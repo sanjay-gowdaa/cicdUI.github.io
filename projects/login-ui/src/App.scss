@@ -1,13 +1,13 @@
 .main-content {
-    background: url('./static/assets/landing_img.jpg') no-repeat center center;
     width: 100%;
+    position: absolute;
     height: calc(100% - 70px);
 }
 
 .main-content-banner {
-    position: fixed;
-    bottom: 1em;
-    left: 2em;
+    position: relative;
+    bottom: 20em;
+    left: 10em;
     background: rgba(0, 0, 0, 0.6);
     border-radius: 10px;
     width: 50%;
@@ -42,4 +42,9 @@
 /*border radius*/
 .vikas-btn-radius {
     border-radius: 3px
+}
+
+
+.col-white {
+    color: white !important;
 }
