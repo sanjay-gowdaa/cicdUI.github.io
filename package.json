@@ -24,12 +24,12 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "buyer:start": "cd projects/buyer-ui && yarn start",
-    "buyer:build": "cd projects/buyer-ui && yarn build",
-    "login:start": "cd projects/login-ui && yarn start",
-    "login:build": "cd projects/login-ui && yarn build",
-    "seller:start": "cd projects/seller-ui && yarn start",
-    "seller:build": "cd projects/seller-ui && yarn build",
+    "buyer:start": "cd projects/buyer-ui && npm start",
+    "buyer:build": "cd projects/buyer-ui && npm build",
+    "login:start": "cd projects/login-ui && npm start",
+    "login:build": "cd projects/login-ui && npm build",
+    "seller:start": "cd projects/seller-ui && npm start",
+    "seller:build": "cd projects/seller-ui && npm build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "lint": "eslint \"*/**/*.{js,ts,tsx}\" --quiet --fix"

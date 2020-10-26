@@ -19,7 +19,7 @@ const App = (props: any) => {
               <Paragraph>
                 In the process of internal desktop applications development, many different design specs and
                 implementations would be involved, which might cause designers and developers difficulties and
-                duplication and reduce the efficiency of development.
+                duplication and reduce the efficiency of development. CI build test
               </Paragraph>
               <Button className='vikas-btn-radius' size='large' type="primary">Register</Button>
             </Typography>
