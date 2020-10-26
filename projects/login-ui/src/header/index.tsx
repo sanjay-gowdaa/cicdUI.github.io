@@ -17,7 +17,7 @@ const HeaderActions = ({history}: {history: any}) => {
         visible={signUpPopupVisible}
         onVisibleChange={() => setSignUpPopupVisible(!signUpPopupVisible)}
       >
-        <Button className='margin-l-r-1em vikas-btn-radius' type="primary" size="large">Register</Button>
+        <Button className='margin-l-r-1em vikas-btn-radius wid150' type="primary" size="large">Register</Button>
       </Popover>
       <Popover
         content={<Login />}
@@ -26,7 +26,7 @@ const HeaderActions = ({history}: {history: any}) => {
         visible={loginPopupVisible}
         onVisibleChange={() => setLoginPopupVisible(!loginPopupVisible)}
       >
-        <Button className='vikas-btn-radius' size="large">Login</Button>
+        <Button className='vikas-btn-radius wid150' size="large">Login</Button>
       </Popover>
     </div>
   )
