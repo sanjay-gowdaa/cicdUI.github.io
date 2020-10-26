@@ -1,5 +1,6 @@
 import React from 'react'
-import { Row, Col, Form, Input, Button, Divider } from 'antd';
+import { Row, Col, Form, Input, Button, Divider, Select, Upload } from 'antd';
+import { UploadOutlined } from '@ant-design/icons';
 import Header from '../header'
 import './registration.scss'
 
@@ -8,10 +9,21 @@ const singleLabelFieldLayout = {
     wrapperCol: { span: 18 },
   };
   const tailLayout = {
-    wrapperCol: { span: 12 },
+    wrapperCol: { offset: 8, span: 12 },
   };
 
+  const normFile = (e: any) => {
+    console.log('Upload event:', e);
+    if (Array.isArray(e)) {
+      return e;
+    }
+    return e && e.fileList;
+  };
+
+  
 const Buyer = (props: any) => {
+    const [form] = Form.useForm();
+
     const onFinish = (values: any) => {
         console.log('Success:', values);
       };
@@ -20,6 +32,9 @@ const Buyer = (props: any) => {
         console.log('Failed:', errorInfo);
       };
 
+      const onReset = () => {
+        form.resetFields();
+      };
       
     return (
         <React.Fragment>
@@ -29,6 +44,7 @@ const Buyer = (props: any) => {
             <h1>Profile Verification</h1>
             <Divider />
             <Form
+                form={form}
                 {...singleLabelFieldLayout}
                 name="basic"
                 initialValues={{name: 'Naresh Gowda', number: '9876543210'}}
@@ -82,12 +98,17 @@ const Buyer = (props: any) => {
                         </Form.Item>
                     </Col>
                     <Col span={10}>
+
                         <Form.Item
-                            label="Upload ID Card"
                             name="id_card"
-                            rules={[{ required: true, message: 'Please input your username!' }]}
+                            label="Upload ID Card"
+                            valuePropName="fileList"
+                            getValueFromEvent={normFile}
+                            rules={[{ required: true, message: 'Upload ID!' }]}
                         >
-                            <Input />
+                            <Upload name="logo" action="/upload.do" listType="picture">
+                            <Button icon={<UploadOutlined />}>Click to upload</Button>
+                            </Upload>
                         </Form.Item>
 
                         <Form.Item
@@ -112,10 +133,10 @@ const Buyer = (props: any) => {
 
                         <Form.Item
                             label="District"
-                            name="district"
-                            rules={[{ message: 'Please input your password!' }]}
-                        >
-                            <Input />
+                            name="district">
+                            <Select placeholder="District">
+                                <Select.Option value="bellary">Bellary</Select.Option>
+                            </Select>
                         </Form.Item>
                     </Col>
                     <Col span={10}>
@@ -129,10 +150,10 @@ const Buyer = (props: any) => {
 
                         <Form.Item
                             label="Taluk"
-                            name="taluk"
-                            rules={[{ message: 'Please input your username!' }]}
-                        >
-                            <Input />
+                            name="taluk">
+                            <Select placeholder="Taluk">
+                                <Select.Option value="hospet">Hospet</Select.Option>
+                            </Select>
                         </Form.Item>
                     </Col>
                 </Row>
@@ -140,8 +161,11 @@ const Buyer = (props: any) => {
                 <Row justify="center">
                     <Col span={12}>                
                         <Form.Item {...tailLayout}>
-                        <Button className='width-full' type="primary" htmlType="submit">
-                        Submit
+                        <Button className='margin-l-r-1em' htmlType="button" onClick={onReset}>
+                            Cancel
+                        </Button>
+                        <Button className='' type="primary" htmlType="submit">
+                            Submit
                         </Button>
                         </Form.Item>
                     </Col>
