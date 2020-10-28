@@ -1,8 +1,11 @@
 import React from 'react'
 import { Row, Col, Form, Input, Button, Divider, Select, Upload } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
+import { useSelector, useDispatch } from 'react-redux';
 import Header from '../header'
 import './registration.scss'
+import { RootState } from '../store/rootReducer';
+import { updateForm } from '../store/registrationReducer/actions';
 
 const singleLabelFieldLayout = {
     labelCol: { span: 24 },
@@ -23,9 +26,12 @@ const singleLabelFieldLayout = {
   
 const Buyer = (props: any) => {
     const [form] = Form.useForm();
+    const dispatch = useDispatch();
+    const registrationState = useSelector((state: RootState) => state.registration);
 
     const onFinish = (values: any) => {
         console.log('Success:', values);
+        dispatch(updateForm(values));
       };
     
       const onFinishFailed = (errorInfo: any) => {
@@ -47,7 +53,7 @@ const Buyer = (props: any) => {
                 form={form}
                 {...singleLabelFieldLayout}
                 name="basic"
-                initialValues={{name: 'Naresh Gowda', number: '9876543210'}}
+                initialValues={registrationState.formData}
                 onFinish={onFinish}
                 onFinishFailed={onFinishFailed}
                 >
@@ -57,7 +63,7 @@ const Buyer = (props: any) => {
                             labelCol={{ span: 10 }}
                             wrapperCol={{ span: 12 }}
                             label="Name"
-                            name="name"
+                            name="username"
                         >
                             <Input bordered={false} disabled={true} />
                         </Form.Item>
@@ -65,7 +71,7 @@ const Buyer = (props: any) => {
                             labelCol={{ span: 10 }}
                             wrapperCol={{ span: 12 }}
                             label="Phone Number"
-                            name="number"
+                            name="phone"
                         >
                             <Input bordered={false} disabled={true} />
                         </Form.Item>

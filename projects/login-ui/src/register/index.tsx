@@ -1,6 +1,9 @@
 import React, {useState} from 'react';
 import { Form, Input, Button, Checkbox, Menu } from 'antd';
 import {routesMap} from '../constants'
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '../store/rootReducer';
+import { updateBasicRegistrationData, updateEntityType } from '../store/registrationReducer/actions';
 
 const {register_buyer, register_seller, register_entity} = routesMap;
 const layout = {
@@ -14,15 +17,20 @@ const layout = {
 
 const Register = ({history}: {history: any}) => {
     const [currentType, setCurrentType] = useState('buyer')
-  
+    const dispatch = useDispatch();
+    // const registrationState = useSelector((state: RootState) => state.registration);
+    
     const onFinish = (values: any) => {
-    console.log('Success:', values);
-    history.push(`register/${currentType}`)
-  };
+        console.log('Success:', values);
+        const {username, phone} = values
+        dispatch(updateEntityType(currentType))
+        dispatch(updateBasicRegistrationData({username, phone}))
+        history.push(`register/${currentType}`)
+    };
 
-  const onFinishFailed = (errorInfo: any) => {
-    console.log('Failed:', errorInfo);
-  };
+    const onFinishFailed = (errorInfo: any) => {
+        console.log('Failed:', errorInfo);
+    };
 
 
   const handleClick = (e: any) => {
