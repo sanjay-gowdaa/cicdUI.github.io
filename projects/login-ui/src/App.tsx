@@ -22,7 +22,13 @@ const App = (props: any) => {
                 implementations would be involved, which might cause designers and developers difficulties and
                 duplication and reduce the efficiency of development. CI build test
               </Paragraph>
-              <Button className='vikas-btn-radius wid150' size='large' type="primary">Register</Button>
+              <Button 
+                className='vikas-btn-radius wid150' 
+                size='large' 
+                type="primary"
+              >
+                  Register
+              </Button>
             </Typography>
       </div>
     </div>

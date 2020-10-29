@@ -66,7 +66,12 @@ const Register = ({history}: {history: any}) => {
                 <Input />
             </Form.Item>
 
-            <Form.Item {...tailLayout} name="remember" valuePropName="checked">
+            <Form.Item 
+                {...tailLayout} 
+                name="remember" 
+                valuePropName="checked"
+                rules={[{ required: true, message: 'Please accept the terms and conditions!' }]}
+            >
                 <Checkbox>
                     I have read and accept to 
                     <a className='terms-and-conditions' href='https://www.google.com/' target='_blank'>

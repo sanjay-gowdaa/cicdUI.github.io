@@ -82,7 +82,7 @@ const Buyer = (props: any) => {
                         <Form.Item
                             label="OTP"
                             name="otp"
-                            rules={[{ required: true, message: 'Please input your username!' }]}
+                            rules={[{ required: true, message: 'Please input the OTP!' }]}
                         >
                             <Input />
                         </Form.Item>
@@ -98,7 +98,7 @@ const Buyer = (props: any) => {
                         <Form.Item
                             label="Email"
                             name="email"
-                            rules={[{ required: true, message: 'Please input your username!' }]}
+                            rules={[{ required: true, message: 'Please input your email id!' }]}
                         >
                             <Input />
                         </Form.Item>
@@ -132,7 +132,7 @@ const Buyer = (props: any) => {
                         <Form.Item
                             label="Address"
                             name="address_1"
-                            rules={[{ required: true, message: 'Please input your username!' }]}
+                            rules={[{ required: true, message: 'Please input your Address!' }]}
                         >
                             <Input />
                         </Form.Item>
@@ -149,7 +149,7 @@ const Buyer = (props: any) => {
                         <Form.Item
                             label="Pin Code"
                             name="pin_code"
-                            rules={[{ required: true, message: 'Please input your username!' }]}
+                            rules={[{ required: true, message: 'Please input your pin code!' }]}
                         >
                             <Input />
                         </Form.Item>
