@@ -1,11 +1,14 @@
 import React from 'react'
-import { Row, Col, Form, Input, Button, Divider, Select, Upload } from 'antd';
+import { Row, Col, Form, Input, Button, Divider, Select, Upload, message } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
 import { useSelector, useDispatch } from 'react-redux';
 import Header from '../header'
 import './registration.scss'
 import { RootState } from '../store/rootReducer';
 import { updateForm } from '../store/registrationReducer/actions';
+import {routesMap} from '../constants'
+const {home} = routesMap
+
 
 const singleLabelFieldLayout = {
     labelCol: { span: 24 },
@@ -20,11 +23,12 @@ const singleLabelFieldLayout = {
     if (Array.isArray(e)) {
       return e;
     }
-    return e && e.fileList;
+    return e && e.fileList[0];
   };
 
   
 const Buyer = (props: any) => {
+    const {history} = props;
     const [form] = Form.useForm();
     const dispatch = useDispatch();
     const registrationState = useSelector((state: RootState) => state.registration);
@@ -32,15 +36,14 @@ const Buyer = (props: any) => {
     const onFinish = (values: any) => {
         console.log('Success:', values);
         dispatch(updateForm(values));
+        history.push(home)
       };
     
       const onFinishFailed = (errorInfo: any) => {
         console.log('Failed:', errorInfo);
       };
 
-      const onReset = () => {
-        form.resetFields();
-      };
+      const onReset = () => history.push(home)
       
     return (
         <React.Fragment>
@@ -112,14 +115,23 @@ const Buyer = (props: any) => {
                             getValueFromEvent={normFile}
                             rules={[{ required: true, message: 'Upload ID!' }]}
                         >
-                            <Upload name="logo" action="/upload.do" listType="picture">
-                            <Button icon={<UploadOutlined />}>Click to upload</Button>
+                            <Upload
+                                beforeUpload= {(file) => {
+                                    const isRequiredFileType = file.type === 'application/pdf' || file.type === 'image/jpeg' || file.type === 'image/png'
+                                    if (!isRequiredFileType) {
+                                      message.error(`${file.name} is not a PDF file or an Image file`);
+                                    }
+                                    return !isRequiredFileType;
+                                  }}
+                                name="logo"
+                                listType="text">
+                                <Button icon={<UploadOutlined />}>Click to upload</Button>
                             </Upload>
                         </Form.Item>
 
                         <Form.Item
                             label="Confirm Password"
-                            name="confirm_password"
+                            name="confirmPassword"
                             rules={[{ required: true, message: 'Please input your password!' }]}
                         >
                             <Input.Password />
@@ -131,7 +143,7 @@ const Buyer = (props: any) => {
                     <Col span={10}>
                         <Form.Item
                             label="Address"
-                            name="address_1"
+                            name="addressLine"
                             rules={[{ required: true, message: 'Please input your Address!' }]}
                         >
                             <Input />
@@ -148,7 +160,7 @@ const Buyer = (props: any) => {
                     <Col span={10}>
                         <Form.Item
                             label="Pin Code"
-                            name="pin_code"
+                            name="pinCode"
                             rules={[{ required: true, message: 'Please input your pin code!' }]}
                         >
                             <Input />
