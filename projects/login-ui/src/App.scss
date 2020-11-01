@@ -1,13 +1,12 @@
 .main-content {
     width: 100%;
-    position: absolute;
     height: calc(100% - 70px);
 }
 
 .main-content-banner {
-    position: relative;
-    bottom: 20em;
-    left: 10em;
+    position: fixed;
+    bottom: 10em;
+    left: 5em;
     background: rgba(0, 0, 0, 0.6);
     border-radius: 10px;
     width: 50%;
@@ -21,6 +20,10 @@
     
     &.align-center {
         align-items: center;
+    }
+
+    &.justify-content-space-bet {
+        justify-content: space-between;
     }
 }
 
@@ -40,6 +43,11 @@
 }
 .wid150{
     width: 150px;
+}
+
+/**/
+.height-full {
+    height: 100%;
 }
 
 /*border radius*/
