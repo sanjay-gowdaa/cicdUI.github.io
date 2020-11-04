@@ -1,0 +1,36 @@
+.seller-ui-app {
+  .seller-ui-dashboard {
+    padding: 2em;
+  }
+}
+
+/*generic classes*/
+
+/*flex-classes*/
+.display-flex-row {
+  display: flex;
+  flex-direction: row;
+  
+  &.align-center {
+      align-items: center;
+  }
+
+  &.justify-content-space-bet {
+      justify-content: space-between;
+  }
+}
+
+/*Margin and padding classes*/
+.margin-l-r-1em {
+  margin-left: 1em;
+  margin-right: 1em;
+}
+
+.margin-t-1em {
+  margin-top: 1em;
+}
+
+/*border radius*/
+.vikas-btn-radius {
+  border-radius: 3px
+}
