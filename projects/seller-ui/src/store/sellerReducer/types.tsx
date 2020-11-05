@@ -23,5 +23,5 @@ export interface MatchRequirementModel extends CropModel {
 
 export interface SellerStateModel {
   cropsList: Array<CropModel>
-  mockCropsList: Array<MatchRequirementModel>
+  matchesList: Array<MatchRequirementModel>
 }

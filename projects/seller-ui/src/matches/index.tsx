@@ -11,7 +11,7 @@ const MatchedSection = () => {
     return (
         <div>
             <Title level={2}>My Matches</Title>
-            <Table className='margin-t-1em' columns={matchesColumns} dataSource={sellerState.cropsList} />
+            <Table className='margin-t-1em' columns={matchesColumns} dataSource={sellerState.matchesList} />
         </div>
     )
 }

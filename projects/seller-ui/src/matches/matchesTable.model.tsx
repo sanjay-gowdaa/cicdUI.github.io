@@ -1,15 +1,27 @@
 import React from 'react';
-import { Typography, Progress, Statistic } from 'antd';
-import { CaretUpOutlined, CaretDownOutlined } from '@ant-design/icons';
-import { CropModel } from '../store/sellerReducer/types';
+import { Typography, Button } from 'antd';
+import { MatchRequirementModel } from '../store/sellerReducer/types';
 
-const { Title } = Typography;
+const { Title, Text } = Typography;
 export const matchesColumns = [
-    {
+
+  {
+    title: 'Buyer Id',
+    dataIndex: 'buyerId',
+    key: 'buyerId',
+    render: (buyerId: string) => {
+      return (
+        <>
+          <Text underline>{buyerId}</Text>
+        </>
+      )
+    } ,
+  },  
+  {
       title: 'Crop',
       dataIndex: 'cropName',
       key: 'cropName',
-      render: (cropName: string, record: CropModel) => {
+      render: (cropName: string, record: MatchRequirementModel) => {
         return (
           <>
             <Title level={5}>{cropName}</Title>
@@ -24,48 +36,21 @@ export const matchesColumns = [
       key: 'cropGrade',
     },
     {
-      title: 'Qunatity Remaining',
+      title: 'Qunatity Required',
       dataIndex: 'quantity',
       key: 'quantity',
       render: (quantity: number) => {
         return (
           <>
             <p>{quantity} qtl</p>
-            <Progress percent={100} showInfo={false} />
           </>
         )
       }
     },
     {
-        title: 'Price per qtl',
-        dataIndex: 'pricePerQnt',
-        key: 'pricePerQnt',
-    },
-    {
-        title: 'Live APMC Rates per qtl',
-        dataIndex: 'apmcRate',
-        key: 'apmcRate',
-        render: (apmcRate: number, record: CropModel) => {
-          const {apmcRateChange}  = record
-          const {difference, increase} = apmcRateChange
-          const color = increase ? '#12805C' : '#E90000'
-          return (
-            <>
-              <p>{apmcRate}</p>
-              <Statistic
-                value={difference}
-                valueStyle={{ color, fontSize: '12px' }}
-                prefix={ increase ? <CaretUpOutlined /> : <CaretDownOutlined />}
-              />
-            </>
-          )
-        }
-    },
-    {
-        title: 'Intent Sell',
-        dataIndex: 'intentToSell',
-        key: 'intentToSell',
-        render: (intentToSell: boolean) => <p>{intentToSell ? 'yes' : 'no'}</p>,
+      title: 'Location',
+      dataIndex: 'location',
+      key: 'location',
     },
     {
       title: 'Additional',
@@ -74,15 +59,22 @@ export const matchesColumns = [
       render: (termsAndConditions: string) => {
         return (
           <>
-          <div><a href={termsAndConditions} target='_blank'>Terms & Conditions</a></div>
-          <div><a href={termsAndConditions} target='_blank'>Crop Photos</a></div>
+          <div><a href={termsAndConditions} target='_blank'>View Terms</a></div>
           </>
         )
       }
     },
-    // {
-    //   title: 'Action',
-    //   key: 'action',
-    //   render: (text: string) => <a>{text}</a>,
-    // },
+    {
+      title: '',
+      key: 'action',
+      render: (text: any, record: MatchRequirementModel) => {
+        return (
+          <div className='display-flex-row'>
+            <Button type="link">View Details</Button>
+            <Button className='vikas-btn-radius' type="primary">Accept</Button>
+            <Button type="link" danger> Delete </Button>
+          </div>
+        )
+      }
+    },
   ];

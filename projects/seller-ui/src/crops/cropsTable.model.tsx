@@ -62,7 +62,7 @@ export const cropColumns = [
         }
     },
     {
-        title: 'Intent Sell',
+        title: 'Intent To Sell',
         dataIndex: 'intentToSell',
         key: 'intentToSell',
         render: (intentToSell: boolean) => <p>{intentToSell ? 'yes' : 'no'}</p>,
