@@ -21,7 +21,21 @@ export interface MatchRequirementModel extends CropModel {
   location: string
 }
 
+export enum TransactionStatus {
+  pending = 'PENDING',
+  on_going ='ON_GOING',
+  completed = 'COMPLETED'
+}
+
+export interface TransactioModel extends MatchRequirementModel {
+  transactionId: string
+  transactionStatus: TransactionStatus
+  transactionTotalAmount: number
+  transactionStatusText: string
+}
+
 export interface SellerStateModel {
   cropsList: Array<CropModel>
   matchesList: Array<MatchRequirementModel>
+  transactionList: Array<TransactioModel>
 }

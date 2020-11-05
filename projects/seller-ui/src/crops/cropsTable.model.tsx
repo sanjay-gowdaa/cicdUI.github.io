@@ -37,9 +37,9 @@ export const cropColumns = [
       }
     },
     {
-        title: 'Price per qtl',
-        dataIndex: 'pricePerQnt',
-        key: 'pricePerQnt',
+      title: 'Price per qtl',
+      dataIndex: 'pricePerQnt',
+      key: 'pricePerQnt',
     },
     {
         title: 'Live APMC Rates per qtl',

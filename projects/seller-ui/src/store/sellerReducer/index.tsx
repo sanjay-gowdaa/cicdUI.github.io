@@ -1,10 +1,11 @@
 import { UPDATE_FORM } from './actions';
-import { mockCropsList, mockMatchedCropsList } from './mockData.temp';
+import { mockCropsList, mockMatchedCropsList, mockTransactionCropsList } from './mockData.temp';
 import { SellerStateModel } from './types';
 
 const INITIAL_STATE: SellerStateModel = {
     cropsList: mockCropsList,
-    matchesList: mockMatchedCropsList
+    matchesList: mockMatchedCropsList,
+    transactionList: mockTransactionCropsList
 };
 
 const reducer = (state = INITIAL_STATE, action: any) => {
