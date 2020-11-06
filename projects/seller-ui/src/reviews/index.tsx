@@ -1,11 +1,19 @@
 import React from 'react'
 import { Typography } from 'antd';
+import { useSelector, useDispatch } from 'react-redux';
+import { RootState } from '../store/rootReducer';
+import Review from './review';
 
 const { Title } = Typography;
 
 const ReviewsSection = () => {
+    const sellerState = useSelector((state: RootState) => state.seller);
+    const {reviewsList} = sellerState
     return (
-        <Title level={2}>ReviewsSection Section</Title>
+        <>
+            <Title level={2}>Reviews</Title>
+            <Review reviewsList={reviewsList} />
+        </>
     )
 }
 

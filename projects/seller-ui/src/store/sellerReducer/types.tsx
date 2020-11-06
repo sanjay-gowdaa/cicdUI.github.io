@@ -38,4 +38,13 @@ export interface SellerStateModel {
   cropsList: Array<CropModel>
   matchesList: Array<MatchRequirementModel>
   transactionList: Array<TransactioModel>
+  reviewsList: Array<ReviewRating>
+}
+
+export interface ReviewRating {
+  rating: number,
+  buyerId: string
+  buyerLocation: string
+  date: string
+  reviewtext: string
 }

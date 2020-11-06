@@ -1,4 +1,4 @@
-import { CropModel, MatchRequirementModel, TransactioModel, TransactionStatus } from "./types";
+import { CropModel, MatchRequirementModel, ReviewRating, TransactioModel, TransactionStatus } from "./types";
 
 export const mockCropsList: Array<CropModel> = [
     {
@@ -94,5 +94,15 @@ export const mockTransactionCropsList: Array<TransactioModel> = [
         transactionId: '112',
         transactionTotalAmount: 40000,
         transactionStatusText: '10% Advance payment initiated'
+    }
+]
+
+export const mockReviewsList: Array<ReviewRating> = [
+    {
+        rating: 4,
+        buyerId: '232445',
+        buyerLocation: 'Mandya',
+        date: new Date().toISOString(),
+        reviewtext: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries"
     }
 ]
