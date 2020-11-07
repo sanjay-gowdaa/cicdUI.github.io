@@ -1,5 +1,5 @@
 import React from 'react';
-import { Typography, Progress, Statistic } from 'antd';
+import { Typography, Progress, Statistic, Button } from 'antd';
 import { CaretUpOutlined, CaretDownOutlined } from '@ant-design/icons';
 import { CropModel } from '../store/sellerReducer/types';
 
@@ -65,7 +65,7 @@ export const cropColumns = [
         title: 'Intent To Sell',
         dataIndex: 'intentToSell',
         key: 'intentToSell',
-        render: (intentToSell: boolean) => <p>{intentToSell ? 'yes' : 'no'}</p>,
+        render: (intentToSell: boolean) => <p>{intentToSell ? 'Yes' : 'No'}</p>,
     },
     {
       title: 'Additional',
@@ -80,9 +80,23 @@ export const cropColumns = [
         )
       }
     },
-    // {
-    //   title: 'Action',
-    //   key: 'action',
-    //   render: (text: string) => <a>{text}</a>,
-    // },
+    {
+      title: '',
+      key: 'action',
+      render: (text: string, record: CropModel) => {
+        const {intentToSell} = record
+        return (
+          intentToSell  ? null : (
+            <>
+              <Button type="link" block>
+                Edit
+              </Button>
+              <Button type="link" danger block>
+                Delete
+              </Button>
+            </>
+          )
+        )
+      },
+    },
   ];

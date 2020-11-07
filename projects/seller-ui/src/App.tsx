@@ -8,6 +8,7 @@ import ReviewsSection from './reviews';
 import TransactionSection from './transactions';
 import { Divider } from 'antd';
 import 'antd/dist/antd.css'; 
+import Footer from './footer';
 
 function App(props: any) {
   const {history} = props;
@@ -25,6 +26,7 @@ function App(props: any) {
         <Divider />
         <ReviewsSection />
       </div>
+      <Footer />
     </div>
   );
 }

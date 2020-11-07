@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import { Popover, Button, Image, Typography  } from 'antd';
 import Logo from '../static/assets/logo.jpg';
+import Profile from '../static/assets/prof.png'
 import './header.scss'
 
 const { Title } = Typography;
@@ -16,9 +17,14 @@ const HeaderActions = ({history}: {history: any}) => {
         visible={signUpPopupVisible}
         onVisibleChange={() => setSignUpPopupVisible(!signUpPopupVisible)}
       >
-        <div>
-          <Title level={4}>Naresh Gowda</Title>
-          <p>Seller Id: 276327</p>
+        <div className='display-flex-row align-center'>
+          <div className='margin-l-r-1em'>
+            <Title level={4} className='margin-unset'>Naresh Gowda</Title>
+            <p className='margin-unset'>Seller Id: 276327</p>
+          </div>
+          <Image
+            src={Profile}
+          />
         </div>
       </Popover>
     </div>
