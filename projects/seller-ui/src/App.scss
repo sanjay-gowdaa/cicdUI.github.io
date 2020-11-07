@@ -18,6 +18,9 @@
   &.justify-content-space-bet {
       justify-content: space-between;
   }
+  &.justify-center {
+    justify-content: center;
+  }
 }
 
 /*Margin and padding classes*/
@@ -33,4 +36,9 @@
 /*border radius*/
 .vikas-btn-radius {
   border-radius: 3px
+}
+
+/*height-class*/
+.height-full {
+  height: 100% !important;
 }

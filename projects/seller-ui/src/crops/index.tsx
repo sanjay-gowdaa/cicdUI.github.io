@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../store/rootReducer';
 import { cropColumns } from './cropsTable.model';
 import './crops.scss'
+import AddCropModal from './AddCrop';
 
 const { Title } = Typography;
 
@@ -12,7 +13,7 @@ const CropsSection = () => {
     return (
         <div className='crops-container'>
             <Title level={2}>My Crops</Title>
-            <Button type="primary" className='add-crop-btn vikas-btn-radius'>Add Crop</Button>
+            <AddCropModal />
             <Table className='margin-t-1em' columns={cropColumns} dataSource={sellerState.cropsList} />
         </div>
     )

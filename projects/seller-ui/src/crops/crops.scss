@@ -6,3 +6,19 @@
         font-size: 18px;
     }
 }
+
+.add-crop-form {
+    .additional-text {
+        margin: 0 1em;
+        white-space: nowrap;
+        color: #4E4E4E;
+    }
+
+    .crop-modal-action-btn {
+        width: 220px;
+    }
+}
+
+.add-crop-modal .ant-modal-content {
+    padding: 2em !important;
+}
