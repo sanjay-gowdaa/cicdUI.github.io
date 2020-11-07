@@ -12,17 +12,17 @@ const DashboardSection = () => {
             <Row gutter={{ xs: 0, sm: 0, md: 32}}>
                 <Col  md={8} sm={24} xs={24} >
                     <div className='dashboard-tile'>
-                        Weather/Area Info
+                        <Title level={4}>Weather/Area Info</Title>
                     </div>
                 </Col>
                 <Col md={8} sm={24} xs={24} >
                     <div className='dashboard-tile'>
-                        Crop Info
+                        <Title level={4}>Crop Info</Title>
                     </div>
                 </Col>
                 <Col md={8} sm={24} xs={24} >
                     <div className='dashboard-tile'>
-                        Events
+                        <Title level={4}>Events</Title>
                     </div>
                 </Col>
             </Row>
