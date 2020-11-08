@@ -1,9 +1,13 @@
 import React, {useState} from 'react';
 import { Modal, Typography, Button, 
-    Row, Col, Form, Input, Select, Space, Divider } from 'antd';
+    Row, Col, Form, Input, Select, Space, Divider, Upload } from 'antd';
+import { InboxOutlined } from '@ant-design/icons';
 
 const { Text } = Typography;
 const { Option } = Select;
+const { Dragger } = Upload;
+const { TextArea } = Input;
+
 const singleLabelFieldLayout = {
     labelCol: { span: 24 },
     wrapperCol: { span: 20 },
@@ -21,7 +25,8 @@ const AddCropModal = () => {
     const onFinish = (values: any) => {
         console.log('Success:', values);
         // dispatch(updateForm(values));
-        // history.push(home)
+        form.resetFields();
+        setModalVisible(false)
     };
     
     const onFinishFailed = (errorInfo: any) => {
@@ -153,7 +158,32 @@ const AddCropModal = () => {
                         <Divider className='height-full' type="vertical" />
                     </Col>
                     <Col sm={24} md={10} lg={10}>
-                        <div>col-6</div>
+                        <Form.Item
+                            label="Add Crop Photos"
+                            name="cropImages"
+                        >
+                            <Dragger className='crop-images-upload' multiple={true} accept='image/*' listType='picture-card' >
+                                <div className='display-flex-row'>
+                                <div>
+                                    <p className="ant-upload-drag-icon">
+                                        <InboxOutlined />
+                                    </p>
+                                </div>
+                                <div>
+                                    <p className="ant-upload-text">Drag and drop images here or Browse</p>
+                                    <p className="ant-upload-hint">
+                                        Upload maximum 5 images. Each image less than 1 MB
+                                    </p>
+                                </div>
+                                </div>
+                            </Dragger>
+                        </Form.Item>
+                        <Form.Item
+                            label="Additional Information"
+                            name="additionalInfo"
+                        >
+                            <TextArea rows={4} />
+                        </Form.Item>
                     </Col>
                 </Row>
                 <Row justify='center'>

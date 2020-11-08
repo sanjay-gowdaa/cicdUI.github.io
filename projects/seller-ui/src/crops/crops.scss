@@ -22,3 +22,14 @@
 .add-crop-modal .ant-modal-content {
     padding: 2em !important;
 }
+
+.crop-images-upload {
+    .ant-upload {
+        padding: 1em !important;
+    }
+    
+    & + .ant-upload-list {
+        margin-top: 1em !important;
+    }
+}
+
