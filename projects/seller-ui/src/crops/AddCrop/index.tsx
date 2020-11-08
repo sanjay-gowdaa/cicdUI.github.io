@@ -46,7 +46,7 @@ const AddCropModal = () => {
         <Modal
             title="Add Crop"
             visible={modalVisible}
-            footer={[]}
+            footer={null}
             maskClosable={false}
             onCancel={() => setModalVisible(false)}
             width={'90%'}

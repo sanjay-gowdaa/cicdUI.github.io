@@ -3,7 +3,12 @@ import { Typography, Button } from 'antd';
 import { MatchRequirementModel } from '../store/sellerReducer/types';
 
 const { Title, Text } = Typography;
-export const matchesColumns = [
+export interface componentCallBacksModel {
+  showCropDetailsModal: Function
+  populateCropDetails: Function
+}
+
+export const matchesColumns = (componentCallBacks: componentCallBacksModel) => [
 
   {
     title: 'Buyer Id',
@@ -70,7 +75,10 @@ export const matchesColumns = [
       render: (text: any, record: MatchRequirementModel) => {
         return (
           <div className='display-flex-row'>
-            <Button type="link">View Details</Button>
+            <Button type="link" onClick={() => {
+              componentCallBacks?.populateCropDetails(record);
+              componentCallBacks?.showCropDetailsModal(true);
+            }}>View Details</Button>
             <Button className='vikas-btn-radius' type="primary">Accept</Button>
             <Button type="link" danger> Delete </Button>
           </div>
