@@ -2,11 +2,11 @@ import React from 'react'
 import { Row, Col, Form, Input, Button, Divider, Select, Upload, message } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
 import { useSelector, useDispatch } from 'react-redux';
-import Header from '../header'
+import Header from '../../header'
 import './registration.scss'
-import { RootState } from '../store/rootReducer';
-import { updateForm } from '../store/registrationReducer/actions';
-import {routesMap} from '../constants'
+import { RootState } from '../../store/rootReducer';
+import { updateForm } from '../../store/registrationReducer/actions';
+import {routesMap} from '../../constants'
 const {home} = routesMap
 
 
@@ -23,11 +23,10 @@ const singleLabelFieldLayout = {
     if (Array.isArray(e)) {
       return e;
     }
-    return e && e.fileList[0];
+    return [e && e.fileList[0]];
   };
 
-  
-const Buyer = (props: any) => {
+const Seller = (props: any) => {
     const {history} = props;
     const [form] = Form.useForm();
     const dispatch = useDispatch();
@@ -49,7 +48,6 @@ const Buyer = (props: any) => {
         <React.Fragment>
         <Header />
         <div className='entity-details-container'>
-            
             <h1>Profile Verification</h1>
             <Divider />
             <Form
@@ -59,7 +57,7 @@ const Buyer = (props: any) => {
                 initialValues={registrationState.formData}
                 onFinish={onFinish}
                 onFinishFailed={onFinishFailed}
-                >
+            >
                 <Row gutter={24}>
                     <Col span={6}>
                         <Form.Item
@@ -101,7 +99,6 @@ const Buyer = (props: any) => {
                         <Form.Item
                             label="Email"
                             name="email"
-                            rules={[{ required: true, message: 'Please input your email id!' }]}
                         >
                             <Input />
                         </Form.Item>
@@ -124,7 +121,7 @@ const Buyer = (props: any) => {
                                     return !isRequiredFileType;
                                   }}
                                 name="logo"
-                                listType="text">
+                                listType='text'>
                                 <Button icon={<UploadOutlined />}>Click to upload</Button>
                             </Upload>
                         </Form.Item>
@@ -177,7 +174,7 @@ const Buyer = (props: any) => {
                 </Row>
 
                 <Row justify="center">
-                    <Col span={12}>                
+                    <Col span={12}>
                         <Form.Item {...tailLayout}>
                         <Button className='margin-l-r-1em' htmlType="button" onClick={onReset}>
                             Cancel
@@ -194,4 +191,4 @@ const Buyer = (props: any) => {
     )
 }
 
-export default Buyer;
+export default Seller;

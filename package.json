@@ -19,9 +19,6 @@
     "redux-thunk": "^2.3.0",
     "typescript": "~3.7.2"
   },
-  "workspaces": [
-    "projects/*"
-  ],
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
@@ -53,6 +50,7 @@
     "@typescript-eslint/eslint-plugin": "^4.4.0",
     "@typescript-eslint/parser": "^4.4.0",
     "eslint-config-prettier": "^6.12.0",
+    "eslint-config-react-app": "^6.0.0",
     "eslint-plugin-prettier": "^3.1.4",
     "prettier": "^2.1.2",
     "react-redux": "^7.2.2",
