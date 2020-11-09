@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 import { Typography, Divider, Rate } from 'antd';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../../store/rootReducer';
@@ -8,7 +8,7 @@ const { Title } = Typography;
 
 const ReviewsSection = () => {
     const sellerState = useSelector((state: RootState) => state.seller);
-    const {reviewsList} = sellerState
+    const { reviewsList } = sellerState;
     return (
         <>
             <Title level={2}>Reviews</Title>
@@ -17,7 +17,7 @@ const ReviewsSection = () => {
             <Divider />
             <Review reviewsList={reviewsList} />
         </>
-    )
-}
+    );
+};
 
 export default ReviewsSection;
