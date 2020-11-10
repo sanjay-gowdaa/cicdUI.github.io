@@ -1,5 +1,8 @@
 import React from 'react';
 import { Form, Input, Button, Checkbox } from 'antd';
+import { RootState } from '../../store/rootReducer';
+import { useSelector, useDispatch } from 'react-redux';
+import { updateUserDetails } from '../../store/loginReducer/actions';
 
 const layout = {
     labelCol: { span: 24 },
@@ -11,9 +14,17 @@ const tailLayout = {
 
 const Login = (props: any) => {
     const { history } = props;
+    const registrationState = useSelector((state: RootState) => state.registration);
+
+    const dispatch = useDispatch();
 
     const onFinish = (values: any) => {
-        console.log('Success:', values);
+        const {phoneNum}: {phoneNum: string} = values;
+        /* To be removed later start*/
+        const {formData} = registrationState;
+        const {username} = formData;
+        /* To be removed later end*/
+        dispatch(updateUserDetails({phone: phoneNum, username, userId: '276327'}));
         history.push('/seller');
     };
 
@@ -31,7 +42,7 @@ const Login = (props: any) => {
         >
             <Form.Item
                 label="Phone Number/Email Id"
-                name="username"
+                name="phoneNum"
                 rules={[{ required: true, message: 'Please input your username!' }]}
             >
                 <Input />

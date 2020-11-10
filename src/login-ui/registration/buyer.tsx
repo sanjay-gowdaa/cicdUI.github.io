@@ -22,7 +22,7 @@ const normFile = (e: any) => {
     if (Array.isArray(e)) {
         return e;
     }
-    return [e && e.fileList[0]];
+    return e && e.fileList;
 };
 
 const Buyer = (props: any) => {

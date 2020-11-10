@@ -1,7 +1,7 @@
 import React from 'react';
 import { Typography, Progress, Statistic, Button } from 'antd';
 import { CaretUpOutlined, CaretDownOutlined } from '@ant-design/icons';
-import { CropModel } from '../../store/sellerReducer/types';
+import { ApmcRateChangeModel, CropModel } from '../../store/sellerReducer/types';
 
 const { Title } = Typography;
 export const cropColumns = [
@@ -47,7 +47,7 @@ export const cropColumns = [
         key: 'apmcRate',
         render: (apmcRate: number, record: CropModel) => {
             const { apmcRateChange } = record;
-            const { difference, increase } = apmcRateChange;
+            const { difference, increase } = apmcRateChange as ApmcRateChangeModel;
             const color = increase ? '#12805C' : '#E90000';
             return (
                 <>

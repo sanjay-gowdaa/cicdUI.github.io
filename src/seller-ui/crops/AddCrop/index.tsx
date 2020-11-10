@@ -13,6 +13,8 @@ import {
     Upload,
 } from 'antd';
 import { InboxOutlined } from '@ant-design/icons';
+import { useDispatch } from 'react-redux';
+import { addNewCrop } from '../../../store/sellerReducer/actions';
 
 const { Text } = Typography;
 const { Option } = Select;
@@ -31,11 +33,12 @@ const fieldwithInfoLayout = {
 
 const AddCropModal = () => {
     const [modalVisible, setModalVisible] = useState(false);
-    const [form] = Form.useForm();
+    const [form] = Form.useForm(); 
+    const dispatch = useDispatch();
 
     const onFinish = (values: any) => {
         console.log('Success:', values);
-        // dispatch(updateForm(values));
+        dispatch(addNewCrop(values));
         form.resetFields();
         setModalVisible(false);
     };
@@ -83,31 +86,33 @@ const AddCropModal = () => {
                                 name="cropName"
                                 rules={[{ required: true, message: 'Please select the Crop!' }]}
                             >
-                                <Select placeholder="Select" allowClear>
+                                <Select placeholder="Select">
                                     <Option value="rice">Rice</Option>
                                     <Option value="ragi">Ragi</Option>
                                 </Select>
-                                <Space direction="horizontal">
-                                    <Text type="secondary">Unable to find your crop?</Text>
-                                    <Text type="secondary" underline>
-                                        Add Crop
-                                    </Text>
-                                </Space>
                             </Form.Item>
-
-                            <Form.Item label="Select Sub Category" name="subCategory">
+                            {/* Addition crop name msg */}
+                            <Space direction="horizontal">
+                                <Text type="secondary">Unable to find your crop?</Text>
+                                <Text type="secondary" underline>
+                                    Add Crop
+                                </Text>
+                            </Space>
+                            <Form.Item 
+                                label="Select Sub Category" 
+                                name="subCategory">
                                 <Select placeholder="Select" allowClear>
                                     <Option value="pearl_millet">Pearl Millet</Option>
                                     <Option value="sona_masoori_raw">Sona Masoori Raw</Option>
                                 </Select>
-                                <Space direction="horizontal">
-                                    <Text type="secondary">Unable to find your sub category?</Text>
-                                    <Text type="secondary" underline>
-                                        Add Sub Category
-                                    </Text>
-                                </Space>
                             </Form.Item>
-
+                            {/* Addition Sub Category msg */}
+                            <Space direction="horizontal">
+                                <Text type="secondary">Unable to find your sub category?</Text>
+                                <Text type="secondary" underline>
+                                    Add Sub Category
+                                </Text>
+                            </Space>
                             <Form.Item label="Crop Grade" name="grade">
                                 <Select placeholder="Select" allowClear>
                                     <Option value="Grade_A">Grade A</Option>

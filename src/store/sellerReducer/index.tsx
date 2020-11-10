@@ -1,4 +1,4 @@
-import { UPDATE_FORM } from './actions';
+import { UPDATE_FORM, ADD_NEW_CROP } from './actions';
 import {
     mockCropsList,
     mockMatchedCropsList,
@@ -16,9 +16,11 @@ const INITIAL_STATE: SellerStateModel = {
 
 const reducer = (state = INITIAL_STATE, action: any) => {
     switch (action.type) {
-        case UPDATE_FORM:
-            return { ...state, formData: action.payload };
 
+        case ADD_NEW_CROP:
+            const updatedCropList = [...state.cropsList, action.payload]
+            return { ...state, cropsList: updatedCropList };
+            
         default:
             return state;
     }

@@ -18,17 +18,17 @@ export const mockCropsList: Array<CropModel> = [
         intentToSell: false,
         termsAndConditions: 'http://google.com',
     },
-    {
-        cropName: 'Ragi',
-        subCategory: 'Pearl Millet',
-        cropGrade: 'Grade A',
-        quantity: 40,
-        pricePerQnt: 2000,
-        apmcRate: 2100,
-        intentToSell: true,
-        apmcRateChange: { difference: 150, increase: false },
-        termsAndConditions: 'http://google.com',
-    },
+    // {
+    //     cropName: 'Ragi',
+    //     subCategory: 'Pearl Millet',
+    //     cropGrade: 'Grade A',
+    //     quantity: 40,
+    //     pricePerQnt: 2000,
+    //     apmcRate: 2100,
+    //     intentToSell: true,
+    //     apmcRateChange: { difference: 150, increase: false },
+    //     termsAndConditions: 'http://google.com',
+    // },
 ];
 
 export const mockMatchedCropsList: Array<MatchRequirementModel> = [

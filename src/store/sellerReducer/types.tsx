@@ -5,14 +5,14 @@ export interface ApmcRateChangeModel {
 
 export interface CropModel {
     cropName: string;
-    subCategory: string;
-    cropGrade: string;
+    subCategory?: string;
+    cropGrade?: string;
     quantity: number;
     pricePerQnt: number;
     apmcRate: number;
     intentToSell: boolean;
-    termsAndConditions: string;
-    apmcRateChange: ApmcRateChangeModel;
+    termsAndConditions?: string;
+    apmcRateChange: ApmcRateChangeModel | null;
 }
 
 export interface MatchRequirementModel extends CropModel {
