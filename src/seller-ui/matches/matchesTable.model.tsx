@@ -1,6 +1,7 @@
 import React from 'react';
-import { Typography, Button } from 'antd';
+import { Typography, Button, Image } from 'antd';
 import { MatchRequirementModel } from '../../store/sellerReducer/types';
+import RagiImg from '../../static/assets/ragi.png'
 
 const { Title, Text } = Typography;
 export interface componentCallBacksModel {
@@ -27,10 +28,15 @@ export const matchesColumns = (componentCallBacks: componentCallBacksModel) => [
         key: 'cropName',
         render: (cropName: string, record: MatchRequirementModel) => {
             return (
-                <>
-                    <Title level={5}>{cropName}</Title>
-                    <p>{record?.subCategory}</p>
-                </>
+                <div className='display-flex-row align-center'>
+                    <Image
+                        src={RagiImg}
+                    />
+                    <div className='margin-l-r-1em'>
+                        <Title level={5}>{cropName}</Title>
+                        <p>{record?.subCategory}</p>
+                    </div>
+                </div>
             );
         },
     },

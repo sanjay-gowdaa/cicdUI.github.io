@@ -13,7 +13,7 @@ const SellerUi = (props: any) => {
     const { history } = props;
     return (
         <div className="seller-ui-app">
-            <Header history={history} />
+            <Header history={history} showActions isLoggedIn />
             <div className="seller-ui-dashboard">
                 <DashboardSection />
                 <Divider />

@@ -1,8 +1,8 @@
 import React from 'react';
-import { Typography, Progress, Statistic, Button } from 'antd';
+import { Typography, Progress, Statistic, Button, Image } from 'antd';
 import { CaretUpOutlined, CaretDownOutlined } from '@ant-design/icons';
 import { ApmcRateChangeModel, CropModel } from '../../store/sellerReducer/types';
-
+import RagiImg from '../../static/assets/ragi.png'
 const { Title } = Typography;
 export const cropColumns = [
     {
@@ -11,10 +11,15 @@ export const cropColumns = [
         key: 'cropName',
         render: (cropName: string, record: CropModel) => {
             return (
-                <>
-                    <Title level={5}>{cropName}</Title>
-                    <p>{record?.subCategory}</p>
-                </>
+                <div className='display-flex-row align-center'>
+                    <Image
+                        src={RagiImg}
+                    />
+                    <div className='margin-l-r-1em'>
+                        <Title level={5}>{cropName}</Title>
+                        <p>{record?.subCategory}</p>
+                    </div>
+                </div>
             );
         },
     },
