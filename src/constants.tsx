@@ -4,4 +4,5 @@ export const routesMap = {
     register_seller: '/seller',
     register_entity: '/register/:id',
     seller_ui: '/seller',
+    buyer_ui: '/buyer',
 };
