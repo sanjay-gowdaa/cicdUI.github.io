@@ -1,7 +1,11 @@
-import React from 'react';
+import React, {useEffect} from 'react';
+import { useDispatch } from 'react-redux';
+
+import { updatePartialUserDetails } from '../store/loginReducer/actions';
+import { UserType } from '../store/loginReducer/types';
+
 // import DashboardSection from './dashboard';
 import Header from '../header';
-// import MatchedSection from './matches';
 import { Divider } from 'antd';
 import Footer from '../footer';
 import './buyer.scss';
@@ -12,6 +16,12 @@ import ProduceSection from './produce';
 
 const BuyerUI = (props: any) => {
     const { history } = props;
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        dispatch(updatePartialUserDetails({ username: 'Ramesh Guru', userId: '376337', userType: UserType.BUYER}));
+      }, []);
+
     return (
         <div className="buyer-ui-app">
             <Header history={history} showActions isLoggedIn />

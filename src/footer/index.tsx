@@ -21,6 +21,7 @@ const Footer = () => {
                 </p>
             </div>
             <div>
+                <p className='powered-by-text margin-unset'>Powered by</p>
                 <img src={footerImg} width="100%" height="90%" />
             </div>
         </div>

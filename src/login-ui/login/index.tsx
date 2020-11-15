@@ -3,6 +3,7 @@ import { Form, Input, Button, Checkbox } from 'antd';
 import { RootState } from '../../store/rootReducer';
 import { useSelector, useDispatch } from 'react-redux';
 import { updateUserDetails } from '../../store/loginReducer/actions';
+import { UserType } from '../../store/loginReducer/types';
 
 const layout = {
     labelCol: { span: 24 },
@@ -24,7 +25,7 @@ const Login = (props: any) => {
         const {formData} = registrationState;
         const {username} = formData;
         /* To be removed later end*/
-        dispatch(updateUserDetails({phone: phoneNum, username, userId: '276327'}));
+        dispatch(updateUserDetails({phone: phoneNum, username, userId: '276327', userType: UserType.BUYER}));
         history.push('/seller');
     };
 

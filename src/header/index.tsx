@@ -1,39 +1,10 @@
 import React, { useState } from 'react';
 import Login from '../login-ui/login';
 import Register from '../login-ui/register';
-import { Popover, Button, Image, Typography } from 'antd';
+import UserHeader from '../header-profile';
+import { Popover, Button, Image } from 'antd';
 import Logo from '../static/assets/logo.jpg';
-import Profile from '../static/assets/prof.png'
-
 import './header.scss';
-
-const { Title } = Typography;
-
-const UserHeader = () => {
-    const [signUpPopupVisible, setSignUpPopupVisible] = useState(false)
-    return (
-      <div className='display-flex-row align-center'>
-        <Popover
-          content={<p>Content</p>}
-          title={<h2>Register</h2>}
-          trigger="click"
-          visible={signUpPopupVisible}
-          onVisibleChange={() => setSignUpPopupVisible(!signUpPopupVisible)}
-        >
-          <div className='display-flex-row align-center'>
-            <div className='margin-l-r-1em'>
-              <Title level={4} className='margin-unset'>Naresh Gowda</Title>
-              <p className='margin-unset'>Seller Id: 276327</p>
-            </div>
-            <Image
-              preview={false}
-              src={Profile}
-            />
-          </div>
-        </Popover>
-      </div>
-    )
-  }
 
 const UserBasicActions = ({ history}: { history: any }) => {
     const [loginPopupVisible, setLoginPopupVisible] = useState(false);
