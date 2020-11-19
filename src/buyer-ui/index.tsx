@@ -13,6 +13,7 @@ import MatchedSection from './matches';
 import ReviewsSection from './reviews';
 import TransactionSection from './transactions';
 import ProduceSection from './produce';
+import MasterList from './masterList';
 
 const BuyerUI = (props: any) => {
     const { history } = props;
@@ -26,8 +27,8 @@ const BuyerUI = (props: any) => {
         <div className="buyer-ui-app">
             <Header history={history} showActions isLoggedIn />
             <div className="buyer-ui-dashboard">
-                {/* <DashboardSection />
-                <Divider />*/}
+                <MasterList />
+                <Divider />
                 <ProduceSection />
                 <Divider />
                 <MatchedSection />
