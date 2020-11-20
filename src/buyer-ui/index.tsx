@@ -1,12 +1,11 @@
 import React, {useEffect} from 'react';
+import { Divider, Typography } from 'antd';
 import { useDispatch } from 'react-redux';
 
 import { updatePartialUserDetails } from '../store/loginReducer/actions';
 import { UserType } from '../store/loginReducer/types';
 
-// import DashboardSection from './dashboard';
 import Header from '../header';
-import { Divider } from 'antd';
 import Footer from '../footer';
 import './buyer.scss';
 import MatchedSection from './matches';
@@ -14,6 +13,8 @@ import ReviewsSection from './reviews';
 import TransactionSection from './transactions';
 import ProduceSection from './produce';
 import AddProduceModal from './masterList';
+
+const {Title} = Typography;
 
 const BuyerUI = (props: any) => {
     const { history } = props;
@@ -27,6 +28,8 @@ const BuyerUI = (props: any) => {
         <div className="buyer-ui-app">
             <Header history={history} showActions isLoggedIn />
             <div className="buyer-ui-dashboard">
+                <Title level={2}>My Dashboard</Title>
+                <Divider />
                 <AddProduceModal />
                 <Divider />
                 <ProduceSection />
