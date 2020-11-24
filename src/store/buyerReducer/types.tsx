@@ -35,6 +35,28 @@ export enum TransactionStatus {
     completed = 'COMPLETED',
 }
 
+export interface flatMasterListType { 
+    produce_id: string;
+    produce_name: string;
+    crop_id: string;
+    crop_name: string;
+    category_id: string;
+    category_name: string;
+    grade_id: string;
+    grade_name: string;
+}
+
+export interface MasterListProduce { 
+    produceId: string;
+    produceName: string;
+    cropId: string;
+    cropName: string;
+    categoryId: string;
+    categoryName: string;
+    gradeId: string;
+    gradeName: string;
+}
+
 export interface TransactioModel extends MatchRequirementModel {
     transactionId: string;
     transactionStatus: TransactionStatus;
@@ -43,6 +65,7 @@ export interface TransactioModel extends MatchRequirementModel {
 }
 
 export interface BuyerStateModel {
+    masterProduceList: Array<MasterListProduce>;
     produceList: Array<ProduceModel>;
     matchesList: Array<MatchRequirementModel>;
     transactionList: Array<TransactioModel>;

@@ -18,7 +18,7 @@ const SellerUi = (props: any) => {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        dispatch(updatePartialUserDetails({ username: 'Naresh Gowda', userId: '276327', userType: UserType.SELLER}));
+        // dispatch(updatePartialUserDetails({ username: 'Naresh Gowda', userId: '276327', userType: UserType.SELLER}));
       }, []);
 
     return (

@@ -1,12 +1,17 @@
 import React, {useState} from 'react';
+import { useDispatch } from 'react-redux';
 import { Row, Col, Select, List, Typography, Button, Table } from 'antd';
 import {uniqBy, remove} from 'lodash';
-import {flatMasterListType, mockMasterFlatList} from '../../../store/mockMasterList';
+import {mockMasterFlatList} from '../../../store/mockMasterList';
 import { masterListColumns } from './../masterListTable.model';
+import { flatMasterListType } from '../../../store/buyerReducer/types';
+import { updateMasterlist } from '../../../store/buyerReducer/actions';
 const { Option } = Select;
 const { Title } = Typography;
 
-const MasterList = () => {
+const MasterList = (props: any) => {
+    const {setModalVisible} = props
+    const dispatch = useDispatch();
     const [masterList, updateMasterList] = useState(mockMasterFlatList)
     const [produceListForMasterCategory, setProduceListForMasterCategory] = useState([]);
     const [selectedProduce, setSelectedProduce] = useState({produceId: '', produceName: ''});
@@ -193,6 +198,30 @@ const MasterList = () => {
                     }})}
                     dataSource={addedMasterList}
                 />
+            </Col>
+        </Row>
+        <Row justify="center">
+            <Col>
+                <Button
+                    className="margin-l-r-1em crop-modal-action-btn vikas-btn-radius"
+                    type="text"
+                    htmlType="button"
+                    onClick={() => {
+                        setModalVisible(false);
+                    }}
+                >
+                    Cancel
+                </Button>
+                <Button
+                    className="crop-modal-action-btn vikas-btn-radius"
+                    type="primary"
+                    onClick={() => {
+                        dispatch(updateMasterlist(addedMasterList));
+                        setModalVisible(false);
+                    }}
+                >
+                    Done
+                </Button>
             </Col>
         </Row>
         </>

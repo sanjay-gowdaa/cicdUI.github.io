@@ -71,16 +71,7 @@
 //     }
 // ]
 
-export interface flatMasterListType { 
-    produce_id: string;
-    produce_name: string;
-    crop_id: string;
-    crop_name: string;
-    category_id: string;
-    category_name: string;
-    grade_id: string;
-    grade_name: string;
-}
+
 
 export const mockMasterFlatList = [
     {produce_id: 'cereals', produce_name: 'Cereals',  crop_id: 'jowar', crop_name: 'Jowar',

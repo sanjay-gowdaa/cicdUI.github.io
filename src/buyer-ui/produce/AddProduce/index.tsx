@@ -13,6 +13,7 @@ import {
 } from 'antd';
 import { useDispatch } from 'react-redux';
 import { addNewProduce } from '../../../store/buyerReducer/actions';
+import { flatMasterListType, MasterListProduce } from '../../../store/buyerReducer/types';
 
 const { Option } = Select;
 const { TextArea } = Input;
@@ -27,7 +28,27 @@ const fieldwithInfoLayout = {
     wrapperCol: { span: 18 },
 };
 
-const AddCropModal = () => {
+const getMasterProduceListOpts = ({masterProduceList}: {masterProduceList: Array<MasterListProduce>}) => {
+    return (
+        <>
+            {
+                masterProduceList.map((produce: MasterListProduce) => {
+                    const {categoryId, categoryName, cropId, cropName, produceId, produceName, gradeId, gradeName} = produce;
+                    return (
+                        <Option 
+                            key={`${categoryId}-${cropId}-${produceId}-${gradeId}`} 
+                            value={`${produceName}-${cropName}-${categoryName}-${gradeName}`}
+                        >
+                            {`${produceName} - ${cropName} - ${categoryName} - ${gradeName}`}
+                        </Option>
+                    )
+                })
+            }
+        </>
+    )
+}
+
+const AddCropModal = ({masterProduceList}: {masterProduceList: Array<MasterListProduce>}) => {
     const [modalVisible, setModalVisible] = useState(false);
     const [form] = Form.useForm(); 
     const dispatch = useDispatch();
@@ -78,13 +99,12 @@ const AddCropModal = () => {
                     <Row gutter={16}>
                         <Col xs={24} md={10} lg={10}>
                             <Form.Item
-                                label="Select Produce (From Master List)*"
+                                label="Select Produce (From Master List)"
                                 name="produceName"
                                 rules={[{ required: true, message: 'Please select the Produce!' }]}
                             >
                                 <Select placeholder="Select">
-                                    <Option value="Cereal - Ragi - Pearl Millet - Grade A">Cereal - Ragi - Pearl Millet - Grade A</Option>
-                                    <Option value="Cereal - Rice - Sona Masoori Raw - Grade B">Cereal - Rice - Sona Masoori Raw - Grade B</Option>
+                                    {getMasterProduceListOpts({masterProduceList})}
                                 </Select>
                             </Form.Item>
 

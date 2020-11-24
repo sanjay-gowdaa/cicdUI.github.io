@@ -28,7 +28,7 @@ const AddProduceModal = () => {
                 width={'90%'}
                 wrapClassName="add-produce-modal"
             >
-                <MasterList />
+                <MasterList setModalVisible={setModalVisible} />
             </Modal>
         </>
     )

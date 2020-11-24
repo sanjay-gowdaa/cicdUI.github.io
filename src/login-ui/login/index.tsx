@@ -21,12 +21,23 @@ const Login = (props: any) => {
 
     const onFinish = (values: any) => {
         const {phoneNum}: {phoneNum: string} = values;
+
+
         /* To be removed later start*/
         const {formData} = registrationState;
         const {username} = formData;
         /* To be removed later end*/
-        dispatch(updateUserDetails({phone: phoneNum, username, userId: '276327', userType: UserType.BUYER}));
-        history.push('/seller');
+        //dispatch(updateUserDetails({phone: phoneNum, username, userId: '276327', userType: UserType.BUYER}));
+
+        if (phoneNum === '12345') {
+            dispatch(updateUserDetails({phone: '12345', username: 'Naresh Gowda', userId: '276327', userType: UserType.SELLER}));
+            history.push('/seller');
+        } else if (phoneNum === '67890') {
+            dispatch(updateUserDetails({phone: '67890', username: 'Ramesh Guru', userId: '376337', userType: UserType.BUYER}));
+            history.push('/buyer');
+        } else {
+            
+        }
     };
 
     const onFinishFailed = (errorInfo: any) => {
