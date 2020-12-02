@@ -1,6 +1,8 @@
 export interface RegsitrationFormModel {
     username: string;
     phone: string;
+    email: string;
+    type: string;
 }
 
 export interface RegitrationFullFormModel extends RegsitrationFormModel {

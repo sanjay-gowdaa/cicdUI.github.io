@@ -1,18 +1,24 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Login from '../login-ui/login';
 import Register from '../login-ui/register';
 import UserHeader from '../header-profile';
 import { Popover, Button, Image } from 'antd';
+import { useDispatch } from 'react-redux';
 import Logo from '../static/assets/logo.jpg';
 import './header.scss';
+import { getConfigurations } from '../store/registrationReducer/actions';
 
 const UserBasicActions = ({ history}: { history: any }) => {
     const [loginPopupVisible, setLoginPopupVisible] = useState(false);
     const [signUpPopupVisible, setSignUpPopupVisible] = useState(false);
+    const dispatch = useDispatch();
+    useEffect(() => {
+        dispatch(getConfigurations())
+    }, [])
     return (
         <div className="display-flex-row align-center">
             <Popover
-                content={<Register history={history} />}
+                content={<Register history={history} setSignUpPopupVisible={setSignUpPopupVisible} />}
                 title={<h2>Register</h2>}
                 trigger="click"
                 visible={signUpPopupVisible}
