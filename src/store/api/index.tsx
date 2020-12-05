@@ -37,8 +37,12 @@ export const getAllConfigs = () => {
 
 /* Registration And Login Interface */
 export const registerUser = (userType: string, userFormData: any) => {
-    const registrationApi = `${BASE_URL}/${STAGE}/register?user_type=${userType}`
-    return fetch(registrationApi).then((response: any) => response.json())
+    const registrationApi = `${BASE_URL}/${STAGE}/register`
+    return fetch(registrationApi,
+        {
+            method: 'POST',
+            body: userFormData
+        }).then((response: any) => response.json())
 }
 
 /* Registration And Login Interface End*/

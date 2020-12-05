@@ -8,13 +8,13 @@ import store from './store';
 // import * as serviceWorker from './serviceWorker';
 
 ReactDOM.render(
-    <React.StrictMode>
+    <>
         <Router>
             <Provider store={store}>
                 <HomePageRoutes />
             </Provider>
         </Router>
-    </React.StrictMode>,
+    </>,
     document.getElementById('root'),
 );
 

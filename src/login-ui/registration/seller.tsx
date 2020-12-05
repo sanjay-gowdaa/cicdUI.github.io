@@ -37,7 +37,7 @@ const Seller = (props: any) => {
 
     const onConfirmRegister = () => {
         const userType = registrationState.entityType;
-        const multipartFormData = generateFormData(registerFormValues)
+        const multipartFormData = generateFormData({formSubmitValues: registerFormValues, userType, addressForPin})
         dispatch(updateForm(registerFormValues as any));
         dispatch(submitRegsiter(userType, multipartFormData));
         toggleShowConfirmation(!showConfirmation)
@@ -46,7 +46,7 @@ const Seller = (props: any) => {
     const onFinish = (values: any) => {
         console.log('Success:', values);
         setRegisterFormValues(values)
-        // history.push(home);
+        toggleShowConfirmation(!showConfirmation)
     };
 
     const onFinishFailed = (errorInfo: any) => {
@@ -102,15 +102,6 @@ const Seller = (props: any) => {
                                 wrapperCol={{ span: 12 }}
                                 label="Phone Number"
                                 name="phone"
-                            >
-                                <Input bordered={false} disabled={true} />
-                            </Form.Item>
-                            <Form.Item
-                                labelAlign='left'
-                                labelCol={{ span: 10 }}
-                                wrapperCol={{ span: 12 }}
-                                label="Email"
-                                name="email"
                             >
                                 <Input bordered={false} disabled={true} />
                             </Form.Item>

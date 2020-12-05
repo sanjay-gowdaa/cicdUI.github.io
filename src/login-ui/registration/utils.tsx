@@ -1,29 +1,61 @@
 import { RuleObject } from "antd/lib/form";
 import { getLocationByPin } from "../../store/api";
+import { PIN_6_DIGIT_MSG, PIN_NOT_FOUND, PIN_REQUIRED_MSG, UserTypes } from "../constants";
 
-const PIN_REQUIRED_MSG = 'Please input your pin code!';
-const PIN_6_DIGIT_MSG = 'Enter pincode of 6 characters!';
-const PIN_NOT_FOUND = 'Pincode not found';
+type generateFormDataProps = {
+    formSubmitValues: any,
+    userType: string,
+    addressForPin: string
+}
 
-export const generateFormData = (formSubmitValues: any) => {
+export const generateFormData = ({formSubmitValues, userType, addressForPin}: generateFormDataProps) => {
+    console.log('formData formSubmitValues', formSubmitValues)
+    const {bank_statement} = formSubmitValues;
     let formData = new FormData();
-    const registrationFormEntries = Object.entries(formSubmitValues);
-    registrationFormEntries.forEach((formEntity) => {
-        const entityKey = formEntity[0];
-        let entityValue: (any);
-        if (Array.isArray(formEntity[1])) {
-            const nestedFormValue = formEntity[1][0];
-            if (nestedFormValue.hasOwnProperty('originFileObj')) {
-                entityValue = nestedFormValue;
-            } else {
-                entityValue = formEntity[1];
-            }
-        } else {
-            entityValue = formEntity[1];
-        }
-        formData.append(entityKey, entityValue);
-    });
+    formData.append('bank_doc', bank_statement[0]);
+    delete formSubmitValues['bank_statement'];
+
+    if (userType === UserTypes.SELLER) {
+        const {} = formSubmitValues
+        formSubmitValues = {...formSubmitValues, isSeller: true}
+    } else {
+        const {aadhar_card, pan_card} = formSubmitValues
+        formData.append('id_doc', aadhar_card[0]);
+        formData.append('pan_doc', pan_card[0]);
+        delete formSubmitValues['aadhar_card'];
+        delete formSubmitValues['pan_card'];
+        formSubmitValues = {...formSubmitValues, isBuyer: true}
+    }
+    formSubmitValues = {...formSubmitValues, address_line_2: addressForPin};
+    console.log('formData formSubmitValues edited', formSubmitValues)
+    const actualUserReq = JSON.stringify(formSubmitValues)
+    formData.append('user_req', actualUserReq)
+    
+    // const registrationFormEntries = Object.entries(formSubmitValues);
+    // registrationFormEntries.forEach((formEntity) => {
+    //     const entityKey = formEntity[0];
+    //     let entityValue: (any);
+    //     if (Array.isArray(formEntity[1])) {
+    //         const nestedFormValue = formEntity[1][0];
+    //         if (nestedFormValue.hasOwnProperty('originFileObj')) {
+    //             entityValue = nestedFormValue;
+    //         } else {
+    //             entityValue = formEntity[1];
+    //         }
+    //     } else {
+    //         entityValue = formEntity[1];
+    //     }
+    //     formData.append(entityKey, entityValue);
+    // });
     return formData;
+
+
+    // id_doc
+    // bank_doc
+    // pan_doc
+    // isBuyer
+    // isSeller
+    // user_req
 }
 
 

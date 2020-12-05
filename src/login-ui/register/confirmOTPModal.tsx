@@ -17,7 +17,7 @@ const ConfirmOTPModal = ({showOTPModal, setShowOTPModal, currentType, history}: 
     useEffect(() => {
         if (otpError.verified) {
             setShowOTPModal(!showOTPModal)
-            history.push(`register/${currentType.toLocaleLowerCase()}`);
+            return history.push(`register/${currentType.toLocaleLowerCase()}`);
         }
       }, [otpError.verified])
 

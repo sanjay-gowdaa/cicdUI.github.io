@@ -13,8 +13,6 @@ const RegisterConfirmation = (props: propsModel) => {
         <>
             <Modal
                 visible={showConfirmation}
-                onOk={() => onConfirmRegister()}
-                onCancel={() => toggleShowConfirmation(!showConfirmation)}
                 centered
                 title={null}
                 footer={null}
@@ -24,10 +22,10 @@ const RegisterConfirmation = (props: propsModel) => {
                 <p>Submit your details for verification?</p>
                 <Row justify='end'>
                     <Col>
-                        <Button className='margin-l-r-1em'>
+                        <Button className='margin-l-r-1em' onClick={() => toggleShowConfirmation(!showConfirmation)}>
                             Cancel
                         </Button>
-                        <Button type="primary" className='margin-l-r-1em'>
+                        <Button type="primary" className='margin-l-r-1em' onClick={() => onConfirmRegister()}>
                             Yes
                         </Button>
                     </Col>

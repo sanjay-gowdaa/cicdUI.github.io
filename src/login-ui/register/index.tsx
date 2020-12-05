@@ -10,21 +10,10 @@ import {
 } from '../../store/registrationReducer/actions';
 import ConfirmOTPModal from './confirmOTPModal';
 import {uniqBy} from 'lodash';
+import { registerBasicFormMainLayout, registerBasicFormTailLayout, UserTypes } from '../constants';
 
 const { Option } = Select;
 const { Title } = Typography;
-const layout = {
-    labelCol: { span: 24 },
-    wrapperCol: { span: 24 },
-};
-const tailLayout = {
-    wrapperCol: { span: 24 },
-};
-
-enum UserTypes {
-    SELLER = 'Seller',
-    BUYER = 'Buyer'
-}
 
 const getUserTypeOption = (configs: [any], currentType: string) => {
         const filterUserTypeOptns = uniqBy(configs.filter(config => config.type === currentType), 'sub_type');
@@ -48,10 +37,10 @@ const Register = ({ history, setSignUpPopupVisible }: { history: any, setSignUpP
 
     const onFinish = (values: any) => {
         console.log('Success:', values);
-        const { username, phone, email, type } = values;
+        const { name, phone, email, type } = values;
         dispatch(sendOTP(`91${phone}`))
         dispatch(updateEntityType(currentType));
-        dispatch(updateBasicRegistrationData({ username, phone, email, type }));
+        dispatch(updateBasicRegistrationData({ name, phone, email, type }));
         setSignUpPopupVisible(false);
         setShowOTPModal(!showOTPModal)
     };
@@ -94,7 +83,7 @@ const Register = ({ history, setSignUpPopupVisible }: { history: any, setSignUpP
             </Row>
 
             <Form
-                {...layout}
+                {...registerBasicFormMainLayout}
                 name="basic"
                 className='register-basic-form'
                 initialValues={{}}
@@ -115,7 +104,7 @@ const Register = ({ history, setSignUpPopupVisible }: { history: any, setSignUpP
                 </Form.Item>
                 <Form.Item
                     label="Name"
-                    name="username"
+                    name="name"
                     rules={[{ required: true, message: 'Please input your username!' }]}
                 >
                     <Input />
@@ -134,14 +123,14 @@ const Register = ({ history, setSignUpPopupVisible }: { history: any, setSignUpP
                     <Form.Item
                         label="Email"
                         name="email"
-                        rules={[{ required: true, message: 'Please input your Email!' }]}
+                        rules={[{ required: currentType === UserTypes.BUYER, message: 'Please input your Email!' }]}
                     >
                         <Input />
                     </Form.Item> : null
                 }
 
                 <Form.Item
-                    {...tailLayout}
+                    {...registerBasicFormTailLayout}
                     name="remember"
                     valuePropName="checked"
                     rules={[{ required: true, message: 'Please accept the terms and conditions!' }]}
@@ -158,7 +147,7 @@ const Register = ({ history, setSignUpPopupVisible }: { history: any, setSignUpP
                     </Checkbox>
                 </Form.Item>
 
-                <Form.Item {...tailLayout}>
+                <Form.Item {...registerBasicFormTailLayout}>
                     <Button className="width-full" type="primary" htmlType="submit">
                         Submit
                     </Button>
