@@ -69,6 +69,7 @@ const Buyer = (props: any) => {
                 <Form
                     labelAlign='left'
                     form={form}
+                    colon={false}
                     {...singleLabelFieldLayout}
                     name="basic"
                     initialValues={
@@ -93,7 +94,6 @@ const Buyer = (props: any) => {
                             >
                                 <Input bordered={false} disabled={true} />
                             </Form.Item>
-
                             <Form.Item
                                 labelAlign='left'
                                 labelCol={{ span: 10 }}
@@ -112,7 +112,6 @@ const Buyer = (props: any) => {
                             >
                                 <Input bordered={false} disabled={true} />
                             </Form.Item>
-
                             <Form.Item
                                 labelAlign='left'
                                 labelCol={{ span: 10 }}
@@ -210,7 +209,6 @@ const Buyer = (props: any) => {
 
                     <h2>Working Hours*</h2>
                     <Row gutter={16} justify="start">
-                        
                         <Col sm={24} md={24} lg={12}>
                             <Form.Item 
                                 labelCol={{span: 6}}
@@ -365,6 +363,27 @@ const Buyer = (props: any) => {
                                 >
                                     <Button icon={<UploadOutlined />}>Upload Image</Button>
                                 </Upload>
+                            </Form.Item>
+                            <Form.Item
+                                label="UPI ID(optional)"
+                                name="upi_id"
+                            >
+                                <Input />
+                            </Form.Item>
+                        </Col>
+                    </Row>
+
+                    <Row gutter={16} justify="start">
+                        <Col sm={24} md={24} lg={12}>
+                            <Form.Item
+                                name="consent"
+                                valuePropName="checked"
+                                rules={[{ required: true, message: 'Please accept the terms and conditions!' }]}
+                            >
+                                <Checkbox>
+                                    I certify that the information submitted above is true and correct to the best of my knowledge. 
+                                    I further understand that any false statements may result in denial or revocation of the services
+                                </Checkbox>
                             </Form.Item>
                         </Col>
                     </Row>
