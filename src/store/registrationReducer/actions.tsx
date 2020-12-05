@@ -1,4 +1,4 @@
-import { sendOtp, getAllConfigs, verifyOtp } from '../api';
+import { sendOtp, getAllConfigs, verifyOtp, registerUser } from '../api';
 import { RegitrationFullFormModel, RegsitrationFormModel } from './types';
 
 export const UPDATE_FORM = 'UPDATE_FORM';
@@ -63,13 +63,13 @@ export const  getConfigurations = () => {
 
 export const sendOTP = (otpNumber: string) => {
     return async (dispatch: any, getState: any) => {
-        // sendOtp(otpNumber);
+        sendOtp(otpNumber);
     }
 }
 
-export const confirmOTP = (number: string, otp: number) => {
+export const confirmOTP = (number: string, otp: string) => {
     return async (dispatch: any, getState: any) => {
-        const verifyOtpResponse = await verifyOtp(number, otp);
+        const verifyOtpResponse = await verifyOtp(`91${number}`, otp);
         const {OTP_response = {}} = verifyOtpResponse || {}
         const {type = '', message} = OTP_response
         if (type === 'error') {
@@ -79,5 +79,12 @@ export const confirmOTP = (number: string, otp: number) => {
             dispatch(setOtpErrorFlag(false))
             dispatch(setOtpVerifiedFlag(true))
         }
+    }
+}
+
+export const submitRegsiter = (userType: string, userFormData: any) => {
+    return async(dispatch: any, getState: any) => {
+        const registerUserResponse = await registerUser(userType, userFormData)
+        console.log('registerUserResponse', registerUserResponse);
     }
 }

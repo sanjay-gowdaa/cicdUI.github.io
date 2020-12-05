@@ -1,5 +1,5 @@
-import React, {useState} from 'react';
-import { Modal, Typography, InputNumber, Row, Col, Button, Alert } from 'antd';
+import React, {useState, useEffect} from 'react';
+import { Modal, Typography, Input, Row, Col, Button, Alert } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import { confirmOTP } from '../../store/registrationReducer/actions';
 import { RootState } from '../../store/rootReducer';
@@ -7,12 +7,19 @@ import { RootState } from '../../store/rootReducer';
 const { Text } = Typography;
 const ConfirmOTPModal = ({showOTPModal, setShowOTPModal, currentType, history}: {showOTPModal: boolean, setShowOTPModal: Function, currentType: string, history: any}) => {
     const dispatch = useDispatch();
-    const [curOtp, setCurOtp] = useState(0)
+    const [curOtp, setCurOtp] = useState('')
 
-    const onOtpChange = (value: any): void => setCurOtp(value)
+    const onOtpChange = (event: any): void => setCurOtp(event.target.value)
     
     const registrationState = useSelector((state: RootState) => state.registration);
     const {otpError, formData} = registrationState;
+
+    useEffect(() => {
+        if (otpError.verified) {
+            setShowOTPModal(!showOTPModal)
+            history.push(`register/${currentType.toLocaleLowerCase()}`);
+        }
+      }, [otpError.verified])
 
     return (
         <Modal
@@ -32,7 +39,7 @@ const ConfirmOTPModal = ({showOTPModal, setShowOTPModal, currentType, history}: 
                     </Text>
                 </Col>
                 <Col>
-                    <InputNumber value={curOtp} placeholder="Enter 4 digit otp" onChange={onOtpChange} />
+                    <Input value={curOtp} placeholder="Enter 4 digit otp" onChange={onOtpChange} />
                 </Col>
             </Row>
             {
@@ -53,9 +60,8 @@ const ConfirmOTPModal = ({showOTPModal, setShowOTPModal, currentType, history}: 
                         type="primary" 
                         onClick={() => {
                             dispatch(confirmOTP( formData?.phone, curOtp))
-                            // setShowOTPModal(!showOTPModal)
-                            // history.push(`register/${currentType.toLocaleLowerCase()}`);
-                    }} >
+                        }}
+                    >
                         Proceed to profile verification
                     </Button>
                 </Col>

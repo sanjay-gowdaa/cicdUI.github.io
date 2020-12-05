@@ -4,9 +4,10 @@ import { Typography, Row, Col, Button } from 'antd';
 import landing_img from './static/assets/landing_img.jpg';
 import Footer from './footer';
 import './App.scss';
-import './static/styles/antd.css';
+// import './static/styles/antd.css';
+import 'antd/dist/antd.css';
 
-const { Title, Paragraph, Text, Link } = Typography;
+const { Title, Paragraph } = Typography;
 
 const App = (props: any) => {
     const { history } = props;

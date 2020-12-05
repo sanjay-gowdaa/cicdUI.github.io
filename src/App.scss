@@ -22,6 +22,10 @@
       align-items: center;
   }
 
+  &.align-flex-end {
+    align-items: flex-end;
+  }
+
   &.justify-content-space-bet {
       justify-content: space-between;
   }
@@ -41,6 +45,9 @@
   margin: unset !important;
 }
 
+.margin-b-2em {
+  margin-bottom: 2em;
+}
 
 .terms-and-conditions {
   margin: 0 0.3em;
