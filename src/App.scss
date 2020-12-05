@@ -1,3 +1,5 @@
+$col-shade-green: #12805C;
+
 .main-content {
   width: 100%;
   height: calc(100% - 70px);
@@ -74,4 +76,14 @@
 /* Color classes*/
 .col-white {
   color: white !important;
+}
+
+.color-green-shade {
+  border-color: $col-shade-green !important;
+  color: $col-shade-green !important;
+}
+
+.col-backgroud-green {
+  background-color: $col-shade-green !important;
+  border-color: $col-shade-green !important;
 }

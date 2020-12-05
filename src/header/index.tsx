@@ -18,21 +18,6 @@ const UserBasicActions = ({ history}: { history: any }) => {
     return (
         <div className="display-flex-row align-center">
             <Popover
-                content={<Register history={history} setSignUpPopupVisible={setSignUpPopupVisible} />}
-                title={<h2>Register</h2>}
-                trigger="click"
-                visible={signUpPopupVisible}
-                onVisibleChange={() => setSignUpPopupVisible(!signUpPopupVisible)}
-            >
-                <Button
-                    className="margin-l-r-1em vikas-btn-radius wid150"
-                    type="primary"
-                    size="large"
-                >
-                    Register
-                </Button>
-            </Popover>
-            <Popover
                 content={<Login history={history} />}
                 title={<h2>Login</h2>}
                 trigger="click"
@@ -41,6 +26,23 @@ const UserBasicActions = ({ history}: { history: any }) => {
             >
                 <Button className="vikas-btn-radius wid150" size="large">
                     Login
+                </Button>
+            </Popover>
+            <Popover
+                content={<Register history={history} setSignUpPopupVisible={setSignUpPopupVisible} />}
+                title={null}
+                trigger="click"
+                color='#F2F2F2'
+                overlayClassName='register-popup-container'
+                visible={signUpPopupVisible}
+                onVisibleChange={() => setSignUpPopupVisible(!signUpPopupVisible)}
+            >
+                <Button
+                    className="margin-l-r-1em vikas-btn-radius wid150 col-backgroud-green"
+                    type="primary"
+                    size="large"
+                >
+                    Register
                 </Button>
             </Popover>
         </div>

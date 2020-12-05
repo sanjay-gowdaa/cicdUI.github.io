@@ -24,7 +24,7 @@ const App = (props: any) => {
                         designers and developers difficulties and duplication and reduce the
                         efficiency of development. CI build test
                     </Paragraph>
-                    <Button className="vikas-btn-radius wid150" size="large" type="primary">
+                    <Button className="vikas-btn-radius wid150 col-backgroud-green" size="large" type="primary">
                         Register
                     </Button>
                 </Typography>

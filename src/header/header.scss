@@ -7,3 +7,15 @@
     height: 70px;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.16);
 }
+
+.register-popup-container {
+    .ant-popover-inner-content {
+        padding: 2em;
+    }
+
+    .register-basic-form {
+        .ant-form-item {
+            margin-bottom: 0.5em;
+        }
+    }
+}

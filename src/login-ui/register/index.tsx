@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { Form, Input, Button, Checkbox, Menu, Select, Row, Col } from 'antd';
+import React, { useState } from 'react';
+import { Form, Input, Button, Checkbox, Select, Row, Col, Typography, Divider } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../store/rootReducer';
 import {
@@ -12,6 +12,7 @@ import ConfirmOTPModal from './confirmOTPModal';
 import {uniqBy} from 'lodash';
 
 const { Option } = Select;
+const { Title } = Typography;
 const layout = {
     labelCol: { span: 24 },
     wrapperCol: { span: 24 },
@@ -19,6 +20,11 @@ const layout = {
 const tailLayout = {
     wrapperCol: { span: 24 },
 };
+
+enum UserTypes {
+    SELLER = 'Seller',
+    BUYER = 'Buyer'
+}
 
 const getUserTypeOption = (configs: [any], currentType: string) => {
         const filterUserTypeOptns = uniqBy(configs.filter(config => config.type === currentType), 'sub_type');
@@ -63,23 +69,24 @@ const Register = ({ history, setSignUpPopupVisible }: { history: any, setSignUpP
                 showOTPModal={showOTPModal}
                 currentType={currentType}
             />
-            
+            <Title level={4} type='secondary'>Please register to use Vikasbandhu services</Title>
+            <Divider />
             <p className=''>I am a</p>
             <Row gutter={16}>
                 <Col span={12}>
                     <Button 
-                        onClick={() => setUserType('Seller')} 
+                        onClick={() => setUserType(UserTypes.SELLER)} 
                         size={'large'} 
-                        className='width-full'
+                        className={`width-full ${currentType === UserTypes.SELLER ? 'color-green-shade' : null}`}
                     >
                         Seller
                     </Button>
                 </Col>
                 <Col span={12}>
                     <Button 
-                        onClick={() => setUserType('Buyer')} 
+                        onClick={() => setUserType(UserTypes.BUYER)} 
                         size={'large'} 
-                        className='width-full'
+                        className={`width-full ${currentType === UserTypes.BUYER ? 'color-green-shade' : null}`}
                     >
                         Buyer
                     </Button>
@@ -89,13 +96,18 @@ const Register = ({ history, setSignUpPopupVisible }: { history: any, setSignUpP
             <Form
                 {...layout}
                 name="basic"
+                className='register-basic-form'
                 initialValues={{}}
                 onFinish={onFinish}
                 onFinishFailed={onFinishFailed}
             >
-                <Form.Item name="type" label="Type" rules={[{ required: true }]}>
+                <Form.Item 
+                    name="type"
+                    label="Type"
+                    rules={[{ required: true, message: `Please select ${currentType} type` }]}
+                >
                     <Select
-                        placeholder="Select a option and change input text above"
+                        placeholder={`Select ${currentType} type`}
                         allowClear
                     >
                         {getUserTypeOption(registrationState.configs, currentType)}
@@ -117,13 +129,16 @@ const Register = ({ history, setSignUpPopupVisible }: { history: any, setSignUpP
                     <Input />
                 </Form.Item>
 
-                <Form.Item
-                    label="Email"
-                    name="email"
-                    rules={[{ required: true, message: 'Please input your Email!' }]}
-                >
-                    <Input />
-                </Form.Item>
+                {
+                    (currentType === UserTypes.BUYER) ? 
+                    <Form.Item
+                        label="Email"
+                        name="email"
+                        rules={[{ required: true, message: 'Please input your Email!' }]}
+                    >
+                        <Input />
+                    </Form.Item> : null
+                }
 
                 <Form.Item
                     {...tailLayout}
