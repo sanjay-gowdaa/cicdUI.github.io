@@ -1,20 +1,21 @@
-import React from 'react';
-import { Row, Col, Form, Input, Button, Divider, Select, Upload, message } from 'antd';
+import React, { useState } from 'react';
+import { Row, Col, Form, Input, Button, Divider, Select, Upload, message, Checkbox } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
 import { useSelector, useDispatch } from 'react-redux';
 import Header from '../../header';
-import './registration.scss';
 import { RootState } from '../../store/rootReducer';
-import { updateForm } from '../../store/registrationReducer/actions';
+import { submitRegsiter, updateForm } from '../../store/registrationReducer/actions';
 import { routesMap } from '../../constants';
+import { customPincodeValidator, generateFormData } from './utils';
+import RegisterConfirmation from './registerConfirmationModal';
+import './registration.scss';
+
 const { home } = routesMap;
+const { Option } = Select;
 
 const singleLabelFieldLayout = {
     labelCol: { span: 24 },
     wrapperCol: { span: 18 },
-};
-const tailLayout = {
-    wrapperCol: { offset: 8, span: 12 },
 };
 
 const normFile = (e: any) => {
@@ -22,19 +23,30 @@ const normFile = (e: any) => {
     if (Array.isArray(e)) {
         return e;
     }
-    return [e && e.fileList[0]];
+    return e && e.fileList;
 };
 
 const Seller = (props: any) => {
     const { history } = props;
+    const [addressForPin, setAddressForPin] = useState('')
+    const [registerFormValues, setRegisterFormValues] = useState({});
+    const [showConfirmation, toggleShowConfirmation] = useState(false);
     const [form] = Form.useForm();
     const dispatch = useDispatch();
     const registrationState = useSelector((state: RootState) => state.registration);
 
+    const onConfirmRegister = () => {
+        const userType = registrationState.entityType;
+        const multipartFormData = generateFormData(registerFormValues)
+        dispatch(updateForm(registerFormValues as any));
+        dispatch(submitRegsiter(userType, multipartFormData));
+        toggleShowConfirmation(!showConfirmation)
+    }
+
     const onFinish = (values: any) => {
         console.log('Success:', values);
-        dispatch(updateForm(values));
-        history.push(home);
+        setRegisterFormValues(values)
+        // history.push(home);
     };
 
     const onFinishFailed = (errorInfo: any) => {
@@ -42,32 +54,50 @@ const Seller = (props: any) => {
     };
 
     const onReset = () => history.push(home);
-
+    
     return (
         <React.Fragment>
+            <RegisterConfirmation
+                showConfirmation={showConfirmation}
+                onConfirmRegister={onConfirmRegister}
+                toggleShowConfirmation={toggleShowConfirmation}
+            />
             <Header />
             <div className="entity-details-container">
-                <h1>Profile Verification</h1>
+                <h1>Seller Profile Verification</h1>
                 <Divider />
                 <Form
+                    labelAlign='left'
                     form={form}
+                    colon={false}
                     {...singleLabelFieldLayout}
                     name="basic"
-                    initialValues={registrationState.formData}
+                    initialValues={{...registrationState.formData}}
                     onFinish={onFinish}
                     onFinishFailed={onFinishFailed}
                 >
-                    <Row gutter={24}>
-                        <Col span={6}>
+                    <Row gutter={16} justify="start">
+                        <Col sm={24} md={24} lg={12}>
                             <Form.Item
+                                labelAlign='left'
                                 labelCol={{ span: 10 }}
                                 wrapperCol={{ span: 12 }}
-                                label="Name"
+                                label="Buyer Type"
+                                name="type"
+                            >
+                                <Input bordered={false} disabled={true} />
+                            </Form.Item>
+                            <Form.Item
+                                labelAlign='left'
+                                labelCol={{ span: 10 }}
+                                wrapperCol={{ span: 12 }}
+                                label="Buyer Name"
                                 name="username"
                             >
                                 <Input bordered={false} disabled={true} />
                             </Form.Item>
                             <Form.Item
+                                labelAlign='left'
                                 labelCol={{ span: 10 }}
                                 wrapperCol={{ span: 12 }}
                                 label="Phone Number"
@@ -75,70 +105,119 @@ const Seller = (props: any) => {
                             >
                                 <Input bordered={false} disabled={true} />
                             </Form.Item>
+                            <Form.Item
+                                labelAlign='left'
+                                labelCol={{ span: 10 }}
+                                wrapperCol={{ span: 12 }}
+                                label="Email"
+                                name="email"
+                            >
+                                <Input bordered={false} disabled={true} />
+                            </Form.Item>
                         </Col>
                     </Row>
-                    <Row gutter={16} justify="space-around">
-                        <Col span={10}>
-                            <Form.Item
-                                label="OTP"
-                                name="otp"
-                                rules={[{ required: true, message: 'Please input the OTP!' }]}
+                    
+                    <Row gutter={16} justify="start">
+                        <Col sm={24} md={24} lg={12}>
+                            <Form.Item 
+                                labelCol={{span: 24}}
+                                wrapperCol={{span: 18}}
+                                label="PAN card Number" 
                             >
-                                <Input />
-                            </Form.Item>
-
-                            <Form.Item
-                                label="Password"
-                                name="password"
-                                rules={[{ required: true, message: 'Please input your password!' }]}
-                            >
-                                <Input.Password />
-                            </Form.Item>
-
-                            <Form.Item label="Email" name="email">
-                                <Input />
-                            </Form.Item>
-                        </Col>
-                        <Col span={10}>
-                            <Form.Item
-                                name="id_card"
-                                label="Upload ID Card"
-                                valuePropName="fileList"
-                                getValueFromEvent={normFile}
-                                rules={[{ required: true, message: 'Upload ID!' }]}
-                            >
-                                <Upload
-                                    beforeUpload={(file) => {
-                                        const isRequiredFileType =
-                                            file.type === 'application/pdf' ||
-                                            file.type === 'image/jpeg' ||
-                                            file.type === 'image/png';
-                                        if (!isRequiredFileType) {
-                                            message.error(
-                                                `${file.name} is not a PDF file or an Image file`,
-                                            );
-                                        }
-                                        return !isRequiredFileType;
-                                    }}
-                                    name="logo"
-                                    listType="text"
+                                <Form.Item
+                                    name="pan_card_number"
+                                    rules={[{ required: true, message: 'Please provide PAN!' }]}
+                                    style={{ display: 'inline-block', width: '60%' }}
                                 >
-                                    <Button icon={<UploadOutlined />}>Click to upload</Button>
-                                </Upload>
+                                    <Input />
+                                </Form.Item>
+                                <Form.Item
+                                    name="pan_card"
+                                    valuePropName="fileList"
+                                    getValueFromEvent={normFile}
+                                    rules={[{ required: true, message: 'Upload ID!' }]}
+                                    style={{ display: 'inline-block', width: '20%', margin: '0 1em' }}
+                                >
+                                    <Upload
+                                        beforeUpload={(file) => {
+                                            const isRequiredFileType =
+                                                file.type === 'image/jpeg' ||
+                                                file.type === 'image/png';
+                                            if (!isRequiredFileType) {
+                                                message.error(
+                                                    `${file.name} is not an Image file`,
+                                                );
+                                            }
+                                            return !isRequiredFileType;
+                                        }}
+                                        name="pan"
+                                        listType="text"
+                                    >
+                                        <Button icon={<UploadOutlined />}>Upload Image</Button>
+                                    </Upload>
+                                </Form.Item>
                             </Form.Item>
 
-                            <Form.Item
-                                label="Confirm Password"
-                                name="confirmPassword"
-                                rules={[{ required: true, message: 'Please input your password!' }]}
+                            <Form.Item 
+                                labelCol={{span: 24}}
+                                wrapperCol={{span: 18}}
+                                label='Aadhaar card Number'
                             >
-                                <Input.Password />
+                                <Form.Item
+                                    name="aadhar_card_number"
+                                    rules={[{ required: true, message: 'Please provide Aadhaar card Number!' }]}
+                                    style={{ display: 'inline-block', width: '60%' }}
+                                >
+                                    <Input />
+                                </Form.Item>
+                                <Form.Item
+                                    name="aadhar_card"
+                                    valuePropName="fileList"
+                                    getValueFromEvent={normFile}
+                                    rules={[{ required: true, message: 'Upload ID!' }]}
+                                    style={{ display: 'inline-block', width: '20%', margin: '0 1em' }}
+                                >
+                                    <Upload
+                                        beforeUpload={(file) => {
+                                            const isRequiredFileType =
+                                                file.type === 'image/jpeg' ||
+                                                file.type === 'image/png';
+                                            if (!isRequiredFileType) {
+                                                message.error(
+                                                    `${file.name} is not an Image file`,
+                                                );
+                                            }
+                                            return !isRequiredFileType;
+                                        }}
+                                        name="aadhar"
+                                        listType="text"
+                                    >
+                                        <Button icon={<UploadOutlined />}>Upload Image</Button>
+                                    </Upload>
+                                </Form.Item>
                             </Form.Item>
-                        </Col>
-                        <Col span={24}>
+                            
+                            <Form.Item
+                                label='Email (optional)'
+                                name='email'
+                            >
+                                <Input />
+                            </Form.Item>
                             <h2>Location Information</h2>
-                        </Col>
-                        <Col span={10}>
+                            <div className='display-flex-row align-flex-end'>
+                                <Form.Item
+                                    label="Pin Code"
+                                    name="pinCode"
+                                    rules={[
+                                        {
+                                            validator: (rule, value) => customPincodeValidator(rule, value, setAddressForPin) 
+                                        }
+                                    ]}
+                                >
+                                    <Input />
+                                </Form.Item>
+                                <p className='margin-b-2em'>{addressForPin}</p>
+                            </div>
                             <Form.Item
                                 label="Address"
                                 name="addressLine"
@@ -146,44 +225,128 @@ const Seller = (props: any) => {
                             >
                                 <Input />
                             </Form.Item>
-
-                            <Form.Item label="District" name="district">
-                                <Select placeholder="District">
-                                    <Select.Option value="bellary">Bellary</Select.Option>
-                                </Select>
-                            </Form.Item>
                         </Col>
-                        <Col span={10}>
+                    </Row>
+
+                    <h2>Bank Account Information</h2>
+                    <Row gutter={16} justify="start">
+                        <Col sm={24} md={24} lg={12}>
+                            <Row>
+                                <Col span={12}>
+                                    <Form.Item
+                                        label="Account Holder Name"
+                                        name="account_name"
+                                        rules={[{ required: true, message: 'Please input Account Holder Name!' }]}
+                                    >
+                                        <Input />
+                                    </Form.Item>
+                                </Col>
+                                <Col span={12}>
+                                    <Form.Item
+                                        label="IFSC Code"
+                                        name="ifsc_code"
+                                        rules={[{ required: true, message: 'Please input IFSC Code!' }]}
+                                    >
+                                        <Input />
+                                    </Form.Item>
+                                </Col>
+                                <Col span={12}>
+                                    <Form.Item
+                                        label="Account Number"
+                                        name="account_number"
+                                        rules={[{ required: true, message: 'Please input Account Number!' }]}
+                                    >
+                                        <Input />
+                                    </Form.Item>
+                                </Col>
+                                <Col span={12}>
+                                    <Form.Item
+                                        label="Confirm Account Number"
+                                        name="confirm_account_number"
+                                        rules={[{ required: true, message: 'Please Confirm Account Number!' }]}
+                                    >
+                                        <Input />
+                                    </Form.Item>
+                                </Col>
+                            </Row>
+                        </Col>
+                    </Row>
+                    
+                    <Row gutter={16} justify="start">
+                        <Col sm={24} md={24} lg={12}>
                             <Form.Item
-                                label="Pin Code"
-                                name="pinCode"
-                                rules={[{ required: true, message: 'Please input your pin code!' }]}
+                                labelCol={{span: 12}}
+                                wrapperCol={{span: 8}}
+                                name="bank_statement"
+                                label="Upload Bank Passbook or Statement"
+                                valuePropName="fileList"
+                                getValueFromEvent={normFile}
+                                rules={[{ required: true, message: 'Upload the statment!' }]}
+                            >
+                                <Upload
+                                    beforeUpload={(file) => {
+                                        const isRequiredFileType =
+                                            file.type === 'image/jpeg' ||
+                                            file.type === 'image/png';
+                                        if (!isRequiredFileType) {
+                                            message.error(
+                                                `${file.name} is not an Image file`,
+                                            );
+                                        }
+                                        return !isRequiredFileType;
+                                    }}
+                                    name="logo"
+                                    listType="text"
+                                >
+                                    <Button icon={<UploadOutlined />}>Upload Image</Button>
+                                </Upload>
+                            </Form.Item>
+                            <Form.Item
+                                label="UPI ID(optional)"
+                                name="upi_id"
                             >
                                 <Input />
-                            </Form.Item>
-
-                            <Form.Item label="Taluk" name="taluk">
-                                <Select placeholder="Taluk">
-                                    <Select.Option value="hospet">Hospet</Select.Option>
-                                </Select>
                             </Form.Item>
                         </Col>
                     </Row>
 
-                    <Row justify="center">
-                        <Col span={12}>
-                            <Form.Item {...tailLayout}>
-                                <Button
-                                    className="margin-l-r-1em"
-                                    htmlType="button"
-                                    onClick={onReset}
-                                >
-                                    Cancel
-                                </Button>
-                                <Button className="" type="primary" htmlType="submit">
-                                    Submit
-                                </Button>
+                    <Row gutter={16} justify="start">
+                        <Col sm={24} md={24} lg={12}>
+                            <Form.Item
+                                name="consent"
+                                valuePropName="checked"
+                                rules={[{ required: true, message: 'Please accept the terms and conditions!' }]}
+                            >
+                                <Checkbox>
+                                    I certify that the information submitted above is true and correct to the best of my knowledge. 
+                                    I further understand that any false statements may result in denial or revocation of the services
+                                </Checkbox>
                             </Form.Item>
+                        </Col>
+                    </Row>
+
+                    <Row gutter={16}>
+                        <Col sm={24} md={24} lg={12}>
+                            <Row gutter={32} justify='space-around'>
+                                <Col span={8}>
+                                    <Form.Item>
+                                        <Button
+                                            className="margin-l-r-1em width-full"
+                                            htmlType="button"
+                                            onClick={onReset}
+                                        >
+                                            Cancel
+                                        </Button>
+                                    </Form.Item>
+                                </Col>
+                                <Col span={8}>
+                                    <Form.Item>
+                                        <Button className="margin-l-r-1em width-full" type="primary" htmlType="submit">
+                                            Submit
+                                        </Button>
+                                    </Form.Item>
+                                </Col>
+                            </Row>
                         </Col>
                     </Row>
                 </Form>
