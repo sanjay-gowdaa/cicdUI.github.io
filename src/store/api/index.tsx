@@ -1,8 +1,9 @@
-const BASE_URL = 'https://l4dc780eyi.execute-api.ap-south-1.amazonaws.com/dev'
+const BASE_URL = 'https://enzdzh0pw2.execute-api.ap-south-1.amazonaws.com'
+const STAGE = 'dev'
 
 /* OTP Interface */
 export const sendOtp = (number: string) => {
-    const sendOtpApi = `${BASE_URL}/configurations/otp/send`
+    const sendOtpApi = `${BASE_URL}/${STAGE}/otp/send`
     const bodyParam = JSON.stringify({number});
     return fetch(sendOtpApi, {
         method: 'post',
@@ -11,7 +12,7 @@ export const sendOtp = (number: string) => {
 }
 
 export const verifyOtp = (number: string, otp: string) => {
-    const sendOtpApi = `${BASE_URL}/configurations/otp/verify`
+    const sendOtpApi = `${BASE_URL}/${STAGE}/otp/verify`
     const bodyParam = JSON.stringify({number, otp});
     return fetch(sendOtpApi, {
         method: 'post',
@@ -22,21 +23,21 @@ export const verifyOtp = (number: string, otp: string) => {
 
 /* Location interface */
 export const getLocationByPin = (pincode: string) => {
-    const locationByPinApi = `${BASE_URL}/location?pincode=${pincode}`
+    const locationByPinApi = `${BASE_URL}/${STAGE}/location?pincode=${pincode}`
     return fetch(locationByPinApi)
 }
 /* Location interface End */
 
 /* Configurations */
 export const getAllConfigs = () => {
-    const configurationApi = `${BASE_URL}/configurations?config=user_type`
+    const configurationApi = `${BASE_URL}/${STAGE}/config?config=user_type`
     return fetch(configurationApi).then((response: any) => response.json())
 }
 /* Configurations End */
 
 /* Registration And Login Interface */
 export const registerUser = (userType: string, userFormData: any) => {
-    const registrationApi = `${BASE_URL}/register?user_type=${userType}`
+    const registrationApi = `${BASE_URL}/${STAGE}/register?user_type=${userType}`
     return fetch(registrationApi).then((response: any) => response.json())
 }
 

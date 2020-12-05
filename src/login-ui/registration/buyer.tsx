@@ -126,62 +126,84 @@ const Buyer = (props: any) => {
                     
                     <Row gutter={16} justify="start">
                         <Col sm={24} md={24} lg={12}>
-                            <Form.Item
-                                labelCol={{span: 8}}
-                                wrapperCol={{span: 8}}
-                                name="pan_card"
-                                label="Upload Image"
-                                valuePropName="fileList"
-                                getValueFromEvent={normFile}
-                                rules={[{ required: true, message: 'Upload ID!' }]}
+                            <Form.Item 
+                                labelCol={{span: 24}}
+                                wrapperCol={{span: 18}}
+                                label="PAN card Number" 
                             >
-                                <Upload
-                                    beforeUpload={(file) => {
-                                        const isRequiredFileType =
-                                            file.type === 'image/jpeg' ||
-                                            file.type === 'image/png';
-                                        if (!isRequiredFileType) {
-                                            message.error(
-                                                `${file.name} is not an Image file`,
-                                            );
-                                        }
-                                        return !isRequiredFileType;
-                                    }}
-                                    name="pan"
-                                    listType="text"
+                                <Form.Item
+                                    name="pan_card_number"
+                                    rules={[{ required: true, message: 'Please provide PAN!' }]}
+                                    style={{ display: 'inline-block', width: '60%' }}
                                 >
-                                    <Button icon={<UploadOutlined />}>Upload Image</Button>
-                                </Upload>
+                                    <Input />
+                                </Form.Item>
+                                <Form.Item
+                                    name="pan_card"
+                                    valuePropName="fileList"
+                                    getValueFromEvent={normFile}
+                                    rules={[{ required: true, message: 'Upload ID!' }]}
+                                    style={{ display: 'inline-block', width: '20%', margin: '0 1em' }}
+                                >
+                                    <Upload
+                                        beforeUpload={(file) => {
+                                            const isRequiredFileType =
+                                                file.type === 'image/jpeg' ||
+                                                file.type === 'image/png';
+                                            if (!isRequiredFileType) {
+                                                message.error(
+                                                    `${file.name} is not an Image file`,
+                                                );
+                                            }
+                                            return !isRequiredFileType;
+                                        }}
+                                        name="pan"
+                                        listType="text"
+                                    >
+                                        <Button icon={<UploadOutlined />}>Upload Image</Button>
+                                    </Upload>
+                                </Form.Item>
                             </Form.Item>
 
-                            <Form.Item
-                                labelCol={{span: 8}}
-                                wrapperCol={{span: 8}}
-                                name="aadhar_card"
-                                label="Upload Image"
-                                valuePropName="fileList"
-                                getValueFromEvent={normFile}
-                                rules={[{ required: true, message: 'Upload ID!' }]}
+                            <Form.Item 
+                                labelCol={{span: 24}}
+                                wrapperCol={{span: 18}}
+                                label='Aadhaar card Number'
                             >
-                                <Upload
-                                    beforeUpload={(file) => {
-                                        const isRequiredFileType =
-                                            file.type === 'image/jpeg' ||
-                                            file.type === 'image/png';
-                                        if (!isRequiredFileType) {
-                                            message.error(
-                                                `${file.name} is not an Image file`,
-                                            );
-                                        }
-                                        return !isRequiredFileType;
-                                    }}
-                                    name="aadhar"
-                                    listType="text"
+                                <Form.Item
+                                    name="aadhar_card_number"
+                                    rules={[{ required: true, message: 'Please provide Aadhaar card Number!' }]}
+                                    style={{ display: 'inline-block', width: '60%' }}
                                 >
-                                    <Button icon={<UploadOutlined />}>Upload Image</Button>
-                                </Upload>
+                                    <Input />
+                                </Form.Item>
+                                <Form.Item
+                                    name="aadhar_card"
+                                    valuePropName="fileList"
+                                    getValueFromEvent={normFile}
+                                    rules={[{ required: true, message: 'Upload ID!' }]}
+                                    style={{ display: 'inline-block', width: '20%', margin: '0 1em' }}
+                                >
+                                    <Upload
+                                        beforeUpload={(file) => {
+                                            const isRequiredFileType =
+                                                file.type === 'image/jpeg' ||
+                                                file.type === 'image/png';
+                                            if (!isRequiredFileType) {
+                                                message.error(
+                                                    `${file.name} is not an Image file`,
+                                                );
+                                            }
+                                            return !isRequiredFileType;
+                                        }}
+                                        name="aadhar"
+                                        listType="text"
+                                    >
+                                        <Button icon={<UploadOutlined />}>Upload Image</Button>
+                                    </Upload>
+                                </Form.Item>
                             </Form.Item>
-                            
+
                             <h2>Location Information</h2>
                             <div className='display-flex-row align-flex-end'>
                                 <Form.Item
