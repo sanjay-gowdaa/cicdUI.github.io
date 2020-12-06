@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Row, Col, Form, Input, Button, Divider, Select, Upload, message, Checkbox } from 'antd';
+import { Row, Col, Form, Input, Button, Divider, Select, Upload, message, Checkbox, Radio } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
 import { useSelector, useDispatch } from 'react-redux';
 import Header from '../../header';
@@ -7,11 +7,12 @@ import { RootState } from '../../store/rootReducer';
 import { submitRegsiter, updateForm } from '../../store/registrationReducer/actions';
 import { routesMap } from '../../constants';
 import { customPincodeValidator, generateFormData } from './utils';
+import DocumentsUploadComponents from './formComponents/documentsUpload';
 import RegisterConfirmation from './registerConfirmationModal';
+import RequestSubmittedPopup from './requestSubmittedPopup';
 import './registration.scss';
 
 const { home } = routesMap;
-const { Option } = Select;
 
 const singleLabelFieldLayout = {
     labelCol: { span: 24 },
@@ -31,16 +32,19 @@ const Seller = (props: any) => {
     const [addressForPin, setAddressForPin] = useState('')
     const [registerFormValues, setRegisterFormValues] = useState({});
     const [showConfirmation, toggleShowConfirmation] = useState(false);
+    const [showSubmitMsgPopup, toggleShowSubmitMsgPopup] = useState(false);
     const [form] = Form.useForm();
     const dispatch = useDispatch();
     const registrationState = useSelector((state: RootState) => state.registration);
+    const {entityType, formData: partialUserData} = registrationState;
+    const {type: subType} = partialUserData || {}
 
     const onConfirmRegister = () => {
-        const userType = registrationState.entityType;
-        const multipartFormData = generateFormData({formSubmitValues: registerFormValues, userType, addressForPin})
+        const multipartFormData = generateFormData({formSubmitValues: registerFormValues, userType: entityType, addressForPin})
         dispatch(updateForm(registerFormValues as any));
-        dispatch(submitRegsiter(userType, multipartFormData));
+        dispatch(submitRegsiter(entityType, multipartFormData));
         toggleShowConfirmation(!showConfirmation)
+        toggleShowSubmitMsgPopup(!showSubmitMsgPopup)
     }
 
     const onFinish = (values: any) => {
@@ -62,6 +66,7 @@ const Seller = (props: any) => {
                 onConfirmRegister={onConfirmRegister}
                 toggleShowConfirmation={toggleShowConfirmation}
             />
+            <RequestSubmittedPopup history={history} showSubmitMsgPopup={showSubmitMsgPopup} />
             <Header />
             <div className="entity-details-container">
                 <h1>Seller Profile Verification</h1>
@@ -82,7 +87,7 @@ const Seller = (props: any) => {
                                 labelAlign='left'
                                 labelCol={{ span: 10 }}
                                 wrapperCol={{ span: 12 }}
-                                label="Buyer Type"
+                                label="Seller Type"
                                 name="type"
                             >
                                 <Input bordered={false} disabled={true} />
@@ -91,8 +96,8 @@ const Seller = (props: any) => {
                                 labelAlign='left'
                                 labelCol={{ span: 10 }}
                                 wrapperCol={{ span: 12 }}
-                                label="Buyer Name"
-                                name="username"
+                                label="Seller Name"
+                                name="name"
                             >
                                 <Input bordered={false} disabled={true} />
                             </Form.Item>
@@ -101,7 +106,7 @@ const Seller = (props: any) => {
                                 labelCol={{ span: 10 }}
                                 wrapperCol={{ span: 12 }}
                                 label="Phone Number"
-                                name="phone"
+                                name="number"
                             >
                                 <Input bordered={false} disabled={true} />
                             </Form.Item>
@@ -110,83 +115,10 @@ const Seller = (props: any) => {
                     
                     <Row gutter={16} justify="start">
                         <Col sm={24} md={24} lg={12}>
-                            <Form.Item 
-                                labelCol={{span: 24}}
-                                wrapperCol={{span: 18}}
-                                label="PAN card Number" 
-                            >
-                                <Form.Item
-                                    name="pan_card_number"
-                                    rules={[{ required: true, message: 'Please provide PAN!' }]}
-                                    style={{ display: 'inline-block', width: '60%' }}
-                                >
-                                    <Input />
-                                </Form.Item>
-                                <Form.Item
-                                    name="pan_card"
-                                    valuePropName="fileList"
-                                    getValueFromEvent={normFile}
-                                    rules={[{ required: true, message: 'Upload ID!' }]}
-                                    style={{ display: 'inline-block', width: '20%', margin: '0 1em' }}
-                                >
-                                    <Upload
-                                        beforeUpload={(file) => {
-                                            const isRequiredFileType =
-                                                file.type === 'image/jpeg' ||
-                                                file.type === 'image/png';
-                                            if (!isRequiredFileType) {
-                                                message.error(
-                                                    `${file.name} is not an Image file`,
-                                                );
-                                            }
-                                            return !isRequiredFileType;
-                                        }}
-                                        name="pan"
-                                        listType="text"
-                                    >
-                                        <Button icon={<UploadOutlined />}>Upload Image</Button>
-                                    </Upload>
-                                </Form.Item>
-                            </Form.Item>
+                            <DocumentsUploadComponents subType={subType} userType={entityType} documents_list={registrationState.configs} />
 
-                            <Form.Item 
-                                labelCol={{span: 24}}
-                                wrapperCol={{span: 18}}
-                                label='Aadhaar card Number'
-                            >
-                                <Form.Item
-                                    name="aadhar_card_number"
-                                    rules={[{ required: true, message: 'Please provide Aadhaar card Number!' }]}
-                                    style={{ display: 'inline-block', width: '60%' }}
-                                >
-                                    <Input />
-                                </Form.Item>
-                                <Form.Item
-                                    name="aadhar_card"
-                                    valuePropName="fileList"
-                                    getValueFromEvent={normFile}
-                                    rules={[{ required: true, message: 'Upload ID!' }]}
-                                    style={{ display: 'inline-block', width: '20%', margin: '0 1em' }}
-                                >
-                                    <Upload
-                                        beforeUpload={(file) => {
-                                            const isRequiredFileType =
-                                                file.type === 'image/jpeg' ||
-                                                file.type === 'image/png';
-                                            if (!isRequiredFileType) {
-                                                message.error(
-                                                    `${file.name} is not an Image file`,
-                                                );
-                                            }
-                                            return !isRequiredFileType;
-                                        }}
-                                        name="aadhar"
-                                        listType="text"
-                                    >
-                                        <Button icon={<UploadOutlined />}>Upload Image</Button>
-                                    </Upload>
-                                </Form.Item>
-                            </Form.Item>
+                            {/* For testing purpose comment above line and uncomment below */}
+                            {/* <DocumentsUploadComponents subType={'Institution'} userType={'Seller'} documents_list={registrationState.configs} /> */}
                             
                             <Form.Item
                                 label='Email (optional)'
@@ -198,7 +130,7 @@ const Seller = (props: any) => {
                             <div className='display-flex-row align-flex-end'>
                                 <Form.Item
                                     label="Pin Code"
-                                    name="pinCode"
+                                    name="zip"
                                     rules={[
                                         {
                                             validator: (rule, value) => customPincodeValidator(rule, value, setAddressForPin) 
@@ -211,7 +143,7 @@ const Seller = (props: any) => {
                             </div>
                             <Form.Item
                                 label="Address"
-                                name="addressLine"
+                                name="address1"
                                 rules={[{ required: true, message: 'Please input your Address!' }]}
                             >
                                 <Input />

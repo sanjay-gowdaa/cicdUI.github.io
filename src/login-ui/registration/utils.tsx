@@ -9,53 +9,38 @@ type generateFormDataProps = {
 }
 
 export const generateFormData = ({formSubmitValues, userType, addressForPin}: generateFormDataProps) => {
-    console.log('formData formSubmitValues', formSubmitValues)
     const {bank_statement} = formSubmitValues;
     let formData = new FormData();
-    formData.append('bank_doc', bank_statement[0]);
+    formData.append('bank_doc', bank_statement[0].originFileObj);
     delete formSubmitValues['bank_statement'];
 
     if (userType === UserTypes.SELLER) {
-        const {} = formSubmitValues
+    // For testing uncomment below line and comment above line   
+    // if (false) {
+        const {id_doc} = formSubmitValues
+        formData.append('id_doc', id_doc[0].originFileObj);
+        delete formSubmitValues['id_doc'];
         formSubmitValues = {...formSubmitValues, isSeller: true}
     } else {
-        const {aadhar_card, pan_card} = formSubmitValues
-        formData.append('id_doc', aadhar_card[0]);
-        formData.append('pan_doc', pan_card[0]);
+        const {aadhar_card, pan_card, weekday, saturday, sunday} = formSubmitValues
+        const workingHoursData = {...{weekday, saturday, sunday}}
+        formData.append('uidai_doc', aadhar_card[0].originFileObj);
+        formData.append('pan_doc', pan_card[0].originFileObj);
+        /* To be refactored */
         delete formSubmitValues['aadhar_card'];
         delete formSubmitValues['pan_card'];
-        formSubmitValues = {...formSubmitValues, isBuyer: true}
+        delete formSubmitValues['weekday']
+        delete formSubmitValues['saturday']
+        delete formSubmitValues['sunday']
+        /* To be refactored end */
+        formSubmitValues = {...formSubmitValues, working_hours: workingHoursData, isBuyer: true}
+        /* For testing purpose uncomment below line and comment above line */
+        // formSubmitValues = {...formSubmitValues, working_hours: workingHoursData, isBuyer: true, number: '9036565202', email: 'a', name: 'a', type: 'a'}
     }
-    formSubmitValues = {...formSubmitValues, address_line_2: addressForPin};
-    console.log('formData formSubmitValues edited', formSubmitValues)
+    formSubmitValues = {...formSubmitValues, address2: addressForPin};
     const actualUserReq = JSON.stringify(formSubmitValues)
     formData.append('user_req', actualUserReq)
-    
-    // const registrationFormEntries = Object.entries(formSubmitValues);
-    // registrationFormEntries.forEach((formEntity) => {
-    //     const entityKey = formEntity[0];
-    //     let entityValue: (any);
-    //     if (Array.isArray(formEntity[1])) {
-    //         const nestedFormValue = formEntity[1][0];
-    //         if (nestedFormValue.hasOwnProperty('originFileObj')) {
-    //             entityValue = nestedFormValue;
-    //         } else {
-    //             entityValue = formEntity[1];
-    //         }
-    //     } else {
-    //         entityValue = formEntity[1];
-    //     }
-    //     formData.append(entityKey, entityValue);
-    // });
     return formData;
-
-
-    // id_doc
-    // bank_doc
-    // pan_doc
-    // isBuyer
-    // isSeller
-    // user_req
 }
 
 
@@ -82,5 +67,3 @@ export const customPincodeValidator = (rule: RuleObject, value: any, setAddressF
         })
     }
 }
-
-// file.type === 'application/pdf' ||

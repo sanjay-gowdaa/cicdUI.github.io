@@ -15,3 +15,21 @@ export enum UserTypes {
     SELLER = 'Seller',
     BUYER = 'Buyer'
 }
+
+export const workingHours = [{
+    name: '9am_to_9pm',
+    label: '9am to 9pm'
+},
+{
+    name: '9am_to_5pm',
+    label: '9am to 5pm'
+},
+{
+    name: 'holiday',
+    label: 'Holiday'
+},
+{
+    name: 'all_day',
+    label: 'All Day',
+    disabled: true
+}]

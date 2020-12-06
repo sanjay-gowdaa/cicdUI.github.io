@@ -8,6 +8,7 @@ import { submitRegsiter, updateForm } from '../../store/registrationReducer/acti
 import { routesMap } from '../../constants';
 import { customPincodeValidator, generateFormData } from './utils';
 import RegisterConfirmation from './registerConfirmationModal';
+import { workingHours } from '../constants';
 import './registration.scss';
 
 const { home } = routesMap;
@@ -17,6 +18,19 @@ const singleLabelFieldLayout = {
     labelCol: { span: 24 },
     wrapperCol: { span: 18 },
 };
+
+const getWorkingHoursOptions = () => {
+    return (
+        workingHours.map((curOption) => {
+            const {name, label, disabled} = curOption;
+            return (
+                <Option disabled={disabled} value={name}>{label}</Option>
+            )
+        }
+        )
+    )
+}
+
 
 const normFile = (e: any) => {
     console.log('Upload event:', e);
@@ -31,6 +45,8 @@ const Buyer = (props: any) => {
     const [addressForPin, setAddressForPin] = useState('')
     const [registerFormValues, setRegisterFormValues] = useState({});
     const [showConfirmation, toggleShowConfirmation] = useState(false);
+    const [workHoursDisbaled, toggleWorkHoursDisbaled] = useState({weekday: false, saturday: false, sunday: false} as any);
+
     const [form] = Form.useForm();
     const dispatch = useDispatch();
     const registrationState = useSelector((state: RootState) => state.registration);
@@ -52,6 +68,19 @@ const Buyer = (props: any) => {
     const onFinishFailed = (errorInfo: any) => {
         console.log('Failed:', errorInfo);
     };
+
+    const onChangeAllDay = (e: any, relatedEntity: string) => {
+        const {checked} = e.target || {}
+        if (checked) {
+            form.setFieldsValue({[relatedEntity]: 'all_day'});
+        } else {
+            form.setFieldsValue({[relatedEntity]: '9am_to_5pm'});
+        }
+        const updatedWorkHoursStatus = {...workHoursDisbaled, [relatedEntity]: !workHoursDisbaled[relatedEntity]}
+        toggleWorkHoursDisbaled(updatedWorkHoursStatus);
+    }
+
+    const checkIfDisabled = (fieldName: string) => workHoursDisbaled[fieldName];
 
     const onReset = () => history.push(home);
     
@@ -77,7 +106,7 @@ const Buyer = (props: any) => {
                             ...registrationState.formData,
                             saturday: '9am_to_5pm',
                             sunday: 'holiday',
-                            monday_to_friday: '9am_to_9pm'
+                            weekday: '9am_to_9pm'
                         }
                     }
                     onFinish={onFinish}
@@ -132,7 +161,7 @@ const Buyer = (props: any) => {
                                 label="PAN card Number" 
                             >
                                 <Form.Item
-                                    name="pan_card_number"
+                                    name="pan"
                                     rules={[{ required: true, message: 'Please provide PAN!' }]}
                                     style={{ display: 'inline-block', width: '60%' }}
                                 >
@@ -171,7 +200,7 @@ const Buyer = (props: any) => {
                                 label='Aadhaar card Number'
                             >
                                 <Form.Item
-                                    name="aadhar_card_number"
+                                    name="uidai"
                                     rules={[{ required: true, message: 'Please provide Aadhaar card Number!' }]}
                                     style={{ display: 'inline-block', width: '60%' }}
                                 >
@@ -240,21 +269,22 @@ const Buyer = (props: any) => {
                                 <Form.Item 
                                     wrapperCol={{span: 10}}
                                     noStyle
-                                    name="monday_to_friday"
+                                    name="weekday"
                                     rules={[{ required: true }]}
                                 >
-                                    <Select style={{ width: '50%' }} placeholder="Please Select">
-                                        <Option value="9am_to_9pm">9am to 9pm</Option>
+                                    <Select
+                                        disabled={checkIfDisabled('weekday')}
+                                        style={{ width: '50%' }}
+                                        placeholder="Please Select">
+                                        { getWorkingHoursOptions() }
                                     </Select>
                                 </Form.Item>
                                 <Form.Item 
                                     wrapperCol={{span: 10}}
                                     noStyle
-                                    name="monday_to_friday_all_day"
                                     valuePropName='checked'
-                                    
                                 >
-                                    <Checkbox className='full-time-checkbox'> 24 hours </Checkbox>
+                                    <Checkbox onChange={(e) => onChangeAllDay(e, 'weekday')} className='full-time-checkbox'> 24 hours </Checkbox>
                                 </Form.Item>
                             </Form.Item>
 
@@ -269,18 +299,20 @@ const Buyer = (props: any) => {
                                     name="saturday"
                                     rules={[{ required: true }]}
                                 >
-                                    <Select style={{ width: '50%' }} placeholder="Please Select">
-                                        <Option value="9am_to_5pm">9am to 5pm</Option>
+                                    <Select
+                                        disabled={checkIfDisabled('saturday')}
+                                        style={{ width: '50%' }}
+                                        placeholder="Please Select">
+                                        { getWorkingHoursOptions() }
                                     </Select>
                                 </Form.Item>
                                 <Form.Item 
                                     wrapperCol={{span: 10}}
                                     noStyle
-                                    name="saturday_all_day"
                                     valuePropName='checked'
                                     
                                 >
-                                    <Checkbox className='full-time-checkbox'> 24 hours </Checkbox>
+                                    <Checkbox onChange={(e) => onChangeAllDay(e, 'saturday')} className='full-time-checkbox'> 24 hours </Checkbox>
                                 </Form.Item>
                             </Form.Item>
 
@@ -296,18 +328,20 @@ const Buyer = (props: any) => {
                                     name="sunday"
                                     rules={[{ required: true }]}
                                 >
-                                    <Select style={{ width: '50%' }} placeholder="Please Select">
-                                        <Option value="holiday">Holiday</Option>
+                                    <Select
+                                        disabled={checkIfDisabled('sunday')}
+                                        style={{ width: '50%' }}
+                                        placeholder="Please Select">
+                                        { getWorkingHoursOptions() }
                                     </Select>
                                 </Form.Item>
                                 <Form.Item 
                                     wrapperCol={{span: 10}}
                                     noStyle
-                                    name="sunday_all_day"
                                     valuePropName='checked'
                                     
                                 >
-                                    <Checkbox className='full-time-checkbox'> 24 hours </Checkbox>
+                                    <Checkbox onChange={(e) => onChangeAllDay(e, 'sunday')} className='full-time-checkbox'> 24 hours </Checkbox>
                                 </Form.Item>
                             </Form.Item>
                         </Col>

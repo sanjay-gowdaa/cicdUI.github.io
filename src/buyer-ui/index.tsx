@@ -3,7 +3,6 @@ import { Divider, Typography } from 'antd';
 import { useDispatch } from 'react-redux';
 
 import { updatePartialUserDetails } from '../store/loginReducer/actions';
-import { UserType } from '../store/loginReducer/types';
 
 import Header from '../header';
 import Footer from '../footer';

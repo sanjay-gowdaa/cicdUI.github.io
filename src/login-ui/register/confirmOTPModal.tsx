@@ -59,7 +59,7 @@ const ConfirmOTPModal = ({showOTPModal, setShowOTPModal, currentType, history}: 
                     <Button 
                         type="primary" 
                         onClick={() => {
-                            dispatch(confirmOTP( formData?.phone, curOtp))
+                            dispatch(confirmOTP( formData?.number, curOtp))
                         }}
                     >
                         Proceed to profile verification

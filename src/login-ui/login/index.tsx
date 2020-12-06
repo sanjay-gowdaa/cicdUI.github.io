@@ -3,7 +3,7 @@ import { Form, Input, Button, Checkbox } from 'antd';
 import { RootState } from '../../store/rootReducer';
 import { useSelector, useDispatch } from 'react-redux';
 import { updateUserDetails } from '../../store/loginReducer/actions';
-import { UserType } from '../../store/loginReducer/types';
+import { UserTypes } from '../constants';
 
 const layout = {
     labelCol: { span: 24 },
@@ -30,10 +30,10 @@ const Login = (props: any) => {
         //dispatch(updateUserDetails({phone: phoneNum, username, userId: '276327', userType: UserType.BUYER}));
 
         if (phoneNum === '12345') {
-            dispatch(updateUserDetails({phone: '12345', username: 'Naresh Gowda', userId: '276327', userType: UserType.SELLER}));
+            dispatch(updateUserDetails({number: '12345', username: 'Naresh Gowda', userId: '276327', userType: UserTypes.SELLER}));
             history.push('/seller');
         } else if (phoneNum === '67890') {
-            dispatch(updateUserDetails({phone: '67890', username: 'Ramesh Guru', userId: '376337', userType: UserType.BUYER}));
+            dispatch(updateUserDetails({number: '67890', username: 'Ramesh Guru', userId: '376337', userType: UserTypes.BUYER}));
             history.push('/buyer');
         } else {
             

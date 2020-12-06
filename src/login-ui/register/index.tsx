@@ -37,10 +37,10 @@ const Register = ({ history, setSignUpPopupVisible }: { history: any, setSignUpP
 
     const onFinish = (values: any) => {
         console.log('Success:', values);
-        const { name, phone, email, type } = values;
-        dispatch(sendOTP(`91${phone}`))
+        const { name, number, email, type } = values;
+        dispatch(sendOTP(`91${number}`))
         dispatch(updateEntityType(currentType));
-        dispatch(updateBasicRegistrationData({ name, phone, email, type }));
+        dispatch(updateBasicRegistrationData({ name, number, email, type }));
         setSignUpPopupVisible(false);
         setShowOTPModal(!showOTPModal)
     };
@@ -112,7 +112,7 @@ const Register = ({ history, setSignUpPopupVisible }: { history: any, setSignUpP
 
                 <Form.Item
                     label="Phone Number"
-                    name="phone"
+                    name="number"
                     rules={[{ required: true, message: 'Please input your Phone number!' }]}
                 >
                     <Input />

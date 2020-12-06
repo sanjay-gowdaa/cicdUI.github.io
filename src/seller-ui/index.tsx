@@ -11,7 +11,6 @@ import { Divider } from 'antd';
 import Footer from '../footer';
 import './seller.scss';
 import { updatePartialUserDetails } from '../store/loginReducer/actions';
-import { UserType } from '../store/loginReducer/types';
 
 const SellerUi = (props: any) => {
     const { history } = props;

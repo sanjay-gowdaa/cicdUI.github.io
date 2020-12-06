@@ -1,4 +1,5 @@
 import { sendOtp, getAllConfigs, verifyOtp, registerUser } from '../api';
+import { ResponseStatus } from '../genericTypes';
 import { RegitrationFullFormModel, RegsitrationFormModel } from './types';
 
 export const UPDATE_FORM = 'UPDATE_FORM';
@@ -8,6 +9,8 @@ export const UPDATE_CONFIGURATIONS = 'UPDATE_CONFIGURATIONS';
 export const SET_OTP_ERROR_MSG = 'SET_OTP_ERROR_MSG'
 export const SET_OTP_ERROR_FLAG = 'SET_OTP_ERROR_FLAG'
 export const SET_OTP_VERIFIED_FLAG = 'SET_OTP_VERIFIED_FLAG'
+export const SET_REGISTER_ERROR_MSG = 'SET_REGISTER_ERROR_MSG'
+export const SET_REGISTER_VERIFIED_FLAG = 'SET_REGISTER_VERIFIED_FLAG'
 
 export const updateForm = (formData: RegitrationFullFormModel) => {
     return {
@@ -51,6 +54,20 @@ export const setOtpVerifiedFlag = (verifiedFlag: boolean) => {
     }
 }
 
+export const setRegisterMsg = (errorMsg: string) => {
+    return {
+        type: SET_REGISTER_ERROR_MSG,
+        payload: errorMsg
+    }
+}
+
+export const setResgiterVerifiedFlag = (verifiedFlag: boolean) => {
+    return {
+        type: SET_REGISTER_VERIFIED_FLAG,
+        payload: verifiedFlag
+    }
+}
+
 export const  getConfigurations = () => {
     return async (dispatch: any, getState: any) => {
         const allConfigs = await getAllConfigs()
@@ -72,10 +89,10 @@ export const confirmOTP = (number: string, otp: string) => {
         const verifyOtpResponse = await verifyOtp(`91${number}`, otp);
         const {OTPResp = {}} = verifyOtpResponse || {}
         const {type = '', message} = OTPResp
-        if (type === 'error') {
+        if (type === ResponseStatus.ERROR) {
             dispatch(setOtpErrorFlag(true))
             dispatch(setOtpErrorMsg(message))
-        } else if (type === 'success') {
+        } else if (type === ResponseStatus.SUCCESS) {
             dispatch(setOtpErrorFlag(false))
             dispatch(setOtpVerifiedFlag(true))
         }
@@ -84,7 +101,15 @@ export const confirmOTP = (number: string, otp: string) => {
 
 export const submitRegsiter = (userType: string, userFormData: any) => {
     return async(dispatch: any, getState: any) => {
-        const registerUserResponse = await registerUser(userType, userFormData)
+        const registerUserResponse = await registerUser(userType, userFormData);
+        const {result} = registerUserResponse || {}
+        const {status = '', message} = result
         console.log('registerUserResponse', registerUserResponse);
+        dispatch(setRegisterMsg(message))
+        if (status === ResponseStatus.SUCCESS) {
+            dispatch(setResgiterVerifiedFlag(true))
+        } else {
+            dispatch(setResgiterVerifiedFlag(false))
+        }
     }
 }

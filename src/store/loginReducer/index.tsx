@@ -1,11 +1,12 @@
+import { UserTypes } from '../../login-ui/constants';
 import { UPDATE_USER, UPDATE_PARTIAL_USER } from './actions';
-import { UserDetailsModel, UserType } from './types';
+import { UserDetailsModel } from './types';
 
 const INITIAL_STATE: UserDetailsModel = {
     username: '',
-    phone: '',
+    number: '',
     userId: '',
-    userType: UserType.BUYER
+    userType: UserTypes.BUYER
 };
 
 const reducer = (state = INITIAL_STATE, action: any) => {

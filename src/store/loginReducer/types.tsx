@@ -1,12 +1,9 @@
-export enum UserType {
-    BUYER = 'Buyer',
-    SELLER = 'Seller'
-}
+import { UserTypes } from "../../login-ui/constants";
 
 export interface UserDetailsModel {
     username: string;
-    phone: string;
+    number: string;
     userId: string;
-    userType: UserType
+    userType: UserTypes
 }
 

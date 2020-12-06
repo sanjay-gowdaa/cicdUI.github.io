@@ -1,6 +1,6 @@
 export interface RegsitrationFormModel {
     name: string;
-    phone: string;
+    number: string;
     email: string;
     type: string;
 }
