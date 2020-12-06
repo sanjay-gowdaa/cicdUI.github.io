@@ -4,7 +4,7 @@ import { UploadOutlined } from '@ant-design/icons';
 import { useSelector, useDispatch } from 'react-redux';
 import Header from '../../header';
 import { RootState } from '../../store/rootReducer';
-import { submitRegsiter, updateForm } from '../../store/registrationReducer/actions';
+import { setRegisterMsg, setResgiterVerifiedFlag, submitRegsiter, updateForm } from '../../store/registrationReducer/actions';
 import { routesMap } from '../../constants';
 import { customPincodeValidator, generateFormData } from './utils';
 import DocumentsUploadComponents from './formComponents/documentsUpload';
@@ -36,15 +36,19 @@ const Seller = (props: any) => {
     const [form] = Form.useForm();
     const dispatch = useDispatch();
     const registrationState = useSelector((state: RootState) => state.registration);
-    const {entityType, formData: partialUserData} = registrationState;
+    const {entityType, formData: partialUserData, registerResponse} = registrationState;
     const {type: subType} = partialUserData || {}
 
     const onConfirmRegister = () => {
         const multipartFormData = generateFormData({formSubmitValues: registerFormValues, userType: entityType, addressForPin})
         dispatch(updateForm(registerFormValues as any));
         dispatch(submitRegsiter(entityType, multipartFormData));
-        toggleShowConfirmation(!showConfirmation)
-        toggleShowSubmitMsgPopup(!showSubmitMsgPopup)
+        if (registrationState.registerResponse.verified) {
+            dispatch(setRegisterMsg(''))
+            dispatch(setResgiterVerifiedFlag(false))
+            toggleShowConfirmation(!showConfirmation)
+            toggleShowSubmitMsgPopup(!showSubmitMsgPopup)
+        }
     }
 
     const onFinish = (values: any) => {
@@ -62,6 +66,7 @@ const Seller = (props: any) => {
     return (
         <React.Fragment>
             <RegisterConfirmation
+                registerResponse={registerResponse}
                 showConfirmation={showConfirmation}
                 onConfirmRegister={onConfirmRegister}
                 toggleShowConfirmation={toggleShowConfirmation}

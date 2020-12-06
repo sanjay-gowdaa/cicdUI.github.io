@@ -4,12 +4,13 @@ import { UploadOutlined } from '@ant-design/icons';
 import { useSelector, useDispatch } from 'react-redux';
 import Header from '../../header';
 import { RootState } from '../../store/rootReducer';
-import { submitRegsiter, updateForm } from '../../store/registrationReducer/actions';
+import { setRegisterMsg, setResgiterVerifiedFlag, submitRegsiter, updateForm } from '../../store/registrationReducer/actions';
 import { routesMap } from '../../constants';
 import { customPincodeValidator, generateFormData } from './utils';
 import RegisterConfirmation from './registerConfirmationModal';
 import { workingHours } from '../constants';
 import './registration.scss';
+import RequestSubmittedPopup from './requestSubmittedPopup';
 
 const { home } = routesMap;
 const { Option } = Select;
@@ -45,6 +46,7 @@ const Buyer = (props: any) => {
     const [addressForPin, setAddressForPin] = useState('')
     const [registerFormValues, setRegisterFormValues] = useState({});
     const [showConfirmation, toggleShowConfirmation] = useState(false);
+    const [showSubmitMsgPopup, toggleShowSubmitMsgPopup] = useState(false);
     const [workHoursDisbaled, toggleWorkHoursDisbaled] = useState({weekday: false, saturday: false, sunday: false} as any);
 
     const [form] = Form.useForm();
@@ -56,7 +58,12 @@ const Buyer = (props: any) => {
         const multipartFormData = generateFormData({formSubmitValues: registerFormValues, userType, addressForPin})
         dispatch(updateForm(registerFormValues as any));
         dispatch(submitRegsiter(userType, multipartFormData));
-        toggleShowConfirmation(!showConfirmation)
+        if (registrationState.registerResponse.verified) {
+            dispatch(setRegisterMsg(''))
+            dispatch(setResgiterVerifiedFlag(false))
+            toggleShowConfirmation(!showConfirmation)
+            toggleShowSubmitMsgPopup(!showSubmitMsgPopup)
+        }
     }
 
     const onFinish = (values: any) => {
@@ -87,10 +94,12 @@ const Buyer = (props: any) => {
     return (
         <React.Fragment>
             <RegisterConfirmation
+                registerResponse={registrationState.registerResponse}
                 showConfirmation={showConfirmation}
                 onConfirmRegister={onConfirmRegister}
                 toggleShowConfirmation={toggleShowConfirmation}
             />
+            <RequestSubmittedPopup history={history} showSubmitMsgPopup={showSubmitMsgPopup} />
             <Header />
             <div className="entity-details-container">
                 <h1>Buyer Profile Verification</h1>
