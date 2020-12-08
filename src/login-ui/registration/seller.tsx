@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Row, Col, Form, Input, Button, Divider, Select, Upload, message, Checkbox, Radio } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
 import { useSelector, useDispatch } from 'react-redux';
@@ -39,16 +39,25 @@ const Seller = (props: any) => {
     const {entityType, formData: partialUserData, registerResponse} = registrationState;
     const {type: subType} = partialUserData || {}
 
-    const onConfirmRegister = () => {
-        const multipartFormData = generateFormData({formSubmitValues: registerFormValues, userType: entityType, addressForPin})
-        dispatch(updateForm(registerFormValues as any));
-        dispatch(submitRegsiter(entityType, multipartFormData));
-        if (registrationState.registerResponse.verified) {
+    useEffect(() => {
+        if(registerResponse.verified) {
             dispatch(setRegisterMsg(''))
             dispatch(setResgiterVerifiedFlag(false))
             toggleShowConfirmation(!showConfirmation)
             toggleShowSubmitMsgPopup(!showSubmitMsgPopup)
         }
+    }, [registerResponse.verified])
+
+    const onConfirmRegister = () => {
+        const multipartFormData = generateFormData({formSubmitValues: registerFormValues, userType: entityType, addressForPin})
+        dispatch(updateForm(registerFormValues as any));
+        dispatch(submitRegsiter(entityType, multipartFormData));
+        // if (registrationState.registerResponse.verified) {
+        //     dispatch(setRegisterMsg(''))
+        //     dispatch(setResgiterVerifiedFlag(false))
+        //     toggleShowConfirmation(!showConfirmation)
+        //     toggleShowSubmitMsgPopup(!showSubmitMsgPopup)
+        // }
     }
 
     const onFinish = (values: any) => {
@@ -122,7 +131,7 @@ const Seller = (props: any) => {
                         <Col sm={24} md={24} lg={12}>
                             <DocumentsUploadComponents subType={subType} userType={entityType} documents_list={registrationState.configs} />
 
-                            {/* For testing purpose comment above line and uncomment below */}
+                            {/* For testing purpose comment above line and uncomment below *farmer**/}
                             {/* <DocumentsUploadComponents subType={'Institution'} userType={'Seller'} documents_list={registrationState.configs} /> */}
                             
                             <Form.Item
