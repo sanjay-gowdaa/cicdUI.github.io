@@ -68,9 +68,9 @@ const mockConfig = [
 const INITIAL_STATE = {
     entityType: '',
     formData: {},
-    // configs: [],
+    configs: [],
     /* For testing uncomment below and comment above */
-    configs: mockConfig,
+    //configs: mockConfig,
     otpError: {showError: false, errorMg: '', verified: false},
     registerResponse: {errorMg: '', verified: false}
 };

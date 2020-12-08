@@ -4,13 +4,12 @@ import { UploadOutlined } from '@ant-design/icons';
 import { useSelector, useDispatch } from 'react-redux';
 import Header from '../../header';
 import { RootState } from '../../store/rootReducer';
-import { setRegisterMsg, setResgiterVerifiedFlag, submitRegsiter, updateForm } from '../../store/registrationReducer/actions';
+import { resetOtpState, setRegisterMsg, setResgiterVerifiedFlag, submitRegsiter, updateForm } from '../../store/registrationReducer/actions';
 import { routesMap } from '../../constants';
 import { customPincodeValidator, generateFormData } from './utils';
 import DocumentsUploadComponents from './formComponents/documentsUpload';
 import RegisterConfirmation from './registerConfirmationModal';
 import RequestSubmittedPopup from './requestSubmittedPopup';
-import './registration.scss';
 
 const { home } = routesMap;
 
@@ -52,12 +51,6 @@ const Seller = (props: any) => {
         const multipartFormData = generateFormData({formSubmitValues: registerFormValues, userType: entityType, addressForPin})
         dispatch(updateForm(registerFormValues as any));
         dispatch(submitRegsiter(entityType, multipartFormData));
-        // if (registrationState.registerResponse.verified) {
-        //     dispatch(setRegisterMsg(''))
-        //     dispatch(setResgiterVerifiedFlag(false))
-        //     toggleShowConfirmation(!showConfirmation)
-        //     toggleShowSubmitMsgPopup(!showSubmitMsgPopup)
-        // }
     }
 
     const onFinish = (values: any) => {
@@ -70,7 +63,10 @@ const Seller = (props: any) => {
         console.log('Failed:', errorInfo);
     };
 
-    const onReset = () => history.push(home);
+    const onReset = () => {
+        dispatch(resetOtpState())
+        history.push(home);
+    }
     
     return (
         <React.Fragment>

@@ -84,6 +84,14 @@ export const sendOTP = (otpNumber: string) => {
     }
 }
 
+export const resetOtpState = () => {
+    return (dispatch: any) => {
+        dispatch(setOtpErrorMsg(''))
+        dispatch(setOtpErrorFlag(false))
+        dispatch(setOtpVerifiedFlag(false))
+    }
+}
+
 export const confirmOTP = (number: string, otp: string) => {
     return async (dispatch: any, getState: any) => {
         const verifyOtpResponse = await verifyOtp(`91${number}`, otp);

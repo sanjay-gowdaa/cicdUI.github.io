@@ -4,12 +4,11 @@ import { UploadOutlined } from '@ant-design/icons';
 import { useSelector, useDispatch } from 'react-redux';
 import Header from '../../header';
 import { RootState } from '../../store/rootReducer';
-import { setRegisterMsg, setResgiterVerifiedFlag, submitRegsiter, updateForm } from '../../store/registrationReducer/actions';
+import { resetOtpState, setRegisterMsg, setResgiterVerifiedFlag, submitRegsiter, updateForm } from '../../store/registrationReducer/actions';
 import { routesMap } from '../../constants';
 import { customPincodeValidator, generateFormData } from './utils';
 import RegisterConfirmation from './registerConfirmationModal';
 import { workingHours } from '../constants';
-import './registration.scss';
 import RequestSubmittedPopup from './requestSubmittedPopup';
 
 const { home } = routesMap;
@@ -66,9 +65,6 @@ const Buyer = (props: any) => {
         const multipartFormData = generateFormData({formSubmitValues: registerFormValues, userType, addressForPin})
         dispatch(updateForm(registerFormValues as any));
         dispatch(submitRegsiter(userType, multipartFormData));
-        // if (registrationState.registerResponse.verified) {
-
-        // }
     }
 
     const onFinish = (values: any) => {
@@ -94,7 +90,10 @@ const Buyer = (props: any) => {
 
     const checkIfDisabled = (fieldName: string) => workHoursDisbaled[fieldName];
 
-    const onReset = () => history.push(home);
+    const onReset = () => {
+        dispatch(resetOtpState())
+        history.push(home);
+    }
     
     return (
         <React.Fragment>

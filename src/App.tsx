@@ -1,16 +1,22 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import Header from './header';
-import { Typography, Row, Col, Button } from 'antd';
+import { Typography, Button } from 'antd';
+import { useDispatch } from 'react-redux';
 import landing_img from './static/assets/landing_img.jpg';
 import Footer from './footer';
+import { getConfigurations } from './store/registrationReducer/actions';
 import './App.scss';
-// import './static/styles/antd.css';
 import 'antd/dist/antd.css';
 
 const { Title, Paragraph } = Typography;
 
 const App = (props: any) => {
     const { history } = props;
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        dispatch(getConfigurations())
+    }, [])
     return (
         <div className="app-container">
             <Header history={history} showActions={true} />
