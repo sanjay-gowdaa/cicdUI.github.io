@@ -4,6 +4,7 @@ export interface UserDetailsModel {
     username: string;
     number: string;
     userId: string;
-    userType: UserTypes
+    userType: UserTypes;
+    accessToken: string;
 }
 

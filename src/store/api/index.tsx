@@ -45,4 +45,8 @@ export const registerUser = (userType: string, userFormData: any) => {
         }).then((response: any) => response.json())
 }
 
+export const getAccessToken = (userCode: string) => {
+    return fetch(`/something?code=${userCode}`).then((response: any) => response.json())
+}
+
 /* Registration And Login Interface End*/

@@ -6,7 +6,8 @@ const INITIAL_STATE: UserDetailsModel = {
     username: '',
     number: '',
     userId: '',
-    userType: UserTypes.BUYER
+    userType: UserTypes.BUYER,
+    accessToken: ''
 };
 
 const reducer = (state = INITIAL_STATE, action: any) => {
