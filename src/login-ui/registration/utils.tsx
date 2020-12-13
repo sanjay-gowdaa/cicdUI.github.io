@@ -1,6 +1,7 @@
 import { RuleObject } from "antd/lib/form";
 import { getLocationByPin } from "../../store/api";
-import { PIN_6_DIGIT_MSG, PIN_NOT_FOUND, PIN_REQUIRED_MSG, UserTypes } from "../constants";
+import { UserTypes } from "../../store/genericTypes";
+import { PIN_6_DIGIT_MSG, PIN_NOT_FOUND, PIN_REQUIRED_MSG } from "../constants";
 
 type generateFormDataProps = {
     formSubmitValues: any,

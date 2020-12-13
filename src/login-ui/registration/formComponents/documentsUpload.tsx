@@ -2,7 +2,7 @@ import React from 'react';
 import { Form, Radio, Input, Upload, Button, message } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
 import {filter} from 'lodash';
-import { UserTypes } from '../../constants';
+import { UserTypes } from '../../../store/genericTypes';
 
 type documentFormPropsModel = {
     userType: string;

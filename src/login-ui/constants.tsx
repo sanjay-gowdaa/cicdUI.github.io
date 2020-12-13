@@ -11,11 +11,6 @@ export const registerBasicFormTailLayout = {
     wrapperCol: { span: 24 },
 };
 
-export enum UserTypes {
-    SELLER = 'Seller',
-    BUYER = 'Buyer'
-}
-
 export const workingHours = [{
     name: '9am_to_9pm',
     label: '9am to 9pm'

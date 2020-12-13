@@ -3,6 +3,8 @@ import { useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { Spin, Alert } from 'antd';
 import { getAccessTokenAndFetchUserDetails } from '../store/loginReducer/actions';
+import { RootState } from '../store/rootReducer';
+import { UserStateModel } from '../store/loginReducer/types';
 
 function useQuery() {
     return new URLSearchParams(useLocation().search);
@@ -10,6 +12,8 @@ function useQuery() {
 
 const ValidateUserAuthentication = (props: any) => {
     const {history} = props
+    const loginState: UserStateModel = useSelector((state: RootState) => state.loginUser);
+    const {signInState} = loginState
     const dispatch = useDispatch();
     let query = useQuery();
 
@@ -17,15 +21,21 @@ const ValidateUserAuthentication = (props: any) => {
         const accessCode = query.get("code") || '';
         dispatch(getAccessTokenAndFetchUserDetails(accessCode))
     }, [])
-    
+
+    useEffect(() => {
+        if(signInState.isVerified) {
+            history.push('/buyer');
+        }
+    }, [signInState.isVerified])
+
     return (
-        <Spin>
+        <Spin spinning={!signInState.hasError}>
             <Alert
                 className='text-align-center'
                 banner
-                message="Please wait while we are validating the user"
-                description="Please wait while we are validating the user."
-                type="info"
+                message={signInState.hasError ? signInState.msg : 'Please wait while we are validating the user'}
+                description={signInState.hasError ? signInState.msg : 'Please wait while we are validating the user'}
+                type={ signInState.hasError ? 'error': 'info'}
             />
         </Spin>
     )

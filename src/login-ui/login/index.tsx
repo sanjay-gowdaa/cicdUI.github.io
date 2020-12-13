@@ -3,7 +3,7 @@ import { Form, Input, Button, Checkbox } from 'antd';
 import { RootState } from '../../store/rootReducer';
 import { useSelector, useDispatch } from 'react-redux';
 import { updateUserDetails } from '../../store/loginReducer/actions';
-import { UserTypes } from '../constants';
+import { UserTypes } from '../../store/genericTypes';
 
 const layout = {
     labelCol: { span: 24 },

@@ -46,7 +46,22 @@ export const registerUser = (userType: string, userFormData: any) => {
 }
 
 export const getAccessToken = (userCode: string) => {
-    return fetch(`/something?code=${userCode}`).then((response: any) => response.json())
+    const accessTokenApi = `${BASE_URL}/${STAGE}/token`
+    const accessTokenParam = JSON.stringify({
+        'code': userCode,
+        'redirectURL': `https://localhost:3000/`
+        // 'redirectURL': `${BASE_URL}/login-user`
+    })
+    return fetch(accessTokenApi, {
+        method: 'POST',
+        body: accessTokenParam
+    }).then((response: any) => response.json())
+}
+
+export const fetchUserDetails = (userAccessToken: string) => {
+    return fetch(`/user`, {
+        body: userAccessToken
+    }).then((response: any) => response.json())
 }
 
 /* Registration And Login Interface End*/
