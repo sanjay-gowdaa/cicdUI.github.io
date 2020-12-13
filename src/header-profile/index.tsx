@@ -11,8 +11,8 @@ const UserHeader = () => {
 
     return (
       <div className='display-flex-row align-center'>
-          <Title level={4} className='margin-unset'>{loginState.username}</Title>
-          <p className='margin-unset'>Seller Id: {loginState.userId}</p>
+          <Title level={4} className='margin-unset'>{loginState.name}</Title>
+          {/* <p className='margin-unset'>Seller Id: {loginState.userId}</p> */}
       </div>
 
     )

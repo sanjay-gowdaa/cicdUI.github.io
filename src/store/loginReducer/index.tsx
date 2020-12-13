@@ -1,13 +1,10 @@
 
-import { UserTypes } from '../genericTypes';
 import { SET_ACCESS_TOKEN, SET_LOGIN_ERROR, SET_LOGIN_SUCCESS, UPDATE_USER } from './actions';
 import { UserStateModel } from './types';
 
 const INITIAL_STATE: UserStateModel = {
-    username: '',
-    number: '',
-    userId: '',
-    userType: UserTypes.BUYER,
+    userName: '',
+    name: '',
     accessToken: '',
     signInState: {hasError: false, isVerified: false, msg: ''}
 };

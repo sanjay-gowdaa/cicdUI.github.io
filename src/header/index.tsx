@@ -3,6 +3,8 @@ import Register from '../login-ui/register';
 import UserHeader from '../header-profile';
 import { Popover, Button, Image } from 'antd';
 import Logo from '../static/assets/logo.jpg';
+import { LOGIN_URL } from '../store/api';
+
 import './header.scss';
 
 const UserBasicActions = ({ history}: { history: any }) => {
@@ -11,7 +13,7 @@ const UserBasicActions = ({ history}: { history: any }) => {
     return (
         <div className="display-flex-row align-center">
             <Button 
-                onClick={() => window.location.href = 'https://vbui.auth.ap-south-1.amazoncognito.com/login?client_id=7sckhhjs2aq1noqd1fvjdeo69j&response_type=code&redirect_uri=https://localhost:3000/'} 
+                onClick={() => window.location.href = LOGIN_URL} 
                 className="vikas-btn-radius wid150" 
                 size="large"
             >

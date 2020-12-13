@@ -5,6 +5,9 @@ import { Spin, Alert } from 'antd';
 import { getAccessTokenAndFetchUserDetails } from '../store/loginReducer/actions';
 import { RootState } from '../store/rootReducer';
 import { UserStateModel } from '../store/loginReducer/types';
+import { routesMap } from '../constants';
+
+const { buyer_ui, seller_ui } = routesMap
 
 function useQuery() {
     return new URLSearchParams(useLocation().search);
@@ -13,7 +16,7 @@ function useQuery() {
 const ValidateUserAuthentication = (props: any) => {
     const {history} = props
     const loginState: UserStateModel = useSelector((state: RootState) => state.loginUser);
-    const {signInState} = loginState
+    const {signInState, is_seller, is_buyer} = loginState
     const dispatch = useDispatch();
     let query = useQuery();
 
@@ -24,7 +27,11 @@ const ValidateUserAuthentication = (props: any) => {
 
     useEffect(() => {
         if(signInState.isVerified) {
-            history.push('/buyer');
+            if (is_seller) {
+                history.push(seller_ui);
+            } else if (is_buyer) {
+                history.push(buyer_ui);   
+            }
         }
     }, [signInState.isVerified])
 

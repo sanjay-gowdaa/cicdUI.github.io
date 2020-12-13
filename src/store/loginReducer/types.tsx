@@ -1,11 +1,10 @@
 import { UserTypes } from "../genericTypes";
 
 export interface UserDetailsModel {
-    username: string;
-    number: string;
-    userId: string;
-    userType: UserTypes;
-    
+    userName: string;
+    is_buyer?: boolean;
+    is_seller?: boolean;
+    name: string;
 }
 
 export interface UserStateModel extends UserDetailsModel {
