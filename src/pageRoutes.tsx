@@ -4,6 +4,7 @@ import Home from './App';
 import RegisterBuyer from './login-ui/registration';
 import SellerUI from './seller-ui/';
 import BuyerUI from './buyer-ui';
+import ValidateUserAuthentication from './validateUserAuthentication';
 import { routesMap } from './constants';
 const { home, register_entity, seller_ui, buyer_ui } = routesMap;
 
@@ -14,6 +15,7 @@ const HomePageRoutes = () => {
             <Route path={register_entity} component={RegisterBuyer} />
             <Route path={seller_ui} component={SellerUI} />
             <Route path={buyer_ui} component={BuyerUI} />
+            <Route path={'/login-user'} component={ValidateUserAuthentication} />
         </Switch>
     );
 };

@@ -1,24 +1,28 @@
-import { UserTypes } from '../../login-ui/constants';
-import { UPDATE_USER, UPDATE_PARTIAL_USER } from './actions';
-import { UserDetailsModel } from './types';
 
-const INITIAL_STATE: UserDetailsModel = {
-    username: '',
-    number: '',
-    userId: '',
-    userType: UserTypes.BUYER
+import { SET_ACCESS_TOKEN, SET_LOGIN_ERROR, SET_LOGIN_SUCCESS, UPDATE_USER } from './actions';
+import { UserStateModel } from './types';
+
+const INITIAL_STATE: UserStateModel = {
+    userName: '',
+    name: '',
+    accessToken: '',
+    signInState: {hasError: false, isVerified: false, msg: ''}
 };
 
 const reducer = (state = INITIAL_STATE, action: any) => {
     switch (action.type) {
         case UPDATE_USER:
-            const {username, userId, phone, type} = action.payload
-            return { ...state, username, userId, phone, userType: type };
+            return { ...state, ...action.payload };
+        
+        case SET_ACCESS_TOKEN:
+            return { ...state, accessToken: action.payload };
 
-        case UPDATE_PARTIAL_USER:
-            const data = action.payload
-            return { ...state, ...data };
-    
+        case SET_LOGIN_ERROR:
+            return { ...state, signInState: { hasError: true, msg: action.payload, isVerified: false } };
+
+        case SET_LOGIN_SUCCESS:
+            return { ...state, signInState: { hasError: false, msg: '', isVerified: true } };
+
         default:
             return state;
     }

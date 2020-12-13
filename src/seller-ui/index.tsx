@@ -10,16 +10,9 @@ import TransactionSection from './transactions';
 import { Divider } from 'antd';
 import Footer from '../footer';
 import './seller.scss';
-import { updatePartialUserDetails } from '../store/loginReducer/actions';
 
 const SellerUi = (props: any) => {
     const { history } = props;
-    const dispatch = useDispatch();
-
-    useEffect(() => {
-        // dispatch(updatePartialUserDetails({ username: 'Naresh Gowda', userId: '276327', userType: UserType.SELLER}));
-      }, []);
-
     return (
         <div className="seller-ui-app">
             <Header history={history} showActions isLoggedIn />

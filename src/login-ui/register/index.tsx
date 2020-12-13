@@ -3,14 +3,14 @@ import { Form, Input, Button, Checkbox, Select, Row, Col, Typography, Divider } 
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../store/rootReducer';
 import {
-    getConfigurations,
     sendOTP,
     updateBasicRegistrationData,
     updateEntityType,
 } from '../../store/registrationReducer/actions';
 import ConfirmOTPModal from './confirmOTPModal';
 import {uniqBy} from 'lodash';
-import { registerBasicFormMainLayout, registerBasicFormTailLayout, UserTypes } from '../constants';
+import { registerBasicFormMainLayout, registerBasicFormTailLayout } from '../constants';
+import { UserTypes } from '../../store/genericTypes';
 
 const { Option } = Select;
 const { Title } = Typography;
