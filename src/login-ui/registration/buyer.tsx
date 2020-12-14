@@ -37,7 +37,6 @@ const normFile = (e: any) => {
     if (Array.isArray(e)) {
         return e;
     }
-    // e.fileList.filter((file: any) => !!file.status)
     return e && e.fileList.filter((file: any) => !!file.status);
 };
 
@@ -426,7 +425,7 @@ const Buyer = (props: any) => {
                                                 `${file.name} is not an Image file`,
                                             );
                                         }
-                                        return !isRequiredFileType;
+                                        return isRequiredFileType;
                                     }}
                                     name="logo"
                                     listType="text"

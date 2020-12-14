@@ -67,7 +67,7 @@ const SellerDocuments = (props: {documents_list: Array<any>, subType: string}) =
                                 `${file.name} is not an Image file`,
                             );
                         }
-                        return !isRequiredFileType;
+                        return isRequiredFileType;
                     }}
                     name="pan"
                     listType="text"
