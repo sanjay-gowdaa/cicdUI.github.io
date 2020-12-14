@@ -33,11 +33,12 @@ const getWorkingHoursOptions = () => {
 
 
 const normFile = (e: any) => {
-    console.log('Upload event:', e);
+    console.log('Upload event:', e.fileList);
     if (Array.isArray(e)) {
         return e;
     }
-    return e && e.fileList;
+    // e.fileList.filter((file: any) => !!file.status)
+    return e && e.fileList.filter((file: any) => !!file.status);
 };
 
 const Buyer = (props: any) => {
@@ -197,7 +198,7 @@ const Buyer = (props: any) => {
                                                     `${file.name} is not an Image file`,
                                                 );
                                             }
-                                            return !isRequiredFileType;
+                                            return isRequiredFileType;
                                         }}
                                         name="pan"
                                         listType="text"
@@ -236,7 +237,7 @@ const Buyer = (props: any) => {
                                                     `${file.name} is not an Image file`,
                                                 );
                                             }
-                                            return !isRequiredFileType;
+                                            return isRequiredFileType;
                                         }}
                                         name="aadhar"
                                         listType="text"
