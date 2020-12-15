@@ -58,16 +58,18 @@ const SellerDocuments = (props: {documents_list: Array<any>, subType: string}) =
                 style={{ display: 'inline-block', width: '20%', margin: '0 1em' }}
             >
                 <Upload
+                    accept="image/*"
                     beforeUpload={(file) => {
-                        const isRequiredFileType =
-                            file.type === 'image/jpeg' ||
-                            file.type === 'image/png';
-                        if (!isRequiredFileType) {
-                            message.error(
-                                `${file.name} is not an Image file`,
-                            );
-                        }
-                        return isRequiredFileType;
+                        // const isRequiredFileType =
+                        //     file.type === 'image/jpeg' ||
+                        //     file.type === 'image/png';
+                        // if (!isRequiredFileType) {
+                        //     message.error(
+                        //         `${file.name} is not an Image file`,
+                        //     );
+                        // }
+                        // return isRequiredFileType;
+                        return false;
                     }}
                     name="pan"
                     listType="text"

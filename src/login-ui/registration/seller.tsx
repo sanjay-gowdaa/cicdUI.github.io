@@ -23,7 +23,8 @@ const normFile = (e: any) => {
     if (Array.isArray(e)) {
         return e;
     }
-    return e && e.fileList.filter((file: any) => !!file.status);
+    // return e && e.fileList.filter((file: any) => !!file.status);
+    return e && e.fileList;
 };
 
 const Seller = (props: any) => {
@@ -217,16 +218,18 @@ const Seller = (props: any) => {
                                 rules={[{ required: true, message: 'Upload the statment!' }]}
                             >
                                 <Upload
+                                    accept="image/*"
                                     beforeUpload={(file) => {
-                                        const isRequiredFileType =
-                                            file.type === 'image/jpeg' ||
-                                            file.type === 'image/png';
-                                        if (!isRequiredFileType) {
-                                            message.error(
-                                                `${file.name} is not an Image file`,
-                                            );
-                                        }
-                                        return isRequiredFileType;
+                                        // const isRequiredFileType =
+                                        //     file.type === 'image/jpeg' ||
+                                        //     file.type === 'image/png';
+                                        // if (!isRequiredFileType) {
+                                        //     message.error(
+                                        //         `${file.name} is not an Image file`,
+                                        //     );
+                                        // }
+                                        // return isRequiredFileType;
+                                        return false;
                                     }}
                                     name="logo"
                                     listType="text"

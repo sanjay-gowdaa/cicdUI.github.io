@@ -33,11 +33,11 @@ const getWorkingHoursOptions = () => {
 
 
 const normFile = (e: any) => {
-    console.log('Upload event:', e.fileList);
+    console.log('Upload event:', e);
     if (Array.isArray(e)) {
         return e;
     }
-    return e && e.fileList.filter((file: any) => !!file.status);
+    return e && e.fileList;
 };
 
 const Buyer = (props: any) => {
@@ -188,16 +188,17 @@ const Buyer = (props: any) => {
                                     style={{ display: 'inline-block', width: '20%', margin: '0 1em' }}
                                 >
                                     <Upload
+                                        accept="image/*"
                                         beforeUpload={(file) => {
-                                            const isRequiredFileType =
-                                                file.type === 'image/jpeg' ||
-                                                file.type === 'image/png';
-                                            if (!isRequiredFileType) {
-                                                message.error(
-                                                    `${file.name} is not an Image file`,
-                                                );
-                                            }
-                                            return isRequiredFileType;
+                                            // const isRequiredFileType =
+                                            //     file.type === 'image/jpeg' ||
+                                            //     file.type === 'image/png';
+                                            // if (!isRequiredFileType) {
+                                            //     message.error(
+                                            //         `${file.name} is not an Image file`,
+                                            //     );
+                                            // }
+                                            return false;
                                         }}
                                         name="pan"
                                         listType="text"
@@ -227,16 +228,17 @@ const Buyer = (props: any) => {
                                     style={{ display: 'inline-block', width: '20%', margin: '0 1em' }}
                                 >
                                     <Upload
+                                        accept="image/*"
                                         beforeUpload={(file) => {
-                                            const isRequiredFileType =
-                                                file.type === 'image/jpeg' ||
-                                                file.type === 'image/png';
-                                            if (!isRequiredFileType) {
-                                                message.error(
-                                                    `${file.name} is not an Image file`,
-                                                );
-                                            }
-                                            return isRequiredFileType;
+                                            // const isRequiredFileType =
+                                            //     file.type === 'image/jpeg' ||
+                                            //     file.type === 'image/png';
+                                            // if (!isRequiredFileType) {
+                                            //     message.error(
+                                            //         `${file.name} is not an Image file`,
+                                            //     );
+                                            // }
+                                            return false;
                                         }}
                                         name="aadhar"
                                         listType="text"
@@ -416,16 +418,17 @@ const Buyer = (props: any) => {
                                 rules={[{ required: true, message: 'Upload the statment!' }]}
                             >
                                 <Upload
+                                    accept="image/*"
                                     beforeUpload={(file) => {
-                                        const isRequiredFileType =
-                                            file.type === 'image/jpeg' ||
-                                            file.type === 'image/png';
-                                        if (!isRequiredFileType) {
-                                            message.error(
-                                                `${file.name} is not an Image file`,
-                                            );
-                                        }
-                                        return isRequiredFileType;
+                                        // const isRequiredFileType =
+                                        //     file.type === 'image/jpeg' ||
+                                        //     file.type === 'image/png';
+                                        // if (!isRequiredFileType) {
+                                        //     message.error(
+                                        //         `${file.name} is not an Image file`,
+                                        //     );
+                                        // }
+                                        return false;
                                     }}
                                     name="logo"
                                     listType="text"
