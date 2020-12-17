@@ -1,20 +1,23 @@
 import React, { useState } from 'react';
 import {
-    Modal,
-    Typography,
     Button,
-    Row,
     Col,
+    Divider,
     Form,
     Input,
+    Modal,
+    Row,
     Select,
     Space,
-    Divider,
+    Typography,
     Upload,
 } from 'antd';
 import { InboxOutlined } from '@ant-design/icons';
 import { useDispatch } from 'react-redux';
+
 import { addNewCrop } from '../../../store/sellerReducer/actions';
+import PrimaryBtn from '../../../app-components/primaryBtn';
+import CancelBtn from '../../../app-components/cancelBtn';
 
 const { Text } = Typography;
 const { Option } = Select;
@@ -33,7 +36,7 @@ const fieldwithInfoLayout = {
 
 const AddCropModal = () => {
     const [modalVisible, setModalVisible] = useState(false);
-    const [form] = Form.useForm(); 
+    const [form] = Form.useForm();
     const dispatch = useDispatch();
 
     const onFinish = (values: any) => {
@@ -54,13 +57,11 @@ const AddCropModal = () => {
 
     return (
         <>
-            <Button
-                type="primary"
+            <PrimaryBtn
                 className="add-crop-btn vikas-btn-radius"
                 onClick={() => setModalVisible(true)}
-            >
-                Add Crop
-            </Button>
+                content="Add Crop"
+            />
             <Modal
                 title="Add Crop"
                 visible={modalVisible}
@@ -86,7 +87,7 @@ const AddCropModal = () => {
                                 name="cropName"
                                 rules={[{ required: true, message: 'Please select the Crop!' }]}
                             >
-                                <Select placeholder="Select">
+                                <Select className="custom-select" placeholder="Select">
                                     <Option value="rice">Rice</Option>
                                     <Option value="ragi">Ragi</Option>
                                 </Select>
@@ -98,10 +99,8 @@ const AddCropModal = () => {
                                     Add Crop
                                 </Text>
                             </Space>
-                            <Form.Item 
-                                label="Select Sub Category" 
-                                name="subCategory">
-                                <Select placeholder="Select" allowClear>
+                            <Form.Item label="Select Sub Category" name="subCategory">
+                                <Select className="custom-select" placeholder="Select" allowClear>
                                     <Option value="pearl_millet">Pearl Millet</Option>
                                     <Option value="sona_masoori_raw">Sona Masoori Raw</Option>
                                 </Select>
@@ -114,7 +113,7 @@ const AddCropModal = () => {
                                 </Text>
                             </Space>
                             <Form.Item label="Crop Grade" name="grade">
-                                <Select placeholder="Select" allowClear>
+                                <Select className="custom-select" placeholder="Select" allowClear>
                                     <Option value="Grade_A">Grade A</Option>
                                     <Option value="Grade_B">Grade B</Option>
                                 </Select>
@@ -127,7 +126,7 @@ const AddCropModal = () => {
                                 rules={[{ required: true, message: 'Please input the Qunatity!' }]}
                             >
                                 <div className="display-flex-row">
-                                    <Input placeholder="In quintal" />
+                                    <Input className="custom-input" placeholder="In quintal" />
                                     <span className="additional-text">Qtl</span>
                                 </div>
                             </Form.Item>
@@ -144,7 +143,7 @@ const AddCropModal = () => {
                                 ]}
                             >
                                 <div className="display-flex-row">
-                                    <Input placeholder="In rupees" />
+                                    <Input className="custom-input" placeholder="In rupees" />
                                     <span className="additional-text">APMC Rate Mandya:</span>
                                 </div>
                             </Form.Item>
@@ -153,7 +152,7 @@ const AddCropModal = () => {
                                 label="Select Terms and Conditions"
                                 name="termsAndConditions"
                             >
-                                <Select placeholder="Select"></Select>
+                                <Select className="custom-select" placeholder="Select" />
                             </Form.Item>
 
                             <Form.Item
@@ -163,7 +162,7 @@ const AddCropModal = () => {
                                     { required: true, message: 'Please set your intent to sell' },
                                 ]}
                             >
-                                <Select placeholder="Select">
+                                <Select className="custom-select" placeholder="Select">
                                     <Option value="yes">Yes</Option>
                                     <Option value="no">No</Option>
                                 </Select>
@@ -198,20 +197,16 @@ const AddCropModal = () => {
                                 </Dragger>
                             </Form.Item>
                             <Form.Item label="Additional Information" name="additionalInfo">
-                                <TextArea rows={4} />
+                                <TextArea className="custom-input" rows={4} />
                             </Form.Item>
                         </Col>
                     </Row>
                     <Row justify="center">
                         <Col>
-                            <Button
+                            <CancelBtn
                                 className="margin-l-r-1em crop-modal-action-btn vikas-btn-radius"
-                                type="text"
-                                htmlType="button"
                                 onClick={onReset}
-                            >
-                                Cancel
-                            </Button>
+                            />
                             <Button
                                 className="crop-modal-action-btn vikas-btn-radius"
                                 type="primary"

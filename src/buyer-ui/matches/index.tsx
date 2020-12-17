@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
-import { Typography, Table } from 'antd';
-import { useSelector, useDispatch } from 'react-redux';
+import { Table, Typography } from 'antd';
+import { useDispatch, useSelector } from 'react-redux';
+
 import { RootState } from '../../store/rootReducer';
 import { componentCallBacksModel, matchesColumns } from './matchesTable.model';
 import ViewCropDetails from './viewCropDetails';
 
 const { Title } = Typography;
+
 const initialEmptyCropDetail = {
     cropName: '',
     subCategory: '',
@@ -29,6 +31,7 @@ const MatchedSection = () => {
         showCropDetailsModal: setOpenDetailsModal,
         populateCropDetails: setSelectedCropDetails,
     };
+
     return (
         <div>
             <Title level={2}>My Matches</Title>

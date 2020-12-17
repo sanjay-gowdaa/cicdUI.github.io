@@ -1,6 +1,7 @@
 import React from 'react';
-import { Typography, Divider, Rate } from 'antd';
+import { Divider, Rate, Typography } from 'antd';
 import { useSelector, useDispatch } from 'react-redux';
+
 import { RootState } from '../../store/rootReducer';
 import Review from './review';
 

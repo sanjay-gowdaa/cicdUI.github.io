@@ -1,5 +1,6 @@
 import React from 'react';
-import { Typography, Button } from 'antd';
+import { Typography } from 'antd';
+
 import { TransactioModel } from '../../store/sellerReducer/types';
 
 const { Title, Text } = Typography;

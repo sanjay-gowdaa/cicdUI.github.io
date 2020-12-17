@@ -1,8 +1,9 @@
 import React from 'react';
-import { Typography, Rate, Space } from 'antd';
+import { Rate, Space, Typography } from 'antd';
+
 import { ReviewRating } from '../../store/buyerReducer/types';
 
-const { Title, Text } = Typography;
+const { Text, Title } = Typography;
 
 interface PropsType {
     reviewsList: Array<ReviewRating>;

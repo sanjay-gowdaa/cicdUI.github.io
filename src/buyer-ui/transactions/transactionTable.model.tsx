@@ -1,9 +1,10 @@
 import React from 'react';
-import { Typography, Image } from 'antd';
+import { Image, Typography } from 'antd';
+
 import { TransactioModel } from '../../store/buyerReducer/types';
 import RagiImg from '../../static/assets/ragi.png'
 
-const { Title, Text } = Typography;
+const { Text, Title } = Typography;
 export const transactionColumns = [
     {
         title: 'Id',

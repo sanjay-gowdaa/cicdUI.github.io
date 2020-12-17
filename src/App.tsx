@@ -1,10 +1,13 @@
-import React, {useEffect} from 'react';
+import React, { useEffect } from 'react';
 import Header from './header';
-import { Typography, Button } from 'antd';
+import { Typography } from 'antd';
 import { useDispatch } from 'react-redux';
+
 import landing_img from './static/assets/landing_img.jpg';
 import Footer from './footer';
 import { getConfigurations } from './store/registrationReducer/actions';
+import PrimaryBtn from './app-components/primaryBtn';
+
 import './App.scss';
 import 'antd/dist/antd.css';
 
@@ -15,8 +18,8 @@ const App = (props: any) => {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        dispatch(getConfigurations())
-    }, [])
+        dispatch(getConfigurations());
+    }, []);
     return (
         <div className="app-container">
             <Header history={history} showActions={true} />
@@ -30,9 +33,11 @@ const App = (props: any) => {
                         designers and developers difficulties and duplication and reduce the
                         efficiency of development. CI build test
                     </Paragraph>
-                    <Button className="vikas-btn-radius wid150 col-backgroud-green" size="large" type="primary">
-                        Register
-                    </Button>
+                    <PrimaryBtn
+                        className="vikas-btn-radius wid150"
+                        content="Register"
+                        size="large"
+                    />
                 </Typography>
                 <Footer />
             </div>

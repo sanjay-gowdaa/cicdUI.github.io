@@ -1,5 +1,6 @@
 import React from 'react';
-import { Typography, Rate, Space } from 'antd';
+import { Rate, Space, Typography } from 'antd';
+
 import { ReviewRating } from '../../store/sellerReducer/types';
 
 const { Title, Text } = Typography;

@@ -1,5 +1,8 @@
 import React from 'react';
-import { Modal, Button, Row, Col, Alert } from 'antd';
+import { Alert, Col, Modal, Row } from 'antd';
+
+import CancelBtn from '../../app-components/cancelBtn';
+import PrimaryBtn from '../../app-components/primaryBtn';
 
 type propsModel = {
     registerResponse: {errorMg: string, verified: boolean}
@@ -9,7 +12,7 @@ type propsModel = {
 }
 
 const RegisterConfirmation = (props: propsModel) => {
-    const {onConfirmRegister, toggleShowConfirmation, showConfirmation, registerResponse} = props
+    const {onConfirmRegister, toggleShowConfirmation, showConfirmation, registerResponse} = props;
     return (
         <>
             <Modal
@@ -26,12 +29,15 @@ const RegisterConfirmation = (props: propsModel) => {
                 }
                 <Row justify='end'>
                     <Col>
-                        <Button className='margin-l-r-1em' onClick={() => toggleShowConfirmation(!showConfirmation)}>
-                            Cancel
-                        </Button>
-                        <Button type="primary" className='margin-l-r-1em' onClick={() => onConfirmRegister()}>
-                            Yes
-                        </Button>
+                        <CancelBtn
+                            className='margin-l-r-1em'
+                            onClick={() => toggleShowConfirmation(!showConfirmation)}
+                        />
+                        <PrimaryBtn
+                            className='margin-l-r-1em'
+                            onClick={() => onConfirmRegister()}
+                            content="Yes"
+                        />
                     </Col>
                 </Row>
             </Modal>

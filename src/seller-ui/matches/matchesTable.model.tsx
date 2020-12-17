@@ -1,13 +1,16 @@
 import React from 'react';
-import { Typography, Button, Image } from 'antd';
+import { Button, Image, Typography } from 'antd';
+
 import { MatchRequirementModel } from '../../store/sellerReducer/types';
-import RagiImg from '../../static/assets/ragi.png'
+import RagiImg from '../../static/assets/ragi.png';
+import PrimaryBtn from '../../app-components/primaryBtn';
 
 const { Title, Text } = Typography;
+
 export interface componentCallBacksModel {
     showCropDetailsModal: Function;
     populateCropDetails: Function;
-}
+};
 
 export const matchesColumns = (componentCallBacks: componentCallBacksModel) => [
     {
@@ -28,11 +31,9 @@ export const matchesColumns = (componentCallBacks: componentCallBacksModel) => [
         key: 'cropName',
         render: (cropName: string, record: MatchRequirementModel) => {
             return (
-                <div className='display-flex-row align-center'>
-                    <Image
-                        src={RagiImg}
-                    />
-                    <div className='margin-l-r-1em'>
+                <div className="display-flex-row align-center">
+                    <Image src={RagiImg} />
+                    <div className="margin-l-r-1em">
                         <Title level={5}>{cropName}</Title>
                         <p>{record?.subCategory}</p>
                     </div>
@@ -93,9 +94,7 @@ export const matchesColumns = (componentCallBacks: componentCallBacksModel) => [
                     >
                         View Details
                     </Button>
-                    <Button className="vikas-btn-radius" type="primary">
-                        Accept
-                    </Button>
+                    <PrimaryBtn className="vikas-btn-radius" content="Accept" />
                     <Button type="link" danger>
                         {' '}
                         Delete{' '}

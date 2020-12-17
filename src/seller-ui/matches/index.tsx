@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { Typography, Table } from 'antd';
+import { Table, Typography } from 'antd';
 import { useSelector, useDispatch } from 'react-redux';
+
 import { RootState } from '../../store/rootReducer';
 import { componentCallBacksModel, matchesColumns } from './matchesTable.model';
 import ViewCropDetails from './viewCropDetails';
