@@ -69,3 +69,16 @@ export const fetchUserDetails = (userAccessToken: string) => {
 }
 
 /* Registration And Login Interface End*/
+
+/* Seller Apis */
+export const getCategoryList = () => {
+    const categoryListApi = `${BASE_URL}/${STAGE}/getcrops`
+    return fetch(categoryListApi).then((response: any) => response.json())
+}
+
+export const getSubCategoryList = (categoryId: string) => {
+    const subcategoryListApi = `${BASE_URL}/${STAGE}/getcropdetails?crop=${categoryId}`
+    return fetch(subcategoryListApi).then((response: any) => response.json())
+}
+
+/* Seller Apis End */

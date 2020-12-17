@@ -1,4 +1,4 @@
-import { UPDATE_FORM, ADD_NEW_CROP } from './actions';
+import { UPDATE_FORM, ADD_NEW_CROP, UPDATE_CATEGORIES, UPDATE_SUB_CATEGORIES } from './actions';
 import {
     mockCropsList,
     mockMatchedCropsList,
@@ -12,6 +12,8 @@ const INITIAL_STATE: SellerStateModel = {
     matchesList: mockMatchedCropsList,
     transactionList: mockTransactionCropsList,
     reviewsList: mockReviewsList,
+    categories: [],
+    subCategories: []
 };
 
 const reducer = (state = INITIAL_STATE, action: any) => {
@@ -20,6 +22,12 @@ const reducer = (state = INITIAL_STATE, action: any) => {
         case ADD_NEW_CROP:
             const updatedCropList = [...state.cropsList, action.payload]
             return { ...state, cropsList: updatedCropList };
+        
+        case UPDATE_CATEGORIES:
+            return { ...state, categories: action.payload };
+
+        case UPDATE_SUB_CATEGORIES:
+            return { ...state, subCategories: action.payload };    
             
         default:
             return state;
