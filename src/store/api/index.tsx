@@ -1,7 +1,10 @@
 const BASE_URL = 'https://enzdzh0pw2.execute-api.ap-south-1.amazonaws.com'
 const STAGE = 'dev'
+const version_1 = 'v1'
 export const REDIRECT_URL =  `https://${window.location.host}/login-user`
 export const LOGIN_URL = `https://vbui.auth.ap-south-1.amazoncognito.com/login?client_id=7sckhhjs2aq1noqd1fvjdeo69j&response_type=code&redirect_uri=${REDIRECT_URL}`
+
+
 /* OTP Interface */
 export const sendOtp = (number: string) => {
     const sendOtpApi = `${BASE_URL}/${STAGE}/otp/send`
@@ -79,6 +82,14 @@ export const getCategoryList = () => {
 export const getSubCategoryList = (categoryId: string) => {
     const subcategoryListApi = `${BASE_URL}/${STAGE}/getcropdetails?crop=${categoryId}`
     return fetch(subcategoryListApi).then((response: any) => response.json())
+}
+
+export const createCrop = (cropData: any, sellerId: string) => {
+    const addCropApi = `${BASE_URL}/${STAGE}/${version_1}/seller/${sellerId}/crop`;
+    return fetch(addCropApi, {
+        method: 'POST',
+        body: JSON.stringify({cropData})
+    }).then((response: any) => response.json())
 }
 
 /* Seller Apis End */
