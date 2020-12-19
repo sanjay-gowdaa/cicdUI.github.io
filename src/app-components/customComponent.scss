@@ -1,0 +1,126 @@
+$col-shade-green: #12805C;
+
+.custom-primary-button {
+    background-color: $col-shade-green !important;
+    border-color: $col-shade-green !important;
+}
+
+.custom-default-button:hover,
+.custom-default-button:focus {
+    color: $col-shade-green !important;
+    border-color: $col-shade-green !important;
+}
+
+.custom-cancel-button:hover,
+.custom-cancel-button:focus {
+    background-color: #fafafa !important;
+    border-color: #c1c1c1 !important;
+}
+
+.custom-input:hover,
+.custom-input:focus {
+    color: $col-shade-green !important;
+    border-color: $col-shade-green !important;
+}
+
+.custom-select {
+    .ant-select-selector:hover,
+    .ant-select-selector:focus {
+        border-color: $col-shade-green !important;
+    }
+}
+
+.custom-search {
+    .ant-input-search .ant-input:hover,
+    .ant-input-search .ant-input:focus {
+        border-color: $col-shade-green !important;
+    }
+} // Not working
+
+.custom-checkbox{
+
+    .ant-checkbox-checked .ant-checkbox-inner {
+        background-color: $col-shade-green !important;
+    }
+}
+
+.custom-masterlist-modal {
+    .ant-modal-header {
+        padding: 16px 0;
+        margin: 0 24px;
+        border-bottom: 0.25em solid $col-shade-green;
+    }
+
+    .ant-modal-close-x {
+        color: black;
+        font-size: 24px;
+    }
+
+    .custom-list {
+        border: 0.1em solid $col-shade-green;
+        padding-bottom: 0.5em;
+        min-height: 80px;
+
+        .ant-typography {
+            width: inherit;
+            background-color: $col-shade-green;
+            color: white;
+            border-color: $col-shade-green;
+            text-align: center;
+            font-weight: normal;
+        }
+
+        .custom-search {
+            width: 70%;
+            padding-left: 0.5em;
+            padding-bottom: 0.5em;
+            
+            .ant-input-group > .ant-input:first-child {
+                border-radius: 0.3em;
+                font-size: smaller;
+            }
+        }
+
+        .ant-list-item {
+            padding: 0 1em;
+
+            .anticon-caret-right {
+                float: right;
+                margin-top: 3px;
+                color: #c1c1c1;
+            }
+        }
+        
+        #selected-produce-item,
+        #selected-variety-item {
+            background-color: #fce3ba;
+            border-left: 0.5em solid #f5a31a;
+            
+            .anticon-caret-right {
+                color: black;
+            }
+        }
+
+        .selected-grade-item {
+            background-color: #fce3ba;
+
+            .ant-list-item-action {
+                margin: 0;
+            }
+        }
+    }
+    .selected-grade-item {
+        background-color: #fce3ba;
+
+        .ant-list-item-action {
+            margin: 0;
+        }
+    }
+    .ant-input-group-addon {
+        display: none;
+    }
+
+    .ant-table-wrapper {
+        width: 100%;
+    }
+}

@@ -1,16 +1,18 @@
 import React from 'react';
-import { Typography, Table } from 'antd';
+import { Table, Typography } from 'antd';
 import { useSelector } from 'react-redux';
+
 import { RootState } from '../../store/rootReducer';
 import { producColumns } from './produceTable.model';
-import './crops.scss';
 import AddProduce from './AddProduce';
+
+import './crops.scss';
 
 const { Title } = Typography;
 
 const CropsSection = () => {
     const buyerState = useSelector((state: RootState) => state.buyer);
-    const {masterProduceList} = buyerState
+    const {masterProduceList} = buyerState;
     return (
         <div className="crops-container">
             <Title level={2}>My Produce</Title>

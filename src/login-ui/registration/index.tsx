@@ -1,6 +1,8 @@
 import React from 'react';
+
 import BuyerRegister from './buyer';
 import SellerRegister from './seller';
+
 import './registration.scss'
 
 const Registration = (props: any) => {

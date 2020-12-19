@@ -1,5 +1,6 @@
 import React from 'react';
 import { Table } from 'antd';
+
 import { TransactioModel } from '../../store/buyerReducer/types';
 import { transactionColumns } from './transactionTable.model';
 

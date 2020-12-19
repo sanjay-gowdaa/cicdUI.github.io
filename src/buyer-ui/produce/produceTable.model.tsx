@@ -1,7 +1,9 @@
 import React from 'react';
-import { Typography, Button, Image } from 'antd';
+import { Button, Image, Typography } from 'antd';
+
 import { ProduceModel } from '../../store/buyerReducer/types';
 import RagiImg from '../../static/assets/ragi.png'
+
 const { Title } = Typography;
 
 const CROP_INDEX = 1

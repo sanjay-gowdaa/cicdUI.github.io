@@ -1,15 +1,17 @@
 import React from 'react';
-import { Typography, Button, Image } from 'antd';
+import { Button, Image, Typography } from 'antd';
+
 import { MatchRequirementModel } from '../../store/buyerReducer/types';
 import RagiImg from '../../static/assets/ragi.png'
 
-const { Title, Text } = Typography;
+const { Text, Title } = Typography;
+
 export interface componentCallBacksModel {
     removeProduceEntry: Function;}
 
 export const masterListColumns = (componentCallBacks: componentCallBacksModel) => [
     {
-        title: 'Produce Type',
+        title: 'Produce Category',
         dataIndex: 'produceName',
         key: 'produceName',
     },
@@ -19,7 +21,7 @@ export const masterListColumns = (componentCallBacks: componentCallBacksModel) =
         key: 'cropName',
     },
     {
-        title: 'Category',
+        title: 'Variety',
         dataIndex: 'categoryName',
         key: 'categoryName',
     },
@@ -36,7 +38,7 @@ export const masterListColumns = (componentCallBacks: componentCallBacksModel) =
                 <div className="display-flex-row">
                     <Button 
                         className="vikas-btn-radius" 
-                        type="primary"
+                        type="link"
                         danger
                         onClick={() => {
                             componentCallBacks?.removeProduceEntry(record);

@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
-import { Modal, Row, Col, Typography, Button, Divider } from 'antd';
+import { Col, Divider, Modal, Row, Typography } from 'antd';
+
 import { MatchRequirementModel } from '../../store/sellerReducer/types';
+import DefaultBtn from '../../app-components/defaultBtn';
 
 const { Title } = Typography;
 
@@ -8,7 +10,7 @@ interface componentProps {
     openDetailsModal: boolean;
     setOpenDetailsModal: Function;
     cropDetails: MatchRequirementModel;
-}
+};
 
 const ViewCropDetails = (props: componentProps) => {
     const { openDetailsModal, setOpenDetailsModal, cropDetails } = props;
@@ -76,7 +78,7 @@ const ViewCropDetails = (props: componentProps) => {
             <Divider />
             <Row justify="center">
                 <Col>
-                    <Button onClick={closeModal}>Close</Button>
+                    <DefaultBtn onClick={closeModal} content="Close" />
                 </Col>
             </Row>
         </Modal>

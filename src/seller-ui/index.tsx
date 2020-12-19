@@ -1,5 +1,6 @@
-import React, {useEffect} from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
+import { Divider } from 'antd';
 
 import CropsSection from './crops';
 import DashboardSection from './dashboard';
@@ -7,8 +8,8 @@ import Header from '../header';
 import MatchedSection from './matches';
 import ReviewsSection from './reviews';
 import TransactionSection from './transactions';
-import { Divider } from 'antd';
 import Footer from '../footer';
+
 import './seller.scss';
 
 const SellerUi = (props: any) => {

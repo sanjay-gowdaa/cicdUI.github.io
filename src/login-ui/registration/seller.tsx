@@ -1,15 +1,36 @@
-import React, { useState, useEffect } from 'react';
-import { Row, Col, Form, Input, Button, Divider, Select, Upload, message, Checkbox, Radio } from 'antd';
+import React, { useEffect, useState } from 'react';
+import {
+    Button,
+    Checkbox,
+    Col,
+    Divider,
+    Form,
+    message,
+    Input,
+    Radio,
+    Row,
+    Upload
+} from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
 import { useSelector, useDispatch } from 'react-redux';
+
 import Header from '../../header';
 import { RootState } from '../../store/rootReducer';
-import { resetOtpState, setRegisterMsg, setResgiterVerifiedFlag, submitRegsiter, updateForm } from '../../store/registrationReducer/actions';
+import {
+    resetOtpState,
+    setRegisterMsg,
+    setResgiterVerifiedFlag,
+    submitRegsiter,
+    updateForm
+} from '../../store/registrationReducer/actions';
 import { routesMap } from '../../constants';
-import { customPincodeValidator, generateFormData } from './utils';
+import { customIfscValidator, customPincodeValidator, generateFormData } from './utils';
 import DocumentsUploadComponents from './formComponents/documentsUpload';
 import RegisterConfirmation from './registerConfirmationModal';
 import RequestSubmittedPopup from './requestSubmittedPopup';
+import DefaultBtn from '../../app-components/defaultBtn';
+import CancelBtn from '../../app-components/cancelBtn';
+import PrimaryBtn from '../../app-components/primaryBtn';
 
 const { home } = routesMap;
 
@@ -29,7 +50,7 @@ const normFile = (e: any) => {
 
 const Seller = (props: any) => {
     const { history } = props;
-    const [addressForPin, setAddressForPin] = useState('')
+    const [addressForPin, setAddressForPin] = useState('');
     const [registerFormValues, setRegisterFormValues] = useState({});
     const [showConfirmation, toggleShowConfirmation] = useState(false);
     const [showSubmitMsgPopup, toggleShowSubmitMsgPopup] = useState(false);
@@ -37,27 +58,27 @@ const Seller = (props: any) => {
     const dispatch = useDispatch();
     const registrationState = useSelector((state: RootState) => state.registration);
     const {entityType, formData: partialUserData, registerResponse} = registrationState;
-    const {type: subType} = partialUserData || {}
+    const {type: subType} = partialUserData || {};
 
     useEffect(() => {
         if(registerResponse.verified) {
-            dispatch(setRegisterMsg(''))
-            dispatch(setResgiterVerifiedFlag(false))
-            toggleShowConfirmation(!showConfirmation)
-            toggleShowSubmitMsgPopup(!showSubmitMsgPopup)
+            dispatch(setRegisterMsg(''));
+            dispatch(setResgiterVerifiedFlag(false));
+            toggleShowConfirmation(!showConfirmation);
+            toggleShowSubmitMsgPopup(!showSubmitMsgPopup);
         }
-    }, [registerResponse.verified])
+    }, [registerResponse.verified]);
 
     const onConfirmRegister = () => {
-        const multipartFormData = generateFormData({formSubmitValues: registerFormValues, userType: entityType, addressForPin})
+        const multipartFormData = generateFormData({formSubmitValues: registerFormValues, userType: entityType, addressForPin});
         dispatch(updateForm(registerFormValues as any));
         dispatch(submitRegsiter(entityType, multipartFormData));
-    }
+    };
 
     const onFinish = (values: any) => {
         console.log('Success:', values);
-        setRegisterFormValues(values)
-        toggleShowConfirmation(!showConfirmation)
+        setRegisterFormValues(values);
+        toggleShowConfirmation(!showConfirmation);
     };
 
     const onFinishFailed = (errorInfo: any) => {
@@ -65,10 +86,10 @@ const Seller = (props: any) => {
     };
 
     const onReset = () => {
-        dispatch(resetOtpState())
+        dispatch(resetOtpState());
         history.push(home);
-    }
-    
+    };
+
     return (
         <React.Fragment>
             <RegisterConfirmation
@@ -101,7 +122,7 @@ const Seller = (props: any) => {
                                 label="Seller Type"
                                 name="type"
                             >
-                                <Input bordered={false} disabled={true} />
+                                <Input className="custom-input" bordered={false} disabled={true} />
                             </Form.Item>
                             <Form.Item
                                 labelAlign='left'
@@ -110,7 +131,7 @@ const Seller = (props: any) => {
                                 label="Seller Name"
                                 name="name"
                             >
-                                <Input bordered={false} disabled={true} />
+                                <Input className="custom-input" bordered={false} disabled={true} />
                             </Form.Item>
                             <Form.Item
                                 labelAlign='left'
@@ -119,36 +140,32 @@ const Seller = (props: any) => {
                                 label="Phone Number"
                                 name="number"
                             >
-                                <Input bordered={false} disabled={true} />
+                                <Input className="custom-input" bordered={false} disabled={true} />
                             </Form.Item>
                         </Col>
                     </Row>
-                    
+
                     <Row gutter={16} justify="start">
                         <Col sm={24} md={24} lg={12}>
                             <DocumentsUploadComponents subType={subType} userType={entityType} documents_list={registrationState.configs} />
 
                             {/* For testing purpose comment above line and uncomment below *farmer**/}
                             {/* <DocumentsUploadComponents subType={'Institution'} userType={'Seller'} documents_list={registrationState.configs} /> */}
-                            
+
                             <Form.Item
                                 label='Email (optional)'
                                 name='email'
                             >
-                                <Input />
+                                <Input className="custom-input" />
                             </Form.Item>
                             <h2>Location Information</h2>
                             <div className='display-flex-row align-flex-end'>
                                 <Form.Item
                                     label="Pin Code"
                                     name="zip"
-                                    rules={[
-                                        {
-                                            validator: (rule, value) => customPincodeValidator(rule, value, setAddressForPin) 
-                                        }
-                                    ]}
+                                    rules={[{validator: (rule, value) => customPincodeValidator(rule, value, setAddressForPin)}]}
                                 >
-                                    <Input />
+                                    <Input className="custom-input" />
                                 </Form.Item>
                                 <p className='margin-b-2em'>{addressForPin}</p>
                             </div>
@@ -157,7 +174,7 @@ const Seller = (props: any) => {
                                 name="address1"
                                 rules={[{ required: true, message: 'Please input your Address!' }]}
                             >
-                                <Input />
+                                <Input className="custom-input" />
                             </Form.Item>
                         </Col>
                     </Row>
@@ -172,16 +189,16 @@ const Seller = (props: any) => {
                                         name="account_name"
                                         rules={[{ required: true, message: 'Please input Account Holder Name!' }]}
                                     >
-                                        <Input />
+                                        <Input className="custom-input" />
                                     </Form.Item>
                                 </Col>
                                 <Col span={12}>
                                     <Form.Item
                                         label="IFSC Code"
                                         name="ifsc_code"
-                                        rules={[{ required: true, message: 'Please input IFSC Code!' }]}
+                                        rules={[{validator: (rule, value) => customIfscValidator(rule, value)}]}
                                     >
-                                        <Input />
+                                        <Input className="custom-input" />
                                     </Form.Item>
                                 </Col>
                                 <Col span={12}>
@@ -190,7 +207,7 @@ const Seller = (props: any) => {
                                         name="account_number"
                                         rules={[{ required: true, message: 'Please input Account Number!' }]}
                                     >
-                                        <Input />
+                                        <Input className="custom-input" />
                                     </Form.Item>
                                 </Col>
                                 <Col span={12}>
@@ -199,13 +216,13 @@ const Seller = (props: any) => {
                                         name="confirm_account_number"
                                         rules={[{ required: true, message: 'Please Confirm Account Number!' }]}
                                     >
-                                        <Input />
+                                        <Input className="custom-input" />
                                     </Form.Item>
                                 </Col>
                             </Row>
                         </Col>
                     </Row>
-                    
+
                     <Row gutter={16} justify="start">
                         <Col sm={24} md={24} lg={12}>
                             <Form.Item
@@ -234,14 +251,14 @@ const Seller = (props: any) => {
                                     name="logo"
                                     listType="text"
                                 >
-                                    <Button icon={<UploadOutlined />}>Upload Image</Button>
+                                    <DefaultBtn icon={<UploadOutlined />} content="Upload Image" />
                                 </Upload>
                             </Form.Item>
                             <Form.Item
                                 label="UPI ID(optional)"
                                 name="upi_id"
                             >
-                                <Input />
+                                <Input className="custom-input" />
                             </Form.Item>
                         </Col>
                     </Row>
@@ -253,9 +270,9 @@ const Seller = (props: any) => {
                                 valuePropName="checked"
                                 rules={[{ required: true, message: 'Please accept the terms and conditions!' }]}
                             >
-                                <Checkbox>
-                                    I certify that the information submitted above is true and correct to the best of my knowledge. 
-                                    I further understand that any false statements may result in denial or revocation of the services
+                                <Checkbox className="custom-checkbox" >
+                                    I certify that the information submitted above is true and correct to the best of my knowledge.
+                                    I further understand that any false statements may result in denial or revocation of the services.
                                 </Checkbox>
                             </Form.Item>
                         </Col>
@@ -266,20 +283,19 @@ const Seller = (props: any) => {
                             <Row gutter={32} justify='space-around'>
                                 <Col span={8}>
                                     <Form.Item>
-                                        <Button
+                                        <CancelBtn
                                             className="margin-l-r-1em width-full"
-                                            htmlType="button"
                                             onClick={onReset}
-                                        >
-                                            Cancel
-                                        </Button>
+                                        />
                                     </Form.Item>
                                 </Col>
                                 <Col span={8}>
                                     <Form.Item>
-                                        <Button className="margin-l-r-1em width-full" type="primary" htmlType="submit">
-                                            Submit
-                                        </Button>
+                                        <PrimaryBtn
+                                            className="margin-l-r-1em width-full"
+                                            htmlType="submit"
+                                            content="Submit"
+                                        />
                                     </Form.Item>
                                 </Col>
                             </Row>

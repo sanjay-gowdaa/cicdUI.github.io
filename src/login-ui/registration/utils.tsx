@@ -1,7 +1,20 @@
 import { RuleObject } from "antd/lib/form";
+
 import { getLocationByPin } from "../../store/api";
 import { UserTypes } from "../../store/genericTypes";
-import { PIN_6_DIGIT_MSG, PIN_NOT_FOUND, PIN_REQUIRED_MSG } from "../constants";
+import {
+    AADHAAR_12_DIGIT_MSG,
+    AADHAAR_REQUIRED_MSG,
+    IFSC_11_DIGIT_MSG,
+    IFSC_INVALID,
+    IFSC_REQUIRED_MSG,
+    PAN_10_DIGIT_MSG,
+    PAN_INVALID,
+    PAN_REQUIRED_MSG,
+    PIN_6_DIGIT_MSG,
+    PIN_NOT_FOUND,
+    PIN_REQUIRED_MSG,
+} from "../constants";
 
 type generateFormDataProps = {
     formSubmitValues: any,
@@ -42,11 +55,11 @@ export const generateFormData = ({formSubmitValues, userType, addressForPin}: ge
     const actualUserReq = JSON.stringify(formSubmitValues)
     formData.append('user_req', actualUserReq)
     return formData;
-}
+};
 
 
 export const customPincodeValidator = (rule: RuleObject, value: any, setAddressForPin: Function) => {
-    if(!value) {
+    if (!value) {
         return Promise.reject(PIN_REQUIRED_MSG);
     } else if (value.length !== 6 ) {
         return Promise.reject(PIN_6_DIGIT_MSG);
@@ -55,7 +68,7 @@ export const customPincodeValidator = (rule: RuleObject, value: any, setAddressF
         .then((response: any) => response.json())
         .then((response: any) => {
             const {locationDetails} = response;
-            if(!locationDetails) {
+            if (!locationDetails) {
                 return Promise.reject(PIN_NOT_FOUND)
             } else {
                 const getLocationObj = locationDetails[0];
@@ -67,4 +80,47 @@ export const customPincodeValidator = (rule: RuleObject, value: any, setAddressF
             }
         })
     }
-}
+};
+
+export const customPANValidator = (rule: RuleObject, value: any) => {
+    if (!value){
+        return Promise.reject(PAN_REQUIRED_MSG);
+    } else if (value.length !== 10 ) {
+        return Promise.reject(PAN_10_DIGIT_MSG);
+    } else {
+        const panRegExp = /^([A-Z]){5}([0-9]){4}([A-Z]){1}?$/;
+
+        if (panRegExp.test(value)) {
+            return Promise.resolve();
+        } else {
+            return Promise.reject(PAN_INVALID);
+        }
+    }
+};
+
+export const customAadhaarValidator = (rule: RuleObject, value: any) => {
+    if (!value) {
+        return Promise.reject(AADHAAR_REQUIRED_MSG);
+    } else if (value.length !== 12) {
+        return Promise.reject(AADHAAR_12_DIGIT_MSG);
+    } else {
+        return Promise.resolve();
+    }
+};
+
+export const customIfscValidator = (rule: RuleObject, value: any) => {
+
+    if (!value){
+        return Promise.reject(IFSC_REQUIRED_MSG);
+    } else if (value.length !== 11) {
+        return Promise.reject(IFSC_11_DIGIT_MSG);
+    } else {
+        const ifscRegExp = /^[A-Z]{4}0[A-Z0-9]{6}$/;
+
+        if(ifscRegExp.test(value)){
+            return Promise.resolve();
+        } else {
+            return Promise.reject(IFSC_INVALID);
+        }
+    }
+};
