@@ -1,5 +1,5 @@
 import React from 'react';
-import { Typography, Table, Button } from 'antd';
+import { Table, Typography } from 'antd';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../../store/rootReducer';
 import { cropColumns } from './cropsTable.model';

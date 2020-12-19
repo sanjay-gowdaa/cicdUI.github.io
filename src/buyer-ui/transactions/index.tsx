@@ -1,7 +1,8 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../../store/rootReducer';
-import { Typography, Tabs } from 'antd';
+import { Tabs, Typography } from 'antd';
+
 import OnGoingTransactions from './onGoing';
 import CompletedTransactions from './completed';
 import PendingTransactions from './pending';

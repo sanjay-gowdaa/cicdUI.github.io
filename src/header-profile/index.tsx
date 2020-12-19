@@ -1,7 +1,8 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { RootState } from '../store/rootReducer';
 import { Typography } from 'antd';
+
+import { RootState } from '../store/rootReducer';
 import { UserStateModel } from '../store/loginReducer/types';
 
 const { Title } = Typography;

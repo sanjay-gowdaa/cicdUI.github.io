@@ -1,5 +1,6 @@
 import React from 'react';
-import { Typography, Row, Col } from 'antd';
+import { Col, Row, Typography } from 'antd';
+
 import './dashboard.scss';
 
 const { Title } = Typography;

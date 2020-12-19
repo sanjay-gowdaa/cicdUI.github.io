@@ -1,15 +1,41 @@
 import React, { useState, useEffect } from 'react';
-import { Row, Col, Form, Input, Button, Divider, Select, Upload, message, Checkbox } from 'antd';
+import { 
+    Checkbox,
+    Col,
+    Divider,
+    Form,
+    Input,
+    message,
+    Row,
+    Select,
+    Upload
+} from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+
 import Header from '../../header';
 import { RootState } from '../../store/rootReducer';
-import { resetOtpState, setRegisterMsg, setResgiterVerifiedFlag, submitRegsiter, updateForm } from '../../store/registrationReducer/actions';
+import {
+    resetOtpState,
+    setRegisterMsg,
+    setResgiterVerifiedFlag,
+    submitRegsiter,
+    updateForm
+} from '../../store/registrationReducer/actions';
 import { routesMap } from '../../constants';
-import { customPincodeValidator, generateFormData } from './utils';
+import {
+    customAadhaarValidator,
+    customIfscValidator,
+    customPANValidator,
+    customPincodeValidator,
+    generateFormData
+} from './utils';
 import RegisterConfirmation from './registerConfirmationModal';
 import { workingHours } from '../constants';
 import RequestSubmittedPopup from './requestSubmittedPopup';
+import PrimaryBtn from '../../app-components/primaryBtn';
+import DefaultBtn from '../../app-components/defaultBtn';
+import CancelBtn from '../../app-components/cancelBtn';
 
 const { home } = routesMap;
 const { Option } = Select;
@@ -25,24 +51,25 @@ const getWorkingHoursOptions = () => {
             const {name, label, disabled} = curOption;
             return (
                 <Option disabled={disabled} value={name}>{label}</Option>
-            )
+            );
         }
         )
-    )
-}
+    );
+};
 
 
 const normFile = (e: any) => {
-    console.log('Upload event:', e);
+    console.log('Upload event:', e.fileList);
     if (Array.isArray(e)) {
         return e;
     }
+    // return e && e.fileList.filter((file: any) => !!file.status);
     return e && e.fileList;
 };
 
 const Buyer = (props: any) => {
     const { history } = props;
-    const [addressForPin, setAddressForPin] = useState('')
+    const [addressForPin, setAddressForPin] = useState('');
     const [registerFormValues, setRegisterFormValues] = useState({});
     const [showConfirmation, toggleShowConfirmation] = useState(false);
     const [showSubmitMsgPopup, toggleShowSubmitMsgPopup] = useState(false);
@@ -59,13 +86,14 @@ const Buyer = (props: any) => {
             toggleShowConfirmation(!showConfirmation)
             toggleShowSubmitMsgPopup(!showSubmitMsgPopup)
         }
-    }, [registrationState.registerResponse.verified])
+    }, [registrationState.registerResponse.verified]);
+
     const onConfirmRegister = () => {
         const userType = registrationState.entityType;
         const multipartFormData = generateFormData({formSubmitValues: registerFormValues, userType, addressForPin})
         dispatch(updateForm(registerFormValues as any));
         dispatch(submitRegsiter(userType, multipartFormData));
-    }
+    };
 
     const onFinish = (values: any) => {
         console.log('Success:', values);
@@ -78,23 +106,24 @@ const Buyer = (props: any) => {
     };
 
     const onChangeAllDay = (e: any, relatedEntity: string) => {
-        const {checked} = e.target || {}
+        const {checked} = e.target || {};
         if (checked) {
             form.setFieldsValue({[relatedEntity]: 'all_day'});
         } else {
             form.setFieldsValue({[relatedEntity]: '9am_to_5pm'});
         }
-        const updatedWorkHoursStatus = {...workHoursDisbaled, [relatedEntity]: !workHoursDisbaled[relatedEntity]}
+        const updatedWorkHoursStatus = {...workHoursDisbaled, [relatedEntity]: !workHoursDisbaled[relatedEntity]};
+
         toggleWorkHoursDisbaled(updatedWorkHoursStatus);
-    }
+    };
 
     const checkIfDisabled = (fieldName: string) => workHoursDisbaled[fieldName];
 
     const onReset = () => {
-        dispatch(resetOtpState())
+        dispatch(resetOtpState());
         history.push(home);
-    }
-    
+    };
+
     return (
         <React.Fragment>
             <RegisterConfirmation
@@ -134,7 +163,11 @@ const Buyer = (props: any) => {
                                 label="Buyer Type"
                                 name="type"
                             >
-                                <Input bordered={false} disabled={true} />
+                                <Input
+                                    className="custom-input"
+                                    bordered={false}
+                                    disabled={true} 
+                                />
                             </Form.Item>
                             <Form.Item
                                 labelAlign='left'
@@ -143,7 +176,11 @@ const Buyer = (props: any) => {
                                 label="Buyer Name"
                                 name="name"
                             >
-                                <Input bordered={false} disabled={true} />
+                                <Input
+                                    className="custom-input"
+                                    bordered={false}
+                                    disabled={true}
+                                />
                             </Form.Item>
                             <Form.Item
                                 labelAlign='left'
@@ -152,7 +189,11 @@ const Buyer = (props: any) => {
                                 label="Phone Number"
                                 name="number"
                             >
-                                <Input bordered={false} disabled={true} />
+                                <Input
+                                    className="custom-input"
+                                    bordered={false}
+                                    disabled={true}
+                                />
                             </Form.Item>
                             <Form.Item
                                 labelAlign='left'
@@ -161,7 +202,10 @@ const Buyer = (props: any) => {
                                 label="Email"
                                 name="email"
                             >
-                                <Input bordered={false} disabled={true} />
+                                <Input
+                                    className="custom-input"
+                                    bordered={false}
+                                    disabled={true} />
                             </Form.Item>
                         </Col>
                     </Row>
@@ -175,10 +219,10 @@ const Buyer = (props: any) => {
                             >
                                 <Form.Item
                                     name="pan"
-                                    rules={[{ required: true, message: 'Please provide PAN!' }]}
+                                    rules={[{validator: (rule, value) => customPANValidator(rule, value)}]}
                                     style={{ display: 'inline-block', width: '60%' }}
                                 >
-                                    <Input />
+                                    <Input className="custom-input" />
                                 </Form.Item>
                                 <Form.Item
                                     name="pan_card"
@@ -198,12 +242,16 @@ const Buyer = (props: any) => {
                                             //         `${file.name} is not an Image file`,
                                             //     );
                                             // }
+                                            // return isRequiredFileType;
                                             return false;
                                         }}
                                         name="pan"
                                         listType="text"
                                     >
-                                        <Button icon={<UploadOutlined />}>Upload Image</Button>
+                                        <DefaultBtn 
+                                            icon={<UploadOutlined />} 
+                                            content="Upload Image"
+                                        />
                                     </Upload>
                                 </Form.Item>
                             </Form.Item>
@@ -215,10 +263,10 @@ const Buyer = (props: any) => {
                             >
                                 <Form.Item
                                     name="uidai"
-                                    rules={[{ required: true, message: 'Please provide Aadhaar card Number!' }]}
+                                    rules={[{validator: (rule, value) => customAadhaarValidator(rule, value)}]}
                                     style={{ display: 'inline-block', width: '60%' }}
                                 >
-                                    <Input />
+                                    <Input className="custom-input" />
                                 </Form.Item>
                                 <Form.Item
                                     name="aadhar_card"
@@ -228,7 +276,7 @@ const Buyer = (props: any) => {
                                     style={{ display: 'inline-block', width: '20%', margin: '0 1em' }}
                                 >
                                     <Upload
-                                        accept="image/*"
+                                        accept="images/*"
                                         beforeUpload={(file) => {
                                             // const isRequiredFileType =
                                             //     file.type === 'image/jpeg' ||
@@ -238,12 +286,15 @@ const Buyer = (props: any) => {
                                             //         `${file.name} is not an Image file`,
                                             //     );
                                             // }
+                                            // return isRequiredFileType;
                                             return false;
                                         }}
                                         name="aadhar"
                                         listType="text"
                                     >
-                                        <Button icon={<UploadOutlined />}>Upload Image</Button>
+                                        <DefaultBtn
+                                            icon={<UploadOutlined />}
+                                            content="Upload Image" />
                                     </Upload>
                                 </Form.Item>
                             </Form.Item>
@@ -259,7 +310,7 @@ const Buyer = (props: any) => {
                                         }
                                     ]}
                                 >
-                                    <Input />
+                                    <Input className="custom-input" />
                                 </Form.Item>
                                 <p className='margin-b-2em'>{addressForPin}</p>
                             </div>
@@ -268,7 +319,7 @@ const Buyer = (props: any) => {
                                 name="addressLine"
                                 rules={[{ required: true, message: 'Please input your Address!' }]}
                             >
-                                <Input />
+                                <Input className="custom-input" />
                             </Form.Item>
                         </Col>
                     </Row>
@@ -288,6 +339,7 @@ const Buyer = (props: any) => {
                                     rules={[{ required: true }]}
                                 >
                                     <Select
+                                        className="custom-select"
                                         disabled={checkIfDisabled('weekday')}
                                         style={{ width: '50%' }}
                                         placeholder="Please Select">
@@ -299,7 +351,12 @@ const Buyer = (props: any) => {
                                     noStyle
                                     valuePropName='checked'
                                 >
-                                    <Checkbox onChange={(e) => onChangeAllDay(e, 'weekday')} className='full-time-checkbox'> 24 hours </Checkbox>
+                                    <Checkbox 
+                                        className="custom-checkbox"
+                                        onChange={(e) => onChangeAllDay(e, 'weekday')} 
+                                        style={{margin: "0 2em"}} >
+                                            24 hours 
+                                    </Checkbox>
                                 </Form.Item>
                             </Form.Item>
 
@@ -315,9 +372,11 @@ const Buyer = (props: any) => {
                                     rules={[{ required: true }]}
                                 >
                                     <Select
+                                        className="custom-select" 
                                         disabled={checkIfDisabled('saturday')}
                                         style={{ width: '50%' }}
-                                        placeholder="Please Select">
+                                        placeholder="Please Select"
+                                    >
                                         { getWorkingHoursOptions() }
                                     </Select>
                                 </Form.Item>
@@ -327,10 +386,14 @@ const Buyer = (props: any) => {
                                     valuePropName='checked'
                                     
                                 >
-                                    <Checkbox onChange={(e) => onChangeAllDay(e, 'saturday')} className='full-time-checkbox'> 24 hours </Checkbox>
+                                    <Checkbox
+                                        className="custom-checkbox"
+                                        onChange={(e) => onChangeAllDay(e, 'saturday')} 
+                                        style={{margin: "0 2em"}}>
+                                            24 hours 
+                                    </Checkbox>
                                 </Form.Item>
                             </Form.Item>
-
 
                             <Form.Item 
                                 labelCol={{span: 6}}
@@ -346,7 +409,8 @@ const Buyer = (props: any) => {
                                     <Select
                                         disabled={checkIfDisabled('sunday')}
                                         style={{ width: '50%' }}
-                                        placeholder="Please Select">
+                                        placeholder="Please Select"
+                                    >
                                         { getWorkingHoursOptions() }
                                     </Select>
                                 </Form.Item>
@@ -356,7 +420,12 @@ const Buyer = (props: any) => {
                                     valuePropName='checked'
                                     
                                 >
-                                    <Checkbox onChange={(e) => onChangeAllDay(e, 'sunday')} className='full-time-checkbox'> 24 hours </Checkbox>
+                                    <Checkbox
+                                        className="custom-checkbox" 
+                                        onChange={(e) => onChangeAllDay(e, 'sunday')} 
+                                        style={{margin: "0 2em"}}>
+                                            24 hours
+                                    </Checkbox> 
                                 </Form.Item>
                             </Form.Item>
                         </Col>
@@ -372,16 +441,16 @@ const Buyer = (props: any) => {
                                         name="account_name"
                                         rules={[{ required: true, message: 'Please input Account Holder Name!' }]}
                                     >
-                                        <Input />
+                                        <Input className="custom-input" />
                                     </Form.Item>
                                 </Col>
                                 <Col span={12}>
                                     <Form.Item
                                         label="IFSC Code"
                                         name="ifsc_code"
-                                        rules={[{ required: true, message: 'Please input IFSC Code!' }]}
+                                        rules={[{validator: (rule, value) => customIfscValidator(rule, value)}]}
                                     >
-                                        <Input />
+                                        <Input className="custom-input" />
                                     </Form.Item>
                                 </Col>
                                 <Col span={12}>
@@ -390,7 +459,7 @@ const Buyer = (props: any) => {
                                         name="account_number"
                                         rules={[{ required: true, message: 'Please input Account Number!' }]}
                                     >
-                                        <Input />
+                                        <Input className="custom-input" />
                                     </Form.Item>
                                 </Col>
                                 <Col span={12}>
@@ -399,7 +468,7 @@ const Buyer = (props: any) => {
                                         name="confirm_account_number"
                                         rules={[{ required: true, message: 'Please Confirm Account Number!' }]}
                                     >
-                                        <Input />
+                                        <Input className="custom-input" />
                                     </Form.Item>
                                 </Col>
                             </Row>
@@ -418,7 +487,7 @@ const Buyer = (props: any) => {
                                 rules={[{ required: true, message: 'Upload the statment!' }]}
                             >
                                 <Upload
-                                    accept="image/*"
+                                    accept="images/*"
                                     beforeUpload={(file) => {
                                         // const isRequiredFileType =
                                         //     file.type === 'image/jpeg' ||
@@ -428,19 +497,22 @@ const Buyer = (props: any) => {
                                         //         `${file.name} is not an Image file`,
                                         //     );
                                         // }
+                                        // return isRequiredFileType;
                                         return false;
                                     }}
                                     name="logo"
                                     listType="text"
                                 >
-                                    <Button icon={<UploadOutlined />}>Upload Image</Button>
+                                    <DefaultBtn
+                                        icon={<UploadOutlined />}
+                                        content="Upload Image" />
                                 </Upload>
                             </Form.Item>
                             <Form.Item
                                 label="UPI ID(optional)"
                                 name="upi_id"
                             >
-                                <Input />
+                                <Input className="custom-input" />
                             </Form.Item>
                         </Col>
                     </Row>
@@ -452,7 +524,7 @@ const Buyer = (props: any) => {
                                 valuePropName="checked"
                                 rules={[{ required: true, message: 'Please accept the terms and conditions!' }]}
                             >
-                                <Checkbox>
+                                <Checkbox className="custom-checkbox" >
                                     I certify that the information submitted above is true and correct to the best of my knowledge. 
                                     I further understand that any false statements may result in denial or revocation of the services
                                 </Checkbox>
@@ -465,20 +537,19 @@ const Buyer = (props: any) => {
                             <Row gutter={32} justify='space-around'>
                                 <Col span={8}>
                                     <Form.Item>
-                                        <Button
+                                        <CancelBtn
                                             className="margin-l-r-1em width-full"
-                                            htmlType="button"
                                             onClick={onReset}
-                                        >
-                                            Cancel
-                                        </Button>
+                                        />
                                     </Form.Item>
                                 </Col>
                                 <Col span={8}>
                                     <Form.Item>
-                                        <Button className="margin-l-r-1em width-full" type="primary" htmlType="submit">
-                                            Submit
-                                        </Button>
+                                        <PrimaryBtn 
+                                            className="margin-l-r-1em width-full"
+                                            htmlType="submit"
+                                            content="Submit"
+                                        />
                                     </Form.Item>
                                 </Col>
                             </Row>

@@ -1,22 +1,25 @@
 import React, { useState } from 'react';
 import {
-    Modal,
-    Typography,
     Button,
-    Row,
     Col,
+    DatePicker,
     Form,
     Input,
+    Modal,
+    Row,
     Select,
+    Typography,
     Upload,
-    DatePicker
 } from 'antd';
 import { useDispatch } from 'react-redux';
+
 import { addNewProduce } from '../../../store/buyerReducer/actions';
 import { flatMasterListType, MasterListProduce } from '../../../store/buyerReducer/types';
+import CancelBtn from '../../../app-components/cancelBtn';
+import PrimaryBtn from '../../../app-components/primaryBtn';
 
-const { Option } = Select;
 const { TextArea } = Input;
+const { Option } = Select;
 
 const singleLabelFieldLayout = {
     labelCol: { span: 24 },
@@ -45,8 +48,8 @@ const getMasterProduceListOpts = ({masterProduceList}: {masterProduceList: Array
                 })
             }
         </>
-    )
-}
+    );
+};
 
 const AddCropModal = ({masterProduceList}: {masterProduceList: Array<MasterListProduce>}) => {
     const [modalVisible, setModalVisible] = useState(false);
@@ -71,13 +74,11 @@ const AddCropModal = ({masterProduceList}: {masterProduceList: Array<MasterListP
 
     return (
         <>
-            <Button
-                type="primary"
+            <PrimaryBtn
                 className="add-crop-btn vikas-btn-radius"
                 onClick={() => setModalVisible(true)}
-            >
-                Add Produce
-            </Button>
+                content="Add Produce"
+            />
             <Modal
                 title="Add Interested Crops"
                 visible={modalVisible}
@@ -103,7 +104,7 @@ const AddCropModal = ({masterProduceList}: {masterProduceList: Array<MasterListP
                                 name="produceName"
                                 rules={[{ required: true, message: 'Please select the Produce!' }]}
                             >
-                                <Select placeholder="Select">
+                                <Select className="custom-select" placeholder="Select">
                                     {getMasterProduceListOpts({masterProduceList})}
                                 </Select>
                             </Form.Item>
@@ -115,7 +116,7 @@ const AddCropModal = ({masterProduceList}: {masterProduceList: Array<MasterListP
                                 rules={[{ required: true, message: 'Please input the Qunatity!' }]}
                             >
                                 <div className="display-flex-row">
-                                    <Input placeholder="In quintal" />
+                                    <Input className="custom-input" placeholder="In quintal" />
                                     <span className="additional-text">Qtl</span>
                                 </div>
                             </Form.Item>
@@ -125,30 +126,26 @@ const AddCropModal = ({masterProduceList}: {masterProduceList: Array<MasterListP
                                 name="deliveryBy"
                                 rules={[{ type: 'object', required: true, message: 'Please select time!' }]}
                             >
-                                <DatePicker />
+                                <DatePicker className="custom-input" />
                             </Form.Item>
 
                             <Form.Item
                                 label="Select Terms and Conditions"
                                 name="termsAndConditions"
                             >
-                                <Select placeholder="Select"></Select>
+                                <Select className="custom-select" placeholder="Select"></Select>
                             </Form.Item>
                             <Form.Item label="Additional Information" name="additionalInfo">
-                                <TextArea rows={4} />
+                                <TextArea className="custom-input" rows={4} />
                             </Form.Item>
                         </Col>
                     </Row>
                     <Row justify="center">
                         <Col>
-                            <Button
+                            <CancelBtn
                                 className="margin-l-r-1em crop-modal-action-btn vikas-btn-radius"
-                                type="text"
-                                htmlType="button"
                                 onClick={onReset}
-                            >
-                                Cancel
-                            </Button>
+                            />
                             <Button
                                 className="crop-modal-action-btn vikas-btn-radius"
                                 type="primary"

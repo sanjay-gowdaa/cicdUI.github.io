@@ -1,9 +1,12 @@
 import React from 'react';
+import { Image, Popover } from 'antd';
+
 import Register from '../login-ui/register';
 import UserHeader from '../header-profile';
-import { Popover, Button, Image } from 'antd';
 import Logo from '../static/assets/logo.jpg';
 import { LOGIN_URL } from '../store/api';
+import PrimaryBtn from '../app-components/primaryBtn';
+import DefaultBtn from '../app-components/defaultBtn';
 
 import './header.scss';
 
@@ -12,13 +15,12 @@ const UserBasicActions = ({ history, popUpTrigger }: { history: any, popUpTrigge
 
     return (
         <div className="display-flex-row align-center">
-            <Button 
-                onClick={() => window.location.href = LOGIN_URL} 
+            <DefaultBtn
                 className="vikas-btn-radius wid150" 
+                content="Login"
+                onClick={() => window.location.href = LOGIN_URL} 
                 size="large"
-            >
-                Login
-            </Button>
+            />
             <Popover
                 content={<Register history={history} setSignUpPopupVisible={setSignUpPopupVisible} />}
                 title={null}
@@ -28,13 +30,12 @@ const UserBasicActions = ({ history, popUpTrigger }: { history: any, popUpTrigge
                 visible={signUpPopupVisible}
                 onVisibleChange={() => setSignUpPopupVisible(!signUpPopupVisible)}
             >
-                <Button
-                    className="margin-l-r-1em vikas-btn-radius wid150 col-backgroud-green"
+                <PrimaryBtn
+                    className="margin-l-r-1em vikas-btn-radius wid150"
                     type="primary"
                     size="large"
-                >
-                    Register
-                </Button>
+                    content="Register"
+                />
             </Popover>
         </div>
     );
