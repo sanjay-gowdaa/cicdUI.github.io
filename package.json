@@ -21,6 +21,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
+    "start:https": "set HTTPS=true&&react-scripts start",
     "build": "react-scripts build",
     "buyer:start": "cd projects/buyer-ui && yarn start",
     "buyer:build": "cd projects/buyer-ui && yarn build",

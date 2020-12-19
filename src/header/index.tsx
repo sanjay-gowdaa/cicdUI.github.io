@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Image, Popover } from 'antd';
 
 import Register from '../login-ui/register';
@@ -10,8 +10,8 @@ import DefaultBtn from '../app-components/defaultBtn';
 
 import './header.scss';
 
-const UserBasicActions = ({ history}: { history: any }) => {
-    const [signUpPopupVisible, setSignUpPopupVisible] = useState(false);
+const UserBasicActions = ({ history, popUpTrigger }: { history: any, popUpTrigger: any }) => {
+    const {signUpPopupVisible, setSignUpPopupVisible} = popUpTrigger;
 
     return (
         <div className="display-flex-row align-center">
@@ -39,18 +39,17 @@ const UserBasicActions = ({ history}: { history: any }) => {
             </Popover>
         </div>
     );
-};
-
-const HeaderActions = ({ history, isLoggedIn }: { history: any, isLoggedIn: boolean }) => {
-    return isLoggedIn ? <UserHeader /> : <UserBasicActions history={history} />
+}
+const HeaderActions = ({ history, isLoggedIn, popUpTrigger }: { history: any, isLoggedIn: boolean, popUpTrigger: any }) => {
+    return isLoggedIn ? <UserHeader /> : <UserBasicActions history={history} popUpTrigger={popUpTrigger} />
 };
 
 const Header = (headerProps: any) => {
-    const { history, showActions, isLoggedIn } = headerProps;
+    const { history, showActions, isLoggedIn, popUpTrigger } = headerProps;
     return (
         <div className="landing-page-header-bar">
             <Image width={100} height={60} src={Logo} preview={false} />
-            {showActions ? <HeaderActions isLoggedIn={isLoggedIn} history={history} /> : null}
+            {showActions ? <HeaderActions isLoggedIn={isLoggedIn} history={history} popUpTrigger={popUpTrigger} /> : null}
         </div>
     );
 };

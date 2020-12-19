@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
     Button,
     Col,
@@ -13,11 +13,15 @@ import {
     Upload,
 } from 'antd';
 import { InboxOutlined } from '@ant-design/icons';
-import { useDispatch } from 'react-redux';
-
-import { addNewCrop } from '../../../store/sellerReducer/actions';
+import { useDispatch, useSelector } from 'react-redux';
+import { addCrop, addNewCrop, fetchAllCategories, fetchAllSubCategories } from '../../../store/sellerReducer/actions';
+import { RootState } from '../../../store/rootReducer';
+import { SellerStateModel } from '../../../store/sellerReducer/types';
+import { renderCategoryOptions, renderGradeOptionsForSubCategory, renderSubCategoryOptions } from '../cropUtils';
+import { UserStateModel } from '../../../store/loginReducer/types';
 import PrimaryBtn from '../../../app-components/primaryBtn';
 import CancelBtn from '../../../app-components/cancelBtn';
+
 
 const { Text } = Typography;
 const { Option } = Select;
@@ -36,12 +40,20 @@ const fieldwithInfoLayout = {
 
 const AddCropModal = () => {
     const [modalVisible, setModalVisible] = useState(false);
-    const [form] = Form.useForm();
+    const [selectedSubCategory, setSelectedSubCategory] = useState('');
+    const [form] = Form.useForm(); 
     const dispatch = useDispatch();
+    const sellerStore: SellerStateModel = useSelector((state: RootState) => state.seller);
+    const userStore: UserStateModel = useSelector((state: RootState) => state.loginUser);
+
+    useEffect(() => {
+        sellerStore.categories && !sellerStore.categories.length && dispatch(fetchAllCategories())
+    }, [])
 
     const onFinish = (values: any) => {
         console.log('Success:', values);
         dispatch(addNewCrop(values));
+        // dispatch(addCrop(values, userStore.id))
         form.resetFields();
         setModalVisible(false);
     };
@@ -55,6 +67,14 @@ const AddCropModal = () => {
         setModalVisible(false);
     };
 
+    const onSelectCrop = (value: string) => {
+        dispatch(fetchAllSubCategories(value));
+    }
+
+    const onSelectSubCategory = (value: string) => {
+        setSelectedSubCategory(value)
+    }
+
     return (
         <>
             <PrimaryBtn
@@ -67,7 +87,10 @@ const AddCropModal = () => {
                 visible={modalVisible}
                 footer={null}
                 maskClosable={false}
-                onCancel={() => setModalVisible(false)}
+                onCancel={() => {
+                    form.resetFields();
+                    setModalVisible(false)
+                }}
                 width={'90%'}
                 wrapClassName="add-crop-modal"
             >
@@ -87,9 +110,8 @@ const AddCropModal = () => {
                                 name="cropName"
                                 rules={[{ required: true, message: 'Please select the Crop!' }]}
                             >
-                                <Select className="custom-select" placeholder="Select">
-                                    <Option value="rice">Rice</Option>
-                                    <Option value="ragi">Ragi</Option>
+                                <Select className="custom-select" placeholder="Select" onChange={onSelectCrop}>
+                                    {renderCategoryOptions(sellerStore.categories)}
                                 </Select>
                             </Form.Item>
                             {/* Addition crop name msg */}
@@ -99,10 +121,11 @@ const AddCropModal = () => {
                                     Add Crop
                                 </Text>
                             </Space>
-                            <Form.Item label="Select Sub Category" name="subCategory">
-                                <Select className="custom-select" placeholder="Select" allowClear>
-                                    <Option value="pearl_millet">Pearl Millet</Option>
-                                    <Option value="sona_masoori_raw">Sona Masoori Raw</Option>
+                            <Form.Item 
+                                label="Select Sub Category" 
+                                name="subCategory">
+                                <Select className="custom-select" placeholder="Select" allowClear onChange={onSelectSubCategory} onClear={() => setSelectedSubCategory('')}>
+                                    {renderSubCategoryOptions(sellerStore.subCategories)}
                                 </Select>
                             </Form.Item>
                             {/* Addition Sub Category msg */}
@@ -114,8 +137,7 @@ const AddCropModal = () => {
                             </Space>
                             <Form.Item label="Crop Grade" name="grade">
                                 <Select className="custom-select" placeholder="Select" allowClear>
-                                    <Option value="Grade_A">Grade A</Option>
-                                    <Option value="Grade_B">Grade B</Option>
+                                    {selectedSubCategory ? renderGradeOptionsForSubCategory(sellerStore.subCategories, selectedSubCategory) : []}
                                 </Select>
                             </Form.Item>
 
@@ -178,6 +200,10 @@ const AddCropModal = () => {
                                     multiple={true}
                                     accept="image/*"
                                     listType="picture-card"
+                                    beforeUpload= {(file) => {
+                                        return false
+                                      }
+                                    }
                                 >
                                     <div className="display-flex-row">
                                         <div>

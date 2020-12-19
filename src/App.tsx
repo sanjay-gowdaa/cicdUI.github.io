@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, {useEffect, useState} from 'react';
 import Header from './header';
 import { Typography } from 'antd';
 import { useDispatch } from 'react-redux';
@@ -16,13 +16,14 @@ const { Title, Paragraph } = Typography;
 const App = (props: any) => {
     const { history } = props;
     const dispatch = useDispatch();
+    const [signUpPopupVisible, setSignUpPopupVisible] = useState(false);
 
     useEffect(() => {
         dispatch(getConfigurations());
     }, []);
     return (
         <div className="app-container">
-            <Header history={history} showActions={true} />
+            <Header history={history} showActions={true} popUpTrigger={{setSignUpPopupVisible, signUpPopupVisible}} />
             <div className="main-content">
                 <img src={landing_img} width="100%" height="90%" />
                 <Typography className="main-content-banner">
@@ -37,6 +38,7 @@ const App = (props: any) => {
                         className="vikas-btn-radius wid150"
                         content="Register"
                         size="large"
+                        onClick={() => setSignUpPopupVisible(!signUpPopupVisible)}
                     />
                 </Typography>
                 <Footer />
