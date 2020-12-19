@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import Header from './header';
 import { Typography, Button } from 'antd';
 import { useDispatch } from 'react-redux';
@@ -13,13 +13,14 @@ const { Title, Paragraph } = Typography;
 const App = (props: any) => {
     const { history } = props;
     const dispatch = useDispatch();
+    const [signUpPopupVisible, setSignUpPopupVisible] = useState(false);
 
     useEffect(() => {
         dispatch(getConfigurations())
     }, [])
     return (
         <div className="app-container">
-            <Header history={history} showActions={true} />
+            <Header history={history} showActions={true} popUpTrigger={{setSignUpPopupVisible, signUpPopupVisible}} />
             <div className="main-content">
                 <img src={landing_img} width="100%" height="90%" />
                 <Typography className="main-content-banner">
@@ -30,7 +31,12 @@ const App = (props: any) => {
                         designers and developers difficulties and duplication and reduce the
                         efficiency of development. CI build test
                     </Paragraph>
-                    <Button className="vikas-btn-radius wid150 col-backgroud-green" size="large" type="primary">
+                    <Button
+                        className="vikas-btn-radius wid150 col-backgroud-green"
+                        size="large"
+                        type="primary"
+                        onClick={() => setSignUpPopupVisible(!signUpPopupVisible)}
+                    >
                         Register
                     </Button>
                 </Typography>

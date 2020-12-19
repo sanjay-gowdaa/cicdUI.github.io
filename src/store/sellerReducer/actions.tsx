@@ -1,5 +1,5 @@
 import { CropModel } from "./types";
-import { getCategoryList, getSubCategoryList } from "../api";
+import { getCategoryList, getSubCategoryList, createCrop } from "../api";
 
 export const UPDATE_CATEGORIES = 'UPDATE_CATEGORIES';
 export const UPDATE_SUB_CATEGORIES = 'UPDATE_SUB_CATEGORIES';
@@ -60,5 +60,11 @@ export const fetchAllSubCategories = (categoryId: string) => {
         // const {status = '', message, data} = result
         console.log('registerUserResponse', Items);
         dispatch(updateSubCategories(Items))
+    }
+}
+
+export const addCrop = (cropData: any, sellerId: string) => {
+    return async(dispatch: any, getState: any) => {
+        const cropAdded = await createCrop(cropData, sellerId)
     }
 }
