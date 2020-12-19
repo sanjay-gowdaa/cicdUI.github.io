@@ -6,6 +6,7 @@ import SellerUI from './seller-ui/';
 import BuyerUI from './buyer-ui';
 import ValidateUserAuthentication from './validateUserAuthentication';
 import { routesMap } from './constants';
+import GuardedRoute from './app-components/GuardedRoute';
 const { home, register_entity, seller_ui, buyer_ui } = routesMap;
 
 const HomePageRoutes = () => {
@@ -13,9 +14,12 @@ const HomePageRoutes = () => {
         <Switch>
             <Route exact path={home} component={Home} />
             <Route path={register_entity} component={RegisterBuyer} />
-            <Route path={seller_ui} component={SellerUI} />
-            <Route path={buyer_ui} component={BuyerUI} />
+            {/* <Route path={seller_ui} component={SellerUI} /> */}
+            {/* <Route path={buyer_ui} component={BuyerUI} /> */}
             <Route path={'/login-user'} component={ValidateUserAuthentication} />
+            {/* Protected route guard */}
+            <GuardedRoute Component={SellerUI} path={seller_ui} auth={false} />
+            <GuardedRoute Component={BuyerUI} path={buyer_ui} auth={false} />
         </Switch>
     );
 };
