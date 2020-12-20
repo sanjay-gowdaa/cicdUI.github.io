@@ -5,8 +5,11 @@ export interface ApmcRateChangeModel {
 
 export interface ProduceModel {
     produceName: string;
+    grade: string;
+    category: string;
+    sub_type: string;
     quantityReq: number;
-    deliveryBy: any;
+    delivery_by: any;
     termsAndConditions?: string | null;
     additionalInfo?: string | null;
 }
@@ -65,7 +68,7 @@ export interface TransactioModel extends MatchRequirementModel {
 }
 
 export interface BuyerStateModel {
-    masterProduceList: Array<MasterListProduce>;
+    masterProduceList: Array<string>;
     produceList: Array<ProduceModel>;
     matchesList: Array<MatchRequirementModel>;
     transactionList: Array<TransactioModel>;

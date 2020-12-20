@@ -1,4 +1,5 @@
 const BASE_URL = 'https://enzdzh0pw2.execute-api.ap-south-1.amazonaws.com'
+const ALTERNATIVE_BASE_URL = 'https://mf9ikza105.execute-api.ap-south-1.amazonaws.com'
 const STAGE = 'dev'
 const version_1 = 'v1'
 
@@ -15,6 +16,8 @@ const USER_PROFILE_API = 'getuserprofile'
 const CROP_TYPES_API = 'getcrops'
 const CROP_SUB_TYPES_DETAILS_API = 'getcropdetails'
 
+const getAuthHeader = (userAccessToken: string) => ({'Authorization': `Bearer ${userAccessToken}`})
+const getApiKeyHeader = () => ({'x-api-key': 'mv87g1fKjV2EZQs8lvrkm7Knd7m8pUPF7hwvNv8f'})
 
 /* OTP Interface */
 export const sendOtp = (number: string) => {
@@ -76,9 +79,7 @@ export const getAccessToken = (userCode: string) => {
 export const fetchUserDetails = (userAccessToken: string) => {
     const userProfileApi = `${BASE_URL}/${STAGE}/${USER_PROFILE_API}`
     return fetch(userProfileApi, {
-        headers: {
-            'Authorization': `Bearer ${userAccessToken}`
-        }
+        headers: getAuthHeader(userAccessToken)
     }).then((response: any) => response.json())
 }
 
@@ -104,3 +105,23 @@ export const createCrop = (cropData: any, sellerId: string) => {
 }
 
 /* Seller Apis End */
+
+/* Buyer Apis */
+export const addProduce = (produceData: any, buyerId: string) => {
+    const addProduceApi = `${ALTERNATIVE_BASE_URL}/${STAGE}/${version_1}/buyer/${buyerId}/crop`;
+    const bodyParamData = JSON.stringify(produceData);
+    return fetch(addProduceApi, {
+        method: 'POST',
+        headers: getApiKeyHeader(),
+        body: bodyParamData
+    }).then((response: any) => response.json())
+}
+
+export const getAllProduce = (buyerId: string) => {
+    const getAllProduceApi = `${ALTERNATIVE_BASE_URL}/${STAGE}/${version_1}/buyer/${buyerId}/crop`;
+    return fetch(getAllProduceApi, {
+        headers: getApiKeyHeader(),
+    }).then((response: any) => response.json())
+}
+
+/* Buyer Apis End */

@@ -8,13 +8,10 @@ import {
     Modal,
     Row,
     Select,
-    Typography,
-    Upload,
 } from 'antd';
 import { useDispatch } from 'react-redux';
 
 import { addNewProduce } from '../../../store/buyerReducer/actions';
-import { flatMasterListType, MasterListProduce } from '../../../store/buyerReducer/types';
 import CancelBtn from '../../../app-components/cancelBtn';
 import PrimaryBtn from '../../../app-components/primaryBtn';
 
@@ -31,19 +28,13 @@ const fieldwithInfoLayout = {
     wrapperCol: { span: 18 },
 };
 
-const getMasterProduceListOpts = ({masterProduceList}: {masterProduceList: Array<MasterListProduce>}) => {
+const getMasterProduceListOpts = ({masterProduceList}: {masterProduceList: Array<string>}) => {
     return (
         <>
             {
-                masterProduceList.map((produce: MasterListProduce) => {
-                    const {categoryId, categoryName, cropId, cropName, produceId, produceName, gradeId, gradeName} = produce;
+                masterProduceList.map((produce: string) => {
                     return (
-                        <Option 
-                            key={`${categoryId}-${cropId}-${produceId}-${gradeId}`} 
-                            value={`${produceName}-${cropName}-${categoryName}-${gradeName}`}
-                        >
-                            {`${produceName} - ${cropName} - ${categoryName} - ${gradeName}`}
-                        </Option>
+                        <Option key={produce} value={produce}> {produce}</Option>
                     )
                 })
             }
@@ -51,14 +42,19 @@ const getMasterProduceListOpts = ({masterProduceList}: {masterProduceList: Array
     );
 };
 
-const AddCropModal = ({masterProduceList}: {masterProduceList: Array<MasterListProduce>}) => {
+const AddCropModal = ({masterProduceList}: {masterProduceList: Array<string>}) => {
     const [modalVisible, setModalVisible] = useState(false);
     const [form] = Form.useForm(); 
     const dispatch = useDispatch();
 
     const onFinish = (fieldsValue: any) => {
         console.log('Success:', fieldsValue);
-        dispatch(addNewProduce(fieldsValue));
+        const {produce_name, delivery_by, quantity, additional_info} = fieldsValue
+        const [masterProduce, category, sub_type, grade] = produce_name.split('-')
+        const deliveryByIsoformat = new Date(delivery_by).toISOString();
+        const addProducePayload = {category, sub_type, grade, delivery_by: deliveryByIsoformat, additional_info, quantity}
+        console.log('addProducePayload', addProducePayload)
+        dispatch(addNewProduce(addProducePayload));
         form.resetFields();
         setModalVisible(false);
     };
@@ -101,7 +97,7 @@ const AddCropModal = ({masterProduceList}: {masterProduceList: Array<MasterListP
                         <Col xs={24} md={10} lg={10}>
                             <Form.Item
                                 label="Select Produce (From Master List)"
-                                name="produceName"
+                                name="produce_name"
                                 rules={[{ required: true, message: 'Please select the Produce!' }]}
                             >
                                 <Select className="custom-select" placeholder="Select">
@@ -112,7 +108,7 @@ const AddCropModal = ({masterProduceList}: {masterProduceList: Array<MasterListP
                             <Form.Item
                                 {...fieldwithInfoLayout}
                                 label="Qunatity"
-                                name="quantityReq"
+                                name="quantity"
                                 rules={[{ required: true, message: 'Please input the Qunatity!' }]}
                             >
                                 <div className="display-flex-row">
@@ -123,7 +119,7 @@ const AddCropModal = ({masterProduceList}: {masterProduceList: Array<MasterListP
 
                             <Form.Item
                                 label="Delivery Required By"
-                                name="deliveryBy"
+                                name="delivery_by"
                                 rules={[{ type: 'object', required: true, message: 'Please select time!' }]}
                             >
                                 <DatePicker className="custom-input" />
@@ -131,11 +127,11 @@ const AddCropModal = ({masterProduceList}: {masterProduceList: Array<MasterListP
 
                             <Form.Item
                                 label="Select Terms and Conditions"
-                                name="termsAndConditions"
+                                name="terms_and_conditions"
                             >
                                 <Select className="custom-select" placeholder="Select"></Select>
                             </Form.Item>
-                            <Form.Item label="Additional Information" name="additionalInfo">
+                            <Form.Item label="Additional Information" name="additional_info">
                                 <TextArea className="custom-input" rows={4} />
                             </Form.Item>
                         </Col>

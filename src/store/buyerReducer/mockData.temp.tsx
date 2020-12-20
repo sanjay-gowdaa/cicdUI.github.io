@@ -6,15 +6,6 @@ import {
     TransactionStatus,
 } from './types';
 
-export const mockProduceList: Array<ProduceModel> = [
-    {
-        produceName: 'Cereal - Ragi - Pearl Millet - Grade A',
-        quantityReq: 20,
-        deliveryBy: '2020-11-13T14:04:20.360Z',
-        termsAndConditions: 'http://google.com',
-    }
-]
-
 export const mockMatchedCropsList: Array<MatchRequirementModel> = [
     {
         cropName: 'Rice',
@@ -95,3 +86,9 @@ export const mockReviewsList: Array<ReviewRating> = [
             "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries",
     },
 ];
+
+export const mockMasterListData: Array<string> = [
+    'Pulses - Tur - RED - Grade 3',
+    'Cereals - Paddy - BLACK - Grade 1',
+    'Cereals - Jowar - HYBRID - Grade 2'
+]
