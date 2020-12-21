@@ -70,6 +70,10 @@ $col-shade-green: #12805C;
             font-weight: normal;
         }
 
+        .produce-scroll-bar {
+            overflow-y: scroll;    
+        }
+
         .custom-search {
             width: 70%;
             padding-left: 0.5em;
@@ -91,8 +95,8 @@ $col-shade-green: #12805C;
             }
         }
         
-        #selected-produce-item,
-        #selected-variety-item {
+        .selected-produce-item:hover,
+        .selected-variety-item:hover {
             background-color: #fce3ba;
             border-left: 0.5em solid #f5a31a;
             
@@ -109,6 +113,7 @@ $col-shade-green: #12805C;
             }
         }
     }
+    
     .selected-grade-item {
         background-color: #fce3ba;
 
@@ -116,6 +121,7 @@ $col-shade-green: #12805C;
             margin: 0;
         }
     }
+
     .ant-input-group-addon {
         display: none;
     }
@@ -123,4 +129,34 @@ $col-shade-green: #12805C;
     .ant-table-wrapper {
         width: 100%;
     }
+
+    th.ant-table-cell {
+        text-align: center;
+        background-color: $col-shade-green;
+        color: white;
+        padding: 0 16px;
+    }
+
+    td.ant-table-cell {
+        padding: 0 16px;
+    }
+}
+
+.custom-dropdown-button {
+    padding-left: 1em;
+
+    .ant-btn-default:first-of-type {
+        display: none;
+    }
+
+    .ant-btn-icon-only {
+        border-radius: 2em !important;
+    }
+    
+    .ant-btn-icon-only:hover,
+    .ant-btn-icon-only:focus {
+        border-color: $col-shade-green !important;
+        color:$col-shade-green !important;
+    }
+
 }
