@@ -16,7 +16,7 @@ const {Title} = Typography;
 const BuyerUI = (props: any) => {
     const { history } = props;
     return (
-        <div className="buyer-ui-app">
+        <div className="buyer-ui-app" id="buyer-ui-app">
             <Header history={history} showActions isLoggedIn />
             <div className="buyer-ui-dashboard">
                 <Title level={2}>My Dashboard</Title>
