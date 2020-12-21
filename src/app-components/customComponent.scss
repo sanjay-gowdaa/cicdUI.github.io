@@ -160,3 +160,19 @@ $col-shade-green: #12805C;
     }
 
 }
+
+.custom-breadcrumb {
+    .ant-breadcrumb-link {
+        color: black;
+    }
+
+    .ant-breadcrumb-link:hover,
+    .ant-breadcrumb-link:focus {
+        color: black;
+        border-bottom: 0.25em solid $col-shade-green;
+    }
+}
+
+.custom-badge {
+    padding-left: 1em !important;
+}
