@@ -1,4 +1,4 @@
-import { UPDATE_MASTER_LIST, GET_MASTER_LIST, UPDATE_PRODUCE_LIST } from './actions';
+import { UPDATE_MASTER_LIST, GET_MASTER_LIST, UPDATE_PRODUCE_LIST, UPDATE_CROPS_LIST, UPDATE_VARIETY_LIST } from './actions';
 import {
     mockMasterListData,
     mockMatchedCropsList,
@@ -9,6 +9,8 @@ import {
 import { BuyerStateModel } from './types';
 
 const INITIAL_STATE: BuyerStateModel = {
+    cropsList: [],
+    varietyList: [],
     masterProduceList: mockMasterListData,
     produceList: [],
     matchesList: mockMatchedCropsList,
@@ -26,6 +28,12 @@ const reducer = (state = INITIAL_STATE, action: any) => {
         case UPDATE_PRODUCE_LIST:
             return { ...state, produceList: action.payload }
 
+        case UPDATE_CROPS_LIST:
+            return {...state, cropsList: action.payload}
+
+        case UPDATE_VARIETY_LIST:
+            return {...state, varietyList: action.payload}
+    
         default:
             return state;
     }
