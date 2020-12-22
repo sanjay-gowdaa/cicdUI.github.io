@@ -1,10 +1,5 @@
 import React from 'react';
-import { Button, Image, Typography } from 'antd';
-
-import { MatchRequirementModel } from '../../store/buyerReducer/types';
-import RagiImg from '../../static/assets/ragi.png'
-
-const { Text, Title } = Typography;
+import { Button } from 'antd';
 
 export interface componentCallBacksModel {
     removeProduceEntry: Function;}
@@ -12,23 +7,23 @@ export interface componentCallBacksModel {
 export const masterListColumns = (componentCallBacks: componentCallBacksModel) => [
     {
         title: 'Produce Category',
-        dataIndex: 'produceName',
-        key: 'produceName',
+        dataIndex: 'produce_name',
+        key: 'produce_name',
     },
     {
         title: 'Produce',
-        dataIndex: 'cropName',
-        key: 'cropName',
+        dataIndex: 'crop_name',
+        key: 'crop_name',
     },
     {
         title: 'Variety',
-        dataIndex: 'categoryName',
-        key: 'categoryName',
+        dataIndex: 'category_name',
+        key: 'category_name',
     },
     {
         title: 'Grade',
-        dataIndex: 'gradeName',
-        key: 'gradeName',
+        dataIndex: 'grade_name',
+        key: 'grade_name',
     },
     {
         title: '',

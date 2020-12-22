@@ -1,14 +1,20 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Modal, Typography } from 'antd';
 
 import MasterList from './addProduce';
 import DefaultBtn from '../../app-components/defaultBtn';
+import { useDispatch } from 'react-redux';
+import { getMasterProduceList } from '../../store/buyerReducer/actions';
 
 const { Paragraph, Title } = Typography;
 
 const AddProduceModal = () => {
     const [modalVisible, setModalVisible] = useState(false);
-
+    const dispatch = useDispatch();
+    
+    useEffect(() => {
+        dispatch(getMasterProduceList())
+    }, [])
     return (
         <>
             <div>

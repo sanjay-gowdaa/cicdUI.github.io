@@ -14,15 +14,11 @@ import {
 } from 'antd';
 import {uniqBy, remove} from 'lodash';
 import { FilterOutlined, CaretRightOutlined } from '@ant-design/icons';
-
-import {mockMasterFlatList} from '../../../store/mockMasterList';
 import { masterListColumns } from './../masterListTable.model';
-import { BuyerStateModel, CropCategoryModel, flatMasterListType, ProduceModel } from '../../../store/buyerReducer/types';
-import { fetchAllProduce, fetchAllCrops, updateMasterlist, fetchAllVariety } from '../../../store/buyerReducer/actions';
+import { BuyerStateModel, CropCategoryModel, MasterListApiFormat } from '../../../store/buyerReducer/types';
+import { fetchAllProduce, fetchAllCrops, updateMasterlist, fetchAllVariety, updateMasterListData } from '../../../store/buyerReducer/actions';
 import DefaultBtn from '../../../app-components/defaultBtn';
 import CancelBtn from '../../../app-components/cancelBtn';
-
-import '../../../app-components/customComponent.scss';
 import { RootState } from '../../../store/rootReducer';
 
 const { Search } = Input;
@@ -30,23 +26,18 @@ const { Option } = Select;
 const { Text, Title } = Typography;
 
 const MasterList = (props: any) => {
+    const buyerStore: BuyerStateModel = useSelector((state: RootState) => state.buyer);
     const {setModalVisible} = props;
     const dispatch = useDispatch();
-    // const [masterList, updateMasterList] = useState(mockMasterFlatList);
-    // const [produceListForMasterCategory, setProduceListForMasterCategory] = useState([]);
-    // const [selectedProduce, setSelectedProduce] = useState({produceId: '', produceName: ''});
-    // const [selectedCropDetails, setSelectedCropDetails] = useState({cropId: '', cropName: ''});
-    // const [selectedCategoryDetails, setSelectedCategoryDetails] = useState({categoryId: '', categoryName: ''});
-    const [addedMasterList, updateAddedMasterList] = useState([]);
-    
+    const [addedMasterList, updateAddedMasterList] = useState(buyerStore.masterProduceList as Array<MasterListApiFormat>);
     const [selectedProduceCategory, setSelectedProduceCategory] = useState('');
     const [selectedCrop, setSelectedCrop] = useState('');
     const [selectedVariety, setSelectedVariety] = useState('');
     const [selectedGrade, setSelectedGrade] = useState('');
-    const buyerStore: BuyerStateModel = useSelector((state: RootState) => state.buyer);
+    const [selectedGradeList, updateSelectedList] = useState({} as any)
 
     useEffect(() => {
-        buyerStore.produceList && !buyerStore.produceList.length && dispatch(fetchAllProduce());
+        buyerStore.masterCropNames && !buyerStore.masterCropNames.length && dispatch(fetchAllProduce());
     }, [])
 
     /* On change of master produce selection*/
@@ -95,13 +86,15 @@ const MasterList = (props: any) => {
         const gradeList = cropName
             .filter((crop: CropCategoryModel) => crop.variety === cropVariety)
                 .map(({grade}: CropCategoryModel, index) => {
+                    console.log('grade', grade)
                     return (
                         <>
                             <List.Item key={`${grade}-${index}`} >
                                 <Checkbox className="custom-checkbox" 
+                                    checked={isSelected(grade)}
                                     onChange={()=> {
                                         setSelectedGrade(grade);
-                                        addCropToList()
+                                        addCropToList(grade)
                                     }}
                                 >
                                     {grade}
@@ -113,35 +106,80 @@ const MasterList = (props: any) => {
         return gradeList;
     };
 
-    const addCropToList = () => {
-        console.log(selectedProduceCategory, ":", selectedCrop, ":", selectedVariety, ":", selectedGrade)
-
-        // const {produceId, produceName} = selectedProduce;
-        // const {categoryName, categoryId} = selectedCategoryDetails;
-        // const {cropName, cropId} = selectedCropDetails;
-        
-        // /* Update reference/existing arrays */
-        // // Update original masterList
-        // let duplicateMasterList = [...masterList];
-        // remove(duplicateMasterList, (masterProduce: flatMasterListType) => masterProduce.crop_id === cropId && masterProduce.grade_id === gradeId);
-        // updateMasterList(duplicateMasterList);
-        
-        // // Update produce list based on dropdown values
-        // // let duplicateProduceList = [...produceListForMasterCategory];
-        // // remove(duplicateProduceList, (masterProduce: flatMasterListType) => masterProduce.crop_id === cropId && masterProduce.grade_id === gradeId);
-        // // setProduceListForMasterCategory(duplicateProduceList);
+    const addCropToList = (gradeSelection: string) => {
+        if(selectedGradeList[selectedProduceCategory])  {
+            const allCropsDataFromProduce = selectedGradeList[selectedProduceCategory]
+            if(allCropsDataFromProduce[selectedCrop]) {
+                const allCategoryDataForCrop = allCropsDataFromProduce[selectedCrop]
+                if(allCategoryDataForCrop[selectedVariety]) {
+                    const updatedCatGrade = {...allCategoryDataForCrop[selectedVariety], [gradeSelection]: true}
+                    Object.assign(selectedGradeList[selectedProduceCategory][selectedCrop], {[selectedVariety]: updatedCatGrade})
+                    updateSelectedList( selectedGradeList)
+                } else {
+                    Object.assign(selectedGradeList[selectedProduceCategory][selectedCrop], {[selectedVariety]: {[gradeSelection]: true}})
+                    updateSelectedList( selectedGradeList)
+                }
+            } else {
+                Object.assign(selectedGradeList[selectedProduceCategory], {[selectedCrop]: {[selectedVariety]: {[gradeSelection]: true}}})
+                updateSelectedList( selectedGradeList)
+            }
+        } else {
+            Object.assign(selectedGradeList, { [selectedProduceCategory]: { [selectedCrop]: {[selectedVariety]: {[gradeSelection]: true} } } });
+            updateSelectedList(selectedGradeList);
+        }
         
         // /* Table data manipulations start */
         // // Create entry data
-        const entryData = {selectedProduceCategory, selectedCrop, selectedVariety, selectedGrade};
+        const entryData = {
+            produce_name: selectedProduceCategory,
+            crop_name: selectedCrop,
+            category_name: selectedVariety,
+            grade_name: gradeSelection
+        };
         
         //  // Update master list
         const updatedMasterList: any = [...addedMasterList, entryData];
-        console.log("Master list", updatedMasterList);
         updateAddedMasterList(updatedMasterList);
         // /* Table data manipulations end */
     }
+
+    // const setSelectedClassName = (selectedClassName: string, listType: string) => {
+    //     var element = document.getElementsByClassName(selectedClassName);
+    //     var idName = "";
+    //     var gradeSelected = "";
+    //     var isGrade = false;
+
+    //     switch(listType){
+    //         case "produce": {
+    //             idName="selected-produce-item";
+    //             break;
+    //         }
+    //         case "variety": {
+    //             idName="selected-variety-item";
+    //             break;
+    //         }
+    //         case "grade": {
+    //             gradeSelected="selected-grade-item";
+    //             isGrade = true;
+    //             break;
+    //         }
+    //     }
+
+    //     if (isGrade) {
+    //         element.item(0)?.setAttribute("className", gradeSelected);
+    //     } else {
+    //         element.item(0)?.setAttribute("id",idName);
+    //     }
+    // };
     
+    const isSelected = (curItemGradeName: string) => {
+        const isProducePresent = selectedGradeList[selectedProduceCategory]
+        const isCropPresent = isProducePresent && selectedGradeList[selectedProduceCategory][selectedCrop]
+        const isSubCategoryPresent = isCropPresent && selectedGradeList[selectedProduceCategory][selectedCrop][selectedVariety]
+        const isGradeSelected = isSubCategoryPresent && selectedGradeList[selectedProduceCategory][selectedCrop][selectedVariety][curItemGradeName]
+        return isGradeSelected;
+    }
+
     return (
         <>
         <Row gutter={16}>
@@ -155,7 +193,7 @@ const MasterList = (props: any) => {
                     onChange={handleMasterProduceChange}
                     style={{ width: '100%' }}
                 >
-                    {renderMasterProduceChildren(buyerStore.produceList)}
+                    {renderMasterProduceChildren(buyerStore.masterCropNames)}
                 </Select>
             </Col>
         </Row>
@@ -201,7 +239,7 @@ const MasterList = (props: any) => {
                     }})}
                     pagination={ false }
                     rowClassName="custom-row"
-                    scroll = {{y: 100}}
+                    scroll = {{y: 200}}
                     dataSource={addedMasterList}
                 />
             </Col>
@@ -218,7 +256,7 @@ const MasterList = (props: any) => {
                     className="crop-modal-action-btn vikas-btn-radius"
                     type="primary"
                     onClick={() => {
-                        dispatch(updateMasterlist(addedMasterList));
+                        dispatch(updateMasterListData(addedMasterList))
                         setModalVisible(false);
                     }}
                 >

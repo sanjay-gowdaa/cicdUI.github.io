@@ -115,15 +115,13 @@ export const addProduce = (produceData: any, buyerId: string) => {
     const bodyParamData = JSON.stringify(produceData);
     return fetch(addProduceApi, {
         method: 'POST',
-        headers: getApiKeyHeader(),
         body: bodyParamData
     }).then((response: any) => response.json());
 };
 
 export const getAllProduce = (buyerId: string) => {
-    const getAllProduceApi = `${ALTERNATIVE_BASE_URL}/${STAGE}/${version_1}/buyer/${buyerId}/crop`;
+    const getAllProduceApi = `${BASE_URL}/${STAGE}/buyer/${buyerId}/crop`;
     return fetch(getAllProduceApi, {
-        headers: getApiKeyHeader(),
     }).then((response: any) => response.json());
 };
 
@@ -139,4 +137,18 @@ export const getCropCategoryList = () => {
     return fetch(cropCategoryApi).then((response: any) => response.json());
 };
 
+
+export const updateMasterList = (updateMasterList: any, buyerId: string) => {
+    const masterListApi = `${BASE_URL}/${STAGE}/buyer/${buyerId}/master_list`;
+    const bodyParamData = JSON.stringify(updateMasterList);
+    return fetch(masterListApi, {
+        method: 'POST',
+        body: bodyParamData
+    }).then((response: any) => response.json())
+}
+
+export const getMasterList = (buyerId: string) => {
+    const masterListApi = `${BASE_URL}/${STAGE}/buyer/${buyerId}/master_list`;
+    return fetch(masterListApi).then((response: any) => response.json())
+}
 /* Buyer Apis End */

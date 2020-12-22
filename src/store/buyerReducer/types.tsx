@@ -60,6 +60,13 @@ export interface MasterListProduce {
     gradeName: string;
 }
 
+export interface MasterListApiFormat {
+    produce_name: string;
+    crop_name: string;
+    category_name: string;
+    grade_name: string;
+}
+
 export interface TransactioModel extends MatchRequirementModel {
     transactionId: string;
     transactionStatus: TransactionStatus;
@@ -68,8 +75,9 @@ export interface TransactioModel extends MatchRequirementModel {
 }
 
 export interface BuyerStateModel {
-    masterProduceList: Array<string>;
+    masterProduceList: Array<MasterListApiFormat>;
     produceList: Array<string>;
+    masterCropNames: Array<string>;
     cropsList: Array<string>;
     varietyList: Array<any>;
     matchesList: Array<MatchRequirementModel>;

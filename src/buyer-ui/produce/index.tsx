@@ -23,7 +23,7 @@ const CropsSection = () => {
     return (
         <div className="crops-container">
             <Title level={2}>My Produce</Title>
-            <AddProduce masterProduceList={masterProduceList} />
+            {/* <AddProduce masterProduceList={masterProduceList} /> */}
             <Table
                 className="margin-t-1em"
                 columns={producColumns}
