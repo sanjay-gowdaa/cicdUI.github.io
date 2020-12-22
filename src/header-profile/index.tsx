@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
-import { Badge, Breadcrumb, Card, Dropdown, Menu, Modal, notification, Popconfirm, Tooltip, Typography } from 'antd';
+import { Badge, Breadcrumb, Card, Dropdown, Menu, Modal, notification, Popconfirm, Space, Tooltip, Typography } from 'antd';
 import { BellFilled, ContactsFilled, LogoutOutlined } from '@ant-design/icons';
 import MenuItem from 'antd/lib/menu/MenuItem';
 import { Redirect } from 'react-router-dom';
@@ -15,7 +15,7 @@ const { Text, Title } = Typography;
 
 const UserHeader = () => {
     const loginState: UserStateModel = useSelector((state: RootState) => state.loginUser);
-    const fieldOfficer = "Mx. Field Officer";
+    const fieldOfficer = "Mahesh Kumar";
     const fieldOfficerNumber = "9876543210";
     const [notificationNumber, setNotificationNumber] = useState(2);
     const [isLogout, setLogout] = useState(false); 
@@ -60,36 +60,23 @@ const UserHeader = () => {
     const showContactInfo = () => {
         return (
             <Menu>
-                <MenuItem key="fieldOfficerInfo" onClick={displayFieldOfficerInfo} >
-                    Field Officer
+                <MenuItem key="fieldOfficerInfo" >
+                    <Card>
+                        <Title level={4}>Field Officer Info:</Title>
+                        <Space direction="vertical">
+                            <Text>Name: {fieldOfficer}</Text>
+                            <Text>Phone No: {fieldOfficerNumber}</Text>
+                        </Space>
+                    </Card>
                 </MenuItem>
-                <MenuItem key="contactUs" onClick={displayContactInfo}>
-                    Contact Us
-                    {/* Alert */}
+                <MenuItem key="contactUs">
+                    <Card>
+                        <Title level={4}>Contact Us:</Title>
+                        <Text>contactus@vikasbandhu.in</Text>
+                    </Card>
                 </MenuItem>
             </Menu>
         );
-    };
-
-    const displayContactInfo = () => {
-        Modal.info({
-            title: 'Contact Us',
-            content: (
-                <Title level={4}>support@vikasbandhu.in</Title>
-            )
-        })
-    };
-
-    const displayFieldOfficerInfo = () => {
-        Modal.info({
-            title: 'Your Filed Officer Details',
-            content: (
-                <Card>
-                    <Title level={4}>Name: {fieldOfficer}</Title>
-                    <Text>{fieldOfficerNumber}</Text>
-                </Card>
-            )
-        });
     };
 
     const logout = () => {
