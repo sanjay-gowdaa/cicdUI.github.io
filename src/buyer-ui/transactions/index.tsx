@@ -17,7 +17,7 @@ function callback(key: any) {
 const TransactionSection = () => {
     const buyerState = useSelector((state: RootState) => state.buyer);
     return (
-        <>
+        <div id="buyer-ui-transactions">
             <Title level={2}>My Transactions</Title>
             <Tabs defaultActiveKey="1" size="large" onChange={callback}>
                 <TabPane tab="On Going" key="1">
@@ -30,7 +30,7 @@ const TransactionSection = () => {
                     <CompletedTransactions transactionList={buyerState.transactionList} />
                 </TabPane>
             </Tabs>
-        </>
+        </div>
     );
 };
 

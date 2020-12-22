@@ -69,7 +69,9 @@ export interface TransactioModel extends MatchRequirementModel {
 
 export interface BuyerStateModel {
     masterProduceList: Array<string>;
-    produceList: Array<ProduceModel>;
+    produceList: Array<string>;
+    cropsList: Array<string>;
+    varietyList: Array<any>;
     matchesList: Array<MatchRequirementModel>;
     transactionList: Array<TransactioModel>;
     reviewsList: Array<ReviewRating>;
@@ -81,4 +83,12 @@ export interface ReviewRating {
     buyerLocation: string;
     date: string;
     reviewtext: string;
+}
+
+export interface CropCategoryModel {
+    config_id: string;
+    config_name: string;
+    variety: string;
+    grade: string;
+    name: string;
 }

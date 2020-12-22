@@ -33,7 +33,7 @@ const MatchedSection = () => {
     };
 
     return (
-        <div>
+        <div id="buyer-ui-matches">
             <Title level={2}>My Matches</Title>
             <Table
                 className="margin-t-1em"

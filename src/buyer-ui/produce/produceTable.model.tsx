@@ -7,7 +7,7 @@ const { Title } = Typography;
 
 export const producColumns = [
     {
-        title: 'Crop',
+        title: 'Produce',
         dataIndex: 'cropName',
         key: 'cropName',
         render: (cropName: string, record: ProduceModel) => {

@@ -11,13 +11,13 @@ const ReviewsSection = () => {
     const buyerState = useSelector((state: RootState) => state.buyer);
     const { reviewsList } = buyerState;
     return (
-        <>
+        <div id="buyer-ui-feedback">
             <Title level={2}>Reviews</Title>
             <Rate disabled defaultValue={4} />
             <Title level={4}>Total {reviewsList.length} review</Title>
             <Divider />
             <Review reviewsList={reviewsList} />
-        </>
+        </div>
     );
 };
 

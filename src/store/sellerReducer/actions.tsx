@@ -43,7 +43,6 @@ export const addNewCrop = (cropData: CropModel) => {
     };
 };
 
-
 export const fetchAllCategories = () => {
     return async(dispatch: any, getState: any) => {
         const allCategoriesList = await getCategoryList();
