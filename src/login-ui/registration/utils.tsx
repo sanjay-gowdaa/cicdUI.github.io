@@ -26,15 +26,11 @@ type generateFormDataProps = {
 }
 
 export const generateFormData = ({formSubmitValues, userType, addressForPin, district, taluk, state}: generateFormDataProps) => {
-    console.log("generateFormData method utils", formSubmitValues, userType, addressForPin, district, taluk, state);
     const {bank_statement} = formSubmitValues;
-    console.log("bank_statement", bank_statement);
     let formData = new FormData();
     formData.append('bank_doc', bank_statement[0].originFileObj);
-    console.log(formData);
     delete formSubmitValues['bank_statement'];
-    console.log("bank_statement after delete", bank_statement);
-
+    
     if (userType === UserTypes.SELLER) {
     // For testing uncomment below line and comment above line   
     // if (false) {
@@ -66,7 +62,6 @@ export const generateFormData = ({formSubmitValues, userType, addressForPin, dis
 
 
 export const customPincodeValidator = (rule: RuleObject, value: any, setAddressForPin: Function, setDistrict: Function, setTaluk: Function, setStateName: Function) => {
-    console.log("customPincodeValidator utils");
     if (!value) {
         return Promise.reject(PIN_REQUIRED_MSG);
     } else if (value.length !== 6 ) {
@@ -94,7 +89,6 @@ export const customPincodeValidator = (rule: RuleObject, value: any, setAddressF
 };
 
 export const customPANValidator = (rule: RuleObject, value: any) => {
-    console.log("customPANValiator utils");
     if (!value){
         return Promise.reject(PAN_REQUIRED_MSG);
     } else if (value.length !== 10 ) {
@@ -111,7 +105,6 @@ export const customPANValidator = (rule: RuleObject, value: any) => {
 };
 
 export const customAadhaarValidator = (rule: RuleObject, value: any) => {
-    console.log("customAadhaarValidator utils");
     if (!value) {
         return Promise.reject(AADHAAR_REQUIRED_MSG);
     } else if (value.length !== 12) {
@@ -122,7 +115,6 @@ export const customAadhaarValidator = (rule: RuleObject, value: any) => {
 };
 
 export const customIfscValidator = (rule: RuleObject, value: any) => {
-    console.log("customIfscValidator utils");
     if (!value){
         return Promise.reject(IFSC_REQUIRED_MSG);
     } else if (value.length !== 11) {
