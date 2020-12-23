@@ -1,5 +1,4 @@
 const BASE_URL = 'https://enzdzh0pw2.execute-api.ap-south-1.amazonaws.com'
-const ALTERNATIVE_BASE_URL = 'https://mf9ikza105.execute-api.ap-south-1.amazonaws.com'
 const STAGE = 'dev'
 
 export const REDIRECT_URL =  `https://${window.location.host}/login-user`
@@ -114,7 +113,7 @@ export const getAllCrops = (sellerId: string) => {
 
 /* Buyer Apis */
 export const addProduce = (produceData: any, buyerId: string) => {
-    const addProduceApi = `${ALTERNATIVE_BASE_URL}/${STAGE}/buyer/${buyerId}/crop`;
+    const addProduceApi = `${BASE_URL}/${STAGE}/buyer/${buyerId}/crop`;
     const bodyParamData = JSON.stringify(produceData);
     return fetch(addProduceApi, {
         method: 'POST',

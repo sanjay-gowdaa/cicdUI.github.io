@@ -14,6 +14,7 @@ import { useDispatch } from 'react-redux';
 import { addNewProduce } from '../../../store/buyerReducer/actions';
 import CancelBtn from '../../../app-components/cancelBtn';
 import PrimaryBtn from '../../../app-components/primaryBtn';
+import { MasterListApiFormat } from '../../../store/buyerReducer/types';
 
 const { TextArea } = Input;
 const { Option } = Select;
@@ -28,13 +29,19 @@ const fieldwithInfoLayout = {
     wrapperCol: { span: 18 },
 };
 
-const getMasterProduceListOpts = ({masterProduceList}: {masterProduceList: Array<string>}) => {
+const getMasterProduceListOpts = ({masterProduceList}: {masterProduceList: Array<MasterListApiFormat>}) => {
     return (
         <>
             {
-                masterProduceList.map((produce: string) => {
+                masterProduceList.map((masterProduceItem: MasterListApiFormat) => {
+                    const {produce_name = '', crop_name = '', category_name = '', grade_name = ''} = masterProduceItem;
                     return (
-                        <Option key={produce} value={produce}> {produce}</Option>
+                        <Option 
+                            key={`${produce_name}-${crop_name}-${category_name}-${grade_name}`}
+                            value={`${produce_name}-${crop_name}-${category_name}-${grade_name}`}
+                        > 
+                            {`${produce_name}-${crop_name}-${category_name}-${grade_name}`}
+                        </Option>
                     )
                 })
             }
@@ -42,13 +49,12 @@ const getMasterProduceListOpts = ({masterProduceList}: {masterProduceList: Array
     );
 };
 
-const AddCropModal = ({masterProduceList}: {masterProduceList: Array<string>}) => {
+const AddCropModal = ({masterProduceList}: {masterProduceList: Array<any>}) => {
     const [modalVisible, setModalVisible] = useState(false);
     const [form] = Form.useForm(); 
     const dispatch = useDispatch();
 
     const onFinish = (fieldsValue: any) => {
-        console.log('Success:', fieldsValue);
         const {produce_name, delivery_by, quantity, additional_info} = fieldsValue
         const [masterProduce, category, sub_type, grade] = produce_name.split('-')
         const deliveryByIsoformat = new Date(delivery_by).toISOString();

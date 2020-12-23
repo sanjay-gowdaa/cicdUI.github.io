@@ -32,8 +32,8 @@ export const producColumns = [
     },
     {
         title: 'Quantity Required',
-        dataIndex: 'quantityReq',
-        key: 'quantityReq'
+        dataIndex: 'quantity',
+        key: 'quantity'
     },
     {
         title: 'Delivery By',

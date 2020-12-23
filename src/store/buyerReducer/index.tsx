@@ -1,8 +1,6 @@
 import { UPDATE_MASTER_LIST, GET_MASTER_LIST, UPDATE_PRODUCE_LIST, UPDATE_CROPS_LIST, UPDATE_VARIETY_LIST, UPDATE_MASTER_CROP_NAMES_LIST } from './actions';
 import {
-    mockMasterListData,
     mockMatchedCropsList,
-    //mockProduceList,
     mockReviewsList,
     mockTransactionCropsList,
 } from './mockData.temp';

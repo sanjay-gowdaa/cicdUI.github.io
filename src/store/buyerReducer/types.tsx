@@ -49,17 +49,6 @@ export interface flatMasterListType {
     grade_name: string;
 }
 
-export interface MasterListProduce { 
-    produceId: string;
-    produceName: string;
-    cropId: string;
-    cropName: string;
-    categoryId: string;
-    categoryName: string;
-    gradeId: string;
-    gradeName: string;
-}
-
 export interface MasterListApiFormat {
     produce_name: string;
     crop_name: string;

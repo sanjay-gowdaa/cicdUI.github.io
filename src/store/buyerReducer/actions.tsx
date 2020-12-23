@@ -1,6 +1,6 @@
 import { addProduce, getAllProduce, getCropCategoryList, getCropList, getSubCategoryList, getMasterList, updateMasterList } from "../api";
 import { RootState } from "../rootReducer";
-import { MasterListApiFormat, MasterListProduce, ProduceModel } from "./types";
+import { MasterListApiFormat, ProduceModel } from "./types";
 
 export const UPDATE_MASTER_LIST = 'UPDATE_MASTER_LIST';
 export const GET_MASTER_LIST = 'GET_MASTER_LIST';
@@ -9,7 +9,7 @@ export const UPDATE_MASTER_CROP_NAMES_LIST = 'UPDATE_MASTER_CROP_NAMES_LIST';
 export const UPDATE_CROPS_LIST = 'UPDATE_CROPS_LIST';
 export const UPDATE_VARIETY_LIST = 'UPDATE_VARIETY_LIST';
 
-export const updateMasterlist = (masterlist: Array<MasterListProduce>) => {
+export const updateMasterlist = (masterlist: Array<any>) => {
     return {
         type: UPDATE_MASTER_LIST,
         payload: masterlist,
@@ -71,7 +71,7 @@ export const addNewProduce = (/*produceFormData: ProduceModel*/ produceFormData:
     return async(dispatch: any, getState: any) => {
         const {loginUser} = getState() as RootState; 
         // for testing, use USER-ID 
-        // const {userName = '7892329983'} = loginUser
+        // const userName = '7892329983'
         const {userName} = loginUser
         const addProduceResponse = await addProduce(produceFormData, userName);
         console.log('addProduceResponse', addProduceResponse);
