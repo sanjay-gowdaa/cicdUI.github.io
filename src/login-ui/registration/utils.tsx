@@ -55,7 +55,13 @@ export const generateFormData = ({formSubmitValues, userType, addressForPin}: ge
         /* For testing purpose uncomment below line and comment above line */
         // formSubmitValues = {...formSubmitValues, working_hours: workingHoursData, isBuyer: true, number: '9036565202', email: 'a', name: 'a', type: 'a'}
     }
-    formSubmitValues =  {...formSubmitValues, address2: `${addressForPin.taluk}, ${addressForPin.district}, ${addressForPin.state}`};
+    formSubmitValues = 
+        {...formSubmitValues, 
+            address2: `${addressForPin.taluk}, ${addressForPin.district}, ${addressForPin.state}`,
+            taluk: addressForPin.taluk,
+            district: addressForPin.district,
+            state: addressForPin.state
+        };
     const actualUserReq = JSON.stringify(formSubmitValues)
     formData.append('user_req', actualUserReq)
     return formData;
