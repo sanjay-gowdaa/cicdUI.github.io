@@ -6,3 +6,10 @@ export const routesMap = {
     seller_ui: '/seller',
     buyer_ui: '/buyer',
 };
+
+export const headerBreadcrumb = {
+    produce: "-ui-app",
+    matches: "-ui-matches",
+    transaction: "-ui-transactions",
+    feedback: "-ui-feedback",
+}
