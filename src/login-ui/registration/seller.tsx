@@ -20,7 +20,7 @@ import {
     resetOtpState,
     setRegisterMsg,
     setResgiterVerifiedFlag,
-    submitRegsiter,
+    submitRegister,
     updateForm
 } from '../../store/registrationReducer/actions';
 import { routesMap } from '../../constants';
@@ -40,6 +40,7 @@ const singleLabelFieldLayout = {
 };
 
 const normFile = (e: any) => {
+    console.log("normFile seller");
     console.log('Upload event:', e);
     if (Array.isArray(e)) {
         return e;
@@ -49,8 +50,12 @@ const normFile = (e: any) => {
 };
 
 const Seller = (props: any) => {
+    console.log("Seller");
     const { history } = props;
     const [addressForPin, setAddressForPin] = useState('');
+    const [district, setDistrict] = useState('');
+    const [taluk, setTaluk] = useState('');
+    const [state, setStateName] = useState('');
     const [registerFormValues, setRegisterFormValues] = useState({});
     const [showConfirmation, toggleShowConfirmation] = useState(false);
     const [showSubmitMsgPopup, toggleShowSubmitMsgPopup] = useState(false);
@@ -61,6 +66,7 @@ const Seller = (props: any) => {
     const {type: subType} = partialUserData || {};
 
     useEffect(() => {
+        console.log("useEffects seller");
         if(registerResponse.verified) {
             dispatch(setRegisterMsg(''));
             dispatch(setResgiterVerifiedFlag(false));
@@ -70,22 +76,26 @@ const Seller = (props: any) => {
     }, [registerResponse.verified]);
 
     const onConfirmRegister = () => {
-        const multipartFormData = generateFormData({formSubmitValues: registerFormValues, userType: entityType, addressForPin});
+        console.log("onConfirmRegister seller");
+        const multipartFormData = generateFormData({formSubmitValues: registerFormValues, userType: entityType, addressForPin, district, taluk, state});
         dispatch(updateForm(registerFormValues as any));
-        dispatch(submitRegsiter(entityType, multipartFormData));
+        dispatch(submitRegister(entityType, multipartFormData));
     };
 
     const onFinish = (values: any) => {
+        console.log("onFinish seller");
         console.log('Success:', values);
         setRegisterFormValues(values);
         toggleShowConfirmation(!showConfirmation);
     };
 
     const onFinishFailed = (errorInfo: any) => {
+        console.log("onFinishFailed seller");
         console.log('Failed:', errorInfo);
     };
 
     const onReset = () => {
+        console.log("onReset seller");
         dispatch(resetOtpState());
         history.push(home);
     };
@@ -163,7 +173,7 @@ const Seller = (props: any) => {
                                 <Form.Item
                                     label="Pin Code"
                                     name="zip"
-                                    rules={[{validator: (rule, value) => customPincodeValidator(rule, value, setAddressForPin)}]}
+                                    rules={[{validator: (rule, value) => customPincodeValidator(rule, value, setAddressForPin, setDistrict, setTaluk, setStateName)}]}
                                 >
                                     <Input className="custom-input" />
                                 </Form.Item>
