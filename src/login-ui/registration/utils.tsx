@@ -19,13 +19,14 @@ import {
 type generateFormDataProps = {
     formSubmitValues: any,
     userType: string,
-    addressForPin: string,
-    district: string,
-    taluk: string,
-    state: string
+    addressForPin: {
+        taluk: string,
+        district: string,
+        state: string
+    }
 }
 
-export const generateFormData = ({formSubmitValues, userType, addressForPin, district, taluk, state}: generateFormDataProps) => {
+export const generateFormData = ({formSubmitValues, userType, addressForPin}: generateFormDataProps) => {
     const {bank_statement} = formSubmitValues;
     let formData = new FormData();
     formData.append('bank_doc', bank_statement[0].originFileObj);
@@ -61,7 +62,7 @@ export const generateFormData = ({formSubmitValues, userType, addressForPin, dis
 };
 
 
-export const customPincodeValidator = (rule: RuleObject, value: any, setAddressForPin: Function, setDistrict: Function, setTaluk: Function, setStateName: Function) => {
+export const customPincodeValidator = (rule: RuleObject, value: any, setAddressForPin: Function) => {
     if (!value) {
         return Promise.reject(PIN_REQUIRED_MSG);
     } else if (value.length !== 6 ) {
@@ -77,11 +78,9 @@ export const customPincodeValidator = (rule: RuleObject, value: any, setAddressF
                 const getLocationObj = locationDetails[0];
                 const {PostOffice = []} = getLocationObj || {}
                 const {District = '', State = '', Block = ''} = PostOffice[0] || {};
-                const address = `${Block}, ${District}, ${State}`;
+                // const address = `${Block}, ${District}, ${State}`;
+                const address = { taluk: Block, district: District, state: State };
                 setAddressForPin(address);
-                setDistrict(District);
-                setTaluk(Block);
-                setStateName(State);
                 return Promise.resolve();
             }
         })

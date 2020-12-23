@@ -50,10 +50,7 @@ const normFile = (e: any) => {
 
 const Seller = (props: any) => {
     const { history } = props;
-    const [addressForPin, setAddressForPin] = useState('');
-    const [district, setDistrict] = useState('');
-    const [taluk, setTaluk] = useState('');
-    const [state, setStateName] = useState('');
+    const [addressForPin, setAddressForPin] = useState({taluk: '', district: '', state: ''});
     const [registerFormValues, setRegisterFormValues] = useState({});
     const [showConfirmation, toggleShowConfirmation] = useState(false);
     const [showSubmitMsgPopup, toggleShowSubmitMsgPopup] = useState(false);
@@ -73,7 +70,7 @@ const Seller = (props: any) => {
     }, [registerResponse.verified]);
 
     const onConfirmRegister = () => {
-        const multipartFormData = generateFormData({formSubmitValues: registerFormValues, userType: entityType, addressForPin, district, taluk, state});
+        const multipartFormData = generateFormData({formSubmitValues: registerFormValues, userType: entityType, addressForPin});
         dispatch(updateForm(registerFormValues as any));
         dispatch(submitRegister(entityType, multipartFormData));
     };
@@ -166,11 +163,11 @@ const Seller = (props: any) => {
                                 <Form.Item
                                     label="Pin Code"
                                     name="zip"
-                                    rules={[{validator: (rule, value) => customPincodeValidator(rule, value, setAddressForPin, setDistrict, setTaluk, setStateName)}]}
+                                    rules={[{validator: (rule, value) => customPincodeValidator(rule, value, setAddressForPin)}]}
                                 >
                                     <Input className="custom-input" />
                                 </Form.Item>
-                                <p className='margin-b-2em'>{addressForPin}</p>
+                                <p className='margin-b-2em'>{addressForPin.taluk} {addressForPin.district} {addressForPin.state}</p>
                             </div>
                             <Form.Item
                                 label="Address"

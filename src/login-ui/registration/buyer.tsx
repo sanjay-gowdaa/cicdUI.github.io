@@ -69,10 +69,7 @@ const normFile = (e: any) => {
 
 const Buyer = (props: any) => {
     const { history } = props;
-    const [addressForPin, setAddressForPin] = useState('');
-    const [district, setDistrict] = useState('');
-    const [taluk, setTaluk] = useState('');
-    const [state, setStateName] = useState('');
+    const [addressForPin, setAddressForPin] = useState({taluk: '', district: '', state: ''});
     const [registerFormValues, setRegisterFormValues] = useState({});
     const [showConfirmation, toggleShowConfirmation] = useState(false);
     const [showSubmitMsgPopup, toggleShowSubmitMsgPopup] = useState(false);
@@ -93,7 +90,7 @@ const Buyer = (props: any) => {
 
     const onConfirmRegister = () => {
         const userType = registrationState.entityType;
-        const multipartFormData = generateFormData({formSubmitValues: registerFormValues, userType, addressForPin, district, taluk, state});
+        const multipartFormData = generateFormData({formSubmitValues: registerFormValues, userType, addressForPin});
         dispatch(updateForm(registerFormValues as any));
         dispatch(submitRegister(userType, multipartFormData));
     };
@@ -309,13 +306,13 @@ const Buyer = (props: any) => {
                                     name="pinCode"
                                     rules={[
                                         {
-                                            validator: (rule, value) => customPincodeValidator(rule, value, setAddressForPin, setDistrict, setTaluk, setStateName)
+                                            validator: (rule, value) => customPincodeValidator(rule, value, setAddressForPin)
                                         }
                                     ]}
                                 >
                                     <Input className="custom-input" />
                                 </Form.Item>
-                                <p className='margin-b-2em'>{addressForPin}</p>
+                                <p className='margin-b-2em'>{addressForPin.taluk} {addressForPin.district} {addressForPin.state}</p>
                             </div>
                             <Form.Item
                                 label="Address"
