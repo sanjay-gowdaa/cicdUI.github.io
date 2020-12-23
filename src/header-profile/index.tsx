@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { 
     Badge,
@@ -19,6 +19,7 @@ import { Redirect } from 'react-router-dom';
 import { RootState } from '../store/rootReducer';
 import { UserStateModel } from '../store/loginReducer/types';
 import DefaultBtn from '../app-components/defaultBtn';
+import { headerBreadcrumb } from '../constants';
 
 const { Text, Title } = Typography;
 
@@ -27,20 +28,22 @@ const UserHeader = () => {
     const fieldOfficer = "Mahesh Kumar";
     const fieldOfficerNumber = "9876543210";
     const [notificationNumber, setNotificationNumber] = useState(2);
-    const [isLogout, setLogout] = useState(false); 
-    var produce, matches, transaction, feedback;
+    const [isLogout, setLogout] = useState(false);
+    const [userType, setUserType] = useState('');
+    const [breadCrumbs, setBreadCrumbs] = useState({produce: '', matches: '', transaction: '', feedback: ''});
 
-    if (loginState.is_buyer) {
-        produce = "#" + "buyer-ui-app";
-        matches = "#" + "buyer-ui-matches";
-        transaction = "#" + "buyer-ui-transactions";
-        feedback = "#" + "buyer-ui-feedback";
-    } else {
-        produce = "#" + "seller-ui-app";
-        matches = "#" + "seller-ui-matches";
-        transaction = "#" + "seller-ui-transactions";
-        feedback = "#" + "seller-ui-feedback";
-    }
+    useEffect(() => {
+        loginState.is_buyer ? setUserType("#buyer") : setUserType("seller");
+        headerCrumbNames();
+    }, [userType])
+
+    const headerCrumbNames = () => {
+        const produceName = userType + headerBreadcrumb.produce;
+        const matchesName = userType + headerBreadcrumb.matches;
+        const transactionName = userType + headerBreadcrumb.transaction;
+        const feedbackName = userType + headerBreadcrumb.feedback;
+        setBreadCrumbs({produce: produceName, matches: matchesName,transaction: transactionName, feedback: feedbackName});
+    };
 
     // clear=true Means Clear one notification. clear=false Means Add one notification
     const clearNotification = (clear: boolean) => {
@@ -96,10 +99,10 @@ const UserHeader = () => {
     return (
       <div className="display-flex-row align-center">
         <Breadcrumb separator=" " className="custom-breadcrumb">
-            <Breadcrumb.Item href={produce} >Produce</Breadcrumb.Item>
-            <Breadcrumb.Item href={matches} >Matches</Breadcrumb.Item>
-            <Breadcrumb.Item href={transaction} >Transaction</Breadcrumb.Item>
-            <Breadcrumb.Item href={feedback} >Feedback</Breadcrumb.Item>
+            <Breadcrumb.Item href={breadCrumbs.produce} >Produce</Breadcrumb.Item>
+            <Breadcrumb.Item href={breadCrumbs.matches} >Matches</Breadcrumb.Item>
+            <Breadcrumb.Item href={breadCrumbs.transaction} >Transaction</Breadcrumb.Item>
+            <Breadcrumb.Item href={breadCrumbs.feedback} >Feedback</Breadcrumb.Item>
         </Breadcrumb>
         <Badge count={notificationNumber} className="custom-badge">
             <Tooltip title="Notifications">
