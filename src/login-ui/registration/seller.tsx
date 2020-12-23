@@ -40,7 +40,6 @@ const singleLabelFieldLayout = {
 };
 
 const normFile = (e: any) => {
-    console.log("normFile seller");
     console.log('Upload event:', e);
     if (Array.isArray(e)) {
         return e;
