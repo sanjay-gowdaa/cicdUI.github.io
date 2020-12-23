@@ -19,7 +19,11 @@ import {
 type generateFormDataProps = {
     formSubmitValues: any,
     userType: string,
-    addressForPin: string
+    addressForPin: {
+        taluk: string,
+        district: string,
+        state: string
+    }
 }
 
 export const generateFormData = ({formSubmitValues, userType, addressForPin}: generateFormDataProps) => {
@@ -27,7 +31,7 @@ export const generateFormData = ({formSubmitValues, userType, addressForPin}: ge
     let formData = new FormData();
     formData.append('bank_doc', bank_statement[0].originFileObj);
     delete formSubmitValues['bank_statement'];
-
+    
     if (userType === UserTypes.SELLER) {
     // For testing uncomment below line and comment above line   
     // if (false) {
@@ -51,7 +55,13 @@ export const generateFormData = ({formSubmitValues, userType, addressForPin}: ge
         /* For testing purpose uncomment below line and comment above line */
         // formSubmitValues = {...formSubmitValues, working_hours: workingHoursData, isBuyer: true, number: '9036565202', email: 'a', name: 'a', type: 'a'}
     }
-    formSubmitValues = {...formSubmitValues, address2: addressForPin};
+    formSubmitValues = 
+        {...formSubmitValues, 
+            address2: `${addressForPin.taluk}, ${addressForPin.district}, ${addressForPin.state}`,
+            taluk: addressForPin.taluk,
+            district: addressForPin.district,
+            state: addressForPin.state
+        };
     const actualUserReq = JSON.stringify(formSubmitValues)
     formData.append('user_req', actualUserReq)
     return formData;
@@ -74,7 +84,8 @@ export const customPincodeValidator = (rule: RuleObject, value: any, setAddressF
                 const getLocationObj = locationDetails[0];
                 const {PostOffice = []} = getLocationObj || {}
                 const {District = '', State = '', Block = ''} = PostOffice[0] || {};
-                const address = `${Block}, ${District}, ${State}`;
+                // const address = `${Block}, ${District}, ${State}`;
+                const address = { taluk: Block, district: District, state: State };
                 setAddressForPin(address);
                 return Promise.resolve();
             }
@@ -109,7 +120,6 @@ export const customAadhaarValidator = (rule: RuleObject, value: any) => {
 };
 
 export const customIfscValidator = (rule: RuleObject, value: any) => {
-
     if (!value){
         return Promise.reject(IFSC_REQUIRED_MSG);
     } else if (value.length !== 11) {

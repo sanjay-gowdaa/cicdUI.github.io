@@ -20,7 +20,7 @@ import {
     resetOtpState,
     setRegisterMsg,
     setResgiterVerifiedFlag,
-    submitRegsiter,
+    submitRegister,
     updateForm
 } from '../../store/registrationReducer/actions';
 import { routesMap } from '../../constants';
@@ -50,7 +50,7 @@ const normFile = (e: any) => {
 
 const Seller = (props: any) => {
     const { history } = props;
-    const [addressForPin, setAddressForPin] = useState('');
+    const [addressForPin, setAddressForPin] = useState({taluk: '', district: '', state: ''});
     const [registerFormValues, setRegisterFormValues] = useState({});
     const [showConfirmation, toggleShowConfirmation] = useState(false);
     const [showSubmitMsgPopup, toggleShowSubmitMsgPopup] = useState(false);
@@ -72,7 +72,7 @@ const Seller = (props: any) => {
     const onConfirmRegister = () => {
         const multipartFormData = generateFormData({formSubmitValues: registerFormValues, userType: entityType, addressForPin});
         dispatch(updateForm(registerFormValues as any));
-        dispatch(submitRegsiter(entityType, multipartFormData));
+        dispatch(submitRegister(entityType, multipartFormData));
     };
 
     const onFinish = (values: any) => {
@@ -167,7 +167,7 @@ const Seller = (props: any) => {
                                 >
                                     <Input className="custom-input" />
                                 </Form.Item>
-                                <p className='margin-b-2em'>{addressForPin}</p>
+                                <p className='margin-b-2em'>{addressForPin.taluk} {addressForPin.district} {addressForPin.state}</p>
                             </div>
                             <Form.Item
                                 label="Address"

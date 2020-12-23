@@ -107,7 +107,7 @@ export const confirmOTP = (number: string, otp: string) => {
     }
 }
 
-export const submitRegsiter = (userType: string, userFormData: any) => {
+export const submitRegister = (userType: string, userFormData: any) => {
     return async(dispatch: any, getState: any) => {
         const registerUserResponse = await registerUser(userType, userFormData);
         const {result} = registerUserResponse || {}

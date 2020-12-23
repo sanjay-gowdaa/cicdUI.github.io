@@ -19,7 +19,7 @@ import {
     resetOtpState,
     setRegisterMsg,
     setResgiterVerifiedFlag,
-    submitRegsiter,
+    submitRegister,
     updateForm
 } from '../../store/registrationReducer/actions';
 import { routesMap } from '../../constants';
@@ -69,7 +69,7 @@ const normFile = (e: any) => {
 
 const Buyer = (props: any) => {
     const { history } = props;
-    const [addressForPin, setAddressForPin] = useState('');
+    const [addressForPin, setAddressForPin] = useState({taluk: '', district: '', state: ''});
     const [registerFormValues, setRegisterFormValues] = useState({});
     const [showConfirmation, toggleShowConfirmation] = useState(false);
     const [showSubmitMsgPopup, toggleShowSubmitMsgPopup] = useState(false);
@@ -90,9 +90,9 @@ const Buyer = (props: any) => {
 
     const onConfirmRegister = () => {
         const userType = registrationState.entityType;
-        const multipartFormData = generateFormData({formSubmitValues: registerFormValues, userType, addressForPin})
+        const multipartFormData = generateFormData({formSubmitValues: registerFormValues, userType, addressForPin});
         dispatch(updateForm(registerFormValues as any));
-        dispatch(submitRegsiter(userType, multipartFormData));
+        dispatch(submitRegister(userType, multipartFormData));
     };
 
     const onFinish = (values: any) => {
@@ -306,13 +306,13 @@ const Buyer = (props: any) => {
                                     name="pinCode"
                                     rules={[
                                         {
-                                            validator: (rule, value) => customPincodeValidator(rule, value, setAddressForPin) 
+                                            validator: (rule, value) => customPincodeValidator(rule, value, setAddressForPin)
                                         }
                                     ]}
                                 >
                                     <Input className="custom-input" />
                                 </Form.Item>
-                                <p className='margin-b-2em'>{addressForPin}</p>
+                                <p className='margin-b-2em'>{addressForPin.taluk} {addressForPin.district} {addressForPin.state}</p>
                             </div>
                             <Form.Item
                                 label="Address"
