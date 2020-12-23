@@ -50,7 +50,6 @@ const normFile = (e: any) => {
 };
 
 const Seller = (props: any) => {
-    console.log("Seller");
     const { history } = props;
     const [addressForPin, setAddressForPin] = useState('');
     const [district, setDistrict] = useState('');
@@ -66,7 +65,6 @@ const Seller = (props: any) => {
     const {type: subType} = partialUserData || {};
 
     useEffect(() => {
-        console.log("useEffects seller");
         if(registerResponse.verified) {
             dispatch(setRegisterMsg(''));
             dispatch(setResgiterVerifiedFlag(false));
@@ -76,26 +74,22 @@ const Seller = (props: any) => {
     }, [registerResponse.verified]);
 
     const onConfirmRegister = () => {
-        console.log("onConfirmRegister seller");
         const multipartFormData = generateFormData({formSubmitValues: registerFormValues, userType: entityType, addressForPin, district, taluk, state});
         dispatch(updateForm(registerFormValues as any));
         dispatch(submitRegister(entityType, multipartFormData));
     };
 
     const onFinish = (values: any) => {
-        console.log("onFinish seller");
         console.log('Success:', values);
         setRegisterFormValues(values);
         toggleShowConfirmation(!showConfirmation);
     };
 
     const onFinishFailed = (errorInfo: any) => {
-        console.log("onFinishFailed seller");
         console.log('Failed:', errorInfo);
     };
 
     const onReset = () => {
-        console.log("onReset seller");
         dispatch(resetOtpState());
         history.push(home);
     };
