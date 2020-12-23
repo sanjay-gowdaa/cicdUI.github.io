@@ -1,7 +1,6 @@
 const BASE_URL = 'https://enzdzh0pw2.execute-api.ap-south-1.amazonaws.com'
 const ALTERNATIVE_BASE_URL = 'https://mf9ikza105.execute-api.ap-south-1.amazonaws.com'
 const STAGE = 'dev'
-const version_1 = 'v1'
 
 export const REDIRECT_URL =  `https://${window.location.host}/login-user`
 export const LOGIN_URL = `https://vbui.auth.ap-south-1.amazoncognito.com/login?client_id=7sckhhjs2aq1noqd1fvjdeo69j&response_type=code&redirect_uri=${REDIRECT_URL}`;
@@ -18,7 +17,6 @@ const CROP_SUB_TYPES_DETAILS_API = 'getcropdetails';
 const CROP_CATEGORY_DETAILS_API = 'getcropcategories';
 
 const getAuthHeader = (userAccessToken: string) => ({'Authorization': `Bearer ${userAccessToken}`});
-const getApiKeyHeader = () => ({'x-api-key': 'mv87g1fKjV2EZQs8lvrkm7Knd7m8pUPF7hwvNv8f'});
 
 /* OTP Interface */
 export const sendOtp = (number: string) => {
@@ -69,7 +67,6 @@ export const getAccessToken = (userCode: string) => {
     const accessTokenParam = JSON.stringify({
         'code': userCode,
         'redirectURL': REDIRECT_URL
-        // 'redirectURL': `${BASE_URL}/login-user`
     });
     return fetch(accessTokenApi, {
         method: 'POST',
@@ -100,18 +97,24 @@ export const getSubCategoryList = (categoryId: string) => {
 };
 
 export const createCrop = (cropData: any, sellerId: string) => {
-    const addCropApi = `${BASE_URL}/${STAGE}/${version_1}/seller/${sellerId}/crop`;
+    const addCropApi = `${BASE_URL}/${STAGE}/seller/${sellerId}/crop`;
     return fetch(addCropApi, {
         method: 'POST',
-        body: JSON.stringify({cropData})
+        body: cropData
     }).then((response: any) => response.json());
+};
+
+
+export const getAllCrops = (sellerId: string) => {
+    const fetcCropsApi = `${BASE_URL}/${STAGE}/seller/${sellerId}/crop`;
+    return fetch(fetcCropsApi).then((response: any) => response.json());
 };
 
 /* Seller Apis End */
 
 /* Buyer Apis */
 export const addProduce = (produceData: any, buyerId: string) => {
-    const addProduceApi = `${ALTERNATIVE_BASE_URL}/${STAGE}/${version_1}/buyer/${buyerId}/crop`;
+    const addProduceApi = `${ALTERNATIVE_BASE_URL}/${STAGE}/buyer/${buyerId}/crop`;
     const bodyParamData = JSON.stringify(produceData);
     return fetch(addProduceApi, {
         method: 'POST',

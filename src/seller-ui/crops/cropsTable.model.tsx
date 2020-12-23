@@ -2,7 +2,7 @@ import React from 'react';
 import { Button, Image, Progress,  Statistic, Typography } from 'antd';
 import { CaretUpOutlined, CaretDownOutlined } from '@ant-design/icons';
 
-import { ApmcRateChangeModel, CropModel } from '../../store/sellerReducer/types';
+import { ApmcRateChangeModel, CropApiModel } from '../../store/sellerReducer/types';
 import RagiImg from '../../static/assets/ragi.png';
 
 const { Title } = Typography;
@@ -10,15 +10,15 @@ const { Title } = Typography;
 export const cropColumns = [
     {
         title: 'Crop',
-        dataIndex: 'cropName',
-        key: 'cropName',
-        render: (cropName: string, record: CropModel) => {
+        dataIndex: 'crop_name',
+        key: 'crop_name',
+        render: (cropName: string, record: CropApiModel) => {
             return (
                 <div className="display-flex-row align-center">
                     <Image src={RagiImg} />
                     <div className="margin-l-r-1em">
                         <Title level={5}>{cropName}</Title>
-                        <p>{record?.subCategory}</p>
+                        <p>{record?.sub_category}</p>
                     </div>
                 </div>
             );
@@ -26,8 +26,8 @@ export const cropColumns = [
     },
     {
         title: 'Grade',
-        dataIndex: 'cropGrade',
-        key: 'cropGrade',
+        dataIndex: 'crop_grade',
+        key: 'crop_grade',
     },
     {
         title: 'Qunatity Remaining',
@@ -44,40 +44,41 @@ export const cropColumns = [
     },
     {
         title: 'Price per qtl',
-        dataIndex: 'pricePerQnt',
-        key: 'pricePerQnt',
+        dataIndex: 'price_per_qnt',
+        key: 'price_per_qnt',
     },
-    {
-        title: 'Live APMC Rates per qtl',
-        dataIndex: 'apmcRate',
-        key: 'apmcRate',
-        render: (apmcRate: number, record: CropModel) => {
-            const { apmcRateChange } = record;
-            const { difference, increase } = apmcRateChange as ApmcRateChangeModel;
-            const color = increase ? '#12805C' : '#E90000';
-            return (
-                <>
-                    <p>{apmcRate}</p>
-                    <Statistic
-                        value={difference}
-                        valueStyle={{ color, fontSize: '12px' }}
-                        prefix={increase ? <CaretUpOutlined /> : <CaretDownOutlined />}
-                    />
-                </>
-            );
-        },
-    },
+    // {
+    //     title: 'Live APMC Rates per qtl',
+    //     dataIndex: 'apmcRate',
+    //     key: 'apmcRate',
+    //     render: (apmcRate: number, record: CropModel) => {
+    //         const { apmcRateChange } = record;
+    //         const { difference, increase } = apmcRateChange as ApmcRateChangeModel;
+    //         const color = increase ? '#12805C' : '#E90000';
+    //         return (
+    //             <>
+    //                 <p>{apmcRate}</p>
+    //                 <Statistic
+    //                     value={difference}
+    //                     valueStyle={{ color, fontSize: '12px' }}
+    //                     prefix={increase ? <CaretUpOutlined /> : <CaretDownOutlined />}
+    //                 />
+    //             </>
+    //         );
+    //     },
+    // },
     {
         title: 'Intent To Sell',
-        dataIndex: 'intentToSell',
-        key: 'intentToSell',
+        dataIndex: 'intent_to_sell',
+        key: 'intent_to_sell',
         render: (intentToSell: boolean) => <p>{intentToSell ? 'Yes' : 'No'}</p>,
     },
     {
         title: 'Additional',
-        key: 'termsAndConditions',
-        dataIndex: 'termsAndConditions',
-        render: (termsAndConditions: string) => {
+        key: 'terms_and_conditions',
+        dataIndex: 'terms_and_conditions',
+        render: (termsAndConditions: string, record: CropApiModel) => {
+            // const {} = record;
             return (
                 <>
                     <div>
@@ -97,9 +98,9 @@ export const cropColumns = [
     {
         title: '',
         key: 'action',
-        render: (text: string, record: CropModel) => {
-            const { intentToSell } = record;
-            return intentToSell ? null : (
+        render: (text: string, record: CropApiModel) => {
+            const { intent_to_sell } = record;
+            return intent_to_sell ? null : (
                 <>
                     <Button type="link" block>
                         Edit

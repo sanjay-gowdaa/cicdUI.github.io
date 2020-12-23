@@ -48,9 +48,9 @@ export const getMasterProduceList = () => {
     return async(dispatch: any, getState: any) => {
         const {loginUser} = getState() as RootState; 
         const {userName} = loginUser;
-        // const masterProduceList = await getMasterList(userName);
-        //testing
-        const masterProduceList = await getMasterList('7892329983');
+        const masterProduceList = await getMasterList(userName);
+        // testing
+        // const masterProduceList = await getMasterList('7892329983');
         const masterList = masterProduceList || [];
         dispatch(updateMasterlist(masterList));
     }
@@ -60,9 +60,9 @@ export const updateMasterListData = (masterlist: Array<MasterListApiFormat>) => 
     return async(dispatch: any, getState: any) => {
         const {loginUser} = getState() as RootState; 
         const {userName} = loginUser;
-        // const updateMasterListResponse = await updateMasterList(masterlist, userName);
-        //testing
-        const updateMasterListResponse = await updateMasterList(masterlist, '7892329983');
+        const updateMasterListResponse = await updateMasterList(masterlist, userName);
+        // testing
+        // const updateMasterListResponse = await updateMasterList(masterlist, '7892329983');
         dispatch(getMasterProduceList());
     }
 }
@@ -83,8 +83,9 @@ export const getProduceList = () => {
     return async(dispatch: any, getState: any) => {
         const {loginUser} = getState() as RootState; 
         // for tesing, use USER-ID 
-        const {userName} = {userName: '7892329983'}; 
-        //const {userName} = loginUser
+        // const {userName} = {userName: '7892329983'}; 
+        
+        const {userName} = loginUser
         const getProduceListResponse = await getAllProduce(userName);
         const {Items, Count} = getProduceListResponse || {Items: []}
         console.log('getProduceList', Items);

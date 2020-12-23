@@ -14,15 +14,12 @@ import {
 } from 'antd';
 import { InboxOutlined } from '@ant-design/icons';
 import { useDispatch, useSelector } from 'react-redux';
-
-import { addCrop, addNewCrop, fetchAllCategories, fetchAllSubCategories } from '../../../store/sellerReducer/actions';
+import { addNewCropData, fetchAllCategories, fetchAllSubCategories } from '../../../store/sellerReducer/actions';
 import { RootState } from '../../../store/rootReducer';
 import { SellerStateModel } from '../../../store/sellerReducer/types';
-import { renderCategoryOptions, renderGradeOptionsForSubCategory, renderSubCategoryOptions } from '../cropUtils';
-import { UserStateModel } from '../../../store/loginReducer/types';
+import { createSellerFormData, renderCategoryOptions, renderGradeOptionsForSubCategory, renderSubCategoryOptions } from '../cropUtils';
 import PrimaryBtn from '../../../app-components/primaryBtn';
 import CancelBtn from '../../../app-components/cancelBtn';
-
 
 const { Text } = Typography;
 const { Option } = Select;
@@ -45,16 +42,14 @@ const AddCropModal = () => {
     const [form] = Form.useForm(); 
     const dispatch = useDispatch();
     const sellerStore: SellerStateModel = useSelector((state: RootState) => state.seller);
-    const userStore: UserStateModel = useSelector((state: RootState) => state.loginUser);
 
     useEffect(() => {
         sellerStore.categories && !sellerStore.categories.length && dispatch(fetchAllCategories())
     }, [])
 
     const onFinish = (values: any) => {
-        console.log('Success:', values);
-        dispatch(addNewCrop(values));
-        // dispatch(addCrop(values, userStore.id))
+        // console.log('Success:', values);
+        dispatch(addNewCropData(createSellerFormData(values)));
         form.resetFields();
         setModalVisible(false);
     };

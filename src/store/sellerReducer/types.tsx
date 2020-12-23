@@ -2,6 +2,17 @@ export interface ApmcRateChangeModel {
     difference: number;
     increase: boolean;
 }
+export interface CropApiModel {
+    crop_name: string;
+    sub_category?: string;
+    crop_grade?: string;
+    quantity: number;
+    price_per_qnt: number;
+    apmc_rate: number;
+    intent_to_sell: boolean;
+    terms_and_conditions?: string;
+    apmc_rate_change: ApmcRateChangeModel | null;
+}
 
 export interface CropModel {
     cropName: string;

@@ -2,6 +2,7 @@ import React from 'react';
 import { Select } from 'antd';
 import { uniqBy } from 'lodash';
 import { CropCategoryModel } from '../../store/sellerReducer/types';
+import { camelToSnakeCase } from '../../store/utils';
 const {Option} = Select
 
 export const renderCategoryOptions = (categories: Array<string>) => {
@@ -25,3 +26,24 @@ export const renderGradeOptionsForSubCategory = (selectedCropDataList: Array<Cro
                             .map(({grade}: CropCategoryModel, index) => <Option key={`${grade}-${index}`} value={grade}> {grade} </Option>)
     return gradeOptions
 }
+
+export const createSellerFormData = (formValues: any) => {
+    const sellerCropKeys = Object.keys(formValues);
+    const sellerCropFormData = new FormData();
+    sellerCropKeys.forEach((cropKey) => {
+        if (cropKey !== 'cropImages') {
+            const snakeCaseKey = camelToSnakeCase(cropKey);
+            const cropDataValue = formValues[cropKey];
+            sellerCropFormData.append(snakeCaseKey, cropDataValue)
+        } else {
+            const cropImagesObject = formValues[cropKey] || {file: {}, fileList: []};
+            const {fileList: cropImagesList} = cropImagesObject;
+            cropImagesList.forEach((imageFileObj: any, index: number) => {
+                const {originFileObj} = imageFileObj;
+                sellerCropFormData.append(`crop_image_${index}`, originFileObj);
+            })
+        }
+    });
+    
+    return sellerCropFormData;
+};
