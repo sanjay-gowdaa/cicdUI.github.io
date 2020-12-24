@@ -33,7 +33,7 @@ const UserHeader = () => {
     const [breadCrumbs, setBreadCrumbs] = useState({produce: '', matches: '', transaction: '', feedback: ''});
 
     useEffect(() => {
-        loginState.is_buyer ? setUserType("#buyer") : setUserType("seller");
+        loginState.is_buyer ? setUserType("#buyer") : setUserType("#seller");
         headerCrumbNames();
     }, [userType])
 
