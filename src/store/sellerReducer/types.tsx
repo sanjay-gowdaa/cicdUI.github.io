@@ -47,7 +47,9 @@ export interface TransactioModel extends MatchRequirementModel {
 
 export interface SellerStateModel {
     categories: Array<string>;
-    subCategories: Array<any>;
+    produce: Array<string>;
+    variety: Array<CropCategoryModel>;
+    grade: Array<CropCategoryModel>;
     cropsList: Array<CropModel>;
     matchesList: Array<MatchRequirementModel>;
     transactionList: Array<TransactioModel>;
