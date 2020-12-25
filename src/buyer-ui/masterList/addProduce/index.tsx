@@ -12,14 +12,15 @@ import {
     Table,
     Typography
 } from 'antd';
-import {uniqBy, remove} from 'lodash';
+import { uniqBy, remove } from 'lodash';
 import { FilterOutlined, CaretRightOutlined } from '@ant-design/icons';
 import { masterListColumns } from './../masterListTable.model';
 import { BuyerStateModel, CropCategoryModel, MasterListApiFormat } from '../../../store/buyerReducer/types';
-import { fetchAllProduce, fetchAllCrops, updateMasterlist, fetchAllVariety, updateMasterListData } from '../../../store/buyerReducer/actions';
+import { fetchAllProduce, fetchAllCrops, fetchAllVariety, updateMasterListData } from '../../../store/buyerReducer/actions';
 import DefaultBtn from '../../../app-components/defaultBtn';
 import CancelBtn from '../../../app-components/cancelBtn';
 import { RootState } from '../../../store/rootReducer';
+import { convertMasterListToGradeStructure, updateMasterCropDatastructure } from '../masterListUtils';
 
 const { Search } = Input;
 const { Option } = Select;
@@ -33,13 +34,13 @@ const MasterList = (props: any) => {
     const [selectedProduceCategory, setSelectedProduceCategory] = useState('');
     const [selectedCrop, setSelectedCrop] = useState('');
     const [selectedVariety, setSelectedVariety] = useState('');
-    const [selectedGrade, setSelectedGrade] = useState('');
-    const [selectedGradeList, updateSelectedList] = useState({} as any)
+    const [selectedGradeList, updateSelectedList] = useState(convertMasterListToGradeStructure(buyerStore.masterProduceList) as any)
 
     useEffect(() => {
         buyerStore.masterCropNames && !buyerStore.masterCropNames.length && dispatch(fetchAllProduce());
     }, [])
 
+    
     /* On change of master produce selection*/
     const handleMasterProduceChange = (produceName: string) => {
         // Should erase the variety and grade data on change.
@@ -86,15 +87,15 @@ const MasterList = (props: any) => {
         const gradeList = cropName
             .filter((crop: CropCategoryModel) => crop.variety === cropVariety)
                 .map(({grade}: CropCategoryModel, index) => {
-                    console.log('grade', grade)
                     return (
                         <>
                             <List.Item key={`${grade}-${index}`} >
                                 <Checkbox className="custom-checkbox" 
                                     checked={isSelected(grade)}
-                                    onChange={()=> {
-                                        setSelectedGrade(grade);
-                                        addCropToList(grade)
+                                    onChange={(e)=> {
+                                        const {target} = e;
+                                        const {checked} = target;
+                                        addCropToList(grade, checked)
                                     }}
                                 >
                                     {grade}
@@ -106,41 +107,46 @@ const MasterList = (props: any) => {
         return gradeList;
     };
 
-    const addCropToList = (gradeSelection: string) => {
-        if(selectedGradeList[selectedProduceCategory])  {
-            const allCropsDataFromProduce = selectedGradeList[selectedProduceCategory]
-            if(allCropsDataFromProduce[selectedCrop]) {
-                const allCategoryDataForCrop = allCropsDataFromProduce[selectedCrop]
-                if(allCategoryDataForCrop[selectedVariety]) {
-                    const updatedCatGrade = {...allCategoryDataForCrop[selectedVariety], [gradeSelection]: true}
-                    Object.assign(selectedGradeList[selectedProduceCategory][selectedCrop], {[selectedVariety]: updatedCatGrade})
-                    updateSelectedList( selectedGradeList)
-                } else {
-                    Object.assign(selectedGradeList[selectedProduceCategory][selectedCrop], {[selectedVariety]: {[gradeSelection]: true}})
-                    updateSelectedList( selectedGradeList)
-                }
-            } else {
-                Object.assign(selectedGradeList[selectedProduceCategory], {[selectedCrop]: {[selectedVariety]: {[gradeSelection]: true}}})
-                updateSelectedList( selectedGradeList)
-            }
-        } else {
-            Object.assign(selectedGradeList, { [selectedProduceCategory]: { [selectedCrop]: {[selectedVariety]: {[gradeSelection]: true} } } });
-            updateSelectedList(selectedGradeList);
-        }
+    const addCropToList = (gradeSelection: string, isSelected: boolean) => {
+        const updatedGradeStructure = updateMasterCropDatastructure(
+            gradeSelection, 
+            isSelected, 
+            {gradeDataStructure: selectedGradeList, selectedProduceCategory, selectedCrop, selectedVariety}
+        )
         
-        // /* Table data manipulations start */
-        // // Create entry data
+        updateSelectedList(updatedGradeStructure);
+        // Create entry data
         const entryData = {
             produce_name: selectedProduceCategory,
             crop_name: selectedCrop,
             category_name: selectedVariety,
             grade_name: gradeSelection
         };
+        // Update master list
+        if (isSelected) {
+            updateAddedMasterList([...addedMasterList, entryData]);
+        } else {
+            //pending to remove from master list
+        }
         
-        //  // Update master list
-        const updatedMasterList: any = [...addedMasterList, entryData];
-        updateAddedMasterList(updatedMasterList);
-        // /* Table data manipulations end */
+    }
+
+    const handleMasterTableDelete = (record: MasterListApiFormat, index: number) => {
+        const {crop_name, grade_name: gradeName, category_name, produce_name} = record;
+        /* Remove from master list array */
+        let copiedMasterList = [...addedMasterList];
+        copiedMasterList.splice(index, 1);
+        updateAddedMasterList(copiedMasterList);
+        /* Remove from master list array end */
+
+        /* Update grade datastructure */
+        const updatedGradeStructure = updateMasterCropDatastructure(
+            gradeName, 
+            false, 
+            {gradeDataStructure: selectedGradeList, selectedProduceCategory: produce_name, selectedCrop: crop_name, selectedVariety: category_name}
+        );
+        updateSelectedList(updatedGradeStructure);
+        /* Update grade datastructure end */
     }
 
     // const setSelectedClassName = (selectedClassName: string, listType: string) => {
@@ -234,9 +240,10 @@ const MasterList = (props: any) => {
             <Col>
                 <Table
                     className="margin-t-1em"
-                    columns={masterListColumns({removeProduceEntry: (record: any) => {
-                        console.log('removeProduceEntry', record)
-                    }})}
+                    columns={
+                        masterListColumns({
+                            removeProduceEntry: (record: MasterListApiFormat, index: number) => handleMasterTableDelete(record, index)
+                        })}
                     pagination={ false }
                     rowClassName="custom-row"
                     scroll = {{y: 200}}
@@ -244,7 +251,7 @@ const MasterList = (props: any) => {
                 />
             </Col>
         </Row>
-        <Row justify="center">
+        <Row justify="center" className='margin-t-1em'>
             <Col>
                 <CancelBtn
                     className="margin-l-r-1em crop-modal-action-btn vikas-btn-radius"

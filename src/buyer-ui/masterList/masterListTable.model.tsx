@@ -1,5 +1,6 @@
 import React from 'react';
 import { Button } from 'antd';
+import { MasterListApiFormat } from '../../store/buyerReducer/types';
 
 export interface componentCallBacksModel {
     removeProduceEntry: Function;}
@@ -28,7 +29,7 @@ export const masterListColumns = (componentCallBacks: componentCallBacksModel) =
     {
         title: '',
         key: 'action',
-        render: (text: any, record: any) => {
+        render: (text: any, record: MasterListApiFormat, index: number) => {
             return (
                 <div className="display-flex-row">
                     <Button 
@@ -36,7 +37,7 @@ export const masterListColumns = (componentCallBacks: componentCallBacksModel) =
                         type="link"
                         danger
                         onClick={() => {
-                            componentCallBacks?.removeProduceEntry(record);
+                            componentCallBacks?.removeProduceEntry(record, index);
                         }}
                     >
                         Remove
