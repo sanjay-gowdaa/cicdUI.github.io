@@ -47,7 +47,7 @@ export interface TransactioModel extends MatchRequirementModel {
 
 export interface SellerStateModel {
     categories: Array<string>;
-    produce: Array<string>;
+    masterCrops: Array<string>;
     variety: Array<CropCategoryModel>;
     grade: Array<CropCategoryModel>;
     cropsList: Array<CropModel>;
