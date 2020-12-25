@@ -55,16 +55,16 @@ const UserHeader = () => {
     };
 
     const openNotification = () => {
-        notification['success']({
-            message: 'Verification Successful',
-            description: 'Your profile has been verified successfully.',
-            duration: 0, // Don't close automatically
-            onClose: () => clearNotification(true)
-        });
         notification['info']({
             message: 'Field Officer Assigned',
             description: `You have been assigned a filed officer. The name of your field officer is ${fieldOfficer}`,
             duration: 0,
+            onClose: () => clearNotification(true)
+        });
+        notification['success']({
+            message: 'Verification Successful',
+            description: 'Your profile has been verified successfully.',
+            duration: 0, // Don't close automatically
             onClose: () => clearNotification(true)
         });
     };
