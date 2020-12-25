@@ -3,9 +3,9 @@ import { getSubCategoryList, createCrop, getAllCrops, getCropCategoryList, getCr
 import { RootState } from "../rootReducer";
 
 export const UPDATE_CATEGORIES = 'UPDATE_CATEGORIES';
-export const UPDATE_PRODUCE = 'UPDATE_PRODUCE';
+export const UPDATE_MASTER_CROPS = 'UPDATE_MASTER_CROPS';
 export const UPDATE_VARIETY = 'UPDATE_VARIETY';
-export const UPDATE_GRADE = 'UPDATE_GRADE';
+
 export const UPDATE_FORM = 'UPDATE_FORM';
 export const ADD_NEW_CROP = 'ADD_NEW_CROP';
 export const UPDATE_SELLER_CROPS_LIST = 'UPDATE_SELLER_CROPS_LIST';
@@ -24,9 +24,9 @@ export const updateAllCategories = (categories: Array<string>) => {
     }
 }
 
-export const updateProduce = (produce: Array<string>) => {
+export const updateMasterCrops = (produce: Array<string>) => {
     return {
-        type: UPDATE_PRODUCE,
+        type: UPDATE_MASTER_CROPS,
         payload: produce
     }
 }
@@ -37,13 +37,6 @@ export const updateVariety = (variety: Array<any>) => {
         payload: variety
     }
 };
-
-export const updateGrade = (grade: Array<any>) => {
-    return {
-        type: UPDATE_GRADE,
-        payload: grade
-    }
-}
 
 export const updateSellerCropsList = (cropsList: Array<any>) => {
     return {
@@ -60,11 +53,11 @@ export const fetchAllCategories = () => {
     }
 }
 
-export const fetchAllProduce = (category: string) => {
+export const fetchAllMasterCrops = (category: string) => {
     return async(dispatch: any, getState: any) => {
         const allCropList = await getCropList(category);
         const {crops} = allCropList || []
-        dispatch(updateProduce(crops))
+        dispatch(updateMasterCrops(crops))
     }
 }
 
@@ -73,14 +66,6 @@ export const fetchAllVariety = (cropName: string) => {
         const allVarietyList = await getSubCategoryList(cropName);
         const {crops: {Items: variety}} = allVarietyList || { variety: []}
         dispatch(updateVariety(variety))
-    }
-}
-
-export const fetchAllGrade = (cropName: string) => {
-    return async(dispatch: any, getState: any) => {
-        const allGradeList = await getSubCategoryList(cropName);
-        const {crops: {Items: grade}} = allGradeList || {grade: []}
-        dispatch(updateGrade(grade))
     }
 }
 
