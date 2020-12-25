@@ -14,7 +14,7 @@ import {
 } from 'antd';
 import { InboxOutlined } from '@ant-design/icons';
 import { useDispatch, useSelector } from 'react-redux';
-import { addNewCropData, fetchAllCategories, fetchAllGrade, fetchAllProduce, fetchAllVariety } from '../../../store/sellerReducer/actions';
+import { addNewCropData, fetchAllCategories, fetchAllMasterCrops, fetchAllVariety } from '../../../store/sellerReducer/actions';
 import { RootState } from '../../../store/rootReducer';
 import { SellerStateModel } from '../../../store/sellerReducer/types';
 import {
@@ -49,7 +49,7 @@ const AddCropModal = () => {
     const sellerStore: SellerStateModel = useSelector((state: RootState) => state.seller);
 
     const [selectedCategory, setSelectedCategory] = useState('');
-    const [selectedProduce, setSelectedProduce] = useState('');
+    const [selectedMasterCrop, setSelectedMasterCrop] = useState('');
     const [selectedVariety, setSelectedVariety] = useState('');
     const [selectedGrade, setSelectedGrade] = useState('');
 
@@ -75,17 +75,16 @@ const AddCropModal = () => {
 
     const onSelectCategory = (category: string) => {
         setSelectedCategory(category);
-        dispatch(fetchAllProduce(category));
+        dispatch(fetchAllMasterCrops(category));
     };
 
-    const onSelectProduce = (produce: string) => {
-        setSelectedProduce(produce);
+    const onMasterCrops = (produce: string) => {
+        setSelectedMasterCrop(produce);
         dispatch(fetchAllVariety(produce));
     }
 
     const onSelectVariety = (produce: string, variety: string) => {
         setSelectedVariety(variety);
-        dispatch(fetchAllGrade(produce));
     }
 
     return (
@@ -139,9 +138,9 @@ const AddCropModal = () => {
                                 <Select
                                     className="custom-select"
                                     placeholder="Select"
-                                    onChange={onSelectProduce}
+                                    onChange={onMasterCrops}
                                 >
-                                    {renderCategoryOptions(sellerStore.produce)}
+                                    {renderCategoryOptions(sellerStore.masterCrops)}
                                 </Select>
                             </Form.Item>
                             {/* Addition crop name msg */}
@@ -160,7 +159,7 @@ const AddCropModal = () => {
                                     className="custom-select"
                                     placeholder="Select"
                                     allowClear
-                                    onChange={(value: string) => onSelectVariety(selectedProduce, value)}
+                                    onChange={(value: string) => onSelectVariety(selectedMasterCrop, value)}
                                     onClear={() => setSelectedSubCategory('')}
                                 >
                                     {renderSubCategoryOptions(sellerStore.variety)}
