@@ -49,7 +49,6 @@ export interface SellerStateModel {
     categories: Array<string>;
     masterCrops: Array<string>;
     variety: Array<CropCategoryModel>;
-    grade: Array<CropCategoryModel>;
     cropsList: Array<CropModel>;
     matchesList: Array<MatchRequirementModel>;
     transactionList: Array<TransactioModel>;

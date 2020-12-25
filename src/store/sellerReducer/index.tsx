@@ -10,7 +10,6 @@ const INITIAL_STATE: SellerStateModel = {
     cropsList: [],
     masterCrops: [],
     variety: [],
-    grade: [],
     matchesList: mockMatchedCropsList,
     transactionList: mockTransactionCropsList,
     reviewsList: mockReviewsList,
