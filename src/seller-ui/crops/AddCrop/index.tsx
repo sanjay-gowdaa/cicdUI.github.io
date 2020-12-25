@@ -14,14 +14,19 @@ import {
 } from 'antd';
 import { InboxOutlined } from '@ant-design/icons';
 import { useDispatch, useSelector } from 'react-redux';
-import { addNewCropData, fetchAllCategories, fetchAllSubCategories } from '../../../store/sellerReducer/actions';
+import { addNewCropData, fetchAllCategories, fetchAllMasterCrops, fetchAllVariety } from '../../../store/sellerReducer/actions';
 import { RootState } from '../../../store/rootReducer';
 import { SellerStateModel } from '../../../store/sellerReducer/types';
-import { createSellerFormData, renderCategoryOptions, renderGradeOptionsForSubCategory, renderSubCategoryOptions } from '../cropUtils';
+import {
+    createSellerFormData,
+    renderCategoryOptions,
+    renderGradeOptionsForSubCategory,
+    renderSubCategoryOptions
+} from '../cropUtils';
 import PrimaryBtn from '../../../app-components/primaryBtn';
 import CancelBtn from '../../../app-components/cancelBtn';
 
-const { Text } = Typography;
+const { Text, Title } = Typography;
 const { Option } = Select;
 const { Dragger } = Upload;
 const { TextArea } = Input;
@@ -39,12 +44,17 @@ const fieldwithInfoLayout = {
 const AddCropModal = () => {
     const [modalVisible, setModalVisible] = useState(false);
     const [selectedSubCategory, setSelectedSubCategory] = useState('');
-    const [form] = Form.useForm(); 
+    const [form] = Form.useForm();
     const dispatch = useDispatch();
     const sellerStore: SellerStateModel = useSelector((state: RootState) => state.seller);
 
+    const [selectedCategory, setSelectedCategory] = useState('');
+    const [selectedMasterCrop, setSelectedMasterCrop] = useState('');
+    const [selectedVariety, setSelectedVariety] = useState('');
+    const [selectedGrade, setSelectedGrade] = useState('');
+
     useEffect(() => {
-        sellerStore.categories && !sellerStore.categories.length && dispatch(fetchAllCategories())
+        sellerStore.categories && !sellerStore.categories.length && dispatch(fetchAllCategories());
     }, [])
 
     const onFinish = (values: any) => {
@@ -63,12 +73,18 @@ const AddCropModal = () => {
         setModalVisible(false);
     };
 
-    const onSelectCrop = (value: string) => {
-        dispatch(fetchAllSubCategories(value));
+    const onSelectCategory = (category: string) => {
+        setSelectedCategory(category);
+        dispatch(fetchAllMasterCrops(category));
+    };
+
+    const onMasterCrops = (produce: string) => {
+        setSelectedMasterCrop(produce);
+        dispatch(fetchAllVariety(produce));
     }
 
-    const onSelectSubCategory = (value: string) => {
-        setSelectedSubCategory(value)
+    const onSelectVariety = (produce: string, variety: string) => {
+        setSelectedVariety(variety);
     }
 
     return (
@@ -79,7 +95,7 @@ const AddCropModal = () => {
                 content="Add Crop"
             />
             <Modal
-                title="Add Crop"
+                title={<Title level={5}>Add Produce</Title>}
                 visible={modalVisible}
                 footer={null}
                 maskClosable={false}
@@ -102,38 +118,69 @@ const AddCropModal = () => {
                     <Row gutter={16}>
                         <Col xs={24} md={10} lg={10}>
                             <Form.Item
-                                label="Select Crop"
-                                name="cropName"
-                                rules={[{ required: true, message: 'Please select the Crop!' }]}
+                                label="Select Category"
+                                name="categoryName"
+                                rules={[{ required: true, message: 'Please select the Crop Category!' }]}
                             >
-                                <Select className="custom-select" placeholder="Select" onChange={onSelectCrop}>
+                                <Select
+                                    className="custom-select"
+                                    placeholder="Select"
+                                    onChange={onSelectCategory}
+                                >
                                     {renderCategoryOptions(sellerStore.categories)}
+                                </Select>
+                            </Form.Item>
+                            <Form.Item
+                                label="Select Produce"
+                                name="cropName"
+                                rules={[{ required: true, message: 'Please select the Produce!' }]}
+                            >
+                                <Select
+                                    className="custom-select"
+                                    placeholder="Select"
+                                    onChange={onMasterCrops}
+                                >
+                                    {renderCategoryOptions(sellerStore.masterCrops)}
                                 </Select>
                             </Form.Item>
                             {/* Addition crop name msg */}
                             <Space direction="horizontal">
-                                <Text type="secondary">Unable to find your crop?</Text>
+                                <Text type="secondary">Unable to find your produce?</Text>
                                 <Text type="secondary" underline>
-                                    Add Crop
+                                    Add Produce
                                 </Text>
                             </Space>
                             <Form.Item 
-                                label="Select Sub Category" 
-                                name="subCategory">
-                                <Select className="custom-select" placeholder="Select" allowClear onChange={onSelectSubCategory} onClear={() => setSelectedSubCategory('')}>
-                                    {renderSubCategoryOptions(sellerStore.subCategories)}
+                                label="Select Variety*"
+                                name="subCategory"
+                                rules={[{ required: true, message: 'Please select the Produce Variety!' }]}
+                            >
+                                <Select 
+                                    className="custom-select"
+                                    placeholder="Select"
+                                    allowClear
+                                    onChange={(value: string) => onSelectVariety(selectedMasterCrop, value)}
+                                    onClear={() => setSelectedSubCategory('')}
+                                >
+                                    {renderSubCategoryOptions(sellerStore.variety)}
                                 </Select>
                             </Form.Item>
                             {/* Addition Sub Category msg */}
                             <Space direction="horizontal">
-                                <Text type="secondary">Unable to find your sub category?</Text>
+                                <Text type="secondary">Unable to find your sub variety?</Text>
                                 <Text type="secondary" underline>
-                                    Add Sub Category
+                                    Add Variety
                                 </Text>
                             </Space>
-                            <Form.Item label="Crop Grade" name="grade">
-                                <Select className="custom-select" placeholder="Select" allowClear>
-                                    {selectedSubCategory ? renderGradeOptionsForSubCategory(sellerStore.subCategories, selectedSubCategory) : []}
+                            <Form.Item label="Select Grade" name="grade">
+                                <Select
+                                    className="custom-select"
+                                    placeholder="Select"
+                                    allowClear
+                                    onChange={(value: string) => setSelectedGrade(value)}    
+                                >
+                                    {/* {selectedSubCategory ? renderGradeOptionsForSubCategory(sellerStore.subCategories, selectedSubCategory) : []} */}
+                                    {selectedVariety ? renderGradeOptionsForSubCategory(sellerStore.variety,selectedVariety) : []}
                                 </Select>
                             </Form.Item>
 
@@ -171,10 +218,13 @@ const AddCropModal = () => {
                                 name="termsAndConditions"
                             >
                                 <Select className="custom-select" placeholder="Select" />
+                                <Text type="secondary" underline>
+                                    Add Terms
+                                </Text>
                             </Form.Item>
 
                             <Form.Item
-                                label="Intent to sell"
+                                label="Intent to Sell?"
                                 name="intentToSell"
                                 rules={[
                                     { required: true, message: 'Please set your intent to sell' },
@@ -190,7 +240,7 @@ const AddCropModal = () => {
                             <Divider className="height-full" type="vertical" />
                         </Col>
                         <Col sm={24} md={10} lg={10}>
-                            <Form.Item label="Add Crop Photos" name="cropImages">
+                            <Form.Item label="Add Produce Photos" name="cropImages">
                                 <Dragger
                                     className="crop-images-upload"
                                     multiple={true}
@@ -209,7 +259,7 @@ const AddCropModal = () => {
                                         </div>
                                         <div>
                                             <p className="ant-upload-text">
-                                                Drag and drop images here or Browse
+                                                Drag and drop images here or <a>Browse</a>
                                             </p>
                                             <p className="ant-upload-hint">
                                                 Upload maximum 5 images. Each image less than 1 MB
@@ -234,7 +284,7 @@ const AddCropModal = () => {
                                 type="primary"
                                 htmlType="submit"
                             >
-                                Add Crop
+                                Add Produce
                             </Button>
                         </Col>
                     </Row>
