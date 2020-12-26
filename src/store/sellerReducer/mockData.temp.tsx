@@ -1,5 +1,4 @@
 import {
-    CropModel,
     MatchRequirementModel,
     ReviewRating,
     TransactioModel,

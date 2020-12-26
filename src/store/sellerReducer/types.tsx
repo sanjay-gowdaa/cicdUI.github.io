@@ -1,7 +1,3 @@
-export interface ApmcRateChangeModel {
-    difference: number;
-    increase: boolean;
-}
 export interface CropApiModel {
     crop_name: string;
     sub_category?: string;
@@ -11,7 +7,6 @@ export interface CropApiModel {
     apmc_rate: number;
     intent_to_sell: boolean;
     terms_and_conditions?: string;
-    apmc_rate_change: ApmcRateChangeModel | null;
 }
 
 export interface CropModel {
@@ -23,7 +18,7 @@ export interface CropModel {
     apmcRate: number;
     intentToSell: boolean;
     termsAndConditions?: string;
-    apmcRateChange: ApmcRateChangeModel | null;
+    apmcRateChange: any;
 }
 
 export interface MatchRequirementModel extends CropModel {
@@ -53,6 +48,7 @@ export interface SellerStateModel {
     matchesList: Array<MatchRequirementModel>;
     transactionList: Array<TransactioModel>;
     reviewsList: Array<ReviewRating>;
+    apmcCropPrice: string;
 }
 
 export interface ReviewRating {

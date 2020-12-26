@@ -14,6 +14,7 @@ const USER_PROFILE_API = 'getuserprofile';
 const CROP_TYPES_API = 'getcrops';
 const CROP_SUB_TYPES_DETAILS_API = 'getcropdetails';
 const CROP_CATEGORY_DETAILS_API = 'getcropcategories';
+const APMC_MODAL_PRICE = 'getmodalprice';
 
 const getAuthHeader = (userAccessToken: string) => ({'Authorization': `Bearer ${userAccessToken}`});
 
@@ -108,6 +109,11 @@ export const getAllCrops = (sellerId: string) => {
     const fetcCropsApi = `${BASE_URL}/${STAGE}/seller/${sellerId}/crop`;
     return fetch(fetcCropsApi).then((response: any) => response.json());
 };
+
+export const getApmcModalPrice = ({region, commodity, variety}: {region: string, commodity: string, variety: string}) => {
+    const getApmcPriceApi = `${BASE_URL}/${STAGE}/${APMC_MODAL_PRICE}?region=${region}&commodity=${commodity}&variety=${variety}`;
+    return fetch(getApmcPriceApi).then((response: any) => response.json());
+}
 
 /* Seller Apis End */
 

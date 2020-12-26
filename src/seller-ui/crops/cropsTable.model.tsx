@@ -2,7 +2,7 @@ import React from 'react';
 import { Button, Image, Progress,  Statistic, Typography } from 'antd';
 import { CaretUpOutlined, CaretDownOutlined } from '@ant-design/icons';
 
-import { ApmcRateChangeModel, CropApiModel } from '../../store/sellerReducer/types';
+import { CropApiModel } from '../../store/sellerReducer/types';
 import RagiImg from '../../static/assets/ragi.png';
 
 const { Title } = Typography;
@@ -47,26 +47,32 @@ export const cropColumns = [
         dataIndex: 'price_per_qnt',
         key: 'price_per_qnt',
     },
-    // {
-    //     title: 'Live APMC Rates per qtl',
-    //     dataIndex: 'apmcRate',
-    //     key: 'apmcRate',
-    //     render: (apmcRate: number, record: CropModel) => {
-    //         const { apmcRateChange } = record;
-    //         const { difference, increase } = apmcRateChange as ApmcRateChangeModel;
-    //         const color = increase ? '#12805C' : '#E90000';
-    //         return (
-    //             <>
-    //                 <p>{apmcRate}</p>
-    //                 <Statistic
-    //                     value={difference}
-    //                     valueStyle={{ color, fontSize: '12px' }}
-    //                     prefix={increase ? <CaretUpOutlined /> : <CaretDownOutlined />}
-    //                 />
-    //             </>
-    //         );
-    //     },
-    // },
+    {
+        title: 'Live APMC Rates per qtl',
+        dataIndex: 'apmc_rate',
+        key: 'apmc_rate',
+        render: (apmc_rate: number, record: CropApiModel) => {
+            const { price_per_qnt } = record;
+            const differencePrice = apmc_rate - price_per_qnt
+            const color = differencePrice > 0 ? '#12805C' : '#E90000';
+
+            if (isNaN(differencePrice)) {
+                return ( <p>Data not available</p> )
+            } else {
+                return (
+                    <>
+                        <p>{apmc_rate}</p>
+                        <Statistic
+                            value={differencePrice}
+                            valueStyle={{ color, fontSize: '12px' }}
+                            prefix={differencePrice > 0 ? <CaretUpOutlined /> : <CaretDownOutlined />}
+                        />
+                    </>
+                );
+            }
+
+        },
+    },
     {
         title: 'Intent To Sell',
         dataIndex: 'intent_to_sell',

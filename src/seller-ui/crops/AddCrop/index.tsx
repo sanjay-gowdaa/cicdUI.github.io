@@ -14,7 +14,7 @@ import {
 } from 'antd';
 import { InboxOutlined } from '@ant-design/icons';
 import { useDispatch, useSelector } from 'react-redux';
-import { addNewCropData, fetchAllCategories, fetchAllMasterCrops, fetchAllVariety } from '../../../store/sellerReducer/actions';
+import { addNewCropData, fetchAllCategories, fetchAllMasterCrops, fetchAllVariety, fetchCropApmcPrice } from '../../../store/sellerReducer/actions';
 import { RootState } from '../../../store/rootReducer';
 import { SellerStateModel } from '../../../store/sellerReducer/types';
 import {
@@ -25,6 +25,7 @@ import {
 } from '../cropUtils';
 import PrimaryBtn from '../../../app-components/primaryBtn';
 import CancelBtn from '../../../app-components/cancelBtn';
+import { UserStateModel } from '../../../store/loginReducer/types';
 
 const { Text, Title } = Typography;
 const { Option } = Select;
@@ -43,15 +44,13 @@ const fieldwithInfoLayout = {
 
 const AddCropModal = () => {
     const [modalVisible, setModalVisible] = useState(false);
-    const [selectedSubCategory, setSelectedSubCategory] = useState('');
     const [form] = Form.useForm();
     const dispatch = useDispatch();
     const sellerStore: SellerStateModel = useSelector((state: RootState) => state.seller);
+    const loginUser: UserStateModel = useSelector((state: RootState) => state.loginUser);
 
-    const [selectedCategory, setSelectedCategory] = useState('');
     const [selectedMasterCrop, setSelectedMasterCrop] = useState('');
     const [selectedVariety, setSelectedVariety] = useState('');
-    const [selectedGrade, setSelectedGrade] = useState('');
 
     useEffect(() => {
         sellerStore.categories && !sellerStore.categories.length && dispatch(fetchAllCategories());
@@ -59,7 +58,10 @@ const AddCropModal = () => {
 
     const onFinish = (values: any) => {
         // console.log('Success:', values);
-        dispatch(addNewCropData(createSellerFormData(values)));
+        const updatedValueWithApmcRates = {...values, apmcRate: !isNaN(parseFloat(sellerStore.apmcCropPrice)) ? parseFloat(sellerStore.apmcCropPrice) : null}
+        // For testing uncomment below and comment above
+        // const updatedValueWithApmcRates = {...values, apmcRate: parseFloat('1800')}
+        dispatch(addNewCropData(createSellerFormData(updatedValueWithApmcRates)));
         form.resetFields();
         setModalVisible(false);
     };
@@ -74,16 +76,27 @@ const AddCropModal = () => {
     };
 
     const onSelectCategory = (category: string) => {
-        setSelectedCategory(category);
+        /* Reset other fields */
+        form.setFieldsValue({cropName: null, subCategory: null, grade: null});
+        setSelectedMasterCrop('');
+        setSelectedVariety('');
+        /* Reset other fields end */
         dispatch(fetchAllMasterCrops(category));
     };
 
     const onMasterCrops = (produce: string) => {
+        /* Reset other fields */
+        form.setFieldsValue({subCategory: null, grade: null});
+        setSelectedVariety('');
+        /* Reset other fields end */
         setSelectedMasterCrop(produce);
         dispatch(fetchAllVariety(produce));
     }
 
-    const onSelectVariety = (produce: string, variety: string) => {
+    const onSelectVariety = (variety: string) => {
+        /* Reset other fields */
+        form.setFieldsValue({grade: null});
+        /* Reset other fields end */
         setSelectedVariety(variety);
     }
 
@@ -111,7 +124,13 @@ const AddCropModal = () => {
                     className="add-crop-form"
                     {...singleLabelFieldLayout}
                     name="basic"
-                    initialValues={{ intentToSell: 'Yes' }}
+                    initialValues={{
+                        intentToSell: 'Yes',
+                        categoryName: null,
+                        cropName: null,
+                        subCategory: null,
+                        grade: null
+                    }}
                     onFinish={onFinish}
                     onFinishFailed={onFinishFailed}
                 >
@@ -151,7 +170,7 @@ const AddCropModal = () => {
                                 </Text>
                             </Space>
                             <Form.Item 
-                                label="Select Variety*"
+                                label="Select Variety"
                                 name="subCategory"
                                 rules={[{ required: true, message: 'Please select the Produce Variety!' }]}
                             >
@@ -159,8 +178,12 @@ const AddCropModal = () => {
                                     className="custom-select"
                                     placeholder="Select"
                                     allowClear
-                                    onChange={(value: string) => onSelectVariety(selectedMasterCrop, value)}
-                                    onClear={() => setSelectedSubCategory('')}
+                                    onChange={(value: string) => {
+                                            onSelectVariety(value)
+                                            dispatch(fetchCropApmcPrice({commodity: selectedMasterCrop, variety: value}))
+                                        }
+                                    }
+                                    onClear={() => null}
                                 >
                                     {renderSubCategoryOptions(sellerStore.variety)}
                                 </Select>
@@ -172,22 +195,23 @@ const AddCropModal = () => {
                                     Add Variety
                                 </Text>
                             </Space>
-                            <Form.Item label="Select Grade" name="grade">
+                            <Form.Item
+                                label="Select Grade"
+                                name="grade"
+                            >
                                 <Select
                                     className="custom-select"
                                     placeholder="Select"
                                     allowClear
-                                    onChange={(value: string) => setSelectedGrade(value)}    
                                 >
-                                    {/* {selectedSubCategory ? renderGradeOptionsForSubCategory(sellerStore.subCategories, selectedSubCategory) : []} */}
-                                    {selectedVariety ? renderGradeOptionsForSubCategory(sellerStore.variety,selectedVariety) : []}
+                                    {selectedVariety ? renderGradeOptionsForSubCategory(sellerStore.variety, selectedVariety) : []}
                                 </Select>
                             </Form.Item>
 
                             <Form.Item
                                 {...fieldwithInfoLayout}
                                 label="Qunatity"
-                                name="qunatity"
+                                name="quantity"
                                 rules={[{ required: true, message: 'Please input the Qunatity!' }]}
                             >
                                 <div className="display-flex-row">
@@ -209,7 +233,9 @@ const AddCropModal = () => {
                             >
                                 <div className="display-flex-row">
                                     <Input className="custom-input" placeholder="In rupees" />
-                                    <span className="additional-text">APMC Rate Mandya:</span>
+                                    <span className="additional-text">
+                                        APMC Rate {(loginUser as any).district}: {sellerStore.apmcCropPrice}
+                                    </span>
                                 </div>
                             </Form.Item>
 

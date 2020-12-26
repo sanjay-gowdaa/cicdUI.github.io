@@ -1,21 +1,12 @@
-import { CropModel } from "./types";
-import { getSubCategoryList, createCrop, getAllCrops, getCropCategoryList, getCropList } from "../api";
+import { getSubCategoryList, createCrop, getAllCrops, getCropCategoryList, getCropList, getApmcModalPrice } from "../api";
 import { RootState } from "../rootReducer";
 
 export const UPDATE_CATEGORIES = 'UPDATE_CATEGORIES';
 export const UPDATE_MASTER_CROPS = 'UPDATE_MASTER_CROPS';
 export const UPDATE_VARIETY = 'UPDATE_VARIETY';
-
-export const UPDATE_FORM = 'UPDATE_FORM';
 export const ADD_NEW_CROP = 'ADD_NEW_CROP';
 export const UPDATE_SELLER_CROPS_LIST = 'UPDATE_SELLER_CROPS_LIST';
-
-export const updateForm = (formData: any) => {
-    return {
-        type: UPDATE_FORM,
-        payload: formData,
-    };
-};
+export const UPDATE_APMC_RATE = 'UPDATE_APMC_RATE';
 
 export const updateAllCategories = (categories: Array<string>) => {
     return {
@@ -42,6 +33,32 @@ export const updateSellerCropsList = (cropsList: Array<any>) => {
     return {
         type: UPDATE_SELLER_CROPS_LIST,
         payload: cropsList
+    }
+}
+
+export const updateApmcCropRate = (modalPrice: string) => {
+    return {
+        type: UPDATE_APMC_RATE,
+        payload: modalPrice
+    }
+}
+
+export const fetchCropApmcPrice = ({commodity, variety}: {commodity: string, variety: string}) => {
+    return async(dispatch: any, getState: any) => {
+        const { loginUser } = getState() as RootState;
+        const { district } = loginUser;
+        
+        // for testing
+        // const district = 'Kolar';
+        // const commodity = 'Rice';
+        // const variety = 'Sona';
+        // for testing end
+
+        const priceModel = await getApmcModalPrice({region: district, commodity, variety})
+        const {recentPrice} = priceModel || {recentPrice: {}};
+        const {modal_price, message} = recentPrice || {modal_price: '', message: ''};
+        const apmcData = modal_price ? modal_price : message;
+        dispatch(updateApmcCropRate(apmcData));
     }
 }
 
