@@ -12,7 +12,7 @@ import {
     Table,
     Typography
 } from 'antd';
-import { uniqBy, remove } from 'lodash';
+import { uniqBy, remove, findIndex } from 'lodash';
 import { FilterOutlined, CaretRightOutlined } from '@ant-design/icons';
 import { masterListColumns } from './../masterListTable.model';
 import { BuyerStateModel, CropCategoryModel, MasterListApiFormat } from '../../../store/buyerReducer/types';
@@ -107,6 +107,17 @@ const MasterList = (props: any) => {
         return gradeList;
     };
 
+    /* 
+        Function with side affect, updating the state.
+    */
+    const removeElementAndUpdateList = (itemIndex: number) => {
+        /* Remove from master list array */
+        let copiedMasterList = [...addedMasterList];
+        copiedMasterList.splice(itemIndex, 1);
+        updateAddedMasterList(copiedMasterList);
+        /* Remove from master list array end */
+    }
+
     const addCropToList = (gradeSelection: string, isSelected: boolean) => {
         const updatedGradeStructure = updateMasterCropDatastructure(
             gradeSelection, 
@@ -126,18 +137,15 @@ const MasterList = (props: any) => {
         if (isSelected) {
             updateAddedMasterList([...addedMasterList, entryData]);
         } else {
-            //pending to remove from master list
+            const removeElementIndex = findIndex(addedMasterList, entryData);
+            removeElementAndUpdateList(removeElementIndex);
         }
         
     }
 
     const handleMasterTableDelete = (record: MasterListApiFormat, index: number) => {
         const {crop_name, grade_name: gradeName, category_name, produce_name} = record;
-        /* Remove from master list array */
-        let copiedMasterList = [...addedMasterList];
-        copiedMasterList.splice(index, 1);
-        updateAddedMasterList(copiedMasterList);
-        /* Remove from master list array end */
+        removeElementAndUpdateList(index);
 
         /* Update grade datastructure */
         const updatedGradeStructure = updateMasterCropDatastructure(

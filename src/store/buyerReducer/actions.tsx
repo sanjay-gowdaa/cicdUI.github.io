@@ -74,7 +74,7 @@ export const addNewProduce = (/*produceFormData: ProduceModel*/ produceFormData:
         // const userName = '7892329983'
         const {userName} = loginUser
         const addProduceResponse = await addProduce(produceFormData, userName);
-        console.log('addProduceResponse', addProduceResponse);
+        // console.log('addProduceResponse', addProduceResponse);
         dispatch(getProduceList())
     }
 }
@@ -88,7 +88,7 @@ export const getProduceList = () => {
         const {userName} = loginUser
         const getProduceListResponse = await getAllProduce(userName);
         const {Items, Count} = getProduceListResponse || {Items: []}
-        console.log('getProduceList', Items);
+        // console.log('getProduceList', Items);
         dispatch(updateProduceList(Items as Array<ProduceModel>))
     }
 }
@@ -97,7 +97,7 @@ export const fetchAllProduce = () => {
     return async(dispatch: any, getState: any) => {
         const allProduceList = await getCropCategoryList();
         const {categories} = allProduceList || []
-        console.log('registerUserResponse', categories);
+        // console.log('registerUserResponse', categories);
         dispatch(updateMasterCropNamesList(categories))
     }
 }
@@ -106,7 +106,7 @@ export const fetchAllCrops = (category: string) => {
     return async(dispatch: any, getState: any) => {
         const allCropsList = await getCropList(category);
         const {crops} = allCropsList || []
-        console.log('Crops List', crops);
+        // console.log('Crops List', crops);
         dispatch(updateCropsList(crops));
     }
 }
@@ -115,7 +115,7 @@ export const fetchAllVariety = (crop: string) => {
     return async(dispatch: any, getState: any) => {
         const allVarietyList = await getSubCategoryList(crop);
         const { crops: {Items: variety}} = allVarietyList || {variety: []}
-        console.log('Variety list', variety);
+        // console.log('Variety list', variety);
         dispatch(updateVarietyList(variety));    
     }
 }
