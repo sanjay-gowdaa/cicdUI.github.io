@@ -49,11 +49,14 @@ export const cropColumns = [
     },
     {
         title: 'Live APMC Rates per qtl',
-        dataIndex: 'apmc_rate',
-        key: 'apmc_rate',
-        render: (apmc_rate: number, record: CropApiModel) => {
-            const { price_per_qnt } = record;
-            const differencePrice = apmc_rate - price_per_qnt
+        dataIndex: 'modal_price',
+        key: 'modal_price',
+        render: (modal_price: number, record: CropApiModel) => {
+            const { price_per_qnt, intent_to_sell: intentToSell } = record;
+            if (intentToSell === 'Yes') {
+                return (<p>-</p>)
+            } else {
+            const differencePrice = modal_price - price_per_qnt
             const color = differencePrice > 0 ? '#12805C' : '#E90000';
 
             if (isNaN(differencePrice)) {
@@ -61,7 +64,7 @@ export const cropColumns = [
             } else {
                 return (
                     <>
-                        <p>{apmc_rate}</p>
+                        <p>{modal_price}</p>
                         <Statistic
                             value={differencePrice}
                             valueStyle={{ color, fontSize: '12px' }}
@@ -70,14 +73,13 @@ export const cropColumns = [
                     </>
                 );
             }
-
+        }
         },
     },
     {
         title: 'Intent To Sell',
         dataIndex: 'intent_to_sell',
-        key: 'intent_to_sell',
-        render: (intentToSell: boolean) => <p>{intentToSell ? 'Yes' : 'No'}</p>,
+        key: 'intent_to_sell'
     },
     {
         title: 'Additional',

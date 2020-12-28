@@ -95,7 +95,7 @@ const AddCropModal = ({masterProduceList}: {masterProduceList: Array<any>}) => {
                     className="add-crop-form"
                     {...singleLabelFieldLayout}
                     name="basic"
-                    initialValues={{ }}
+                    initialValues={{additional_info: ''}}
                     onFinish={onFinish}
                     onFinishFailed={onFinishFailed}
                 >

@@ -58,9 +58,12 @@ const AddCropModal = () => {
 
     const onFinish = (values: any) => {
         // console.log('Success:', values);
-        const updatedValueWithApmcRates = {...values, apmcRate: !isNaN(parseFloat(sellerStore.apmcCropPrice)) ? parseFloat(sellerStore.apmcCropPrice) : null}
+        const updatedValueWithApmcRates = {
+            ...values,
+            district: loginUser.district,
+        }
         // For testing uncomment below and comment above
-        // const updatedValueWithApmcRates = {...values, apmcRate: parseFloat('1800')}
+        // const updatedValueWithApmcRates = {...values, district: 'Gadag'}
         dispatch(addNewCropData(createSellerFormData(updatedValueWithApmcRates)));
         form.resetFields();
         setModalVisible(false);
@@ -126,6 +129,8 @@ const AddCropModal = () => {
                     name="basic"
                     initialValues={{
                         intentToSell: 'Yes',
+                        termsAndConditions: '',
+                        additionalInfo: '',
                         categoryName: null,
                         cropName: null,
                         subCategory: null,
@@ -234,7 +239,8 @@ const AddCropModal = () => {
                                 <div className="display-flex-row">
                                     <Input className="custom-input" placeholder="In rupees" />
                                     <span className="additional-text">
-                                        APMC Rate {(loginUser as any).district}: {sellerStore.apmcCropPrice}
+                                        {/* APMC Rate {loginUser.district}: {sellerStore.apmcCropPrice} */}
+                                        APMC Rate {'Gadag'}: {sellerStore.apmcCropPrice}
                                     </span>
                                 </div>
                             </Form.Item>
@@ -257,7 +263,7 @@ const AddCropModal = () => {
                                 ]}
                             >
                                 <Select className="custom-select" placeholder="Select">
-                                    <Option value="yes">Yes</Option>
+                                    <Option value="Yes">Yes</Option>
                                     <Option value="no">No</Option>
                                 </Select>
                             </Form.Item>
