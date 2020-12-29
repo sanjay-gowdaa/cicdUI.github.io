@@ -14,8 +14,8 @@ import {
 } from 'antd';
 import { BellFilled, ContactsFilled, LogoutOutlined } from '@ant-design/icons';
 import MenuItem from 'antd/lib/menu/MenuItem';
-import { Redirect } from 'react-router-dom';
 
+import { LOGOUT_URL } from '../store/api';
 import { RootState } from '../store/rootReducer';
 import { UserStateModel } from '../store/loginReducer/types';
 import DefaultBtn from '../app-components/defaultBtn';
@@ -28,7 +28,6 @@ const UserHeader = () => {
     const fieldOfficer = "Mahesh Kumar";
     const fieldOfficerNumber = "9876543210";
     const [notificationNumber, setNotificationNumber] = useState(2);
-    const [isLogout, setLogout] = useState(false);
     const [userType, setUserType] = useState('');
     const [breadCrumbs, setBreadCrumbs] = useState({produce: '', matches: '', transaction: '', feedback: ''});
 
@@ -91,11 +90,6 @@ const UserHeader = () => {
         );
     };
 
-    const logout = () => {
-        // Logout Functionality
-        setLogout(true);
-    };
-
     return (
       <div className="display-flex-row align-center">
         <Breadcrumb separator=" " className="custom-breadcrumb">
@@ -125,7 +119,7 @@ const UserHeader = () => {
         <Popconfirm
             title="Are you sure you want to logout?"
             okText="Yes"
-            onConfirm={logout}
+            onConfirm={() => window.location.href = LOGOUT_URL}
             cancelText="No"
         >
             <Tooltip title="logout">
@@ -136,7 +130,6 @@ const UserHeader = () => {
                 />
             </Tooltip>
         </Popconfirm>
-        {isLogout && <Redirect to="/" />}
       </div>
     );
 };
