@@ -1,11 +1,20 @@
-import React from 'react';
-import { Button, Image, Progress,  Statistic, Typography } from 'antd';
+import React, { useState } from 'react';
+import { Button, Image, Progress,  Statistic, Typography, Modal } from 'antd';
 import { CaretUpOutlined, CaretDownOutlined } from '@ant-design/icons';
 
 import { CropApiModel } from '../../store/sellerReducer/types';
 import RagiImg from '../../static/assets/ragi.png';
+import ViewCropPhotos from './viewCropPhotos';
 
 const { Title } = Typography;
+
+const viewCropPhotos = () => {
+    Modal.info({
+        title: 'Crop Photos',
+        className: "custom-view-crop-photos-modal",
+        content: <ViewCropPhotos />
+    });
+};
 
 export const cropColumns = [
     {
@@ -95,9 +104,12 @@ export const cropColumns = [
                         </a>
                     </div>
                     <div>
-                        <a href={termsAndConditions} target="_blank">
+                        {/* <a href={termsAndConditions} target="_blank">
                             Crop Photos
-                        </a>
+                        </a> */}
+                        <Button type="link" onClick={viewCropPhotos} >
+                            Crop Photos
+                        </Button>
                     </div>
                 </>
             );
