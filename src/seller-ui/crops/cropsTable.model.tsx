@@ -1,20 +1,39 @@
-import React, { useState } from 'react';
-import { Button, Image, Progress,  Statistic, Typography, Modal } from 'antd';
+import React from 'react';
+import { Button, Image, Modal, Progress, Skeleton, Space, Statistic, Typography } from 'antd';
 import { CaretUpOutlined, CaretDownOutlined } from '@ant-design/icons';
 
 import { CropApiModel } from '../../store/sellerReducer/types';
 import RagiImg from '../../static/assets/ragi.png';
-import ViewCropPhotos from './viewCropPhotos';
+import ConfirmOTPModal from '../../login-ui/register/confirmOTPModal';
 
 const { Title } = Typography;
 
-const viewCropPhotos = () => {
+const viewCropPhotos = (cropList: any) => {
     Modal.info({
         title: 'Crop Photos',
         className: "custom-view-crop-photos-modal",
-        content: <ViewCropPhotos />
+        content: displayImage(cropList)
     });
 };
+
+const displayImage = (cropList: any) => {
+    const {crop_image_1} = cropList || [];
+    const {crop_image_2} = cropList || [];
+    const {crop_image_3} = cropList || [];
+    const {crop_image_4} = cropList || [];
+    const {crop_image_5} = cropList || [];
+
+    return (
+        <Space direction="vertical">
+            <Image.PreviewGroup>
+            {(crop_image_1 === undefined) ? <Skeleton.Image /> : <Image width={200} height={200} src={crop_image_1} /> }
+            {(crop_image_2 === undefined) ? <Skeleton.Image /> : <Image width={200} height={200} src={crop_image_2} /> }
+            {(crop_image_3 === undefined) ? <Skeleton.Image /> : <Image width={200} height={200} src={crop_image_3} /> }
+            {(crop_image_4 === undefined) ? <Skeleton.Image /> : <Image width={200} height={200} src={crop_image_4} /> }
+            {(crop_image_5 === undefined) ? <Skeleton.Image /> : <Image width={200} height={200} src={crop_image_5} /> }
+            </Image.PreviewGroup>
+        </Space>)
+}
 
 export const cropColumns = [
     {
@@ -95,7 +114,7 @@ export const cropColumns = [
         key: 'terms_and_conditions',
         dataIndex: 'terms_and_conditions',
         render: (termsAndConditions: string, record: CropApiModel) => {
-            // const {} = record;
+            const {crop_name} = record;
             return (
                 <>
                     <div>
@@ -107,9 +126,10 @@ export const cropColumns = [
                         {/* <a href={termsAndConditions} target="_blank">
                             Crop Photos
                         </a> */}
-                        <Button type="link" onClick={viewCropPhotos} >
+                        <Button type="link" onClick={() => viewCropPhotos(record)} >
                             Crop Photos
                         </Button>
+                        {console.log(record)}
                     </div>
                 </>
             );
