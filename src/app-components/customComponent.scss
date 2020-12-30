@@ -176,3 +176,14 @@ $col-shade-green: #12805C;
 .custom-badge {
     padding-left: 1em !important;
 }
+
+.custom-view-crop-photos-modal {
+    .ant-modal-confirm-content {
+        overflow-y: scroll;
+        max-height: 200px;
+
+        .ant-skeleton-element {
+            padding: 1em;
+        }
+    }
+}
