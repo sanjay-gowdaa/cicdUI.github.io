@@ -177,13 +177,28 @@ $col-shade-green: #12805C;
     padding-left: 1em !important;
 }
 
-.custom-view-crop-photos-modal {
-    .ant-modal-confirm-content {
-        overflow-y: scroll;
-        max-height: 200px;
+.custom-view-crop-photos {
 
-        .ant-skeleton-element {
-            padding: 1em;
+    .ant-drawer-header {
+        background-color: $col-shade-green;
+        
+        .ant-drawer-title {
+            color: white;
+        }
+
+        .anticon-close {
+            color: white;
+        }
+    }
+
+    .ant-drawer-body {
+        padding: 20px;
+        overflow-y: scroll;
+        overflow-x: unset;
+
+        .ant-skeleton-image {
+            height: 86px;
+            width: 86px;
         }
     }
 }
