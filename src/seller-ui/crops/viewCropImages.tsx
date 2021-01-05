@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
-import { Button, Drawer, Image, Skeleton, Space } from 'antd';
+import { Button, Drawer, Image, Space, Typography } from 'antd';
+
+const { Text } = Typography;
 
 const ViewCropImages = (props: any) => {
     const { list } = props;
@@ -14,23 +16,25 @@ const ViewCropImages = (props: any) => {
     return (
         <>
             <Button type="link" onClick={() => setDrawerVisible(true)} >
-                Crop Photos
+                Produce Photos
             </Button>
             <Drawer
-                title="Crop Photos"
+                title="Produce Photos"
                 closable={true}
                 visible={drawerVisible}
                 className="custom-view-crop-photos"
                 placement="right"
                 onClose={() => setDrawerVisible(false)}
             >
+                {((crop_image_1 === undefined) && (crop_image_2 === undefined) && (crop_image_3 === undefined) && (crop_image_4 === undefined) && (crop_image_5 === undefined)) ?
+                <Text>There are no images</Text> : <Text>Click on the image to preview</Text>}
                 <Image.PreviewGroup>
                     <Space direction="vertical" size="middle" align="center" >
-                        {(crop_image_1 === undefined) ? <Skeleton.Image /> : <Image width={200} height={200} src={crop_image_1} /> }
-                        {(crop_image_2 === undefined) ? <Skeleton.Image /> : <Image width={200} height={200} src={crop_image_2} /> }
-                        {(crop_image_3 === undefined) ? <Skeleton.Image /> : <Image width={200} height={200} src={crop_image_3} /> }
-                        {(crop_image_4 === undefined) ? <Skeleton.Image /> : <Image width={200} height={200} src={crop_image_4} /> }
-                        {(crop_image_5 === undefined) ? <Skeleton.Image /> : <Image width={200} height={200} src={crop_image_5} /> }
+                        {(crop_image_1 !== undefined) && <Image width={200} height={200} src={crop_image_1} /> }
+                        {(crop_image_2 !== undefined) && <Image width={200} height={200} src={crop_image_2} /> }
+                        {(crop_image_3 !== undefined) && <Image width={200} height={200} src={crop_image_3} /> }
+                        {(crop_image_4 !== undefined) && <Image width={200} height={200} src={crop_image_4} /> }
+                        {(crop_image_5 !== undefined) && <Image width={200} height={200} src={crop_image_5} /> }
                     </Space>
                 </Image.PreviewGroup>
             </Drawer>
