@@ -29,7 +29,7 @@ const UserHeader = () => {
     const fieldOfficerNumber = "9876543210";
     const [notificationNumber, setNotificationNumber] = useState(2);
     const [userType, setUserType] = useState('');
-    const [breadCrumbs, setBreadCrumbs] = useState({produce: '', matches: '', transaction: '', feedback: ''});
+    const [breadCrumbs, setBreadCrumbs] = useState({produce: '', matches: '', transaction: '', feedback: '', crops: ''});
 
     useEffect(() => {
         loginState.is_buyer ? setUserType("#buyer") : setUserType("#seller");
@@ -41,7 +41,8 @@ const UserHeader = () => {
         const matchesName = userType + headerBreadcrumb.matches;
         const transactionName = userType + headerBreadcrumb.transaction;
         const feedbackName = userType + headerBreadcrumb.feedback;
-        setBreadCrumbs({produce: produceName, matches: matchesName,transaction: transactionName, feedback: feedbackName});
+        const cropsName = userType + headerBreadcrumb.crops;
+        setBreadCrumbs({produce: produceName, matches: matchesName,transaction: transactionName, feedback: feedbackName, crops: cropsName});
     };
 
     // clear=true Means Clear one notification. clear=false Means Add one notification
@@ -93,7 +94,12 @@ const UserHeader = () => {
     return (
       <div className="display-flex-row align-center">
         <Breadcrumb separator=" " className="custom-breadcrumb">
-            <Breadcrumb.Item href={breadCrumbs.produce} >Produce</Breadcrumb.Item>
+            {loginState.is_buyer ?
+                <Breadcrumb.Item href={breadCrumbs.produce} >Produce</Breadcrumb.Item>
+                : <>
+                <Breadcrumb.Item href={breadCrumbs.produce} >Information</Breadcrumb.Item>
+                <Breadcrumb.Item href={breadCrumbs.crops} >Crops</Breadcrumb.Item> </>
+            }
             <Breadcrumb.Item href={breadCrumbs.matches} >Matches</Breadcrumb.Item>
             <Breadcrumb.Item href={breadCrumbs.transaction} >Transaction</Breadcrumb.Item>
             <Breadcrumb.Item href={breadCrumbs.feedback} >Feedback</Breadcrumb.Item>
