@@ -94,8 +94,8 @@ const UserHeader = () => {
     return (
       <div className="display-flex-row align-center">
         <Breadcrumb separator=" " className="custom-breadcrumb">
-            {loginState.is_buyer &&
-                <Breadcrumb.Item href={breadCrumbs.produce} >Produce</Breadcrumb.Item>
+            {loginState.is_buyer ?
+                <Breadcrumb.Item href={breadCrumbs.produce} >Produce</Breadcrumb.Item> : null
             }
             <Breadcrumb.Item href={breadCrumbs.produce} >Information</Breadcrumb.Item>
             <Breadcrumb.Item href={breadCrumbs.crops} >Produce</Breadcrumb.Item>
