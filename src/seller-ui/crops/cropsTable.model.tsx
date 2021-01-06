@@ -1,9 +1,10 @@
 import React from 'react';
-import { Button, Image, Progress,  Statistic, Typography } from 'antd';
+import { Button, Image, Progress, Statistic, Typography } from 'antd';
 import { CaretUpOutlined, CaretDownOutlined } from '@ant-design/icons';
 
 import { CropApiModel } from '../../store/sellerReducer/types';
 import RagiImg from '../../static/assets/ragi.png';
+import ViewCropImages from './viewCropImages';
 
 const { Title } = Typography;
 
@@ -86,7 +87,8 @@ export const cropColumns = [
         key: 'terms_and_conditions',
         dataIndex: 'terms_and_conditions',
         render: (termsAndConditions: string, record: CropApiModel) => {
-            // const {} = record;
+            const {crop_name} = record;
+
             return (
                 <>
                     <div>
@@ -95,9 +97,7 @@ export const cropColumns = [
                         </a>
                     </div>
                     <div>
-                        <a href={termsAndConditions} target="_blank">
-                            Crop Photos
-                        </a>
+                        <ViewCropImages list={record} />
                     </div>
                 </>
             );

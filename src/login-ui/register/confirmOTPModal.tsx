@@ -6,6 +6,7 @@ import {
     Modal,
     Row,
     Space,
+    Statistic,
     Typography
 } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
@@ -13,9 +14,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { confirmOTP } from '../../store/registrationReducer/actions';
 import { RootState } from '../../store/rootReducer';
 import PrimaryBtn from '../../app-components/primaryBtn';
-import CancelBtn from '../../app-components/cancelBtn';
 
-const { Text } = Typography;
+const { Text, Title } = Typography;
+const { Countdown } = Statistic
 
 const ConfirmOTPModal = ({showOTPModal, setShowOTPModal, currentType, history}: {showOTPModal: boolean, setShowOTPModal: Function, currentType: string, history: any}) => {
     const dispatch = useDispatch();
@@ -25,6 +26,8 @@ const ConfirmOTPModal = ({showOTPModal, setShowOTPModal, currentType, history}: 
 
     const registrationState = useSelector((state: RootState) => state.registration);
     const { otpError, formData } = registrationState;
+
+    const otpTimer = Date.now() + 1000*60*10 ;
 
     useEffect(() => {
         if (otpError.verified) {
@@ -36,7 +39,7 @@ const ConfirmOTPModal = ({showOTPModal, setShowOTPModal, currentType, history}: 
     return (
         <Modal
             wrapClassName="otp-modal"
-            title={null}
+            title={<Title level={5}>OTP Verification</Title>}
             centered
             closable={false}
             maskClosable={false}
@@ -46,13 +49,24 @@ const ConfirmOTPModal = ({showOTPModal, setShowOTPModal, currentType, history}: 
         >
             <Row justify="center">
                 <Col>
-                    <Text strong>
-                        Please enter 4 digit OTP number sent to your phone number/ email for verification
+                    <Text>
+                        Please enter 4 digit OTP number sent to your phone number/ email
                     </Text>
                 </Col>
                 <Col>
                     <Input value={curOtp} placeholder="Enter 4 digit otp" onChange={onOtpChange} />
                 </Col>
+            </Row>
+            <Row>
+                <Space>
+                    <Text>Didn't recieve OTP?</Text>
+                    <Text className="custom-color-change"> Resend Code in </Text>
+                    <Countdown
+                        className="custom-color-change"
+                        value={otpTimer} format="mm:ss"
+                        onFinish={() => console.log("Resent OTP")}
+                    />
+                </Space>
             </Row>
             {
                 otpError.showError && (
@@ -66,7 +80,6 @@ const ConfirmOTPModal = ({showOTPModal, setShowOTPModal, currentType, history}: 
             <Row justify="center" className="margin-t-1em">
                 <Col>
                     <Space>
-                        <CancelBtn onClick={() => setShowOTPModal(!showOTPModal)} />
                         <PrimaryBtn
                             onClick={() => {
                                 dispatch(confirmOTP(formData?.number, curOtp));

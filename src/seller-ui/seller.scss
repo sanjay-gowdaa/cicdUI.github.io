@@ -1,6 +1,28 @@
+$col-shade-green: #12805C;
+
 .seller-ui-app {
     .seller-ui-dashboard {
       padding: 2em;
     }
   }
   
+.custom-view-crop-photos {
+
+    .ant-drawer-header {
+        background-color: $col-shade-green;
+        
+        .ant-drawer-title {
+            color: white;
+        }
+
+        .anticon-close {
+            color: white;
+        }
+    }
+
+    .ant-drawer-body {
+        padding: 20px;
+        overflow-y: scroll;
+        overflow-x: unset;
+    }
+}

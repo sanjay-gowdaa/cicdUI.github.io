@@ -268,10 +268,8 @@ const AddCropModal = () => {
                                 </Select>
                             </Form.Item>
                         </Col>
-                        <Col lg={2}>
-                            <Divider className="height-full" type="vertical" />
-                        </Col>
-                        <Col sm={24} md={10} lg={10}>
+                        <Divider className="height-full" type="vertical" style={{height: "25em", color: "black" }} />
+                        <Col span={12}>
                             <Form.Item label="Add Produce Photos" name="cropImages">
                                 <Dragger
                                     className="crop-images-upload"
