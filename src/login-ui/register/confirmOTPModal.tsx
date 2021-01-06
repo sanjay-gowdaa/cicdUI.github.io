@@ -41,7 +41,7 @@ const ConfirmOTPModal = ({showOTPModal, setShowOTPModal, currentType, history}: 
             wrapClassName="otp-modal"
             title={<Title level={5}>OTP Verification</Title>}
             centered
-            closable={true}
+            closable={false}
             maskClosable={false}
             visible={showOTPModal}
             footer={null}
