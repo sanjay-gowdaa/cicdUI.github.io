@@ -19,7 +19,7 @@ const CropsSection = () => {
 
     return (
         <div className="crops-container">
-            <Title level={2}>My Crops</Title>
+            <Title level={2}>My Produce</Title>
             <AddCropModal />
             <Table
                 className="margin-t-1em"

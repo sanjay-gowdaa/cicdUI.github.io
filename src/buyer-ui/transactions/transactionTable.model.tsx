@@ -12,7 +12,7 @@ export const transactionColumns = [
         key: 'transactionId',
     },
     {
-        title: 'Crop',
+        title: 'Produce',
         dataIndex: 'cropName',
         key: 'cropName',
         render: (cropName: string, record: TransactioModel) => {
