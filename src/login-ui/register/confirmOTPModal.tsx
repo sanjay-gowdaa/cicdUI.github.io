@@ -28,7 +28,6 @@ const ConfirmOTPModal = ({showOTPModal, setShowOTPModal, currentType, history}: 
 
     const otpTimer = Date.now() + 1000*60*10 ;
 
-    var otp = '';
     const [inputOtp, setInputOtp] = useState({digit1: '', digit2: '', digit3: '', digit4: ''});
 
     useEffect(() => {
@@ -125,7 +124,7 @@ const ConfirmOTPModal = ({showOTPModal, setShowOTPModal, currentType, history}: 
                     <Space>
                         <PrimaryBtn
                             onClick={() => {
-                                otp = `${inputOtp.digit1} + ${inputOtp.digit2} + ${inputOtp.digit3} + ${inputOtp.digit4}`
+                                const otp = `${inputOtp.digit1} + ${inputOtp.digit2} + ${inputOtp.digit3} + ${inputOtp.digit4}`
                                 dispatch(confirmOTP(formData?.number,otp));
                             }}
                             content="Proceed to profile verification"
