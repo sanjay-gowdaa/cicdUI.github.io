@@ -1,5 +1,5 @@
 const BASE_URL = process.env.REACT_APP_BASE_URL; //'https://enzdzh0pw2.execute-api.ap-south-1.amazonaws.com'
-const STAGE = 'dev'
+const STAGE = process.env.REACT_APP_ENV;
 
 export const REDIRECT_URL =  `https://${window.location.host}/login-user`
 export const LOGOUT_REDIRECT = `https://${window.location.host}/`;
