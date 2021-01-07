@@ -26,9 +26,8 @@ export const cropColumns = [
     },
     {
         title: 'Grade',
-        dataIndex: 'sub_category',
-        key: 'sub_category',
-        render: (sub_category: string) => {return ( <p>{sub_category}</p>)}
+        dataIndex: 'crop_grade',
+        key: 'crop_grade'
     },
     {
         title: 'Qunatity Remaining',
