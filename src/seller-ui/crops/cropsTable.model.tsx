@@ -13,13 +13,12 @@ export const cropColumns = [
         title: 'Produce*',
         dataIndex: 'crop_name',
         key: 'crop_name',
-        render: (cropName: string, record: CropApiModel) => {
+        render: (cropName: string) => {
             return (
                 <div className="display-flex-row align-center">
                     <Image src={RagiImg} />
                     <div className="margin-l-r-1em">
                         <Title level={5}>{cropName}</Title>
-                        <p>{record?.sub_category}</p>
                     </div>
                 </div>
             );
@@ -27,31 +26,22 @@ export const cropColumns = [
     },
     {
         title: 'Grade',
-        dataIndex: 'crop_grade',
-        key: 'crop_grade',
+        dataIndex: 'sub_category',
+        key: 'sub_category',
+        render: (sub_category: string) => {return ( <p>{sub_category}</p>)}
     },
     {
         title: 'Qunatity Remaining',
         dataIndex: 'quantity',
         key: 'quantity',
+        className: 'seller-quantity-remaining',
         render: (quantity: number) => {
             //Temporarily
             const fullQuantity = quantity;
-            const element = document.getElementsByClassName("seller-quantity-remaining");
-            var move = 0;
             
-            const demo = () => {
-                move = move + 1;
-                for(let i=0; i<element.length; i++) {
-                    console.log(element[i].parentElement?.classList);
-                    element[i].parentElement?.classList.add("custom-table-cell");
-                    console.log(element[i].parentElement?.classList);
-                }
-            }
-
             return (
                 <>
-                    <p className="seller-quantity-remaining" style={{margin: "0"}} onMouseMove={() => {if(move === 0)demo()}} >{quantity} qtl</p>
+                    <p style={{margin: "0"}} >{quantity} qtl</p>
                     <Progress className="custom-progress-bar" percent={100} showInfo={false} strokeColor="#12805C" />
                     <Text style={{color: "#999999", fontSize: "smaller"}}>{fullQuantity} qtl</Text>
                 </>
