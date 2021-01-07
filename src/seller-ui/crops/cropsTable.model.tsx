@@ -6,11 +6,11 @@ import { CropApiModel } from '../../store/sellerReducer/types';
 import RagiImg from '../../static/assets/ragi.png';
 import ViewCropImages from './viewCropImages';
 
-const { Title } = Typography;
+const { Title, Text } = Typography;
 
 export const cropColumns = [
     {
-        title: 'Crop',
+        title: 'Produce*',
         dataIndex: 'crop_name',
         key: 'crop_name',
         render: (cropName: string, record: CropApiModel) => {
@@ -35,10 +35,25 @@ export const cropColumns = [
         dataIndex: 'quantity',
         key: 'quantity',
         render: (quantity: number) => {
+            //Temporarily
+            const fullQuantity = quantity;
+            const element = document.getElementsByClassName("seller-quantity-remaining");
+            var move = 0;
+            
+            const demo = () => {
+                move = move + 1;
+                for(let i=0; i<element.length; i++) {
+                    console.log(element[i].parentElement?.classList);
+                    element[i].parentElement?.classList.add("custom-table-cell");
+                    console.log(element[i].parentElement?.classList);
+                }
+            }
+
             return (
                 <>
-                    <p>{quantity} qtl</p>
-                    <Progress percent={100} showInfo={false} />
+                    <p className="seller-quantity-remaining" style={{margin: "0"}} onMouseMove={() => {if(move === 0)demo()}} >{quantity} qtl</p>
+                    <Progress className="custom-progress-bar" percent={100} showInfo={false} strokeColor="#12805C" />
+                    <Text style={{color: "#999999", fontSize: "smaller"}}>{fullQuantity} qtl</Text>
                 </>
             );
         },
@@ -87,8 +102,6 @@ export const cropColumns = [
         key: 'terms_and_conditions',
         dataIndex: 'terms_and_conditions',
         render: (termsAndConditions: string, record: CropApiModel) => {
-            const {crop_name} = record;
-
             return (
                 <>
                     <div>
