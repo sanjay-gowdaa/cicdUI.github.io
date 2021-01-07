@@ -26,7 +26,7 @@ export const matchesColumns = (componentCallBacks: componentCallBacksModel) => [
         },
     },
     {
-        title: 'Produce*',
+        title: 'Produce',
         dataIndex: 'cropName',
         key: 'cropName',
         render: (cropName: string, record: MatchRequirementModel) => {

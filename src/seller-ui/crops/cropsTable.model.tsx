@@ -10,15 +10,16 @@ const { Title, Text } = Typography;
 
 export const cropColumns = [
     {
-        title: 'Produce*',
+        title: 'Produce',
         dataIndex: 'crop_name',
         key: 'crop_name',
-        render: (cropName: string) => {
+        render: (cropName: string, record: CropApiModel) => {
             return (
                 <div className="display-flex-row align-center">
                     <Image src={RagiImg} />
                     <div className="margin-l-r-1em">
                         <Title level={5}>{cropName}</Title>
+                        <p>{record?.sub_category}</p>
                     </div>
                 </div>
             );
