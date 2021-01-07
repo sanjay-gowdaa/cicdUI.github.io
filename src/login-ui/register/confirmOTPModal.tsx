@@ -20,14 +20,17 @@ const { Countdown } = Statistic
 
 const ConfirmOTPModal = ({showOTPModal, setShowOTPModal, currentType, history}: {showOTPModal: boolean, setShowOTPModal: Function, currentType: string, history: any}) => {
     const dispatch = useDispatch();
-    const [curOtp, setCurOtp] = useState('');
+    // const [curOtp, setCurOtp] = useState('');
 
-    const onOtpChange = (event: any): void => setCurOtp(event.target.value);
+    // const onOtpChange = (event: any): void => setCurOtp(event.target.value);
 
     const registrationState = useSelector((state: RootState) => state.registration);
     const { otpError, formData } = registrationState;
 
     const otpTimer = Date.now() + 1000*60*10 ;
+
+    const [otp, setOtp] = useState('');
+    const [inputOtp, setInputOtp] = useState({digit1: '', digit2: '', digit3: '', digit4: ''});
 
     useEffect(() => {
         if (otpError.verified) {
@@ -36,9 +39,20 @@ const ConfirmOTPModal = ({showOTPModal, setShowOTPModal, currentType, history}: 
         }
     }, [otpError.verified]);
 
+    const clearOtp = (event: any) => {
+        if (event.target.value.length === 1) {
+            event.target.nextSibling.focus();
+        }
+        if (otp.length === 4) {
+            setOtp('');
+            setInputOtp({digit1: '', digit2: '', digit3: '', digit4: ''});
+        }
+    };
+
     return (
         <Modal
             wrapClassName="otp-modal"
+            className="custom-otp-modal"
             title={<Title level={5}>OTP Verification</Title>}
             centered
             closable={false}
@@ -54,12 +68,59 @@ const ConfirmOTPModal = ({showOTPModal, setShowOTPModal, currentType, history}: 
                     </Text>
                 </Col>
                 <Col>
-                    <Input value={curOtp} placeholder="Enter 4 digit otp" onChange={onOtpChange} />
+                    {/* <Input value={curOtp} placeholder="Enter 4 digit otp" onChange={onOtpChange} /> */}
+                    <Input
+                        className="custom-otp-input-digits custom-input"
+                        disabled={false}
+                        maxLength={1}
+                        onChange={(event: any) => {
+                            setOtp(otp + event.target.value);
+                            setInputOtp({...inputOtp, digit1: event.target.value});
+                        }}
+                        onKeyUp={clearOtp}
+                        type="text"
+                        value={inputOtp.digit1}
+                    />
+                    <Input
+                        className="custom-otp-input-digits custom-input"
+                        disabled={(inputOtp.digit1 === '')? true : false}
+                        maxLength={1}
+                        onChange={(event: any) => {
+                            setOtp(otp + event.target.value);
+                            setInputOtp({...inputOtp, digit2: event.target.value});
+                        }}
+                        onKeyUp={clearOtp}
+                        type="text"
+                        value={inputOtp.digit2}
+                    />
+                    <Input
+                        className="custom-otp-input-digits custom-input"
+                        disabled={(inputOtp.digit2 === '')? true : false}
+                        maxLength={1}
+                        onChange={(event: any) => {
+                            setOtp(otp + event.target.value);
+                            setInputOtp({...inputOtp, digit3: event.target.value});
+                        }}
+                        onKeyUp={clearOtp}
+                        type="text"
+                        value={inputOtp.digit3}
+                    />
+                    <Input
+                        className="custom-otp-input-digits custom-input"
+                        disabled={(inputOtp.digit3 === '')? true : false}
+                        maxLength={1}
+                        onChange={(event: any) => {
+                            setOtp(otp + event.target.value);
+                            setInputOtp({...inputOtp, digit4: event.target.value});
+                        }}
+                        type="text"
+                        value={inputOtp.digit4}
+                    />
                 </Col>
             </Row>
             <Row>
                 <Space>
-                    <Text>Didn't recieve OTP?</Text>
+                    <Text>Didn't receive OTP?</Text>
                     <Text className="custom-color-change"> Resend Code in </Text>
                     <Countdown
                         className="custom-color-change"
@@ -82,7 +143,8 @@ const ConfirmOTPModal = ({showOTPModal, setShowOTPModal, currentType, history}: 
                     <Space>
                         <PrimaryBtn
                             onClick={() => {
-                                dispatch(confirmOTP(formData?.number, curOtp));
+                                // dispatch(confirmOTP(formData?.number, curOtp));
+                                dispatch(confirmOTP(formData?.number,otp));
                             }}
                             content="Proceed to profile verification"
                         />
