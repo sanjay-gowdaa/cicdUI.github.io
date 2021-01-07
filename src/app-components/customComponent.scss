@@ -177,38 +177,6 @@ $col-shade-green: #12805C;
     padding-left: 1em !important;
 }
 
-.custom-otp-modal {
-    .ant-modal-content {
-        width: 24em;
-
-        .ant-modal-header {
-            padding-bottom: 0;
-            border: none;
-        }
-
-        .ant-modal-body {
-            padding-top: 0;
-
-            input.custom-otp-input-digits {
-                width: 2.5em;
-                height:2.5em;
-                margin: 0.5em;
-            }
-
-            .custom-color-change {
-                color: #cacaca !important;
-                // font-size: small !important;
-            
-                .ant-statistic-content-value {
-                    color: #cacaca !important;
-                    font-size: initial;
-                    padding-bottom: 0.5em;
-                }
-            }
-        }
-    }
-}
-
 .partial-match {
     font-size: smaller;
     background-color: #f5a31a;
