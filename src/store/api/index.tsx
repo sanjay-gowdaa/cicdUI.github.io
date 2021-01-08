@@ -86,16 +86,13 @@ export const fetchUserDetails = (userAccessToken: string) => {
 /* Registration And Login Interface End*/
 
 /* Seller Apis */
-//  getCrops Api
-export const getCategoryList = () => {
-    const categoryListApi = `${BASE_URL}/${STAGE}/${CROP_TYPES_API}`;
-    return fetch(categoryListApi).then((response: any) => response.json());
-};
 
 // getCropdetails Api
-export const getSubCategoryList = (categoryId: string) => {
+export const getSubCategoryList = (categoryId: string, userAccessToken: string) => {
     const subcategoryListApi = `${BASE_URL}/${STAGE}/${CROP_SUB_TYPES_DETAILS_API}?crop=${categoryId}`;
-    return fetch(subcategoryListApi).then((response: any) => response.json());
+    return fetch(subcategoryListApi, {
+        headers: getAuthHeader(userAccessToken)
+    }).then((response: any) => response.json());
 };
 
 export const createCrop = (cropData: any, sellerId: string, userAccessToken: string) => {
@@ -141,15 +138,19 @@ export const getAllProduce = (buyerId: string, userAccessToken: string) => {
 };
 
 // getCrops Api
-export const getCropList = (filteredCrop: string) => {
+export const getCropList = (filteredCrop: string, userAccessToken: string) => {
     const categoryListApi = `${BASE_URL}/${STAGE}/${CROP_TYPES_API}?category=${filteredCrop}`;
-    return fetch(categoryListApi).then((response: any) => response.json());
+    return fetch(categoryListApi, {
+        headers: getAuthHeader(userAccessToken)
+    }).then((response: any) => response.json());
 };
 
 // getCropCategories Api
-export const getCropCategoryList = () => {
+export const getCropCategoryList = (userAccessToken: string) => {
     const cropCategoryApi = `${BASE_URL}/${STAGE}/${CROP_CATEGORY_DETAILS_API}`;
-    return fetch(cropCategoryApi).then((response: any) => response.json());
+    return fetch(cropCategoryApi, {
+        headers: getAuthHeader(userAccessToken)
+    }).then((response: any) => response.json());
 };
 
 

@@ -111,7 +111,7 @@ export const cropColumns = [
         key: 'action',
         render: (text: string, record: CropApiModel) => {
             const { intent_to_sell } = record;
-            return intent_to_sell ? null : (
+            return intent_to_sell === 'Yes' ? null : (
                 <>
                     <Button type="link" block>
                         Edit

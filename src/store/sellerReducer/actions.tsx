@@ -65,7 +65,9 @@ export const fetchCropApmcPrice = ({commodity, variety}: {commodity: string, var
 
 export const fetchAllCategories = () => {
     return async(dispatch: any, getState: any) => {
-        const allCategoriesList = await getCropCategoryList();
+        const {loginUser}: {loginUser: UserStateModel} = getState() as RootState;
+        const {accessToken} = loginUser;
+        const allCategoriesList = await getCropCategoryList(accessToken);
         const {categories} = allCategoriesList || []
         dispatch(updateAllCategories(categories))
     }
@@ -73,7 +75,9 @@ export const fetchAllCategories = () => {
 
 export const fetchAllMasterCrops = (category: string) => {
     return async(dispatch: any, getState: any) => {
-        const allCropList = await getCropList(category);
+        const {loginUser}: {loginUser: UserStateModel} = getState() as RootState;
+        const {accessToken} = loginUser;
+        const allCropList = await getCropList(category, accessToken);
         const {crops} = allCropList || []
         dispatch(updateMasterCrops(crops))
     }
@@ -81,7 +85,9 @@ export const fetchAllMasterCrops = (category: string) => {
 
 export const fetchAllVariety = (cropName: string) => {
     return async(dispatch: any, getState: any) => {
-        const allVarietyList = await getSubCategoryList(cropName);
+        const {loginUser}: {loginUser: UserStateModel} = getState() as RootState;
+        const {accessToken} = loginUser;
+        const allVarietyList = await getSubCategoryList(cropName, accessToken);
         const {crops: {Items: variety}} = allVarietyList || { variety: []}
         dispatch(updateVariety(variety))
     }
