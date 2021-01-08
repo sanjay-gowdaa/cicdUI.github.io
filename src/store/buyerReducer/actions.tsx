@@ -1,4 +1,5 @@
 import { addProduce, getAllProduce, getCropCategoryList, getCropList, getSubCategoryList, getMasterList, updateMasterList } from "../api";
+import { UserStateModel } from "../loginReducer/types";
 import { RootState } from "../rootReducer";
 import { MasterListApiFormat, ProduceModel } from "./types";
 
@@ -46,9 +47,9 @@ export const updateVarietyList = (varietyList: Array<string>) => {
 
 export const getMasterProduceList = () => {
     return async(dispatch: any, getState: any) => {
-        const {loginUser} = getState() as RootState; 
-        const {userName} = loginUser;
-        const masterProduceList = await getMasterList(userName);
+        const {loginUser}: {loginUser: UserStateModel} = getState() as RootState;
+        const {userName, accessToken} = loginUser;
+        const masterProduceList = await getMasterList(userName, accessToken);
         // testing
         // const masterProduceList = await getMasterList('7892329983');
         const masterList = masterProduceList || [];
@@ -58,9 +59,9 @@ export const getMasterProduceList = () => {
 
 export const updateMasterListData = (masterlist: Array<MasterListApiFormat>) => {
     return async(dispatch: any, getState: any) => {
-        const {loginUser} = getState() as RootState; 
-        const {userName} = loginUser;
-        const updateMasterListResponse = await updateMasterList(masterlist, userName);
+        const {loginUser}: {loginUser: UserStateModel} = getState() as RootState;
+        const {userName, accessToken} = loginUser;
+        const updateMasterListResponse = await updateMasterList(masterlist, userName, accessToken);
         // testing
         // const updateMasterListResponse = await updateMasterList(masterlist, '7892329983');
         dispatch(getMasterProduceList());
@@ -69,11 +70,11 @@ export const updateMasterListData = (masterlist: Array<MasterListApiFormat>) => 
 
 export const addNewProduce = (/*produceFormData: ProduceModel*/ produceFormData: any) => {
     return async(dispatch: any, getState: any) => {
-        const {loginUser} = getState() as RootState; 
+        const {loginUser}: {loginUser: UserStateModel} = getState() as RootState;
         // for testing, use USER-ID 
         // const userName = '7892329983'
-        const {userName} = loginUser
-        const addProduceResponse = await addProduce(produceFormData, userName);
+        const {userName, accessToken} = loginUser
+        const addProduceResponse = await addProduce(produceFormData, userName, accessToken);
         // console.log('addProduceResponse', addProduceResponse);
         dispatch(getProduceList())
     }
@@ -81,12 +82,12 @@ export const addNewProduce = (/*produceFormData: ProduceModel*/ produceFormData:
 
 export const getProduceList = () => {
     return async(dispatch: any, getState: any) => {
-        const {loginUser} = getState() as RootState; 
+        const {loginUser}: {loginUser: UserStateModel} = getState() as RootState;
         // for tesing, use USER-ID 
         // const {userName} = {userName: '7892329983'}; 
         
-        const {userName} = loginUser
-        const getProduceListResponse = await getAllProduce(userName);
+        const {userName, accessToken} = loginUser
+        const getProduceListResponse = await getAllProduce(userName, accessToken);
         const {Items, Count} = getProduceListResponse || {Items: []}
         // console.log('getProduceList', Items);
         dispatch(updateProduceList(Items as Array<ProduceModel>))

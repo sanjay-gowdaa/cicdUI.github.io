@@ -1,4 +1,5 @@
 import { getSubCategoryList, createCrop, getAllCrops, getCropCategoryList, getCropList, getApmcModalPrice } from "../api";
+import { UserStateModel } from "../loginReducer/types";
 import { RootState } from "../rootReducer";
 
 export const UPDATE_CATEGORIES = 'UPDATE_CATEGORIES';
@@ -88,22 +89,22 @@ export const fetchAllVariety = (cropName: string) => {
 
 export const addNewCropData = (cropData: FormData) => {
     return async(dispatch: any, getState: any) => {
-        const {loginUser} = getState() as RootState; 
+        const {loginUser}: {loginUser: UserStateModel} = getState() as RootState;
         // for tesing, use USER-ID 
-        // const {userName} = {userName: '7892329983'}; 
-        const {userName} = loginUser
-        const cropAdded = await createCrop(cropData, userName)
+        // const {userName} = {userName: '9036565202'};
+        const {userName, accessToken} = loginUser
+        const cropAdded = await createCrop(cropData, userName, accessToken)
         dispatch(getAllCropsList());
     }
 }
 
 export const getAllCropsList = () => {
     return async(dispatch: any, getState: any) => {
-        const {loginUser} = getState() as RootState; 
+        const {loginUser}: {loginUser: UserStateModel} = getState() as RootState;
         // for tesing, use USER-ID 
-        // const {userName} = {userName: '7892329983'}; 
-        const {userName} = loginUser
-        const cropsList = await getAllCrops(userName)
+        // const {userName} = {userName: '9036565202'}; 
+        const {userName, accessToken} = loginUser
+        const cropsList = await getAllCrops(userName, accessToken)
         const {Items, Count} = cropsList || {Items: [], Count: 0}
         dispatch(updateSellerCropsList(Items))
     }
