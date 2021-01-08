@@ -20,7 +20,7 @@ const DashboardSection = () => {
                 </Col>
                 <Col md={8} sm={24} xs={24}>
                     <div className="dashboard-tile">
-                        <Title level={4}>Crop Info</Title>
+                        <Title level={4}>Produce Info</Title>
                     </div>
                 </Col>
                 <Col md={8} sm={24} xs={24}>

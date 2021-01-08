@@ -6,11 +6,11 @@ import { CropApiModel } from '../../store/sellerReducer/types';
 import RagiImg from '../../static/assets/ragi.png';
 import ViewCropImages from './viewCropImages';
 
-const { Title } = Typography;
+const { Title, Text } = Typography;
 
 export const cropColumns = [
     {
-        title: 'Crop',
+        title: 'Produce',
         dataIndex: 'crop_name',
         key: 'crop_name',
         render: (cropName: string, record: CropApiModel) => {
@@ -28,17 +28,22 @@ export const cropColumns = [
     {
         title: 'Grade',
         dataIndex: 'crop_grade',
-        key: 'crop_grade',
+        key: 'crop_grade'
     },
     {
         title: 'Qunatity Remaining',
         dataIndex: 'quantity',
         key: 'quantity',
+        className: 'seller-quantity-remaining',
         render: (quantity: number) => {
+            //Temporarily
+            const fullQuantity = quantity;
+            
             return (
                 <>
-                    <p>{quantity} qtl</p>
-                    <Progress percent={100} showInfo={false} />
+                    <p style={{margin: "0"}} >{quantity} qtl</p>
+                    <Progress className="custom-progress-bar" percent={100} showInfo={false} strokeColor="#12805C" />
+                    <Text style={{color: "#999999", fontSize: "smaller"}}>{fullQuantity} qtl</Text>
                 </>
             );
         },
@@ -87,8 +92,6 @@ export const cropColumns = [
         key: 'terms_and_conditions',
         dataIndex: 'terms_and_conditions',
         render: (termsAndConditions: string, record: CropApiModel) => {
-            const {crop_name} = record;
-
             return (
                 <>
                     <div>

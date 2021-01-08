@@ -29,7 +29,7 @@ const ViewCropDetails = (props: componentProps) => {
             </Row>
             <Row>
                 <Col sm={24} md={12}>
-                    Crop
+                    Produce
                 </Col>
                 <Col sm={24} md={12}>
                     : {cropName}

@@ -108,7 +108,7 @@ const AddCropModal = () => {
             <PrimaryBtn
                 className="add-crop-btn vikas-btn-radius"
                 onClick={() => setModalVisible(true)}
-                content="Add Crop"
+                content="Add Produce"
             />
             <Modal
                 title={<Title level={5}>Add Produce</Title>}
