@@ -65,9 +65,7 @@ export const fetchCropApmcPrice = ({commodity, variety}: {commodity: string, var
 
 export const fetchAllCategories = () => {
     return async(dispatch: any, getState: any) => {
-        const {loginUser}: {loginUser: UserStateModel} = getState() as RootState;
-        const {accessToken} = loginUser;
-        const allCategoriesList = await getCropCategoryList(accessToken);
+        const allCategoriesList = await getCropCategoryList();
         const {categories} = allCategoriesList || []
         dispatch(updateAllCategories(categories))
     }
@@ -75,9 +73,7 @@ export const fetchAllCategories = () => {
 
 export const fetchAllMasterCrops = (category: string) => {
     return async(dispatch: any, getState: any) => {
-        const {loginUser}: {loginUser: UserStateModel} = getState() as RootState;
-        const {accessToken} = loginUser;
-        const allCropList = await getCropList(category, accessToken);
+        const allCropList = await getCropList(category);
         const {crops} = allCropList || []
         dispatch(updateMasterCrops(crops))
     }
@@ -85,9 +81,7 @@ export const fetchAllMasterCrops = (category: string) => {
 
 export const fetchAllVariety = (cropName: string) => {
     return async(dispatch: any, getState: any) => {
-        const {loginUser}: {loginUser: UserStateModel} = getState() as RootState;
-        const {accessToken} = loginUser;
-        const allVarietyList = await getSubCategoryList(cropName, accessToken);
+        const allVarietyList = await getSubCategoryList(cropName);
         const {crops: {Items: variety}} = allVarietyList || { variety: []}
         dispatch(updateVariety(variety))
     }
@@ -98,8 +92,8 @@ export const addNewCropData = (cropData: FormData) => {
         const {loginUser}: {loginUser: UserStateModel} = getState() as RootState;
         // for tesing, use USER-ID 
         // const {userName} = {userName: '9036565202'};
-        const {userName, accessToken} = loginUser
-        const cropAdded = await createCrop(cropData, userName, accessToken)
+        const {userName} = loginUser
+        const cropAdded = await createCrop(cropData, userName)
         dispatch(getAllCropsList());
     }
 }
@@ -109,8 +103,8 @@ export const getAllCropsList = () => {
         const {loginUser}: {loginUser: UserStateModel} = getState() as RootState;
         // for tesing, use USER-ID 
         // const {userName} = {userName: '9036565202'}; 
-        const {userName, accessToken} = loginUser
-        const cropsList = await getAllCrops(userName, accessToken)
+        const {userName} = loginUser
+        const cropsList = await getAllCrops(userName)
         const {Items, Count} = cropsList || {Items: [], Count: 0}
         dispatch(updateSellerCropsList(Items))
     }

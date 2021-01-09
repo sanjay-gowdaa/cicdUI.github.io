@@ -48,8 +48,8 @@ export const updateVarietyList = (varietyList: Array<string>) => {
 export const getMasterProduceList = () => {
     return async(dispatch: any, getState: any) => {
         const {loginUser}: {loginUser: UserStateModel} = getState() as RootState;
-        const {userName, accessToken} = loginUser;
-        const masterProduceList = await getMasterList(userName, accessToken);
+        const {userName} = loginUser;
+        const masterProduceList = await getMasterList(userName);
         // testing
         // const masterProduceList = await getMasterList('7892329983');
         const masterList = masterProduceList || [];
@@ -60,8 +60,8 @@ export const getMasterProduceList = () => {
 export const updateMasterListData = (masterlist: Array<MasterListApiFormat>) => {
     return async(dispatch: any, getState: any) => {
         const {loginUser}: {loginUser: UserStateModel} = getState() as RootState;
-        const {userName, accessToken} = loginUser;
-        const updateMasterListResponse = await updateMasterList(masterlist, userName, accessToken);
+        const {userName} = loginUser;
+        const updateMasterListResponse = await updateMasterList(masterlist, userName);
         // testing
         // const updateMasterListResponse = await updateMasterList(masterlist, '7892329983');
         dispatch(getMasterProduceList());
@@ -73,8 +73,8 @@ export const addNewProduce = (/*produceFormData: ProduceModel*/ produceFormData:
         const {loginUser}: {loginUser: UserStateModel} = getState() as RootState;
         // for testing, use USER-ID 
         // const userName = '7892329983'
-        const {userName, accessToken} = loginUser
-        const addProduceResponse = await addProduce(produceFormData, userName, accessToken);
+        const {userName} = loginUser
+        const addProduceResponse = await addProduce(produceFormData, userName);
         // console.log('addProduceResponse', addProduceResponse);
         dispatch(getProduceList())
     }
@@ -86,8 +86,8 @@ export const getProduceList = () => {
         // for tesing, use USER-ID 
         // const {userName} = {userName: '7892329983'}; 
         
-        const {userName, accessToken} = loginUser
-        const getProduceListResponse = await getAllProduce(userName, accessToken);
+        const {userName} = loginUser
+        const getProduceListResponse = await getAllProduce(userName);
         const {Items, Count} = getProduceListResponse || {Items: []}
         // console.log('getProduceList', Items);
         dispatch(updateProduceList(Items as Array<ProduceModel>))
@@ -96,33 +96,24 @@ export const getProduceList = () => {
 
 export const fetchAllProduce = () => {
     return async(dispatch: any, getState: any) => {
-        const {loginUser}: {loginUser: UserStateModel} = getState() as RootState;
-        const {accessToken} = loginUser;
-        const allProduceList = await getCropCategoryList(accessToken);
+        const allProduceList = await getCropCategoryList();
         const {categories} = allProduceList || []
-        // console.log('registerUserResponse', categories);
         dispatch(updateMasterCropNamesList(categories))
     }
 }
 
 export const fetchAllCrops = (category: string) => {
     return async(dispatch: any, getState: any) => {
-        const {loginUser}: {loginUser: UserStateModel} = getState() as RootState;
-        const {accessToken} = loginUser;
-        const allCropsList = await getCropList(category, accessToken);
+        const allCropsList = await getCropList(category);
         const {crops} = allCropsList || []
-        // console.log('Crops List', crops);
         dispatch(updateCropsList(crops));
     }
 }
 
 export const fetchAllVariety = (crop: string) => {
     return async(dispatch: any, getState: any) => {
-        const {loginUser}: {loginUser: UserStateModel} = getState() as RootState;
-        const {accessToken} = loginUser;
-        const allVarietyList = await getSubCategoryList(crop, accessToken);
+        const allVarietyList = await getSubCategoryList(crop);
         const { crops: {Items: variety}} = allVarietyList || {variety: []}
-        // console.log('Variety list', variety);
         dispatch(updateVarietyList(variety));    
     }
 }

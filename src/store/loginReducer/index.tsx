@@ -5,7 +5,6 @@ import { UserStateModel } from './types';
 const INITIAL_STATE: UserStateModel = {
     userName: '',
     name: '',
-    accessToken: '',
     signInState: {hasError: false, isVerified: false, msg: ''}
 };
 

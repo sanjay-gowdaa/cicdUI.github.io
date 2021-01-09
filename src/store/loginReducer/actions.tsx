@@ -1,6 +1,7 @@
 import { fetchUserDetails, getAccessToken } from '../api';
 import { handleResponse } from '../utils';
 import { UserDetailsModel } from './types';
+var CryptoJS = require("crypto-js");
 
 export const UPDATE_FORM = 'UPDATE_LOGIN_DETAILS';
 export const UPDATE_USER = 'UPDATE_USER_DETAILS';
@@ -14,13 +15,6 @@ export const updateUserDetails = (userDetails: Partial<UserDetailsModel>) => {
         payload: userDetails,
     };
 };
-
-export const setUserAccessToken = (token: string) => {
-    return {
-        type: SET_ACCESS_TOKEN,
-        payload: token
-    }
-}
 
 export const setLoginError = (errorMsg: string) => {
     return {
@@ -39,7 +33,6 @@ export const setLoginSuccess = () => {
 export const getUserDetails = (accessToken: string) => {
     return async (dispatch: any, getState: any) => {
         const userDetailsData = await fetchUserDetails(accessToken);
-        console.log('response response', userDetailsData);
         const {result} = userDetailsData || {result: {}}
         // const {status, data} = response || {status: '', data: ''}
         // if (handleResponse(status)) {
@@ -54,12 +47,11 @@ export const getUserDetails = (accessToken: string) => {
 export const getAccessTokenAndFetchUserDetails = (userCode: string) => {
     return async (dispatch: any, getState: any) => {
         const accessTokenDetails = await getAccessToken(userCode)
-        console.log('response response', accessTokenDetails)
         const {result} = accessTokenDetails || {result: {}}
         const {status, data} = result || {status: '', data: ''}
 
         if (handleResponse(status)) {
-            dispatch(setUserAccessToken(data))
+            (window as any).userToken = CryptoJS.AES.encrypt(JSON.stringify(data), "Secret Passphrase").toString();;
             dispatch(getUserDetails(data))
         } else {
             const {statusText, err: {error = ''}} = result || {statusText: '', err: {}}
