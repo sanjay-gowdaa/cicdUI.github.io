@@ -1,11 +1,12 @@
 import CryptoJS from 'crypto-js';
+import { token_grant } from '../../constants';
 const BASE_URL = process.env.REACT_APP_BASE_URL; //'https://enzdzh0pw2.execute-api.ap-south-1.amazonaws.com'
 const STAGE = process.env.REACT_APP_ENV;
 
 export const REDIRECT_URL =  `https://${window.location.host}/login-user`
 export const LOGOUT_REDIRECT = `https://${window.location.host}/`;
 export const LOGIN_URL = `${process.env.REACT_APP_LOGIN_URL_BASE_URL}/login?client_id=7sckhhjs2aq1noqd1fvjdeo69j&response_type=code&redirect_uri=${REDIRECT_URL}`;
-export const LOGOUT_URL = `${process.env.REACT_APP_LOGOUT_BASE_URL}/lougout?client_id=7sckhhjs2aq1noqd1fvjdeo69j&logout_uri=${LOGOUT_REDIRECT}`;
+export const LOGOUT_URL = `${process.env.REACT_APP_LOGOUT_BASE_URL}/logout?client_id=7sckhhjs2aq1noqd1fvjdeo69j&logout_uri=${LOGOUT_REDIRECT}`;
 
 const OTP_SEND_API = 'otp/send';
 const OTP_VERIFY_API = 'otp/send';
@@ -21,7 +22,7 @@ const APMC_MODAL_PRICE = 'getmodalprice';
 
 const getAuthHeader = () =>  {
     const userToken = (window as any).userToken ? (window as any).userToken : '';
-    const decryptedToken = CryptoJS.AES.decrypt(userToken, "Secret Passphrase");
+    const decryptedToken = CryptoJS.AES.decrypt(userToken, token_grant);
     const userAccessToken = JSON.parse(decryptedToken.toString(CryptoJS.enc.Utf8))
     return ({'Authorization': `Bearer ${userAccessToken}`});
 }

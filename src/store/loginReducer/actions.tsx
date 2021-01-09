@@ -1,3 +1,4 @@
+import { token_grant } from '../../constants';
 import { fetchUserDetails, getAccessToken } from '../api';
 import { handleResponse } from '../utils';
 import { UserDetailsModel } from './types';
@@ -51,7 +52,7 @@ export const getAccessTokenAndFetchUserDetails = (userCode: string) => {
         const {status, data} = result || {status: '', data: ''}
 
         if (handleResponse(status)) {
-            (window as any).userToken = CryptoJS.AES.encrypt(JSON.stringify(data), "Secret Passphrase").toString();;
+            (window as any).userToken = CryptoJS.AES.encrypt(JSON.stringify(data), token_grant).toString();;
             dispatch(getUserDetails(data))
         } else {
             const {statusText, err: {error = ''}} = result || {statusText: '', err: {}}

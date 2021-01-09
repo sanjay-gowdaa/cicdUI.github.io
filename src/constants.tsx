@@ -14,3 +14,5 @@ export const headerBreadcrumb = {
     transaction: "-ui-transactions",
     feedback: "-ui-feedback",
 }
+
+export const token_grant = 'vikas-bandhu-token'
