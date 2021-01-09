@@ -1,4 +1,5 @@
 import { addProduce, getAllProduce, getCropCategoryList, getCropList, getSubCategoryList, getMasterList, updateMasterList } from "../api";
+import { UserStateModel } from "../loginReducer/types";
 import { RootState } from "../rootReducer";
 import { MasterListApiFormat, ProduceModel } from "./types";
 
@@ -46,7 +47,7 @@ export const updateVarietyList = (varietyList: Array<string>) => {
 
 export const getMasterProduceList = () => {
     return async(dispatch: any, getState: any) => {
-        const {loginUser} = getState() as RootState; 
+        const {loginUser}: {loginUser: UserStateModel} = getState() as RootState;
         const {userName} = loginUser;
         const masterProduceList = await getMasterList(userName);
         // testing
@@ -58,7 +59,7 @@ export const getMasterProduceList = () => {
 
 export const updateMasterListData = (masterlist: Array<MasterListApiFormat>) => {
     return async(dispatch: any, getState: any) => {
-        const {loginUser} = getState() as RootState; 
+        const {loginUser}: {loginUser: UserStateModel} = getState() as RootState;
         const {userName} = loginUser;
         const updateMasterListResponse = await updateMasterList(masterlist, userName);
         // testing
@@ -69,7 +70,7 @@ export const updateMasterListData = (masterlist: Array<MasterListApiFormat>) => 
 
 export const addNewProduce = (/*produceFormData: ProduceModel*/ produceFormData: any) => {
     return async(dispatch: any, getState: any) => {
-        const {loginUser} = getState() as RootState; 
+        const {loginUser}: {loginUser: UserStateModel} = getState() as RootState;
         // for testing, use USER-ID 
         // const userName = '7892329983'
         const {userName} = loginUser
@@ -81,7 +82,7 @@ export const addNewProduce = (/*produceFormData: ProduceModel*/ produceFormData:
 
 export const getProduceList = () => {
     return async(dispatch: any, getState: any) => {
-        const {loginUser} = getState() as RootState; 
+        const {loginUser}: {loginUser: UserStateModel} = getState() as RootState;
         // for tesing, use USER-ID 
         // const {userName} = {userName: '7892329983'}; 
         
@@ -97,7 +98,6 @@ export const fetchAllProduce = () => {
     return async(dispatch: any, getState: any) => {
         const allProduceList = await getCropCategoryList();
         const {categories} = allProduceList || []
-        // console.log('registerUserResponse', categories);
         dispatch(updateMasterCropNamesList(categories))
     }
 }
@@ -106,7 +106,6 @@ export const fetchAllCrops = (category: string) => {
     return async(dispatch: any, getState: any) => {
         const allCropsList = await getCropList(category);
         const {crops} = allCropsList || []
-        // console.log('Crops List', crops);
         dispatch(updateCropsList(crops));
     }
 }
@@ -115,7 +114,6 @@ export const fetchAllVariety = (crop: string) => {
     return async(dispatch: any, getState: any) => {
         const allVarietyList = await getSubCategoryList(crop);
         const { crops: {Items: variety}} = allVarietyList || {variety: []}
-        // console.log('Variety list', variety);
         dispatch(updateVarietyList(variety));    
     }
 }

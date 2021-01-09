@@ -1,10 +1,12 @@
+import CryptoJS from 'crypto-js';
+import { token_grant } from '../../constants';
 const BASE_URL = process.env.REACT_APP_BASE_URL; //'https://enzdzh0pw2.execute-api.ap-south-1.amazonaws.com'
 const STAGE = process.env.REACT_APP_ENV;
 
 export const REDIRECT_URL =  `https://${window.location.host}/login-user`
 export const LOGOUT_REDIRECT = `https://${window.location.host}/`;
 export const LOGIN_URL = `${process.env.REACT_APP_LOGIN_URL_BASE_URL}/login?client_id=7sckhhjs2aq1noqd1fvjdeo69j&response_type=code&redirect_uri=${REDIRECT_URL}`;
-export const LOGOUT_URL = `${process.env.REACT_APP_LOGOUT_BASE_URL}/lougout?client_id=7sckhhjs2aq1noqd1fvjdeo69j&logout_uri=${LOGOUT_REDIRECT}`;
+export const LOGOUT_URL = `${process.env.REACT_APP_LOGOUT_BASE_URL}/logout?client_id=7sckhhjs2aq1noqd1fvjdeo69j&logout_uri=${LOGOUT_REDIRECT}`;
 
 const OTP_SEND_API = 'otp/send';
 const OTP_VERIFY_API = 'otp/send';
@@ -18,7 +20,12 @@ const CROP_SUB_TYPES_DETAILS_API = 'getcropdetails';
 const CROP_CATEGORY_DETAILS_API = 'getcropcategories';
 const APMC_MODAL_PRICE = 'getmodalprice';
 
-const getAuthHeader = (userAccessToken: string) => ({'Authorization': `Bearer ${userAccessToken}`});
+const getAuthHeader = () =>  {
+    const userToken = (window as any).userToken ? (window as any).userToken : '';
+    const decryptedToken = CryptoJS.AES.decrypt(userToken, token_grant);
+    const userAccessToken = JSON.parse(decryptedToken.toString(CryptoJS.enc.Utf8))
+    return ({'Authorization': `Bearer ${userAccessToken}`});
+}
 
 /* OTP Interface */
 export const sendOtp = (number: string) => {
@@ -79,37 +86,37 @@ export const getAccessToken = (userCode: string) => {
 export const fetchUserDetails = (userAccessToken: string) => {
     const userProfileApi = `${BASE_URL}/${STAGE}/${USER_PROFILE_API}`;
     return fetch(userProfileApi, {
-        headers: getAuthHeader(userAccessToken)
+        headers: getAuthHeader()
     }).then((response: any) => response.json());
 };
 
 /* Registration And Login Interface End*/
 
 /* Seller Apis */
-//  getCrops Api
-export const getCategoryList = () => {
-    const categoryListApi = `${BASE_URL}/${STAGE}/${CROP_TYPES_API}`;
-    return fetch(categoryListApi).then((response: any) => response.json());
-};
 
 // getCropdetails Api
 export const getSubCategoryList = (categoryId: string) => {
     const subcategoryListApi = `${BASE_URL}/${STAGE}/${CROP_SUB_TYPES_DETAILS_API}?crop=${categoryId}`;
-    return fetch(subcategoryListApi).then((response: any) => response.json());
+    return fetch(subcategoryListApi, {
+        headers: getAuthHeader()
+    }).then((response: any) => response.json());
 };
 
 export const createCrop = (cropData: any, sellerId: string) => {
     const addCropApi = `${BASE_URL}/${STAGE}/seller/${sellerId}/crop`;
     return fetch(addCropApi, {
         method: 'POST',
-        body: cropData
+        body: cropData,
+        headers: getAuthHeader()
     }).then((response: any) => response.json());
 };
 
 
 export const getAllCrops = (sellerId: string) => {
     const fetcCropsApi = `${BASE_URL}/${STAGE}/seller/${sellerId}/crop`;
-    return fetch(fetcCropsApi).then((response: any) => response.json());
+    return fetch(fetcCropsApi, {
+        headers: getAuthHeader()
+    }).then((response: any) => response.json());
 };
 
 export const getApmcModalPrice = ({region, commodity, variety}: {region: string, commodity: string, variety: string}) => {
@@ -125,26 +132,32 @@ export const addProduce = (produceData: any, buyerId: string) => {
     const bodyParamData = JSON.stringify(produceData);
     return fetch(addProduceApi, {
         method: 'POST',
-        body: bodyParamData
+        body: bodyParamData,
+        headers: getAuthHeader()
     }).then((response: any) => response.json());
 };
 
 export const getAllProduce = (buyerId: string) => {
     const getAllProduceApi = `${BASE_URL}/${STAGE}/buyer/${buyerId}/crop`;
     return fetch(getAllProduceApi, {
+        headers: getAuthHeader()
     }).then((response: any) => response.json());
 };
 
 // getCrops Api
 export const getCropList = (filteredCrop: string) => {
     const categoryListApi = `${BASE_URL}/${STAGE}/${CROP_TYPES_API}?category=${filteredCrop}`;
-    return fetch(categoryListApi).then((response: any) => response.json());
+    return fetch(categoryListApi, {
+        headers: getAuthHeader()
+    }).then((response: any) => response.json());
 };
 
 // getCropCategories Api
 export const getCropCategoryList = () => {
     const cropCategoryApi = `${BASE_URL}/${STAGE}/${CROP_CATEGORY_DETAILS_API}`;
-    return fetch(cropCategoryApi).then((response: any) => response.json());
+    return fetch(cropCategoryApi, {
+        headers: getAuthHeader()
+    }).then((response: any) => response.json());
 };
 
 
@@ -153,12 +166,15 @@ export const updateMasterList = (updateMasterList: any, buyerId: string) => {
     const bodyParamData = JSON.stringify(updateMasterList);
     return fetch(masterListApi, {
         method: 'POST',
-        body: bodyParamData
+        body: bodyParamData,
+        headers: getAuthHeader()
     }).then((response: any) => response.json())
 }
 
 export const getMasterList = (buyerId: string) => {
     const masterListApi = `${BASE_URL}/${STAGE}/buyer/${buyerId}/master_list`;
-    return fetch(masterListApi).then((response: any) => response.json())
+    return fetch(masterListApi, {
+        headers: getAuthHeader()
+    }).then((response: any) => response.json())
 }
 /* Buyer Apis End */

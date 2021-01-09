@@ -8,7 +8,6 @@ export interface UserDetailsModel {
 }
 
 export interface UserStateModel extends UserDetailsModel {
-    accessToken: string;
     signInState: {hasError: boolean, isVerified: boolean, msg: string};
     district?: string;
 }
