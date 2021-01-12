@@ -26,35 +26,93 @@ type generateFormDataProps = {
     }
 }
 
-export const generateFormData = ({formSubmitValues, userType, addressForPin}: generateFormDataProps) => {
-    const {bank_statement} = formSubmitValues;
-    let formData = new FormData();
-    formData.append('bank_doc', bank_statement[0].originFileObj);
-    delete formSubmitValues['bank_statement'];
+// const converBase64toBlob = (content, contentType) => {
+//     contentType = contentType || '';
+//     var sliceSize = 512;
+//     var byteCharacters = window.atob(content); //method which converts base64 to binary
+//     var byteArrays = [
+//     ];
+//     for (var offset = 0; offset < byteCharacters.length; offset += sliceSize) {
+//       var slice = byteCharacters.slice(offset, offset + sliceSize);
+//       var byteNumbers = new Array(slice.length);
+//       for (var i = 0; i < slice.length; i++) {
+//         byteNumbers[i] = slice.charCodeAt(i);
+//       }
+//       var byteArray = new Uint8Array(byteNumbers);
+//       byteArrays.push(byteArray);
+//     }
+//     var blob = new Blob(byteArrays, {
+//       type: contentType
+//     }); //statement which creates the blob
+//     return blob;
+// }
+
+	
+export const proccessFileToBase64 = (inputObj: any) => {
+    const fileObj = inputObj;
+    const webworkerReader = new FileReader();
+
+    return new Promise((resolve, reject) => {
+        webworkerReader.onerror = () => {
+            webworkerReader.abort();
+            reject(new DOMException("Problem parsing input file."));
+        };
     
+        webworkerReader.onload = function() {
+            const binaryStr: any = webworkerReader.result;
+            const base64Str = btoa(binaryStr);
+            resolve(base64Str);
+        };
+
+        webworkerReader.readAsBinaryString(fileObj);
+    });
+}
+
+export const generateFileData = async (fileObject: {name: string, type: string}, fieldname: string) => {
+    const filename = fileObject.name;
+    const content = await proccessFileToBase64(fileObject);
+    return {fieldname, filename , content};
+}
+
+const cleanUpFormSubmitValues = (keysToBeRemoved: Array<string>, formValues: any) => {
+    keysToBeRemoved.forEach((formFieldKey) => {
+        delete formValues[formFieldKey];
+    })
+}
+
+export const generateFormData = ({formSubmitValues, userType, addressForPin}: generateFormDataProps) => {
+    let fileConversionPromises = [];
+    let formKeysToBeRemoved: Array<string> = [];
+
+    const {bank_statement} = formSubmitValues;
+    const bankstatementData = generateFileData(bank_statement[0].originFileObj, 'bank_doc');
+    fileConversionPromises.push(bankstatementData)    
     if (userType === UserTypes.SELLER) {
     // For testing uncomment below line and comment above line   
     // if (false) {
         const {id_doc} = formSubmitValues
-        formData.append('id_doc', id_doc[0].originFileObj);
-        delete formSubmitValues['id_doc'];
+        const IDDocument = generateFileData(id_doc[0].originFileObj, 'id_doc');
+        fileConversionPromises.push(IDDocument)
+
+        formKeysToBeRemoved = [...formKeysToBeRemoved, 'id_doc', 'bank_statement'];
+        cleanUpFormSubmitValues(formKeysToBeRemoved, formSubmitValues);
+
         formSubmitValues = {...formSubmitValues, isSeller: true}
     } else {
         const {aadhar_card, pan_card, weekday, saturday, sunday} = formSubmitValues
-        const workingHoursData = {...{weekday, saturday, sunday}}
-        formData.append('uidai_doc', aadhar_card[0].originFileObj);
-        formData.append('pan_doc', pan_card[0].originFileObj);
-        /* To be refactored */
-        delete formSubmitValues['aadhar_card'];
-        delete formSubmitValues['pan_card'];
-        delete formSubmitValues['weekday']
-        delete formSubmitValues['saturday']
-        delete formSubmitValues['sunday']
-        /* To be refactored end */
-        formSubmitValues = {...formSubmitValues, working_hours: workingHoursData, isBuyer: true}
+        const buyerIdDocPrimary = generateFileData(aadhar_card[0].originFileObj, 'uidai_doc');
+        const buyerIdDocSecondary = generateFileData(pan_card[0].originFileObj, 'pan_doc');
+        fileConversionPromises.push(buyerIdDocPrimary);
+        fileConversionPromises.push(buyerIdDocSecondary);
+
+        formKeysToBeRemoved = [...formKeysToBeRemoved, 'aadhar_card', 'pan_card', 'weekday', 'saturday', 'sunday', 'bank_statement'];
+        cleanUpFormSubmitValues(formKeysToBeRemoved, formSubmitValues);
+        formSubmitValues = {...formSubmitValues, working_hours: {weekday, saturday, sunday}, isBuyer: true}
+
         /* For testing purpose uncomment below line and comment above line */
         // formSubmitValues = {...formSubmitValues, working_hours: workingHoursData, isBuyer: true, number: '9036565202', email: 'a', name: 'a', type: 'a'}
     }
+
     formSubmitValues = 
         {...formSubmitValues, 
             address2: `${addressForPin.taluk}, ${addressForPin.district}, ${addressForPin.state}`,
@@ -62,9 +120,10 @@ export const generateFormData = ({formSubmitValues, userType, addressForPin}: ge
             district: addressForPin.district,
             state: addressForPin.state
         };
-    const actualUserReq = JSON.stringify(formSubmitValues)
-    formData.append('user_req', actualUserReq)
-    return formData;
+
+    return Promise.all(fileConversionPromises).then((values) => {
+        return {user_req: formSubmitValues, files: values};
+    })
 };
 
 

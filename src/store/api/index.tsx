@@ -67,7 +67,7 @@ export const registerUser = (userType: string, userFormData: any) => {
     return fetch(registrationApi,
         {
             method: 'POST',
-            body: userFormData
+            body: JSON.stringify(userFormData)
         }).then((response: any) => response.json());
 };
 

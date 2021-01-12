@@ -70,9 +70,11 @@ const Seller = (props: any) => {
     }, [registerResponse.verified]);
 
     const onConfirmRegister = () => {
-        const multipartFormData = generateFormData({formSubmitValues: registerFormValues, userType: entityType, addressForPin});
-        dispatch(updateForm(registerFormValues as any));
-        dispatch(submitRegister(entityType, multipartFormData));
+        const registerDataPromise = generateFormData({formSubmitValues: registerFormValues, userType: entityType, addressForPin});
+        registerDataPromise.then((registerFromData) => {
+            dispatch(updateForm(registerFormValues as any));
+            dispatch(submitRegister(entityType, registerFromData));
+        })
     };
 
     const onFinish = (values: any) => {
