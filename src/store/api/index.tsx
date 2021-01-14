@@ -22,9 +22,12 @@ const APMC_MODAL_PRICE = 'getmodalprice';
 
 const getAuthHeader = () =>  {
     const userToken = (window as any).userToken ? (window as any).userToken : '';
-    const decryptedToken = CryptoJS.AES.decrypt(userToken, token_grant);
-    const userAccessToken = JSON.parse(decryptedToken.toString(CryptoJS.enc.Utf8))
+    const decryptedToken = userToken ? CryptoJS.AES.decrypt(userToken, token_grant) : '';
+    const userAccessToken = decryptedToken ? JSON.parse(decryptedToken.toString(CryptoJS.enc.Utf8)) : ''
     return ({'Authorization': `Bearer ${userAccessToken}`});
+
+    // For testing: Bypass auth from UI
+    //return ({'Authorization': `Bearer ${''}`});
 }
 
 /* OTP Interface */
@@ -106,7 +109,7 @@ export const createCrop = (cropData: any, sellerId: string) => {
     const addCropApi = `${BASE_URL}/${STAGE}/seller/${sellerId}/crop`;
     return fetch(addCropApi, {
         method: 'POST',
-        body: cropData,
+        body: JSON.stringify(cropData),
         headers: getAuthHeader()
     }).then((response: any) => response.json());
 };

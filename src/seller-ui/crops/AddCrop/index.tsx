@@ -63,10 +63,12 @@ const AddCropModal = () => {
             district: loginUser.district,
         }
         // For testing uncomment below and comment above
-        // const updatedValueWithApmcRates = {...values, district: 'Gadag'}
-        dispatch(addNewCropData(createSellerFormData(updatedValueWithApmcRates)));
-        form.resetFields();
-        setModalVisible(false);
+        // const updatedValueWithApmcRates = {...values, district: 'Gadag'};
+        createSellerFormData(updatedValueWithApmcRates).then((sellerFromData) => {
+            dispatch(addNewCropData(sellerFromData));
+            form.resetFields();
+            setModalVisible(false);
+        })
     };
 
     const onFinishFailed = (errorInfo: any) => {
