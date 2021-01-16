@@ -90,9 +90,11 @@ const Buyer = (props: any) => {
 
     const onConfirmRegister = () => {
         const userType = registrationState.entityType;
-        const multipartFormData = generateFormData({formSubmitValues: registerFormValues, userType, addressForPin});
-        dispatch(updateForm(registerFormValues as any));
-        dispatch(submitRegister(userType, multipartFormData));
+        const registerDataPromise = generateFormData({formSubmitValues: registerFormValues, userType, addressForPin});
+        registerDataPromise.then((registerFromData) => {
+            dispatch(updateForm(registerFormValues as any));
+            dispatch(submitRegister(userType, registerFromData));
+        })
     };
 
     const onFinish = (values: any) => {

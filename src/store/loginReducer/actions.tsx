@@ -1,9 +1,9 @@
-import { token_grant } from '../../constants';
+import CryptoJS from 'crypto-js';
 import { fetchUserDetails, getAccessToken } from '../api';
 import { handleResponse } from '../utils';
 import { UserDetailsModel } from './types';
-var CryptoJS = require("crypto-js");
 
+const TOKEN_GRANT = process.env.REACT_APP_TOKEN_GRANT as string;
 export const UPDATE_FORM = 'UPDATE_LOGIN_DETAILS';
 export const UPDATE_USER = 'UPDATE_USER_DETAILS';
 export const SET_ACCESS_TOKEN = 'SET_ACCESS_TOKEN';
@@ -52,7 +52,7 @@ export const getAccessTokenAndFetchUserDetails = (userCode: string) => {
         const {status, data} = result || {status: '', data: ''}
 
         if (handleResponse(status)) {
-            (window as any).userToken = CryptoJS.AES.encrypt(JSON.stringify(data), token_grant).toString();;
+            (window as any).userToken = CryptoJS.AES.encrypt(JSON.stringify(data), TOKEN_GRANT).toString();;
             dispatch(getUserDetails(data))
         } else {
             const {statusText, err: {error = ''}} = result || {statusText: '', err: {}}

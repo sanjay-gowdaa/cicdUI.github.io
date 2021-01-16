@@ -3,6 +3,7 @@ import { Select } from 'antd';
 import { uniqBy } from 'lodash';
 import { CropCategoryModel } from '../../store/sellerReducer/types';
 import { camelToSnakeCase } from '../../store/utils';
+import { generateFileData } from '../../app-components/utils';
 const {Option} = Select
 
 export const renderCategoryOptions = (categories: Array<string>) => {
@@ -29,21 +30,25 @@ export const renderGradeOptionsForSubCategory = (selectedCropDataList: Array<Cro
 
 export const createSellerFormData = (formValues: any) => {
     const sellerCropKeys = Object.keys(formValues);
-    const sellerCropFormData = new FormData();
+    const sellerCropJsonData: any = {};
+    const sellerCropImagesPromises: Array<Promise<any>> = []
     sellerCropKeys.forEach((cropKey) => {
         if (cropKey !== 'cropImages') {
             const snakeCaseKey = camelToSnakeCase(cropKey);
             const cropDataValue = formValues[cropKey];
-            sellerCropFormData.append(snakeCaseKey, cropDataValue)
+            sellerCropJsonData[snakeCaseKey] = cropDataValue;
         } else {
             const cropImagesObject = formValues[cropKey] || {file: {}, fileList: []};
             const {fileList: cropImagesList} = cropImagesObject;
             cropImagesList.forEach((imageFileObj: any, index: number) => {
                 const {originFileObj} = imageFileObj;
-                sellerCropFormData.append(`crop_image_${index}`, originFileObj);
+                const cropImagePromise = generateFileData(originFileObj, `crop_image_${index}`);
+                sellerCropImagesPromises.push(cropImagePromise);
             })
         }
     });
     
-    return sellerCropFormData;
+    return Promise.all(sellerCropImagesPromises).then((cropImagesValues) => {
+        return {...sellerCropJsonData, crop_images: cropImagesValues};
+    });
 };
