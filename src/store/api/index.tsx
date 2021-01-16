@@ -1,7 +1,7 @@
 import CryptoJS from 'crypto-js';
-import { token_grant } from '../../constants';
 const BASE_URL = process.env.REACT_APP_BASE_URL; //'https://enzdzh0pw2.execute-api.ap-south-1.amazonaws.com'
 const STAGE = process.env.REACT_APP_ENV;
+const TOKEN_GRANT = process.env.REACT_APP_TOKEN_GRANT as string;
 
 export const REDIRECT_URL =  `https://${window.location.host}/login-user`
 export const LOGOUT_REDIRECT = `https://${window.location.host}/`;
@@ -22,7 +22,7 @@ const APMC_MODAL_PRICE = 'getmodalprice';
 
 const getAuthHeader = () =>  {
     const userToken = (window as any).userToken ? (window as any).userToken : '';
-    const decryptedToken = userToken ? CryptoJS.AES.decrypt(userToken, token_grant) : '';
+    const decryptedToken = userToken ? CryptoJS.AES.decrypt(userToken, TOKEN_GRANT) : '';
     const userAccessToken = decryptedToken ? JSON.parse(decryptedToken.toString(CryptoJS.enc.Utf8)) : ''
     return ({'Authorization': `Bearer ${userAccessToken}`});
 
