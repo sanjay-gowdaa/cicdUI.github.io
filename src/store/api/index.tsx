@@ -9,6 +9,7 @@ export const LOGIN_URL = `${process.env.REACT_APP_LOGIN_URL_BASE_URL}/login?clie
 export const LOGOUT_URL = `${process.env.REACT_APP_LOGOUT_BASE_URL}/logout?client_id=7sckhhjs2aq1noqd1fvjdeo69j&logout_uri=${LOGOUT_REDIRECT}`;
 
 const OTP_SEND_API = 'otp/send';
+const OTP_RESEND_API = 'otp/retry'
 const OTP_VERIFY_API = 'otp/send';
 const LOCATION_API = 'location';
 const CONFIG_API = 'config';
@@ -35,6 +36,15 @@ export const sendOtp = (number: string) => {
     const sendOtpApi = `${BASE_URL}/${STAGE}/${OTP_SEND_API}`;
     const bodyParam = JSON.stringify({number});
     return fetch(sendOtpApi, {
+        method: 'post',
+        body: bodyParam
+    });
+};
+
+export const resendOtp = (number: string) => {
+    const resendOtpApi = `${BASE_URL}/${STAGE}/${OTP_RESEND_API}`;
+    const bodyParam = JSON.stringify({number});
+    return fetch(resendOtpApi, {
         method: 'post',
         body: bodyParam
     });

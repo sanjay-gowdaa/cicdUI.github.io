@@ -32,8 +32,6 @@ const { Title } = Typography;
 
 const getUserTypeOption = (configs: [any], currentType: string) => {
     const filterUserTypeOptns = uniqBy(configs.filter(config => config.type === currentType), 'sub_type');
-    console.log('filterUserTypeOptns', filterUserTypeOptns);
-
     return (
         filterUserTypeOptns.map((userSubType) => {
             const { sub_type } = userSubType;
@@ -51,7 +49,6 @@ const Register = ({ history, setSignUpPopupVisible }: { history: any, setSignUpP
     const registrationState = useSelector((state: RootState) => state.registration);
 
     const onFinish = (values: any) => {
-        console.log('Success:', values);
         const { name, number, email, type } = values;
         dispatch(sendOTP(`91${number}`));
         dispatch(updateEntityType(currentType));

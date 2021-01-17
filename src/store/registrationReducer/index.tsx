@@ -1,76 +1,9 @@
 import { UPDATE_FORM, UPDATE_ENTITY_TYPE, UPDATE_BASIC_REGISTER_FORM, UPDATE_CONFIGURATIONS, SET_OTP_ERROR_MSG, SET_OTP_ERROR_FLAG, SET_OTP_VERIFIED_FLAG, SET_REGISTER_ERROR_MSG, SET_REGISTER_VERIFIED_FLAG } from './actions';
 
-/* To be removed */
-const mockConfig = [
-        {
-            "category": "Individual",
-            "config_id": "ut#buyer#individual#6",
-            "sub_type": "Individual",
-            "documents_list": [
-                "PAN",
-                "AADHAR"
-            ],
-            "config_name": "user_type",
-            "type": "Buyer"
-        },
-        {
-            "category": "individual",
-            "config_id": "ut#seller#farmer#1",
-            "sub_type": "farmer",
-            "documents_list": [
-                "Kisan card"
-            ],
-            "config_name": "user_type",
-            "type": "Seller"
-        },
-        {
-            "category": "Processors",
-            "config_id": "ut#seller#institution#2",
-            "sub_type": "Institution",
-            "documents_list": [
-                "PAN"
-            ],
-            "config_name": "user_type",
-            "type": "Seller"
-        },
-        {
-            "category": "Agents",
-            "config_id": "ut#seller#institution#3",
-            "sub_type": "Institution",
-            "documents_list": [
-                "PAN"
-            ],
-            "config_name": "user_type",
-            "type": "Seller"
-        },
-        {
-            "category": "FPOs",
-            "config_id": "ut#seller#institution#4",
-            "sub_type": "Institution",
-            "documents_list": [
-                "PAN"
-            ],
-            "config_name": "user_type",
-            "type": "Seller"
-        },
-        {
-            "category": "Cold storage",
-            "config_id": "ut#seller#institution#5",
-            "sub_type": "Institution",
-            "documents_list": [
-                "PAN"
-            ],
-            "config_name": "user_type",
-            "type": "Seller"
-        }
-    ]
-
 const INITIAL_STATE = {
     entityType: '',
     formData: {},
     configs: [],
-    /* For testing uncomment below and comment above */
-    //configs: mockConfig,
     otpError: {showError: false, errorMg: '', verified: false},
     registerResponse: {errorMg: '', verified: false}
 };

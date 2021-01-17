@@ -1,5 +1,6 @@
-import { sendOtp, getAllConfigs, verifyOtp, registerUser } from '../api';
+import { sendOtp, getAllConfigs, verifyOtp, registerUser, resendOtp } from '../api';
 import { ResponseStatus } from '../genericTypes';
+import { RootState } from '../rootReducer';
 import { RegitrationFullFormModel, RegsitrationFormModel } from './types';
 
 export const UPDATE_FORM = 'UPDATE_FORM';
@@ -84,6 +85,15 @@ export const sendOTP = (otpNumber: string) => {
     }
 }
 
+export const resendOTP = () => {
+    return async (dispatch: any, getState: any) => {
+        const {registration} = getState() as RootState; 
+        const {formData = {}} = registration || {};
+        const {number} = formData
+        resendOtp(`91${number}`);
+    }
+}
+
 export const resetOtpState = () => {
     return (dispatch: any) => {
         dispatch(setOtpErrorMsg(''))
@@ -112,7 +122,6 @@ export const submitRegister = (userType: string, userFormData: any) => {
         const registerUserResponse = await registerUser(userType, userFormData);
         const {result} = registerUserResponse || {}
         const {status = '', message} = result
-        console.log('registerUserResponse', registerUserResponse);
         dispatch(setRegisterMsg(message))
         if (status === ResponseStatus.SUCCESS) {
             dispatch(setResgiterVerifiedFlag(true))

@@ -11,7 +11,7 @@ import {
 } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { confirmOTP } from '../../store/registrationReducer/actions';
+import { confirmOTP, resendOTP } from '../../store/registrationReducer/actions';
 import { RootState } from '../../store/rootReducer';
 import PrimaryBtn from '../../app-components/primaryBtn';
 
@@ -22,12 +22,12 @@ const { Countdown } = Statistic
 
 const ConfirmOTPModal = ({showOTPModal, setShowOTPModal, currentType, history}: {showOTPModal: boolean, setShowOTPModal: Function, currentType: string, history: any}) => {
     const dispatch = useDispatch();
-
     const registrationState = useSelector((state: RootState) => state.registration);
+    
     const { otpError, formData } = registrationState;
-
-    const otpTimer = Date.now() + 1000*60*10 ;
-
+    const [otpTimer, setOtpTimer] = useState(0);
+    const [resend, showResend] = useState(false);
+    const [otpResent, setOtpResent] = useState(false);
     const [inputOtp, setInputOtp] = useState({digit1: '', digit2: '', digit3: '', digit4: ''});
 
     useEffect(() => {
@@ -37,11 +37,22 @@ const ConfirmOTPModal = ({showOTPModal, setShowOTPModal, currentType, history}: 
         }
     }, [otpError.verified]);
 
+    useEffect(() => {
+        if(showOTPModal) {
+            setOtpTimer(Date.now() + 1000*60);
+        }
+    }, [showOTPModal])
+
     const setFocusToNext = (event: any) => {
         if (event.target.value.length === 1) {
             event.target.nextSibling.focus();
         }
     };
+
+    const retryOtpSend = () => {
+        setOtpResent(true);
+        dispatch(resendOTP())
+    }
 
     return (
         <Modal
@@ -101,13 +112,19 @@ const ConfirmOTPModal = ({showOTPModal, setShowOTPModal, currentType, history}: 
             </Row>
             <Row>
                 <Space>
-                    <Text>Didn't receive OTP?</Text>
-                    <Text className="custom-color-change"> Resend Code in </Text>
-                    <Countdown
-                        className="custom-color-change"
-                        value={otpTimer} format="mm:ss"
-                        onFinish={() => console.log("Resent OTP")}
-                    />
+                    {
+                        !resend ? ( 
+                            <>
+                                <Text>Didn't receive OTP?</Text>
+                                <Text className="custom-color-change"> Resend Code in </Text>
+                                <Countdown
+                                className="custom-color-change"
+                                value={otpTimer} format="mm:ss"
+                                onFinish={() => showResend(true)}
+                            />
+                            </>
+                        ) : (!otpResent ? <PrimaryBtn onClick={retryOtpSend} content="Resend OTP" /> : null)
+                    }
                 </Space>
             </Row>
             {
