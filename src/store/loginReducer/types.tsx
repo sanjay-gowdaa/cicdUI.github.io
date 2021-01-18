@@ -1,7 +1,7 @@
 import { UserTypes } from "../genericTypes";
 
 export interface UserDetailsModel {
-    userName: string;
+    username: string;
     is_buyer?: boolean;
     is_seller?: boolean;
     name: string;

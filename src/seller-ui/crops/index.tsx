@@ -6,11 +6,12 @@ import { cropColumns } from './cropsTable.model';
 import './crops.scss';
 import AddCropModal from './AddCrop';
 import { getAllCropsList } from '../../store/sellerReducer/actions';
+import { SellerStateModel } from '../../store/sellerReducer/types';
 
 const { Title } = Typography;
 
 const CropsSection = () => {
-    const sellerState = useSelector((state: RootState) => state.seller);
+    const sellerState: SellerStateModel = useSelector((state: RootState) => state.seller);
     const dispatch = useDispatch();
 
     useEffect(() => {

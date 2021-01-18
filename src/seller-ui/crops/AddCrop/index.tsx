@@ -14,7 +14,7 @@ import {
 } from 'antd';
 import { InboxOutlined } from '@ant-design/icons';
 import { useDispatch, useSelector } from 'react-redux';
-import { addNewCropData, fetchAllCategories, fetchAllMasterCrops, fetchAllVariety, fetchCropApmcPrice } from '../../../store/sellerReducer/actions';
+import { addNewCropData, fetchAllCategories, fetchAllMasterCrops, fetchAllVariety, fetchLiveApmcRate } from '../../../store/sellerReducer/actions';
 import { RootState } from '../../../store/rootReducer';
 import { SellerStateModel } from '../../../store/sellerReducer/types';
 import {
@@ -187,7 +187,7 @@ const AddCropModal = () => {
                                     allowClear
                                     onChange={(value: string) => {
                                             onSelectVariety(value)
-                                            dispatch(fetchCropApmcPrice({commodity: selectedMasterCrop, variety: value}))
+                                            dispatch(fetchLiveApmcRate({commodity: selectedMasterCrop, variety: value}))
                                         }
                                     }
                                     onClear={() => null}

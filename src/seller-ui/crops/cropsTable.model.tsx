@@ -55,27 +55,31 @@ export const cropColumns = [
     },
     {
         title: 'Live APMC Rates per qtl',
-        dataIndex: 'modal_price',
-        key: 'modal_price',
-        render: (modal_price: number, record: CropApiModel) => {
-            const { price_per_qnt, intent_to_sell: intentToSell } = record;
+        dataIndex: 'apmc_rate_data',
+        key: 'apmc_rate_data',
+        render: (apmc_rate_data: {apmc_price: string, increase: string}, record: CropApiModel) => {
+            const { intent_to_sell: intentToSell } = record;
+            const { apmc_price, increase } = apmc_rate_data || {apmc_price: null, increase: null};
             if (intentToSell === 'Yes') {
                 return (<p>-</p>)
             } else {
-            const differencePrice = modal_price - price_per_qnt
-            const color = differencePrice > 0 ? '#12805C' : '#E90000';
+                const isIncrease = parseInt(increase) > 0;
+                const color = isIncrease ? '#12805C' : '#E90000';
 
-            if (isNaN(differencePrice)) {
+            if (!apmc_price) {
                 return ( <p>Data not available</p> )
             } else {
                 return (
                     <>
-                        <p>{modal_price}</p>
-                        <Statistic
-                            value={differencePrice}
-                            valueStyle={{ color, fontSize: '12px' }}
-                            prefix={differencePrice > 0 ? <CaretUpOutlined /> : <CaretDownOutlined />}
-                        />
+                        <p>{apmc_price}</p>
+                        {
+                            !isNaN(parseInt(increase)) ? (<Statistic
+                                value={parseInt(increase)}
+                                valueStyle={{ color, fontSize: '12px' }}
+                                prefix={isIncrease ? <CaretUpOutlined /> : <CaretDownOutlined />}
+                            />) : null
+                        }
+
                     </>
                 );
             }
