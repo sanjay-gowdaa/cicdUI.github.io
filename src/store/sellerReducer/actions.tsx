@@ -98,10 +98,10 @@ export const updateApmcCropRateData = (allProduceliveRates: Array<{
 export const fetchLiveApmcRate = ({commodity, variety}: {commodity: string, variety: string}) => {
     return async(dispatch: any, getState: any) => {
         const { loginUser } = getState() as RootState;
-        // const { district } = loginUser;
+        const { district } = loginUser;
         
         // for testing
-        const district = 'hassan';
+        // const district = 'hassan';
         // const commodity = 'Rice';
         // const variety = 'Sona';
         // for testing end

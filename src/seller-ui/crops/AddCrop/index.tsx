@@ -241,8 +241,7 @@ const AddCropModal = () => {
                                 <div className="display-flex-row">
                                     <Input className="custom-input" placeholder="In rupees" />
                                     <span className="additional-text">
-                                        {/* APMC Rate {loginUser.district}: {sellerStore.apmcCropPrice} */}
-                                        APMC Rate {'Gadag'}: {sellerStore.apmcCropPrice}
+                                        APMC Rate {loginUser.district}: {sellerStore.apmcCropPrice}
                                     </span>
                                 </div>
                             </Form.Item>
