@@ -12,3 +12,9 @@ export enum UserTypes {
     SELLER = 'Seller',
     BUYER = 'Buyer'
 }
+
+export type LiveApmcRates = {
+    region: string;
+    commodity: string;
+    variety: string;
+}

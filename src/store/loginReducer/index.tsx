@@ -3,7 +3,7 @@ import { SET_ACCESS_TOKEN, SET_LOGIN_ERROR, SET_LOGIN_SUCCESS, UPDATE_USER } fro
 import { UserStateModel } from './types';
 
 const INITIAL_STATE: UserStateModel = {
-    userName: '',
+    username: '',
     name: '',
     signInState: {hasError: false, isVerified: false, msg: ''}
 };

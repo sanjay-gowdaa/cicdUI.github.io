@@ -1,12 +1,14 @@
 export interface CropApiModel {
     crop_name: string;
-    sub_category?: string;
-    crop_grade?: string;
+    sub_category: string;
+    crop_grade: string;
     quantity: number;
     price_per_qnt: number;
     apmc_rate: number;
     intent_to_sell: string;
     terms_and_conditions?: string;
+    district: string;
+    apmc_rate_data?: {apmc_price: string, increase: string}
 }
 
 export interface CropModel {
@@ -44,7 +46,7 @@ export interface SellerStateModel {
     categories: Array<string>;
     masterCrops: Array<string>;
     variety: Array<CropCategoryModel>;
-    cropsList: Array<CropModel>;
+    cropsList: Array<CropApiModel>;
     matchesList: Array<MatchRequirementModel>;
     transactionList: Array<TransactioModel>;
     reviewsList: Array<ReviewRating>;
