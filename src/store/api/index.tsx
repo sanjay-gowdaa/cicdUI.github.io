@@ -11,7 +11,7 @@ export const LOGOUT_URL = `${process.env.REACT_APP_LOGOUT_BASE_URL}/logout?clien
 
 const OTP_SEND_API = 'otp/send';
 const OTP_RESEND_API = 'otp/retry'
-const OTP_VERIFY_API = 'otp/send';
+const OTP_VERIFY_API = 'otp/verify';
 const LOCATION_API = 'location';
 const CONFIG_API = 'config';
 const REGISTER_API = 'register';
