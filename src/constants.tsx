@@ -6,6 +6,7 @@ export const routesMap = {
     seller_ui: '/seller',
     buyer_ui: '/buyer',
     terms: '/tAndCPage',
+    purchase_agreement: '/agreement',
 };
 
 export const headerBreadcrumb = {
