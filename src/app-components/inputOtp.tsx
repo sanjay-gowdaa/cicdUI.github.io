@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
 import { Input } from 'antd';
 
-import './customComponent.scss';
-
 const InputOtp = (props: any) => {
     const { setInput } = props;
 
@@ -25,43 +23,53 @@ const InputOtp = (props: any) => {
         setInput(otp);
     };
 
+    const inputStyle = {
+        width: "2.5em",
+        height: "2.5em",
+        margin: "0.5em",
+    };
+
     return (
         <>
             <Input
-                className="custom-otp-input-digits custom-input digit1"
+                className="custom-input digit1"
                 disabled={false}
                 maxLength={1}
                 onChange={(event: any) => setInputOtp({...inputOtp, digit1: event.target.value})}
                 onKeyUp={setFocusToNext}
                 type="text"
                 value={inputOtp.digit1}
+                style={inputStyle}
             />
             <Input
-                className="custom-otp-input-digits custom-input"
+                className="custom-input"
                 disabled={(inputOtp.digit1 === '')? true : false}
                 maxLength={1}
                 onChange={(event: any) => setInputOtp({...inputOtp, digit2: event.target.value})}
                 onKeyUp={setFocusToNext}
                 type="text"
                 value={inputOtp.digit2}
+                style={inputStyle}
             />
             <Input
-                className="custom-otp-input-digits custom-input"
+                className="custom-input"
                 disabled={(inputOtp.digit2 === '')? true : false}
                 maxLength={1}
                 onChange={(event: any) => setInputOtp({...inputOtp, digit3: event.target.value})}
                 onKeyUp={setFocusToNext}
                 type="text"
                 value={inputOtp.digit3}
+                style={inputStyle}
             />
             <Input
-                className="custom-otp-input-digits custom-input  digit4"
+                className="custom-input digit4"
                 disabled={(inputOtp.digit3 === '')? true : false}
                 maxLength={1}
                 onChange={(event: any) => setInputOtp({...inputOtp, digit4: event.target.value})}
                 onKeyUp={setFocusToNext}
                 type="text"
                 value={inputOtp.digit4}
+                style={inputStyle}
             />
         </>
     );
