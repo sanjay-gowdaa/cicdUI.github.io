@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { 
+    Button,
     Checkbox,
     Col,
     Divider,
@@ -26,6 +27,7 @@ import {
 import { UserTypes } from '../../store/genericTypes';
 import DefaultBtn from '../../app-components/defaultBtn';
 import PrimaryBtn from '../../app-components/primaryBtn';
+import { TAndCPopup } from '../../terms-and-conditions/index';
 
 const { Option } = Select;
 const { Title } = Typography;
@@ -45,6 +47,7 @@ const getUserTypeOption = (configs: [any], currentType: string) => {
 const Register = ({ history, setSignUpPopupVisible }: { history: any, setSignUpPopupVisible: Function }) => {
     const [currentType, setCurrentType] = useState('Buyer');
     const [showOTPModal, setShowOTPModal] = useState(false);
+    const [displayTandC, setTandC] = useState(false);
     const dispatch = useDispatch();
     const registrationState = useSelector((state: RootState) => state.registration);
 
@@ -62,6 +65,7 @@ const Register = ({ history, setSignUpPopupVisible }: { history: any, setSignUpP
     };
 
     const setUserType = (userType: string) => setCurrentType(userType);
+
     return (
         <React.Fragment>
             <ConfirmOTPModal
@@ -154,13 +158,9 @@ const Register = ({ history, setSignUpPopupVisible }: { history: any, setSignUpP
                 >
                     <Checkbox className="custom-checkbox">
                         I have read and accept to
-                        <a
-                            className="terms-and-conditions"
-                            href="https://www.google.com/"
-                            target="_blank"
-                        >
+                        <Button type="link" onClick={() => setTandC(true)}>
                             terms and conditions
-                        </a>
+                        </Button>
                         .
                     </Checkbox>
                 </Form.Item>
@@ -169,6 +169,7 @@ const Register = ({ history, setSignUpPopupVisible }: { history: any, setSignUpP
                     <PrimaryBtn className="width-full" htmlType="submit" content="Submit" />
                 </Form.Item>
             </Form>
+            { displayTandC && <TAndCPopup initialDisplayType="general" viewTAndC={displayTandC} /> }
         </React.Fragment>
     );
 };
