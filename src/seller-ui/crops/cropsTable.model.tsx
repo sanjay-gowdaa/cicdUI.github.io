@@ -5,6 +5,7 @@ import { CaretUpOutlined, CaretDownOutlined } from '@ant-design/icons';
 import { CropApiModel } from '../../store/sellerReducer/types';
 import RagiImg from '../../static/assets/ragi.png';
 import ViewCropImages from './viewCropImages';
+import ViewTerms from '../../terms-and-conditions/viewTerms';
 
 const { Title, Text } = Typography;
 
@@ -98,14 +99,8 @@ export const cropColumns = [
         render: (termsAndConditions: string, record: CropApiModel) => {
             return (
                 <>
-                    <div>
-                        <a href={termsAndConditions} target="_blank">
-                            Terms & Conditions
-                        </a>
-                    </div>
-                    <div>
-                        <ViewCropImages list={record} />
-                    </div>
+                    <ViewTerms displayType="seller" content="Terms & Conditions" />    
+                    <ViewCropImages list={record} />
                 </>
             );
         },
