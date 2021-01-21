@@ -16,6 +16,7 @@ import PrimaryBtn from '../../app-components/primaryBtn';
 import InputOtp from '../../app-components/inputOtp';
 
 import "./register.scss";
+import { getTimeStamp } from '../../app-components/utils';
 
 const { Text, Title } = Typography;
 const { Countdown } = Statistic
@@ -28,6 +29,7 @@ const ConfirmOTPModal = ({showOTPModal, setShowOTPModal, currentType, history}: 
     const [otpTimer, setOtpTimer] = useState(0);
     const [resend, showResend] = useState(false);
     const [otpResent, setOtpResent] = useState(false);
+    const [timeStamp, setTimeStamp] = useState({});
     const [otp, setOtp] = useState("");
 
     useEffect(() => {
@@ -108,6 +110,7 @@ const ConfirmOTPModal = ({showOTPModal, setShowOTPModal, currentType, history}: 
                         <PrimaryBtn
                             onClick={() => {
                                 dispatch(confirmOTP(formData?.number,otp));
+                                setTimeStamp(dispatch(getTimeStamp));
                             }}
                             content="Submit OTP"
                         />
