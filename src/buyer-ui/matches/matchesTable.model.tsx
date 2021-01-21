@@ -4,6 +4,7 @@ import { Button, Image, Typography } from 'antd';
 import { MatchRequirementModel } from '../../store/buyerReducer/types';
 import RagiImg from '../../static/assets/ragi.png'
 import PrimaryBtn from '../../app-components/primaryBtn';
+import ViewTerms from '../../terms-and-conditions/viewTerms';
 
 const { Title, Text } = Typography;
 
@@ -78,11 +79,7 @@ export const matchesColumns = (componentCallBacks: componentCallBacksModel) => [
         render: (termsAndConditions: string) => {
             return (
                 <>
-                    <div>
-                        <a href={termsAndConditions} target="_blank">
-                            View Terms
-                        </a>
-                    </div>
+                    <ViewTerms displayType="buyer" content="View Terms" />
                 </>
             );
         },
