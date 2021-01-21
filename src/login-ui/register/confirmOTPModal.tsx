@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import {
     Alert,
     Col,
-    Input,
     Modal,
     Row,
     Space,
@@ -14,6 +13,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { confirmOTP, resendOTP } from '../../store/registrationReducer/actions';
 import { RootState } from '../../store/rootReducer';
 import PrimaryBtn from '../../app-components/primaryBtn';
+import InputOtp from '../../app-components/inputOtp';
 
 import "./register.scss";
 
@@ -28,7 +28,7 @@ const ConfirmOTPModal = ({showOTPModal, setShowOTPModal, currentType, history}: 
     const [otpTimer, setOtpTimer] = useState(0);
     const [resend, showResend] = useState(false);
     const [otpResent, setOtpResent] = useState(false);
-    const [inputOtp, setInputOtp] = useState({digit1: '', digit2: '', digit3: '', digit4: ''});
+    const [otp, setOtp] = useState("");
 
     useEffect(() => {
         if (otpError.verified) {
@@ -41,18 +41,12 @@ const ConfirmOTPModal = ({showOTPModal, setShowOTPModal, currentType, history}: 
         if(showOTPModal) {
             setOtpTimer(Date.now() + 1000*60);
         }
-    }, [showOTPModal])
-
-    const setFocusToNext = (event: any) => {
-        if (event.target.value.length === 1) {
-            event.target.nextSibling.focus();
-        }
-    };
+    }, [showOTPModal]);
 
     const retryOtpSend = () => {
         setOtpResent(true);
-        dispatch(resendOTP())
-    }
+        dispatch(resendOTP());
+    };
 
     return (
         <Modal
@@ -73,49 +67,15 @@ const ConfirmOTPModal = ({showOTPModal, setShowOTPModal, currentType, history}: 
                     </Text>
                 </Col>
                 <Col>
-                    <Input
-                        className="custom-otp-input-digits custom-input"
-                        disabled={false}
-                        maxLength={1}
-                        onChange={(event: any) => setInputOtp({...inputOtp, digit1: event.target.value})}
-                        onKeyUp={setFocusToNext}
-                        type="text"
-                        value={inputOtp.digit1}
-                    />
-                    <Input
-                        className="custom-otp-input-digits custom-input"
-                        disabled={(inputOtp.digit1 === '')? true : false}
-                        maxLength={1}
-                        onChange={(event: any) => setInputOtp({...inputOtp, digit2: event.target.value})}
-                        onKeyUp={setFocusToNext}
-                        type="text"
-                        value={inputOtp.digit2}
-                    />
-                    <Input
-                        className="custom-otp-input-digits custom-input"
-                        disabled={(inputOtp.digit2 === '')? true : false}
-                        maxLength={1}
-                        onChange={(event: any) => setInputOtp({...inputOtp, digit3: event.target.value})}
-                        onKeyUp={setFocusToNext}
-                        type="text"
-                        value={inputOtp.digit3}
-                    />
-                    <Input
-                        className="custom-otp-input-digits custom-input"
-                        disabled={(inputOtp.digit3 === '')? true : false}
-                        maxLength={1}
-                        onChange={(event: any) => setInputOtp({...inputOtp, digit4: event.target.value})}
-                        type="text"
-                        value={inputOtp.digit4}
-                    />
+                    <InputOtp setInput={setOtp} />
                 </Col>
             </Row>
             <Row>
                 <Space>
+                    <Text>Didn't receive OTP?</Text>
                     {
                         !resend ? ( 
                             <>
-                                <Text>Didn't receive OTP?</Text>
                                 <Text className="custom-color-change"> Resend Code in </Text>
                                 <Countdown
                                 className="custom-color-change"
@@ -123,9 +83,15 @@ const ConfirmOTPModal = ({showOTPModal, setShowOTPModal, currentType, history}: 
                                 onFinish={() => showResend(true)}
                             />
                             </>
-                        ) : (!otpResent ? <PrimaryBtn onClick={retryOtpSend} content="Resend OTP" /> : null)
+                        ) : (!otpResent ? <PrimaryBtn className="add-margin-bottom" onClick={retryOtpSend} content="Resend OTP" /> : null)
                     }
                 </Space>
+                <Alert
+                    className="confirm-otp-modal-warning"
+                    type="warning"
+                    message="By entering the OTP you accept the terms and conditions 
+                        and are ready to verify your profile"
+                />
             </Row>
             {
                 otpError.showError && (
@@ -141,10 +107,9 @@ const ConfirmOTPModal = ({showOTPModal, setShowOTPModal, currentType, history}: 
                     <Space>
                         <PrimaryBtn
                             onClick={() => {
-                                const otp = `${inputOtp.digit1} + ${inputOtp.digit2} + ${inputOtp.digit3} + ${inputOtp.digit4}`
                                 dispatch(confirmOTP(formData?.number,otp));
                             }}
-                            content="Proceed to profile verification"
+                            content="Submit OTP"
                         />
                     </Space>
                 </Col>
