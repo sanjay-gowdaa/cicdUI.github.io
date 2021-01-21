@@ -6,7 +6,8 @@ $col-shade-green: #12805C;
 }
 
 .custom-default-button:hover,
-.custom-default-button:focus {
+.custom-default-button:focus,
+.focus-button-item {
     color: $col-shade-green !important;
     border-color: $col-shade-green !important;
 }
@@ -175,4 +176,33 @@ $col-shade-green: #12805C;
 
 .custom-badge {
     padding-left: 1em !important;
+}
+
+.custom-t-and-c-modal {
+    .general-terms {
+        overflow-y: scroll;
+        height: 200px;
+        font-size: x-small;
+    }
+}
+
+.collapsable-t-and-c {
+    width: 95%;
+    margin: 1em auto !important;
+    
+    .general-terms {
+        font-size: small;
+    }
+}
+
+.upper-roman-list-style {
+    list-style-type: upper-roman !important;
+}
+
+.lower-roman-list-style {
+    list-style-type: lower-roman !important;
+}
+
+.lower-alpha-list-style {
+    list-style-type: lower-alpha !important;
 }
