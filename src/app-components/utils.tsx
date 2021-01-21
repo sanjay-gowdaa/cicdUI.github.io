@@ -44,3 +44,33 @@ export const generateFileData = async (fileObject: {name: string, type: string},
     const content = await proccessFileToBase64(fileObject);
     return {fieldname, filename , content};
 }
+
+export const getTimeStamp = () => {
+    const dateAndTime = new Date();
+    const dd = ("0" + (dateAndTime.getDate()+1)).slice(-2);
+    const mm = ("0" + (dateAndTime.getMonth()+1)).slice(-2);
+    const date = `${dd}/${mm}/${dateAndTime.getFullYear()}`;
+
+    var hour = dateAndTime.getHours();
+    var hh, amPm;
+    const min = dateAndTime.getMinutes();
+
+    if(hour < 12){
+        hh = hour;
+        amPm="A.M";
+    }else if(hour === 12){
+        hh = hour;
+        amPm = "noon";
+    }else if(hour > 12 && hour !== 24){
+        hh = hour - 12;
+        amPm = "P.M";
+    } else {
+        hh = 12;
+        amPm = "P.M";
+    }
+    ((hh < 10) && (hh = "0" + hh) )
+    const time = `${hh}:${min}${amPm}`;
+
+    console.log("Time stamp", date, time);
+    return {date: date, time: time};
+}
