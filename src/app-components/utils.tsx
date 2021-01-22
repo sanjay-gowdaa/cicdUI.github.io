@@ -53,14 +53,14 @@ export const getTimeStamp = () => {
 
     var hour = dateAndTime.getHours();
     var hh, amPm;
-    const min = dateAndTime.getMinutes();
+    const min = ("0" +dateAndTime.getMinutes()).slice(-2);
 
     if(hour < 12){
         hh = hour;
         amPm="A.M";
     }else if(hour === 12){
         hh = hour;
-        amPm = "noon";
+        (dateAndTime.getMinutes() === 0) ? (amPm="noon"): (amPm="P.M")
     }else if(hour > 12 && hour !== 24){
         hh = hour - 12;
         amPm = "P.M";
@@ -70,7 +70,7 @@ export const getTimeStamp = () => {
     }
     ((hh < 10) && (hh = "0" + hh) )
     const time = `${hh}:${min}${amPm}`;
+    const timeStamp = {date: date, time: time};
 
-    console.log("Time stamp", date, time);
-    return {date: date, time: time};
+    return timeStamp;
 }
