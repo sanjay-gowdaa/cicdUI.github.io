@@ -3,8 +3,8 @@ import { Button, Image, Typography } from 'antd';
 
 import { MatchRequirementModel } from '../../store/buyerReducer/types';
 import RagiImg from '../../static/assets/ragi.png'
-import PrimaryBtn from '../../app-components/primaryBtn';
 import ViewTerms from '../../terms-and-conditions/viewTerms';
+import ConnectMatch from './connectMatch';
 
 const { Title, Text } = Typography;
 
@@ -99,10 +99,7 @@ export const matchesColumns = (componentCallBacks: componentCallBacksModel) => [
                     >
                         View Details
                     </Button>
-                    <PrimaryBtn
-                        className="vikas-btn-radius"
-                        content="Connect"
-                    />
+                    <ConnectMatch cropDetails={record} />
                     <Button type="link" danger>
                         {' '}
                         Reject{' '}
