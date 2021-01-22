@@ -14,4 +14,5 @@ export interface RegitrationFullFormModel extends RegsitrationFormModel {
     pinCode: string;
     taluk: string;
     email: string;
+    timeStamp: any;
 }

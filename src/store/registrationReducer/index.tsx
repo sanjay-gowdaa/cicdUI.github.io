@@ -1,11 +1,12 @@
-import { UPDATE_FORM, UPDATE_ENTITY_TYPE, UPDATE_BASIC_REGISTER_FORM, UPDATE_CONFIGURATIONS, SET_OTP_ERROR_MSG, SET_OTP_ERROR_FLAG, SET_OTP_VERIFIED_FLAG, SET_REGISTER_ERROR_MSG, SET_REGISTER_VERIFIED_FLAG } from './actions';
+import { UPDATE_FORM, UPDATE_ENTITY_TYPE, UPDATE_BASIC_REGISTER_FORM, UPDATE_CONFIGURATIONS, SET_OTP_ERROR_MSG, SET_OTP_ERROR_FLAG, SET_OTP_VERIFIED_FLAG, SET_REGISTER_ERROR_MSG, SET_REGISTER_VERIFIED_FLAG, SET_TIME_STAMP } from './actions';
 
 const INITIAL_STATE = {
     entityType: '',
     formData: {},
     configs: [],
     otpError: {showError: false, errorMg: '', verified: false},
-    registerResponse: {errorMg: '', verified: false}
+    registerResponse: {errorMg: '', verified: false},
+    timeStamp: {}
 };
 
 const reducer = (state = INITIAL_STATE, action: any) => {
@@ -47,6 +48,9 @@ const reducer = (state = INITIAL_STATE, action: any) => {
             const updatedRegisterFlag = {...resgiterResponseDet, verified: action.payload}
             return { ...state, registerResponse: updatedRegisterFlag };
 
+        case SET_TIME_STAMP:
+            return { ...state, timeStamp: action.payload };
+        
         default:
             return state;
     }
