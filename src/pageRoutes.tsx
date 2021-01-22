@@ -8,7 +8,7 @@ import ValidateUserAuthentication from './validateUserAuthentication';
 import { routesMap } from './constants';
 import GuardedRoute from './app-components/GuardedRoute';
 import { Terms } from './terms-and-conditions';
-import PurchaseAgreement from './terms-and-conditions/purchase-agreement';
+import { PurchaseAgreement } from './purchase-agreement';
 
 const { home, register_entity, seller_ui, buyer_ui, terms, purchase_agreement } = routesMap;
 
