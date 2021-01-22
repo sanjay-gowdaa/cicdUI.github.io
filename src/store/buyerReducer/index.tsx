@@ -1,4 +1,4 @@
-import { UPDATE_MASTER_LIST, GET_MASTER_LIST, UPDATE_PRODUCE_LIST, UPDATE_CROPS_LIST, UPDATE_VARIETY_LIST, UPDATE_MASTER_CROP_NAMES_LIST } from './actions';
+import { UPDATE_MASTER_LIST, GET_MASTER_LIST, UPDATE_PRODUCE_LIST, UPDATE_CROPS_LIST, UPDATE_VARIETY_LIST, UPDATE_MASTER_CROP_NAMES_LIST, UPDATE_TIME_STAMP } from './actions';
 import {
     mockMatchedCropsList,
     mockReviewsList,
@@ -15,6 +15,7 @@ const INITIAL_STATE: BuyerStateModel = {
     matchesList: mockMatchedCropsList,
     transactionList: mockTransactionCropsList,
     reviewsList: mockReviewsList,
+    timeStamp: {}
 };
 
 const reducer = (state = INITIAL_STATE, action: any) => {
@@ -35,6 +36,9 @@ const reducer = (state = INITIAL_STATE, action: any) => {
         
         case UPDATE_MASTER_CROP_NAMES_LIST:
             return {...state, masterCropNames: action.payload}
+
+        case UPDATE_TIME_STAMP:
+            return {...state, timeStamp: action.payload}
 
         default:
             return state;
