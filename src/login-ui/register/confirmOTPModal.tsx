@@ -107,7 +107,6 @@ const ConfirmOTPModal = ({showOTPModal, setShowOTPModal, currentType, history}: 
                     <Space>
                         <PrimaryBtn
                             onClick={() => {
-                                // const otp = `${inputOtp.digit1}${inputOtp.digit2}${inputOtp.digit3}${inputOtp.digit4}`
                                 dispatch(confirmOTP(formData?.number,otp));
                                 dispatch(saveTimeStamp);
                             }}
