@@ -1,5 +1,7 @@
 import React from 'react';
-import { Alert, Typography } from 'antd';
+import { Typography } from 'antd';
+
+import './termsAndConditions.scss';
 
 const { Title, Paragraph } = Typography;
 
@@ -33,13 +35,6 @@ const GeneralTerms = () => {
                 them carefully. Access to and use of Platform depends solely on the acceptance of 
                 these Terms and Conditions.
             </Paragraph>
-            <Alert
-                message="Reading Buyer/Seller Terms and Conditions is mandatory."
-                banner={true}
-                style={{fontSize: "small"}}
-                type="info"
-                showIcon
-            />
         </div>
     );
 };

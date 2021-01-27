@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Collapse, Modal, Space, Typography } from 'antd';
+import { Alert, Collapse, Modal, Space } from 'antd';
 
 import GeneralTerms from './generalTerms';
 import BuyerTerms from './buyerTerms';
@@ -10,7 +10,8 @@ import DefaultBtn from '../app-components/defaultBtn';
 import Header from '../header';
 import Footer from '../footer';
 
-const { Text } = Typography;
+import './termsAndConditions.scss';
+
 const { Panel } = Collapse;
 
 export const Terms = () => {
@@ -83,11 +84,18 @@ export const TAndCPopup = (props: any) => {
             title="Terms and Conditions"
             closable={false}    
             footer={[
-                <a style={{float: "left", fontSize: "x-small"}} href="/tAndCPage" target="_blank">View Full Page</a>,
+                <a className="view-full-page" href="/terms&conditions" target="_blank">View Full Page</a>,
                 <PrimaryBtn content="Okay" key="submit" onClick={tAndCRead} />
             ]}
         >
             <Space direction="vertical">
+                <Alert
+                    message="Reading all the Terms and Conditions is mandatory."
+                    banner={true}
+                    style={{fontSize: "small"}}
+                    type="info"
+                    showIcon
+                />
                 <Space direction="horizontal">
                     <DefaultBtn
                         className="general-terms-button"

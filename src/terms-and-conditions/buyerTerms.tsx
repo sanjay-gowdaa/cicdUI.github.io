@@ -1,6 +1,8 @@
 import React from 'react';
 import { Space, Typography } from 'antd';
 
+import './termsAndConditions.scss';
+
 const { Text, Title, Paragraph } = Typography;
 
 const BuyerTerms = () => {
