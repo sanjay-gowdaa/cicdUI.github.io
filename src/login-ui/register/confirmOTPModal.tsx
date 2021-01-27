@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import {
     Alert,
     Col,
+    Divider,
     Modal,
     Row,
     Space,
@@ -15,7 +16,7 @@ import { RootState } from '../../store/rootReducer';
 import PrimaryBtn from '../../app-components/primaryBtn';
 import InputOtp from '../../app-components/inputOtp';
 
-import "./register.scss";
+import './register.scss';
 
 const { Text, Title } = Typography;
 const { Countdown } = Statistic
@@ -23,8 +24,10 @@ const { Countdown } = Statistic
 const ConfirmOTPModal = ({showOTPModal, setShowOTPModal, currentType, history}: {showOTPModal: boolean, setShowOTPModal: Function, currentType: string, history: any}) => {
     const dispatch = useDispatch();
     const registrationState = useSelector((state: RootState) => state.registration);
-    
+
     const { otpError, formData } = registrationState;
+    const phoneNumber = "" + formData?.number;
+    const lastFour = phoneNumber.substr(phoneNumber.length - 4);
     const [otpTimer, setOtpTimer] = useState(0);
     const [resend, showResend] = useState(false);
     const [otpResent, setOtpResent] = useState(false);
@@ -63,7 +66,7 @@ const ConfirmOTPModal = ({showOTPModal, setShowOTPModal, currentType, history}: 
             <Row justify="center">
                 <Col>
                     <Text>
-                        Please enter 4 digit OTP number sent to your phone number/ email
+                        Please enter 4 digit OTP number sent to your phone number +91-******{lastFour}
                     </Text>
                 </Col>
                 <Col>
@@ -86,6 +89,7 @@ const ConfirmOTPModal = ({showOTPModal, setShowOTPModal, currentType, history}: 
                         ) : (!otpResent ? <PrimaryBtn className="add-margin-bottom" onClick={retryOtpSend} content="Resend OTP" /> : null)
                     }
                 </Space>
+                <Divider className="confirm-otp-divider" />
                 <Alert
                     className="confirm-otp-modal-warning"
                     type="warning"
