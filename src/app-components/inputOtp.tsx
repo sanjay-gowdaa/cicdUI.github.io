@@ -43,7 +43,7 @@ const InputOtp = (props: any) => {
             />
             <Input
                 className="custom-input"
-                disabled={(inputOtp.digit1 === '')? true : false}
+                disabled={(inputOtp.digit1 === '')}
                 maxLength={1}
                 onChange={(event: any) => setInputOtp({...inputOtp, digit2: event.target.value})}
                 onKeyUp={setFocusToNext}
@@ -53,7 +53,7 @@ const InputOtp = (props: any) => {
             />
             <Input
                 className="custom-input"
-                disabled={(inputOtp.digit2 === '')? true : false}
+                disabled={(inputOtp.digit2 === '')}
                 maxLength={1}
                 onChange={(event: any) => setInputOtp({...inputOtp, digit3: event.target.value})}
                 onKeyUp={setFocusToNext}
@@ -63,7 +63,7 @@ const InputOtp = (props: any) => {
             />
             <Input
                 className="custom-input digit4"
-                disabled={(inputOtp.digit3 === '')? true : false}
+                disabled={(inputOtp.digit3 === '')}
                 maxLength={1}
                 onChange={(event: any) => setInputOtp({...inputOtp, digit4: event.target.value})}
                 onKeyUp={setFocusToNext}
