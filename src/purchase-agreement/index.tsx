@@ -3,52 +3,25 @@ import { Table, Typography } from 'antd';
 
 import Header from '../header';
 import Footer from '../footer';
+import { columns, data } from './utils';
+
+import './purchaseAgreement.scss';
 
 const { Paragraph, Text, Title } = Typography;
 
 export const PurchaseAgreement = () => {
-    const today = new Date();
-    const dd = ("0" + (today.getDate()+1)).slice(-2);
-    const mm = ("0" + (today.getMonth()+1)).slice(-2);
-    const date = `${dd}/${mm}/${today.getFullYear()}`;
-
-    const columns = [
-        {
-            title: 'Seller',
-            dataIndex: 'seller',
-            key: 'seller',
-            render: (text: string) => <Text>{text}</Text>
-        },
-        {
-            title: 'Buyer',
-            dataIndex: 'buyer',
-            key: 'buyer',
-            render: (text: string) => <Text>{text}</Text>
-        }
-    ];
-
-    const data = [
-        {
-            key: '1',
-            seller: '',
-            buyer: ''
-        },
-        {
-            key: '2',
-            seller: '',
-            buyer: ''
-        }
-    ];
+    const date = new Date().toLocaleDateString();
+    const day = new Date().getDay();
 
     return (
         <>
             <Header showActions={false} />
-            <div style={{width: "95%", margin: "0 auto", padding: "0.2em"}}>
+            <div className="purchase-agreement">
                 <Title level={2} underline>AGREEMENT FOR PURCHASE</Title>
-                <Text style={{float: "right"}}>Agreement no: </Text>
+                <Text className="float-right">Agreement no: </Text>
                 <Text>
                     <b>THIS Agreement for Purchase</b>("<b>Purchase Agreement</b>")
-                    made on {today.getDay()} day of {date} ("<b>Execution Date</b>")by:
+                    made on {day} day of {date} ("<b>Execution Date</b>")by:
                 </Text>
                 <Table bordered columns={columns} dataSource={data} />
                 <Text>
