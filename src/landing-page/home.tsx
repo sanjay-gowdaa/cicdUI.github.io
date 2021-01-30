@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Button, Image, Typography } from 'antd';
 
 import Logo from '../static/assets/Mask Group 9.png';
@@ -6,10 +6,6 @@ import Logo from '../static/assets/Mask Group 9.png';
 const { Title } = Typography;
 
 const Home = () => {
-
-    useEffect(() => {
-        document.getElementById("home")?.parentElement?.classList.add("home-page-fixed-element");
-    },[]);
 
     const goToAim = (url: any) => {
         window.location = url;
