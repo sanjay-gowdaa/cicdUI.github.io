@@ -1,0 +1,440 @@
+$col-shade-green: #12805C;
+
+.float-left {
+    float: left;
+}
+
+.float-right {
+    float: right;
+}
+
+.margin-none {
+    margin: 0.2em;
+}
+
+.col-white {
+    color: white !important;
+}
+
+.col-green {
+    color: $col-shade-green !important;
+}
+
+.default-button {
+    border-color: $col-shade-green !important;
+    color: $col-shade-green !important;
+    background-color: white !important;
+}
+
+.primary-button {
+    background-color: $col-shade-green !important;
+    border-color: $col-shade-green !important;
+    color: white !important;
+}
+
+#home {
+    height: 100em;
+    bottom: 20em;
+    width: 100%;
+    position: relative;
+    background: transparent url('../static/assets/Vikasbandhu_1810801264.jpg') 0% 0% no-repeat padding-box;
+    opacity: 1;
+
+    .home-content {
+        position: relative;
+        left: 8em;
+        top: 30em;
+        width: 30em;
+        height: 35em;
+        padding-left: 2em;
+        -webkit-backdrop-filter: blur(1.25em);
+        backdrop-filter: blur(1.25em);
+        border-radius: 0.5em;
+        background-color: rgba($color: #000000, $alpha: 0.2);
+
+        .logo {
+            border-radius: 0.5em;
+            margin: 2em 2em 2em 0;
+            height: 100px;
+            width: 150px;
+        }
+        
+        .home-paragraph {
+            margin-top: 4em;
+
+            .margin-none {
+                margin: 0;
+            }
+        }
+
+        .explore-vb-btn {
+            background-color: #f5a31a !important;
+            border-color: #f5a31a !important;
+            height: 3em;
+            width: 15em;
+            margin-left: 2em;
+            border-radius: 3px;
+            margin-top: 4em;
+            font-size: large;
+        }
+    }
+}
+
+#aim {
+    position: relative;
+    margin-left: 35em;
+    bottom: 16em;
+    height: 45em;
+    scroll-margin: 5em;
+
+    .handshake-image {
+        float: right;
+        position: relative;
+        bottom: 5em;
+        left: 67em;
+    }
+    
+    .aim-card-row {
+        width: fit-content !important;
+        margin: 0 auto !important;
+        position: relative;
+        bottom: 10em;
+        right: 20em;
+
+        .aim-card {
+            background-color: $col-shade-green;
+            width: 15em;
+            border-radius: 3px;
+            height: 15em;
+            display: inline-flex;
+            margin: 2em;
+            text-align: center;
+            
+            .hex1 {
+                width: 0;
+                margin: 0 auto;
+                margin-top: 1em;
+                border-bottom: 2em solid #32886C;
+                border-left: 3em solid transparent;
+                border-right: 3em solid transparent;
+            }
+            
+            .hex2 {
+                margin: 0 auto;
+                width: 6em;
+                height: 3em;
+                background-color: #32886C;
+            }
+            
+            .hex3 {
+                margin: 0 auto;
+                margin-bottom: 1em;
+                width: 0;
+                border-top: 2em solid #32886C;
+                border-left: 3em solid transparent;
+                border-right: 3em solid transparent;
+            }
+        }
+    }
+}
+
+#ecosystem {
+    position: relative;
+    // left: 25em;
+    margin-left: 35em;
+    bottom: 16em;
+    height: 45em;
+    scroll-margin: 5em;
+    
+    .ecosystem-content {
+        color: #12805C !important;
+        background-color: #e0efea;
+        width: 63em;
+        border-radius: 0.3em;
+        height: 40em;
+        padding-left: 3em;
+
+        .ecosystem-title {
+            padding-top: 1em;
+            margin-top: 0;
+        }
+
+        .bulletin-image {
+            float: left;
+            padding-top: 1em;
+        }
+
+        .bulletin-content {
+            position: relative;
+            top: 1em;
+            float: right;
+            right: 19em;
+
+            .bulletin-points {
+                font-size: large;
+                line-height: 4.5em;
+            }
+        }
+
+        .nature-image {
+            float: right;
+            position: relative;
+            left: 37em;
+        }
+    }
+}
+
+#commodities {
+    position: relative;
+    top: 5em;
+    // left: 20em;
+    margin-left: 23em;
+    height: 45em;
+    scroll-margin: 5em;
+    
+    .commodities-paragraph {
+        width: 56em;
+        line-height: 1.5em;
+    }
+
+    .commodities-list {
+        float: left;
+        margin-top: 4em;
+    }
+
+    .commodities-name {
+        font-size: large;
+        position: relative;
+        top: 1.5em;
+        right: 6em;
+    }
+
+    .wheat-image {
+        position: relative;
+        top: 3em;
+        left: 4em;
+    }
+}
+
+#users {
+    position: relative;
+    top: 5em;
+    // left: 20em;
+    margin-left: 30em;
+    height: 45em;
+    scroll-margin: 5em;
+    
+    .user-title {
+        position: relative;
+        left: 13em;
+    }
+
+    .user-card {
+        background-color: #e0efea;
+        width: 32em;
+        height: 25em;
+        float: left;
+        margin-left: 3em;
+        text-align: center;
+        line-height: 1.5em;
+
+    }
+
+    .transport-image {
+        margin-top: 2em;
+    }
+}
+
+#aboutUs {
+    position: relative;
+    top: 5em;
+    // left: 20em;
+    margin-left: 30em;
+    width: 63.5em;
+    height: 82em;
+    scroll-margin: 5em;
+    padding-left: 4em;
+    // margin-left: 8em;
+    background-color: #fbfbfb;
+    
+    .about-us-title {
+        padding-top: 2em;
+    }
+
+    .outline-image {
+        position: relative;
+        bottom: 6em;
+        left: 45em;
+    }
+
+    .outline-paragraph {
+        position: relative;
+        bottom: 10em;
+        width: 52em;
+    }
+
+    .vision-card,
+    .philosophy-card {
+        width: 27.5em;
+        height: 18em;
+        bottom: 5em;
+        position: relative;
+        background-color: #e0efea;
+        text-align: center;
+
+        .card-image {
+            margin-top: 3em;
+        }
+
+        .card-paragraph {
+            width: 23em;
+            margin: 0 auto;
+        }
+    }
+
+    .paragraph-width {
+        width: 23em;
+        margin: 0 auto;
+    }
+
+    .philosophy-card {
+        right: 4em;
+    }
+
+    .about-us-our-team {
+        text-align: center;
+        width: 54em;
+        padding: 2em 0;
+        margin-top: 4em;
+        height: 25em;
+        border: 0.2em solid #e0efea;
+        border-radius: 3px;
+
+        .our-team {
+            float: left;
+            position:relative;
+            margin-left: 4em;        
+
+            .person-name {
+                margin: 0;
+            }
+        }
+
+    }
+}
+
+#legal {
+    width: 67em;
+    position: relative;
+    top: 5em;
+    // left: 20em;
+    margin-left: 30em;
+    height: 53em;
+    scroll-margin: 5em;
+    margin-top: 10em;
+    // margin-left: 8em;
+    background-color: $col-shade-green;
+    color: white;
+    padding-left: 3em;
+
+    .legal-title {
+        padding-top: 2em;
+        margin-top: 0;
+    }
+
+    .accept-image {
+        position: relative;
+        bottom: 4em;
+        left: 50em;
+    }
+
+    .legal-tab {
+        position: relative;
+        bottom: 8em;
+        
+        .ant-tabs-tab,
+        .ant-tabs-tab-active {
+            width: fit-content;
+            display: inline-flex;
+            padding: 0.5em 2em;
+            border: 0.2em solid #f5a31a;
+            border-radius: 3px;
+            margin-right: 0.2em;
+        }
+
+        .ant-tabs-nav {
+            position: relative;
+            top: 1em;
+        }
+
+        .ant-tabs-tab {
+            background-color: $col-shade-green !important;
+        }
+
+        .ant-tabs-tab-btn,
+        .ant-tabs-tab-btn:active {
+            color: white !important;
+        }
+
+        .ant-tabs-tab-active {
+            background-color: #f5a31a !important;
+        }
+
+        .ant-tabs-content-holder {
+            width: 60em;
+            position: relative;
+            border-radius: 5px;
+            background-color: #339273;
+
+            ul {
+                list-style-position: outside;
+                padding: 1em;
+                
+                li {
+                    padding: 2em;
+                    padding-bottom: 0;
+                    color: white;
+                }
+            }
+
+            .read-more-button {
+                background-color: white;
+                color: $col-shade-green;
+                position: relative;
+                left: 2em;
+                margin-bottom: 2em;
+            }
+        }
+    }
+}
+
+#contactUs {
+    position: relative;
+    top: 5em;
+    // left: 20em;
+    margin-left: 30em;
+    height: 45em;
+    margin-top: 8em;
+    // margin-left: 8em;;
+    scroll-margin: 5em;
+    
+    .contact-us-info {
+        font-size: large;
+        float: left;
+
+        .anticon {
+            font-size: 32px;
+            color: #f5a31a;
+            padding-right: 1em;
+        }
+    }
+
+    .write-feedback {
+        background-color: #fbfbfb;
+        padding: 1em;
+
+        .feedback-form {
+            padding: 2em;
+        }
+    }
+}
