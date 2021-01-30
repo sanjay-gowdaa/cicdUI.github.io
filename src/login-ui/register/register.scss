@@ -11,12 +11,6 @@
             .ant-modal-body {
                 padding-top: 0;
     
-                input.custom-otp-input-digits {
-                    width: 2.5em;
-                    height:2.5em;
-                    margin: 0.5em;
-                }
-    
                 .custom-color-change {
                     color: #cacaca !important;
                     
@@ -25,6 +19,20 @@
                         font-size: initial;
                         padding-bottom: 0.5em;
                     }
+                }
+
+                .add-margin-bottom {
+                    margin-bottom: 0.5em;
+                }
+
+                .confirm-otp-modal-warning {
+                    background-color: white;
+                    border: none;
+                    line-height: 1em;
+                }
+
+                .confirm-otp-divider {
+                    margin: 0;
                 }
             }
         }

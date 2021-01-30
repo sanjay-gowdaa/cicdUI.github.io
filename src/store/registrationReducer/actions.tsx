@@ -1,3 +1,4 @@
+import { getTimeStamp } from '../../app-components/utils';
 import { sendOtp, getAllConfigs, verifyOtp, registerUser, resendOtp } from '../api';
 import { ResponseStatus } from '../genericTypes';
 import { RootState } from '../rootReducer';
@@ -12,6 +13,7 @@ export const SET_OTP_ERROR_FLAG = 'SET_OTP_ERROR_FLAG'
 export const SET_OTP_VERIFIED_FLAG = 'SET_OTP_VERIFIED_FLAG'
 export const SET_REGISTER_ERROR_MSG = 'SET_REGISTER_ERROR_MSG'
 export const SET_REGISTER_VERIFIED_FLAG = 'SET_REGISTER_VERIFIED_FLAG'
+export const SET_TIME_STAMP = 'SET_TIME_STAMP';
 
 export const updateForm = (formData: RegitrationFullFormModel) => {
     return {
@@ -66,6 +68,13 @@ export const setResgiterVerifiedFlag = (verifiedFlag: boolean) => {
     return {
         type: SET_REGISTER_VERIFIED_FLAG,
         payload: verifiedFlag
+    }
+}
+
+export const setTimeStamp = (timeStamp: any) => {
+    return {
+        type: SET_TIME_STAMP,
+        payload: timeStamp
     }
 }
 
@@ -129,4 +138,9 @@ export const submitRegister = (userType: string, userFormData: any) => {
             dispatch(setResgiterVerifiedFlag(false))
         }
     }
+}
+
+export const saveTimeStamp = (dispatch: any) => {
+    const timeStamp = getTimeStamp();
+    dispatch(setTimeStamp(timeStamp));
 }

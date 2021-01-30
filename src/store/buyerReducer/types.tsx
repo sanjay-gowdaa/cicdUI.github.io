@@ -72,6 +72,7 @@ export interface BuyerStateModel {
     matchesList: Array<MatchRequirementModel>;
     transactionList: Array<TransactioModel>;
     reviewsList: Array<ReviewRating>;
+    timeStamp: any;
 }
 
 export interface ReviewRating {

@@ -51,6 +51,7 @@ export interface SellerStateModel {
     transactionList: Array<TransactioModel>;
     reviewsList: Array<ReviewRating>;
     apmcCropPrice: string;
+    timeStamp: any;
 }
 
 export interface ReviewRating {

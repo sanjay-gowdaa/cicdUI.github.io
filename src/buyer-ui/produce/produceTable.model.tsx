@@ -2,6 +2,7 @@ import React from 'react';
 import { Button, Image, Typography } from 'antd';
 import { ProduceModel } from '../../store/buyerReducer/types';
 import RagiImg from '../../static/assets/ragi.png'
+import ViewTerms from '../../terms-and-conditions/viewTerms';
 
 const { Title } = Typography;
 
@@ -51,9 +52,7 @@ export const producColumns = [
         render: (termsAndConditions: string) => {
             return (
                 <>
-                    <a href={termsAndConditions} target="_blank">
-                        Terms & Conditions
-                    </a>                
+                    <ViewTerms displayType="buyer" content="Terms & Conditions" />                
                 </>
             );
         },

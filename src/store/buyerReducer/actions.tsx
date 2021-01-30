@@ -1,3 +1,4 @@
+import { getTimeStamp } from "../../app-components/utils";
 import { addProduce, getAllProduce, getCropCategoryList, getCropList, getSubCategoryList, getMasterList, updateMasterList } from "../api";
 import { UserStateModel } from "../loginReducer/types";
 import { RootState } from "../rootReducer";
@@ -9,6 +10,7 @@ export const UPDATE_PRODUCE_LIST = 'UPDATE_PRODUCE_LIST';
 export const UPDATE_MASTER_CROP_NAMES_LIST = 'UPDATE_MASTER_CROP_NAMES_LIST';
 export const UPDATE_CROPS_LIST = 'UPDATE_CROPS_LIST';
 export const UPDATE_VARIETY_LIST = 'UPDATE_VARIETY_LIST';
+export const UPDATE_TIME_STAMP = 'UPDATE_TIME_STAMP';
 
 export const updateMasterlist = (masterlist: Array<any>) => {
     return {
@@ -43,7 +45,14 @@ export const updateVarietyList = (varietyList: Array<string>) => {
         type: UPDATE_VARIETY_LIST,
         payload: varietyList
     }
-}   
+}
+
+export const updateTimeStamp = (timeStamp: any) => {
+    return {
+        type: UPDATE_TIME_STAMP,
+        payload: timeStamp
+    }
+}
 
 export const getMasterProduceList = () => {
     return async(dispatch: any, getState: any) => {
@@ -116,4 +125,9 @@ export const fetchAllVariety = (crop: string) => {
         const { crops: {Items: variety}} = allVarietyList || {variety: []}
         dispatch(updateVarietyList(variety));    
     }
+}
+
+export const saveTimeStamp = (dispatch: any) => {
+    const timeStamp = getTimeStamp();
+    dispatch(updateTimeStamp(timeStamp));
 }

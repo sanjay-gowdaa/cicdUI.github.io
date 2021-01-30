@@ -14,7 +14,8 @@ const INITIAL_STATE: SellerStateModel = {
     transactionList: mockTransactionCropsList,
     reviewsList: mockReviewsList,
     categories: [],
-    apmcCropPrice: ''
+    apmcCropPrice: '',
+    timeStamp: {}
 };
 
 const reducer = (state = INITIAL_STATE, action: any) => {

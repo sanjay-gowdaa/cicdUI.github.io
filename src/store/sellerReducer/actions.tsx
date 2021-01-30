@@ -1,4 +1,5 @@
 import { sortBy } from "lodash";
+import { getTimeStamp } from "../../app-components/utils";
 import { getSubCategoryList, createCrop, getAllCrops, getCropCategoryList, getCropList, getLiveApmcRate } from "../api";
 import { LiveApmcRates } from "../genericTypes";
 import { UserStateModel } from "../loginReducer/types";
@@ -12,6 +13,7 @@ export const ADD_NEW_CROP = 'ADD_NEW_CROP';
 export const UPDATE_SELLER_CROPS_LIST = 'UPDATE_SELLER_CROPS_LIST';
 export const UPDATE_APMC_RATE = 'UPDATE_APMC_RATE';
 export const UPDATE_APMC_DATA_TO_CROPS = 'UPDATE_APMC_DATA_TO_CROPS';
+export const UPDATE_TIME_STAMP = 'UPDATE_TIME_STAMP';
 
 export const updateAllCategories = (categories: Array<string>) => {
     return {
@@ -45,6 +47,13 @@ export const updateApmcCropRate = (modalPrice: string) => {
     return {
         type: UPDATE_APMC_RATE,
         payload: modalPrice
+    }
+}
+
+export const updateTimeStamp = (timeStamp: any) => {
+    return {
+        type: UPDATE_TIME_STAMP,
+        payload: timeStamp
     }
 }
 
@@ -174,6 +183,10 @@ export const getAllCropsList = () => {
         const {Items, Count} = cropsList || {Items: [], Count: 0}
         dispatch(updateSellerCropsList(Items));
         dispatch(fetchAllCropsApmcData(Items));
-    }
-    
+    }   
+}
+
+export const saveTimeStamp = (dispatch: any) => {
+    const timeStamp = getTimeStamp();
+    dispatch(updateTimeStamp(timeStamp));
 }

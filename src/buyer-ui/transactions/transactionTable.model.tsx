@@ -2,9 +2,11 @@ import React from 'react';
 import { Image, Typography } from 'antd';
 
 import { TransactioModel } from '../../store/buyerReducer/types';
-import RagiImg from '../../static/assets/ragi.png'
+import RagiImg from '../../static/assets/ragi.png';
+import ViewTerms from '../../terms-and-conditions/viewTerms';
 
 const { Text, Title } = Typography;
+
 export const transactionColumns = [
     {
         title: 'Id',
@@ -75,11 +77,7 @@ export const transactionColumns = [
         render: (termsAndConditions: string) => {
             return (
                 <>
-                    <div>
-                        <a href={termsAndConditions} target="_blank">
-                            View Terms
-                        </a>
-                    </div>
+                    <ViewTerms displayType="buyer" content="View Terms" />
                 </>
             );
         },

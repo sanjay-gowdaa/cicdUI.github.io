@@ -18,7 +18,7 @@ const initialEmptyCropDetail = {
     apmcRateChange: { difference: 0, increase: true },
     intentToSell: false,
     termsAndConditions: '',
-    buyerId: '',
+    sellerId: '',
     quantityRequired: 0,
     location: '',
 };

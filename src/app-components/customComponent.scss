@@ -6,7 +6,8 @@ $col-shade-green: #12805C;
 }
 
 .custom-default-button:hover,
-.custom-default-button:focus {
+.custom-default-button:focus,
+.focus-button-item {
     color: $col-shade-green !important;
     border-color: $col-shade-green !important;
 }

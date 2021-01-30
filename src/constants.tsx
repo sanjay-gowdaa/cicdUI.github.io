@@ -5,6 +5,8 @@ export const routesMap = {
     register_entity: '/register/:id',
     seller_ui: '/seller',
     buyer_ui: '/buyer',
+    terms: '/terms&conditions',
+    purchase_agreement: '/agreement',
 };
 
 export const headerBreadcrumb = {

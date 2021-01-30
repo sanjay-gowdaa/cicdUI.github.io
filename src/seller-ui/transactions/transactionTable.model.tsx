@@ -2,8 +2,10 @@ import React from 'react';
 import { Typography } from 'antd';
 
 import { TransactioModel } from '../../store/sellerReducer/types';
+import ViewTerms from '../../terms-and-conditions/viewTerms';
 
 const { Title, Text } = Typography;
+
 export const transactionColumns = [
     {
         title: 'Id',
@@ -71,11 +73,7 @@ export const transactionColumns = [
         render: (termsAndConditions: string) => {
             return (
                 <>
-                    <div>
-                        <a href={termsAndConditions} target="_blank">
-                            View Terms
-                        </a>
-                    </div>
+                    <ViewTerms displayType="seller" content="View Terms" />
                 </>
             );
         },

@@ -44,3 +44,11 @@ export const generateFileData = async (fileObject: {name: string, type: string},
     const content = await proccessFileToBase64(fileObject);
     return {fieldname, filename , content};
 }
+
+export const getTimeStamp = () => {
+    const date = new Date().toLocaleDateString();
+    const time = new Date().toLocaleTimeString();
+    const timeStamp = {date: date, time: time};
+
+    return timeStamp;
+}
