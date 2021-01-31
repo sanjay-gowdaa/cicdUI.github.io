@@ -1,11 +1,11 @@
 import React from 'react';
 import { Image, Space, Typography } from 'antd';
 
-import StapleCrop from '../static/assets/Mask Group 4.png';
-import Pulses from '../static/assets/Mask Group 5.png';
-import CashCrop from '../static/assets/Mask Group 6.png';
-import Spices from '../static/assets/Mask Group 7.png';
-import OilSeed from '../static/assets/Mask Group 8.png';
+import StapleCrop from '../static/assets/stapleCrop.png';
+import Pulses from '../static/assets/pulses.png';
+import CashCrop from '../static/assets/cashCrop.png';
+import Spices from '../static/assets/spices.png';
+import OilSeed from '../static/assets/oilSeed.png';
 import Wheat from '../static/assets/wheat-1.svg';
 
 const { Paragraph, Text, Title } = Typography;

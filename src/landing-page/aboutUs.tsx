@@ -4,9 +4,9 @@ import { Card, Image, Space, Typography } from 'antd';
 import Outline from '../static/assets/Outline.svg';
 import Vision from '../static/assets/vision.svg';
 import Philosophy from '../static/assets/philosophy.svg';
-import Nagappa from '../static/assets/Image 7.png';
-import Suma from '../static/assets/Mask Group 10.png';
-import Sadananda from '../static/assets/Image 8.png';
+import Nagappa from '../static/assets/nagappa.png';
+import Suma from '../static/assets/suma.png';
+import Sadananda from '../static/assets/sadananda.png';
 
 const { Paragraph, Text, Title } = Typography;
 

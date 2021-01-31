@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button, Image, Typography } from 'antd';
 
-import Logo from '../static/assets/Mask Group 9.png';
+import Logo from '../static/assets/vbLogo.png';
 
 const { Title } = Typography;
 
@@ -39,7 +39,7 @@ const Home = () => {
                 </Button>
             </div>
         </div>
-    )
-}
+    );
+};
 
 export default Home;

@@ -1,9 +1,8 @@
 import React from 'react';
 import { Card, Image, Space, Typography } from 'antd';
 
-import Banner from '../static/assets/Mask \Group 3.png';
+import Banner from '../static/assets/banner.png';
 import Join from '../static/assets/friends.svg';
-
 
 import PrimaryBtn from '../app-components/primaryBtn';
 

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Card, Image, Row, Typography } from 'antd';
 
 import Connect from '../static/assets/connection.svg';

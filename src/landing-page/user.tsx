@@ -3,7 +3,7 @@ import { Card, Image, Typography } from 'antd';
 
 import SellerIcon from '../static/assets/man.svg';
 import BuyerIcon from '../static/assets/teacher.svg';
-import Transport from '../static/assets/Group 93.svg';
+import Transport from '../static/assets/transport.svg';
 
 const { Paragraph, Text, Title } = Typography;
 

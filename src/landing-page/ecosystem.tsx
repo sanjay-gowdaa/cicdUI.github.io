@@ -1,8 +1,8 @@
 import React from 'react';
 import { Image, Space, Typography } from 'antd';
 
-import Tractor from '../static/assets/Group 23.svg';
-import Bulletin from '../static/assets/Group 99.svg';
+import Tractor from '../static/assets/tractor.svg';
+import Bulletin from '../static/assets/bulletin.svg';
 import Nature from '../static/assets/nature.svg';
 
 const { Text, Title } = Typography;
