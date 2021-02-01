@@ -24,7 +24,7 @@ const User = () => {
             </Card>
             <Card className="user-card">
                 <Title className="col-green" level={2}>Buyers</Title>
-                <Text>Buyer Community -Optimize and enable a direct connect</Text>
+                <Text>Buyer Community Optimize and enable direct connect</Text>
                 <Image width={125} height={125} src={BuyerIcon} preview={false} />
                 <Paragraph>
                     VikasBandhu attempts to identify the right quantity 

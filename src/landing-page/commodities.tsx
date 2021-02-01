@@ -20,7 +20,7 @@ const Commodities = () => {
                 Karnataka covering the  major crops native to this region. The scope of produce 
                 is intended/limited to be below categories at this point.
             </Paragraph>
-            <Space direction="horizontal" size="large">
+            {/* <Space direction="horizontal" size="large"> */}
                 <div className="commodities-list">
                     <Image
                         className="commodities-image"
@@ -67,7 +67,7 @@ const Commodities = () => {
                     />
                     <Text className="commodities-name">Oil Seeds</Text>
                 </div>
-            </Space>
+            {/* </Space> */}
             <Image className="wheat-image" src={Wheat} preview={false} />
         </div>
     );

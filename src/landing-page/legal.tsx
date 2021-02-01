@@ -77,7 +77,9 @@ const Legal = () => {
                             posted or linked to the revised Policy on the Website.
                         </li>
                     </ul>
-                    <Button className="read-more-button vikas-btn-radius">Read More</Button>
+                    <Button className="read-more-button vikas-btn-radius">
+                        <Link to="/terms&conditions" target="_blank">Read More</Link>
+                    </Button>
                 </TabPane>
             </Tabs>
         </div>

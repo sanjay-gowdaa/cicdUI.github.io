@@ -10,7 +10,7 @@ const ContactUs = () => {
         <div id="contactUs">
             <Title className="col-green contact-us-title" level={2}>Contact Us</Title>
             <Row>
-                <Col span={8} className="contact-us-info">
+                <Col span={9} className="contact-us-info">
                     <Space direction="vertical">
                         <Text><PhoneOutlined className="contact-us-icon" />Phone Number</Text>
                         <Text><MailOutlined className="contact-us-icon" />contactus@samparkbindhu.in</Text>
@@ -18,7 +18,7 @@ const ContactUs = () => {
                         <br/>J P Nagar 9th Phase, Bengaluru-560062</address>
                     </Space>
                 </Col>
-                <Col span={8} className="write-feedback">
+                <Col span={9} className="write-feedback">
                     <Space direction="vertical">
                     <div className="feedback-form">
                         <Title className="write-feedback-title" level={4}>We would like to hear from you!</Title>
