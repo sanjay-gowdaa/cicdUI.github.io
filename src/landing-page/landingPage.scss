@@ -34,19 +34,21 @@ $col-shade-green: #12805C;
 
 #home {
     height: 100em;
-    bottom: 20em;
+    bottom: 10em;
     width: 100%;
     position: relative;
-    background: transparent url('../static/assets/Vikasbandhu_1810801264.jpg') 0% 0% no-repeat padding-box;
+    background: transparent url('../static/assets/Vikasbandhu_1810801264_1920x1080pxl.jpg') 0% 0% no-repeat padding-box;
+    background-position: center;
+    background-size: auto;
     opacity: 1;
 
     .home-content {
         position: relative;
-        left: 8em;
-        top: 30em;
-        width: 30em;
-        height: 35em;
-        padding-left: 2em;
+        left: 10vw;
+        top: 20em;
+        width: 32vw;
+        height: 30em;
+        padding-left: 4vw;
         -webkit-backdrop-filter: blur(1.25em);
         backdrop-filter: blur(1.25em);
         border-radius: 0.5em;
@@ -60,7 +62,7 @@ $col-shade-green: #12805C;
         }
         
         .home-paragraph {
-            margin-top: 4em;
+            margin-top: 4vh;
 
             .margin-none {
                 margin: 0;
@@ -70,11 +72,11 @@ $col-shade-green: #12805C;
         .explore-vb-btn {
             background-color: #f5a31a !important;
             border-color: #f5a31a !important;
-            height: 3em;
-            width: 15em;
+            height: 2.5em;
+            width: 18vw;
             margin-left: 2em;
             border-radius: 3px;
-            margin-top: 4em;
+            margin-top: 4vh;
             font-size: large;
         }
     }
@@ -82,9 +84,8 @@ $col-shade-green: #12805C;
 
 #aim {
     position: relative;
-    margin-left: 35em;
+    margin-left: 37vw;
     bottom: 16em;
-    height: 45em;
     scroll-margin: 5em;
 
     .handshake-image {
@@ -140,19 +141,17 @@ $col-shade-green: #12805C;
 
 #ecosystem {
     position: relative;
-    // left: 25em;
-    margin-left: 35em;
+    margin-left: 20vw;
     bottom: 16em;
-    height: 45em;
     scroll-margin: 5em;
     
     .ecosystem-content {
         color: #12805C !important;
         background-color: #e0efea;
-        width: 63em;
+        width: 60vw;
         border-radius: 0.3em;
         height: 40em;
-        padding-left: 3em;
+        padding-left: 2vw;
 
         .ecosystem-title {
             padding-top: 1em;
@@ -168,7 +167,7 @@ $col-shade-green: #12805C;
             position: relative;
             top: 1em;
             float: right;
-            right: 19em;
+            right: 15vw;
 
             .bulletin-points {
                 font-size: large;
@@ -179,7 +178,7 @@ $col-shade-green: #12805C;
         .nature-image {
             float: right;
             position: relative;
-            left: 37em;
+            left: 37vw;
         }
     }
 }
@@ -187,9 +186,7 @@ $col-shade-green: #12805C;
 #commodities {
     position: relative;
     top: 5em;
-    // left: 20em;
-    margin-left: 23em;
-    height: 45em;
+    margin-left: 20vw;
     scroll-margin: 5em;
     
     .commodities-paragraph {
@@ -199,62 +196,65 @@ $col-shade-green: #12805C;
 
     .commodities-list {
         float: left;
+        width: 12vw;
         margin-top: 4em;
     }
 
     .commodities-name {
         font-size: large;
-        position: relative;
-        top: 1.5em;
-        right: 6em;
+    }
+
+    .commodities-image {
+        width: 10vw;
+        height: 10vw;
     }
 
     .wheat-image {
         position: relative;
         top: 3em;
-        left: 4em;
+        left: 2vh;
+        width: 60vw;
     }
 }
 
 #users {
     position: relative;
     top: 5em;
-    // left: 20em;
-    margin-left: 30em;
-    height: 45em;
+    margin-left: 16vw;
+    margin-top: 5em;
     scroll-margin: 5em;
     
     .user-title {
         position: relative;
-        left: 13em;
+        left: 23vw;
     }
 
     .user-card {
         background-color: #e0efea;
-        width: 32em;
+        width: 30vw;
         height: 25em;
         float: left;
-        margin-left: 3em;
+        margin-left: 2vw;
         text-align: center;
         line-height: 1.5em;
-
     }
 
     .transport-image {
         margin-top: 2em;
+        margin-left: 2vw;
+        width: 60vw;
     }
 }
 
 #aboutUs {
     position: relative;
     top: 5em;
-    // left: 20em;
-    margin-left: 30em;
-    width: 63.5em;
-    height: 82em;
+    margin-left: 18vw;
+    width: 63.5vw;
+    height: 84em;
     scroll-margin: 5em;
-    padding-left: 4em;
-    // margin-left: 8em;
+    padding-left: 2vw;
+    z-index: -1;
     background-color: #fbfbfb;
     
     .about-us-title {
@@ -264,18 +264,18 @@ $col-shade-green: #12805C;
     .outline-image {
         position: relative;
         bottom: 6em;
-        left: 45em;
+        left: 45vw;
     }
 
     .outline-paragraph {
         position: relative;
         bottom: 10em;
-        width: 52em;
+        width: 52vw;
     }
 
     .vision-card,
     .philosophy-card {
-        width: 27.5em;
+        width: 27.5vw;
         height: 18em;
         bottom: 5em;
         position: relative;
@@ -287,18 +287,18 @@ $col-shade-green: #12805C;
         }
 
         .card-paragraph {
-            width: 23em;
+            width: 23vw;
             margin: 0 auto;
         }
     }
 
     .paragraph-width {
-        width: 23em;
+        width: 23vw;
         margin: 0 auto;
     }
 
     .philosophy-card {
-        right: 4em;
+        right: 4vw;
     }
 
     .about-us-our-team {
@@ -324,18 +324,16 @@ $col-shade-green: #12805C;
 }
 
 #legal {
-    width: 67em;
+    width: 60vw;
     position: relative;
     top: 5em;
-    // left: 20em;
-    margin-left: 30em;
+    margin-left: 18vw;
     height: 53em;
     scroll-margin: 5em;
     margin-top: 10em;
-    // margin-left: 8em;
     background-color: $col-shade-green;
     color: white;
-    padding-left: 3em;
+    padding-left: 3vw;
 
     .legal-title {
         padding-top: 2em;
@@ -344,13 +342,13 @@ $col-shade-green: #12805C;
 
     .accept-image {
         position: relative;
-        bottom: 4em;
-        left: 50em;
+        bottom: 6em;
+        left: 48vw;
     }
 
     .legal-tab {
         position: relative;
-        bottom: 8em;
+        bottom: 10em;
         
         .ant-tabs-tab,
         .ant-tabs-tab-active {
@@ -381,7 +379,7 @@ $col-shade-green: #12805C;
         }
 
         .ant-tabs-content-holder {
-            width: 60em;
+            width: 55vw;
             position: relative;
             border-radius: 5px;
             background-color: #339273;
@@ -411,11 +409,9 @@ $col-shade-green: #12805C;
 #contactUs {
     position: relative;
     top: 5em;
-    // left: 20em;
-    margin-left: 30em;
-    height: 45em;
+    margin-left: 20vw;
     margin-top: 8em;
-    // margin-left: 8em;;
+    height: 45em;
     scroll-margin: 5em;
     
     .contact-us-info {

@@ -11,3 +11,16 @@
         display: none;
     }
 }
+
+.register-seller,
+.register-buyer {
+
+    .landing-page-header-bar {
+        position: unset;
+
+        .header-breadcrumb {
+            display: none;
+        }
+    }
+
+}
