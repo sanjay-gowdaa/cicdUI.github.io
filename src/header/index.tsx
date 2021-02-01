@@ -1,5 +1,5 @@
 import React from 'react';
-import { Image, Popover } from 'antd';
+import { Breadcrumb, Image, Popover } from 'antd';
 
 import Register from '../login-ui/register';
 import UserHeader from '../header-profile';
@@ -49,6 +49,16 @@ const Header = (headerProps: any) => {
     return (
         <div className="landing-page-header-bar">
             <Image width={100} height={60} src={Logo} preview={false} />
+            <Breadcrumb className="header-breadcrumb" separator=" ">
+                <Breadcrumb.Item href="#home">Home</Breadcrumb.Item>
+                <Breadcrumb.Item href="#aim">Aim</Breadcrumb.Item>
+                <Breadcrumb.Item href="#ecosystem">EcoSystem</Breadcrumb.Item>
+                <Breadcrumb.Item href="#commodities">Commodities</Breadcrumb.Item>
+                <Breadcrumb.Item href="#users">Users</Breadcrumb.Item>
+                <Breadcrumb.Item href="#aboutUs">About Us</Breadcrumb.Item>
+                <Breadcrumb.Item href="#legal">Legal</Breadcrumb.Item>
+                <Breadcrumb.Item href="#contactUs">Contact Us</Breadcrumb.Item>
+            </Breadcrumb>
             {showActions ? <HeaderActions isLoggedIn={isLoggedIn} history={history} popUpTrigger={popUpTrigger} /> : null}
         </div>
     );

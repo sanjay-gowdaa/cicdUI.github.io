@@ -1,0 +1,441 @@
+$col-shade-green: #12805C;
+
+.float-left {
+    float: left;
+}
+
+.float-right {
+    float: right;
+}
+
+.margin-none {
+    margin: 0.2em;
+}
+
+.col-white {
+    color: white !important;
+}
+
+.col-green {
+    color: $col-shade-green !important;
+}
+
+.default-button {
+    border-color: $col-shade-green !important;
+    color: $col-shade-green !important;
+    background-color: white !important;
+}
+
+.primary-button {
+    background-color: $col-shade-green !important;
+    border-color: $col-shade-green !important;
+    color: white !important;
+}
+
+#home {
+    height: 100em;
+    bottom: 10em;
+    width: 100%;
+    position: relative;
+    background: transparent url('../static/assets/Vikasbandhu_1810801264_1920x1080pxl.jpg') 0% 0% no-repeat padding-box;
+    background-position: center;
+    background-size: auto;
+    opacity: 1;
+
+    .home-content {
+        position: relative;
+        left: 10vw;
+        top: 20em;
+        width: 32vw;
+        height: 30em;
+        padding-left: 4vw;
+        -webkit-backdrop-filter: blur(1.25em);
+        backdrop-filter: blur(1.25em);
+        border-radius: 0.5em;
+        background-color: rgba($color: #000000, $alpha: 0.2);
+
+        .logo {
+            border-radius: 0.5em;
+            margin: 2em 2em 2em 0;
+            height: 100px;
+            width: 150px;
+        }
+        
+        .home-paragraph {
+            margin-top: 4vh;
+
+            .margin-none {
+                margin: 0;
+            }
+        }
+
+        .explore-vb-btn {
+            background-color: #f5a31a !important;
+            border-color: #f5a31a !important;
+            height: 2.5em;
+            width: 18vw;
+            margin-left: 2em;
+            border-radius: 3px;
+            margin-top: 4vh;
+            font-size: large;
+        }
+    }
+}
+
+#aim {
+    position: relative;
+    margin-left: 37vw;
+    bottom: 16em;
+    scroll-margin: 5em;
+
+    .aim-title {
+        position: relative;
+        right: 18vw;
+    }
+
+    .handshake-image {
+        float: right;
+        position: relative;
+        bottom: 8em;
+        right: -23vw;
+    }
+    
+    .aim-card-row {
+        width: fit-content !important;
+        margin: 0 auto !important;
+        position: relative;
+        bottom: 10em;
+        right: 20em;
+
+        .aim-card {
+            background-color: $col-shade-green;
+            width: 15em;
+            border-radius: 3px;
+            height: 15em;
+            display: inline-flex;
+            margin: 2em;
+            text-align: center;
+            
+            .hex1 {
+                width: 0;
+                margin: 0 auto;
+                margin-top: 1em;
+                border-bottom: 2em solid #32886C;
+                border-left: 3em solid transparent;
+                border-right: 3em solid transparent;
+            }
+            
+            .hex2 {
+                margin: 0 auto;
+                width: 6em;
+                height: 3em;
+                background-color: #32886C;
+            }
+            
+            .hex3 {
+                margin: 0 auto;
+                margin-bottom: 1em;
+                width: 0;
+                border-top: 2em solid #32886C;
+                border-left: 3em solid transparent;
+                border-right: 3em solid transparent;
+            }
+        }
+    }
+}
+
+#ecosystem {
+    position: relative;
+    margin-left: 20vw;
+    bottom: 16em;
+    scroll-margin: 5em;
+    
+    .ecosystem-content {
+        color: #12805C !important;
+        background-color: #e0efea;
+        width: 60vw;
+        border-radius: 0.3em;
+        height: 40em;
+        padding-left: 2vw;
+
+        .ecosystem-title {
+            padding-top: 1em;
+            margin-top: 0;
+        }
+
+        .bulletin-image {
+            float: left;
+            padding-top: 1em;
+        }
+
+        .bulletin-content {
+            position: relative;
+            top: 1em;
+            float: right;
+            right: 15vw;
+
+            .bulletin-points {
+                font-size: large;
+                line-height: 4.5em;
+            }
+        }
+
+        .nature-image {
+            float: right;
+            position: relative;
+            left: 37vw;
+        }
+    }
+}
+
+#commodities {
+    position: relative;
+    top: 5em;
+    margin-left: 20vw;
+    scroll-margin: 5em;
+    
+    .commodities-paragraph {
+        width: 56em;
+        line-height: 1.5em;
+    }
+
+    .commodities-list {
+        float: left;
+        width: 12vw;
+        margin-top: 4em;
+    }
+
+    .commodities-name {
+        font-size: large;
+    }
+
+    .commodities-image {
+        width: 10vw;
+        height: 10vw;
+    }
+
+    .wheat-image {
+        position: relative;
+        top: 3em;
+        left: 2vh;
+        width: 60vw;
+    }
+}
+
+#users {
+    position: relative;
+    top: 5em;
+    margin-left: 16vw;
+    margin-top: 5em;
+    scroll-margin: 5em;
+    
+    .user-title {
+        position: relative;
+        left: 23vw;
+    }
+
+    .user-card {
+        background-color: #e0efea;
+        width: 30vw;
+        height: 25em;
+        float: left;
+        margin-left: 2vw;
+        text-align: center;
+        line-height: 1.5em;
+    }
+
+    .transport-image {
+        margin-top: 2em;
+        margin-left: 2vw;
+        width: 60vw;
+    }
+}
+
+#aboutUs {
+    position: relative;
+    top: 5em;
+    margin-left: 18vw;
+    width: 63.5vw;
+    height: 84em;
+    scroll-margin: 5em;
+    padding-left: 2vw;
+    z-index: -1;
+    background-color: #fbfbfb;
+    
+    .about-us-title {
+        padding-top: 2em;
+    }
+
+    .outline-image {
+        position: relative;
+        bottom: 6em;
+        left: 45vw;
+    }
+
+    .outline-paragraph {
+        position: relative;
+        bottom: 10em;
+        width: 52vw;
+    }
+
+    .vision-card,
+    .philosophy-card {
+        width: 27.5vw;
+        height: 18em;
+        bottom: 5em;
+        position: relative;
+        background-color: #e0efea;
+        text-align: center;
+
+        .card-image {
+            margin-top: 3em;
+        }
+
+        .card-paragraph {
+            width: 23vw;
+            margin: 0 auto;
+        }
+    }
+
+    .paragraph-width {
+        width: 23vw;
+        margin: 0 auto;
+    }
+
+    .philosophy-card {
+        right: 4vw;
+    }
+
+    .about-us-our-team {
+        text-align: center;
+        width: 54em;
+        padding: 2em 0;
+        margin-top: 4em;
+        height: 25em;
+        border: 0.2em solid #e0efea;
+        border-radius: 3px;
+
+        .our-team {
+            float: left;
+            position:relative;
+            margin-left: 4em;        
+
+            .person-name {
+                margin: 0;
+            }
+        }
+
+    }
+}
+
+#legal {
+    width: 60vw;
+    position: relative;
+    top: 5em;
+    margin-left: 18vw;
+    height: 53em;
+    scroll-margin: 5em;
+    margin-top: 10em;
+    background-color: $col-shade-green;
+    color: white;
+    padding-left: 3vw;
+
+    .legal-title {
+        padding-top: 2em;
+        margin-top: 0;
+    }
+
+    .accept-image {
+        position: relative;
+        bottom: 6em;
+        left: 48vw;
+    }
+
+    .legal-tab {
+        position: relative;
+        bottom: 10em;
+        
+        .ant-tabs-tab,
+        .ant-tabs-tab-active {
+            width: fit-content;
+            display: inline-flex;
+            padding: 0.5em 2em;
+            border: 0.2em solid #f5a31a;
+            border-radius: 3px;
+            margin-right: 0.2em;
+        }
+
+        .ant-tabs-nav {
+            position: relative;
+            top: 1em;
+        }
+
+        .ant-tabs-tab {
+            background-color: $col-shade-green !important;
+        }
+
+        .ant-tabs-tab-btn,
+        .ant-tabs-tab-btn:active {
+            color: white !important;
+        }
+
+        .ant-tabs-tab-active {
+            background-color: #f5a31a !important;
+        }
+
+        .ant-tabs-content-holder {
+            width: 55vw;
+            position: relative;
+            border-radius: 5px;
+            background-color: #339273;
+
+            ul {
+                list-style-position: outside;
+                padding: 1em;
+                
+                li {
+                    padding: 2em;
+                    padding-bottom: 0;
+                    color: white;
+                }
+            }
+
+            .read-more-button {
+                background-color: white;
+                color: $col-shade-green;
+                position: relative;
+                left: 2em;
+                margin-bottom: 2em;
+            }
+        }
+    }
+}
+
+#contactUs {
+    position: relative;
+    top: 5em;
+    margin-left: 20vw;
+    margin-top: 8em;
+    height: 45em;
+    scroll-margin: 5em;
+    
+    .contact-us-info {
+        font-size: large;
+        float: left;
+
+        .anticon {
+            font-size: 32px;
+            color: #f5a31a;
+            padding-right: 1em;
+        }
+    }
+
+    .write-feedback {
+        background-color: #fbfbfb;
+        padding: 1em;
+
+        .feedback-form {
+            padding: 2em;
+        }
+    }
+}

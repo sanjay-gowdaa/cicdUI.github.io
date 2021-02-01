@@ -11,6 +11,7 @@ import Header from '../header';
 import Footer from '../footer';
 
 import './termsAndConditions.scss';
+import PrivacyPolicy from './privacyPolicy';
 
 const { Panel } = Collapse;
 
@@ -18,7 +19,7 @@ export const Terms = () => {
     return (
         <div className="t-and-c-page">      
             <Header showActions={false} />
-            <Collapse className="collapsable-t-and-c" defaultActiveKey={['1']}>
+            <Collapse className="collapsable-t-and-c" defaultActiveKey={1}>
                 <Panel header="General Terms" key="1">
                     <GeneralTerms />
                 </Panel>
@@ -27,6 +28,9 @@ export const Terms = () => {
                 </Panel>
                 <Panel header="Seller Terms" key="3">
                     <SellerTerms />
+                </Panel>
+                <Panel header="Privacy Policy" key="4">
+                    <PrivacyPolicy />    
                 </Panel>                
             </Collapse>
             <Footer />

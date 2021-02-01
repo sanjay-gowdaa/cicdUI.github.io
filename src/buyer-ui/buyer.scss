@@ -1,15 +1,25 @@
 .buyer-ui-app {
-  .buyer-ui-dashboard {
-    padding: 2em;
-  }
-  .add-produce-btn {
-    width: 280px;
-    height: 52px;
-    font-weight: 500;
-    font-size: 18px;
-  }
+
+    .landing-page-header-bar {
+        position: unset;
+
+        .header-breadcrumb {
+            display: none;
+        }
+    }
+    
+    .buyer-ui-dashboard {
+        padding: 2em;
+    }
+  
+    .add-produce-btn {
+        width: 280px;
+        height: 52px;
+        font-weight: 500;
+        font-size: 18px;
+    }
 }
   
-  .add-produce-modal .ant-modal-content {
+.add-produce-modal .ant-modal-content {
     padding: 2em !important;
 }

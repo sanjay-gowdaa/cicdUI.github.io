@@ -3,6 +3,14 @@
     margin: 0 auto;
     padding: 0.2em;
 
+    .landing-page-header-bar {
+        position: unset;
+    
+        .header-breadcrumb {
+            display: none;
+        }
+    }
+    
     .float-right {
         float: right;
     }

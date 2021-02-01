@@ -1,93 +1,119 @@
 $col-shade-green: #12805C;
 
+html {
+    scroll-behavior: smooth;
+    width: 100%;
+}
+
 .main-content {
-  width: 100%;
-  height: calc(100% - 70px);
+    width: 100%;
+    height: calc(100% - 70px);
+
+    #banner-div {
+        position: fixed;
+        top: 5em;
+        float: left;
+        opacity: 1;
+    }
+    
+    .join-us {
+        position: fixed;
+        top: 15em;
+        right: 2em;
+        width: 15em;
+        height: 20em;
+        background-color: white;
+        border-radius: 3px;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+        text-align: center;
+        float: right;
+        opacity: 1;
+    }
 }
 
 .main-content-banner {
-  position: fixed;
-  bottom: 10em;
-  left: 5em;
-  background: rgba(0, 0, 0, 0.6);
-  border-radius: 10px;
-  width: 50%;
-  padding: 2em;
+    position: fixed;
+    bottom: 10em;
+    left: 5em;
+    background: rgba(0, 0, 0, 0.6);
+    border-radius: 10px;
+    width: 50%;
+    padding: 2em;
 }
 
 .text-align-center {
-  text-align: center;
+    text-align: center;
 }
 
 /*flex-classes*/
 .display-flex-row {
-  display: flex;
-  flex-direction: row;
-  
-  &.align-center {
-      align-items: center;
-  }
+    display: flex;
+    flex-direction: row;
 
-  &.align-flex-end {
-    align-items: flex-end;
-  }
+    &.align-center {
+        align-items: center;
+    }
 
-  &.justify-content-space-bet {
-      justify-content: space-between;
-  }
+    &.align-flex-end {
+        align-items: flex-end;
+    }
+
+    &.justify-content-space-bet {
+        justify-content: space-between;
+    }
 }
 
 /*Margin and padding classes*/
 .margin-l-r-1em {
-  margin-left: 1em;
-  margin-right: 1em;
+    margin-left: 1em;
+    margin-right: 1em;
 }
 
 .margin-t-1em {
-  margin-top: 1em;
+    margin-top: 1em;
 }
 
 .margin-unset {
-  margin: unset !important;
+    margin: unset !important;
 }
 
 .margin-b-2em {
-  margin-bottom: 2em;
+    margin-bottom: 2em;
 }
 
 .terms-and-conditions {
-  margin: 0 0.3em;
+    margin: 0 0.3em;
 }
 
 /*width classes*/
 .width-full {
-  width: 100%
+    width: 100%
 }
 .wid150{
-  width: 150px;
+    width: 150px;
 }
 
 /**/
 .height-full {
-  height: 100%;
+    height: 100%;
 }
 
 /*border radius*/
 .vikas-btn-radius {
-  border-radius: 3px
+    border-radius: 3px
 }
 
 /* Color classes*/
 .col-white {
-  color: white !important;
+    color: white !important;
 }
 
 .color-green-shade {
-  border-color: $col-shade-green !important;
-  color: $col-shade-green !important;
+    border-color: $col-shade-green !important;
+    color: $col-shade-green !important;
 }
 
 .col-backgroud-green {
-  background-color: $col-shade-green !important;
-  border-color: $col-shade-green !important;
+    background-color: $col-shade-green !important;
+    border-color: $col-shade-green !important;
 }

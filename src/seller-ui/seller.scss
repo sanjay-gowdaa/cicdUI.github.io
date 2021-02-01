@@ -1,10 +1,19 @@
 $col-shade-green: #12805C;
 
 .seller-ui-app {
+    
+    .landing-page-header-bar {
+        position: unset;
+    
+        .header-breadcrumb {
+            display: none;
+        }
+    }
+    
     .seller-ui-dashboard {
       padding: 2em;
     }
-  }
+}
   
 .custom-view-crop-photos {
 

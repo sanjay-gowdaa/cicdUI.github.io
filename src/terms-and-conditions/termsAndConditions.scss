@@ -1,33 +1,44 @@
-.custom-t-and-c-modal {
-    .general-terms {
-        overflow-y: scroll;
-        height: 200px;
+.t-and-c-page {
+    
+    .landing-page-header-bar {
+        position: unset;
+    
+        .header-breadcrumb {
+            display: none;
+        }
+    }
+
+    .custom-t-and-c-modal {
+        .general-terms {
+            overflow-y: scroll;
+            height: 200px;
+            font-size: x-small;
+        }
+    }
+
+    .collapsable-t-and-c {
+        width: 95%;
+        margin: 1em auto !important;
+        
+        .general-terms {
+            font-size: small;
+        }
+    }
+
+    .upper-roman-list-style {
+        list-style-type: upper-roman !important;
+    }
+
+    .lower-roman-list-style {
+        list-style-type: lower-roman !important;
+    }
+
+    .lower-alpha-list-style {
+        list-style-type: lower-alpha !important;
+    }
+
+    .view-full-page {
+        float: left;
         font-size: x-small;
     }
-}
-
-.collapsable-t-and-c {
-    width: 95%;
-    margin: 1em auto !important;
-    
-    .general-terms {
-        font-size: small;
-    }
-}
-
-.upper-roman-list-style {
-    list-style-type: upper-roman !important;
-}
-
-.lower-roman-list-style {
-    list-style-type: lower-roman !important;
-}
-
-.lower-alpha-list-style {
-    list-style-type: lower-alpha !important;
-}
-
-.view-full-page {
-    float: left;
-    font-size: x-small;
 }
