@@ -11,9 +11,9 @@ const Registration = (props: any) => {
         params: { id },
     } = match;
     return id === 'seller' ? (
-        <SellerRegister history={history} />
+        <div className="register-seller"><SellerRegister history={history} /></div>
     ) : (
-        <BuyerRegister history={history} />
+        <div className="register-buyer"><BuyerRegister history={history} /></div>
     );
 };
 
