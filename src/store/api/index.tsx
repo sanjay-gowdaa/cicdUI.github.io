@@ -23,12 +23,21 @@ const CROP_CATEGORY_DETAILS_API = 'getcropcategories';
 // const APMC_MODAL_PRICE_DEPRECATED = 'getmodalprice';
 const APMC_LIVE_RATES = 'getliverates';
 
+const parseToken = (userToken: string) => {
+    const sholudDecrypt = process.env.REACT_APP_ENV === 'prod';
+    const decryptedToken = sholudDecrypt ? CryptoJS.AES.decrypt(userToken, TOKEN_GRANT) : userToken;
+    const userAccessToken = sholudDecrypt ? JSON.parse(decryptedToken.toString(CryptoJS.enc.Utf8)) : decryptedToken;
+    return userAccessToken;
+}
+
 const getAuthHeader = () =>  {
     const userToken = (window as any).userToken ? (window as any).userToken : '';
-    const decryptedToken = userToken ? CryptoJS.AES.decrypt(userToken, TOKEN_GRANT) : '';
-    const userAccessToken = decryptedToken ? JSON.parse(decryptedToken.toString(CryptoJS.enc.Utf8)) : ''
-    return ({'Authorization': `Bearer ${userAccessToken}`});
-
+    if (userToken) {
+        const userAccessToken = parseToken(userToken);
+        return ({'Authorization': `Bearer ${userAccessToken}`});
+    } else {
+        return ({'Authorization': `Bearer `});
+    }
     // For testing: Bypass auth from UI
     //return ({'Authorization': `Bearer ${''}`});
 }
@@ -145,6 +154,7 @@ export const getLiveApmcRate = (cropDetails: Array<LiveApmcRates>) => {
     const getApmcPriceApi = `${BASE_URL}/${STAGE}/${APMC_LIVE_RATES}`;
     return fetch(getApmcPriceApi, {
         method: 'POST',
+        headers: getAuthHeader(),
         body: JSON.stringify({crops: cropDetails})
     }).then((response: any) => response.json());
 }

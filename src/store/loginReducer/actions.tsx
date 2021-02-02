@@ -52,7 +52,8 @@ export const getAccessTokenAndFetchUserDetails = (userCode: string) => {
         const {status, data} = result || {status: '', data: ''}
 
         if (handleResponse(status)) {
-            (window as any).userToken = CryptoJS.AES.encrypt(JSON.stringify(data), TOKEN_GRANT).toString();;
+            const sholudEncrypt = process.env.REACT_APP_ENV === 'prod';
+            (window as any).userToken = sholudEncrypt ? CryptoJS.AES.encrypt(JSON.stringify(data), TOKEN_GRANT).toString() : data;
             dispatch(getUserDetails(data))
         } else {
             const {statusText, err: {error = ''}} = result || {statusText: '', err: {}}

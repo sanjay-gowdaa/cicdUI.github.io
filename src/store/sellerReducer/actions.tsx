@@ -1,4 +1,4 @@
-import { sortBy } from "lodash";
+import { sortBy, isEmpty } from "lodash";
 import { getTimeStamp } from "../../app-components/utils";
 import { getSubCategoryList, createCrop, getAllCrops, getCropCategoryList, getCropList, getLiveApmcRate } from "../api";
 import { LiveApmcRates } from "../genericTypes";
@@ -117,10 +117,14 @@ export const fetchLiveApmcRate = ({commodity, variety}: {commodity: string, vari
 
         const priceModel = await getLiveApmcRate([{region: district, commodity, variety}])
         const {liveRates} = priceModel || {liveRates: []};
-        const {liveRates: liveRatesData} = liveRates[0];
-        const sortedData = sortBy(liveRatesData, ['timestamp']);
-        const apmcePrice = sortedData[1].modal_price;
-        dispatch(updateApmcCropRate(apmcePrice));
+        if(!isEmpty(liveRates)) {
+            const {liveRates: liveRatesData} = liveRates[0];
+            const sortedData = sortBy(liveRatesData, ['timestamp']);
+            const apmcePrice = sortedData[1].modal_price;
+            dispatch(updateApmcCropRate(apmcePrice));
+        } else {
+            dispatch(updateApmcCropRate('No records found'));
+        }
     }
 }
 
