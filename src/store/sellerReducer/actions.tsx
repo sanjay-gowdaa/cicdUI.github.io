@@ -117,7 +117,7 @@ export const fetchLiveApmcRate = ({commodity, variety}: {commodity: string, vari
 
         const priceModel = await getLiveApmcRate([{region: district, commodity, variety}])
         const {liveRates} = priceModel || {liveRates: []};
-        if(!isEmpty(liveRates)) {
+        if(Object.keys(liveRates).length) {
             const {liveRates: liveRatesData} = liveRates[0];
             const sortedData = sortBy(liveRatesData, ['timestamp']);
             const apmcePrice = sortedData[1].modal_price;
