@@ -22,8 +22,7 @@ const reducer = (state = INITIAL_STATE, action: any) => {
     switch (action.type) {
         
         case UPDATE_MASTER_LIST:
-            const updatedMasterList = [...state.masterProduceList, ...action.payload]
-            return {...state, masterProduceList: updatedMasterList }
+            return {...state, masterProduceList: action.payload }
         
         case UPDATE_PRODUCE_LIST:
             return { ...state, produceList: action.payload }

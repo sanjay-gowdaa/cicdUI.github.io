@@ -12,7 +12,7 @@ export const UPDATE_CROPS_LIST = 'UPDATE_CROPS_LIST';
 export const UPDATE_VARIETY_LIST = 'UPDATE_VARIETY_LIST';
 export const UPDATE_TIME_STAMP = 'UPDATE_TIME_STAMP';
 
-export const updateMasterlist = (masterlist: Array<any>) => {
+export const updateStoreMasterList = (masterlist: Array<any>) => {
     return {
         type: UPDATE_MASTER_LIST,
         payload: masterlist,
@@ -62,7 +62,7 @@ export const getMasterProduceList = () => {
         // testing
         // const masterProduceList = await getMasterList('7892329983');
         const masterList = masterProduceList || [];
-        dispatch(updateMasterlist(masterList));
+        dispatch(updateStoreMasterList(masterList));
     }
 }
 
