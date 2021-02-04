@@ -6,8 +6,8 @@ const TOKEN_GRANT = process.env.REACT_APP_TOKEN_GRANT as string;
 
 export const REDIRECT_URL =  `https://${window.location.host}/login-user`
 export const LOGOUT_REDIRECT = `https://${window.location.host}/`;
-export const LOGIN_URL = `${process.env.REACT_APP_LOGIN_URL_BASE_URL}/login?client_id=7sckhhjs2aq1noqd1fvjdeo69j&response_type=code&redirect_uri=${REDIRECT_URL}`;
-export const LOGOUT_URL = `${process.env.REACT_APP_LOGOUT_BASE_URL}/logout?client_id=7sckhhjs2aq1noqd1fvjdeo69j&logout_uri=${LOGOUT_REDIRECT}`;
+export const LOGIN_URL = `${process.env.REACT_APP_LOGIN_URL_BASE_URL}/login?client_id=${process.env.REACT_APP_COGNITO_CLIENT_ID}&response_type=code&redirect_uri=${REDIRECT_URL}`;
+export const LOGOUT_URL = `${process.env.REACT_APP_LOGOUT_BASE_URL}/logout?client_id=${process.env.REACT_APP_COGNITO_CLIENT_ID}&logout_uri=${LOGOUT_REDIRECT}`;
 
 const OTP_SEND_API = 'otp/send';
 const OTP_RESEND_API = 'otp/retry'
