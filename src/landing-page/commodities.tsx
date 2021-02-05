@@ -4,9 +4,10 @@ import { Image, Typography } from 'antd';
 import StapleCrop from '../static/assets/stapleCrop.png';
 import Pulses from '../static/assets/pulses.png';
 import CashCrop from '../static/assets/cashCrop.png';
-import Spices from '../static/assets/spices.png';
+// import Spices from '../static/assets/spices.png';
 import OilSeed from '../static/assets/oilSeed.png';
 import Wheat from '../static/assets/wheat-1.svg';
+import Cardomom from '../static/assets/cardomom.jpg';
 
 const { Paragraph, Text, Title } = Typography;
 
@@ -55,7 +56,9 @@ const Commodities = () => {
                     className="commodities-image"
                     width={150}
                     height={150}
-                    src={Spices}
+                    // src={Spices}
+                    // <span>Photo by <a href="https://unsplash.com/@mousumde?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Mousum De</a> on <a href="https://unsplash.com/s/photos/cardamom?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a></span>
+                    src={Cardomom}
                     preview={false}
                 /><br/>
                 <Text className="commodities-name">Spices</Text>
