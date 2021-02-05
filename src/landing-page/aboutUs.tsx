@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, Image, Space, Typography } from 'antd';
+import { Card, Col, Image, Row, Space, Typography } from 'antd';
 
 import Outline from '../static/assets/Outline.svg';
 import Vision from '../static/assets/vision.svg';
@@ -22,31 +22,37 @@ const AboutUs = () => {
                 with farmers and everyone in the value chain to understand the needs.
                 We are committed to ensure a meaningful facilitation to the buyers and sellers. 
             </Paragraph>
-            <Card className="vision-card float-left">
-                <Image className="card-image" src={Vision} preview={false} />
-                <Title className="col-green card-title" level={3}>Our Vision</Title>
-                <Paragraph className="card-paragraph">
-                    Ensure that we create a brand which is synonymous with trust and respect 
-                    amongst communities in the agriculture space.
-                </Paragraph>
-            </Card>
-            <Card className="philosophy-card float-right">
-                <Image className="card-image" src={Philosophy} preview={false} />
-                <Title className="col-green card-title" level={3}>Our Philosophy</Title>
-                <Paragraph  className="card-paragraph">
-                    Continuously improve our services to add value and Brand to our business, 
-                    our partners and our communities. 
-                </Paragraph>
-            </Card>
-            <div className="float-left">
+            <Row>
+                <Col span={12}>
+                    <Card className="vision-card">
+                        <Image src={Vision} preview={false} />
+                        <Title className="col-green card-title" level={3}>Our Vision</Title>
+                        <Paragraph className="card-paragraph">
+                            Ensure that we create a brand which is synonymous with trust and respect 
+                            amongst communities in the agriculture space.
+                        </Paragraph>
+                    </Card>
+                </Col>
+                <Col span={12}>
+                    <Card className="vision-card">
+                        <Image src={Philosophy} preview={false} />
+                        <Title className="col-green card-title" level={3}>Our Philosophy</Title>
+                        <Paragraph  className="card-paragraph">
+                            Continuously improve our services to add value and Brand to our business, 
+                            our partners and our communities. 
+                        </Paragraph>
+                    </Card>
+                </Col>
+            </Row>
+            <div>
                 <Title className="col-green" level={3}>Partnering Government's Vision</Title>
-                <Paragraph style={{width: "52em"}}>
+                <Paragraph className="vision-paragraph">
                     We take pride in partnering Government's vision of doubling farmer's income by 
                     reducing middlemen. This is our contribution to nation building and making it truly
                     'Atmanirbhar Bharat'.
                 </Paragraph>
             </div>
-            <div className="about-us-our-team float-left">
+            <div className="about-us-our-team">
                 <Title className="col-green" level={3}>Our Team</Title>
                 <Space direction="horizontal">
                     <div className="our-team">
@@ -54,7 +60,7 @@ const AboutUs = () => {
                         <Title className="person-name" level={4}>G S Nagappa</Title>
                         <Text>Director</Text>
                     </div>
-                    <div className="our-team">
+                    <div className="our-team suma">
                         <Image src={Suma} preview={false} />
                         <Title className="person-name" level={4}>Suma Sadananda</Title>
                         <Text>Director</Text>
@@ -62,7 +68,7 @@ const AboutUs = () => {
                     <div className="our-team">
                         <Image src={Sadananda} preview={false} />
                         <Title className="person-name" level={4}>Sadananda Murthy</Title>
-                        <Text>VP, Leads Engg. & Ops.</Text>
+                        <Text>Leads Engg. & Ops.</Text>
                     </div>
                 </Space>
             </div>
