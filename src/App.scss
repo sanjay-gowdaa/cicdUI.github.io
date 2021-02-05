@@ -8,27 +8,6 @@ html {
 .main-content {
     width: 100%;
     height: calc(100% - 70px);
-
-    #banner-div {
-        position: fixed;
-        top: 5em;
-        float: left;
-        opacity: 1;
-    }
-    
-    .join-us {
-        position: fixed;
-        top: 15em;
-        right: 2em;
-        width: 15em;
-        height: 20em;
-        background-color: white;
-        border-radius: 3px;
-        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-        text-align: center;
-        float: right;
-        opacity: 1;
-    }
 }
 
 .main-content-banner {
