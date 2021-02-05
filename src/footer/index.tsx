@@ -12,7 +12,7 @@ const Footer = () => {
                     <MailOutlined /> support@vikasbandhu.com
                 </p>
                 <p>
-                    <PhoneOutlined /> +91-9000090000
+                    <PhoneOutlined /> +91-99845711600
                 </p>
             </div>
             <div>
