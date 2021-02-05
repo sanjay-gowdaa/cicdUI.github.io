@@ -13,6 +13,10 @@ import './header.scss';
 const UserBasicActions = ({ history, popUpTrigger }: { history: any, popUpTrigger: any }) => {
     const {signUpPopupVisible, setSignUpPopupVisible} = popUpTrigger;
 
+    const goToHome = (url: any) => {
+        window.location = url;
+    };
+
     return (
         <div className="display-flex-row align-center">
             <DefaultBtn
@@ -31,9 +35,11 @@ const UserBasicActions = ({ history, popUpTrigger }: { history: any, popUpTrigge
                 onVisibleChange={() => setSignUpPopupVisible(!signUpPopupVisible)}
             >
                 <PrimaryBtn
+                    id="header-register-button"
                     className="margin-l-r-1em vikas-btn-radius wid150"
                     type="primary"
                     size="large"
+                    onClick={() => goToHome("#home")}
                     content="Register"
                 />
             </Popover>
@@ -48,7 +54,7 @@ const Header = (headerProps: any) => {
     const { history, showActions, isLoggedIn, popUpTrigger } = headerProps;
     return (
         <div className="landing-page-header-bar">
-            <Image width={100} height={60} src={Logo} preview={false} />
+            <Image width={"6vw"} height={"11vh"} src={Logo} preview={false} />
             <Breadcrumb className="header-breadcrumb" separator=" ">
                 <Breadcrumb.Item href="#home">Home</Breadcrumb.Item>
                 <Breadcrumb.Item href="#aim">Aim</Breadcrumb.Item>
