@@ -11,6 +11,8 @@ import TransactionSection from './transactions';
 import ProduceSection from './produce';
 import AddProduceModal from './masterList';
 
+import Banner from '../static/assets/buyerBanner.jpg';
+
 const {Title} = Typography;
 
 const BuyerUI = (props: any) => {
@@ -20,6 +22,7 @@ const BuyerUI = (props: any) => {
             <Header history={history} showActions isLoggedIn />
             <div className="buyer-ui-dashboard">
                 <Title level={2}>My Dashboard</Title>
+                <img className="buyer-banner" src={Banner} alt="buyer-banner" />
                 <Divider />
                 <AddProduceModal />
                 <Divider />
