@@ -14,37 +14,35 @@ const Aim = () => {
     return (
         <div id="aim">
             <Title className="col-green aim-title">VikasBandhu helps you in</Title>
-            <Image className="handshake-image" src={Handshake} preview={false} />
+            <img className="handshake-image" src={Handshake} alt="handshake-image" />
             <Row className="aim-card-row">
                 <Card className="aim-card">
                     <div className="hex1"></div>
-                    <div className="hex2"><Image src={Connect} preview={false} /></div>
+                    <div className="hex2"><Image className="icon-inside-hex" src={Connect} preview={false} /></div>
                     <div className="hex3"></div>
                     <Text className="col-white">Connecting buyers and sellers</Text>
                 </Card>
                 <Card className="aim-card">
                     <div className="hex1"></div>
-                    <div className="hex2"><Image src={Direct} preview={false} /></div>
+                    <div className="hex2"><Image className="icon-inside-hex" src={Direct} preview={false} /></div>
                     <div className="hex3"></div> 
                     <Text className="col-white">Direct selling of agricultural produce</Text>
                 </Card>
                 <Card className="aim-card">
                     <div className="hex1"></div>
-                    <div className="hex2"><Image src={BestPrize} preview={false} /></div>
+                    <div className="hex2"><Image className="icon-inside-hex" src={BestPrize} preview={false} /></div>
                     <div className="hex3"></div> 
                     <Text className="col-white">Ensuring best price for both buyer and seller</Text>
                 </Card>
-            </Row>
-            <Row className="aim-card-row">
                 <Card className="aim-card">
                     <div className="hex1"></div>
-                    <div className="hex2"><Image src={LiveInfo} preview={false} /></div>
+                    <div className="hex2"><Image className="icon-inside-hex" src={LiveInfo} preview={false} /></div>
                     <div className="hex3"></div>
                     <Text className="col-white">Providing live information on pricing for study</Text>
                 </Card>
                 <Card className="aim-card">
                     <div className="hex1"></div>
-                    <div className="hex2"><Image src={Mission} preview={false} /></div>
+                    <div className="hex2"><Image className="icon-inside-hex" src={Mission} preview={false} /></div>
                     <div className="hex3"></div>
                     <Text className="col-white">Partnering Government's vision</Text>
                 </Card>
