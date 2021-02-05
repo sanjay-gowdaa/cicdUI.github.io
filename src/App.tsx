@@ -25,6 +25,10 @@ const App = (props: any) => {
         dispatch(getConfigurations());
     }, []);
 
+    const callReg = () => {
+        document.getElementById("header-register-button")?.click();
+    }
+
     return (
         <div className="app-container">
             <Header history={history} showActions={true} popUpTrigger={{setSignUpPopupVisible, signUpPopupVisible}} />
@@ -40,7 +44,7 @@ const App = (props: any) => {
                             Be part of VikasBandhu family!
                         </Title>
                         <Image src={Join} preview={false} />
-                        <PrimaryBtn className="vikas-btn-radius" content="Register" />
+                        <PrimaryBtn onClick={() => callReg()} className="vikas-btn-radius" content="Register" />
                         </Space>
                     </Card>
                 </div>
