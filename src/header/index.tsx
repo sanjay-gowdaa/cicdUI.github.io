@@ -20,7 +20,7 @@ const UserBasicActions = ({ history, popUpTrigger }: { history: any, popUpTrigge
     return (
         <div className="display-flex-row align-center">
             <DefaultBtn
-                className="vikas-btn-radius wid150" 
+                className="vikas-btn-radius wid150 custom-login-button" 
                 content="Login"
                 onClick={() => window.location.href = LOGIN_URL} 
                 size="large"
@@ -36,7 +36,7 @@ const UserBasicActions = ({ history, popUpTrigger }: { history: any, popUpTrigge
             >
                 <PrimaryBtn
                     id="header-register-button"
-                    className="margin-l-r-1em vikas-btn-radius wid150"
+                    className="margin-l-r-1em vikas-btn-radius wid150 custom-register-button"
                     type="primary"
                     size="large"
                     onClick={() => goToHome("#home")}
