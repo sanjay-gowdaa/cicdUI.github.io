@@ -1,208 +1,237 @@
 $col-shade-green: #12805C;
 
-.float-left {
-    float: left;
-}
-
-.float-right {
-    float: right;
-}
-
-.margin-none {
-    margin: 0.2em;
-}
-
-.col-white {
-    color: white !important;
-}
-
 .col-green {
     color: $col-shade-green !important;
 }
 
-.default-button {
-    border-color: $col-shade-green !important;
-    color: $col-shade-green !important;
-    background-color: white !important;
-}
-
-.primary-button {
-    background-color: $col-shade-green !important;
-    border-color: $col-shade-green !important;
-    color: white !important;
-}
-
 #home {
-    height: 100em;
-    bottom: 10em;
-    width: 100%;
-    position: relative;
-    background: transparent url('../static/assets/Vikasbandhu_1810801264_1920x1080pxl.jpg') 0% 0% no-repeat padding-box;
-    background-position: center;
-    background-size: auto;
+    background: url('../static/assets/Vikasbandhu_1810801264_1920x1080pxl.jpg');
+    background-position: center center;
+    background-size: 100% auto;
+    background-repeat: no-repeat;
+    background-origin: padding-box;
+    scroll-margin: 13vh;
+    z-index: 1;
     opacity: 1;
 
-    .home-content {
+    .home-content-wrapper {
         position: relative;
-        left: 10vw;
-        top: 20em;
-        width: 32vw;
-        height: 30em;
-        padding-left: 4vw;
-        -webkit-backdrop-filter: blur(1.25em);
-        backdrop-filter: blur(1.25em);
-        border-radius: 0.5em;
-        background-color: rgba($color: #000000, $alpha: 0.2);
-
-        .logo {
-            border-radius: 0.5em;
-            margin: 2em 2em 2em 0;
-            height: 100px;
-            width: 150px;
-        }
+        top: 13vh;
+        height: 100vh;
         
-        .home-paragraph {
-            margin-top: 4vh;
-
-            .margin-none {
-                margin: 0;
+        .home-content {
+            position: relative;
+            left: 5vw;
+            top: 5vh;
+            width: fit-content;
+            height: fit-content;
+            padding: 2vw;
+            -webkit-backdrop-filter: blur(1.25em);
+            backdrop-filter: blur(1.25em);
+            border-radius: 0.5em;
+            background-color: rgba($color: #000000, $alpha: 0.2);
+    
+            .logo {
+                border-radius: 0.5em;
+            }
+            
+            .home-paragraph {
+                margin-top: 4vh;
+    
+                .margin-none {
+                    margin: 0;
+                }
+            }
+    
+            .explore-vb-btn {
+                background-color: #f5a31a !important;
+                border-color: #f5a31a !important;
+                border-radius: 3px;
+                margin: 2vh 0;
             }
         }
+    }
+}
 
-        .explore-vb-btn {
-            background-color: #f5a31a !important;
-            border-color: #f5a31a !important;
-            height: 2.5em;
-            width: 18vw;
-            margin-left: 2em;
-            border-radius: 3px;
-            margin-top: 4vh;
-            font-size: large;
+.fixed-landing-page-banner {
+    float: left;
+    position: sticky;
+    top: 13vh;
+    opacity: 1;
+    width: 17.2vw;
+}
+
+.fixed-card-join {
+    position: sticky;
+    float: right;
+    top: 33vh;
+    opacity: 1;
+
+    .join-us {
+        width: 18vw;
+        height: fit-content;
+        background-color: white;
+        border-radius: 3px;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+        text-align: center;
+        opacity: 1;
+    
+        .fixed-title {
+            font-size: 2vw;
         }
     }
 }
 
 #aim {
-    position: relative;
-    margin-left: 37vw;
-    bottom: 16em;
-    scroll-margin: 5em;
+    scroll-margin: 13vh;
 
     .aim-title {
-        position: relative;
-        right: 18vw;
+        padding-top: 6vh;
+        font-size: 3vw;
+        margin-left: 20vw;
     }
 
     .handshake-image {
         float: right;
         position: relative;
-        bottom: 8em;
-        right: -23vw;
+        bottom: 10vh;
+        left: 2vw;
     }
     
     .aim-card-row {
-        width: fit-content !important;
-        margin: 0 auto !important;
-        position: relative;
-        bottom: 10em;
-        right: 20em;
+        padding-top: 6vh;
+        padding-left: 1.75vw;
 
         .aim-card {
             background-color: $col-shade-green;
-            width: 15em;
+            width: 15vw;
             border-radius: 3px;
-            height: 15em;
+            height: 15vw;
             display: inline-flex;
-            margin: 2em;
+            margin: 2vh auto;
             text-align: center;
+            font-size: 1.2vw;
+            line-height: 1;
             
             .hex1 {
                 width: 0;
                 margin: 0 auto;
-                margin-top: 1em;
-                border-bottom: 2em solid #32886C;
-                border-left: 3em solid transparent;
-                border-right: 3em solid transparent;
+                // margin-top: 1em;
+                border-bottom: 2vw solid #32886C;
+                border-left: 3vw solid transparent;
+                border-right: 3vw solid transparent;
             }
             
             .hex2 {
                 margin: 0 auto;
-                width: 6em;
-                height: 3em;
+                width: 6vw;
+                height: 3vw;
                 background-color: #32886C;
+
+                .icon-inside-hex {
+                    width: 3.5vw;
+                }
             }
             
             .hex3 {
                 margin: 0 auto;
-                margin-bottom: 1em;
+                // margin-bottom: 1em;
                 width: 0;
-                border-top: 2em solid #32886C;
-                border-left: 3em solid transparent;
-                border-right: 3em solid transparent;
+                border-top: 2vw solid #32886C;
+                border-left: 3vw solid transparent;
+                border-right: 3vw solid transparent;
             }
         }
     }
 }
 
 #ecosystem {
-    position: relative;
-    margin-left: 20vw;
-    bottom: 16em;
-    scroll-margin: 5em;
+    scroll-margin: 13vh;
+
+    .tractor-image {
+        padding-top: 6vh;
+        width: 62vw;
+        margin: 0 auto;
+    }
     
     .ecosystem-content {
         color: #12805C !important;
         background-color: #e0efea;
-        width: 60vw;
+        width: 62vw;
         border-radius: 0.3em;
-        height: 40em;
+        height: fit-content;
+        margin: 0 auto;
+        margin-bottom: 2vh;
         padding-left: 2vw;
 
         .ecosystem-title {
-            padding-top: 1em;
+            padding-top: 2vh;
+            padding-right: 2vw;
             margin-top: 0;
+            font-size: 2.35vw;
         }
 
         .bulletin-image {
             float: left;
-            padding-top: 1em;
+            padding-top: 3vh;
         }
 
-        .bulletin-content {
-            position: relative;
-            top: 1em;
-            float: right;
-            right: 15vw;
+        .bulletin-image {
+            padding: 0 1vw;
+            background-color: #e2e8d5;
+            border-radius: 3vw;
+            margin-bottom: 3vh;
 
-            .bulletin-points {
-                font-size: large;
-                line-height: 4.5em;
+            img {
+                width: 3vw;
+                height: 3vw;
             }
+
+            .first-bulletin-image {
+                margin-top: 4vh;
+            }
+
+            .last-bulletin-image {
+                margin-bottom: 4vh;
+            }
+        }
+
+        .bulletin-text {
+            padding-top: 2vh;
+            padding-left: 1vw;
+            font-size: 1.6vw;
         }
 
         .nature-image {
             float: right;
             position: relative;
-            left: 37vw;
+            bottom: 30vh;
+            right: 2vw;
         }
     }
 }
 
 #commodities {
-    position: relative;
-    top: 5em;
+    // position: relative;
+    // top: 5em;
     margin-left: 20vw;
-    scroll-margin: 5em;
+    scroll-margin: 13vh;
     
+    .commodities-title {
+        padding-top: 6vh;
+        font-size: 3vw;
+    }
+
     .commodities-paragraph {
-        width: 56em;
-        line-height: 1.5em;
+        width: 60vw;
+        font-size: large;
+        line-height: 4vh;
     }
 
     .commodities-list {
         float: left;
         width: 12vw;
-        margin-top: 4em;
+        margin-top: 8vh;
     }
 
     .commodities-name {
@@ -215,159 +244,143 @@ $col-shade-green: #12805C;
     }
 
     .wheat-image {
-        position: relative;
-        top: 3em;
-        left: 2vh;
+        margin: 4vh auto;
         width: 60vw;
     }
 }
 
 #users {
-    position: relative;
-    top: 5em;
-    margin-left: 16vw;
-    margin-top: 5em;
-    scroll-margin: 5em;
+    scroll-margin: 13vh;
     
     .user-title {
-        position: relative;
-        left: 23vw;
+        padding-top: 6vh;
+        font-size: 3vw;
+        margin-left: 20vw;
     }
 
-    .user-card {
-        background-color: #e0efea;
-        width: 30vw;
-        height: 25em;
-        float: left;
-        margin-left: 2vw;
-        text-align: center;
-        line-height: 1.5em;
+    .user-column {
+        margin-left: 4vw;
+        .user-card {
+            background-color: #e0efea;
+            width: fit-content;
+            height: fit-content;
+            text-align: center;
+        }
     }
 
     .transport-image {
-        margin-top: 2em;
-        margin-left: 2vw;
+        margin: 5vh 19vw;
         width: 60vw;
     }
 }
 
 #aboutUs {
-    position: relative;
-    top: 5em;
+    margin: 5vh 0;
     margin-left: 18vw;
-    width: 63.5vw;
-    height: 84em;
-    scroll-margin: 5em;
-    padding-left: 2vw;
-    z-index: -1;
+    width: 62vw;
+    height: fit-content;
+    scroll-margin: 13vh;
+    padding: 2vh 2vw;
     background-color: #fbfbfb;
     
     .about-us-title {
-        padding-top: 2em;
+        padding-top: 4vh;
     }
 
     .outline-image {
         position: relative;
-        bottom: 6em;
+        bottom: 10vh;
         left: 45vw;
     }
 
     .outline-paragraph {
         position: relative;
-        bottom: 10em;
-        width: 52vw;
+        bottom: 25vh;
+        font-size: large;
+        width: 50vw;
     }
 
-    .vision-card,
-    .philosophy-card {
-        width: 27.5vw;
-        height: 18em;
-        bottom: 5em;
+    .vision-card{
+        width: fit-content;
+        height: fit-content;
+        bottom: 15vh;
         position: relative;
         background-color: #e0efea;
         text-align: center;
 
-        .card-image {
-            margin-top: 3em;
-        }
-
         .card-paragraph {
             width: 23vw;
+            font-size: large;   
             margin: 0 auto;
         }
     }
 
-    .paragraph-width {
-        width: 23vw;
-        margin: 0 auto;
-    }
-
-    .philosophy-card {
-        right: 4vw;
+    .vision-paragraph {
+        width: fit-content;
+        font-size: large;
     }
 
     .about-us-our-team {
         text-align: center;
-        width: 54em;
-        padding: 2em 0;
-        margin-top: 4em;
-        height: 25em;
+        width: fit-content;
+        padding: 4vh 0;
+        margin: 4vh 0;
+        height: fit-content;
         border: 0.2em solid #e0efea;
         border-radius: 3px;
 
         .our-team {
-            float: left;
-            position:relative;
-            margin-left: 4em;        
+            margin-left: 4vw;        
 
             .person-name {
                 margin: 0;
             }
         }
 
+        .suma {
+            padding-top: 8vh;
+        }
+
     }
 }
 
 #legal {
-    width: 60vw;
-    position: relative;
-    top: 5em;
+    width: 62vw;
+    margin: 10vh 0;
     margin-left: 18vw;
-    height: 53em;
-    scroll-margin: 5em;
-    margin-top: 10em;
+    height: fit-content;
+    scroll-margin: 13vh;
     background-color: $col-shade-green;
     color: white;
     padding-left: 3vw;
 
     .legal-title {
-        padding-top: 2em;
+        padding-top: 4vh;
         margin-top: 0;
     }
 
     .accept-image {
         position: relative;
-        bottom: 6em;
+        bottom: 10vh;
         left: 48vw;
     }
 
     .legal-tab {
         position: relative;
-        bottom: 10em;
+        bottom: 18vh;
         
         .ant-tabs-tab,
         .ant-tabs-tab-active {
             width: fit-content;
             display: inline-flex;
-            padding: 0.5em 2em;
+            padding: 1vh 2vw;
             border: 0.2em solid #f5a31a;
             border-radius: 3px;
-            margin-right: 0.2em;
         }
 
         .ant-tabs-nav {
             position: relative;
-            top: 1em;
+            top: 2.6vh;
         }
 
         .ant-tabs-tab {
@@ -385,16 +398,17 @@ $col-shade-green: #12805C;
 
         .ant-tabs-content-holder {
             width: 55vw;
+            height: fit-content;
             position: relative;
             border-radius: 5px;
             background-color: #339273;
 
             ul {
                 list-style-position: outside;
-                padding: 1em;
+                padding-left: 2vw;
                 
                 li {
-                    padding: 2em;
+                    padding: 4vh;
                     padding-bottom: 0;
                     color: white;
                 }
@@ -403,39 +417,35 @@ $col-shade-green: #12805C;
             .read-more-button {
                 background-color: white;
                 color: $col-shade-green;
-                position: relative;
-                left: 2em;
-                margin-bottom: 2em;
+                margin-left: 6vw;
+                margin-bottom: 4vh;
             }
         }
     }
 }
 
 #contactUs {
-    position: relative;
-    top: 5em;
-    margin-left: 20vw;
-    margin-top: 8em;
-    height: 45em;
-    scroll-margin: 5em;
+    margin-top: 10vh;
+    margin-left: 18vw;
+    scroll-margin: 13vh;
     
     .contact-us-info {
         font-size: large;
-        float: left;
-
+    
         .anticon {
-            font-size: 32px;
+            font-size: x-large;
             color: #f5a31a;
-            padding-right: 1em;
+            padding: 0 1vw;
         }
     }
 
     .write-feedback {
         background-color: #fbfbfb;
-        padding: 1em;
+        padding: 1vw;
+        margin-bottom: 4vh;
 
         .feedback-form {
-            padding: 2em;
+            padding: 2vw;
         }
     }
 }
