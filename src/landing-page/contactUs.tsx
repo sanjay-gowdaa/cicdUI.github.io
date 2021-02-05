@@ -12,7 +12,7 @@ const ContactUs = () => {
             <Row>
                 <Col span={9} className="contact-us-info">
                     <Space direction="vertical">
-                        <Text><PhoneOutlined className="contact-us-icon" />Phone Number</Text>
+                        <Text><PhoneOutlined className="contact-us-icon" />+91-9845711600</Text>
                         <Text><MailOutlined className="contact-us-icon" />contactus@samparkbindhu.in</Text>
                         <address><HomeOutlined className="contact-us-icon" />617, "Shivam", Royal Park Residency, 
                         <br/>J P Nagar 9th Phase, Bengaluru-560062</address>
@@ -24,18 +24,20 @@ const ContactUs = () => {
                         <Title className="write-feedback-title" level={4}>We would like to hear from you!</Title>
                         <Text>Full Name</Text>
                         <Input
+                            className="custom-input"
                             placeholder="Enter your Full Name"
                             required={true}
                         /><br/>
                         <Text>Email</Text>
                         <Input
+                            className="custom-input"
                             placeholder="Enter your email"
                             required={true}
                         />
                         <Text>Phone</Text>
-                        <Input placeholder="Enter phone number" /><br/>
+                        <Input className="custom-input" placeholder="Enter phone number" /><br/>
                         <Text>Message</Text>
-                        <TextArea /><br/><br/>
+                        <TextArea className="custom-input" /><br/><br/>
                         <Button className="vikas-btn-radius primary-button" type="primary">Submit</Button>
                     </div>
                     </Space>
