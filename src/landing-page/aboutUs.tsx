@@ -44,7 +44,7 @@ const AboutUs = () => {
                     </Card>
                 </Col>
             </Row>
-            <div>
+            <div className="vision-div">
                 <Title className="col-green" level={3}>Partnering Government's Vision</Title>
                 <Paragraph className="vision-paragraph">
                     We take pride in partnering Government's vision of doubling farmer's income by 
@@ -60,10 +60,10 @@ const AboutUs = () => {
                         <Title className="person-name" level={4}>G S Nagappa</Title>
                         <Text>Director</Text>
                     </div>
-                    <div className="our-team suma">
+                    <div className="our-team">
                         <Image src={Suma} preview={false} />
-                        <Title className="person-name" level={4}>Suma Sadananda</Title>
-                        <Text>Director</Text>
+                        <Title className="person-name suma" level={4}>Suma Sadananda</Title>
+                        <Text className="suma">Director</Text>
                     </div>
                     <div className="our-team">
                         <Image src={Sadananda} preview={false} />
