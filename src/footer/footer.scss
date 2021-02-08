@@ -2,10 +2,12 @@
     width: 100%;
     background: #0A533B;
     height: 10%;
+    z-index: 1;
+    position: relative;
     color: #FFFFFF;
     padding: 0 1em;
 
     .powered-by-text {
-        padding: 1em 1em 0 1em;
+        padding: 0 1em;
     }
 }

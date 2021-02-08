@@ -13,30 +13,32 @@ const Home = () => {
 
     return (
         <div id="home">
+            <div className="home-content-wrapper">
             <div className="home-content">
                 <Image className="logo" height={100} width={100} src={Logo} preview={false} />
                 <div className="home-paragraph">
-                    <Title className="col-white" level={3}>
+                    <Title className="col-white" level={4}>
                         VikasBandhu -
                     </Title>
-                    <Title className="col-white margin-none" level={3}>
+                    <Title className="col-white margin-none" level={5}>
                         Friendly E-Market Place for
                     </Title>
-                    <Title className="col-white margin-none" level={3}>
+                    <Title className="col-white margin-none" level={5}>
                         Buyers and Sellers to connect,
                     </Title>
-                    <Title className="col-white margin-none" level={3}>
+                    <Title className="col-white margin-none" level={5}>
                         engage and transact seamlessly
                     </Title>
-                    <Title className="col-white margin-none" level={3}>
+                    <Title className="col-white margin-none" level={5}>
                         for win-win relationships
                     </Title>
                 </div>
                 <Button className="explore-vb-btn" onClick={() => goToAim("#aim")}>
-                    <Title className="col-white margin-none" level={4}>
+                    <Title className="col-white margin-none" level={5}>
                         Explore Vikasbandhu
                     </Title>
                 </Button>
+            </div>
             </div>
         </div>
     );
