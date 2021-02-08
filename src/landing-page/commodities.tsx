@@ -56,8 +56,6 @@ const Commodities = () => {
                     className="commodities-image"
                     width={150}
                     height={150}
-                    // src={Spices}
-                    // <span>Photo by <a href="https://unsplash.com/@mousumde?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Mousum De</a> on <a href="https://unsplash.com/s/photos/cardamom?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a></span>
                     src={Cardomom}
                     preview={false}
                 /><br/>
