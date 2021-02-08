@@ -25,9 +25,10 @@ const App = (props: any) => {
         dispatch(getConfigurations());
     }, []);
 
-    const callReg = () => {
-        document.getElementById("header-register-button")?.click();
-    }
+    const showRegisterPopup = (url: any) => {
+        window.location = url;
+        setSignUpPopupVisible(!signUpPopupVisible);
+    };
 
     return (
         <div className="app-container">
@@ -44,7 +45,11 @@ const App = (props: any) => {
                             Be part of VikasBandhu family!
                         </Title>
                         <Image src={Join} preview={false} />
-                        <PrimaryBtn onClick={() => callReg()} className="vikas-btn-radius" content="Register" />
+                        <PrimaryBtn
+                            onClick={() => showRegisterPopup("#home")}
+                            className="vikas-btn-radius join-us-reg"
+                            content="Register"
+                        />
                         </Space>
                     </Card>
                 </div>
