@@ -65,7 +65,6 @@ const Seller = (props: any) => {
     const [registerFormValues, setRegisterFormValues] = useState({});
     const [showConfirmation, toggleShowConfirmation] = useState(false);
     const [showSubmitMsgPopup, toggleShowSubmitMsgPopup] = useState(false);
-    const [accountNumber, setAccountNumber] = useState();
     const [form] = Form.useForm();
     const dispatch = useDispatch();
     const registrationState = useSelector((state: RootState) => state.registration);
@@ -73,6 +72,7 @@ const Seller = (props: any) => {
     const {type: subType} = partialUserData || {};
 
     useEffect(() => {
+        {console.log(form.getFieldsValue().account_number)}
         if(registerResponse.verified) {
             dispatch(setRegisterMsg(''));
             dispatch(setResgiterVerifiedFlag(false));
@@ -231,7 +231,7 @@ const Seller = (props: any) => {
                                         name="account_number"
                                         rules={[{
                                             required: true,
-                                            validator: (rule,value) => accountNumberValidator(rule, value, setAccountNumber)
+                                            validator: (rule,value) => accountNumberValidator(rule, value)
                                         }]}
                                     >
                                         <Input className="custom-input" />
@@ -243,7 +243,7 @@ const Seller = (props: any) => {
                                         name="confirm_account_number"
                                         rules={[{
                                             required: true,
-                                            validator: (rule, value) => confirmAccountValidator(rule,value, accountNumber)
+                                            validator: (rule, value) => confirmAccountValidator(rule, value, form.getFieldsValue().account_number)
                                         }]}
                                     >
                                         <Input className="custom-input" />

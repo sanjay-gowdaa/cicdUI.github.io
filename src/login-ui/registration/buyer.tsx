@@ -78,7 +78,6 @@ const Buyer = (props: any) => {
     const [showConfirmation, toggleShowConfirmation] = useState(false);
     const [showSubmitMsgPopup, toggleShowSubmitMsgPopup] = useState(false);
     const [workHoursDisbaled, toggleWorkHoursDisbaled] = useState({weekday: false, saturday: false, sunday: false} as any);
-    const [accountNumber, setAccountNumber] = useState();
     const [form] = Form.useForm();
     const dispatch = useDispatch();
     const registrationState = useSelector((state: RootState) => state.registration);
@@ -310,10 +309,7 @@ const Buyer = (props: any) => {
                                 <Form.Item
                                     label="Pin Code"
                                     name="pinCode"
-                                    rules={[{
-                                        required: true,
-                                        validator: (rule, value) => customPincodeValidator(rule, value, setAddressForPin)
-                                    }]}
+                                    rules={[{validator: (rule, value) => customPincodeValidator(rule, value, setAddressForPin)}]}
                                 >
                                     <Input className="custom-input" />
                                 </Form.Item>
@@ -471,7 +467,7 @@ const Buyer = (props: any) => {
                                         name="account_number"
                                         rules={[{
                                             required: true,
-                                            validator: (rule,value) => accountNumberValidator(rule, value, setAccountNumber)
+                                            validator: (rule,value) => accountNumberValidator(rule, value)
                                         }]}
                                     >
                                         <Input className="custom-input" />
@@ -483,7 +479,7 @@ const Buyer = (props: any) => {
                                         name="confirm_account_number"
                                         rules={[{
                                             required: true,
-                                            validator: (rule, value) => confirmAccountValidator(rule,value, accountNumber)
+                                            validator: (rule, value) => confirmAccountValidator(rule, value, form.getFieldsValue().account_number)
                                         }]}
                                     >
                                         <Input className="custom-input" />
