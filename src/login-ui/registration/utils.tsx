@@ -174,13 +174,12 @@ export const customNameValidator = (rule: RuleObject, value: any, name: string) 
     }
 };
 
-export const accountNumberValidator = (rule: RuleObject, value: any, setNumber: Function) => {
+export const accountNumberValidator = (rule: RuleObject, value: any) => {
     const regExp = /^[0-9]*$/;
 
     if(!value) {
         return Promise.reject(ACCOUNT_NUMBER_REQUIRED_MSG);
     } else if(regExp.test(value)) {
-        setNumber(value);
         if(value.length < 9) {
             return Promise.reject(ACCOUNT_NUMBER_MIN_DIGITS_MSG);
         } else if(value.length > 18) {
@@ -196,7 +195,7 @@ export const accountNumberValidator = (rule: RuleObject, value: any, setNumber: 
 export const confirmAccountValidator = (rule: RuleObject, value: any, accountNumber: any) => {
     if(!value) {
         return Promise.reject(CONFIRM_ACCOUNT_REQUIRED_MSG);
-    } else if(!value === accountNumber) {
+    } else if(value !== accountNumber) {
         return Promise.reject(CONFIRM_ACCOUNT_MISMATCH);
     } else {
         return Promise.resolve();
