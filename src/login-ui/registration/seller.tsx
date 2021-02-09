@@ -24,7 +24,17 @@ import {
     updateForm
 } from '../../store/registrationReducer/actions';
 import { routesMap } from '../../constants';
-import { customIfscValidator, customPincodeValidator, generateFormData } from './utils';
+
+import {
+    accountNumberValidator,
+    confirmAccountValidator,
+    customIfscValidator,
+    customNameValidator,
+    customPincodeValidator,
+    customUpiValidator,
+    emailValidator,
+    generateFormData
+} from './utils';
 import DocumentsUploadComponents from './formComponents/documentsUpload';
 import RegisterConfirmation from './registerConfirmationModal';
 import RequestSubmittedPopup from './requestSubmittedPopup';
@@ -33,6 +43,7 @@ import CancelBtn from '../../app-components/cancelBtn';
 import PrimaryBtn from '../../app-components/primaryBtn';
 
 const { home } = routesMap;
+const { TextArea } = Input;
 
 const singleLabelFieldLayout = {
     labelCol: { span: 24 },
@@ -54,6 +65,7 @@ const Seller = (props: any) => {
     const [registerFormValues, setRegisterFormValues] = useState({});
     const [showConfirmation, toggleShowConfirmation] = useState(false);
     const [showSubmitMsgPopup, toggleShowSubmitMsgPopup] = useState(false);
+    const [accountNumber, setAccountNumber] = useState();
     const [form] = Form.useForm();
     const dispatch = useDispatch();
     const registrationState = useSelector((state: RootState) => state.registration);
@@ -74,7 +86,7 @@ const Seller = (props: any) => {
         registerDataPromise.then((registerFromData) => {
             dispatch(updateForm(registerFormValues as any));
             dispatch(submitRegister(entityType, registerFromData));
-        })
+        });
     };
 
     const onFinish = (values: any) => {
@@ -157,6 +169,7 @@ const Seller = (props: any) => {
                             <Form.Item
                                 label='Email (optional)'
                                 name='email'
+                                rules={[{validator: (rule, value) => emailValidator(rule, value)}]}
                             >
                                 <Input className="custom-input" />
                             </Form.Item>
@@ -165,7 +178,10 @@ const Seller = (props: any) => {
                                 <Form.Item
                                     label="Pin Code"
                                     name="zip"
-                                    rules={[{validator: (rule, value) => customPincodeValidator(rule, value, setAddressForPin)}]}
+                                    rules={[{
+                                        required: true,
+                                        validator: (rule, value) => customPincodeValidator(rule, value, setAddressForPin)
+                                    }]}
                                 >
                                     <Input className="custom-input" />
                                 </Form.Item>
@@ -176,7 +192,7 @@ const Seller = (props: any) => {
                                 name="address1"
                                 rules={[{ required: true, message: 'Please input your Address!' }]}
                             >
-                                <Input className="custom-input" />
+                                <TextArea className="custom-input" />
                             </Form.Item>
                         </Col>
                     </Row>
@@ -189,7 +205,10 @@ const Seller = (props: any) => {
                                     <Form.Item
                                         label="Account Holder Name"
                                         name="account_name"
-                                        rules={[{ required: true, message: 'Please input Account Holder Name!' }]}
+                                        rules={[{
+                                            required: true,
+                                            validator: (rule, value) => customNameValidator(rule, value, "Account Holder Name")
+                                        }]}
                                     >
                                         <Input className="custom-input" />
                                     </Form.Item>
@@ -198,7 +217,10 @@ const Seller = (props: any) => {
                                     <Form.Item
                                         label="IFSC Code"
                                         name="ifsc_code"
-                                        rules={[{validator: (rule, value) => customIfscValidator(rule, value)}]}
+                                        rules={[{
+                                            required: true,
+                                            validator: (rule, value) => customIfscValidator(rule, value)
+                                        }]}
                                     >
                                         <Input className="custom-input" />
                                     </Form.Item>
@@ -207,7 +229,10 @@ const Seller = (props: any) => {
                                     <Form.Item
                                         label="Account Number"
                                         name="account_number"
-                                        rules={[{ required: true, message: 'Please input Account Number!' }]}
+                                        rules={[{
+                                            required: true,
+                                            validator: (rule,value) => accountNumberValidator(rule, value, setAccountNumber)
+                                        }]}
                                     >
                                         <Input className="custom-input" />
                                     </Form.Item>
@@ -216,7 +241,10 @@ const Seller = (props: any) => {
                                     <Form.Item
                                         label="Confirm Account Number"
                                         name="confirm_account_number"
-                                        rules={[{ required: true, message: 'Please Confirm Account Number!' }]}
+                                        rules={[{
+                                            required: true,
+                                            validator: (rule, value) => confirmAccountValidator(rule,value, accountNumber)
+                                        }]}
                                     >
                                         <Input className="custom-input" />
                                     </Form.Item>
@@ -259,6 +287,7 @@ const Seller = (props: any) => {
                             <Form.Item
                                 label="UPI ID(optional)"
                                 name="upi_id"
+                                rules={[{validator: (rule, value) => customUpiValidator(rule, value)}]}
                             >
                                 <Input className="custom-input" />
                             </Form.Item>
