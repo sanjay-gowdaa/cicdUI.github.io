@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { 
+import {
     Button,
     Checkbox,
     Col,
@@ -19,7 +19,6 @@ import {
     updateBasicRegistrationData,
     updateEntityType,
 } from '../../store/registrationReducer/actions';
-import ConfirmOTPModal from './confirmOTPModal';
 import {
     registerBasicFormMainLayout,
     registerBasicFormTailLayout
@@ -28,6 +27,9 @@ import { UserTypes } from '../../store/genericTypes';
 import DefaultBtn from '../../app-components/defaultBtn';
 import PrimaryBtn from '../../app-components/primaryBtn';
 import { TAndCPopup } from '../../terms-and-conditions/index';
+
+import ConfirmOTPModal from './confirmOTPModal';
+import { emailRequired, validatePhoneNumber, validateUserName } from './utils';
 
 const { Option } = Select;
 const { Title } = Typography;
@@ -69,7 +71,7 @@ const Register = ({ history, setSignUpPopupVisible }: { history: any, setSignUpP
     const closeRegForm = () => {
         setSignUpPopupVisible(false);
     }
-    
+
     return (
         <React.Fragment>
             <ConfirmOTPModal
@@ -130,7 +132,10 @@ const Register = ({ history, setSignUpPopupVisible }: { history: any, setSignUpP
                 <Form.Item
                     label="Name"
                     name="name"
-                    rules={[{ required: true, message: 'Please input your username!' }]}
+                    rules={[{
+                        required: true,
+                        validator: (rule, value) => validateUserName(rule, value)
+                    }]}
                 >
                     <Input className="custom-input" />
                 </Form.Item>
@@ -138,7 +143,10 @@ const Register = ({ history, setSignUpPopupVisible }: { history: any, setSignUpP
                 <Form.Item
                     label="Phone Number"
                     name="number"
-                    rules={[{ required: true, message: 'Please input your Phone number!' }]}
+                    rules={[{
+                        required: true,
+                        validator: (rule, value) => validatePhoneNumber(rule, value)
+                    }]}
                 >
                     <Input className="custom-input" />
                 </Form.Item>
@@ -148,8 +156,11 @@ const Register = ({ history, setSignUpPopupVisible }: { history: any, setSignUpP
                     <Form.Item
                         label="Email"
                         name="email"
-                        rules={[{ required: currentType === UserTypes.BUYER, message: 'Please input your Email!' }]}
-                    >
+                        rules={[{
+                            required: currentType === UserTypes.BUYER,
+                            validator: (rule, value) => emailRequired(rule, value)
+                        }]}
+                   >
                         <Input className="custom-input" />
                     </Form.Item> : null
                 }
