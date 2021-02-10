@@ -117,11 +117,15 @@ export const fetchLiveApmcRate = ({commodity, variety}: {commodity: string, vari
 
         const priceModel = await getLiveApmcRate([{region: district, commodity, variety}])
         const {liveRates} = priceModel || {liveRates: []};
-        if(Object.keys(liveRates).length) {
+        if(liveRates.length) {
             const {liveRates: liveRatesData} = liveRates[0];
-            const sortedData = sortBy(liveRatesData, ['timestamp']);
-            const apmcePrice = sortedData[1].modal_price;
-            dispatch(updateApmcCropRate(apmcePrice));
+            if (Object.keys(liveRatesData).length) {
+                const sortedData = sortBy(liveRatesData, ['timestamp']);
+                const apmcePrice = sortedData[1].modal_price;
+                dispatch(updateApmcCropRate(apmcePrice));
+            } else {
+                dispatch(updateApmcCropRate('No records found'));    
+            }
         } else {
             dispatch(updateApmcCropRate('No records found'));
         }
@@ -186,7 +190,9 @@ export const getAllCropsList = () => {
         const cropsList = await getAllCrops(username)
         const {Items, Count} = cropsList || {Items: [], Count: 0}
         dispatch(updateSellerCropsList(Items));
-        dispatch(fetchAllCropsApmcData(Items));
+        if (Items.length) {
+            dispatch(fetchAllCropsApmcData(Items));
+        }
     }   
 }
 
