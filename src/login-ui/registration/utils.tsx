@@ -205,7 +205,7 @@ export const confirmAccountValidator = (rule: RuleObject, value: any, accountNum
 export const customUpiValidator = (rule: RuleObject, value: any) => {
     const regExp = /^[\w.-]+@[\w.-]+$/;
 
-    if(regExp.test(value) || value === "") {
+    if(regExp.test(value) || value === undefined) {
         return Promise.resolve();
     } else {
         return Promise.reject(UPI_ID_INVALID_MSG);
@@ -215,7 +215,7 @@ export const customUpiValidator = (rule: RuleObject, value: any) => {
 export const emailValidator = (rule: RuleObject, value: any) => {
     const regExp = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
 
-    if(regExp.test(value) || value === "") {
+    if(regExp.test(value) || value === undefined) {
         return Promise.resolve();
     } else {
         return Promise.reject(EMAIL_INVALID_MSG);
