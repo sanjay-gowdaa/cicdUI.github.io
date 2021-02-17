@@ -94,14 +94,11 @@ const UserHeader = () => {
     return (
       <div className="display-flex-row align-center">
         <Breadcrumb separator=" " className="custom-breadcrumb">
-            {loginState.is_buyer ?
-                <Breadcrumb.Item href={breadCrumbs.produce} >Produce</Breadcrumb.Item> : null
-            }
-            <Breadcrumb.Item href={breadCrumbs.produce} >Information</Breadcrumb.Item>
             <Breadcrumb.Item href={breadCrumbs.crops} >Produce</Breadcrumb.Item>
             <Breadcrumb.Item href={breadCrumbs.matches} >Matches</Breadcrumb.Item>
             <Breadcrumb.Item href={breadCrumbs.transaction} >Transaction</Breadcrumb.Item>
             <Breadcrumb.Item href={breadCrumbs.feedback} >Feedback</Breadcrumb.Item>
+            <Breadcrumb.Item href="/terms&conditions">Terms & Conditions</Breadcrumb.Item>
         </Breadcrumb>
         <Badge count={notificationNumber} className="custom-badge">
             <Tooltip title="Notifications">
