@@ -13,7 +13,7 @@ const InputOtp = (props: any) => {
 
         (event.keyCode === 8 && !firstDigit && prevSpace ++);
         
-        if(prevSpace === 2) {
+        if(prevSpace >= 1) {
             prevSpace = 0;
             event.target.previousSibling.focus();
         }
