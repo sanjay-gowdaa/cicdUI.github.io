@@ -1,11 +1,10 @@
 import React from 'react';
-import { Button, Image, Progress, Statistic, Typography } from 'antd';
+import { Button, Image, Modal, Progress, Statistic, Typography } from 'antd';
 import { CaretUpOutlined, CaretDownOutlined } from '@ant-design/icons';
 
 import { CropApiModel } from '../../store/sellerReducer/types';
 import RagiImg from '../../static/assets/ragi.png';
 import ViewCropImages from './viewCropImages';
-import ViewTerms from '../../terms-and-conditions/viewTerms';
 
 const { Title, Text } = Typography;
 
@@ -28,8 +27,8 @@ export const cropColumns = [
     },
     {
         title: 'Grade',
-        dataIndex: 'crop_grade',
-        key: 'crop_grade'
+        dataIndex: 'grade',
+        key: 'grade'
     },
     {
         title: 'Qunatity Remaining',
@@ -94,12 +93,30 @@ export const cropColumns = [
     },
     {
         title: 'Additional',
-        key: 'terms_and_conditions',
-        dataIndex: 'terms_and_conditions',
-        render: (termsAndConditions: string, record: CropApiModel) => {
+        key: 'additional_info',
+        dataIndex: 'additional_info',
+        render: (additional_info: string, record: CropApiModel) => {
+            const openAdditionalInfo = () => {
+                {
+                    additional_info !== "" &&
+                    Modal.info({
+                        title: 'Additional Info',
+                        content: `${additional_info}`,
+                        okText: 'Ok',
+                        icon: null
+                    });
+                }
+            };
+            
             return (
                 <>
-                    <ViewTerms displayType="seller" content="Terms & Conditions" />    
+                    <Button
+                        type="link"
+                        disabled={additional_info === ""}
+                        onClick={openAdditionalInfo}
+                    >
+                        Additional Info
+                    </Button>
                     <ViewCropImages list={record} />
                 </>
             );
@@ -108,7 +125,7 @@ export const cropColumns = [
     {
         title: '',
         key: 'action',
-        render: (text: string, record: CropApiModel) => {
+        render: (record: CropApiModel) => {
             const { intent_to_sell } = record;
             return intent_to_sell === 'Yes' ? null : (
                 <>
