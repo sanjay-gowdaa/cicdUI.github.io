@@ -1,20 +1,28 @@
 import React, { useEffect, useState } from 'react';
 import {
+    Alert,
     Button,
     Col,
     Divider,
     Form,
     Input,
     Modal,
+    Radio,
     Row,
     Select,
     Space,
     Typography,
-    Upload,
+    Upload
 } from 'antd';
 import { InboxOutlined } from '@ant-design/icons';
 import { useDispatch, useSelector } from 'react-redux';
-import { addNewCropData, fetchAllCategories, fetchAllMasterCrops, fetchAllVariety, fetchLiveApmcRate } from '../../../store/sellerReducer/actions';
+import {
+    addNewCropData,
+    fetchAllCategories,
+    fetchAllMasterCrops,
+    fetchAllVariety,
+    fetchLiveApmcRate
+} from '../../../store/sellerReducer/actions';
 import { RootState } from '../../../store/rootReducer';
 import { SellerStateModel } from '../../../store/sellerReducer/types';
 import {
@@ -51,10 +59,11 @@ const AddCropModal = () => {
 
     const [selectedMasterCrop, setSelectedMasterCrop] = useState('');
     const [selectedVariety, setSelectedVariety] = useState('');
+    const [intentToSell, setIntentToSell] = useState(false);
 
     useEffect(() => {
         sellerStore.categories && !sellerStore.categories.length && dispatch(fetchAllCategories());
-    }, [])
+    }, []);
 
     const onFinish = (values: any) => {
         // console.log('Success:', values);
@@ -68,7 +77,7 @@ const AddCropModal = () => {
             dispatch(addNewCropData(sellerFromData));
             form.resetFields();
             setModalVisible(false);
-        })
+        });
     };
 
     const onFinishFailed = (errorInfo: any) => {
@@ -96,14 +105,14 @@ const AddCropModal = () => {
         /* Reset other fields end */
         setSelectedMasterCrop(produce);
         dispatch(fetchAllVariety(produce));
-    }
+    };
 
     const onSelectVariety = (variety: string) => {
         /* Reset other fields */
         form.setFieldsValue({grade: null});
         /* Reset other fields end */
         setSelectedVariety(variety);
-    }
+    };
 
     return (
         <>
@@ -119,7 +128,7 @@ const AddCropModal = () => {
                 maskClosable={false}
                 onCancel={() => {
                     form.resetFields();
-                    setModalVisible(false)
+                    setModalVisible(false);
                 }}
                 width={'90%'}
                 wrapClassName="add-crop-modal"
@@ -130,8 +139,7 @@ const AddCropModal = () => {
                     {...singleLabelFieldLayout}
                     name="basic"
                     initialValues={{
-                        intentToSell: 'Yes',
-                        termsAndConditions: '',
+                        intentToSell: 'No',
                         additionalInfo: '',
                         categoryName: null,
                         cropName: null,
@@ -176,20 +184,19 @@ const AddCropModal = () => {
                                     Add Produce
                                 </Text>
                             </Space>
-                            <Form.Item 
+                            <Form.Item
                                 label="Select Variety"
                                 name="subCategory"
                                 rules={[{ required: true, message: 'Please select the Produce Variety!' }]}
                             >
-                                <Select 
+                                <Select
                                     className="custom-select"
                                     placeholder="Select"
                                     allowClear
                                     onChange={(value: string) => {
-                                            onSelectVariety(value)
-                                            dispatch(fetchLiveApmcRate({commodity: selectedMasterCrop, variety: value}))
-                                        }
-                                    }
+                                            onSelectVariety(value);
+                                            dispatch(fetchLiveApmcRate({commodity: selectedMasterCrop, variety: value}));
+                                    }}
                                     onClear={() => null}
                                 >
                                     {renderSubCategoryOptions(sellerStore.variety)}
@@ -214,7 +221,6 @@ const AddCropModal = () => {
                                     {selectedVariety ? renderGradeOptionsForSubCategory(sellerStore.variety, selectedVariety) : []}
                                 </Select>
                             </Form.Item>
-
                             <Form.Item
                                 {...fieldwithInfoLayout}
                                 label="Qunatity"
@@ -226,52 +232,42 @@ const AddCropModal = () => {
                                     <span className="additional-text">Qtl</span>
                                 </div>
                             </Form.Item>
-
                             <Form.Item
                                 {...fieldwithInfoLayout}
                                 label="Price per quintal"
                                 name="pricePerQnt"
-                                rules={[
-                                    {
+                                rules={[{
                                         required: true,
                                         message: 'Please input the Price per quintal!',
-                                    },
-                                ]}
+                                }]}
                             >
                                 <div className="display-flex-row">
-                                    <Input className="custom-input" placeholder="In rupees" />
-                                    <span className="additional-text">
-                                        APMC Rate {loginUser.district}: {sellerStore.apmcCropPrice}
-                                    </span>
+                                    <Space direction="vertical">
+                                        <Input className="custom-input" placeholder="In rupees" />
+                                        <span className="additional-text">
+                                            APMC Rate {loginUser.district}: {sellerStore.apmcCropPrice}
+                                        </span>
+                                    </Space>
                                 </div>
                             </Form.Item>
-
-                            <Form.Item
-                                label="Select Terms and Conditions"
-                                name="termsAndConditions"
-                            >
-                                <Select className="custom-select" placeholder="Select" />
-                                <Text type="secondary" underline>
-                                    Add Terms
-                                </Text>
-                            </Form.Item>
-
                             <Form.Item
                                 label="Intent to Sell?"
                                 name="intentToSell"
-                                rules={[
-                                    { required: true, message: 'Please set your intent to sell' },
-                                ]}
+                                rules={[{
+                                    required: true,
+                                    message: 'Please set your intent to sell'
+                                }]}
                             >
-                                <Select className="custom-select" placeholder="Select">
-                                    <Option value="Yes">Yes</Option>
-                                    <Option value="no">No</Option>
-                                </Select>
+                                <Radio.Group className="custom-radio" defaultValue={"No"}>
+                                    <Radio value={"Yes"} onClick={() => setIntentToSell(true)}>Yes</Radio>
+                                    <Radio value={"No"} onClick={() => setIntentToSell(false)}>No</Radio>
+                                </Radio.Group><br/>
+                                {intentToSell && <Alert type="warning" message={<>You can not edit if intent to sell is set to "<b>Yes</b>"</>}/>}
                             </Form.Item>
                         </Col>
                         <Divider className="height-full" type="vertical" style={{height: "25em", color: "black" }} />
                         <Col span={12}>
-                            <Form.Item label="Add Produce Photos" name="cropImages">
+                            <Form.Item label="Add Produce Photos" name="cropImages" required={intentToSell}>
                                 <Dragger
                                     className="crop-images-upload"
                                     multiple={true}
@@ -279,8 +275,7 @@ const AddCropModal = () => {
                                     listType="picture-card"
                                     beforeUpload= {(file) => {
                                         return false
-                                      }
-                                    }
+                                    }}
                                 >
                                     <div className="display-flex-row">
                                         <div>
