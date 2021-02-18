@@ -1,6 +1,7 @@
 import React from 'react';
 import { Button, Image, Modal, Progress, Statistic, Typography } from 'antd';
 import { CaretUpOutlined, CaretDownOutlined } from '@ant-design/icons';
+import { isEmpty } from 'lodash';
 
 import { CropApiModel } from '../../store/sellerReducer/types';
 import RagiImg from '../../static/assets/ragi.png';
@@ -98,7 +99,7 @@ export const cropColumns = [
         render: (additional_info: string, record: CropApiModel) => {
             const openAdditionalInfo = () => {
                 {
-                    additional_info !== "" &&
+                    isEmpty(additional_info) &&
                     Modal.info({
                         title: 'Additional Info',
                         content: `${additional_info}`,
@@ -112,7 +113,7 @@ export const cropColumns = [
                 <>
                     <Button
                         type="link"
-                        disabled={additional_info === ""}
+                        disabled={isEmpty(additional_info)}
                         onClick={openAdditionalInfo}
                     >
                         Additional Info
