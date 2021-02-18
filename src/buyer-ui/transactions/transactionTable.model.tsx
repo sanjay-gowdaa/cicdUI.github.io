@@ -1,5 +1,5 @@
 import React from 'react';
-import { Image, Typography } from 'antd';
+import { Button, Image, Typography } from 'antd';
 
 import { TransactioModel } from '../../store/buyerReducer/types';
 import RagiImg from '../../static/assets/ragi.png';
@@ -74,10 +74,10 @@ export const transactionColumns = [
         title: 'Additional',
         key: 'termsAndConditions',
         dataIndex: 'termsAndConditions',
-        render: (termsAndConditions: string) => {
+        render: () => {
             return (
                 <>
-                    <ViewTerms displayType="buyer" content="View Terms" />
+                    <Button type="link">Additional Info</Button>
                 </>
             );
         },
