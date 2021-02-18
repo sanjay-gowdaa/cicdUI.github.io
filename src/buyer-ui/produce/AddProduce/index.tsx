@@ -7,7 +7,7 @@ import {
     Input,
     Modal,
     Row,
-    Select,
+    Select
 } from 'antd';
 import { useDispatch } from 'react-redux';
 
@@ -36,13 +36,13 @@ const getMasterProduceListOpts = ({masterProduceList}: {masterProduceList: Array
                 masterProduceList.map((masterProduceItem: MasterListApiFormat) => {
                     const {produce_name = '', crop_name = '', category_name = '', grade_name = ''} = masterProduceItem;
                     return (
-                        <Option 
+                        <Option
                             key={`${produce_name}-${crop_name}-${category_name}-${grade_name}`}
                             value={`${produce_name}-${crop_name}-${category_name}-${grade_name}`}
-                        > 
+                        >
                             {`${produce_name}-${crop_name}-${category_name}-${grade_name}`}
                         </Option>
-                    )
+                    );
                 })
             }
         </>
@@ -51,15 +51,15 @@ const getMasterProduceListOpts = ({masterProduceList}: {masterProduceList: Array
 
 const AddCropModal = ({masterProduceList}: {masterProduceList: Array<any>}) => {
     const [modalVisible, setModalVisible] = useState(false);
-    const [form] = Form.useForm(); 
+    const [form] = Form.useForm();
     const dispatch = useDispatch();
 
     const onFinish = (fieldsValue: any) => {
-        const {produce_name, delivery_by, quantity, additional_info} = fieldsValue
-        const [masterProduce, category, sub_type, grade] = produce_name.split('-')
+        const {produce_name, delivery_by, quantity, additional_info} = fieldsValue;
+        const [masterProduce, category, sub_type, grade] = produce_name.split('-');
         const deliveryByIsoformat = new Date(delivery_by).toISOString();
-        const addProducePayload = {category, sub_type, grade, delivery_by: deliveryByIsoformat, additional_info, quantity}
-        console.log('addProducePayload', addProducePayload)
+        const addProducePayload = {category, sub_type, grade, delivery_by: deliveryByIsoformat, additional_info, quantity};
+        console.log('addProducePayload', addProducePayload);
         dispatch(addNewProduce(addProducePayload));
         form.resetFields();
         setModalVisible(false);
@@ -110,7 +110,6 @@ const AddCropModal = ({masterProduceList}: {masterProduceList: Array<any>}) => {
                                     {getMasterProduceListOpts({masterProduceList})}
                                 </Select>
                             </Form.Item>
-
                             <Form.Item
                                 {...fieldwithInfoLayout}
                                 label="Qunatity"
@@ -122,20 +121,12 @@ const AddCropModal = ({masterProduceList}: {masterProduceList: Array<any>}) => {
                                     <span className="additional-text">Qtl</span>
                                 </div>
                             </Form.Item>
-
                             <Form.Item
                                 label="Delivery Required By"
                                 name="delivery_by"
                                 rules={[{ type: 'object', required: true, message: 'Please select time!' }]}
                             >
                                 <DatePicker className="custom-input" />
-                            </Form.Item>
-
-                            <Form.Item
-                                label="Select Terms and Conditions"
-                                name="terms_and_conditions"
-                            >
-                                <Select className="custom-select" placeholder="Select"></Select>
                             </Form.Item>
                             <Form.Item label="Additional Information" name="additional_info">
                                 <TextArea className="custom-input" rows={4} />
