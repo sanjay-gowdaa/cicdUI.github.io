@@ -3,7 +3,6 @@ import { Button, Image, Typography } from 'antd';
 
 import { MatchRequirementModel } from '../../store/sellerReducer/types';
 import RagiImg from '../../static/assets/ragi.png';
-import ViewTerms from '../../terms-and-conditions/viewTerms';
 import AcceptMatch from './acceptMatch';
 
 const { Title, Text } = Typography;
@@ -70,12 +69,12 @@ export const matchesColumns = (componentCallBacks: componentCallBacksModel) => [
     },
     {
         title: 'Additional',
-        key: 'termsAndConditions',
-        dataIndex: 'termsAndConditions',
-        render: (termsAndConditions: string) => {
+        key: 'additional_info',
+        dataIndex: 'additional_info',
+        render: () => {
             return (
                 <>
-                    <ViewTerms displayType="seller" content="View Terms" />
+                    <Button type="link">Package Details</Button>
                 </>
             );
         },
@@ -98,7 +97,7 @@ export const matchesColumns = (componentCallBacks: componentCallBacksModel) => [
                     <AcceptMatch cropDetails={record} />
                     <Button type="link" danger>
                         {' '}
-                        Delete{' '}
+                        Reject{' '}
                     </Button>
                 </div>
             );
