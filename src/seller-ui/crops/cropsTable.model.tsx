@@ -9,6 +9,15 @@ import { isEmpty } from 'lodash';
 
 const { Title, Text } = Typography;
 
+const openAdditionalInfo = (content: any) => {
+    Modal.info({
+        title: 'Additional Info',
+        content: `${content}`,
+        okText: 'Ok',
+        icon: null
+    });
+};
+
 export const cropColumns = [
     {
         title: 'Produce',
@@ -97,24 +106,12 @@ export const cropColumns = [
         key: 'additional_info',
         dataIndex: 'additional_info',
         render: (additional_info: string, record: CropApiModel) => {
-            const openAdditionalInfo = () => {
-                {
-                    !isEmpty(additional_info) &&
-                    Modal.info({
-                        title: 'Additional Info',
-                        content: `${additional_info}`,
-                        okText: 'Ok',
-                        icon: null
-                    });
-                }
-            };
-            
             return (
                 <>
                     <Button
                         type="link"
                         disabled={isEmpty(additional_info)}
-                        onClick={openAdditionalInfo}
+                        onClick={() => openAdditionalInfo(additional_info)}
                     >
                         Additional Info
                     </Button>
@@ -126,7 +123,7 @@ export const cropColumns = [
     {
         title: '',
         key: 'action',
-        render: (record: CropApiModel) => {
+        render: (text: string, record: CropApiModel) => {
             const { intent_to_sell } = record;
             return intent_to_sell === 'Yes' ? null : (
                 <>
