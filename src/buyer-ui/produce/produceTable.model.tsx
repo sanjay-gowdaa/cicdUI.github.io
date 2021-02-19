@@ -7,6 +7,15 @@ import RagiImg from '../../static/assets/ragi.png';
 
 const { Title } = Typography;
 
+const openAdditionalInfo = (content: any) => {
+    Modal.info({
+        title: 'Additional Info',
+        content: `${content}`,
+        okText: 'Ok',
+        icon: null
+    });
+};
+
 export const producColumns = [
     {
         title: 'Produce',
@@ -53,23 +62,11 @@ export const producColumns = [
         key: 'additional_info',
         dataIndex: 'additional_info',
         render: (additionalInfo: string) => {
-            const openAdditionalInfo = () => {
-                {
-                    !isEmpty(additionalInfo) &&
-                    Modal.info({
-                        title: 'Additional Info',
-                        content: `${additionalInfo}`,
-                        okText: 'Ok',
-                        icon: null
-                    });
-                }
-            };
-
             return (
                 <Button
                     type="link"
                     disabled={isEmpty(additionalInfo)}
-                    onClick={openAdditionalInfo}
+                    onClick={() => openAdditionalInfo(additionalInfo)}
                 >
                     Additional Info
                 </Button>
