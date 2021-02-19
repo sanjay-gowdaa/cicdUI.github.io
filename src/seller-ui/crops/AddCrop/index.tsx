@@ -36,7 +36,6 @@ import CancelBtn from '../../../app-components/cancelBtn';
 import { UserStateModel } from '../../../store/loginReducer/types';
 
 const { Text, Title } = Typography;
-const { Option } = Select;
 const { Dragger } = Upload;
 const { TextArea } = Input;
 
