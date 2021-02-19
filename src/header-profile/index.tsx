@@ -19,9 +19,10 @@ import { LOGOUT_URL } from '../store/api';
 import { RootState } from '../store/rootReducer';
 import { UserStateModel } from '../store/loginReducer/types';
 import DefaultBtn from '../app-components/defaultBtn';
-import { headerBreadcrumb } from '../constants';
+import { headerBreadcrumb, routesMap } from '../constants';
 
 const { Text, Title } = Typography;
+const { terms } = routesMap;
 
 const UserHeader = () => {
     const loginState: UserStateModel = useSelector((state: RootState) => state.loginUser);
@@ -98,7 +99,7 @@ const UserHeader = () => {
             <Breadcrumb.Item href={breadCrumbs.matches} >Matches</Breadcrumb.Item>
             <Breadcrumb.Item href={breadCrumbs.transaction} >Transaction</Breadcrumb.Item>
             <Breadcrumb.Item href={breadCrumbs.feedback} >Feedback</Breadcrumb.Item>
-            <Breadcrumb.Item href="/terms&conditions">Terms & Conditions</Breadcrumb.Item>
+            <Breadcrumb.Item href={terms}>Terms & Conditions</Breadcrumb.Item>
         </Breadcrumb>
         <Badge count={notificationNumber} className="custom-badge">
             <Tooltip title="Notifications">
