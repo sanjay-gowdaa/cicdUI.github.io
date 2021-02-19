@@ -6,7 +6,7 @@ export interface CropApiModel {
     price_per_qnt: number;
     apmc_rate: number;
     intent_to_sell: string;
-    terms_and_conditions?: string;
+    additional_info: string;
     district: string;
     apmc_rate_data?: {apmc_price: string, increase: string}
 }

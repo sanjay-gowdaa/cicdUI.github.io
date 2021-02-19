@@ -1,13 +1,22 @@
 import React from 'react';
-import { Button, Image, Progress, Statistic, Typography } from 'antd';
+import { Button, Image, Modal, Progress, Statistic, Typography } from 'antd';
 import { CaretUpOutlined, CaretDownOutlined } from '@ant-design/icons';
 
 import { CropApiModel } from '../../store/sellerReducer/types';
 import RagiImg from '../../static/assets/ragi.png';
 import ViewCropImages from './viewCropImages';
-import ViewTerms from '../../terms-and-conditions/viewTerms';
+import { isEmpty } from 'lodash';
 
 const { Title, Text } = Typography;
+
+const openAdditionalInfo = (content: any) => {
+    Modal.info({
+        title: 'Additional Info',
+        content: `${content}`,
+        okText: 'Ok',
+        icon: null
+    });
+};
 
 export const cropColumns = [
     {
@@ -28,8 +37,8 @@ export const cropColumns = [
     },
     {
         title: 'Grade',
-        dataIndex: 'crop_grade',
-        key: 'crop_grade'
+        dataIndex: 'grade',
+        key: 'grade'
     },
     {
         title: 'Qunatity Remaining',
@@ -94,12 +103,18 @@ export const cropColumns = [
     },
     {
         title: 'Additional',
-        key: 'terms_and_conditions',
-        dataIndex: 'terms_and_conditions',
-        render: (termsAndConditions: string, record: CropApiModel) => {
+        key: 'additional_info',
+        dataIndex: 'additional_info',
+        render: (additional_info: string, record: CropApiModel) => {
             return (
                 <>
-                    <ViewTerms displayType="seller" content="Terms & Conditions" />    
+                    <Button
+                        type="link"
+                        disabled={isEmpty(additional_info)}
+                        onClick={() => openAdditionalInfo(additional_info)}
+                    >
+                        Additional Info
+                    </Button>
                     <ViewCropImages list={record} />
                 </>
             );
