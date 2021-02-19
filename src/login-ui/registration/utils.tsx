@@ -1,4 +1,5 @@
 import { RuleObject } from "antd/lib/form";
+import { isEmpty } from "lodash";
 import { generateFileData, proccessFileToBase64 } from "../../app-components/utils";
 
 import { getLocationByPin } from "../../store/api";
@@ -205,7 +206,7 @@ export const confirmAccountValidator = (rule: RuleObject, value: any, accountNum
 export const customUpiValidator = (rule: RuleObject, value: any) => {
     const regExp = /^[\w.-]+@[\w.-]+$/;
 
-    if(regExp.test(value) || value === "") {
+    if(regExp.test(value) || isEmpty(value)) {
         return Promise.resolve();
     } else {
         return Promise.reject(UPI_ID_INVALID_MSG);
@@ -215,7 +216,7 @@ export const customUpiValidator = (rule: RuleObject, value: any) => {
 export const emailValidator = (rule: RuleObject, value: any) => {
     const regExp = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
 
-    if(regExp.test(value) || value === "") {
+    if(regExp.test(value) || isEmpty(value)) {
         return Promise.resolve();
     } else {
         return Promise.reject(EMAIL_INVALID_MSG);

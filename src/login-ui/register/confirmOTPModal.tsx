@@ -57,7 +57,7 @@ const ConfirmOTPModal = ({showOTPModal, setShowOTPModal, currentType, history}: 
             className="custom-otp-modal"
             title={<Title level={5}>OTP Verification</Title>}
             centered
-            closable={false}
+            closable={true}
             maskClosable={false}
             visible={showOTPModal}
             footer={null}
@@ -105,17 +105,18 @@ const ConfirmOTPModal = ({showOTPModal, setShowOTPModal, currentType, history}: 
                         </Col>
                     </Row> )
             }
-
             <Row justify="center" className="margin-t-1em">
                 <Col>
                     <Space>
-                        <PrimaryBtn
-                            onClick={() => {
-                                dispatch(confirmOTP(formData?.number,otp));
-                                dispatch(saveTimeStamp);
-                            }}
-                            content="Submit OTP"
-                        />
+                        {otp !== "" && 
+                            <PrimaryBtn
+                                onClick={() => {
+                                    dispatch(confirmOTP(formData?.number,otp));
+                                    dispatch(saveTimeStamp);
+                                }}
+                                content="Submit OTP"
+                            />
+                        }
                     </Space>
                 </Col>
             </Row>

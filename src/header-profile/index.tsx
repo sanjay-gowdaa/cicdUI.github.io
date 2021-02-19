@@ -19,9 +19,10 @@ import { LOGOUT_URL } from '../store/api';
 import { RootState } from '../store/rootReducer';
 import { UserStateModel } from '../store/loginReducer/types';
 import DefaultBtn from '../app-components/defaultBtn';
-import { headerBreadcrumb } from '../constants';
+import { headerBreadcrumb, routesMap } from '../constants';
 
 const { Text, Title } = Typography;
+const { terms } = routesMap;
 
 const UserHeader = () => {
     const loginState: UserStateModel = useSelector((state: RootState) => state.loginUser);
@@ -94,14 +95,11 @@ const UserHeader = () => {
     return (
       <div className="display-flex-row align-center">
         <Breadcrumb separator=" " className="custom-breadcrumb">
-            {loginState.is_buyer ?
-                <Breadcrumb.Item href={breadCrumbs.produce} >Produce</Breadcrumb.Item> : null
-            }
-            <Breadcrumb.Item href={breadCrumbs.produce} >Information</Breadcrumb.Item>
             <Breadcrumb.Item href={breadCrumbs.crops} >Produce</Breadcrumb.Item>
             <Breadcrumb.Item href={breadCrumbs.matches} >Matches</Breadcrumb.Item>
             <Breadcrumb.Item href={breadCrumbs.transaction} >Transaction</Breadcrumb.Item>
             <Breadcrumb.Item href={breadCrumbs.feedback} >Feedback</Breadcrumb.Item>
+            <Breadcrumb.Item href={terms}>Terms & Conditions</Breadcrumb.Item>
         </Breadcrumb>
         <Badge count={notificationNumber} className="custom-badge">
             <Tooltip title="Notifications">
