@@ -2,8 +2,7 @@ import React from 'react';
 import { Button, Image, Typography } from 'antd';
 
 import { MatchRequirementModel } from '../../store/buyerReducer/types';
-import RagiImg from '../../static/assets/ragi.png'
-import ViewTerms from '../../terms-and-conditions/viewTerms';
+import RagiImg from '../../static/assets/ragi.png';
 import ConnectMatch from './connectMatch';
 
 const { Title, Text } = Typography;
@@ -59,7 +58,7 @@ export const matchesColumns = (componentCallBacks: componentCallBacksModel) => [
         dataIndex: 'totalPrice',
         key: 'totalPrice',
         render: (totalPrice: any, record: MatchRequirementModel) => {
-            const {pricePerQnt, quantityRequired} = record
+            const {pricePerQnt, quantityRequired} = record;
             return (
                 <>
                     <p>{quantityRequired*pricePerQnt}</p>
@@ -74,12 +73,12 @@ export const matchesColumns = (componentCallBacks: componentCallBacksModel) => [
     },
     {
         title: 'Additional',
-        key: 'termsAndConditions',
-        dataIndex: 'termsAndConditions',
-        render: (termsAndConditions: string) => {
+        key: 'additionalInfo',
+        dataIndex: 'additionalInfo',
+        render: () => {
             return (
                 <>
-                    <ViewTerms displayType="buyer" content="View Terms" />
+                    <Button type="link">Additional Info</Button>
                 </>
             );
         },
@@ -101,8 +100,7 @@ export const matchesColumns = (componentCallBacks: componentCallBacksModel) => [
                     </Button>
                     <ConnectMatch cropDetails={record} />
                     <Button type="link" danger>
-                        {' '}
-                        Reject{' '}
+                        Reject
                     </Button>
                 </div>
             );

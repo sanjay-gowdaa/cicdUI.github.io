@@ -1,10 +1,20 @@
 import React from 'react';
-import { Button, Image, Typography } from 'antd';
+import { Button, Image, Modal, Typography } from 'antd';
+import { isEmpty } from 'lodash';
+
 import { ProduceModel } from '../../store/buyerReducer/types';
-import RagiImg from '../../static/assets/ragi.png'
-import ViewTerms from '../../terms-and-conditions/viewTerms';
+import RagiImg from '../../static/assets/ragi.png';
 
 const { Title } = Typography;
+
+const openAdditionalInfo = (content: any) => {
+    Modal.info({
+        title: 'Additional Info',
+        content: `${content}`,
+        okText: 'Ok',
+        icon: null
+    });
+};
 
 export const producColumns = [
     {
@@ -13,6 +23,7 @@ export const producColumns = [
         key: 'cropName',
         render: (cropName: string, record: ProduceModel) => {
             const {category, sub_type: subType} = record;
+
             return (
                 <div className='display-flex-row align-center'>
                     <Image
@@ -41,19 +52,24 @@ export const producColumns = [
         dataIndex: 'delivery_by',
         key: 'delivery_by',
         render: (delivery_by: string) => {
-            const dateObj = new Date(delivery_by)
+            const dateObj = new Date(delivery_by);
+
             return dateObj.toLocaleDateString();
         }
     },
     {
         title: 'Additional',
-        key: 'termsAndConditions',
-        dataIndex: 'termsAndConditions',
-        render: (termsAndConditions: string) => {
+        key: 'additional_info',
+        dataIndex: 'additional_info',
+        render: (additionalInfo: string) => {
             return (
-                <>
-                    <ViewTerms displayType="buyer" content="Terms & Conditions" />                
-                </>
+                <Button
+                    type="link"
+                    disabled={isEmpty(additionalInfo)}
+                    onClick={() => openAdditionalInfo(additionalInfo)}
+                >
+                    Additional Info
+                </Button>
             );
         },
     },
