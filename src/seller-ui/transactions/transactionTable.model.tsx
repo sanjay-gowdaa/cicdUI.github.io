@@ -1,8 +1,7 @@
 import React from 'react';
-import { Typography } from 'antd';
+import { Button, Typography } from 'antd';
 
 import { TransactioModel } from '../../store/sellerReducer/types';
-import ViewTerms from '../../terms-and-conditions/viewTerms';
 
 const { Title, Text } = Typography;
 
@@ -68,12 +67,12 @@ export const transactionColumns = [
     },
     {
         title: 'Additional',
-        key: 'termsAndConditions',
-        dataIndex: 'termsAndConditions',
-        render: (termsAndConditions: string) => {
+        key: 'additional_info',
+        dataIndex: 'additional_info',
+        render: () => {
             return (
                 <>
-                    <ViewTerms displayType="seller" content="View Terms" />
+                    <Button type="link">Packaging Details</Button>
                 </>
             );
         },

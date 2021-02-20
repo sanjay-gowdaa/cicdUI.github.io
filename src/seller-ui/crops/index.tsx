@@ -19,7 +19,7 @@ const CropsSection = () => {
     }, [])
 
     return (
-        <div className="crops-container">
+        <div className="crops-container" id="seller-ui-crops">
             <Title level={2}>My Produce</Title>
             <AddCropModal />
             <Table

@@ -7,7 +7,7 @@ const PrivacyPolicy = () => {
     return (
         <>
             <Paragraph>
-                SamarkBindhu Solutions Private Limited (“<b>SamparkBindhu</b>/<b>Company</b>”) is a company 
+                SamparkBindhu Solutions Private Limited (“<b>SamparkBindhu</b>/<b>Company</b>”) is a company 
                 registered under the Companies Act, 2013, bearing CIN U72900KA2020PTC137512 and having its 
                 registered office at #617, "Shivam", Royal Park Residency, J P Nagar 9th Phase, Bengaluru 
                 Bangalore, Karnataka - 560062, India.
