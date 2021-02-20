@@ -1,7 +1,7 @@
-import { sortBy, isEmpty } from "lodash";
+import { sortBy, isEmpty, isNull } from "lodash";
 import { getTimeStamp } from "../../app-components/utils";
-import { getSubCategoryList, createCrop, getAllCrops, getCropCategoryList, getCropList, getLiveApmcRate } from "../api";
-import { LiveApmcRates } from "../genericTypes";
+import { getSubCategoryList, createCrop, getAllCrops, getCropCategoryList, getCropList, getLiveApmcRate, getLiveApmcRateUpdated } from "../api";
+import { ApmcApiResponseBase, LiveApmcRates, UpdatedLiveApmcRatesQuery } from "../genericTypes";
 import { UserStateModel } from "../loginReducer/types";
 import { RootState } from "../rootReducer";
 import { CropApiModel, SellerStateModel } from "./types";
@@ -43,7 +43,7 @@ export const updateSellerCropsList = (cropsList: Array<any>) => {
     }
 }
 
-export const updateApmcCropRate = (modalPrice: string) => {
+export const updateApmcCropRate = (modalPrice: string | number) => {
     return {
         type: UPDATE_APMC_RATE,
         payload: modalPrice
@@ -57,18 +57,15 @@ export const updateTimeStamp = (timeStamp: any) => {
     }
 }
 
-export const updateApmcCropRateData = (allProduceliveRates: Array<{
-    region: string;
-    commodity: string;
-    variety: string;
-    liveRates: any;
-}>, cropsList: Array<CropApiModel>) => {
-    const allProduceApmcData = allProduceliveRates.map((produceLiveRate) => {
-        const {liveRates: curProduceLiveRate} = produceLiveRate;
-        if(curProduceLiveRate?.length) {
-            const [lastestEntry, prevEntry] = sortBy(curProduceLiveRate, ['timestamp']);
-            const difference = lastestEntry.modal_price - prevEntry.modal_price;
-            return {apmc_price: lastestEntry.modal_price, increase: difference};
+export const updateApmcListData = (
+        allCropsApmcData: Array<ApmcApiResponseBase>,
+        cropsList: Array<CropApiModel>
+    ) => {
+    const allProduceApmcData = allCropsApmcData.map((apmcData: ApmcApiResponseBase) => {
+        if(!isEmpty(apmcData)) {
+            const {latest_apmc_price, previousLatestApmcPrice} = apmcData;
+            const difference = latest_apmc_price - previousLatestApmcPrice;
+            return {apmc_price: latest_apmc_price, increase: difference};
         } else {
             return {apmc_price: '', increase: null};
         }
@@ -84,51 +81,84 @@ export const updateApmcCropRateData = (allProduceliveRates: Array<{
     }
 }
 
-/* Not in use currently */
-// export const fetchCropApmcPrice = ({commodity, variety}: {commodity: string, variety: string}) => {
+// export const updateApmcCropRateData = (allProduceliveRates: Array<{
+//     region: string;
+//     commodity: string;
+//     variety: string;
+//     liveRates: any;
+// }>, cropsList: Array<CropApiModel>) => {
+//     const allProduceApmcData = allProduceliveRates.map((produceLiveRate) => {
+//         const {liveRates: curProduceLiveRate} = produceLiveRate;
+//         if(curProduceLiveRate?.length) {
+//             const [lastestEntry, prevEntry] = sortBy(curProduceLiveRate, ['timestamp']);
+//             const difference = lastestEntry.modal_price - prevEntry.modal_price;
+//             return {apmc_price: lastestEntry.modal_price, increase: difference};
+//         } else {
+//             return {apmc_price: '', increase: null};
+//         }
+//     });
+
+//     const cropListUpdated = cropsList.map((cropProduce: CropApiModel, index: number) => {
+//         return {...cropProduce, apmc_rate_data: allProduceApmcData[index]}
+//     })
+
+//     return {
+//         type: UPDATE_SELLER_CROPS_LIST,
+//         payload: cropListUpdated
+//     }
+// }
+
+// export const fetchLiveApmcRate = ({commodity, variety}: {commodity: string, variety: string}) => {
 //     return async(dispatch: any, getState: any) => {
 //         const { loginUser } = getState() as RootState;
 //         const { district } = loginUser;
         
 //         // for testing
-//         // const district = 'Kolar';
+//         // const district = 'hassan';
 //         // const commodity = 'Rice';
 //         // const variety = 'Sona';
 //         // for testing end
 
-//         const priceModel = await getApmcModalPrice({region: district, commodity, variety})
-//         const {recentPrice} = priceModel || {recentPrice: {}};
-//         const {modal_price, message} = recentPrice || {modal_price: '', message: ''};
-//         const apmcData = modal_price ? modal_price : message;
-//         dispatch(updateApmcCropRate(apmcData));
+//         const priceModel = await getLiveApmcRate([{region: district, commodity, variety}])
+//         const {liveRates} = priceModel || {liveRates: []};
+//         if(liveRates.length) {
+//             const {liveRates: liveRatesData} = liveRates[0];
+//             if (Object.keys(liveRatesData).length) {
+//                 const sortedData = sortBy(liveRatesData, ['timestamp']);
+//                 const apmcePrice = sortedData[1].modal_price;
+//                 dispatch(updateApmcCropRate(apmcePrice));
+//             } else {
+//                 dispatch(updateApmcCropRate('No records found'));    
+//             }
+//         } else {
+//             dispatch(updateApmcCropRate('No records found'));
+//         }
 //     }
 // }
 
-export const fetchLiveApmcRate = ({commodity, variety}: {commodity: string, variety: string}) => {
+export const updatedFetchLiveApmcRate = ({
+    grade,
+    itemName,
+    variety,
+    category
+}: {
+    grade: string,
+    itemName: string,
+    variety: string,
+    category: string,
+}) => {
     return async(dispatch: any, getState: any) => {
         const { loginUser } = getState() as RootState;
         const { district } = loginUser;
-        
-        // for testing
-        // const district = 'hassan';
-        // const commodity = 'Rice';
-        // const variety = 'Sona';
-        // for testing end
-
-        const priceModel = await getLiveApmcRate([{region: district, commodity, variety}])
-        const {liveRates} = priceModel || {liveRates: []};
-        if(liveRates.length) {
-            const {liveRates: liveRatesData} = liveRates[0];
-            if (Object.keys(liveRatesData).length) {
-                const sortedData = sortBy(liveRatesData, ['timestamp']);
-                const apmcePrice = sortedData[1].modal_price;
-                dispatch(updateApmcCropRate(apmcePrice));
-            } else {
-                dispatch(updateApmcCropRate('No records found'));    
-            }
+        const apmcPriceResponse: Array<ApmcApiResponseBase> = await getLiveApmcRateUpdated([{grade, district, variety, category, item_name: itemName}])
+        const apmcPriceDetails = (!isEmpty(apmcPriceResponse) && !isNull(apmcPriceResponse)) ? apmcPriceResponse : [];
+        if(apmcPriceDetails.length) {
+            const {latest_apmc_price} = apmcPriceDetails[0] || {}
+            dispatch(updateApmcCropRate(latest_apmc_price));
         } else {
             dispatch(updateApmcCropRate('No records found'));
         }
+        
     }
 }
 
@@ -171,13 +201,13 @@ export const fetchAllCropsApmcData = (Items: Array<CropApiModel>) => {
     return async(dispatch: any, getState: any) => {
         const {seller} = getState() as RootState;
         const {cropsList}: SellerStateModel = seller;
-        const apmcFetchDataCrops: Array<LiveApmcRates> = Items.map((item: CropApiModel) => {
-            const {crop_name, sub_category, district} = item;
-            return {region: district, commodity: crop_name, variety: sub_category}
+        const apmcFetchDataCrops: Array<UpdatedLiveApmcRatesQuery> = Items.map((item: CropApiModel) => {
+            const {category_name, crop_name, sub_category, district, grade} = item;
+            return {category: category_name, item_name: crop_name, variety: sub_category, grade, district}
         })
-        const priceModel = await getLiveApmcRate(apmcFetchDataCrops)
-        const {liveRates = []} = priceModel || {liveRates: []};
-        dispatch(updateApmcCropRateData(liveRates, cropsList));
+        const allCropsPriceModel = await getLiveApmcRateUpdated(apmcFetchDataCrops)
+        const allCropsPriceModelDetails = ( !isEmpty(allCropsPriceModel) && !isNull(allCropsPriceModel) ) ? allCropsPriceModel : [];
+        dispatch(updateApmcListData(allCropsPriceModelDetails, cropsList))
     }
 }
 

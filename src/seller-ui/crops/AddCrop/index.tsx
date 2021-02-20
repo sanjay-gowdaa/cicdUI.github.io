@@ -14,7 +14,7 @@ import {
 } from 'antd';
 import { InboxOutlined } from '@ant-design/icons';
 import { useDispatch, useSelector } from 'react-redux';
-import { addNewCropData, fetchAllCategories, fetchAllMasterCrops, fetchAllVariety, fetchLiveApmcRate } from '../../../store/sellerReducer/actions';
+import { addNewCropData, fetchAllCategories, fetchAllMasterCrops, fetchAllVariety, updatedFetchLiveApmcRate } from '../../../store/sellerReducer/actions';
 import { RootState } from '../../../store/rootReducer';
 import { SellerStateModel } from '../../../store/sellerReducer/types';
 import {
@@ -185,11 +185,7 @@ const AddCropModal = () => {
                                     className="custom-select"
                                     placeholder="Select"
                                     allowClear
-                                    onChange={(value: string) => {
-                                            onSelectVariety(value)
-                                            dispatch(fetchLiveApmcRate({commodity: selectedMasterCrop, variety: value}))
-                                        }
-                                    }
+                                    onChange={onSelectVariety}
                                     onClear={() => null}
                                 >
                                     {renderSubCategoryOptions(sellerStore.variety)}
@@ -210,6 +206,14 @@ const AddCropModal = () => {
                                     className="custom-select"
                                     placeholder="Select"
                                     allowClear
+                                    onChange={(value: string) => {
+                                        dispatch(updatedFetchLiveApmcRate({
+                                            category: form.getFieldValue('categoryName'),
+                                            itemName: selectedMasterCrop,
+                                            variety: selectedVariety,
+                                            grade: value,
+                                        }))
+                                    }}
                                 >
                                     {selectedVariety ? renderGradeOptionsForSubCategory(sellerStore.variety, selectedVariety) : []}
                                 </Select>

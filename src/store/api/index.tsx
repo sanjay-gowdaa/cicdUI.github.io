@@ -1,5 +1,5 @@
 import CryptoJS from 'crypto-js';
-import { LiveApmcRates } from '../genericTypes';
+import { LiveApmcRates, UpdatedLiveApmcRatesQuery } from '../genericTypes';
 const BASE_URL = process.env.REACT_APP_BASE_URL; //'https://enzdzh0pw2.execute-api.ap-south-1.amazonaws.com'
 const STAGE = process.env.REACT_APP_ENV;
 const TOKEN_GRANT = process.env.REACT_APP_TOKEN_GRANT as string;
@@ -20,8 +20,8 @@ const USER_PROFILE_API = 'getuserprofile';
 const CROP_TYPES_API = 'getcrops';
 const CROP_SUB_TYPES_DETAILS_API = 'getcropdetails';
 const CROP_CATEGORY_DETAILS_API = 'getcropcategories';
-// const APMC_MODAL_PRICE_DEPRECATED = 'getmodalprice';
 const APMC_LIVE_RATES = 'getliverates';
+const UPDATED_APMC_API = 'https://yldnzvpt6c.execute-api.ap-south-1.amazonaws.com/localApmcDb/getapmcprice'
 
 const parseToken = (userToken: string) => {
     const sholudDecrypt = process.env.REACT_APP_ENV === 'prod';
@@ -143,11 +143,13 @@ export const getAllCrops = (sellerId: string) => {
     }).then((response: any) => response.json());
 };
 
-/* Not in use */
-// export const getApmcModalPrice = ({region, commodity, variety}: LiveApmcRates) => {
-//     const getApmcPriceApi = `${BASE_URL}/${STAGE}/${APMC_MODAL_PRICE_DEPRECATED}?region=${region}&commodity=${commodity}&variety=${variety}`;
-//     return fetch(getApmcPriceApi).then((response: any) => response.json());
-// }
+export const getLiveApmcRateUpdated = (cropDetails: Array<UpdatedLiveApmcRatesQuery>) => {
+    return fetch(UPDATED_APMC_API, {
+        method: 'POST',
+        // headers: getAuthHeader(),
+        body: JSON.stringify(cropDetails)
+    }).then((response: any) => response.json());
+}
 
 export const getLiveApmcRate = (cropDetails: Array<LiveApmcRates>) => {
     const apmcLiveRateBody = {crops: cropDetails}
