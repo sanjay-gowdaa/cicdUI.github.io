@@ -21,7 +21,7 @@ import {
     fetchAllCategories,
     fetchAllMasterCrops,
     fetchAllVariety,
-    fetchLiveApmcRate
+    updatedFetchLiveApmcRate
 } from '../../../store/sellerReducer/actions';
 import { RootState } from '../../../store/rootReducer';
 import { SellerStateModel } from '../../../store/sellerReducer/types';
@@ -192,10 +192,7 @@ const AddCropModal = () => {
                                     className="custom-select"
                                     placeholder="Select"
                                     allowClear
-                                    onChange={(value: string) => {
-                                            onSelectVariety(value);
-                                            dispatch(fetchLiveApmcRate({commodity: selectedMasterCrop, variety: value}));
-                                    }}
+                                    onChange={onSelectVariety}
                                     onClear={() => null}
                                 >
                                     {renderSubCategoryOptions(sellerStore.variety)}
@@ -216,6 +213,14 @@ const AddCropModal = () => {
                                     className="custom-select"
                                     placeholder="Select"
                                     allowClear
+                                    onChange={(value: string) => {
+                                        dispatch(updatedFetchLiveApmcRate({
+                                            category: form.getFieldValue('categoryName'),
+                                            itemName: selectedMasterCrop,
+                                            variety: selectedVariety,
+                                            grade: value,
+                                        }))
+                                    }}
                                 >
                                     {selectedVariety ? renderGradeOptionsForSubCategory(sellerStore.variety, selectedVariety) : []}
                                 </Select>

@@ -18,3 +18,16 @@ export type LiveApmcRates = {
     commodity: string;
     variety: string;
 }
+
+export type UpdatedLiveApmcRatesQuery = {
+    grade: string;
+    item_name: string;
+    variety: string;
+    district: string;
+    category: string;
+}
+
+export type ApmcApiResponseBase = {
+    latest_apmc_price: number;
+    previousLatestApmcPrice: number;
+} 
