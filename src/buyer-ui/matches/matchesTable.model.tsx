@@ -73,8 +73,8 @@ export const matchesColumns = (componentCallBacks: componentCallBacksModel) => [
     },
     {
         title: 'Additional',
-        key: 'termsAndConditions',
-        dataIndex: 'termsAndConditions',
+        key: 'additionalInfo',
+        dataIndex: 'additionalInfo',
         render: () => {
             return (
                 <>
