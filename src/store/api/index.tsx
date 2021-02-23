@@ -174,6 +174,19 @@ export const addProduce = (produceData: any, buyerId: string) => {
     }).then((response: any) => response.json());
 };
 
+export const patchProduce = () => {
+
+}
+
+export const deleteProduce = (userID: string, produceId: string, is_buyer?: boolean) => {
+    const userType = is_buyer ? 'buyer' : 'seller';
+    const produceApi = `${BASE_URL}/${STAGE}/${userType}/${userID}/crop/${produceId}`;
+    return fetch(produceApi, {
+        method: 'DELETE',
+        headers: getAuthHeader()
+    }).then((response: any) => response);
+}
+
 export const getAllProduce = (buyerId: string) => {
     const getAllProduceApi = `${BASE_URL}/${STAGE}/buyer/${buyerId}/crop`;
     return fetch(getAllProduceApi, {

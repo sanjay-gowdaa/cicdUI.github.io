@@ -18,7 +18,11 @@ const openAdditionalInfo = (content: any) => {
     });
 };
 
-export const cropColumns = [
+type cropColumnsCallback = {
+    deleteCrop: any;
+}
+
+export const cropColumns = ({deleteCrop}: cropColumnsCallback) => [
     {
         title: 'Produce',
         dataIndex: 'crop_name',
@@ -130,7 +134,14 @@ export const cropColumns = [
                     <Button type="link" block>
                         Edit
                     </Button>
-                    <Button type="link" danger block>
+                    <Button
+                        type="link" 
+                        danger
+                        block
+                        onClick={
+                            () => deleteCrop(record.sk)
+                        }
+                    >
                         Delete
                     </Button>
                 </>

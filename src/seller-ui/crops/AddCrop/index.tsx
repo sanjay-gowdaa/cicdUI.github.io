@@ -208,6 +208,7 @@ const AddCropModal = () => {
                             <Form.Item
                                 label="Select Grade"
                                 name="grade"
+                                rules={[{ required: true, message: 'Please select the grade!' }]}
                             >
                                 <Select
                                     className="custom-select"
