@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Modal, Typography } from 'antd';
 
-import MasterList from './addProduce';
+import MasterList from './masterListUpdate';
 import DefaultBtn from '../../app-components/defaultBtn';
 import { useDispatch } from 'react-redux';
 import { getMasterProduceList } from '../../store/buyerReducer/actions';

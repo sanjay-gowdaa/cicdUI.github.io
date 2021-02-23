@@ -14,13 +14,13 @@ import {
 } from 'antd';
 import { uniqBy, remove, findIndex } from 'lodash';
 import { FilterOutlined, CaretRightOutlined } from '@ant-design/icons';
-import { masterListColumns } from './../masterListTable.model';
-import { BuyerStateModel, CropCategoryModel, MasterListApiFormat } from '../../../store/buyerReducer/types';
-import { fetchAllProduce, fetchAllCrops, fetchAllVariety, updateMasterListData } from '../../../store/buyerReducer/actions';
-import DefaultBtn from '../../../app-components/defaultBtn';
-import CancelBtn from '../../../app-components/cancelBtn';
-import { RootState } from '../../../store/rootReducer';
-import { convertMasterListToGradeStructure, updateMasterCropDatastructure } from '../masterListUtils';
+import { masterListColumns } from './masterListTable.model';
+import { BuyerStateModel, CropCategoryModel, MasterListApiFormat } from '../../store/buyerReducer/types';
+import { fetchAllProduce, fetchAllCrops, fetchAllVariety, updateMasterListData } from '../../store/buyerReducer/actions';
+import DefaultBtn from '../../app-components/defaultBtn';
+import CancelBtn from '../../app-components/cancelBtn';
+import { RootState } from '../../store/rootReducer';
+import { convertMasterListToGradeStructure, updateMasterCropDatastructure } from './masterListUtils';
 
 const { Search } = Input;
 const { Option } = Select;
