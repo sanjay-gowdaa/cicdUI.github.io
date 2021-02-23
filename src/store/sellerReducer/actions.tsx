@@ -1,6 +1,6 @@
 import { sortBy, isEmpty, isNull } from "lodash";
 import { getTimeStamp } from "../../app-components/utils";
-import { getSubCategoryList, createCrop, getAllCrops, getCropCategoryList, getCropList, getLiveApmcRate, getLiveApmcRateUpdated } from "../api";
+import { getSubCategoryList, createCrop, getAllCrops, getCropCategoryList, getCropList, getLiveApmcRate, getLiveApmcRateUpdated, deleteProduce } from "../api";
 import { ApmcApiResponseBase, LiveApmcRates, UpdatedLiveApmcRatesQuery } from "../genericTypes";
 import { UserStateModel } from "../loginReducer/types";
 import { RootState } from "../rootReducer";
@@ -61,7 +61,7 @@ export const updateApmcListData = (
         allCropsApmcData: Array<ApmcApiResponseBase>,
         cropsList: Array<CropApiModel>
     ) => {
-    const allProduceApmcData = allCropsApmcData.map((apmcData: ApmcApiResponseBase) => {
+    const allProduceApmcData = Array.isArray(allCropsApmcData) ? allCropsApmcData.map((apmcData: ApmcApiResponseBase) => {
         if(!isEmpty(apmcData)) {
             const {latest_apmc_price, previousLatestApmcPrice} = apmcData;
             const difference = latest_apmc_price - previousLatestApmcPrice;
@@ -69,11 +69,11 @@ export const updateApmcListData = (
         } else {
             return {apmc_price: '', increase: null};
         }
-    });
+    }) : [];
 
-    const cropListUpdated = cropsList.map((cropProduce: CropApiModel, index: number) => {
+    const cropListUpdated = allProduceApmcData.length ? cropsList.map((cropProduce: CropApiModel, index: number) => {
         return {...cropProduce, apmc_rate_data: allProduceApmcData[index]}
-    })
+    }) : cropsList;
 
     return {
         type: UPDATE_SELLER_CROPS_LIST,
@@ -193,6 +193,15 @@ export const addNewCropData = (cropData: FormData) => {
         // const {username} = {username: '9036565202'};
         const {username} = loginUser
         const cropAdded = await createCrop(cropData, username)
+        dispatch(getAllCropsList());
+    }
+}
+
+export const deleteSelectedCrop = (cropID: string) => {
+    return async(dispatch: any, getState: any) => {
+        const {loginUser}: {loginUser: UserStateModel} = getState() as RootState;
+        const {username, district, is_seller} = loginUser;
+        const deletedResponse = await deleteProduce(username, cropID, !is_seller);
         dispatch(getAllCropsList());
     }
 }

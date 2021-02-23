@@ -16,7 +16,12 @@ const openAdditionalInfo = (content: any) => {
     });
 };
 
-export const producColumns = [
+type produceColumnCallbacks = {
+    deleteProduce: any;
+    prepareForEditProduce: any;
+}
+
+export const produceColumns = ({deleteProduce, prepareForEditProduce}: produceColumnCallbacks) => [
     {
         title: 'Produce',
         dataIndex: 'cropName',
@@ -79,10 +84,22 @@ export const producColumns = [
         render: (text: string, record: ProduceModel) => {
             return (
                 <>
-                    <Button type="link">
+                    <Button 
+                        type="link"
+                        onClick={() => {
+                                prepareForEditProduce(record)
+                            }
+                        }
+                    >
                         Edit
                     </Button>
-                    <Button type="link" danger>
+                    <Button
+                        type="link" 
+                        danger
+                        onClick={
+                            () => deleteProduce(record.sk)
+                        }
+                    >
                         Delete
                     </Button>
                 </>

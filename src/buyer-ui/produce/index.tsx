@@ -1,32 +1,60 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Table, Typography } from 'antd';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { RootState } from '../../store/rootReducer';
-import { producColumns } from './produceTable.model';
+import { produceColumns } from './produceTable.model';
 import AddProduce from './AddProduce';
 
 import './crops.scss';
-import { getProduceList } from '../../store/buyerReducer/actions';
+import { deleteSelectedProduce, getProduceList } from '../../store/buyerReducer/actions';
+import { ProduceModel } from '../../store/buyerReducer/types';
+import PrimaryBtn from '../../app-components/primaryBtn';
 
 const { Title } = Typography;
 
 const CropsSection = () => {
     const buyerState = useSelector((state: RootState) => state.buyer);
     const dispatch = useDispatch();
+    const [isEdit, setIsEdit] = useState(false);
+    const [currentProduceRecord, setCurrentProduceRecord] = useState({} as ProduceModel);
+    const [modalVisible, setModalVisible] = useState(false);
     const {masterProduceList} = buyerState;
     
     useEffect(() => {
         dispatch(getProduceList())
     }, [])
 
+    const deleteProduce = (produceId: string) => {
+        const indexOfHash = produceId.indexOf('#');
+        const actualProduceId = indexOfHash > 0 ? produceId.substr(indexOfHash+1) : '';
+        dispatch(deleteSelectedProduce(actualProduceId));
+    }
+
+    const prepareForEditProduce = (produceData: ProduceModel) => {
+        setIsEdit(!isEdit);
+        setCurrentProduceRecord(produceData);
+        setModalVisible(!modalVisible);
+    }
+
     return (
         <div className="crops-container">
             <Title level={2}>My Produce</Title>
-            <AddProduce masterProduceList={masterProduceList} />
+            <PrimaryBtn
+                className="add-crop-btn vikas-btn-radius"
+                onClick={() => setModalVisible(true)}
+                content="Add Produce"
+            />
+            <AddProduce 
+                currentProduceRecord={currentProduceRecord}
+                isEdit={isEdit}
+                masterProduceList={masterProduceList}
+                setModalVisible={setModalVisible}
+                modalVisible={modalVisible}
+            />
             <Table
                 className="margin-t-1em"
-                columns={producColumns}
+                columns={produceColumns({deleteProduce, prepareForEditProduce})}
                 dataSource={buyerState.produceList}
             />
         </div>

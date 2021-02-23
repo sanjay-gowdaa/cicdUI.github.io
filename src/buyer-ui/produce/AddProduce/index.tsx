@@ -13,8 +13,8 @@ import { useDispatch } from 'react-redux';
 
 import { addNewProduce } from '../../../store/buyerReducer/actions';
 import CancelBtn from '../../../app-components/cancelBtn';
-import PrimaryBtn from '../../../app-components/primaryBtn';
-import { MasterListApiFormat } from '../../../store/buyerReducer/types';
+import { MasterListApiFormat, ProduceModel } from '../../../store/buyerReducer/types';
+import moment from 'moment';
 
 const { TextArea } = Input;
 const { Option } = Select;
@@ -28,6 +28,14 @@ const fieldwithInfoLayout = {
     labelCol: { span: 24 },
     wrapperCol: { span: 18 },
 };
+
+type AddCropModalProps = {
+    masterProduceList: Array<any>;
+    isEdit: boolean;
+    currentProduceRecord: ProduceModel;
+    setModalVisible: any;
+    modalVisible: boolean;
+}
 
 const getMasterProduceListOpts = ({masterProduceList}: {masterProduceList: Array<MasterListApiFormat>}) => {
     return (
@@ -49,8 +57,13 @@ const getMasterProduceListOpts = ({masterProduceList}: {masterProduceList: Array
     );
 };
 
-const AddCropModal = ({masterProduceList}: {masterProduceList: Array<any>}) => {
-    const [modalVisible, setModalVisible] = useState(false);
+const AddCropModal = ({
+        masterProduceList,
+        isEdit,
+        currentProduceRecord,
+        setModalVisible,
+        modalVisible
+    }: AddCropModalProps) => {
     const [form] = Form.useForm();
     const dispatch = useDispatch();
 
@@ -58,7 +71,15 @@ const AddCropModal = ({masterProduceList}: {masterProduceList: Array<any>}) => {
         const {produce_name, delivery_by, quantity, additional_info} = fieldsValue;
         const [masterProduce, category, sub_type, grade] = produce_name.split('-');
         const deliveryByIsoformat = new Date(delivery_by).toISOString();
-        const addProducePayload = {category, sub_type, grade, delivery_by: deliveryByIsoformat, additional_info, quantity};
+        const addProducePayload = {
+                crop_name: masterProduce,
+                category,
+                sub_type,
+                grade,
+                delivery_by: deliveryByIsoformat,
+                additional_info,
+                quantity
+            };
         console.log('addProducePayload', addProducePayload);
         dispatch(addNewProduce(addProducePayload));
         form.resetFields();
@@ -74,83 +95,84 @@ const AddCropModal = ({masterProduceList}: {masterProduceList: Array<any>}) => {
         setModalVisible(false);
     };
 
+    const processOnEditInitValues = (currentProduceRecord: ProduceModel) => {
+        const deliveryByProcessed = moment(currentProduceRecord.delivery_by)
+        return {...currentProduceRecord, delivery_by: deliveryByProcessed}
+    }
+
+    const getInitialValues = () => {
+        return isEdit ? processOnEditInitValues(currentProduceRecord) : {additional_info: ''}
+    }
+
     return (
-        <>
-            <PrimaryBtn
-                className="add-crop-btn vikas-btn-radius"
-                onClick={() => setModalVisible(true)}
-                content="Add Produce"
-            />
-            <Modal
-                title="Add Interested Crops"
-                visible={modalVisible}
-                footer={null}
-                maskClosable={false}
-                onCancel={() => setModalVisible(false)}
-                width={'90%'}
-                wrapClassName="add-crop-modal"
+        <Modal
+            title="Add Interested Crops"
+            visible={modalVisible}
+            footer={null}
+            maskClosable={false}
+            onCancel={() => setModalVisible(false)}
+            width={'90%'}
+            wrapClassName="add-crop-modal"
+        >
+            <Form
+                form={form}
+                className="add-crop-form"
+                {...singleLabelFieldLayout}
+                name="basic"
+                initialValues={getInitialValues()}
+                onFinish={onFinish}
+                onFinishFailed={onFinishFailed}
             >
-                <Form
-                    form={form}
-                    className="add-crop-form"
-                    {...singleLabelFieldLayout}
-                    name="basic"
-                    initialValues={{additional_info: ''}}
-                    onFinish={onFinish}
-                    onFinishFailed={onFinishFailed}
-                >
-                    <Row gutter={16}>
-                        <Col xs={24} md={10} lg={10}>
+                <Row gutter={16}>
+                    <Col xs={24} md={10} lg={10}>
+                        <Form.Item
+                            label="Select Produce (From Master List)"
+                            name="produce_name"
+                            rules={[{ required: true, message: 'Please select the Produce!' }]}
+                        >
+                            <Select className="custom-select" placeholder="Select">
+                                {getMasterProduceListOpts({masterProduceList})}
+                            </Select>
+                        </Form.Item>
+                        <Form.Item {...fieldwithInfoLayout} label="Qunatity">
                             <Form.Item
-                                label="Select Produce (From Master List)"
-                                name="produce_name"
-                                rules={[{ required: true, message: 'Please select the Produce!' }]}
-                            >
-                                <Select className="custom-select" placeholder="Select">
-                                    {getMasterProduceListOpts({masterProduceList})}
-                                </Select>
-                            </Form.Item>
-                            <Form.Item
-                                {...fieldwithInfoLayout}
-                                label="Qunatity"
                                 name="quantity"
+                                noStyle
                                 rules={[{ required: true, message: 'Please input the Qunatity!' }]}
                             >
-                                <div className="display-flex-row">
-                                    <Input className="custom-input" placeholder="In quintal" />
-                                    <span className="additional-text">Qtl</span>
-                                </div>
+                                <Input style={{ width: 160 }} className="custom-input" placeholder="In quintal" />
                             </Form.Item>
-                            <Form.Item
-                                label="Delivery Required By"
-                                name="delivery_by"
-                                rules={[{ type: 'object', required: true, message: 'Please select time!' }]}
-                            >
-                                <DatePicker className="custom-input" />
-                            </Form.Item>
-                            <Form.Item label="Additional Information" name="additional_info">
-                                <TextArea className="custom-input" rows={4} />
-                            </Form.Item>
-                        </Col>
-                    </Row>
-                    <Row justify="center">
-                        <Col>
-                            <CancelBtn
-                                className="margin-l-r-1em crop-modal-action-btn vikas-btn-radius"
-                                onClick={onReset}
-                            />
-                            <Button
-                                className="crop-modal-action-btn vikas-btn-radius"
-                                type="primary"
-                                htmlType="submit"
-                            >
-                                Add Produce
-                            </Button>
-                        </Col>
-                    </Row>
-                </Form>
-            </Modal>
-        </>
+                            <span className="additional-text">Qtl</span>
+                        </Form.Item>
+                        <Form.Item
+                            label="Delivery Required By"
+                            name="delivery_by"
+                            rules={[{ type: 'object', required: true, message: 'Please select time!' }]}
+                        >
+                            <DatePicker className="custom-input" />
+                        </Form.Item>
+                        <Form.Item label="Additional Information" name="additional_info">
+                            <TextArea className="custom-input" rows={4} />
+                        </Form.Item>
+                    </Col>
+                </Row>
+                <Row justify="center">
+                    <Col>
+                        <CancelBtn
+                            className="margin-l-r-1em crop-modal-action-btn vikas-btn-radius"
+                            onClick={onReset}
+                        />
+                        <Button
+                            className="crop-modal-action-btn vikas-btn-radius"
+                            type="primary"
+                            htmlType="submit"
+                        >
+                            Add Produce
+                        </Button>
+                    </Col>
+                </Row>
+            </Form>
+        </Modal>
     );
 };
 

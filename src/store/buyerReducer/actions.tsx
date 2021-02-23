@@ -1,5 +1,5 @@
 import { getTimeStamp } from "../../app-components/utils";
-import { addProduce, getAllProduce, getCropCategoryList, getCropList, getSubCategoryList, getMasterList, updateMasterList } from "../api";
+import { addProduce, getAllProduce, getCropCategoryList, getCropList, getSubCategoryList, getMasterList, updateMasterList, deleteProduce } from "../api";
 import { UserStateModel } from "../loginReducer/types";
 import { RootState } from "../rootReducer";
 import { MasterListApiFormat, ProduceModel } from "./types";
@@ -82,10 +82,19 @@ export const addNewProduce = (/*produceFormData: ProduceModel*/ produceFormData:
         const {loginUser}: {loginUser: UserStateModel} = getState() as RootState;
         // for testing, use USER-ID 
         // const username = '7892329983'
-        const {username} = loginUser
-        const addProduceResponse = await addProduce(produceFormData, username);
+        const {username, district} = loginUser
+        const addProduceResponse = await addProduce({...produceFormData, district}, username);
         // console.log('addProduceResponse', addProduceResponse);
         dispatch(getProduceList())
+    }
+}
+
+export const deleteSelectedProduce = (produceID: string) => {
+    return async(dispatch: any, getState: any) => {
+        const {loginUser}: {loginUser: UserStateModel} = getState() as RootState;
+        const {username, district, is_buyer} = loginUser;
+        const deletedResponse = await deleteProduce(username, produceID, is_buyer);
+        dispatch(getProduceList());
     }
 }
 

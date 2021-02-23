@@ -8,10 +8,10 @@ export interface ProduceModel {
     grade: string;
     category: string;
     sub_type: string;
-    quantityReq: number;
+    quantity: number;
     delivery_by: any;
-    termsAndConditions?: string | null;
     additionalInfo?: string | null;
+    sk?: string;
 }
 
 export interface CropModel {
