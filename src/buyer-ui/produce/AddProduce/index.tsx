@@ -11,7 +11,7 @@ import {
 } from 'antd';
 import { useDispatch } from 'react-redux';
 
-import { addNewProduce } from '../../../store/buyerReducer/actions';
+import { addNewProduce, editProduce } from '../../../store/buyerReducer/actions';
 import CancelBtn from '../../../app-components/cancelBtn';
 import { MasterListApiFormat, ProduceModel } from '../../../store/buyerReducer/types';
 import moment from 'moment';
@@ -72,16 +72,19 @@ const AddCropModal = ({
         const [masterProduce, category, sub_type, grade] = produce_name.split('-');
         const deliveryByIsoformat = new Date(delivery_by).toISOString();
         const addProducePayload = {
-                crop_name: masterProduce,
-                category,
-                sub_type,
-                grade,
-                delivery_by: deliveryByIsoformat,
-                additional_info,
-                quantity
-            };
+            crop_name: masterProduce.trim(),
+            category: category.trim(),
+            sub_type: sub_type.trim(),
+            grade: grade.trim(),
+            delivery_by: deliveryByIsoformat,
+            additional_info,
+            quantity
+        };
+        const {sk, pk} = currentProduceRecord;
         console.log('addProducePayload', addProducePayload);
-        dispatch(addNewProduce(addProducePayload));
+        (isEdit 
+            ? dispatch(editProduce({...addProducePayload, is_delete: "no", sk, pk})) 
+            : dispatch(addNewProduce(addProducePayload)));
         form.resetFields();
         setModalVisible(false);
     };
@@ -96,8 +99,10 @@ const AddCropModal = ({
     };
 
     const processOnEditInitValues = (currentProduceRecord: ProduceModel) => {
+        const {crop_name, category, sub_type, grade} = currentProduceRecord;
+        const produce_name = `${crop_name}-${category}-${sub_type}-${grade}`;
         const deliveryByProcessed = moment(currentProduceRecord.delivery_by)
-        return {...currentProduceRecord, delivery_by: deliveryByProcessed}
+        return {...currentProduceRecord, delivery_by: deliveryByProcessed, produce_name};
     }
 
     const getInitialValues = () => {
