@@ -108,6 +108,14 @@ const Buyer = (props: any) => {
 
     const onFinishFailed = (errorInfo: any) => {
         console.log('Failed:', errorInfo);
+        const name = errorInfo.errorFields[0].name[0];
+        const formName = `basic_${name}`;
+        const element = document.getElementById(formName);
+        element?.scrollIntoView();
+    };
+
+    window.onbeforeunload = function () {
+        return "The data will be lost on reload of page. Are you sure?" ;
     };
 
     const onChangeAllDay = (e: any, relatedEntity: string) => {
