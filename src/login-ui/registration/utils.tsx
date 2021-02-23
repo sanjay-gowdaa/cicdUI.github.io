@@ -51,7 +51,7 @@ export const generateFormData = ({formSubmitValues, userType, addressForPin}: ge
     let formKeysToBeRemoved: Array<string> = [];
 
     const {bank_statement} = formSubmitValues;
-    if(bank_statement) {
+    if(bank_statement && bank_statement.length) {
         const bankstatementData = generateFileData(bank_statement[0].originFileObj, 'bank_doc');
         fileConversionPromises.push(bankstatementData);
     }
