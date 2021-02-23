@@ -230,7 +230,7 @@ const Seller = (props: any) => {
                                             validator: (rule, value) => customIfscValidator(rule, value)
                                         }]}
                                     >
-                                        <Input className="custom-input" />
+                                        <Input className="custom-input" style={{textTransform: "uppercase"}} />
                                     </Form.Item>
                                 </Col>
                                 <Col span={12}>
