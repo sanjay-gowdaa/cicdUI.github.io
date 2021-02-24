@@ -25,11 +25,6 @@ const App = (props: any) => {
         dispatch(getConfigurations());
     }, []);
 
-    const showRegisterPopup = (url: any) => {
-        window.location = url;
-        setSignUpPopupVisible(!signUpPopupVisible);
-    };
-
     return (
         <div className="app-container">
             <Header history={history} showActions={true} popUpTrigger={{setSignUpPopupVisible, signUpPopupVisible}} />
@@ -46,7 +41,7 @@ const App = (props: any) => {
                         </Title>
                         <Image src={Join} preview={false} />
                         <PrimaryBtn
-                            onClick={() => showRegisterPopup("#home")}
+                            onClick={() => setSignUpPopupVisible(!signUpPopupVisible)}
                             className="vikas-btn-radius join-us-reg"
                             content="Register"
                         />
