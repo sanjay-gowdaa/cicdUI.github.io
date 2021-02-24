@@ -25,13 +25,8 @@
 }
 
 .register-popup-container {
-    .custom-register-modal {
-        top: 3em;
-        float: right;
-
-        .ant-modal-content {
-            background-color: #F2F2F2;
-        }
+    .ant-popover-inner-content {
+        padding: 2em;
     }
 
     .register-basic-form {
