@@ -21,19 +21,20 @@ import {
     fetchAllCategories,
     fetchAllMasterCrops,
     fetchAllVariety,
+    updateCropData,
     updatedFetchLiveApmcRate
 } from '../../../store/sellerReducer/actions';
 import { RootState } from '../../../store/rootReducer';
-import { SellerStateModel } from '../../../store/sellerReducer/types';
+import { CropApiModel, SellerStateModel } from '../../../store/sellerReducer/types';
 import {
     createSellerFormData,
     renderCategoryOptions,
     renderGradeOptionsForSubCategory,
     renderSubCategoryOptions
 } from '../cropUtils';
-import PrimaryBtn from '../../../app-components/primaryBtn';
 import CancelBtn from '../../../app-components/cancelBtn';
 import { UserStateModel } from '../../../store/loginReducer/types';
+import { camelCase } from 'lodash';
 
 const { Text, Title } = Typography;
 const { Dragger } = Upload;
@@ -49,8 +50,16 @@ const fieldwithInfoLayout = {
     wrapperCol: { span: 18 },
 };
 
-const AddCropModal = () => {
-    const [modalVisible, setModalVisible] = useState(false);
+type PropsType = {
+    currentProduceRecord: CropApiModel;
+    isEdit: boolean;
+    setIsEdit: any;
+    setModalVisible: any;
+    modalVisible: boolean;
+}
+
+const AddCropModal = (addCropProps: PropsType) => {
+    const {currentProduceRecord, isEdit, setIsEdit, setModalVisible, modalVisible} = addCropProps;
     const [form] = Form.useForm();
     const dispatch = useDispatch();
     const sellerStore: SellerStateModel = useSelector((state: RootState) => state.seller);
@@ -59,6 +68,7 @@ const AddCropModal = () => {
     const [selectedMasterCrop, setSelectedMasterCrop] = useState('');
     const [selectedVariety, setSelectedVariety] = useState('');
     const [intentToSell, setIntentToSell] = useState(false);
+    // let cropImagesList: Array<any> = [];
 
     useEffect(() => {
         sellerStore.categories && !sellerStore.categories.length && dispatch(fetchAllCategories());
@@ -69,13 +79,19 @@ const AddCropModal = () => {
         const updatedValueWithApmcRates = {
             ...values,
             district: loginUser.district,
+            zip: loginUser.zip
         }
+        console.log('updatedValueWithApmcRates', updatedValueWithApmcRates);
         // For testing uncomment below and comment above
         // const updatedValueWithApmcRates = {...values, district: 'Gadag'};
         createSellerFormData(updatedValueWithApmcRates).then((sellerFromData) => {
-            dispatch(addNewCropData(sellerFromData));
-            form.resetFields();
-            setModalVisible(false);
+            if(isEdit) {
+                const {sk, pk} = currentProduceRecord;
+                dispatch(updateCropData({...sellerFromData, sk, pk, is_delete: "no"}));
+            } else {
+                dispatch(addNewCropData(sellerFromData));
+            }
+            resetAllState()
         });
     };
 
@@ -83,10 +99,47 @@ const AddCropModal = () => {
         console.log('Failed:', errorInfo);
     };
 
-    const onReset = () => {
+    const processEditValues = (currentProduceRecord: CropApiModel) => {
+        let updatedProduceObject: any = {}
+        let cropImagesData: any = []
+        const produceEntries = Object.entries(currentProduceRecord);
+        produceEntries.forEach((currentEntry, curIndex) => {
+            const produceDataKey = currentEntry[0];
+            const camelCasedKey = camelCase(produceDataKey);
+            updatedProduceObject[camelCasedKey] = currentEntry[1];
+            if (produceDataKey.includes('crop_image')) {
+                cropImagesData.push({
+                    uid: curIndex,
+                    name: produceDataKey,
+                    status: 'done',
+                    url: currentEntry[1]
+                })
+            }
+        });
+        updatedProduceObject['cropImages'] = cropImagesData;
+        // cropImagesList = cropImagesData;
+        return updatedProduceObject;
+    }
+
+    const getInitialValues = () => {
+        // if(!isEdit) {
+        //     cropImagesList = [];
+        // }
+        return isEdit ? processEditValues(currentProduceRecord) : {
+            intentToSell: 'No',
+            additionalInfo: '',
+            categoryName: null,
+            cropName: null,
+            subCategory: null,
+            grade: null
+        }
+    }
+
+    const resetAllState = () => {
         form.resetFields();
         setModalVisible(false);
-    };
+        setIsEdit(false);
+    }
 
     const onSelectCategory = (category: string) => {
         /* Reset other fields */
@@ -115,20 +168,12 @@ const AddCropModal = () => {
 
     return (
         <>
-            <PrimaryBtn
-                className="add-crop-btn vikas-btn-radius"
-                onClick={() => setModalVisible(true)}
-                content="Add Produce"
-            />
             <Modal
                 title={<Title level={5}>Add Produce</Title>}
                 visible={modalVisible}
                 footer={null}
                 maskClosable={false}
-                onCancel={() => {
-                    form.resetFields();
-                    setModalVisible(false);
-                }}
+                onCancel={resetAllState}
                 width={'90%'}
                 wrapClassName="add-crop-modal"
             >
@@ -137,14 +182,7 @@ const AddCropModal = () => {
                     className="add-crop-form"
                     {...singleLabelFieldLayout}
                     name="basic"
-                    initialValues={{
-                        intentToSell: 'No',
-                        additionalInfo: '',
-                        categoryName: null,
-                        cropName: null,
-                        subCategory: null,
-                        grade: null
-                    }}
+                    initialValues={getInitialValues()}
                     onFinish={onFinish}
                     onFinishFailed={onFinishFailed}
                 >
@@ -226,34 +264,30 @@ const AddCropModal = () => {
                                     {selectedVariety ? renderGradeOptionsForSubCategory(sellerStore.variety, selectedVariety) : []}
                                 </Select>
                             </Form.Item>
-                            <Form.Item
-                                {...fieldwithInfoLayout}
-                                label="Qunatity"
-                                name="quantity"
-                                rules={[{ required: true, message: 'Please input the Qunatity!' }]}
-                            >
-                                <div className="display-flex-row">
-                                    <Input className="custom-input" placeholder="In quintal" />
-                                    <span className="additional-text">Qtl</span>
-                                </div>
+                            <Form.Item {...fieldwithInfoLayout} label="Qunatity">
+                                <Form.Item
+                                    name="quantity"
+                                    noStyle
+                                    rules={[{ required: true, message: 'Please input the Qunatity!' }]}
+                                >
+                                    <Input style={{ width: 200 }} className="custom-input" placeholder="In quintal" />
+                                </Form.Item>
+                                <span className="additional-text">Qtl</span>
                             </Form.Item>
-                            <Form.Item
-                                {...fieldwithInfoLayout}
-                                label="Price per quintal"
-                                name="pricePerQnt"
-                                rules={[{
+                            <Form.Item {...fieldwithInfoLayout} label="Price per quintal">
+                                <Form.Item
+                                    name="pricePerQnt"
+                                    rules={[{
                                         required: true,
                                         message: 'Please input the Price per quintal!',
-                                }]}
-                            >
-                                <div className="display-flex-row">
-                                    <Space direction="vertical">
-                                        <Input className="custom-input" placeholder="In rupees" />
-                                        <span className="additional-text">
-                                            APMC Rate {loginUser.district}: {sellerStore.apmcCropPrice}
-                                        </span>
-                                    </Space>
-                                </div>
+                                    }]}
+                                    noStyle
+                                >
+                                    <Input className="custom-input" placeholder="In rupees" />
+                                </Form.Item>
+                                <span className="additional-text">
+                                    APMC Rate {loginUser.district}: {sellerStore.apmcCropPrice}
+                                </span>
                             </Form.Item>
                             <Form.Item
                                 label="Intent to Sell?"
@@ -308,7 +342,7 @@ const AddCropModal = () => {
                         <Col>
                             <CancelBtn
                                 className="margin-l-r-1em crop-modal-action-btn vikas-btn-radius"
-                                onClick={onReset}
+                                onClick={resetAllState}
                             />
                             <Button
                                 className="crop-modal-action-btn vikas-btn-radius"

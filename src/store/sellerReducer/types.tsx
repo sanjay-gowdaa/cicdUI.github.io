@@ -10,7 +10,8 @@ export interface CropApiModel {
     additional_info: string;
     district: string;
     apmc_rate_data?: {apmc_price: string, increase: string};
-    sk?: string
+    sk?: string;
+    pk?: string;
 }
 
 export interface CropModel {

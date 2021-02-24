@@ -135,6 +135,16 @@ export const createCrop = (cropData: any, sellerId: string) => {
     }).then((response: any) => response.json());
 };
 
+export const patchCrop = (cropData: any, sellerId: string) => {
+    const addProduceApi = `${BASE_URL}/${STAGE}/seller/${sellerId}/crop`;
+    const bodyParamData = JSON.stringify(cropData);
+    return fetch(addProduceApi, {
+        method: 'PATCH',
+        body: bodyParamData,
+        headers: getAuthHeader()
+    }).then((response: any) => response.json());
+}
+
 
 export const getAllCrops = (sellerId: string) => {
     const fetcCropsApi = `${BASE_URL}/${STAGE}/seller/${sellerId}/crop`;

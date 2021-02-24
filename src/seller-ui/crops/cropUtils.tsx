@@ -40,7 +40,7 @@ export const createSellerFormData = (formValues: any) => {
         } else {
             const cropImagesObject = formValues[cropKey] || {file: {}, fileList: []};
             const {fileList: cropImagesList} = cropImagesObject;
-            cropImagesList.forEach((imageFileObj: any, index: number) => {
+            cropImagesList && cropImagesList.forEach((imageFileObj: any, index: number) => {
                 const {originFileObj} = imageFileObj;
                 const cropImagePromise = generateFileData(originFileObj, `crop_image_${index}`);
                 sellerCropImagesPromises.push(cropImagePromise);
