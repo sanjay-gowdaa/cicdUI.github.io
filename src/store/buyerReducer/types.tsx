@@ -4,7 +4,7 @@ export interface ApmcRateChangeModel {
 }
 
 export interface ProduceModel {
-    produceName: string;
+    crop_name: string;
     grade: string;
     category: string;
     sub_type: string;
@@ -12,6 +12,7 @@ export interface ProduceModel {
     delivery_by: any;
     additionalInfo?: string | null;
     sk?: string;
+    pk?: string;
 }
 
 export interface CropModel {

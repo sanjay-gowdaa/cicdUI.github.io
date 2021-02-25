@@ -1,6 +1,6 @@
 import { sortBy, isEmpty, isNull } from "lodash";
 import { getTimeStamp } from "../../app-components/utils";
-import { getSubCategoryList, createCrop, getAllCrops, getCropCategoryList, getCropList, getLiveApmcRate, getLiveApmcRateUpdated, deleteProduce } from "../api";
+import { getSubCategoryList, createCrop, getAllCrops, getCropCategoryList, getCropList, getLiveApmcRate, getLiveApmcRateUpdated, deleteProduce, patchCrop } from "../api";
 import { ApmcApiResponseBase, LiveApmcRates, UpdatedLiveApmcRatesQuery } from "../genericTypes";
 import { UserStateModel } from "../loginReducer/types";
 import { RootState } from "../rootReducer";
@@ -191,8 +191,19 @@ export const addNewCropData = (cropData: FormData) => {
         const {loginUser}: {loginUser: UserStateModel} = getState() as RootState;
         // for tesing, use USER-ID 
         // const {username} = {username: '9036565202'};
-        const {username} = loginUser
+        const {username} = loginUser;
         const cropAdded = await createCrop(cropData, username)
+        dispatch(getAllCropsList());
+    }
+}
+
+export const updateCropData = (cropData: FormData) => {
+    return async(dispatch: any, getState: any) => {
+        const {loginUser}: {loginUser: UserStateModel} = getState() as RootState;
+        // for tesing, use USER-ID 
+        // const {username} = {username: '9036565202'};
+        const {username, zip} = loginUser;
+        const cropAdded = await patchCrop(cropData, username);
         dispatch(getAllCropsList());
     }
 }

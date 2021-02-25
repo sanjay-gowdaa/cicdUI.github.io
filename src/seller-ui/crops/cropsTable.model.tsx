@@ -20,9 +20,10 @@ const openAdditionalInfo = (content: any) => {
 
 type cropColumnsCallback = {
     deleteCrop: any;
+    prepareForEditCrop: any;
 }
 
-export const cropColumns = ({deleteCrop}: cropColumnsCallback) => [
+export const cropColumns = ({deleteCrop, prepareForEditCrop}: cropColumnsCallback) => [
     {
         title: 'Produce',
         dataIndex: 'crop_name',
@@ -131,16 +132,18 @@ export const cropColumns = ({deleteCrop}: cropColumnsCallback) => [
             const { intent_to_sell } = record;
             return intent_to_sell === 'Yes' ? null : (
                 <>
-                    <Button type="link" block>
+                    <Button
+                        type="link"
+                        block
+                        onClick={() => prepareForEditCrop(record)}
+                    >
                         Edit
                     </Button>
                     <Button
                         type="link" 
                         danger
                         block
-                        onClick={
-                            () => deleteCrop(record.sk)
-                        }
+                        onClick={() => deleteCrop(record.sk)}
                     >
                         Delete
                     </Button>

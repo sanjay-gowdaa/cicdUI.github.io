@@ -32,7 +32,7 @@ const CropsSection = () => {
     }
 
     const prepareForEditProduce = (produceData: ProduceModel) => {
-        setIsEdit(!isEdit);
+        setIsEdit(true);
         setCurrentProduceRecord(produceData);
         setModalVisible(!modalVisible);
     }
@@ -42,7 +42,10 @@ const CropsSection = () => {
             <Title level={2}>My Produce</Title>
             <PrimaryBtn
                 className="add-crop-btn vikas-btn-radius"
-                onClick={() => setModalVisible(true)}
+                onClick={() => {
+                    setIsEdit(false);
+                    setModalVisible(true);
+                }}
                 content="Add Produce"
             />
             <AddProduce 

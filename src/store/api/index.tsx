@@ -135,6 +135,16 @@ export const createCrop = (cropData: any, sellerId: string) => {
     }).then((response: any) => response.json());
 };
 
+export const patchCrop = (cropData: any, sellerId: string) => {
+    const addProduceApi = `${BASE_URL}/${STAGE}/seller/${sellerId}/crop`;
+    const bodyParamData = JSON.stringify(cropData);
+    return fetch(addProduceApi, {
+        method: 'PATCH',
+        body: bodyParamData,
+        headers: getAuthHeader()
+    }).then((response: any) => response.json());
+}
+
 
 export const getAllCrops = (sellerId: string) => {
     const fetcCropsApi = `${BASE_URL}/${STAGE}/seller/${sellerId}/crop`;
@@ -174,8 +184,14 @@ export const addProduce = (produceData: any, buyerId: string) => {
     }).then((response: any) => response.json());
 };
 
-export const patchProduce = () => {
-
+export const patchProduce = (produceData: any, buyerId: string) => {
+    const addProduceApi = `${BASE_URL}/${STAGE}/buyer/${buyerId}/crop`;
+    const bodyParamData = JSON.stringify(produceData);
+    return fetch(addProduceApi, {
+        method: 'PATCH',
+        body: bodyParamData,
+        headers: getAuthHeader()
+    }).then((response: any) => response.json());
 }
 
 export const deleteProduce = (userID: string, produceId: string, is_buyer?: boolean) => {

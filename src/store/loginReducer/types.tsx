@@ -10,4 +10,5 @@ export interface UserDetailsModel {
 export interface UserStateModel extends UserDetailsModel {
     signInState: {hasError: boolean, isVerified: boolean, msg: string};
     district?: string;
+    zip?: string;
 }
