@@ -1,5 +1,5 @@
 import React from 'react';
-import { Breadcrumb, Image, Popover } from 'antd';
+import { Breadcrumb, Image, Modal } from 'antd';
 
 import Register from '../login-ui/register';
 import UserHeader from '../header-profile';
@@ -13,10 +13,6 @@ import './header.scss';
 const UserBasicActions = ({ history, popUpTrigger }: { history: any, popUpTrigger: any }) => {
     const {signUpPopupVisible, setSignUpPopupVisible} = popUpTrigger;
 
-    const goToHome = (url: any) => {
-        window.location = url;
-    };
-
     return (
         <div className="display-flex-row align-center">
             <DefaultBtn
@@ -25,24 +21,25 @@ const UserBasicActions = ({ history, popUpTrigger }: { history: any, popUpTrigge
                 onClick={() => window.location.href = LOGIN_URL} 
                 size="large"
             />
-            <Popover
-                content={<Register history={history} setSignUpPopupVisible={setSignUpPopupVisible} />}
+            <PrimaryBtn
+                id="header-register-button"
+                className="margin-l-r-1em vikas-btn-radius wid150 custom-register-button"
+                type="primary"
+                size="large"
+                onClick={() => setSignUpPopupVisible(!signUpPopupVisible)}
+                content="Register"
+            />
+            <Modal
                 title={null}
-                trigger="click"
-                color='#F2F2F2'
-                overlayClassName='register-popup-container'
                 visible={signUpPopupVisible}
-                onVisibleChange={() => setSignUpPopupVisible(!signUpPopupVisible)}
+                footer={null}
+                maskClosable={false}
+                className='custom-register-modal'
+                onCancel={() => setSignUpPopupVisible(!signUpPopupVisible)}
+                wrapClassName='register-popup-container'
             >
-                <PrimaryBtn
-                    id="header-register-button"
-                    className="margin-l-r-1em vikas-btn-radius wid150 custom-register-button"
-                    type="primary"
-                    size="large"
-                    onClick={() => goToHome("#home")}
-                    content="Register"
-                />
-            </Popover>
+                <Register history={history} setSignUpPopupVisible={setSignUpPopupVisible} />
+            </Modal>
         </div>
     );
 };

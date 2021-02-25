@@ -68,10 +68,6 @@ const Register = ({ history, setSignUpPopupVisible }: { history: any, setSignUpP
 
     const setUserType = (userType: string) => setCurrentType(userType);
 
-    const closeRegForm = () => {
-        setSignUpPopupVisible(false);
-    }
-
     return (
         <React.Fragment>
             <ConfirmOTPModal
@@ -182,7 +178,7 @@ const Register = ({ history, setSignUpPopupVisible }: { history: any, setSignUpP
 
                 <Form.Item {...registerBasicFormTailLayout}>
                     <PrimaryBtn style={{width: "50%"}} htmlType="submit" content="Request OTP" />
-                    <DefaultBtn style={{width: "50%"}} onClick={() => closeRegForm} content="Cancel" />
+                    <DefaultBtn style={{width: "50%"}} onClick={() => setSignUpPopupVisible(false)} content="Cancel" />
                 </Form.Item>
             </Form>
             { displayTandC && <TAndCPopup initialDisplayType="general" viewTAndC={displayTandC} /> }
