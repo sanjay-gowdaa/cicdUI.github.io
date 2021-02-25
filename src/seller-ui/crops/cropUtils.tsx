@@ -20,15 +20,13 @@ export const renderSubCategoryOptions = (selectedCropDataList: Array<CropCategor
 }
 
 export const renderGradeOptionsForSubCategory = (selectedCropDataList: Array<CropCategoryModel>, subCategory: string) => {
-    console.log('subCategory', subCategory)
-    console.log('filter', selectedCropDataList.filter((cropData: CropCategoryModel) => cropData.variety === subCategory))
     const gradeOptions = selectedCropDataList
                             .filter((cropData: CropCategoryModel) => cropData.variety === subCategory)
                             .map(({grade}: CropCategoryModel, index) => <Option key={`${grade}-${index}`} value={grade}> {grade} </Option>)
     return gradeOptions
 }
 
-export const createSellerFormData = (formValues: any) => {
+export const createSellerFormData = (formValues: any, isEdit: boolean, customFileList: any) => {
     const sellerCropKeys = Object.keys(formValues);
     const sellerCropJsonData: any = {};
     const sellerCropImagesPromises: Array<Promise<any>> = []
@@ -49,6 +47,15 @@ export const createSellerFormData = (formValues: any) => {
     });
     
     return Promise.all(sellerCropImagesPromises).then((cropImagesValues) => {
-        return {...sellerCropJsonData, crop_images: cropImagesValues};
+        if(isEdit) {
+            let imageData: any = {};
+            customFileList.forEach((curImageUrl: string, curImgIndex: number) => {
+                imageData[`crop_image_${curImgIndex+1}`] = curImageUrl;
+            });
+            console.log('customFileList', imageData);
+            return {...sellerCropJsonData, ...imageData};
+        } else {
+            return {...sellerCropJsonData, crop_images: cropImagesValues};
+        }
     });
 };

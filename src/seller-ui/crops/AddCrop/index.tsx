@@ -68,11 +68,34 @@ const AddCropModal = (addCropProps: PropsType) => {
     const [selectedMasterCrop, setSelectedMasterCrop] = useState('');
     const [selectedVariety, setSelectedVariety] = useState('');
     const [intentToSell, setIntentToSell] = useState(false);
-    // let cropImagesList: Array<any> = [];
+    const [formInitialize, setFormInitValues] = useState({
+        intentToSell: 'No',
+        additionalInfo: '',
+        categoryName: null,
+        cropName: null,
+        subCategory: null,
+        grade: null
+    });
+    const [customFileList, setCustomFileList] = useState([])
 
     useEffect(() => {
         sellerStore.categories && !sellerStore.categories.length && dispatch(fetchAllCategories());
     }, []);
+
+    useEffect(() => {
+        if(modalVisible) {
+            const formInitValues = isEdit ? processEditValues(currentProduceRecord) : {
+                intentToSell: 'No',
+                additionalInfo: '',
+                categoryName: null,
+                cropName: null,
+                subCategory: null,
+                grade: null
+            }
+            setFormInitValues(formInitValues);
+            form.setFieldsValue(formInitValues)
+        }
+    }, [modalVisible]);
 
     const onFinish = (values: any) => {
         // console.log('Success:', values);
@@ -84,7 +107,7 @@ const AddCropModal = (addCropProps: PropsType) => {
         console.log('updatedValueWithApmcRates', updatedValueWithApmcRates);
         // For testing uncomment below and comment above
         // const updatedValueWithApmcRates = {...values, district: 'Gadag'};
-        createSellerFormData(updatedValueWithApmcRates).then((sellerFromData) => {
+        createSellerFormData(updatedValueWithApmcRates, isEdit, customFileList).then((sellerFromData) => {
             if(isEdit) {
                 const {sk, pk} = currentProduceRecord;
                 dispatch(updateCropData({...sellerFromData, sk, pk, is_delete: "no"}));
@@ -101,38 +124,43 @@ const AddCropModal = (addCropProps: PropsType) => {
 
     const processEditValues = (currentProduceRecord: CropApiModel) => {
         let updatedProduceObject: any = {}
-        let cropImagesData: any = []
+        let cropImagesData: any = [];
         const produceEntries = Object.entries(currentProduceRecord);
+        console.log('produceEntries', produceEntries);
         produceEntries.forEach((currentEntry, curIndex) => {
             const produceDataKey = currentEntry[0];
             const camelCasedKey = camelCase(produceDataKey);
-            updatedProduceObject[camelCasedKey] = currentEntry[1];
-            if (produceDataKey.includes('crop_image')) {
-                cropImagesData.push({
-                    uid: curIndex,
-                    name: produceDataKey,
-                    status: 'done',
-                    url: currentEntry[1]
-                })
+            
+            /* First approach */
+            // if (produceDataKey.includes('crop_image')) {
+            //     if(currentEntry[1].length) {
+            //         cropImagesData.push({
+            //             uid: curIndex,
+            //             name: produceDataKey,
+            //             status: 'done',
+            //             url: currentEntry[1]
+            //         })
+            //     }
+            // } else {
+            //     updatedProduceObject[camelCasedKey] = currentEntry[1];
+            // }
+            /* First approach end*/
+
+            if(produceDataKey.includes('crop_image')) {
+                updatedProduceObject[produceDataKey] = currentEntry[1];
+                cropImagesData.push(currentEntry[1]);
+            } else {
+                updatedProduceObject[camelCasedKey] = currentEntry[1];
             }
         });
-        updatedProduceObject['cropImages'] = cropImagesData;
-        // cropImagesList = cropImagesData;
-        return updatedProduceObject;
-    }
-
-    const getInitialValues = () => {
-        // if(!isEdit) {
-        //     cropImagesList = [];
+        /* First approach */
+        // if(cropImagesData.length) {
+        //     updatedProduceObject['cropImages'] = cropImagesData;
+        //     setCustomFileList(cropImagesData);
         // }
-        return isEdit ? processEditValues(currentProduceRecord) : {
-            intentToSell: 'No',
-            additionalInfo: '',
-            categoryName: null,
-            cropName: null,
-            subCategory: null,
-            grade: null
-        }
+        /* First approach end */
+        setCustomFileList(cropImagesData);
+        return updatedProduceObject;
     }
 
     const resetAllState = () => {
@@ -182,7 +210,7 @@ const AddCropModal = (addCropProps: PropsType) => {
                     className="add-crop-form"
                     {...singleLabelFieldLayout}
                     name="basic"
-                    initialValues={getInitialValues()}
+                    initialValues={formInitialize}
                     onFinish={onFinish}
                     onFinishFailed={onFinishFailed}
                 >
@@ -312,6 +340,7 @@ const AddCropModal = (addCropProps: PropsType) => {
                                     multiple={true}
                                     accept="image/*"
                                     listType="picture-card"
+                                    disabled={isEdit}
                                     beforeUpload= {(file) => {
                                         return false
                                     }}
