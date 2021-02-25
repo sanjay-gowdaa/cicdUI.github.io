@@ -97,6 +97,14 @@ const Seller = (props: any) => {
 
     const onFinishFailed = (errorInfo: any) => {
         console.log('Failed:', errorInfo);
+        const name = errorInfo.errorFields[0].name[0];
+        const formName = `basic_${name}`;
+        const element = document.getElementById(formName);
+        element?.scrollIntoView();
+    };
+
+    window.onbeforeunload = function () {
+        return "The data will be lost on reload of page. Are you sure?" ;
     };
 
     const onReset = () => {
@@ -222,7 +230,7 @@ const Seller = (props: any) => {
                                             validator: (rule, value) => customIfscValidator(rule, value)
                                         }]}
                                     >
-                                        <Input className="custom-input" />
+                                        <Input className="custom-input" style={{textTransform: "uppercase"}} />
                                     </Form.Item>
                                 </Col>
                                 <Col span={12}>

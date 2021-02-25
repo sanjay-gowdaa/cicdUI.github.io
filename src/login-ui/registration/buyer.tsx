@@ -108,6 +108,14 @@ const Buyer = (props: any) => {
 
     const onFinishFailed = (errorInfo: any) => {
         console.log('Failed:', errorInfo);
+        const name = errorInfo.errorFields[0].name[0];
+        const formName = `basic_${name}`;
+        const element = document.getElementById(formName);
+        element?.scrollIntoView();
+    };
+
+    window.onbeforeunload = function () {
+        return "The data will be lost on reload of page. Are you sure?" ;
     };
 
     const onChangeAllDay = (e: any, relatedEntity: string) => {
@@ -220,14 +228,19 @@ const Buyer = (props: any) => {
                             <Form.Item
                                 labelCol={{span: 24}}
                                 wrapperCol={{span: 18}}
-                                label="PAN card Number" 
+                                label="PAN card Number/ GSTN" 
                             >
                                 <Form.Item
                                     name="pan"
-                                    rules={[{validator: (rule, value) => customPANValidator(rule, value)}]}
+                                    rules={[{
+                                        required: true,
+                                        pattern: /^[a-zA-Z0-9]{10,14}$/,
+                                        message: "Invalid format"
+                                    }]}
+                                    // rules={[{validator: (rule, value) => customPANValidator(rule, value)}]}
                                     style={{ display: 'inline-block', width: '60%' }}
                                 >
-                                    <Input className="custom-input" />
+                                    <Input className="custom-input" style={{textTransform: "uppercase"}} />
                                 </Form.Item>
                                 <Form.Item
                                     name="pan_card"
@@ -441,10 +454,6 @@ const Buyer = (props: any) => {
                                     <Form.Item
                                         label="Account Holder Name"
                                         name="account_name"
-                                        rules={[{
-                                            required: true,
-                                            validator: (rule, value) => customNameValidator(rule, value, "Account Holder Name")
-                                        }]}
                                     >
                                         <Input className="custom-input" />
                                     </Form.Item>
@@ -453,22 +462,14 @@ const Buyer = (props: any) => {
                                     <Form.Item
                                         label="IFSC Code"
                                         name="ifsc_code"
-                                        rules={[{
-                                            required: true,
-                                            validator: (rule, value) => customIfscValidator(rule, value)
-                                        }]}
                                     >
-                                        <Input className="custom-input" />
+                                        <Input className="custom-input" style={{textTransform: "uppercase"}} />
                                     </Form.Item>
                                 </Col>
                                 <Col span={12}>
                                     <Form.Item
                                         label="Account Number"
                                         name="account_number"
-                                        rules={[{
-                                            required: true,
-                                            validator: (rule,value) => accountNumberValidator(rule, value)
-                                        }]}
                                     >
                                         <Input className="custom-input" />
                                     </Form.Item>
@@ -477,10 +478,6 @@ const Buyer = (props: any) => {
                                     <Form.Item
                                         label="Confirm Account Number"
                                         name="confirm_account_number"
-                                        rules={[{
-                                            required: true,
-                                            validator: (rule, value) => confirmAccountValidator(rule, value, form.getFieldsValue().account_number)
-                                        }]}
                                     >
                                         <Input className="custom-input" />
                                     </Form.Item>
@@ -498,7 +495,6 @@ const Buyer = (props: any) => {
                                 label="Upload Bank Passbook or Statement"
                                 valuePropName="fileList"
                                 getValueFromEvent={normFile}
-                                rules={[{ required: true, message: 'Upload the statment!' }]}
                             >
                                 <Upload
                                     accept="images/*"

@@ -51,8 +51,10 @@ export const generateFormData = ({formSubmitValues, userType, addressForPin}: ge
     let formKeysToBeRemoved: Array<string> = [];
 
     const {bank_statement} = formSubmitValues;
-    const bankstatementData = generateFileData(bank_statement[0].originFileObj, 'bank_doc');
-    fileConversionPromises.push(bankstatementData);
+    if(bank_statement && bank_statement.length) {
+        const bankstatementData = generateFileData(bank_statement[0].originFileObj, 'bank_doc');
+        fileConversionPromises.push(bankstatementData);
+    }
     if (userType === UserTypes.SELLER) {
     // For testing uncomment below line and comment above line
     // if (false) {
