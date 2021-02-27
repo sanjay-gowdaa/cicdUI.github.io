@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
     Button,
     Col,
@@ -66,6 +66,18 @@ const AddCropModal = ({
     }: AddCropModalProps) => {
     const [form] = Form.useForm();
     const dispatch = useDispatch();
+    const [formInitialize, setFormInitValues] = useState({produce_name: '', quantity: '', delivery_by: '', additional_info: ''});
+
+    useEffect(() => {
+        if(modalVisible) {
+            const formInitValues: any = isEdit ? 
+            processOnEditInitValues(currentProduceRecord) :
+            {produce_name: '', quantity: '', delivery_by: '', additional_info: ''};
+
+            setFormInitValues(formInitValues);
+            form.setFieldsValue(formInitValues)
+        }
+    }, [modalVisible]);
 
     const onFinish = (fieldsValue: any) => {
         const {produce_name, delivery_by, quantity, additional_info} = fieldsValue;
@@ -105,10 +117,6 @@ const AddCropModal = ({
         return {...currentProduceRecord, delivery_by: deliveryByProcessed, produce_name};
     }
 
-    const getInitialValues = () => {
-        return isEdit ? processOnEditInitValues(currentProduceRecord) : {additional_info: ''}
-    }
-
     return (
         <Modal
             title="Add Interested Crops"
@@ -124,7 +132,7 @@ const AddCropModal = ({
                 className="add-crop-form"
                 {...singleLabelFieldLayout}
                 name="basic"
-                initialValues={getInitialValues()}
+                initialValues={formInitialize}
                 onFinish={onFinish}
                 onFinishFailed={onFinishFailed}
             >
@@ -172,7 +180,7 @@ const AddCropModal = ({
                             type="primary"
                             htmlType="submit"
                         >
-                            Add Produce
+                            { isEdit ? 'Edit' : 'Add' } Produce
                         </Button>
                     </Col>
                 </Row>

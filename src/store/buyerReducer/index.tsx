@@ -12,8 +12,8 @@ const INITIAL_STATE: BuyerStateModel = {
     masterProduceList: [],
     produceList: [],
     masterCropNames: [],
-    matchesList: mockMatchedCropsList,
-    transactionList: mockTransactionCropsList,
+    matchesList: [], // mockMatchedCropsList,
+    transactionList: [], // mockTransactionCropsList,
     reviewsList: mockReviewsList,
     timeStamp: {}
 };

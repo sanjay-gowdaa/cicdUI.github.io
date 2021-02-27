@@ -24,8 +24,8 @@ type produceColumnCallbacks = {
 export const produceColumns = ({deleteProduce, prepareForEditProduce}: produceColumnCallbacks) => [
     {
         title: 'Produce',
-        dataIndex: 'cropName',
-        key: 'cropName',
+        dataIndex: 'crop_name',
+        key: 'crop_name',
         render: (cropName: string, record: ProduceModel) => {
             const {category, sub_type: subType} = record;
 

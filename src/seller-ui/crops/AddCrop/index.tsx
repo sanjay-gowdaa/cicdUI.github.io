@@ -104,7 +104,7 @@ const AddCropModal = (addCropProps: PropsType) => {
             district: loginUser.district,
             zip: loginUser.zip
         }
-        console.log('updatedValueWithApmcRates', updatedValueWithApmcRates);
+        // console.log('updatedValueWithApmcRates', updatedValueWithApmcRates);
         // For testing uncomment below and comment above
         // const updatedValueWithApmcRates = {...values, district: 'Gadag'};
         createSellerFormData(updatedValueWithApmcRates, isEdit, customFileList).then((sellerFromData) => {
@@ -378,7 +378,7 @@ const AddCropModal = (addCropProps: PropsType) => {
                                 type="primary"
                                 htmlType="submit"
                             >
-                                Add Produce
+                                { isEdit ? 'Edit' : 'Add' } Produce
                             </Button>
                         </Col>
                     </Row>
