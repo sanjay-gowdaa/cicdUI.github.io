@@ -1,5 +1,5 @@
-import React from 'react';
-import { Card, Col, Image, Row, Space, Typography } from 'antd';
+import React, { useState } from 'react';
+import { Card, Col, Image, Modal, Row, Space, Typography } from 'antd';
 
 import Outline from '../static/assets/Outline.svg';
 import Vision from '../static/assets/vision.svg';
@@ -8,11 +8,27 @@ import Nagappa from '../static/assets/nagappa.png';
 import Suma from '../static/assets/suma.png';
 import Sadananda from '../static/assets/sadananda.png';
 
-const { Paragraph, Text, Title } = Typography;
+const { Paragraph, Text, Title, Link } = Typography;
 
 const AboutUs = () => {
+    const [viewVideo, setVideo] = useState(false);
+
     return (
         <div id="aboutUs">
+            <Modal
+                visible={viewVideo}
+                onCancel={() => setVideo(!viewVideo)}
+                width={"95%"}
+                className="about-us-video-modal"
+                maskClosable={true}
+                footer={null}
+            >
+                <iframe
+                    width="95%"
+                    height="100%"
+                    src="https://www.youtube.com/embed/zTYLM3MLUWE?playlist=zTYLM3MLUWE&loop=1&autoplay=1&mute=1"
+                />
+            </Modal>
             <Title className="col-green about-us-title" level={2}>About us</Title>
             <img className="outline-image" src={Outline} />
             <Paragraph className="outline-paragraph">
@@ -21,6 +37,7 @@ const AboutUs = () => {
                 Higher Income to farmer communities. We have worked tirelessly 
                 with farmers and everyone in the value chain to understand the needs.
                 We are committed to ensure a meaningful facilitation to the buyers and sellers. 
+                <br/><Link  onClick={() => setVideo(true)}>Click here to watch a video about us.</Link>
             </Paragraph>
             <Row>
                 <Col span={12}>
