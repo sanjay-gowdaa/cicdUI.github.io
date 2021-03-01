@@ -8,6 +8,7 @@ const { Text, Title, Paragraph } = Typography;
 const SellerTerms = () => {
     return (
         <div className="general-terms">
+            <Title level={5} style={{fontSize: "small"}}>Seller Terms</Title>
             <Title level={5} style={{fontSize: "small"}}>1. Definitions</Title>
             <Paragraph>
                 <ol className="upper-roman-list-style">
@@ -751,7 +752,7 @@ const SellerTerms = () => {
             <Space direction="vertical">
                 <Text>Web page: https://Vikasbandhu.in </Text>
                 <Text>Email: contactus@samparkbindhu.in </Text>
-                <Text>Tel.: [●]</Text>
+                <Text>Tel.: +91-9845711600</Text>
             </Space>
         </div>
     );
