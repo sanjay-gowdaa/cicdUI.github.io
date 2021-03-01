@@ -67,7 +67,7 @@ const AddCropModal = (addCropProps: PropsType) => {
 
     const [selectedMasterCrop, setSelectedMasterCrop] = useState('');
     const [selectedVariety, setSelectedVariety] = useState('');
-    const [intentToSell, setIntentToSell] = useState(false);
+    const [showAlert, setAlert] = useState(false);
     const [formInitialize, setFormInitValues] = useState({
         intentToSell: 'No',
         additionalInfo: '',
@@ -167,6 +167,7 @@ const AddCropModal = (addCropProps: PropsType) => {
         form.resetFields();
         setModalVisible(false);
         setIsEdit(false);
+        setAlert(false);
     }
 
     const onSelectCategory = (category: string) => {
@@ -192,6 +193,10 @@ const AddCropModal = (addCropProps: PropsType) => {
         form.setFieldsValue({grade: null});
         /* Reset other fields end */
         setSelectedVariety(variety);
+    };
+
+    const changeIntentToSell = (event: any) => {
+        (event.target.value === 'Yes' ? setAlert(true) : setAlert(false));
     };
 
     return (
@@ -325,16 +330,21 @@ const AddCropModal = (addCropProps: PropsType) => {
                                     message: 'Please set your intent to sell'
                                 }]}
                             >
-                                <Radio.Group className="custom-radio" defaultValue={"No"}>
-                                    <Radio value={"Yes"} onClick={() => setIntentToSell(true)}>Yes</Radio>
-                                    <Radio value={"No"} onClick={() => setIntentToSell(false)}>No</Radio>
-                                </Radio.Group><br/>
-                                {intentToSell && <Alert type="warning" message={<>You can not edit if intent to sell is set to "<b>Yes</b>"</>}/>}
+                                <Radio.Group
+                                    className="custom-radio"
+                                    name="intentToSell"
+                                    onChange={changeIntentToSell}
+                                >
+                                    <Radio value={"Yes"}>Yes</Radio>
+                                    <Radio value={"No"}>No</Radio>
+                                </Radio.Group>
                             </Form.Item>
+                            {showAlert && 
+                                <Alert type="warning" message={<>You can not edit if intent to sell is set to "<b>Yes</b>"</>}/>}
                         </Col>
                         <Divider className="height-full" type="vertical" style={{height: "25em", color: "black" }} />
                         <Col span={12}>
-                            <Form.Item label="Add Produce Photos" name="cropImages" required={intentToSell}>
+                            <Form.Item label="Add Produce Photos" name="cropImages" required={showAlert}>
                                 <Dragger
                                     className="crop-images-upload"
                                     multiple={true}
