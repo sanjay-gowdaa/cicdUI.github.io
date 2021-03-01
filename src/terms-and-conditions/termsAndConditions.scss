@@ -8,14 +8,6 @@
         }
     }
 
-    .custom-t-and-c-modal {
-        .general-terms {
-            overflow-y: scroll;
-            height: 200px;
-            font-size: x-small;
-        }
-    }
-
     .collapsable-t-and-c {
         width: 95%;
         margin: 1em auto !important;
@@ -37,8 +29,17 @@
         list-style-type: lower-alpha !important;
     }
 
-    .view-full-page {
-        float: left;
+}
+
+.custom-t-and-c-modal {
+    .general-terms {
+        overflow-y: scroll;
+        height: 200px;
         font-size: x-small;
     }
+}
+
+.view-full-page {
+    float: left;
+    font-size: x-small;
 }
