@@ -14,12 +14,12 @@ $col-shade-green: #12805C;
     opacity: 1;
 
     .home-content-wrapper {
-        position: absolute;
+        position: relative;
         top: 13vh;
         height: 100vh;
         
         .home-content {
-            position: relative;
+            position: absolute;
             left: 5vw;
             top: 5vh;
             width: fit-content;
