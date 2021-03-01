@@ -5,7 +5,6 @@ $col-shade-green: #12805C;
 }
 
 #home {
-    background: url('../static/assets/Vikasbandhu_1810801264_1920x1080pxl.jpg');
     background-position: center center;
     background-size: 100% auto;
     background-repeat: no-repeat;
@@ -15,7 +14,7 @@ $col-shade-green: #12805C;
     opacity: 1;
 
     .home-content-wrapper {
-        position: relative;
+        position: absolute;
         top: 13vh;
         height: 100vh;
         
@@ -272,6 +271,12 @@ $col-shade-green: #12805C;
     .transport-image {
         margin: 2rem 15rem;
         width: 60vw;
+    }
+}
+
+.about-us-video-modal {
+    .ant-modal-body {
+        height: 80vh;
     }
 }
 
