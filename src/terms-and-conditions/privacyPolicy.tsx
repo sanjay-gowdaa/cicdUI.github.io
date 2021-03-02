@@ -5,7 +5,7 @@ const { Paragraph, Text, Title } = Typography;
 
 const PrivacyPolicy = () => {
     return (
-        <>
+        <div className="general-terms">
             <Paragraph>
                 SamparkBindhu Solutions Private Limited (“<b>SamparkBindhu</b>/<b>Company</b>”) is a company 
                 registered under the Companies Act, 2013, bearing CIN U72900KA2020PTC137512 and having its 
@@ -34,7 +34,7 @@ const PrivacyPolicy = () => {
                 For the purposes of this Policy, “SamparkBindhu”, "we", "us", and "our" means SamparkBindhu 
                 Solutions Private Limited and its group companies.
             </Paragraph>
-            <Title level={4}>1. Nature Of PII Collected By SamparkBindhu</Title>
+            <Title className="font-size-small" level={5}>1. Nature Of PII Collected By SamparkBindhu</Title>
             <Paragraph>
                 <ol>
                     <li>
@@ -92,7 +92,7 @@ const PrivacyPolicy = () => {
                     </li>
                 </ol>
             </Paragraph>
-            <Title level={4}>2. Mechanism Of Data Collection</Title>
+            <Title className="font-size-small" level={5}>2. Mechanism Of Data Collection</Title>
             <Paragraph>
                 We collect information from Users when Users register on our Site, fill out a 
                 feedback form or makes a service enquiry. From time to time, the Site may also 
@@ -102,7 +102,7 @@ const PrivacyPolicy = () => {
                 in Users not being able to use such specific service of the Platform that required 
                 such additional PII.
             </Paragraph>
-            <Title level={4}>3. Use Of Date (Including PII) Collected</Title>
+            <Title className="font-size-small" level={5}>3. Use Of Date (Including PII) Collected</Title>
             <Paragraph>
                 <Text>We may use the information collected from Users in following ways:</Text>
                 <ol>
@@ -116,7 +116,7 @@ const PrivacyPolicy = () => {
                     <li>To improve with  better placement of advertisements.</li>
                 </ol>
             </Paragraph>
-            <Title level={4}>4. Brief Description On Protection Of Users/ Visitor PII By SamparkBindhu</Title>
+            <Title className="font-size-small" level={5}>4. Brief Description On Protection Of Users/ Visitor PII By SamparkBindhu</Title>
             <Paragraph>
                 The following paragraph briefly describes the mechanisms put in place and practices implemented 
                 by SamparkBindhu to protect and maintain integrity and confidentiality of Users PII
@@ -156,7 +156,7 @@ const PrivacyPolicy = () => {
                     </li>
                 </ol>
             </Paragraph>
-            <Title level={4}>5. We Do Not Sell, Trade, Transfer, Or Otherwise Disclose PII To Any Third Parties</Title>
+            <Title className="font-size-small" level={5}>5. We Do Not Sell, Trade, Transfer, Or Otherwise Disclose PII To Any Third Parties</Title>
             <Paragraph>
                 <ol>
                     <li>
@@ -173,14 +173,14 @@ const PrivacyPolicy = () => {
                     </li>
                 </ol>
             </Paragraph>
-            <Title level={4}>6. Purging Of Personal Data</Title>
+            <Title className="font-size-small" level={5}>6. Purging Of Personal Data</Title>
             <Paragraph>
                 Users personal data shall be stored with SamparkBindhu for a pre-determined period after 
                 Users cease to use or access our Platform as per the internal policies for data storage of 
                 SamparkBindhu and the same shall be eventually erased/ purged/ removed from SamparkBindhu 
                 storage as per relevant applicable policies of SamparkBindhu.
             </Paragraph>
-            <Title level={4}>7. Cookie Policy</Title>
+            <Title className="font-size-small" level={5}>7. Cookie Policy</Title>
             <Paragraph>
                 Our Site may use cookies. By using our website and agreeing to these terms of use, 
                 Users consent to our use of cookies in accordance with the terms of our Privacy policy.
@@ -214,7 +214,7 @@ const PrivacyPolicy = () => {
                     </li>
                 </ol>
             </Paragraph>
-            <Title level={4}>8. Links To Third Party Sites</Title>
+            <Title className="font-size-small" level={5}>8. Links To Third Party Sites</Title>
             <Paragraph>
                 <ol>
                     <li>
@@ -255,13 +255,13 @@ const PrivacyPolicy = () => {
                     </li>
                 </ol>
             </Paragraph>
-            <Title level={4}>9. Edit Users Personal Information</Title>
+            <Title className="font-size-small" level={5}>9. Edit Users Personal Information</Title>
             <Paragraph>
                 Users can correct, delete/remove or change information in users personal 
                 profile, or any other information we have about users by:
             </Paragraph>
             <Text>Logging in to users account or e-mailing us or calling us</Text>
-            <Title level={4}>10. Contact Us</Title>
+            <Title className="font-size-small" level={5}>10. Contact Us</Title>
             <Paragraph>
                 If you have any queries, concerns, comments or feedback regarding 
                 this Privacy Policy Users can contact us using the information below:
@@ -272,7 +272,7 @@ const PrivacyPolicy = () => {
                 <address>617, "Shivam", Royal Park Residency, 
                 <br/>J P Nagar 9th Phase, Bengaluru-560062</address>
             </Text>
-        </>
+        </div>
     );
 };
 

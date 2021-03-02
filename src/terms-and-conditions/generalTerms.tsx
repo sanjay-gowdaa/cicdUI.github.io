@@ -8,7 +8,7 @@ const { Title, Paragraph } = Typography;
 const GeneralTerms = () => {
     return (
         <div className="general-terms">
-            <Title level={5} style={{fontSize: "small"}}>General Terms</Title>
+            <Title className="font-size-small" level={5}>General Terms</Title>
             <Paragraph>
                 Vikasbandhu is the trademark owned by SamparkBindhu Solutions Private Limited
                 ("<b>SamparkBindhu</b>"). All back- end support for the application has been created 

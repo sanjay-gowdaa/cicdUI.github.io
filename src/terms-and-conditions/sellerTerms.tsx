@@ -8,8 +8,8 @@ const { Text, Title, Paragraph } = Typography;
 const SellerTerms = () => {
     return (
         <div className="general-terms">
-            <Title level={5} style={{fontSize: "small"}}>Seller Terms</Title>
-            <Title level={5} style={{fontSize: "small"}}>1. Definitions</Title>
+            <Title className="font-size-small" level={5}>Seller Terms</Title>
+            <Title className="font-size-small" level={5}>1. Definitions</Title>
             <Paragraph>
                 <ol className="upper-roman-list-style">
                     <Space direction="vertical">
@@ -54,7 +54,7 @@ const SellerTerms = () => {
                     </Space>
                 </ol>
             </Paragraph>
-            <Title level={5} style={{fontSize: "small"}}>2. Rights And License To Use</Title>
+            <Title className="font-size-small" level={5}>2. Rights And License To Use</Title>
             <Paragraph>
                 <ol className="lower-roman-list-style">
                     <Space direction="vertical">
@@ -90,7 +90,7 @@ const SellerTerms = () => {
                     </Space>
                 </ol>
             </Paragraph>
-            <Title level={5} style={{fontSize: "small"}}>3. Conditions Of Use And Operation Of The Platform</Title>
+            <Title className="font-size-small" level={5}>3. Conditions Of Use And Operation Of The Platform</Title>
             <Text strong={true} underline={true}>Conditions for access of the platform</Text>
             <Paragraph>
                 <ol className="upper-roman-list-style">
@@ -357,7 +357,7 @@ const SellerTerms = () => {
                     </Space>
                 </ol>
             </Paragraph>
-            <Title level={5} style={{fontSize: "small"}}>4. Seller's Obligations</Title>
+            <Title className="font-size-small" level={5}>4. Seller's Obligations</Title>
             <Paragraph>
                 <ol className="lower-roman-list-style">
                     <Space direction="vertical">
@@ -426,7 +426,7 @@ const SellerTerms = () => {
                     </Space>
                 </ol>
             </Paragraph>
-            <Title level={5} style={{fontSize: "small"}}>5. SamparkBindhu Liability And Limitation Of Liability</Title>
+            <Title className="font-size-small" level={5}>5. SamparkBindhu Liability And Limitation Of Liability</Title>
             <Paragraph>
                 <ol className="upper-roman-list-style">
                     <Space direction="vertical">
@@ -518,7 +518,7 @@ const SellerTerms = () => {
                     </Space>
                 </ol>
             </Paragraph>
-            <Title level={5} style={{fontSize: "small"}}>6. Cancellation Of Transaction</Title>
+            <Title className="font-size-small" level={5}>6. Cancellation Of Transaction</Title>
             <Paragraph>
                 <ol className="lower-roman-list-style">
                     <Space direction="vertical">
@@ -537,7 +537,7 @@ const SellerTerms = () => {
                     </Space>
                 </ol>
             </Paragraph>
-            <Title level={5} style={{fontSize: "small"}}>7. Return And Refund Policy</Title>
+            <Title className="font-size-small" level={5}>7. Return And Refund Policy</Title>
             <Paragraph>
                 <ol className="upper-roman-list-style">
                     <Space direction="vertical">
@@ -561,7 +561,7 @@ const SellerTerms = () => {
                     </Space>
                 </ol>
             </Paragraph>
-            <Title level={5} style={{fontSize: "small"}}>8. Software Updates/Upgradation</Title>
+            <Title className="font-size-small" level={5}>8. Software Updates/Upgradation</Title>
             <Paragraph>
                 <ol className="lower-roman-list-style">
                     <Space direction="vertical">
@@ -576,7 +576,7 @@ const SellerTerms = () => {
                     </Space>
                 </ol>
             </Paragraph>
-            <Title level={5} style={{fontSize: "small"}}>9. User Data Privacy And Collection Of Personal Information</Title>
+            <Title className="font-size-small" level={5}>9. User Data Privacy And Collection Of Personal Information</Title>
             <Paragraph>
                 <ol className="upper-roman-list-style">
                     <Space direction="vertical">
@@ -684,7 +684,7 @@ const SellerTerms = () => {
                     </Space>
                 </ol>
             </Paragraph>
-            <Title level={5} style={{fontSize: "small"}}>10. Suspension And Cancellation Of The Account</Title>
+            <Title className="font-size-small" level={5}>10. Suspension And Cancellation Of The Account</Title>
             <Paragraph>
                 SamparkBindhu reserves the right to suspend for any period of time it will define, 
                 to cancel, at its discretion and whenever it deems necessary, to the extent permitted by law, 
@@ -692,7 +692,7 @@ const SellerTerms = () => {
                 present or future, of any of the obligations under these Terms and Conditions and / or the law, 
                 namely in case of false information to be provided by the Seller.
             </Paragraph>
-            <Title level={5} style={{fontSize: "small"}}>11. Final Provisions</Title>
+            <Title className="font-size-small" level={5}>11. Final Provisions</Title>
             <Paragraph>
                 <ol className="lower-roman-list-style">
                     <Space direction="vertical">
@@ -733,7 +733,7 @@ const SellerTerms = () => {
                     </Space>
                 </ol>
             </Paragraph>
-            <Title level={5} style={{fontSize: "small"}}>12. Arbitration</Title>
+            <Title className="font-size-small" level={5}>12. Arbitration</Title>
             <Paragraph>
                 <ol className="upper-roman-list-style">
                     <Space direction="vertical">
@@ -748,9 +748,9 @@ const SellerTerms = () => {
                     </Space>
                 </ol>
             </Paragraph>
-            <Title level={5} style={{fontSize: "small"}}>13. </Title>
+            <Title className="font-size-small" level={5}>13. Contacts</Title>
             <Space direction="vertical">
-                <Text>Web page: https://Vikasbandhu.in </Text>
+                <Text>Web page: <a href="https://vikasbandhu.in" target="_blank">https://vikasbandhu.in</a> </Text>
                 <Text>Email: contactus@samparkbindhu.in </Text>
                 <Text>Tel.: +91-9845711600</Text>
             </Space>

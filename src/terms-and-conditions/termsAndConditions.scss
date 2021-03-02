@@ -36,6 +36,10 @@
         overflow-y: scroll;
         height: 200px;
         font-size: x-small;
+        
+        .font-size-small {
+            font-size: small;
+        }
     }
 }
 
