@@ -95,7 +95,7 @@ export const TAndCPopup = (props: any) => {
                 <Alert
                     message="Reading all the Terms and Conditions is mandatory."
                     banner={true}
-                    style={{fontSize: "small"}}
+                    className="font-size-small"
                     type="info"
                     showIcon
                 />
