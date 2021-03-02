@@ -18,7 +18,7 @@ const Footer = () => {
             <div>
                 <p>
                     {' '}
-                    <span>&#169;</span> (Pending) Vikasbandhu 2020{' '}
+                    <span>&#169;</span> (Applied For) Vikasbandhu 2020{' '}
                 </p>
             </div>
             <div>

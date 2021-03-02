@@ -4,6 +4,7 @@ import { Alert, Collapse, Modal, Space } from 'antd';
 import GeneralTerms from './generalTerms';
 import BuyerTerms from './buyerTerms';
 import SellerTerms from './sellerTerms';
+import PrivacyPolicy from './privacyPolicy';
 
 import PrimaryBtn from '../app-components/primaryBtn';
 import DefaultBtn from '../app-components/defaultBtn';
@@ -11,13 +12,12 @@ import Header from '../header';
 import Footer from '../footer';
 
 import './termsAndConditions.scss';
-import PrivacyPolicy from './privacyPolicy';
 
 const { Panel } = Collapse;
 
 export const Terms = () => {
     return (
-        <div className="t-and-c-page">      
+        <div className="t-and-c-page">
             <Header showActions={false} />
             <Collapse className="collapsable-t-and-c" defaultActiveKey={1}>
                 <Panel header="General Terms" key="1">
@@ -30,8 +30,8 @@ export const Terms = () => {
                     <SellerTerms />
                 </Panel>
                 <Panel header="Privacy Policy" key="4">
-                    <PrivacyPolicy />    
-                </Panel>                
+                    <PrivacyPolicy />
+                </Panel>
             </Collapse>
             <Footer />
         </div>
@@ -44,7 +44,6 @@ export const TAndCPopup = (props: any) => {
     const [displayType, setDisplayType] = useState({general: true, buyer: false, seller: false});
 
     useEffect(() => {
-        console.log("t and c modal")
         displayTerms(initialDisplayType);
     },[]);
 
@@ -76,8 +75,8 @@ export const TAndCPopup = (props: any) => {
             }
             default: break;
         }
-        
-        (type !== initialDisplayType && element.remove("focus-button-item"))
+
+        (type !== initialDisplayType && element.remove("focus-button-item"));
     };
 
     return (
@@ -86,7 +85,7 @@ export const TAndCPopup = (props: any) => {
             className="custom-t-and-c-modal"
             visible={visible}
             title="Terms and Conditions"
-            closable={false}    
+            closable={false}
             footer={[
                 <a className="view-full-page" href="/terms&conditions" target="_blank">View Full Page</a>,
                 <PrimaryBtn content="Okay" key="submit" onClick={tAndCRead} />
@@ -96,7 +95,7 @@ export const TAndCPopup = (props: any) => {
                 <Alert
                     message="Reading all the Terms and Conditions is mandatory."
                     banner={true}
-                    style={{fontSize: "small"}}
+                    className="font-size-small"
                     type="info"
                     showIcon
                 />

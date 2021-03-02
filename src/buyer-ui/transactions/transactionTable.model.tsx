@@ -3,7 +3,6 @@ import { Button, Image, Typography } from 'antd';
 
 import { TransactioModel } from '../../store/buyerReducer/types';
 import RagiImg from '../../static/assets/ragi.png';
-import ViewTerms from '../../terms-and-conditions/viewTerms';
 
 const { Text, Title } = Typography;
 
