@@ -27,8 +27,9 @@ const AboutUs = () => {
                     width="95%"
                     height="100%"
                     src="https://www.youtube.com/embed/zTYLM3MLUWE?playlist=zTYLM3MLUWE&loop=1&autoplay=1&mute=1"
+                    allowFullScreen
                 />
-            </Modal>
+                </Modal>
             <Title className="col-green about-us-title" level={2}>About us</Title>
             <img className="outline-image" src={Outline} />
             <Paragraph className="outline-paragraph">
