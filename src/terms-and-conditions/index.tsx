@@ -10,10 +10,12 @@ import PrimaryBtn from '../app-components/primaryBtn';
 import DefaultBtn from '../app-components/defaultBtn';
 import Header from '../header';
 import Footer from '../footer';
+import { routesMap } from '../constants';
 
 import './termsAndConditions.scss';
 
 const { Panel } = Collapse;
+const { terms } = routesMap;
 
 export const Terms = () => {
     return (
@@ -87,7 +89,7 @@ export const TAndCPopup = (props: any) => {
             title="Terms and Conditions"
             closable={false}
             footer={[
-                <a className="view-full-page" href="/terms&conditions" target="_blank">View Full Page</a>,
+                <a className="view-full-page" href={terms} target="_blank">View Full Page</a>,
                 <PrimaryBtn content="Okay" key="submit" onClick={tAndCRead} />
             ]}
         >

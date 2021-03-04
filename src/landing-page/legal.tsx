@@ -3,9 +3,11 @@ import { Button, Image, Tabs, Typography } from 'antd';
 import { Link } from 'react-router-dom';
 
 import Accept from '../static/assets/Accept.svg';
+import { routesMap } from '../constants';
 
 const { Paragraph, Title } = Typography;
 const { TabPane } = Tabs;
+const { terms } = routesMap;
 
 const Legal = () => {
 
@@ -48,7 +50,7 @@ const Legal = () => {
                         </ul>
                     </Paragraph>
                     <Button className="read-more-button vikas-btn-radius">
-                        <Link to="/terms&conditions" target="_blank">Read More</Link>
+                        <Link to={terms} target="_blank">Read More</Link>
                     </Button>
                 </TabPane>
                 <TabPane className="privacy-tab" tab="Privacy Policy" key="2">
@@ -78,7 +80,7 @@ const Legal = () => {
                         </li>
                     </ul>
                     <Button className="read-more-button vikas-btn-radius">
-                        <Link to="/terms&conditions" target="_blank">Read More</Link>
+                        <Link to={terms} target="_blank">Read More</Link>
                     </Button>
                 </TabPane>
             </Tabs>
