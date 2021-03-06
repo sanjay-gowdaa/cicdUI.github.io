@@ -99,7 +99,7 @@ export const cropColumns = ({
         render: (apmc_rate_data: {apmc_price: string, increase: string}, record: CropApiModel) => {
             const { intent_to_sell: intentToSell } = record;
             const { apmc_price, increase } = apmc_rate_data || {apmc_price: null, increase: null};
-            if (intentToSell === 'Yes') {
+            if (intentToSell.toLowerCase() === 'yes') {
                 return (<p>-</p>)
             } else {
                 const isIncrease = parseInt(increase) > 0;
@@ -129,6 +129,7 @@ export const cropColumns = ({
         title: 'Intent To Sell',
         dataIndex: 'intent_to_sell',
         key: 'intent_to_sell',
+        render: (intentToSell: string) => <p>{intentToSell.toUpperCase()}</p>,
         onCell: (record: CropApiModel) => ({
             record,
             editable: currentCropId === getCropId(record.sk || ''),
@@ -167,11 +168,11 @@ export const cropColumns = ({
             dataIndex: 'action',
             isEdit,
             setIsEdit,
-            handleSave: (record: CropApiModel) => updateCropDetails(record),
+            handleSave: (record: CropApiModel, isPriceUpdated: boolean) => updateCropDetails(record, isPriceUpdated),
         }),
         render: (text: string, record: CropApiModel) => {
             const { intent_to_sell } = record;
-            return intent_to_sell === 'Yes' ? null : (
+            return intent_to_sell.toLowerCase() === 'yes' ? null : (
                 <>
                     <Button
                         type="link"

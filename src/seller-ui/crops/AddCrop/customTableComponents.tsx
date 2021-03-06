@@ -26,8 +26,9 @@ const ActionEditComponent = ({dataIndex, record, editForm, setIsEdit, handleSave
     const save = async () => {
         try {
             const values = await editForm.validateFields();
+            const isPriceUpdated = editForm.getFieldValue('price_per_qnt') !== record['price_per_qnt']
             setIsEdit(false)
-            handleSave({...record, ...values})
+            handleSave({...record, ...values}, isPriceUpdated)
         } catch (errInfo) {
             console.log('Save failed:', errInfo);
         }

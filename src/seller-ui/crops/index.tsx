@@ -43,13 +43,12 @@ const CropsSection = () => {
         dispatch(deleteSelectedCrop(actualCropID));
     }
 
-    const updateCropDetails = (updatedCropData: CropApiModel) => {
-        console.log('updateCropDetails', updatedCropData)
+    const updateCropDetails = (updatedCropData: CropApiModel, isPriceUpdated?: boolean) => {
         const {sk} = updatedCropData;
         const actualCropID = getCropId(sk || '');
         const {intent_to_sell} = updatedCropData;
-        if(intent_to_sell) {
-            dispatch(sellerIntentToSell(updatedCropData, actualCropID))
+        if(intent_to_sell.toLowerCase() === 'yes') {
+            dispatch(sellerIntentToSell(updatedCropData, actualCropID, isPriceUpdated))
         } else {
             dispatch(updateCropData({...updatedCropData, is_delete: "no"}));
         }

@@ -208,11 +208,14 @@ export const updateCropData = (cropData: any) => {
     }
 }
 
-export const sellerIntentToSell = (cropData: any, cropID: string) => {
+export const sellerIntentToSell = (cropData: any, cropID: string, isPriceUpdated?: boolean) => {
     return async(dispatch: any, getState: any) => {
         const {loginUser}: {loginUser: UserStateModel} = getState() as RootState;
         const {username} = loginUser;
-        const cropUpdated = await intentToSell(username, cropID)
+        if(isPriceUpdated) {
+            const cropAdded = await patchCrop({...cropData, is_delete: "no"}, username);
+        }
+        const cropUpdated = await intentToSell(username, cropID);
         dispatch(getAllCropsList());
     }
 }
