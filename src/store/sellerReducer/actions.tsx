@@ -1,6 +1,6 @@
 import { sortBy, isEmpty, isNull } from "lodash";
 import { getTimeStamp } from "../../app-components/utils";
-import { getSubCategoryList, createCrop, getAllCrops, getCropCategoryList, getCropList, getLiveApmcRate, getLiveApmcRateUpdated, deleteProduce, patchCrop } from "../api";
+import { getSubCategoryList, createCrop, getAllCrops, getCropCategoryList, getCropList, getLiveApmcRate, getLiveApmcRateUpdated, deleteProduce, patchCrop, intentToSell } from "../api";
 import { ApmcApiResponseBase, LiveApmcRates, UpdatedLiveApmcRatesQuery } from "../genericTypes";
 import { UserStateModel } from "../loginReducer/types";
 import { RootState } from "../rootReducer";
@@ -197,13 +197,22 @@ export const addNewCropData = (cropData: FormData) => {
     }
 }
 
-export const updateCropData = (cropData: FormData) => {
+export const updateCropData = (cropData: any) => {
     return async(dispatch: any, getState: any) => {
         const {loginUser}: {loginUser: UserStateModel} = getState() as RootState;
         // for tesing, use USER-ID 
         // const {username} = {username: '9036565202'};
-        const {username, zip} = loginUser;
+        const {username} = loginUser;
         const cropAdded = await patchCrop(cropData, username);
+        dispatch(getAllCropsList());
+    }
+}
+
+export const sellerIntentToSell = (cropData: any, cropID: string) => {
+    return async(dispatch: any, getState: any) => {
+        const {loginUser}: {loginUser: UserStateModel} = getState() as RootState;
+        const {username} = loginUser;
+        const cropUpdated = await intentToSell(username, cropID)
         dispatch(getAllCropsList());
     }
 }

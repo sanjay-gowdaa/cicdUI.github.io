@@ -9,6 +9,12 @@ import { isEmpty } from 'lodash';
 
 const { Title, Text } = Typography;
 
+const getCropId = (cropID: string) => {
+    const indexOfHash = cropID.indexOf('#');
+    const actualCropID = indexOfHash > 0 ? cropID.substr(indexOfHash+1) : '';
+    return actualCropID;
+}
+
 const openAdditionalInfo = (content: any) => {
     Modal.info({
         title: 'Additional Info',
@@ -21,9 +27,20 @@ const openAdditionalInfo = (content: any) => {
 type cropColumnsCallback = {
     deleteCrop: any;
     prepareForEditCrop: any;
+    setIsEdit: any;
+    isEdit: boolean;
+    currentCropId: string;
+    updateCropDetails: any;
 }
 
-export const cropColumns = ({deleteCrop, prepareForEditCrop}: cropColumnsCallback) => [
+export const cropColumns = ({
+        deleteCrop,
+        prepareForEditCrop,
+        updateCropDetails,
+        setIsEdit,
+        isEdit,
+        currentCropId
+    }: cropColumnsCallback) => [
     {
         title: 'Produce',
         dataIndex: 'crop_name',
@@ -67,6 +84,13 @@ export const cropColumns = ({deleteCrop, prepareForEditCrop}: cropColumnsCallbac
         title: 'Price per qtl',
         dataIndex: 'price_per_qnt',
         key: 'price_per_qnt',
+        onCell: (record: CropApiModel) => ({
+            record,
+            editable: currentCropId === getCropId(record.sk || ''),
+            dataIndex: 'price_per_qnt',
+            isEdit,
+            handleSave: (record: CropApiModel) => updateCropDetails(record),
+        }),
     },
     {
         title: 'Live APMC Rates per qtl',
@@ -104,12 +128,20 @@ export const cropColumns = ({deleteCrop, prepareForEditCrop}: cropColumnsCallbac
     {
         title: 'Intent To Sell',
         dataIndex: 'intent_to_sell',
-        key: 'intent_to_sell'
+        key: 'intent_to_sell',
+        onCell: (record: CropApiModel) => ({
+            record,
+            editable: currentCropId === getCropId(record.sk || ''),
+            dataIndex: 'intent_to_sell',
+            isEdit,
+            handleSave: (record: CropApiModel) => updateCropDetails(record),
+        }),
     },
     {
         title: 'Additional',
         key: 'additional_info',
         dataIndex: 'additional_info',
+        width: '10%',
         render: (additional_info: string, record: CropApiModel) => {
             return (
                 <>
@@ -128,6 +160,15 @@ export const cropColumns = ({deleteCrop, prepareForEditCrop}: cropColumnsCallbac
     {
         title: '',
         key: 'action',
+        width: '5%',
+        onCell: (record: CropApiModel) => ({
+            record,
+            editable: currentCropId === getCropId(record.sk || ''),
+            dataIndex: 'action',
+            isEdit,
+            setIsEdit,
+            handleSave: (record: CropApiModel) => updateCropDetails(record),
+        }),
         render: (text: string, record: CropApiModel) => {
             const { intent_to_sell } = record;
             return intent_to_sell === 'Yes' ? null : (
