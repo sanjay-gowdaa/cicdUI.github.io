@@ -22,6 +22,7 @@ const CROP_SUB_TYPES_DETAILS_API = 'getcropdetails';
 const CROP_CATEGORY_DETAILS_API = 'getcropcategories';
 const APMC_LIVE_RATES = 'getliverates';
 const UPDATED_APMC_API = 'https://yldnzvpt6c.execute-api.ap-south-1.amazonaws.com/localApmcDb/getapmcprice'
+const INTENT_TO_SELL = 'sell';
 
 const parseToken = (userToken: string) => {
     const sholudDecrypt = process.env.REACT_APP_ENV === 'prod';
@@ -168,6 +169,14 @@ export const getLiveApmcRate = (cropDetails: Array<LiveApmcRates>) => {
         method: 'POST',
         headers: getAuthHeader(),
         body: JSON.stringify({crops: cropDetails})
+    }).then((response: any) => response.json());
+}
+
+export const intentToSell = (userID: string, produceId: string) => {
+    const intentToSellForSeller = `${BASE_URL}/${STAGE}/seller/${userID}/crop/${produceId}/${INTENT_TO_SELL}`
+    return fetch(intentToSellForSeller, {
+        method: 'POST',
+        headers: getAuthHeader()
     }).then((response: any) => response.json());
 }
 

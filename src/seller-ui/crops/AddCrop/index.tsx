@@ -262,7 +262,6 @@ const AddCropModal = (addCropProps: PropsType) => {
                                 <Select
                                     className="custom-select"
                                     placeholder="Select"
-                                    allowClear
                                     onChange={onSelectVariety}
                                     onClear={() => null}
                                 >
@@ -284,7 +283,6 @@ const AddCropModal = (addCropProps: PropsType) => {
                                 <Select
                                     className="custom-select"
                                     placeholder="Select"
-                                    allowClear
                                     onChange={(value: string) => {
                                         dispatch(updatedFetchLiveApmcRate({
                                             category: form.getFieldValue('categoryName'),

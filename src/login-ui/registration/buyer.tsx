@@ -321,7 +321,7 @@ const Buyer = (props: any) => {
                             <div className='display-flex-row align-flex-end'>
                                 <Form.Item
                                     label="Pin Code"
-                                    name="pinCode"
+                                    name="zip"
                                     rules={[{validator: (rule, value) => customPincodeValidator(rule, value, setAddressForPin)}]}
                                 >
                                     <Input className="custom-input" />
@@ -330,7 +330,7 @@ const Buyer = (props: any) => {
                             </div>
                             <Form.Item
                                 label="Address"
-                                name="addressLine"
+                                name="address1"
                                 rules={[{ required: true, message: 'Please input your Address!' }]}
                             >
                                 <TextArea className="custom-input" />
