@@ -54,31 +54,33 @@ const Legal = () => {
                     </Button>
                 </TabPane>
                 <TabPane className="privacy-tab" tab="Privacy Policy" key="2">
-                    <ul>
-                        <li>
-                            SamparkBindhu Solutions Private Limited (“<b>SamparkBindhu</b>/<b>Company</b>”) is a company 
-                            registered under the Companies Act, 2013, bearing CIN U72900KA2020PTC137512 and having its 
-                            registered office at #617, "Shivam", Royal Park Residency, J P Nagar 9th Phase, Bengaluru 
-                            Bangalore, Karnataka - 560062, India
-                        </li>
-                        <li>
-                            This Privacy Policy (“<b>Policy</b>”) sets forth the reasonable security practices and procedures 
-                            adopted by SamparkBindhu and shall apply to the use and disclosure and sharing of sensitive 
-                            personal data or information (“<b>Personal Identifiable Information</b>” or “<b>PII</b>”) provided by the 
-                            registered users of the website <b>[●]</b> (“<b>Website</b>”), which is owned and operated by SamparkBindhu. 
-                            This policy is equally applicable on the visitors to the Website. The Policy outlines the 
-                            various measures undertaken by SamparkBindhu to provide Users with a convenient and safe 
-                            online/ experience, while  maintaining and safeguarding the  confidentiality, integrity, 
-                            and security of Users PII, during storage and transmission through the World Wide Web. This 
-                            Policy explains how SamparkBindhu protects PII provided by Users through the Website and how 
-                            SamparkBindhu store and use that information, to deliver the services on the Website.
-                        </li>
-                        <li>
-                            Please read this Policy carefully, it is subject to change at any time and is advised that Users 
-                            review this Policy periodically. Any change to this Policy will become effective as soon as it is 
-                            posted or linked to the revised Policy on the Website.
-                        </li>
-                    </ul>
+                    <Paragraph>
+                        <ul>
+                            <li>
+                                SamparkBindhu Solutions Private Limited (“<b>SamparkBindhu</b>/<b>Company</b>”) is a company 
+                                registered under the Companies Act, 2013, bearing CIN U72900KA2020PTC137512 and having its 
+                                registered office at #617, "Shivam", Royal Park Residency, J P Nagar 9th Phase, Bengaluru 
+                                Bangalore, Karnataka - 560062, India
+                            </li>
+                            <li>
+                                This Privacy Policy (“<b>Policy</b>”) sets forth the reasonable security practices and procedures 
+                                adopted by SamparkBindhu and shall apply to the use and disclosure and sharing of sensitive 
+                                personal data or information (“<b>Personal Identifiable Information</b>” or “<b>PII</b>”) provided by the 
+                                registered users of the website <b>[●]</b> (“<b>Website</b>”), which is owned and operated by SamparkBindhu. 
+                                This policy is equally applicable on the visitors to the Website. The Policy outlines the 
+                                various measures undertaken by SamparkBindhu to provide Users with a convenient and safe 
+                                online/ experience, while  maintaining and safeguarding the  confidentiality, integrity, 
+                                and security of Users PII, during storage and transmission through the World Wide Web. This 
+                                Policy explains how SamparkBindhu protects PII provided by Users through the Website and how 
+                                SamparkBindhu store and use that information, to deliver the services on the Website.
+                            </li>
+                            <li>
+                                Please read this Policy carefully, it is subject to change at any time and is advised that Users 
+                                review this Policy periodically. Any change to this Policy will become effective as soon as it is 
+                                posted or linked to the revised Policy on the Website.
+                            </li>
+                        </ul>
+                    </Paragraph>
                     <Button className="read-more-button vikas-btn-radius">
                         <Link to={terms} target="_blank">Read More</Link>
                     </Button>

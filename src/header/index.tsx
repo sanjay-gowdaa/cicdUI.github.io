@@ -52,7 +52,7 @@ const Header = (headerProps: any) => {
     const { history, showActions, isLoggedIn, popUpTrigger } = headerProps;
     return (
         <div className="landing-page-header-bar">
-            <Image width={"6vw"} height={"11vh"} src={Logo} preview={false} />
+            <Image width={"7em"} height={"5.5em"} src={Logo} preview={false} />
             <Breadcrumb className="header-breadcrumb" separator=" ">
                 <Breadcrumb.Item href="#home">Home</Breadcrumb.Item>
                 <Breadcrumb.Item href="#aim">Aim</Breadcrumb.Item>
