@@ -9,33 +9,33 @@ $col-shade-green: #12805C;
     background-size: 100% auto;
     background-repeat: no-repeat;
     background-origin: padding-box;
-    scroll-margin: 13vh;
+    scroll-margin: 6rem;
     z-index: 1;
     opacity: 1;
 
     .home-content-wrapper {
         position: relative;
-        top: 13vh;
+        top: 6rem;
         height: 100vh;
         
         .home-content {
             position: absolute;
-            left: 5vw;
-            top: 5vh;
+            left: 5rem;
+            top: 3rem;
             width: fit-content;
             height: fit-content;
-            padding: 2em;
-            -webkit-backdrop-filter: blur(1.25em);
-            backdrop-filter: blur(1.25em);
-            border-radius: 0.5em;
+            padding: 2rem;
+            -webkit-backdrop-filter: blur(1.25rem);
+            backdrop-filter: blur(1.25rem);
+            border-radius: 0.5rem;
             background-color: rgba($color: #000000, $alpha: 0.2);
     
             .logo {
-                border-radius: 0.5em;
+                border-radius: 0.5rem;
             }
             
             .home-paragraph {
-                margin-top: 2em;
+                margin-top: 2rem;
     
                 .margin-none {
                     margin: 0;
@@ -45,8 +45,8 @@ $col-shade-green: #12805C;
             .explore-vb-btn {
                 background-color: #f5a31a !important;
                 border-color: #f5a31a !important;
-                border-radius: 3px;
-                margin: 1em 0;
+                border-radius: 0.2rem;
+                margin: 1rem 0;
             }
         }
     }
@@ -55,46 +55,47 @@ $col-shade-green: #12805C;
 .fixed-landing-page-banner {
     float: left;
     position: sticky;
-    top: 13vh;
+    top: 6rem;
     opacity: 1;
-    width: 17.2vw;
+    width: 17rem;
 }
 
 .fixed-card-join {
     position: sticky;
     float: right;
-    top: 33vh;
+    top: 15rem;
     opacity: 1;
 
     .join-us {
         width: fit-content;
         height: fit-content;
         background-color: white;
-        border-radius: 3px;
+        border-radius: 0.2rem;
         box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
         text-align: center;
         opacity: 1;
         padding: 0;
-        margin-right: 1em;
+        margin-right: 1rem;
         
         .fixed-title {
             font-size: x-large;
-            width: 14vw;
+            width: 10rem;
             margin: 0;
         }
 
         .join-us-reg {
-            width: 13vw;
+            width: 10rem;
+            height: 3rem;
             font-size: large;
         }
     }
 }
 
 #aim {
-    scroll-margin: 13vh;
+    scroll-margin: 6rem;
 
     .aim-title {
-        padding-top: 1em;
+        padding-top: 1rem;
         font-size: 3rem;
         margin-left: 18rem;
     }
@@ -102,22 +103,24 @@ $col-shade-green: #12805C;
     .handshake-image {
         float: right;
         position: relative;
-        bottom: 10vh;
-        left: 2vw;
+        bottom: 5rem;
+        left: 2rem;
     }
     
     .aim-card-row {
-        padding-top: 2.5em;
-        padding-left: 1.75em;
+        position: relative;
+        bottom: 4rem;
+        padding-top: 2.5rem;
+        padding-left: 1.75rem;
         
         .aim-card {
             background-color: $col-shade-green;
-            width: 15vw;
-            border-radius: 0.5em;
-            max-height: fit-content;
-            border-radius: 3px;
+            width: 12.5rem;
+            border-radius: 0.5rem;
+            max-height: min-content;
+            border-radius: 0.2rem;
             display: inline-flex;
-            margin: 1em auto;
+            margin: 1rem auto;
             text-align: center;
             font-size: large;
             line-height: 1;
@@ -125,70 +128,69 @@ $col-shade-green: #12805C;
             .hex1 {
                 width: 0;
                 margin: 0 auto;
-                border-radius: 0.5em;
-                margin-top: 1em;
-                border-bottom: 2vw solid #32886C;
-                border-left: 3vw solid transparent;
-                border-right: 3vw solid transparent;
+                border-radius: 0.3rem;
+                margin-top: 1rem;
+                border-bottom: 1.5rem solid #32886C;
+                border-left: 2.5rem solid transparent;
+                border-right: 2.5rem solid transparent;
             }
             
             .hex2 {
                 margin: 0 auto;
-                width: 5.5vw;
-                height: 2.9vw;
+                width: 4.78rem;
+                height: 2.5rem;
                 background-color: #32886C;
 
                 .icon-inside-hex {
-                    width: 3.5vw;
+                    height: 3rem;
                 }
             }
             
             .hex3 {
                 margin: 0 auto;
-                border-radius: 0.5em;
-                margin-bottom: 1em;
+                border-radius: 0.3rem;
+                margin-bottom: 1rem;
                 width: 0;
-                border-top: 2vw solid #32886C;
-                border-left: 3vw solid transparent;
-                border-right: 3vw solid transparent;
+                border-top: 1.5rem solid #32886C;
+                border-left: 2.5rem solid transparent;
+                border-right: 2.5rem solid transparent;
             }
         }
     }
 }
 
 #ecosystem {
-    scroll-margin: 13vh;
+    scroll-margin: 6rem;
 
     .tractor-image {
-        padding-top: 3em;
-        width: 32vw;
+        padding-top: 0.5rem;
+        width: 30rem;
         margin: 0 auto;
-        margin-left: 15em;
     }
     
     .ecosystem-content {
         color: #12805C !important;
         background-color: #e0efea;
-        width: 62vw;
-        border-radius: 0.3em;
+        width: 50rem;
+        border-radius: 0.3rem;
         height: fit-content;
         margin: 0 auto;
-        margin-bottom: 1em;
-        padding-left: 2em;
+        margin-bottom: 1rem;
+        padding-left: 2rem;
         
         .ecosystem-title {
-            padding-top: 1em;
-            padding-right: 1em;
+            padding-top: 1rem;
+            padding-right: 1rem;
             margin-top: 0;
-            font-size: 2.15em;
+            font-size: 2rem;
         }
 
         .bulletin-image {
             float: left;
-            padding: 0.5em 1vw;
+            padding: 1rem 1rem;
             background-color: #e2e8d5;
-            border-radius: 3vw;
-            margin-bottom: 1.5em;
+            border-radius: 3rem;
+            margin-bottom: 1.5rem;
 
             img {
                 font-size: large;
@@ -196,40 +198,39 @@ $col-shade-green: #12805C;
         }
 
         .bulletin-text {
-            padding-top: 0.5em;
-            padding-left: 1em;
-            font-size: 1.45em;
-            line-height: 1.5em;
+            padding-top: 1rem;
+            padding-left: 1rem;
+            font-size: 1.5rem;
+            line-height: 1.7rem;
         }
 
         .nature-image {
             float: right;
             position: relative;
-            bottom: 30vh;
-            right: 2vw;
+            bottom: 10rem;
+            right: 2rem;
         }
     }
 }
 
 #commodities {
     margin-left: 17rem;
-    scroll-margin: 13vh;
+    scroll-margin: 6rem;
     
     .commodities-title {
-        padding-top: 1em;
-        font-size: 3em;
+        font-size: 2.5rem;
     }
 
     .commodities-paragraph {
-        width: 60vw;
-        font-size: large;
-        line-height: 4vh;
+        width: 50rem;
+        font-size: 1rem;
+        line-height: 2rem;
     }
 
     .commodities-list {
         float: left;
-        width: 12vw;
-        margin-top: 4em;
+        width: 10rem;
+        margin-top: 1.5rem;
     }
 
     .commodities-name {
@@ -237,40 +238,40 @@ $col-shade-green: #12805C;
     }
 
     .commodities-image {
-        width: 10vw;
-        height: 10vw;
+        width: 9rem;
+        height: 10rem;
     }
 
     .wheat-image {
-        margin: 2em auto;
-        width: 60vw;
+        margin: 2rem auto;
+        width: 50rem;
     }
 }
 
 #users {
-    scroll-margin: 13vh;
+    scroll-margin: 6rem;
     
     .user-title {
-        padding-top: 1em;
-        font-size: 2.75em;
+        padding-top: 1rem;
+        font-size: 3rem;
         margin-left: 30rem;
     }
 
     .user-column {
-        margin-left: 3em;
+        margin-left: 3rem;
         
         .user-card {
             background-color: #e0efea;
             width: fit-content;
-            min-height: fit-content;
-            height: fit-content;
+            font-size: 1rem;
+            height: 26rem;
             text-align: center;
         }
     }
 
     .transport-image {
-        margin: 2rem 15rem;
-        width: 60vw;
+        margin: 2rem 16rem;
+        width: 50rem;
     }
 }
 
@@ -281,48 +282,49 @@ $col-shade-green: #12805C;
 }
 
 #aboutUs {
-    margin: 2.5em 0;
-    margin-left: 17em;
-    width: 62vw;
-    height: fit-content;
-    scroll-margin: 13vh;
-    padding: 1em 2em;
+    margin: 2.5rem 0;
+    margin-left: 16rem;
+    width: 53rem;
+    height: 75rem;
+    scroll-margin: 6rem;
+    padding: 1rem 2rem;
     background-color: #fbfbfb;
     
     .about-us-title {
-        padding-top: 1em;
+        padding-top: 1rem;
+        font-size: 3rem;
     }
 
     .outline-image {
         position: relative;
-        bottom: 10vh;
-        left: 45vw;
+        bottom: 5rem;
+        left: 39rem;
     }
 
     .outline-paragraph {
         position: relative;
-        bottom: 15vh;
+        bottom: 10rem;
         font-size: large;
-        width: 50vw;
+        width: 40rem;
     }
 
     .vision-card{
         width: fit-content;
-        height: fit-content;
-        bottom: 15vh;
+        height: 17rem;
+        bottom: 10rem;
         position: relative;
         background-color: #e0efea;
         text-align: center;
 
         .card-paragraph {
-            width: 23vw;
+            width: 18rem;
             font-size: large;   
             margin: 0 auto;
         }
     }
 
     .vision-div {
-        bottom: 12vh;
+        bottom: 8rem;
         position: relative;
             
         .vision-paragraph {
@@ -332,15 +334,15 @@ $col-shade-green: #12805C;
     }
 
     .about-us-our-team {
-        bottom: 10vh;
+        bottom: 8rem;
         position: relative;
         text-align: center;
         width: fit-content;
         justify-content: space-around;
-        padding: 2em;
+        padding: 2rem;
         height: fit-content;
         border: 0.2em solid #e0efea;
-        border-radius: 3px;
+        border-radius: 0.2rem;
         margin: 0 auto;
             
         .our-team {
@@ -351,54 +353,56 @@ $col-shade-green: #12805C;
 
         .suma.person-name {
             position: relative;
-            top: 1.5em;
+            top: 1.8rem;
         }
 
         .suma {
             position: relative;
-            top: 2em;
+            top: 2rem;
         }
 
     }
 }
 
 #legal {
-    width: 62vw;
+    width: 55rem;
+    height: 43rem;
     margin-top: 5rem;
-    margin-left: 18vw;
-    scroll-margin: 13vh;
+    margin-left: 15rem;
+    scroll-margin: 6rem;
     background-color: $col-shade-green;
     color: white;
-    padding-left: 3vw;
+    padding-left: 3rem;
 
     .legal-title {
-        padding-top: 4vh;
+        padding-top: 2rem;
         margin-top: 0;
     }
 
     .accept-image {
         position: relative;
-        bottom: 10vh;
+        bottom: 4rem;
         height: 6rem;
-        left: 48vw;
+        left: 45rem;
     }
 
     .legal-tab {
         position: relative;
-        bottom: 18vh;
+        bottom: 7rem;
         
         .ant-tabs-tab,
         .ant-tabs-tab-active {
             width: fit-content;
             display: inline-flex;
-            padding: 0.5em 2em;
-            border: 0.2em solid #f5a31a;
-            border-radius: 3px;
+            padding: 0.3rem 1rem;
+            font-size: 1rem;
+            border: 0.2rem solid #f5a31a;
+            border-radius: 0.2rem;
         }
 
         .ant-tabs-nav {
             position: relative;
-            top: 2.6vh;
+            top: 1rem;
         }
 
         .ant-tabs-tab {
@@ -415,10 +419,10 @@ $col-shade-green: #12805C;
         }
 
         .ant-tabs-content-holder {
-            width: 55vw;
+            width: 48rem;
             height: fit-content;
             position: relative;
-            border-radius: 5px;
+            border-radius: 0.3rem;
             background-color: #339273;
 
             ul {
@@ -435,17 +439,17 @@ $col-shade-green: #12805C;
             .read-more-button {
                 background-color: white;
                 color: $col-shade-green;
-                margin: 0 5em;
-                margin-bottom: 2em;
+                margin: 0 4.5rem;
+                margin-bottom: 2rem;
             }
         }
     }
 }
 
 #contactUs {
-    margin-top: 6em;
+    margin-top: 6rem;
     margin-left: 16rem;
-    scroll-margin: 13vh;
+    scroll-margin: 6rem;
     
     .contact-us-info {
         font-size: large;
@@ -453,17 +457,17 @@ $col-shade-green: #12805C;
         .anticon {
             font-size: x-large;
             color: #f5a31a;
-            padding: 1em 1em;
+            padding: 1rem 1rem;
         }
     }
 
     .write-feedback {
         background-color: #fbfbfb;
-        padding: 1em;
-        margin-bottom: 2em;
+        padding: 1rem;
+        margin-bottom: 2rem;
 
         .feedback-form {
-            padding: 1.5em;
+            padding: 1.5rem;
         }
     }
 }
