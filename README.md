@@ -1,8 +1,8 @@
 Vikas Bandhu
-## Add description here
 
 ## To override ANTD theme variables
- 
-1. Add the override variables to main.less file
-2. compile the file using 'lessc main.less antd.css --js'
-3. Move the file to your project folder
+Steps to run the application
+1. Make sure you have the latest version of the Node, NPM and YARN
+2. Navigate to root directory of the project
+3. Run npm install or yarn install
+4. Based on the environment you want to use, run yar start:dev or yarn start:demo respectively

@@ -1,6 +1,6 @@
 import CryptoJS from 'crypto-js';
 import { LiveApmcRates, UpdatedLiveApmcRatesQuery } from '../genericTypes';
-const BASE_URL = process.env.REACT_APP_BASE_URL; //'https://enzdzh0pw2.execute-api.ap-south-1.amazonaws.com'
+const BASE_URL = process.env.REACT_APP_BASE_URL;
 const STAGE = process.env.REACT_APP_ENV;
 const TOKEN_GRANT = process.env.REACT_APP_TOKEN_GRANT as string;
 
