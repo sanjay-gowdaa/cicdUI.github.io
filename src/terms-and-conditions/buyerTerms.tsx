@@ -146,7 +146,7 @@ const BuyerTerms = () => {
                             The Buyer undertakes to keep his/her  Account (Bank, KYC)  updated at all times and shall 
                             immediately notify SamparkBindhu operations team in the event any error found in the data 
                             of the Buyer and request to update the same by providing the relevant supporting document 
-                            to SamaprkBindhu operations team. Further at no point of time SamparkBindhu shall liable 
+                            to SamparkBindhu operations team. Further at no point of time SamparkBindhu shall liable 
                             for any false, incomplete or outdated information provided by the Buyer in the Account
                         </li>
                     </Space>
@@ -397,7 +397,7 @@ const BuyerTerms = () => {
                     <li>
                         <b>Quality Assessment</b>: upon acceptance of the Purchase Order of the Buyer by the Seller, the Seller shall be responsible 
                         for providing 2 sample of the Products to SamparkBindhu operations teams wherein one sample shall be sent to the Buyer 
-                        to conduct quality check. SamaprkBindhu operations team shall conduct a quality control check of the Products at the time 
+                        to conduct quality check. SamparkBindhu operations team shall conduct a quality control check of the Products at the time 
                         of unloading at the facility of the Buyer along with the QC team of the Buyer and subject to satisfaction of the QC team 
                         of the Buyer, SamparkBindhu operations team and the QC team of the Buyer shall jointly sign the quality assessment report, 
                         and accordingly the remaining balance shall made to the Seller

@@ -335,10 +335,10 @@ const SellerTerms = () => {
                         decided by SamparkBindhu, and Seller shall be required to pay back to 
                         SamparkBindhu within a period of 15 days, any payments received pursuant 
                         clause (iv); provided, further, and without limiting the preceding, 
-                        SamaparkBindhu shall have the right to adjust the payment s received by 
+                        SamparkBindhu shall have the right to adjust the payment s received by 
                         the Seller pursuant to clause (iv) against any future transaction done by the 
                         Seller. The foregoing shall be in addition to any other remedies or rights 
-                        that SamaprkBindhu may have at law or at equity as a result of the Seller’s 
+                        that SamparkBindhu may have at law or at equity as a result of the Seller’s 
                         failure to comply with clause (iv) above
                     </li>
                     <li>
