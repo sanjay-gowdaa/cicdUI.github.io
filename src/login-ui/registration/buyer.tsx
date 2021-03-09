@@ -302,7 +302,7 @@ const Buyer = (props: any) => {
                                     style={{ display: 'inline-block', width: '20%', margin: '0 1em' }}
                                 >
                                     <Upload
-                                        accept="images/*"
+                                        accept="image/*"
                                         beforeUpload={(file) => {
                                             // const isRequiredFileType =
                                             //     file.type === 'image/jpeg' ||
@@ -505,7 +505,7 @@ const Buyer = (props: any) => {
                                 getValueFromEvent={normFile}
                             >
                                 <Upload
-                                    accept="images/*"
+                                    accept="image/*"
                                     beforeUpload={(file) => {
                                         // const isRequiredFileType =
                                         //     file.type === 'image/jpeg' ||
