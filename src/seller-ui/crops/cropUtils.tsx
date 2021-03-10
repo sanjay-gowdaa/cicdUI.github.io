@@ -26,7 +26,7 @@ export const renderGradeOptionsForSubCategory = (selectedCropDataList: Array<Cro
     return gradeOptions
 }
 
-export const createSellerFormData = (formValues: any, isEdit: boolean, customFileList: any) => {
+export const createSellerFormData = (formValues: any) => {
     const sellerCropKeys = Object.keys(formValues);
     const sellerCropJsonData: any = {};
     const sellerCropImagesPromises: Array<Promise<any>> = []
@@ -47,15 +47,6 @@ export const createSellerFormData = (formValues: any, isEdit: boolean, customFil
     });
     
     return Promise.all(sellerCropImagesPromises).then((cropImagesValues) => {
-        if(isEdit) {
-            let imageData: any = {};
-            customFileList.forEach((curImageUrl: string, curImgIndex: number) => {
-                imageData[`crop_image_${curImgIndex+1}`] = curImageUrl;
-            });
-            console.log('customFileList', imageData);
-            return {...sellerCropJsonData, ...imageData};
-        } else {
-            return {...sellerCropJsonData, crop_images: cropImagesValues};
-        }
+        return {...sellerCropJsonData, crop_images: cropImagesValues};
     });
 };

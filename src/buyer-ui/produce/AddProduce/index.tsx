@@ -90,7 +90,7 @@ const AddCropModal = ({
             grade: grade.trim(),
             delivery_by: deliveryByIsoformat,
             additional_info,
-            quantity
+            quantity: quantity.replace(/^0+/, '') // truncate trailing zeros
         };
         const {sk, pk} = currentProduceRecord;
         console.log('addProducePayload', addProducePayload);

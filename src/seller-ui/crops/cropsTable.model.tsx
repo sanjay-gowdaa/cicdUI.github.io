@@ -67,13 +67,13 @@ export const cropColumns = ({
         dataIndex: 'quantity',
         key: 'quantity',
         className: 'seller-quantity-remaining',
-        render: (quantity: number) => {
+        render: (quantity: string) => {
             //Temporarily
             const fullQuantity = quantity;
             
             return (
                 <>
-                    <p style={{margin: "0"}} >{quantity} qtl</p>
+                    <p style={{margin: "0"}} >{quantity ? quantity.replace(/^0+/, '') : ''} qtl</p>
                     <Progress className="custom-progress-bar" percent={100} showInfo={false} strokeColor="#12805C" />
                     <Text style={{color: "#999999", fontSize: "smaller"}}>{fullQuantity} qtl</Text>
                 </>
@@ -84,6 +84,7 @@ export const cropColumns = ({
         title: 'Price per qtl',
         dataIndex: 'price_per_qnt',
         key: 'price_per_qnt',
+        render: (price_per_qnt: string) => <> { price_per_qnt ? price_per_qnt.replace(/^0+/, '') : '' }</>,
         onCell: (record: CropApiModel) => ({
             record,
             editable: currentCropId === getCropId(record.sk || ''),
@@ -100,13 +101,13 @@ export const cropColumns = ({
             const { intent_to_sell: intentToSell } = record;
             const { apmc_price, increase } = apmc_rate_data || {apmc_price: null, increase: null};
             if (intentToSell.toLowerCase() === 'yes') {
-                return (<p>-</p>)
+                return (<>-</>)
             } else {
                 const isIncrease = parseInt(increase) > 0;
                 const color = isIncrease ? '#12805C' : '#E90000';
 
             if (!apmc_price) {
-                return ( <p>Data not available</p> )
+                return ( <>Data not available</> )
             } else {
                 return (
                     <>
@@ -129,7 +130,7 @@ export const cropColumns = ({
         title: 'Intent To Sell',
         dataIndex: 'intent_to_sell',
         key: 'intent_to_sell',
-        render: (intentToSell: string) => <p>{intentToSell.toUpperCase()}</p>,
+        render: (intentToSell: string) => intentToSell.toUpperCase(),
         onCell: (record: CropApiModel) => ({
             record,
             editable: currentCropId === getCropId(record.sk || ''),

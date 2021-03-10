@@ -114,6 +114,7 @@ const EditableCell: React.FC<EditableCellProps> = ({
     dataIndex,
     record,
     isEdit,
+    setIsEdit,
     handleSave,
     ...restProps
 }) => {
@@ -121,7 +122,8 @@ const EditableCell: React.FC<EditableCellProps> = ({
     const genericProps = {
         record,
         dataIndex,
-        handleSave
+        handleSave,
+        setIsEdit
     }
 
     if(editable) {
