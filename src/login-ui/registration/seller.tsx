@@ -41,6 +41,7 @@ import RequestSubmittedPopup from './requestSubmittedPopup';
 import DefaultBtn from '../../app-components/defaultBtn';
 import CancelBtn from '../../app-components/cancelBtn';
 import PrimaryBtn from '../../app-components/primaryBtn';
+import { cloneDeep } from 'lodash';
 
 const { home } = routesMap;
 const { TextArea } = Input;
@@ -68,7 +69,7 @@ const Seller = (props: any) => {
     const [form] = Form.useForm();
     const dispatch = useDispatch();
     const registrationState = useSelector((state: RootState) => state.registration);
-    const {entityType, formData: partialUserData, registerResponse} = registrationState;
+    const {entityType, formData: partialUserData, registerResponse, isProcessing} = registrationState;
     const {type: subType} = partialUserData || {};
 
     useEffect(() => {
@@ -82,7 +83,11 @@ const Seller = (props: any) => {
     }, [registerResponse.verified]);
 
     const onConfirmRegister = () => {
-        const registerDataPromise = generateFormData({formSubmitValues: registerFormValues, userType: entityType, addressForPin});
+        const registerDataPromise = generateFormData({
+            formSubmitValues: cloneDeep(registerFormValues),
+            userType: entityType,
+            addressForPin
+        });
         registerDataPromise.then((registerFromData) => {
             dispatch(updateForm(registerFormValues as any));
             dispatch(submitRegister(entityType, registerFromData));
@@ -115,6 +120,7 @@ const Seller = (props: any) => {
     return (
         <React.Fragment>
             <RegisterConfirmation
+                isProcessing={isProcessing}
                 registerResponse={registerResponse}
                 showConfirmation={showConfirmation}
                 onConfirmRegister={onConfirmRegister}

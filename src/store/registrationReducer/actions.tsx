@@ -14,6 +14,7 @@ export const SET_OTP_VERIFIED_FLAG = 'SET_OTP_VERIFIED_FLAG'
 export const SET_REGISTER_ERROR_MSG = 'SET_REGISTER_ERROR_MSG'
 export const SET_REGISTER_VERIFIED_FLAG = 'SET_REGISTER_VERIFIED_FLAG'
 export const SET_TIME_STAMP = 'SET_TIME_STAMP';
+export const SET_LOADING_FLAG = 'SET_LOADING_FLAG';
 
 export const updateForm = (formData: RegitrationFullFormModel) => {
     return {
@@ -71,6 +72,13 @@ export const setResgiterVerifiedFlag = (verifiedFlag: boolean) => {
     }
 }
 
+export const setProcessingFlag = (isProcessing: boolean) => {
+    return {
+        type: SET_LOADING_FLAG,
+        payload: isProcessing
+    }
+}
+
 export const setTimeStamp = (timeStamp: any) => {
     return {
         type: SET_TIME_STAMP,
@@ -113,6 +121,7 @@ export const resetOtpState = () => {
 
 export const confirmOTP = (number: string, otp: string) => {
     return async (dispatch: any, getState: any) => {
+        dispatch(setProcessingFlag(true));
         const verifyOtpResponse = await verifyOtp(`91${number}`, otp);
         const {OTPResp = {}} = verifyOtpResponse || {}
         const {type = '', message} = OTPResp
@@ -123,11 +132,13 @@ export const confirmOTP = (number: string, otp: string) => {
             dispatch(setOtpErrorFlag(false))
             dispatch(setOtpVerifiedFlag(true))
         }
+        dispatch(setProcessingFlag(false));
     }
 }
 
 export const submitRegister = (userType: string, userFormData: any) => {
     return async(dispatch: any, getState: any) => {
+        dispatch(setProcessingFlag(true));
         const registerUserResponse = await registerUser(userType, userFormData);
         const {result} = registerUserResponse || {}
         const {status = '', message} = result
@@ -137,6 +148,7 @@ export const submitRegister = (userType: string, userFormData: any) => {
         } else {
             dispatch(setResgiterVerifiedFlag(false))
         }
+        dispatch(setProcessingFlag(false));
     }
 }
 

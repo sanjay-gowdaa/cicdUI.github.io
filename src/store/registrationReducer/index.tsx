@@ -1,4 +1,6 @@
-import { UPDATE_FORM, UPDATE_ENTITY_TYPE, UPDATE_BASIC_REGISTER_FORM, UPDATE_CONFIGURATIONS, SET_OTP_ERROR_MSG, SET_OTP_ERROR_FLAG, SET_OTP_VERIFIED_FLAG, SET_REGISTER_ERROR_MSG, SET_REGISTER_VERIFIED_FLAG, SET_TIME_STAMP } from './actions';
+import { UPDATE_FORM, UPDATE_ENTITY_TYPE, UPDATE_BASIC_REGISTER_FORM, UPDATE_CONFIGURATIONS, SET_OTP_ERROR_MSG,
+    SET_OTP_ERROR_FLAG, SET_OTP_VERIFIED_FLAG, SET_REGISTER_ERROR_MSG, SET_LOADING_FLAG,
+    SET_REGISTER_VERIFIED_FLAG, SET_TIME_STAMP } from './actions';
 
 const INITIAL_STATE = {
     entityType: '',
@@ -6,6 +8,7 @@ const INITIAL_STATE = {
     configs: [],
     otpError: {showError: false, errorMg: '', verified: false},
     registerResponse: {errorMg: '', verified: false},
+    isProcessing: false,
     timeStamp: {}
 };
 
@@ -22,7 +25,10 @@ const reducer = (state = INITIAL_STATE, action: any) => {
 
         case UPDATE_CONFIGURATIONS:
             return { ...state, configs: action.payload};
-        
+
+        case SET_LOADING_FLAG:
+            return { ...state, isProcessing: action.payload };
+
         case SET_OTP_ERROR_MSG:
             const {otpError: errorObj} = state
             const updatedErrorMsg = {...errorObj, errorMg: action.payload}

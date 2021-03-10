@@ -5,7 +5,6 @@ import {
     Divider,
     Form,
     Input,
-    message,
     Row,
     Select,
     Upload
@@ -41,6 +40,7 @@ import RequestSubmittedPopup from './requestSubmittedPopup';
 import PrimaryBtn from '../../app-components/primaryBtn';
 import DefaultBtn from '../../app-components/defaultBtn';
 import CancelBtn from '../../app-components/cancelBtn';
+import { cloneDeep } from 'lodash';
 
 const { home } = routesMap;
 const { Option } = Select;
@@ -93,7 +93,11 @@ const Buyer = (props: any) => {
 
     const onConfirmRegister = () => {
         const userType = registrationState.entityType;
-        const registerDataPromise = generateFormData({formSubmitValues: registerFormValues, userType, addressForPin});
+        const registerDataPromise = generateFormData({
+            formSubmitValues: cloneDeep(registerFormValues),
+            userType,
+            addressForPin
+        });
         registerDataPromise.then((registerFromData) => {
             dispatch(updateForm(registerFormValues as any));
             dispatch(submitRegister(userType, registerFromData));
@@ -144,8 +148,12 @@ const Buyer = (props: any) => {
                 showConfirmation={showConfirmation}
                 onConfirmRegister={onConfirmRegister}
                 toggleShowConfirmation={toggleShowConfirmation}
+                isProcessing={registrationState.isProcessing}
             />
-            <RequestSubmittedPopup history={history} showSubmitMsgPopup={showSubmitMsgPopup} />
+            <RequestSubmittedPopup
+                history={history}
+                showSubmitMsgPopup={showSubmitMsgPopup}
+            />
             <Header />
             <div className="entity-details-container">
                 <h1>Buyer Profile Verification</h1>

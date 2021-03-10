@@ -6,13 +6,14 @@ import PrimaryBtn from '../../app-components/primaryBtn';
 
 type propsModel = {
     registerResponse: {errorMg: string, verified: boolean}
-    onConfirmRegister: Function,
-    toggleShowConfirmation: Function,
+    onConfirmRegister: any,
+    toggleShowConfirmation: any,
     showConfirmation: boolean,
+    isProcessing: boolean
 }
 
 const RegisterConfirmation = (props: propsModel) => {
-    const {onConfirmRegister, toggleShowConfirmation, showConfirmation, registerResponse} = props;
+    const {onConfirmRegister, toggleShowConfirmation, showConfirmation, registerResponse, isProcessing} = props;
     return (
         <>
             <Modal
@@ -34,6 +35,7 @@ const RegisterConfirmation = (props: propsModel) => {
                             onClick={() => toggleShowConfirmation(!showConfirmation)}
                         />
                         <PrimaryBtn
+                            disabled={isProcessing}
                             className='margin-l-r-1em'
                             onClick={() => onConfirmRegister()}
                             content="Yes"
