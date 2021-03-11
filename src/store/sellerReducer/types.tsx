@@ -3,8 +3,8 @@ export interface CropApiModel {
     crop_name: string;
     sub_category: string;
     grade: string;
-    quantity: number;
-    price_per_qnt: number;
+    quantity: string;
+    price_per_qnt: string;
     apmc_rate: number;
     intent_to_sell: string;
     additional_info: string;

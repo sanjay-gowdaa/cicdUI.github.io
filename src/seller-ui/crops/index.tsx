@@ -66,9 +66,6 @@ const CropsSection = () => {
                 content="Add Produce"
             />
             <AddCropModal
-                currentProduceRecord={currentProduceRecord}
-                isEdit={isEdit}
-                setIsEdit={setIsEdit}
                 setModalVisible={setModalVisible}
                 modalVisible={modalVisible}
             />

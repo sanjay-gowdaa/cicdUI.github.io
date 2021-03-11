@@ -102,10 +102,6 @@ const Seller = (props: any) => {
 
     const onFinishFailed = (errorInfo: any) => {
         console.log('Failed:', errorInfo);
-        const name = errorInfo.errorFields[0].name[0];
-        const formName = `basic_${name}`;
-        const element = document.getElementById(formName);
-        element?.scrollIntoView();
     };
 
     window.onbeforeunload = function () {
@@ -135,6 +131,7 @@ const Seller = (props: any) => {
                     labelAlign='left'
                     form={form}
                     colon={false}
+                    scrollToFirstError
                     {...singleLabelFieldLayout}
                     name="basic"
                     initialValues={{...registrationState.formData}}
