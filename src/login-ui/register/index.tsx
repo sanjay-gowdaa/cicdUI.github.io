@@ -147,7 +147,7 @@ const Register = ({ history, setSignUpPopupVisible }: { history: any, setSignUpP
                         label="Category"
                         name="category"
                         rules={[{
-                            required: subType === 'Institution',
+                            required: true,
                             message: `Select ${subType} category`
                         }]}
                     >
