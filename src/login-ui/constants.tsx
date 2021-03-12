@@ -31,6 +31,7 @@ export const UPI_ID_INVALID_MSG = 'Invalid UPI Id!';
 export const PHONE_NUMBER_REQUIRED_MSG = 'Please provide your phone number!';
 export const PHONE_NUMBER_INVALID = 'Phone Number should be a number!';
 export const PHONE_NUMBER_10_DIGIT_MSG = 'Phone Number should be of 10 digits!';
+export const PHONE_NUMBER_ALREADY_EXISTS = 'USER ALREADY EXISTS. KINDLY LOGIN!';
 
 export const EMAIL_REQUIRED_MSG = 'Please provide your email id!';
 export const EMAIL_INVALID_MSG = 'Invalid email id!';
