@@ -4,7 +4,7 @@ const BASE_URL = process.env.REACT_APP_BASE_URL;
 const STAGE = process.env.REACT_APP_ENV;
 const TOKEN_GRANT = process.env.REACT_APP_TOKEN_GRANT as string;
 
-export const REDIRECT_URL =  `https://${window.location.host}/login-user`
+export const REDIRECT_URL =  `https://${window.location.host}/login-user`;
 export const LOGOUT_REDIRECT = `https://${window.location.host}/`;
 export const LOGIN_URL = `${process.env.REACT_APP_LOGIN_URL_BASE_URL}/login?client_id=${process.env.REACT_APP_COGNITO_CLIENT_ID}&response_type=code&redirect_uri=${REDIRECT_URL}`;
 export const LOGOUT_URL = `${process.env.REACT_APP_LOGOUT_BASE_URL}/logout?client_id=${process.env.REACT_APP_COGNITO_CLIENT_ID}&logout_uri=${LOGOUT_REDIRECT}`;
@@ -21,8 +21,9 @@ const CROP_TYPES_API = 'getcrops';
 const CROP_SUB_TYPES_DETAILS_API = 'getcropdetails';
 const CROP_CATEGORY_DETAILS_API = 'getcropcategories';
 const APMC_LIVE_RATES = 'getliverates';
-const UPDATED_APMC_API = 'https://yldnzvpt6c.execute-api.ap-south-1.amazonaws.com/localApmcDb/getapmcprice'
+const UPDATED_APMC_API = 'https://yldnzvpt6c.execute-api.ap-south-1.amazonaws.com/localApmcDb/getapmcprice';
 const INTENT_TO_SELL = 'sell';
+const USER_MANAGER_API = 'user';
 
 const parseToken = (userToken: string) => {
     const sholudDecrypt = process.env.REACT_APP_ENV === 'prod';
@@ -71,6 +72,14 @@ export const verifyOtp = (number: string, otp: string) => {
     }).then((response: any) => response.json());
 };
 /* OTP Interface End */
+
+/* User Manager API*/
+export const getUserManager = (phoneNumber: string) => {
+    const userManagerApi = `${BASE_URL}/${STAGE}/${USER_MANAGER_API}/${phoneNumber}`;
+    return fetch(userManagerApi)
+    .then((response: any) => response.json());
+};
+/* USer Manager API End */
 
 /* Location interface */
 export const getLocationByPin = (pincode: string) => {

@@ -1,13 +1,17 @@
 import { RuleObject } from "antd/lib/form";
+import { isEmpty } from "lodash";
+
 import {
     EMAIL_INVALID_MSG,
     EMAIL_REQUIRED_MSG,
     NAME_INVALID,
     NAME_REQUIRED_MSG,
     PHONE_NUMBER_10_DIGIT_MSG,
+    PHONE_NUMBER_ALREADY_EXISTS,
     PHONE_NUMBER_INVALID,
     PHONE_NUMBER_REQUIRED_MSG
 } from "../constants";
+import { getUserManager } from "../../store/api";
 
 export const validatePhoneNumber = (rule: RuleObject, value: any) => {
     const regExp = /^[0-9]*$/;
@@ -19,7 +23,15 @@ export const validatePhoneNumber = (rule: RuleObject, value: any) => {
     } else if (value.length !== 10) {
         return Promise.reject(PHONE_NUMBER_10_DIGIT_MSG);
     } else {
-        return Promise.resolve();
+        return getUserManager(value)
+        .then((response: any) => {
+            const { Items } = response;
+            if(isEmpty(Items)) {
+                return Promise.resolve();
+            } else {
+                return Promise.reject(PHONE_NUMBER_ALREADY_EXISTS);
+            }
+        });
     }
 };
 
