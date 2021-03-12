@@ -1,29 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import {
-    Button,
     Checkbox,
     Col,
     Divider,
     Form,
-    message,
     Input,
-    Radio,
     Row,
+    Typography,
     Upload
 } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
 import { useSelector, useDispatch } from 'react-redux';
-
-import Header from '../../header';
-import { RootState } from '../../store/rootReducer';
-import {
-    resetOtpState,
-    setRegisterMsg,
-    setResgiterVerifiedFlag,
-    submitRegister,
-    updateForm
-} from '../../store/registrationReducer/actions';
-import { routesMap } from '../../constants';
+import { cloneDeep, trim } from 'lodash';
 
 import {
     accountNumberValidator,
@@ -38,13 +26,24 @@ import {
 import DocumentsUploadComponents from './formComponents/documentsUpload';
 import RegisterConfirmation from './registerConfirmationModal';
 import RequestSubmittedPopup from './requestSubmittedPopup';
+
+import Header from '../../header';
+import { RootState } from '../../store/rootReducer';
+import {
+    resetOtpState,
+    setRegisterMsg,
+    setResgiterVerifiedFlag,
+    submitRegister,
+    updateForm
+} from '../../store/registrationReducer/actions';
+import { routesMap } from '../../constants';
 import DefaultBtn from '../../app-components/defaultBtn';
 import CancelBtn from '../../app-components/cancelBtn';
 import PrimaryBtn from '../../app-components/primaryBtn';
-import { cloneDeep } from 'lodash';
 
 const { home } = routesMap;
 const { TextArea } = Input;
+const { Text } = Typography;
 
 const singleLabelFieldLayout = {
     labelCol: { span: 24 },
@@ -69,12 +68,11 @@ const Seller = (props: any) => {
     const [form] = Form.useForm();
     const dispatch = useDispatch();
     const registrationState = useSelector((state: RootState) => state.registration);
-    const {entityType, formData: partialUserData, registerResponse, isProcessing} = registrationState;
-    const {type: subType} = partialUserData || {};
+    const { configs, entityType, formData, registerResponse, isProcessing } = registrationState;
+    const { type } = formData ;
 
     useEffect(() => {
-        {console.log(form.getFieldsValue().account_number)}
-        if(registerResponse.verified) {
+       if(registerResponse.verified) {
             dispatch(setRegisterMsg(''));
             dispatch(setResgiterVerifiedFlag(false));
             toggleShowConfirmation(!showConfirmation);
@@ -134,7 +132,7 @@ const Seller = (props: any) => {
                     scrollToFirstError
                     {...singleLabelFieldLayout}
                     name="basic"
-                    initialValues={{...registrationState.formData}}
+                    initialValues={{...formData}}
                     onFinish={onFinish}
                     onFinishFailed={onFinishFailed}
                 >
@@ -149,6 +147,22 @@ const Seller = (props: any) => {
                             >
                                 <Input className="custom-input" bordered={false} disabled={true} />
                             </Form.Item>
+                            {
+                                type === "Institution" ?
+                                <Form.Item
+                                    labelAlign="left"
+                                    labelCol={{ span: 10 }}
+                                    wrapperCol={{ span: 12 }}
+                                    label="Category"
+                                    name="category"
+                                >
+                                    <Input
+                                        className="custom-input"
+                                        bordered={false}
+                                        disabled={true}
+                                    />
+                                </Form.Item> : null
+                            }
                             <Form.Item
                                 labelAlign='left'
                                 labelCol={{ span: 10 }}
@@ -167,23 +181,41 @@ const Seller = (props: any) => {
                             >
                                 <Input className="custom-input" bordered={false} disabled={true} />
                             </Form.Item>
+                            {
+                                type === "Institution" ?
+                                <Form.Item
+                                    labelAlign="left"
+                                    labelCol={{ span: 10 }}
+                                    wrapperCol={{ span: 12 }}
+                                    label="Email Id"
+                                    name="email"
+                                >
+                                    <Input
+                                        className="custom-input"
+                                        bordered={false}
+                                        disabled={true}
+                                    />
+                                </Form.Item> : null
+                            }
                         </Col>
                     </Row>
 
                     <Row gutter={16} justify="start">
                         <Col sm={24} md={24} lg={12}>
-                            <DocumentsUploadComponents subType={subType} userType={entityType} documents_list={registrationState.configs} />
+                            <DocumentsUploadComponents subType={type} userType={entityType} documents_list={configs} />
 
                             {/* For testing purpose comment above line and uncomment below *farmer**/}
-                            {/* <DocumentsUploadComponents subType={'Institution'} userType={'Seller'} documents_list={registrationState.configs} /> */}
-
-                            <Form.Item
-                                label='Email (optional)'
-                                name='email'
-                                rules={[{validator: (rule, value) => emailValidator(rule, value)}]}
-                            >
-                                <Input className="custom-input" />
-                            </Form.Item>
+                            {/* <DocumentsUploadComponents subType={'Institution'} userType={'Seller'} documents_list={configs} /> */}
+                            {
+                                type !== "Institution" ?
+                                    <Form.Item
+                                        label='Email'
+                                        name='email'
+                                        rules={[{validator: (rule, value) => emailValidator(rule, value)}]}
+                                    >
+                                        <Input className="custom-input" />
+                                    </Form.Item> : null
+                            }
                             <h2>Location Information</h2>
                             <div className='display-flex-row align-flex-end'>
                                 <Form.Item
@@ -205,6 +237,15 @@ const Seller = (props: any) => {
                             >
                                 <TextArea className="custom-input" />
                             </Form.Item>
+                            {
+                                type === "Institution" ?
+                                <Form.Item
+                                    label="Facilities Provided"
+                                    name="facilitiesProvided"
+                                >
+                                    <TextArea className="custom-input" />
+                                </Form.Item> : null
+                            }
                         </Col>
                     </Row>
 
@@ -216,10 +257,6 @@ const Seller = (props: any) => {
                                     <Form.Item
                                         label="Account Holder Name"
                                         name="account_name"
-                                        rules={[{
-                                            required: true,
-                                            validator: (rule, value) => customNameValidator(rule, value, "Account Holder Name")
-                                        }]}
                                     >
                                         <Input className="custom-input" />
                                     </Form.Item>
@@ -228,10 +265,6 @@ const Seller = (props: any) => {
                                     <Form.Item
                                         label="IFSC Code"
                                         name="ifsc_code"
-                                        rules={[{
-                                            required: true,
-                                            validator: (rule, value) => customIfscValidator(rule, value)
-                                        }]}
                                     >
                                         <Input className="custom-input" style={{textTransform: "uppercase"}} />
                                     </Form.Item>
@@ -240,10 +273,6 @@ const Seller = (props: any) => {
                                     <Form.Item
                                         label="Account Number"
                                         name="account_number"
-                                        rules={[{
-                                            required: true,
-                                            validator: (rule,value) => accountNumberValidator(rule, value)
-                                        }]}
                                     >
                                         <Input className="custom-input" />
                                     </Form.Item>
@@ -252,10 +281,6 @@ const Seller = (props: any) => {
                                     <Form.Item
                                         label="Confirm Account Number"
                                         name="confirm_account_number"
-                                        rules={[{
-                                            required: true,
-                                            validator: (rule, value) => confirmAccountValidator(rule, value, form.getFieldsValue().account_number)
-                                        }]}
                                     >
                                         <Input className="custom-input" />
                                     </Form.Item>
@@ -273,7 +298,6 @@ const Seller = (props: any) => {
                                 label="Upload Bank Passbook or Statement"
                                 valuePropName="fileList"
                                 getValueFromEvent={normFile}
-                                rules={[{ required: true, message: 'Upload the statment!' }]}
                             >
                                 <Upload
                                     accept="image/*"
@@ -292,15 +316,25 @@ const Seller = (props: any) => {
                                     name="logo"
                                     listType="text"
                                 >
-                                    <DefaultBtn icon={<UploadOutlined />} content="Upload Image" />
+                                    <DefaultBtn
+                                        icon={<UploadOutlined />}
+                                        content="Upload Document"
+                                    />
                                 </Upload>
+                                <Text className="font-size-small">Max file size: 1MB</Text>
                             </Form.Item>
                             <Form.Item
-                                label="UPI ID(optional)"
+                                label="UPI ID"
                                 name="upi_id"
                                 rules={[{validator: (rule, value) => customUpiValidator(rule, value)}]}
                             >
                                 <Input className="custom-input" />
+                            </Form.Item>
+                            <Form.Item
+                                label="Additional Information"
+                                name="additional_info"
+                            >
+                                <TextArea className="custom-input" />
                             </Form.Item>
                         </Col>
                     </Row>
