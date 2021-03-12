@@ -36,6 +36,7 @@ const UserBasicActions = ({ history, popUpTrigger }: { history: any, popUpTrigge
                 maskClosable={false}
                 className='custom-register-modal'
                 onCancel={() => setSignUpPopupVisible(!signUpPopupVisible)}
+                centered
                 wrapClassName='register-popup-container'
             >
                 <Register history={history} setSignUpPopupVisible={setSignUpPopupVisible} />
