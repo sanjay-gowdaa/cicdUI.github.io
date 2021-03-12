@@ -100,3 +100,9 @@ html {
 .font-size-small {
     font-size: small;
 }
+
+.required-form-field::before {
+    content: "* ";
+    color: red;
+    width: fit-content;
+}
