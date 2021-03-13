@@ -1,5 +1,15 @@
 import {cloneDeep} from 'lodash';
 
+export const selectedItemClass: any = {
+    'cropType': 'selected-produce-item',
+    'varietyType': 'selected-variety-item',
+    'grade': 'selected-grade-item'
+}
+
+export const renderClassName = (isSelected: boolean, entityType: string) => {
+    return isSelected ? selectedItemClass[entityType] : '';
+}
+
 export const convertMasterListToGradeStructure = (masterList: Array<any>) => {
     let gradeDataStructure: any = {};
     masterList.forEach((masterCropDetails) => {

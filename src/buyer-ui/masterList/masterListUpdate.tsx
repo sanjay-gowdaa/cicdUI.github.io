@@ -20,7 +20,7 @@ import { fetchAllProduce, fetchAllCrops, fetchAllVariety, updateMasterListData }
 import DefaultBtn from '../../app-components/defaultBtn';
 import CancelBtn from '../../app-components/cancelBtn';
 import { RootState } from '../../store/rootReducer';
-import { convertMasterListToGradeStructure, updateMasterCropDatastructure } from './masterListUtils';
+import { convertMasterListToGradeStructure, renderClassName, updateMasterCropDatastructure } from './masterListUtils';
 
 const { Search } = Input;
 const { Option } = Select;
@@ -72,7 +72,11 @@ const MasterList = ({setModalVisible}: any) => {
     /* Get/Show Crops for the selected master produce */
     const getProduceTypeData = (crop: Array<string>) => {
         const produceList = crop.map((cropType, index) => 
-            <List.Item key={`${cropType}-${index}`} onClick={() => handleMasterVarietyChange(cropType)}>
+            <List.Item
+                className={`produce-list-item ${renderClassName(cropType === selectedCrop, 'cropType')}`}
+                key={`${cropType}-${index}`}
+                onClick={() => handleMasterVarietyChange(cropType)}
+            >
                 {cropType} <CaretRightOutlined/>
             </List.Item> )
         return produceList;
@@ -85,6 +89,7 @@ const MasterList = ({setModalVisible}: any) => {
             return (
                 <List.Item
                     key={`${variety}-${index}`}
+                    className={`variety-list-item ${renderClassName(variety === selectedVariety, 'varietyType')}`}
                     onClick={() => setSelectedVariety(variety)
                 }>
                     {variety} <CaretRightOutlined />
