@@ -63,7 +63,7 @@ export const generateFormData = ({formSubmitValues, userType, addressForPin}: ge
             const IDDocument = generateFileData(id_doc[0].originFileObj, 'id_doc');
             fileConversionPromises.push(IDDocument);
         } // Not required
-        if(kisancard_card && kisancard_card) {
+        if(kisancard_card && kisancard_card.length) {
             const kisanCardDoc = generateFileData(kisancard_card[0].originalFileObj,'kisancard_card');
             fileConversionPromises.push(kisanCardDoc);
         }
