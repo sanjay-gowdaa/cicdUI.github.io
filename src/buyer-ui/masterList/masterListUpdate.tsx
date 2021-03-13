@@ -12,7 +12,7 @@ import {
     Table,
     Typography
 } from 'antd';
-import { uniqBy, remove, findIndex } from 'lodash';
+import { uniqBy, findIndex } from 'lodash';
 import { FilterOutlined, CaretRightOutlined } from '@ant-design/icons';
 import { masterListColumns } from './masterListTable.model';
 import { BuyerStateModel, CropCategoryModel, MasterListApiFormat } from '../../store/buyerReducer/types';
@@ -20,27 +20,36 @@ import { fetchAllProduce, fetchAllCrops, fetchAllVariety, updateMasterListData }
 import DefaultBtn from '../../app-components/defaultBtn';
 import CancelBtn from '../../app-components/cancelBtn';
 import { RootState } from '../../store/rootReducer';
-import { convertMasterListToGradeStructure, updateMasterCropDatastructure } from './masterListUtils';
+import { convertMasterListToGradeStructure, renderClassName, updateMasterCropDatastructure } from './masterListUtils';
 
 const { Search } = Input;
 const { Option } = Select;
 const { Text, Title } = Typography;
 
-const MasterList = (props: any) => {
+const MasterList = ({setModalVisible}: any) => {
     const buyerStore: BuyerStateModel = useSelector((state: RootState) => state.buyer);
-    const {setModalVisible} = props;
+    const {masterCropNames, masterProduceList, cropsList, varietyList} = buyerStore;
     const dispatch = useDispatch();
-    const [addedMasterList, updateAddedMasterList] = useState(buyerStore.masterProduceList as Array<MasterListApiFormat>);
+    const [addedMasterList, updateAddedMasterList] = useState(masterProduceList as Array<MasterListApiFormat>);
     const [selectedProduceCategory, setSelectedProduceCategory] = useState('');
     const [selectedCrop, setSelectedCrop] = useState('');
     const [selectedVariety, setSelectedVariety] = useState('');
-    const [selectedGradeList, updateSelectedList] = useState(convertMasterListToGradeStructure(buyerStore.masterProduceList) as any)
+    const [selectedGradeList, updateSelectedList] = useState(convertMasterListToGradeStructure(masterProduceList) as any)
+    const [produceTypeSearchList, updateProduceTypeSearchList] = useState([] as Array<string>)
+    const [varietySearchList, updateVarietySearchList] = useState([] as Array<CropCategoryModel>)
 
     useEffect(() => {
-        buyerStore.masterCropNames && !buyerStore.masterCropNames.length && dispatch(fetchAllProduce());
+        masterCropNames && !masterCropNames.length && dispatch(fetchAllProduce());
     }, [])
 
+    useEffect(() => {
+        updateProduceTypeSearchList(cropsList);
+    }, [cropsList])
     
+    useEffect(() => {
+        updateVarietySearchList(varietyList);
+    }, [varietyList])
+
     /* On change of master produce selection*/
     const handleMasterProduceChange = (produceName: string) => {
         // Should erase the variety and grade data on change.
@@ -62,8 +71,12 @@ const MasterList = (props: any) => {
 
     /* Get/Show Crops for the selected master produce */
     const getProduceTypeData = (crop: Array<string>) => {
-        const produceList = crop.map((cropType) => 
-            <List.Item onClick={() => handleMasterVarietyChange(cropType)}>
+        const produceList = crop.map((cropType, index) => 
+            <List.Item
+                className={`produce-list-item ${renderClassName(cropType === selectedCrop, 'cropType')}`}
+                key={`${cropType}-${index}`}
+                onClick={() => handleMasterVarietyChange(cropType)}
+            >
                 {cropType} <CaretRightOutlined/>
             </List.Item> )
         return produceList;
@@ -71,13 +84,17 @@ const MasterList = (props: any) => {
 
     /* Show categories for the selected Crop */
     const getCategoryListData = (cropName: Array<CropCategoryModel>) => {
-        const varietyList = uniqBy(cropName, 'variety').map((currentCropData) => {
+        const varietyList = uniqBy(cropName, 'variety').map((currentCropData, index) => {
             const {variety} = currentCropData;
-            return (<>
-                <List.Item onClick={() => setSelectedVariety(variety)}>
+            return (
+                <List.Item
+                    key={`${variety}-${index}`}
+                    className={`variety-list-item ${renderClassName(variety === selectedVariety, 'varietyType')}`}
+                    onClick={() => setSelectedVariety(variety)
+                }>
                     {variety} <CaretRightOutlined />
                 </List.Item>
-            </>)
+            )
         })
         return varietyList;
     };
@@ -88,20 +105,18 @@ const MasterList = (props: any) => {
             .filter((crop: CropCategoryModel) => crop.variety === cropVariety)
                 .map(({grade}: CropCategoryModel, index) => {
                     return (
-                        <>
-                            <List.Item key={`${grade}-${index}`} >
-                                <Checkbox className="custom-checkbox" 
-                                    checked={isSelected(grade)}
-                                    onChange={(e)=> {
-                                        const {target} = e;
-                                        const {checked} = target;
-                                        addCropToList(grade, checked)
-                                    }}
-                                >
-                                    {grade}
-                                </Checkbox>
-                            </List.Item>
-                        </>
+                        <List.Item key={`${grade}-${index}`} >
+                            <Checkbox className="custom-checkbox" 
+                                checked={isSelected(grade)}
+                                onChange={(e)=> {
+                                    const {target} = e;
+                                    const {checked} = target;
+                                    addCropToList(grade, checked)
+                                }}
+                            >
+                                {grade}
+                            </Checkbox>
+                        </List.Item>
                     )
                 })
         return gradeList;
@@ -156,35 +171,6 @@ const MasterList = (props: any) => {
         updateSelectedList(updatedGradeStructure);
         /* Update grade datastructure end */
     }
-
-    // const setSelectedClassName = (selectedClassName: string, listType: string) => {
-    //     var element = document.getElementsByClassName(selectedClassName);
-    //     var idName = "";
-    //     var gradeSelected = "";
-    //     var isGrade = false;
-
-    //     switch(listType){
-    //         case "produce": {
-    //             idName="selected-produce-item";
-    //             break;
-    //         }
-    //         case "variety": {
-    //             idName="selected-variety-item";
-    //             break;
-    //         }
-    //         case "grade": {
-    //             gradeSelected="selected-grade-item";
-    //             isGrade = true;
-    //             break;
-    //         }
-    //     }
-
-    //     if (isGrade) {
-    //         element.item(0)?.setAttribute("className", gradeSelected);
-    //     } else {
-    //         element.item(0)?.setAttribute("id",idName);
-    //     }
-    // };
     
     const isSelected = (curItemGradeName: string) => {
         const isProducePresent = selectedGradeList[selectedProduceCategory]
@@ -207,7 +193,7 @@ const MasterList = (props: any) => {
                     onChange={handleMasterProduceChange}
                     style={{ width: '100%' }}
                 >
-                    {renderMasterProduceChildren(buyerStore.masterCropNames)}
+                    {renderMasterProduceChildren(masterCropNames)}
                 </Select>
             </Col>
         </Row>
@@ -215,21 +201,44 @@ const MasterList = (props: any) => {
             <Col span={8}>
                 <div className="custom-list">
                     <Title level={5}>Produce</Title>
-                    <Search className="custom-search" placeholder="Search" />
-                    {getProduceTypeData(buyerStore.cropsList)}
+                    <Input
+                        size="middle"
+                        placeholder="Search"
+                        className="custom-search margin-l-r-1em"
+                        onChange={(searchEvent) => {
+                            const {target: {value: searchTerm}} = searchEvent;
+                            const searchMatches: Array<string> = ( searchTerm ) ? cropsList.filter(
+                                (currentStoreCrop) => currentStoreCrop.toLowerCase().indexOf(searchTerm) !== -1
+                            ) : cropsList;
+                            updateProduceTypeSearchList(searchMatches);
+                        }}
+                    />
+                    {getProduceTypeData(produceTypeSearchList)}
                 </div>
             </Col>
             <Col span={8}>
                 <div className="custom-list">
                     <Title level={5}>Variety</Title>
-                    <Search className="custom-search" placeholder="Search" />
-                    {getCategoryListData(buyerStore.varietyList)}
+                    <Input
+                        size="middle"
+                        placeholder="Search"
+                        className="custom-search margin-l-r-1em"
+                        onChange={(searchEvent) => {
+                            const {target: {value: searchTerm}} = searchEvent;
+                            const searchMatches = ( searchTerm ) ? uniqBy(varietyList, 'variety').filter((currentCropData, index) => {
+                                const {variety} = currentCropData;
+                                return variety.toLowerCase().indexOf(searchTerm) !== -1
+                            }) : varietyList;
+                            updateVarietySearchList(searchMatches);
+                        }}
+                    />
+                    {getCategoryListData(varietySearchList)}
                 </div>
             </Col>
             <Col span={8}>
                 <div className="custom-list">
                     <Title level={5}>Grade</Title>
-                    { selectedVariety ? getGradeData(buyerStore.varietyList, selectedVariety) : [] }
+                    { selectedVariety ? getGradeData(varietyList, selectedVariety) : [] }
                 </div>
             </Col>
         </Row>
