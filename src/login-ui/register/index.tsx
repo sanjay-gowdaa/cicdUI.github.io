@@ -65,8 +65,10 @@ const Register = ({ history, setSignUpPopupVisible }: { history: any, setSignUpP
     const [subType, setSubType] = useState('');
     const [showOTPModal, setShowOTPModal] = useState(false);
     const [displayTandC, setTandC] = useState(false);
+    const [showCategory, setShowCategory] = useState(false);
     const dispatch = useDispatch();
     const registrationState = useSelector((state: RootState) => state.registration);
+    const { configs } = registrationState;
 
     const onFinish = (values: any) => {
         const { name, number, email, type, category } = values;
@@ -82,6 +84,12 @@ const Register = ({ history, setSignUpPopupVisible }: { history: any, setSignUpP
     };
 
     const setUserType = (userType: string) => setCurrentType(userType);
+
+    const onSelectType = (type: any, currentType: string) => {
+        setSubType(type);
+        const filter = uniqBy(configs.filter((config: any) => config.type === currentType && config.sub_type === type), 'category');
+        (filter.length > 1) ? setShowCategory(true) : setShowCategory(false);
+    };
 
     return (
         <React.Fragment>
@@ -135,14 +143,14 @@ const Register = ({ history, setSignUpPopupVisible }: { history: any, setSignUpP
                     <Select
                         className="custom-select"
                         placeholder={`Select ${currentType} type`}
-                        onSelect={(type: any) => setSubType(type) }
+                        onSelect={(type: any) => onSelectType(type, currentType) }
                         allowClear
                     >
-                        {getUserTypeOption(registrationState.configs, currentType)}
+                        {getUserTypeOption(configs, currentType)}
                     </Select>
                 </Form.Item>
                 {
-                    (subType === 'Institution') ?
+                    showCategory ?
                     <Form.Item
                         label="Category"
                         name="category"
@@ -156,7 +164,7 @@ const Register = ({ history, setSignUpPopupVisible }: { history: any, setSignUpP
                             placeholder={`Select ${subType} category`}
                             allowClear
                         >
-                            {getUserCategoryOption(registrationState.configs, currentType)}
+                            {getUserCategoryOption(configs, currentType)}
                         </Select>
                     </Form.Item> : null
                 }
@@ -183,12 +191,12 @@ const Register = ({ history, setSignUpPopupVisible }: { history: any, setSignUpP
                 </Form.Item>
 
                 {
-                    (currentType === UserTypes.BUYER) || (currentType === UserTypes.SELLER && subType === 'Institution') ?
+                    (currentType === UserTypes.BUYER) || (currentType === UserTypes.SELLER && showCategory) ?
                     <Form.Item
                         label="Email"
                         name="email"
                         rules={[{
-                            required: (currentType === UserTypes.BUYER) || (currentType === UserTypes.SELLER && subType === 'Institution'),
+                            required: (currentType === UserTypes.BUYER) || (currentType === UserTypes.SELLER && showCategory),
                             validator: (rule, value) => emailRequired(rule, value)
                         }]}
                    >
