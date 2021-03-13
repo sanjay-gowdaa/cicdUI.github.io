@@ -58,20 +58,41 @@ export const generateFormData = ({formSubmitValues, userType, addressForPin}: ge
     if (userType === UserTypes.SELLER) {
     // For testing uncomment below line and comment above line
     // if (false) {
-        const {id_doc} = formSubmitValues;
-        const IDDocument = generateFileData(id_doc[0].originFileObj, 'id_doc');
-        fileConversionPromises.push(IDDocument);
-
-        formKeysToBeRemoved = [...formKeysToBeRemoved, 'id_doc', 'bank_statement'];
+        const {id_doc, kisancard_card, rtc_card, aadhar_card, pan_card} = formSubmitValues;
+        if(id_doc && id_doc.length) {
+            const IDDocument = generateFileData(id_doc[0].originFileObj, 'id_doc');
+            fileConversionPromises.push(IDDocument);
+        } // Not required
+        if(kisancard_card && kisancard_card) {
+            const kisanCardDoc = generateFileData(kisancard_card[0].originalFileObj,'kisancard_card');
+            fileConversionPromises.push(kisanCardDoc);
+        }
+        if(rtc_card && rtc_card.length) {
+            const rtcCardDoc = generateFileData(rtc_card[0].originalFileObj, 'rtc_card');
+            fileConversionPromises.push(rtcCardDoc);
+        }
+        if(aadhar_card && aadhar_card.length) {
+            const aadharCardDoc = generateFileData(aadhar_card[0].originalFileObj, 'aadhar_card');
+            fileConversionPromises.push(aadharCardDoc);
+        }
+        if(pan_card && pan_card.length) {
+            const panCardDoc = generateFileData(pan_card[0].originalFileObj, 'pan_card');
+            fileConversionPromises.push(panCardDoc);
+        }
+        formKeysToBeRemoved = [...formKeysToBeRemoved, 'id_doc', 'bank_statement', 'kisancard_card', 'rtc_card', 'aadhar_card', 'pan_card'];
         cleanUpFormSubmitValues(formKeysToBeRemoved, formSubmitValues);
 
         formSubmitValues = {...formSubmitValues, isSeller: true};
     } else {
         const {aadhar_card, pan_card, weekday, saturday, sunday} = formSubmitValues;
-        const buyerIdDocPrimary = generateFileData(aadhar_card[0].originFileObj, 'uidai_doc');
-        const buyerIdDocSecondary = generateFileData(pan_card[0].originFileObj, 'pan_doc');
-        fileConversionPromises.push(buyerIdDocPrimary);
-        fileConversionPromises.push(buyerIdDocSecondary);
+        if(aadhar_card && aadhar_card.length){
+            const buyerIdDocPrimary = generateFileData(aadhar_card[0].originFileObj, 'uidai_doc');
+            fileConversionPromises.push(buyerIdDocPrimary);
+        }
+        if(pan_card && pan_card.length){
+            const buyerIdDocSecondary = generateFileData(pan_card[0].originFileObj, 'pan_doc');
+            fileConversionPromises.push(buyerIdDocSecondary);
+        }
 
         formKeysToBeRemoved = [...formKeysToBeRemoved, 'aadhar_card', 'pan_card', 'weekday', 'saturday', 'sunday', 'bank_statement'];
         cleanUpFormSubmitValues(formKeysToBeRemoved, formSubmitValues);
