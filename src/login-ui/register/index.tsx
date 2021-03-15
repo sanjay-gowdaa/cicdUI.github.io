@@ -46,18 +46,35 @@ const getUserTypeOption = (configs: [any], currentType: string) => {
     );
 };
 
+const getUserCategoryOption = (config: [any], currentType: string, type: string) => {
+    const filterUserSubTypeOptns =
+        uniqBy(config.filter(config => config.type === currentType && config.sub_type === type), 'category');
+
+        return (
+        filterUserSubTypeOptns.map((categoryType) => {
+            const { category } = categoryType;
+            return(
+                <Option value={category}>{category}</Option>
+            );
+        })
+    );
+};
+
 const Register = ({ history, setSignUpPopupVisible }: { history: any, setSignUpPopupVisible: Function }) => {
     const [currentType, setCurrentType] = useState('Buyer');
+    const [subType, setSubType] = useState('');
     const [showOTPModal, setShowOTPModal] = useState(false);
     const [displayTandC, setTandC] = useState(false);
+    const [showCategory, setShowCategory] = useState(false);
     const dispatch = useDispatch();
     const registrationState = useSelector((state: RootState) => state.registration);
+    const { configs } = registrationState;
 
     const onFinish = (values: any) => {
-        const { name, number, email, type } = values;
+        const { name, number, email, type, category } = values;
         dispatch(sendOTP(`91${number}`));
         dispatch(updateEntityType(currentType));
-        dispatch(updateBasicRegistrationData({ name, number, email, type }));
+        dispatch(updateBasicRegistrationData({ name, number, email, type, category }));
         setSignUpPopupVisible(false);
         setShowOTPModal(!showOTPModal);
     };
@@ -67,6 +84,12 @@ const Register = ({ history, setSignUpPopupVisible }: { history: any, setSignUpP
     };
 
     const setUserType = (userType: string) => setCurrentType(userType);
+
+    const onSelectType = (type: any, currentType: string) => {
+        setSubType(type);
+        const filter = uniqBy(configs.filter((config: any) => config.type === currentType && config.sub_type === type), 'category');
+        (filter.length > 1) ? setShowCategory(true) : setShowCategory(false);
+    };
 
     return (
         <React.Fragment>
@@ -120,11 +143,31 @@ const Register = ({ history, setSignUpPopupVisible }: { history: any, setSignUpP
                     <Select
                         className="custom-select"
                         placeholder={`Select ${currentType} type`}
+                        onSelect={(type: any) => onSelectType(type, currentType) }
                         allowClear
                     >
-                        {getUserTypeOption(registrationState.configs, currentType)}
+                        {getUserTypeOption(configs, currentType)}
                     </Select>
                 </Form.Item>
+                {
+                    showCategory ?
+                    <Form.Item
+                        label="Category"
+                        name="category"
+                        rules={[{
+                            required: true,
+                            message: `Select ${subType} category`
+                        }]}
+                    >
+                        <Select
+                            className="custom-select"
+                            placeholder={`Select ${subType} category`}
+                            allowClear
+                        >
+                            {getUserCategoryOption(configs, currentType, subType)}
+                        </Select>
+                    </Form.Item> : null
+                }
                 <Form.Item
                     label="Name"
                     name="name"
@@ -148,12 +191,12 @@ const Register = ({ history, setSignUpPopupVisible }: { history: any, setSignUpP
                 </Form.Item>
 
                 {
-                    (currentType === UserTypes.BUYER) ?
+                    (currentType === UserTypes.BUYER) || (currentType === UserTypes.SELLER && showCategory) ?
                     <Form.Item
                         label="Email"
                         name="email"
                         rules={[{
-                            required: currentType === UserTypes.BUYER,
+                            required: (currentType === UserTypes.BUYER) || (currentType === UserTypes.SELLER && showCategory),
                             validator: (rule, value) => emailRequired(rule, value)
                         }]}
                    >

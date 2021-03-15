@@ -3,6 +3,7 @@ export interface RegsitrationFormModel {
     number: string;
     email: string;
     type: string;
+    category: string;
 }
 
 export interface RegitrationFullFormModel extends RegsitrationFormModel {
