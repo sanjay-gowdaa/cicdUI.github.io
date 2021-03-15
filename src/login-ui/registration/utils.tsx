@@ -64,19 +64,19 @@ export const generateFormData = ({formSubmitValues, userType, addressForPin}: ge
             fileConversionPromises.push(IDDocument);
         } // Not required
         if(kisancard_card && kisancard_card.length) {
-            const kisanCardDoc = generateFileData(kisancard_card[0].originalFileObj,'kisancard_card');
+            const kisanCardDoc = generateFileData(kisancard_card[0].originFileObj,'kisancard_card');
             fileConversionPromises.push(kisanCardDoc);
         }
         if(rtc_card && rtc_card.length) {
-            const rtcCardDoc = generateFileData(rtc_card[0].originalFileObj, 'rtc_card');
+            const rtcCardDoc = generateFileData(rtc_card[0].originFileObj, 'rtc_card');
             fileConversionPromises.push(rtcCardDoc);
         }
         if(aadhar_card && aadhar_card.length) {
-            const aadharCardDoc = generateFileData(aadhar_card[0].originalFileObj, 'aadhar_card');
+            const aadharCardDoc = generateFileData(aadhar_card[0].originFileObj, 'aadhar_card');
             fileConversionPromises.push(aadharCardDoc);
         }
         if(pan_card && pan_card.length) {
-            const panCardDoc = generateFileData(pan_card[0].originalFileObj, 'pan_card');
+            const panCardDoc = generateFileData(pan_card[0].originFileObj, 'pan_card');
             fileConversionPromises.push(panCardDoc);
         }
         formKeysToBeRemoved = [...formKeysToBeRemoved, 'id_doc', 'bank_statement', 'kisancard_card', 'rtc_card', 'aadhar_card', 'pan_card'];
