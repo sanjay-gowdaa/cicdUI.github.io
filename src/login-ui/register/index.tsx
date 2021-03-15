@@ -46,9 +46,9 @@ const getUserTypeOption = (configs: [any], currentType: string) => {
     );
 };
 
-const getUserCategoryOption = (config: [any], currentType: string) => {
+const getUserCategoryOption = (config: [any], currentType: string, type: string) => {
     const filterUserSubTypeOptns =
-        uniqBy(config.filter(config => config.type === currentType && config.sub_type === 'Institution'), 'category');
+        uniqBy(config.filter(config => config.type === currentType && config.sub_type === type), 'category');
 
         return (
         filterUserSubTypeOptns.map((categoryType) => {
@@ -164,7 +164,7 @@ const Register = ({ history, setSignUpPopupVisible }: { history: any, setSignUpP
                             placeholder={`Select ${subType} category`}
                             allowClear
                         >
-                            {getUserCategoryOption(configs, currentType)}
+                            {getUserCategoryOption(configs, currentType, subType)}
                         </Select>
                     </Form.Item> : null
                 }
