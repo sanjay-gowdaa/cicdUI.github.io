@@ -187,7 +187,7 @@ const Seller = (props: any) => {
                                     labelAlign="left"
                                     labelCol={{ span: 10 }}
                                     wrapperCol={{ span: 12 }}
-                                    label="Email Id"
+                                    label="Email"
                                     name="email"
                                 >
                                     <Input
