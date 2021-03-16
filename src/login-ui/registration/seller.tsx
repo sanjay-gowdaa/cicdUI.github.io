@@ -320,8 +320,8 @@ const Seller = (props: any) => {
                                         icon={<UploadOutlined />}
                                         content="Upload Document"
                                     />
+                                    <br/><Text className="font-size-small">Max file size: 1MB</Text>
                                 </Upload>
-                                <Text className="font-size-small">Max file size: 1MB</Text>
                             </Form.Item>
                             <Form.Item
                                 label="UPI ID"
