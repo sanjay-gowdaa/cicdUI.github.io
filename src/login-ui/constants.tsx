@@ -62,3 +62,52 @@ export const workingHours = [{
     label: 'All Day',
     disabled: true
 }];
+
+export const documentLabelMapping = [
+{
+    key: "GSTIN",
+    label: "GSTIN",
+    labelClassName: "required-form-field",
+    name: "gstin",
+    upload: false,
+},
+{
+    key: "PAN",
+    label: "PAN card Number",
+    name: "pan",
+    formClassName: "form-item-60",
+    upload: true,
+    uploadFormName: "pan_card"
+},
+{
+    key: "AADHAR",
+    label: "Aadhaar card Number",
+    labelClassName: "required-form-field",
+    name: "uidai",
+    formClassName: "form-item-60",
+    upload: true,
+    uploadFormName: "aadhar_card"
+},
+{
+    key: "Kisan card",
+    label: "Kisan card",
+    name: "kisancard",
+    formClassName: "form-item-60",
+    upload: true,
+    uploadFormName: "kisancard_card"
+},
+{
+    key: "FPO",
+    label: "Society/ FPO Number",
+    name: "fpo",
+    upload: false,
+},
+{
+    key: "RTC",
+    label: "RTC Number",
+    name: "rtc",
+    formClassName: "form-item-60",
+    upload: true,
+    uploadFormName: "rtc_card"
+}
+]
