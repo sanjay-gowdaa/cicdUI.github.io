@@ -5,6 +5,7 @@ import {filter, toLower} from 'lodash';
 
 import { UserTypes } from '../../../store/genericTypes';
 import DefaultBtn from '../../../app-components/defaultBtn';
+import { documentLabelMapping } from '../../constants';
 
 const { Text } = Typography;
 
@@ -37,60 +38,65 @@ const SellerDocuments = (props: {documents_list: Array<any>, subType: string, us
         {
             allDocumentsList.map((documentName) => {
                 return (
-                    <Form.Item
-                        labelCol={{ span: 24 }}
-                        wrapperCol={{ span: 18 }}
-                        label={documentName !== "GSTIN" ?
-                            <span className={(documentName === "GSTIN" || documentName === "AADHAR" ? `required-form-field`: ``)}>
-                                {documentName} card Number
-                            </span>:
-                            <span className="required-form-field">{documentName}</span>
-                        }
-                    >
-                        <Form.Item
-                            name={(documentName === "AADHAR" ? `uidai` : `${toLower(documentName).replace(/ /g, "")}`)}
-                            className={(documentName === "GSTIN" || documentName === "FPO") ? ``: `form-item-60`}
-                        >
-                            <Input className="custom-input" />
-                        </Form.Item>
+                    <>
                         {
-                            (documentName === "GSTIN" || documentName === "FPO") ?
-                                null :
-                                <Form.Item
-                                    name={`${toLower(documentName).replace(/ /g, "")}_card`}
-                                    valuePropName="fileList"
-                                    getValueFromEvent={normFile}
-                                    style={{ display: "inline-block", width: "20%", margin: "0 1em"}}
-                                >
-                                    <Upload
-                                        accept="image/*"
-                                        beforeUpload={(file) => {
-                                            // const isRequiredFileType =
-                                            //     file.type === 'image/jpeg' ||
-                                            //     file.type === 'image/png';
-                                            // if (!isRequiredFileType) {
-                                            //     message.error(
-                                            //         `${file.name} is not an Image file`,
-                                            //     );
-                                            // }
-                                            // return isRequiredFileType;
-                                            return false;
-                                        }}
-                                        name={toLower(documentName)}
-                                        listType="text"
+                            documentLabelMapping.map((document) => {
+                                const { formClassName, key, label, labelClassName, name, upload, uploadFormName } = document;
+                                return ( 
+                                    (key === documentName)?
+                                    <Form.Item
+                                        labelCol={{ span: 24 }}
+                                        wrapperCol={{ span: 18 }}
+                                        label={<span className={labelClassName}>{label}</span>}
                                     >
-                                        <DefaultBtn
-                                            icon={<UploadOutlined />}
-                                            content="Upload Document"
-                                        />
-                                        <Text className="font-size-small">Max file size: 1MB</Text>
-                                    </Upload>
-                                </Form.Item>
-                            }
-                        </Form.Item>
-                    )})
-            }
-        </>
+                                        <Form.Item
+                                            name={name}
+                                            className={formClassName}
+                                        >
+                                            <Input className="custom-input" />
+                                        </Form.Item>
+                                        {
+                                            upload ?
+                                                <Form.Item
+                                                    name={uploadFormName}
+                                                    valuePropName="fileList"
+                                                    getValueFromEvent={normFile}
+                                                    style={{ display: "inline-block", width: "20%", margin: "0 1em"}}
+                                                >
+                                                    <Upload
+                                                        accept="image/*"
+                                                        beforeUpload={(file) => {
+                                                            // const isRequiredFileType =
+                                                            //     file.type === 'image/jpeg' ||
+                                                            //     file.type === 'image/png';
+                                                            // if (!isRequiredFileType) {
+                                                            //     message.error(
+                                                            //         `${file.name} is not an Image file`,
+                                                            //     );
+                                                            // }
+                                                            // return isRequiredFileType;
+                                                            return false;
+                                                        }}
+                                                        name={toLower(documentName)}
+                                                        listType="text"
+                                                    >
+                                                        <DefaultBtn
+                                                            icon={<UploadOutlined />}
+                                                            content="Upload Document"
+                                                        />
+                                                        <Text className="font-size-small">Max file size: 1MB</Text>
+                                                    </Upload>
+                                                </Form.Item> : null
+                                        }
+                                    </Form.Item> : null
+                                )
+                            })
+                        }
+                    </>
+                )
+            })
+        }
+    </>
     );
 };
 
@@ -108,57 +114,64 @@ const BuyerDocuments = (props: {documents_list: Array<any>, subType: string, use
             {
                 allDocumentsList.map((documentName) => {
                     return (
-                        <Form.Item
-                            labelCol={{ span: 24 }}
-                            wrapperCol={{ span: 18 }}
-                            label={documentName !== "GSTIN" ?
-                                <span className={(documentName === "PAN" ? ``: `required-form-field`)}>
-                                    {documentName} card Number
-                                </span>:
-                                <span className="required-form-field">{documentName}</span>
-                            }
-                        >
-                            <Form.Item
-                                name={(documentName === "AADHAR" ? `uidai` : `${toLower(documentName)}`)}
-                                className={(documentName === "GSTIN") ? ``: `form-item-60`}
-                            >
-                                <Input className="custom-input" />
-                            </Form.Item>
+                        <>
                             {
-                                documentName !== "GSTIN" ?
-                                <Form.Item
-                                    name={`${toLower(documentName)}_card`}
-                                    valuePropName="fileList"
-                                    getValueFromEvent={normFile}
-                                    style={{ display: "inline-block", width: "20%", margin: "0 1em"}}
-                                >
-                                    <Upload
-                                        accept="image/*"
-                                        beforeUpload={(file) => {
-                                            // const isRequiredFileType =
-                                            //     file.type === 'image/jpeg' ||
-                                            //     file.type === 'image/png';
-                                            // if (!isRequiredFileType) {
-                                            //     message.error(
-                                            //         `${file.name} is not an Image file`,
-                                            //     );
-                                            // }
-                                            // return isRequiredFileType;
-                                            return false;
-                                        }}
-                                        name={toLower(documentName)}
-                                        listType="text"
-                                    >
-                                        <DefaultBtn
-                                            icon={<UploadOutlined />}
-                                            content="Upload Document"
-                                        />
-                                        <Text className="font-size-small">Max file size: 1MB</Text>
-                                    </Upload>
-                                </Form.Item> : null
+                                documentLabelMapping.map((document) => {
+                                    const { formClassName, key, label, labelClassName, name, upload, uploadFormName } = document;
+                                    return (
+                                        (key === documentName)?
+                                            <Form.Item
+                                                labelCol={{ span: 24 }}
+                                                wrapperCol={{ span: 18 }}
+                                                label={<span className={labelClassName}>{label}</span>}
+                                            >
+                                                <Form.Item
+                                                    name={name}
+                                                    className={formClassName}
+                                                >
+                                                    <Input className="custom-input" />
+                                                </Form.Item>
+                                                {
+                                                    upload ?
+                                                    <Form.Item
+                                                        name={uploadFormName}
+                                                        valuePropName="fileList"
+                                                        getValueFromEvent={normFile}
+                                                        style={{ display: "inline-block", width: "20%", margin: "0 1em"}}
+                                                    >
+                                                        <Upload
+                                                            accept="image/*"
+                                                            beforeUpload={(file) => {
+                                                                // const isRequiredFileType =
+                                                                //     file.type === 'image/jpeg' ||
+                                                                //     file.type === 'image/png';
+                                                                // if (!isRequiredFileType) {
+                                                                //     message.error(
+                                                                //         `${file.name} is not an Image file`,
+                                                                //     );
+                                                                // }
+                                                                // return isRequiredFileType;
+                                                                return false;
+                                                            }}
+                                                            name={toLower(documentName)}
+                                                            listType="text"
+                                                        >
+                                                            <DefaultBtn
+                                                                icon={<UploadOutlined />}
+                                                                content="Upload Document"
+                                                            />
+                                                            <Text className="font-size-small">Max file size: 1MB</Text>
+                                                        </Upload>
+                                                    </Form.Item> : null
+                                                }
+                                            </Form.Item>     
+                                        : null
+                                    )
+                                })
                             }
-                        </Form.Item>
-                    )})
+                        </>
+                    )
+                })
             }
         </>
     );
