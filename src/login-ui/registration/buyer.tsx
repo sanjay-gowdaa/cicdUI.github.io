@@ -12,7 +12,7 @@ import {
 } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
 import { useDispatch, useSelector } from 'react-redux';
-import { cloneDeep } from 'lodash';
+import { cloneDeep, isEmpty } from 'lodash';
 
 import {
     confirmAccountValidator,
@@ -86,7 +86,7 @@ const Buyer = (props: any) => {
     const dispatch = useDispatch();
     const registrationState = useSelector((state: RootState) => state.registration);
     const { configs, entityType, formData, registerResponse, isProcessing } = registrationState;
-    const { type } = formData;
+    const { type, category } = formData;
 
     useEffect(() => {
         if(registerResponse.verified) {
@@ -193,7 +193,7 @@ const Buyer = (props: any) => {
                                 />
                             </Form.Item>
                             {
-                                type === "Institution" ?
+                                !isEmpty(category) ?
                                 <Form.Item
                                     labelAlign="left"
                                     labelCol={{ span: 10 }}

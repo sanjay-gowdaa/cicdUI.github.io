@@ -11,7 +11,7 @@ import {
 } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
 import { useSelector, useDispatch } from 'react-redux';
-import { cloneDeep, trim } from 'lodash';
+import { cloneDeep, isEmpty } from 'lodash';
 
 import {
     accountNumberValidator,
@@ -69,10 +69,10 @@ const Seller = (props: any) => {
     const dispatch = useDispatch();
     const registrationState = useSelector((state: RootState) => state.registration);
     const { configs, entityType, formData, registerResponse, isProcessing } = registrationState;
-    const { type } = formData ;
+    const { type, category } = formData ;
 
     useEffect(() => {
-       if(registerResponse.verified) {
+        if(registerResponse.verified) {
             dispatch(setRegisterMsg(''));
             dispatch(setResgiterVerifiedFlag(false));
             toggleShowConfirmation(!showConfirmation);
@@ -148,7 +148,7 @@ const Seller = (props: any) => {
                                 <Input className="custom-input" bordered={false} disabled={true} />
                             </Form.Item>
                             {
-                                type === "Institution" ?
+                                !isEmpty(category) ?
                                 <Form.Item
                                     labelAlign="left"
                                     labelCol={{ span: 10 }}
@@ -182,7 +182,7 @@ const Seller = (props: any) => {
                                 <Input className="custom-input" bordered={false} disabled={true} />
                             </Form.Item>
                             {
-                                type === "Institution" ?
+                                !isEmpty(category) ?
                                 <Form.Item
                                     labelAlign="left"
                                     labelCol={{ span: 10 }}
@@ -207,7 +207,7 @@ const Seller = (props: any) => {
                             {/* For testing purpose comment above line and uncomment below *farmer**/}
                             {/* <DocumentsUploadComponents subType={'Institution'} userType={'Seller'} documents_list={configs} /> */}
                             {
-                                type !== "Institution" ?
+                                isEmpty(category) ?
                                     <Form.Item
                                         label='Email'
                                         name='email'
@@ -238,7 +238,7 @@ const Seller = (props: any) => {
                                 <TextArea className="custom-input" />
                             </Form.Item>
                             {
-                                type === "Institution" ?
+                                !isEmpty(category) ?
                                 <Form.Item
                                     label="Facilities Provided"
                                     name="facilitiesProvided"
