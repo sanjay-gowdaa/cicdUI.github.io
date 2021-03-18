@@ -433,7 +433,7 @@ const Buyer = (props: any) => {
                             <Form.Item
                                 labelCol={{span: 12}}
                                 wrapperCol={{span: 8}}
-                                name="bank_statement"
+                                name="bank_doc"
                                 label="Upload Bank Passbook or Statement"
                                 valuePropName="fileList"
                                 getValueFromEvent={normFile}
