@@ -3,6 +3,8 @@ import { Form, Input, Typography, Upload } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
 import {filter, toLower} from 'lodash';
 
+import { validateInputField, validateUpload } from '../utils';
+
 import { UserTypes } from '../../../store/genericTypes';
 import DefaultBtn from '../../../app-components/defaultBtn';
 import { documentLabelMapping } from '../../constants';
@@ -13,7 +15,7 @@ type documentFormPropsModel = {
     userType: string;
     documents_list: Array<string>;
     subType: string;
-}
+};
 
 const normFile = (e: any) => {
     console.log('Upload event:', e);
@@ -22,7 +24,6 @@ const normFile = (e: any) => {
     }
     return e && e.fileList;
 };
-
 
 const SellerDocuments = (props: {documents_list: Array<any>, subType: string, userType: string}) => {
     const {documents_list, subType, userType} = props;
@@ -33,70 +34,73 @@ const SellerDocuments = (props: {documents_list: Array<any>, subType: string, us
     });
     /* Creating a unique set */
     allDocumentsList = Array.from(new Set(allDocumentsList));
+
     return (
-    <>
-        {
-            allDocumentsList.map((documentName) => {
-                return (
-                    <>
-                        {
-                            documentLabelMapping.map((document) => {
-                                const { formClassName, key, label, labelClassName, name, upload, uploadFormName } = document;
-                                return ( 
-                                    (key === documentName)?
-                                    <Form.Item
-                                        labelCol={{ span: 24 }}
-                                        wrapperCol={{ span: 18 }}
-                                        label={<span className={labelClassName}>{label}</span>}
-                                    >
+        <>
+            {
+                allDocumentsList.map((documentName) => {
+                    return (
+                        <>
+                            {
+                                documentLabelMapping.map((document) => {
+                                    const { formClassName, key, label, labelClassName, name, upload, uploadFormName } = document;
+                                    return ( 
+                                        (key === documentName)?
                                         <Form.Item
-                                            name={name}
-                                            className={formClassName}
+                                            labelCol={{ span: 24 }}
+                                            wrapperCol={{ span: 18 }}
+                                            label={<span className={labelClassName}>{label}</span>}
                                         >
-                                            <Input className="custom-input" />
-                                        </Form.Item>
-                                        {
-                                            upload ?
-                                                <Form.Item
-                                                    name={uploadFormName}
-                                                    valuePropName="fileList"
-                                                    getValueFromEvent={normFile}
-                                                    style={{ display: "inline-block", width: "20%", margin: "0 1em"}}
-                                                >
-                                                    <Upload
-                                                        accept="image/*"
-                                                        beforeUpload={(file) => {
-                                                            // const isRequiredFileType =
-                                                            //     file.type === 'image/jpeg' ||
-                                                            //     file.type === 'image/png';
-                                                            // if (!isRequiredFileType) {
-                                                            //     message.error(
-                                                            //         `${file.name} is not an Image file`,
-                                                            //     );
-                                                            // }
-                                                            // return isRequiredFileType;
-                                                            return false;
-                                                        }}
-                                                        name={toLower(documentName)}
-                                                        listType="text"
+                                            <Form.Item
+                                                name={name}
+                                                className={formClassName}
+                                                rules={[{ validator: (rule, value) => validateInputField(rule, value, documentName)}]}
+                                            >
+                                                <Input className="custom-input" style={{textTransform: "uppercase"}} />
+                                            </Form.Item>
+                                            {
+                                                upload ?
+                                                    <Form.Item
+                                                        name={uploadFormName}
+                                                        valuePropName="fileList"
+                                                        getValueFromEvent={normFile}
+                                                        rules={[{ validator: (rule, value) => validateUpload(rule, value)}]}
+                                                        style={{ display: "inline-block", width: "20%", margin: "0 1em"}}
                                                     >
-                                                        <DefaultBtn
-                                                            icon={<UploadOutlined />}
-                                                            content="Upload Document"
-                                                        />
-                                                        <Text className="font-size-small">Max file size: 1MB</Text>
-                                                    </Upload>
-                                                </Form.Item> : null
-                                        }
-                                    </Form.Item> : null
-                                )
-                            })
-                        }
-                    </>
-                )
-            })
-        }
-    </>
+                                                        <Upload
+                                                            accept="image/*"
+                                                            beforeUpload={(file) => {
+                                                                // const isRequiredFileType =
+                                                                //     file.type === 'image/jpeg' ||
+                                                                //     file.type === 'image/png';
+                                                                // if (!isRequiredFileType) {
+                                                                //     message.error(
+                                                                //         `${file.name} is not an Image file`,
+                                                                //     );
+                                                                // }
+                                                                // return isRequiredFileType;
+                                                                return false;
+                                                            }}
+                                                            name={toLower(documentName)}
+                                                            listType="text"
+                                                        >
+                                                            <DefaultBtn
+                                                                icon={<UploadOutlined />}
+                                                                content="Upload Document"
+                                                            />
+                                                            <Text className="font-size-small">Max file size: 1MB</Text>
+                                                        </Upload>
+                                                    </Form.Item> : null
+                                            }
+                                        </Form.Item> : null
+                                    );
+                                })
+                            }
+                        </>
+                    );
+                })
+            }
+        </>
     );
 };
 
@@ -109,6 +113,7 @@ const BuyerDocuments = (props: {documents_list: Array<any>, subType: string, use
     });
     /* Creating a unique set */
     allDocumentsList = Array.from(new Set(allDocumentsList));
+
     return (
         <>
             {
@@ -128,8 +133,9 @@ const BuyerDocuments = (props: {documents_list: Array<any>, subType: string, use
                                                 <Form.Item
                                                     name={name}
                                                     className={formClassName}
+                                                    rules={[{ validator: (rule, value) => validateInputField(rule, value, documentName)}]}
                                                 >
-                                                    <Input className="custom-input" />
+                                                    <Input className="custom-input" style={{textTransform: "uppercase"}} />
                                                 </Form.Item>
                                                 {
                                                     upload ?
@@ -137,6 +143,7 @@ const BuyerDocuments = (props: {documents_list: Array<any>, subType: string, use
                                                         name={uploadFormName}
                                                         valuePropName="fileList"
                                                         getValueFromEvent={normFile}
+                                                        rules={[{ validator: (rule, value) => validateUpload(rule, value)}]}
                                                         style={{ display: "inline-block", width: "20%", margin: "0 1em"}}
                                                     >
                                                         <Upload
@@ -166,11 +173,11 @@ const BuyerDocuments = (props: {documents_list: Array<any>, subType: string, use
                                                 }
                                             </Form.Item>     
                                         : null
-                                    )
+                                    );
                                 })
                             }
                         </>
-                    )
+                    );
                 })
             }
         </>
