@@ -1,5 +1,5 @@
 import { RuleObject } from "antd/lib/form";
-import { isEmpty } from "lodash";
+import { isEmpty, toUpper } from "lodash";
 import { generateFileData, proccessFileToBase64 } from "../../app-components/utils";
 
 import { getLocationByPin } from "../../store/api";
@@ -11,18 +11,17 @@ import {
     ACCOUNT_NUMBER_INVALID,
     ACCOUNT_NUMBER_MAX_DIGITS_MSG,
     ACCOUNT_NUMBER_MIN_DIGITS_MSG,
-    ACCOUNT_NUMBER_REQUIRED_MSG,
     CONFIRM_ACCOUNT_MISMATCH,
-    CONFIRM_ACCOUNT_REQUIRED_MSG,
     EMAIL_INVALID_MSG,
+    GSTIN_INVALID_MSG,
+    GSTIN_MIN_DIGITS_MSG,
+    GSTIN_REQUIRED_MSG,
     IFSC_11_DIGIT_MSG,
     IFSC_INVALID,
-    IFSC_REQUIRED_MSG,
+    MAX_FILE_SIZE,
     NAME_INVALID,
-    NAME_REQUIRED_MSG,
     PAN_10_DIGIT_MSG,
     PAN_INVALID,
-    PAN_REQUIRED_MSG,
     PIN_6_DIGIT_MSG,
     PIN_NOT_FOUND,
     PIN_NOT_NUMBER,
@@ -38,7 +37,7 @@ type generateFormDataProps = {
         district: string,
         state: string
     }
-}
+};
 
 const cleanUpFormSubmitValues = (keysToBeRemoved: Array<string>, formValues: any) => {
     keysToBeRemoved.forEach((formFieldKey) => {
@@ -50,31 +49,22 @@ export const generateFormData = ({formSubmitValues, userType, addressForPin}: ge
     let fileConversionPromises = [];
     let formKeysToBeRemoved: Array<string> = [];
 
-    const {bank_statement} = formSubmitValues;
-    if(bank_statement && bank_statement.length) {
-        const bankstatementData = generateFileData(bank_statement[0].originFileObj, 'bank_doc');
-        fileConversionPromises.push(bankstatementData);
+    for(const property in formSubmitValues) {
+        var key = property;
+        if(typeof(formSubmitValues[property]) === "object" && !isEmpty(formSubmitValues[property].originFileObj)) {
+            const uploadedDocument = generateFileData(formSubmitValues[property][0].originFileObj, property);
+            fileConversionPromises.push(uploadedDocument);
+        }
+        formKeysToBeRemoved = [key];
     }
+    cleanUpFormSubmitValues(formKeysToBeRemoved, formSubmitValues);
+
     if (userType === UserTypes.SELLER) {
     // For testing uncomment below line and comment above line
     // if (false) {
-        const {id_doc} = formSubmitValues;
-        const IDDocument = generateFileData(id_doc[0].originFileObj, 'id_doc');
-        fileConversionPromises.push(IDDocument);
-
-        formKeysToBeRemoved = [...formKeysToBeRemoved, 'id_doc', 'bank_statement'];
-        cleanUpFormSubmitValues(formKeysToBeRemoved, formSubmitValues);
-
         formSubmitValues = {...formSubmitValues, isSeller: true};
     } else {
-        const {aadhar_card, pan_card, weekday, saturday, sunday} = formSubmitValues;
-        const buyerIdDocPrimary = generateFileData(aadhar_card[0].originFileObj, 'uidai_doc');
-        const buyerIdDocSecondary = generateFileData(pan_card[0].originFileObj, 'pan_doc');
-        fileConversionPromises.push(buyerIdDocPrimary);
-        fileConversionPromises.push(buyerIdDocSecondary);
-
-        formKeysToBeRemoved = [...formKeysToBeRemoved, 'aadhar_card', 'pan_card', 'weekday', 'saturday', 'sunday', 'bank_statement'];
-        cleanUpFormSubmitValues(formKeysToBeRemoved, formSubmitValues);
+        const {weekday, saturday, sunday} = formSubmitValues;
         formSubmitValues = {...formSubmitValues, working_hours: {weekday, saturday, sunday}, isBuyer: true};
 
         /* For testing purpose uncomment below line and comment above line */
@@ -124,16 +114,16 @@ export const customPincodeValidator = (rule: RuleObject, value: any, setAddressF
 };
 
 export const customPANValidator = (rule: RuleObject, value: any) => {
-    const panRegExp = /^([A-Z]){5}([0-9]){4}([A-Z]){1}?$/;
+    const regExp = /^([A-Z]){5}([0-9]){4}([A-Z]){1}?$/;
 
-    if (!value){
-        return Promise.reject(PAN_REQUIRED_MSG);
+    value = toUpper(value);
+
+    if(regExp.test(value) || isEmpty(value)) {
+        return Promise.resolve();
     } else if (value.length !== 10 ) {
         return Promise.reject(PAN_10_DIGIT_MSG);
-    } else if (!panRegExp.test(value)) {
-        return Promise.reject(PAN_INVALID);
     } else {
-        return Promise.resolve();
+        return Promise.reject(PAN_INVALID);
     }
 };
 
@@ -152,25 +142,23 @@ export const customAadhaarValidator = (rule: RuleObject, value: any) => {
 };
 
 export const customIfscValidator = (rule: RuleObject, value: any) => {
-    const ifscRegExp = /^[A-Z]{4}0[A-Z0-9]{6}$/;
+    const regExp = /^[A-Z]{4}0[A-Z0-9]{6}$/;
 
-    if (!value){
-        return Promise.reject(IFSC_REQUIRED_MSG);
-    } else if (value.length !== 11) {
-        return Promise.reject(IFSC_11_DIGIT_MSG);
-    } else if(!ifscRegExp.test(value)){
-        return Promise.reject(IFSC_INVALID);
-    } else {
+    value = toUpper(value);
+
+    if(regExp.test(value) || isEmpty(value)) {
         return Promise.resolve();
+    } else if(value.length !== 11) {
+        return Promise.reject(IFSC_11_DIGIT_MSG);
+    } else {
+        return Promise.reject(IFSC_INVALID);
     }
 };
 
 export const customNameValidator = (rule: RuleObject, value: any, name: string) => {
     const regExp = /^[a-zA-Z ]{1,50}$/;
 
-    if(!value) {
-        return Promise.reject(`${NAME_REQUIRED_MSG} ${name}!`);
-    } else if(!regExp.test(value)) {
+    if(!(regExp.test(value) || isEmpty(value))) {
         return Promise.reject(`${name} ${NAME_INVALID}`);
     } else {
         return Promise.resolve();
@@ -180,28 +168,22 @@ export const customNameValidator = (rule: RuleObject, value: any, name: string) 
 export const accountNumberValidator = (rule: RuleObject, value: any) => {
     const regExp = /^[0-9]*$/;
 
-    if(!value) {
-        return Promise.reject(ACCOUNT_NUMBER_REQUIRED_MSG);
-    } else if(regExp.test(value)) {
-        if(value.length < 9) {
-            return Promise.reject(ACCOUNT_NUMBER_MIN_DIGITS_MSG);
-        } else if(value.length > 18) {
-            return Promise.reject(ACCOUNT_NUMBER_MAX_DIGITS_MSG);
-        } else {
-            return Promise.resolve();
-        }
-    } else {
+    if(isEmpty(value)){
+        return Promise.resolve();
+    } else if(!(regExp.test(value))) {
         return Promise.reject(ACCOUNT_NUMBER_INVALID);
+    } else if(value.length < 9) {
+        return Promise.reject(ACCOUNT_NUMBER_MIN_DIGITS_MSG);
+    } else if(value.length > 18) {
+        return Promise.reject(ACCOUNT_NUMBER_MAX_DIGITS_MSG);
     }
 };
 
 export const confirmAccountValidator = (rule: RuleObject, value: any, accountNumber: any) => {
-    if(!value) {
-        return Promise.reject(CONFIRM_ACCOUNT_REQUIRED_MSG);
-    } else if(value !== accountNumber) {
-        return Promise.reject(CONFIRM_ACCOUNT_MISMATCH);
-    } else {
+    if(value === accountNumber || isEmpty(value)) {
         return Promise.resolve();
+    } else {
+        return Promise.reject(CONFIRM_ACCOUNT_MISMATCH);
     }
 };
 
@@ -222,5 +204,49 @@ export const emailValidator = (rule: RuleObject, value: any) => {
         return Promise.resolve();
     } else {
         return Promise.reject(EMAIL_INVALID_MSG);
+    }
+};
+
+export const gstinValidator = (rule: RuleObject, value: any) => {
+    const regExp = /^\d{2}([A-Z]){5}([0-9]){4}([A-Z]){1}[A-Z 0-9]{3}$/;
+
+    value = toUpper(value);
+
+    if(!value) {
+        return Promise.reject(GSTIN_REQUIRED_MSG);
+    } else if(value.length !== 15) {
+        return Promise.reject(GSTIN_MIN_DIGITS_MSG);
+    } else if(!regExp.test(value)) {
+        return Promise.reject(GSTIN_INVALID_MSG);
+    } else {
+        return Promise.resolve();
+    }
+};
+
+export const validateUpload = (rule: RuleObject, value: any) => {
+    if(!isEmpty(value)) {
+        const size = value[0]?.size;
+        if(size <= 1000000) {
+            return Promise.resolve();
+        } else {
+            return Promise.reject(MAX_FILE_SIZE);
+        }
+    }
+};
+
+export const validateInputField = (rule: RuleObject, value: any, documentName: string) => {
+    switch(documentName) {
+        case "AADHAR": {
+            return customAadhaarValidator(rule, value);
+        }
+        case "PAN": {
+            return customPANValidator(rule, value);
+        }
+        case "GSTIN": {
+            return gstinValidator(rule, value);
+        }
+        default: {
+            return Promise.resolve();
+        }
     }
 };

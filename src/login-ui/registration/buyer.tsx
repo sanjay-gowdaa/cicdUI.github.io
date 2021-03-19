@@ -7,10 +7,28 @@ import {
     Input,
     Row,
     Select,
+    Typography,
     Upload
 } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
 import { useDispatch, useSelector } from 'react-redux';
+import { cloneDeep, isEmpty } from 'lodash';
+
+import {
+    confirmAccountValidator,
+    customIfscValidator,
+    customNameValidator,
+    accountNumberValidator,
+    customPincodeValidator,
+    generateFormData,
+    customUpiValidator,
+    validateUpload
+} from './utils';
+import RegisterConfirmation from './registerConfirmationModal';
+import DocumentsUploadComponents from './formComponents/documentsUpload';
+import RequestSubmittedPopup from './requestSubmittedPopup';
+
+import { workingHours } from '../constants';
 
 import Header from '../../header';
 import { RootState } from '../../store/rootReducer';
@@ -22,29 +40,14 @@ import {
     updateForm
 } from '../../store/registrationReducer/actions';
 import { routesMap } from '../../constants';
-
-import {
-    confirmAccountValidator,
-    customAadhaarValidator,
-    customIfscValidator,
-    customNameValidator,
-    accountNumberValidator,
-    customPANValidator,
-    customPincodeValidator,
-    generateFormData,
-    customUpiValidator
-} from './utils';
-import RegisterConfirmation from './registerConfirmationModal';
-import { workingHours } from '../constants';
-import RequestSubmittedPopup from './requestSubmittedPopup';
 import PrimaryBtn from '../../app-components/primaryBtn';
 import DefaultBtn from '../../app-components/defaultBtn';
 import CancelBtn from '../../app-components/cancelBtn';
-import { cloneDeep } from 'lodash';
 
 const { home } = routesMap;
 const { Option } = Select;
 const { TextArea } = Input;
+const { Text } = Typography;
 
 const singleLabelFieldLayout = {
     labelCol: { span: 24 },
@@ -81,26 +84,27 @@ const Buyer = (props: any) => {
     const [form] = Form.useForm();
     const dispatch = useDispatch();
     const registrationState = useSelector((state: RootState) => state.registration);
+    const { configs, entityType, formData, registerResponse, isProcessing } = registrationState;
+    const { type, category } = formData;
 
     useEffect(() => {
-        if(registrationState.registerResponse.verified) {
+        if(registerResponse.verified) {
             dispatch(setRegisterMsg(''));
             dispatch(setResgiterVerifiedFlag(false));
             toggleShowConfirmation(!showConfirmation);
             toggleShowSubmitMsgPopup(!showSubmitMsgPopup);
         }
-    }, [registrationState.registerResponse.verified]);
+    }, [registerResponse.verified]);
 
     const onConfirmRegister = () => {
-        const userType = registrationState.entityType;
         const registerDataPromise = generateFormData({
             formSubmitValues: cloneDeep(registerFormValues),
-            userType,
+            userType: entityType,
             addressForPin
         });
         registerDataPromise.then((registerFromData) => {
             dispatch(updateForm(registerFormValues as any));
-            dispatch(submitRegister(userType, registerFromData));
+            dispatch(submitRegister(entityType, registerFromData));
         });
     };
 
@@ -140,11 +144,11 @@ const Buyer = (props: any) => {
     return (
         <React.Fragment>
             <RegisterConfirmation
-                registerResponse={registrationState.registerResponse}
+                registerResponse={registerResponse}
                 showConfirmation={showConfirmation}
                 onConfirmRegister={onConfirmRegister}
                 toggleShowConfirmation={toggleShowConfirmation}
-                isProcessing={registrationState.isProcessing}
+                isProcessing={isProcessing}
             />
             <RequestSubmittedPopup
                 history={history}
@@ -163,7 +167,7 @@ const Buyer = (props: any) => {
                     name="basic"
                     initialValues={
                         {
-                            ...registrationState.formData,
+                            ...formData,
                             saturday: '9am_to_5pm',
                             sunday: 'holiday',
                             weekday: '9am_to_9pm'
@@ -187,6 +191,22 @@ const Buyer = (props: any) => {
                                     disabled={true}
                                 />
                             </Form.Item>
+                            {
+                                !isEmpty(category) ?
+                                <Form.Item
+                                    labelAlign="left"
+                                    labelCol={{ span: 10 }}
+                                    wrapperCol={{ span: 12 }}
+                                    label="Category"
+                                    name="category"
+                                >
+                                    <Input
+                                        className="custom-input"
+                                        bordered={false}
+                                        disabled={true}
+                                    />
+                                </Form.Item> : null
+                            }
                             <Form.Item
                                 labelAlign='left'
                                 labelCol={{ span: 10 }}
@@ -230,104 +250,20 @@ const Buyer = (props: any) => {
 
                     <Row gutter={16} justify="start">
                         <Col sm={24} md={24} lg={12}>
-                            <Form.Item
-                                labelCol={{span: 24}}
-                                wrapperCol={{span: 18}}
-                                label="PAN card Number/ GSTN" 
-                            >
-                                <Form.Item
-                                    name="pan"
-                                    rules={[{
-                                        required: true,
-                                        pattern: /^[a-zA-Z0-9]{10,14}$/,
-                                        message: "Invalid format"
-                                    }]}
-                                    // rules={[{validator: (rule, value) => customPANValidator(rule, value)}]}
-                                    style={{ display: 'inline-block', width: '60%' }}
-                                >
-                                    <Input className="custom-input" style={{textTransform: "uppercase"}} />
-                                </Form.Item>
-                                <Form.Item
-                                    name="pan_card"
-                                    valuePropName="fileList"
-                                    getValueFromEvent={normFile}
-                                    rules={[{ required: true, message: 'Upload ID!' }]}
-                                    style={{ display: 'inline-block', width: '20%', margin: '0 1em' }}
-                                >
-                                    <Upload
-                                        accept="image/*"
-                                        beforeUpload={(file) => {
-                                            // const isRequiredFileType =
-                                            //     file.type === 'image/jpeg' ||
-                                            //     file.type === 'image/png';
-                                            // if (!isRequiredFileType) {
-                                            //     message.error(
-                                            //         `${file.name} is not an Image file`,
-                                            //     );
-                                            // }
-                                            // return isRequiredFileType;
-                                            return false;
-                                        }}
-                                        name="pan"
-                                        listType="text"
-                                    >
-                                        <DefaultBtn
-                                            icon={<UploadOutlined />}
-                                            content="Upload Image"
-                                        />
-                                    </Upload>
-                                </Form.Item>
-                            </Form.Item>
+                        <DocumentsUploadComponents userType={entityType} subType={type} documents_list={configs} />
 
-                            <Form.Item
-                                labelCol={{span: 24}}
-                                wrapperCol={{span: 18}}
-                                label='Aadhaar card Number'
-                            >
-                                <Form.Item
-                                    name="uidai"
-                                    rules={[{validator: (rule, value) => customAadhaarValidator(rule, value)}]}
-                                    style={{ display: 'inline-block', width: '60%' }}
-                                >
-                                    <Input className="custom-input" />
-                                </Form.Item>
-                                <Form.Item
-                                    name="aadhar_card"
-                                    valuePropName="fileList"
-                                    getValueFromEvent={normFile}
-                                    rules={[{ required: true, message: 'Upload ID!' }]}
-                                    style={{ display: 'inline-block', width: '20%', margin: '0 1em' }}
-                                >
-                                    <Upload
-                                        accept="image/*"
-                                        beforeUpload={(file) => {
-                                            // const isRequiredFileType =
-                                            //     file.type === 'image/jpeg' ||
-                                            //     file.type === 'image/png';
-                                            // if (!isRequiredFileType) {
-                                            //     message.error(
-                                            //         `${file.name} is not an Image file`,
-                                            //     );
-                                            // }
-                                            // return isRequiredFileType;
-                                            return false;
-                                        }}
-                                        name="aadhar"
-                                        listType="text"
-                                    >
-                                        <DefaultBtn
-                                            icon={<UploadOutlined />}
-                                            content="Upload Image" />
-                                    </Upload>
-                                </Form.Item>
-                            </Form.Item>
+                        {/*  For Testing comment the above line and uncomment the below line *Individual* *Institution* */}
+                        {/* <DocumentsUploadComponents userType={'Buyer'} subType={'Individual'} documents_list={configs} /> */}
 
                             <h2>Location Information</h2>
                             <div className='display-flex-row align-flex-end'>
                                 <Form.Item
                                     label="Pin Code"
                                     name="zip"
-                                    rules={[{validator: (rule, value) => customPincodeValidator(rule, value, setAddressForPin)}]}
+                                    rules={[{
+                                        required: true,
+                                        validator: (rule, value) => customPincodeValidator(rule, value, setAddressForPin)
+                                    }]}
                                 >
                                     <Input className="custom-input" />
                                 </Form.Item>
@@ -343,7 +279,7 @@ const Buyer = (props: any) => {
                         </Col>
                     </Row>
 
-                    <h2>Working Hours*</h2>
+                    <h2 className="required-form-field">Working Hours</h2>
                     <Row gutter={16} justify="start">
                         <Col sm={24} md={24} lg={12}>
                             <Form.Item
@@ -459,6 +395,7 @@ const Buyer = (props: any) => {
                                     <Form.Item
                                         label="Account Holder Name"
                                         name="account_name"
+                                        rules={[{ validator: (rule, value) => customNameValidator(rule, value, "Account Holder Name")}]}
                                     >
                                         <Input className="custom-input" />
                                     </Form.Item>
@@ -467,6 +404,7 @@ const Buyer = (props: any) => {
                                     <Form.Item
                                         label="IFSC Code"
                                         name="ifsc_code"
+                                        rules={[{ validator: (rule, value) => customIfscValidator(rule, value)}]}
                                     >
                                         <Input className="custom-input" style={{textTransform: "uppercase"}} />
                                     </Form.Item>
@@ -475,6 +413,7 @@ const Buyer = (props: any) => {
                                     <Form.Item
                                         label="Account Number"
                                         name="account_number"
+                                        rules={[{ validator: (rule, value) => accountNumberValidator(rule, value)}]}
                                     >
                                         <Input className="custom-input" />
                                     </Form.Item>
@@ -483,6 +422,7 @@ const Buyer = (props: any) => {
                                     <Form.Item
                                         label="Confirm Account Number"
                                         name="confirm_account_number"
+                                        rules={[{ validator: (rule, value) => confirmAccountValidator(rule, value, form.getFieldsValue().account_number)}]}
                                     >
                                         <Input className="custom-input" />
                                     </Form.Item>
@@ -496,10 +436,11 @@ const Buyer = (props: any) => {
                             <Form.Item
                                 labelCol={{span: 12}}
                                 wrapperCol={{span: 8}}
-                                name="bank_statement"
+                                name="bank_doc"
                                 label="Upload Bank Passbook or Statement"
                                 valuePropName="fileList"
                                 getValueFromEvent={normFile}
+                                rules={[{ validator: (rule, value) => validateUpload(rule, value)}]}
                             >
                                 <Upload
                                     accept="image/*"
@@ -520,15 +461,23 @@ const Buyer = (props: any) => {
                                 >
                                     <DefaultBtn
                                         icon={<UploadOutlined />}
-                                        content="Upload Image" />
+                                        content="Upload Document"
+                                    />
+                                    <br/><Text className="font-size-small">Max file size: 1MB</Text>
                                 </Upload>
                             </Form.Item>
                             <Form.Item
-                                label="UPI ID(optional)"
+                                label="UPI ID"
                                 name="upi_id"
                                 rules={[{validator: (rule, value) => customUpiValidator(rule, value)}]}
                             >
                                 <Input className="custom-input" />
+                            </Form.Item>
+                            <Form.Item
+                                label="Additional Information"
+                                name="additional_info"
+                            >
+                                <TextArea className="custom-input" />
                             </Form.Item>
                         </Col>
                     </Row>
