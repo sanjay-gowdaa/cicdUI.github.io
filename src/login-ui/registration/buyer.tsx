@@ -16,14 +16,13 @@ import { cloneDeep, isEmpty } from 'lodash';
 
 import {
     confirmAccountValidator,
-    customAadhaarValidator,
     customIfscValidator,
     customNameValidator,
     accountNumberValidator,
-    customPANValidator,
     customPincodeValidator,
     generateFormData,
-    customUpiValidator
+    customUpiValidator,
+    validateUpload
 } from './utils';
 import RegisterConfirmation from './registerConfirmationModal';
 import DocumentsUploadComponents from './formComponents/documentsUpload';
@@ -396,6 +395,7 @@ const Buyer = (props: any) => {
                                     <Form.Item
                                         label="Account Holder Name"
                                         name="account_name"
+                                        rules={[{ validator: (rule, value) => customNameValidator(rule, value, "Account Holder Name")}]}
                                     >
                                         <Input className="custom-input" />
                                     </Form.Item>
@@ -404,6 +404,7 @@ const Buyer = (props: any) => {
                                     <Form.Item
                                         label="IFSC Code"
                                         name="ifsc_code"
+                                        rules={[{ validator: (rule, value) => customIfscValidator(rule, value)}]}
                                     >
                                         <Input className="custom-input" style={{textTransform: "uppercase"}} />
                                     </Form.Item>
@@ -412,6 +413,7 @@ const Buyer = (props: any) => {
                                     <Form.Item
                                         label="Account Number"
                                         name="account_number"
+                                        rules={[{ validator: (rule, value) => accountNumberValidator(rule, value)}]}
                                     >
                                         <Input className="custom-input" />
                                     </Form.Item>
@@ -420,6 +422,7 @@ const Buyer = (props: any) => {
                                     <Form.Item
                                         label="Confirm Account Number"
                                         name="confirm_account_number"
+                                        rules={[{ validator: (rule, value) => confirmAccountValidator(rule, value, form.getFieldsValue().account_number)}]}
                                     >
                                         <Input className="custom-input" />
                                     </Form.Item>
@@ -437,6 +440,7 @@ const Buyer = (props: any) => {
                                 label="Upload Bank Passbook or Statement"
                                 valuePropName="fileList"
                                 getValueFromEvent={normFile}
+                                rules={[{ validator: (rule, value) => validateUpload(rule, value)}]}
                             >
                                 <Upload
                                     accept="image/*"
