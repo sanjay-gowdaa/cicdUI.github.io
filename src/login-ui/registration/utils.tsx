@@ -51,8 +51,8 @@ export const generateFormData = ({formSubmitValues, userType, addressForPin}: ge
     let formKeysToBeRemoved: Array<string> = [];
 
     for(const property in formSubmitValues) {
-        var key = "" + property;
-        if(typeof(formSubmitValues[property]) === "object") {
+        var key = property;
+        if(typeof(formSubmitValues[property]) === "object" && !isEmpty(formSubmitValues[property].originFileObj)) {
             const uploadedDocument = generateFileData(formSubmitValues[property][0].originFileObj, property);
             fileConversionPromises.push(uploadedDocument);
         }
