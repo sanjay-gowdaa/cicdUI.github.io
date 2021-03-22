@@ -12,7 +12,7 @@ const ContactUs = () => {
             <Row>
                 <Col span={9} className="contact-us-info">
                     <Space direction="vertical">
-                        <Text><PhoneOutlined className="contact-us-icon" />+91-9845711600</Text>
+                        <Text><PhoneOutlined className="contact-us-icon" />+91-9902956664</Text>
                         <Text><MailOutlined className="contact-us-icon" />contactus@samparkbindhu.in</Text>
                         <address><HomeOutlined className="contact-us-icon" />617, "Shivam", Royal Park Residency, 
                         <br/>J P Nagar 9th Phase, Bengaluru-560062</address>

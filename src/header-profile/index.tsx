@@ -85,7 +85,7 @@ const UserHeader = () => {
                 <MenuItem key="contactUs">
                     <Card>
                         <Title level={4}>Contact Us:</Title>
-                        <Text>contactus@vikasbandhu.in</Text>
+                        <Text>contactus@samparkbindhu.in</Text>
                     </Card>
                 </MenuItem>
             </Menu>

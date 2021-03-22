@@ -9,10 +9,10 @@ const Footer = () => {
         <div className="app-footer-container display-flex-row justify-content-space-bet align-center">
             <div className="height-full">
                 <p>
-                    <MailOutlined /> support@vikasbandhu.com
+                    <MailOutlined /> contactus@samparkbindhu.in
                 </p>
                 <p>
-                    <PhoneOutlined /> +91-99845711600
+                    <PhoneOutlined /> +91-99902956664
                 </p>
             </div>
             <div>

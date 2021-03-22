@@ -752,7 +752,7 @@ const SellerTerms = () => {
             <Space direction="vertical">
                 <Text>Web page: <a href="https://vikasbandhu.in" target="_blank">https://vikasbandhu.in</a> </Text>
                 <Text>Email: contactus@samparkbindhu.in </Text>
-                <Text>Tel.: +91-9845711600</Text>
+                <Text>Tel.: +91-9902956664</Text>
             </Space>
         </div>
     );
