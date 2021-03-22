@@ -1,6 +1,8 @@
 import React from 'react';
 import { Space, Typography } from 'antd';
 
+import { contactUs } from '../constants';
+
 import './termsAndConditions.scss';
 
 const { Text, Title, Paragraph } = Typography;
@@ -675,8 +677,8 @@ const BuyerTerms = () => {
             <Title className="font-size-small" level={5}>13. Contacts</Title>
             <Space direction="vertical">
                 <Text>Web page: <a href="https://vikasbandhu.in" target="_blank">https://vikasbandhu.in</a></Text>
-                <Text>Email: contactus@samparkbindhu.in</Text>
-                <Text>Tel.: +91-9845711600</Text>
+                <Text>Email: {contactUs.emailId}</Text>
+                <Text>Tel.: {contactUs.phoneNumber}</Text>
             </Space>
         </div>
     );

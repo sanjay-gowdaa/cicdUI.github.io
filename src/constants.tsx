@@ -17,4 +17,9 @@ export const headerBreadcrumb = {
     feedback: "-ui-feedback",
 }
 
+export const contactUs = {
+    phoneNumber: "+91-99902956664",
+    emailId: "contactus@samparkbindhu.in"
+}
+
 export const token_grant = 'vikas-bandhu-token'

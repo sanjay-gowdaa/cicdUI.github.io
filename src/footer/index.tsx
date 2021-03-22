@@ -3,16 +3,17 @@ import { MailOutlined, PhoneOutlined } from '@ant-design/icons';
 
 import footerImg from '../static/assets/footer.png';
 import './footer.scss';
+import { contactUs } from '../constants';
 
 const Footer = () => {
     return (
         <div className="app-footer-container display-flex-row justify-content-space-bet align-center">
             <div className="height-full">
                 <p>
-                    <MailOutlined /> support@vikasbandhu.com
+                    <MailOutlined /> {contactUs.emailId}
                 </p>
                 <p>
-                    <PhoneOutlined /> +91-99845711600
+                    <PhoneOutlined /> {contactUs.phoneNumber}
                 </p>
             </div>
             <div>
