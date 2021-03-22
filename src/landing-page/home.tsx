@@ -19,7 +19,7 @@ const Home = () => {
     return (
         <div id="home">
             <div className="home-content-wrapper">
-            <Carousel autoplay autoplaySpeed={8000}>
+            <Carousel autoplay autoplaySpeed={5000}>
                     <Image height={"87vh"} src={VBOne} preview={false} />
                     <Image height={"87vh"} src={VBTwo} preview={false} />
                     <Image height={"87vh"} src={VBThree} preview={false} />
