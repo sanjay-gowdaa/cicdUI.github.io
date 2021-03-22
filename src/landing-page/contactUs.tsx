@@ -2,6 +2,8 @@ import React from 'react';
 import { Button, Col, Input, Row, Space, Typography } from 'antd';
 import { HomeOutlined, MailOutlined, PhoneOutlined } from '@ant-design/icons';
 
+import { contactUs } from '../constants';
+
 const { Text, Title } = Typography;
 const { TextArea } = Input;
 
@@ -12,8 +14,8 @@ const ContactUs = () => {
             <Row>
                 <Col span={9} className="contact-us-info">
                     <Space direction="vertical">
-                        <Text><PhoneOutlined className="contact-us-icon" />+91-9902956664</Text>
-                        <Text><MailOutlined className="contact-us-icon" />contactus@samparkbindhu.in</Text>
+                        <Text><PhoneOutlined className="contact-us-icon" />{contactUs.phoneNumber}</Text>
+                        <Text><MailOutlined className="contact-us-icon" />{contactUs.emailId}</Text>
                         <address><HomeOutlined className="contact-us-icon" />617, "Shivam", Royal Park Residency, 
                         <br/>J P Nagar 9th Phase, Bengaluru-560062</address>
                     </Space>

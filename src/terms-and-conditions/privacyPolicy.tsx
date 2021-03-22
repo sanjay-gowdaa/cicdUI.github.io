@@ -1,6 +1,8 @@
 import React from 'react';
 import { Typography } from 'antd';
 
+import { contactUs } from '../constants';
+
 const { Paragraph, Text, Title } = Typography;
 
 const PrivacyPolicy = () => {
@@ -266,7 +268,7 @@ const PrivacyPolicy = () => {
                 If you have any queries, concerns, comments or feedback regarding 
                 this Privacy Policy Users can contact us using the information below:
             </Paragraph>
-            <Text>Email Id: contactus@samparkbindhu.in</Text>
+            <Text>Email Id: {contactUs.emailId}</Text>
             <br/><Text>
                 Address:
                 <address>617, "Shivam", Royal Park Residency, 

@@ -19,7 +19,7 @@ import { LOGOUT_URL } from '../store/api';
 import { RootState } from '../store/rootReducer';
 import { UserStateModel } from '../store/loginReducer/types';
 import DefaultBtn from '../app-components/defaultBtn';
-import { headerBreadcrumb, routesMap } from '../constants';
+import { contactUs, headerBreadcrumb, routesMap } from '../constants';
 
 const { Text, Title } = Typography;
 const { terms } = routesMap;
@@ -85,7 +85,7 @@ const UserHeader = () => {
                 <MenuItem key="contactUs">
                     <Card>
                         <Title level={4}>Contact Us:</Title>
-                        <Text>contactus@samparkbindhu.in</Text>
+                        <Text>{contactUs.emailId}</Text>
                     </Card>
                 </MenuItem>
             </Menu>
