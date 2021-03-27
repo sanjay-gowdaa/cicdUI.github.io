@@ -21,7 +21,7 @@ const Home = () => {
             <div className="home-content-wrapper">
                 <Alert
                     className="animate-alert"
-                    message={<>Beware of any Fraudelent Websites. <b>Vikasbandhu does not charge any Registration fee</b>. Visit only https://vikasbandhu.in</>}
+                    message={<>Beware of any Fraudulent Websites. <b>Vikasbandhu does not charge any Registration fee</b>. Visit only https://vikasbandhu.in</>}
                     banner
                 />
                 <Carousel autoplay autoplaySpeed={5000}>
