@@ -18,6 +18,17 @@ $col-shade-green: #12805C;
         top: 6rem;
         height: 100vh;
         
+        .animate-alert {
+            animation: warning-banner 30s infinite 20s;
+            width: fit-content;
+        }
+
+        @keyframes warning-banner {
+            0% {left: 0%}
+            50% {left: 40%}
+            100% {left: 0%}
+        }
+
         .home-content {
             position: absolute;
             left: 5rem;
