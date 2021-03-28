@@ -9,8 +9,9 @@ const { Title } = Typography;
 
 interface componentProps {
     openDetailsModal: boolean;
-    setOpenDetailsModal: Function;
-    cropDetails: MatchRequirementModel;
+    setOpenDetailsModal: any;
+    // cropDetails: MatchRequirementModel;
+    cropDetails: any;
 };
 
 const ViewCropDetails = (props: componentProps) => {

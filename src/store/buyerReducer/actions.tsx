@@ -1,5 +1,6 @@
 import { getTimeStamp } from "../../app-components/utils";
-import { addProduce, getAllProduce, getCropCategoryList, getCropList, getSubCategoryList, getMasterList, updateMasterList, deleteProduce, patchProduce } from "../api";
+import { addProduce, getAllProduce, getCropCategoryList, getCropList, getSubCategoryList, getMasterList,
+    updateMasterList, deleteProduce, patchProduce, getBuyerMatchesList, rejectMatch } from "../api";
 import { UserStateModel } from "../loginReducer/types";
 import { RootState } from "../rootReducer";
 import { MasterListApiFormat, ProduceModel } from "./types";
@@ -11,6 +12,9 @@ export const UPDATE_MASTER_CROP_NAMES_LIST = 'UPDATE_MASTER_CROP_NAMES_LIST';
 export const UPDATE_CROPS_LIST = 'UPDATE_CROPS_LIST';
 export const UPDATE_VARIETY_LIST = 'UPDATE_VARIETY_LIST';
 export const UPDATE_TIME_STAMP = 'UPDATE_TIME_STAMP';
+export const UPDATE_MATCHES_LIST = 'UPDATE_MATCHES_LIST';
+export const UPDATE_MATCHES_LIST_FOR_BUYER_CROP = 'UPDATE_MATCHES_LIST_FOR_BUYER_CROP';
+export const SET_MATCHES_LOADER = 'SET_MATCHES_LOADER';
 
 export const updateStoreMasterList = (masterlist: Array<any>) => {
     return {
@@ -54,6 +58,28 @@ export const updateTimeStamp = (timeStamp: any) => {
     }
 }
 
+export const updateMatchesList = (matchesList: Array<any>) => {
+    return {
+        type: UPDATE_MATCHES_LIST,
+        payload: matchesList
+    }
+}
+
+export const setMatchesLoadingFlag = (loadingFlag: boolean) => {
+    return {
+        type: SET_MATCHES_LOADER,
+        payload: loadingFlag
+    }
+}
+/* Not yet in use */
+export const updateMatchesListForID = (buyerCropId: string, matchesList: Array<any>) => {
+    return {
+        type: UPDATE_MATCHES_LIST_FOR_BUYER_CROP,
+        payload: {buyerCropId, newMatchesList: matchesList}
+    }
+}
+/* Not yet in use end */
+
 export const getMasterProduceList = () => {
     return async(dispatch: any, getState: any) => {
         const {loginUser}: {loginUser: UserStateModel} = getState() as RootState;
@@ -86,6 +112,7 @@ export const addNewProduce = (/*produceFormData: ProduceModel*/ produceFormData:
         const addProduceResponse = await addProduce({...produceFormData, district, zip}, username);
         // console.log('addProduceResponse', addProduceResponse);
         dispatch(getProduceList())
+        dispatch(getMatchesForBuyerCrops());
     }
 }
 
@@ -121,6 +148,7 @@ export const getProduceList = () => {
         const {Items, Count} = getProduceListResponse || {Items: []}
         // console.log('getProduceList', Items);
         dispatch(updateProduceList(Items as Array<ProduceModel>))
+        dispatch(getMatchesForBuyerCrops());
     }
 }
 
@@ -145,6 +173,37 @@ export const fetchAllVariety = (crop: string) => {
         const allVarietyList = await getSubCategoryList(crop);
         const { crops: {Items: variety}} = allVarietyList || {variety: []}
         dispatch(updateVarietyList(variety));    
+    }
+}
+
+export const getMatchesForBuyerCrops = () => {
+    /* Hardcoded data */
+    const matchesBody = {
+        buyer_id: "user#123",
+        buyer_crop_ids: ["buyer_crop_id#201"]
+    }
+    /* Hardcoded data */
+    return async(dispatch: any, getState: any) => {
+        dispatch(setMatchesLoadingFlag(true));
+        const matchesList = await getBuyerMatchesList(matchesBody.buyer_id, matchesBody.buyer_crop_ids);
+        dispatch(updateMatchesList(matchesList));
+        dispatch(setMatchesLoadingFlag(false));
+    }
+}
+
+// export const getMatchesForBuyerCropsIDS = (buyerData: {buyer_id: string, buyer_crop_ids: Array<string>}) => {
+//     return async(dispatch: any, getState: any) => {
+//         const matchesList = await getBuyerMatchesList(buyerData.buyer_id, buyerData.buyer_crop_ids);
+//         // dispatch(updateMatchesListForID())
+//     }
+// }
+
+export const rejectMatches = (rejectData: {buyer_id: string, buyer_crop_id: Array<string>}) => {
+    return async(dispatch: any, getState: any) => {
+        const matchesList = await rejectMatch(rejectData);
+        /* Re-calculate matches for all crop */
+        /* Logic can be changed to specific crop if required */
+        dispatch(getMatchesForBuyerCrops());
     }
 }
 

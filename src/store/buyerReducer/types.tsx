@@ -1,8 +1,3 @@
-export interface ApmcRateChangeModel {
-    difference: number;
-    increase: boolean;
-}
-
 export interface ProduceModel {
     crop_name: string;
     grade: string;
@@ -21,16 +16,27 @@ export interface CropModel {
     cropGrade?: string;
     quantity: number;
     pricePerQnt: number;
-    apmcRate: number;
-    intentToSell: boolean;
-    termsAndConditions?: string;
-    apmcRateChange: ApmcRateChangeModel | null;
 }
 
-export interface MatchRequirementModel extends CropModel {
-    sellerId: string;
-    quantityRequired: number;
+export interface MatchRequirementModel {
+    fulfillment_flag: FullfillmentFlags;
+    produce: string;
+    seller_id: string;
+    quantity: number;
     location: string;
+    buyer_id: string;
+    buyer_crop_id: string;
+    seller_quantity: number;
+    seller_remaining_quant: number;
+    buyer_remaining_quant: number;
+}
+
+export enum FullfillmentFlags {
+    single_fulfillment = 'single_fulfillment',
+    single_partial_fulfillment = 'single_partial_fulfillment',
+    multiple_fulfillment = 'multiple_fulfillment',
+    multiple_partial_fulfillment = 'multiple_partial_fulfillment',
+
 }
 
 export enum TransactionStatus {
@@ -74,6 +80,7 @@ export interface BuyerStateModel {
     transactionList: Array<TransactioModel>;
     reviewsList: Array<ReviewRating>;
     timeStamp: any;
+    isMatchesFetching: boolean;
 }
 
 export interface ReviewRating {
