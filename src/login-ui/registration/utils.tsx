@@ -176,6 +176,8 @@ export const accountNumberValidator = (rule: RuleObject, value: any) => {
         return Promise.reject(ACCOUNT_NUMBER_MIN_DIGITS_MSG);
     } else if(value.length > 18) {
         return Promise.reject(ACCOUNT_NUMBER_MAX_DIGITS_MSG);
+    } else {
+        return Promise.resolve();
     }
 };
 
@@ -231,6 +233,8 @@ export const validateUpload = (rule: RuleObject, value: any) => {
         } else {
             return Promise.reject(MAX_FILE_SIZE);
         }
+    } else {
+        return Promise.resolve();
     }
 };
 
