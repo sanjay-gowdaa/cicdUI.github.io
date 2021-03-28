@@ -5,13 +5,13 @@ import { MatchRequirementModel } from '../../store/buyerReducer/types';
 const { Title } = Typography;
 
 interface componentProps {
-    // cropDetails: MatchRequirementModel;
-    cropDetails: any;
+    cropDetails: MatchRequirementModel;
 };
 
 const TradeSumary = (props: componentProps) => {
     const {cropDetails} = props;
-    const { seller_id, produce, quantityRequired, pricePerQnt, location, price, seller_final_price } = cropDetails;
+    const { seller_id, produce, buyer_actual_quantity, buyer_remaining_quant = 0,
+        location, price, seller_final_price } = cropDetails;
 
     return (
         <>
@@ -37,7 +37,7 @@ const TradeSumary = (props: componentProps) => {
                     Quantity
                 </Col>
                 <Col sm={24} md={12}>
-                    : {quantityRequired}
+                    : {buyer_actual_quantity - buyer_remaining_quant}
                 </Col>
             </Row>
             <Row>

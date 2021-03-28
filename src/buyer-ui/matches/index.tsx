@@ -6,20 +6,24 @@ import { RootState } from '../../store/rootReducer';
 import { componentCallBacksModel, matchesColumns } from './matchesTable.model';
 import ViewCropDetails from './viewCropDetails';
 import { getMatchesForBuyerCrops, rejectMatches } from '../../store/buyerReducer/actions';
-import { MatchRequirementModel } from '../../store/buyerReducer/types';
+import { FullfillmentFlags, MatchRequirementModel } from '../../store/buyerReducer/types';
 
 const { Title } = Typography;
 
 const initialEmptyCropDetail = {
-    cropName: '',
-    subCategory: '',
-    cropGrade: '',
+    fulfillment_flag: FullfillmentFlags.single_fulfillment,
+    produce: '',
+    seller_id: '',
     quantity: 0,
-    pricePerQnt: 0,
-    apmcRate: 0,
-    sellerId: '',
-    quantityRequired: 0,
     location: '',
+    buyer_id: '',
+    buyer_crop_id: '',
+    seller_quantity: 0,
+    seller_remaining_quant: 0,
+    buyer_remaining_quant: 0,
+    seller_final_price: 0,
+    price: 0,
+    buyer_actual_quantity: 0
 };
 
 const processFullfillmentData = (allMatchesList: Array<any>) => {

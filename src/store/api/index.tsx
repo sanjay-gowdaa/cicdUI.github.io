@@ -21,7 +21,7 @@ const CROP_TYPES_API = 'getcrops';
 const CROP_SUB_TYPES_DETAILS_API = 'getcropdetails';
 const CROP_CATEGORY_DETAILS_API = 'getcropcategories';
 const APMC_LIVE_RATES = 'getliverates';
-const UPDATED_APMC_API = 'https://yldnzvpt6c.execute-api.ap-south-1.amazonaws.com/localApmcDb/getapmcprice';
+const UPDATED_APMC_API = 'apmc/price/';
 const INTENT_TO_SELL = 'sell';
 const USER_MANAGER_API = 'user';
 const MATCHES_API = `https://a73j5pnsxl.execute-api.ap-south-1.amazonaws.com/${STAGE}/matches`;
@@ -166,7 +166,8 @@ export const getAllCrops = (sellerId: string) => {
 };
 
 export const getLiveApmcRateUpdated = (cropDetails: Array<UpdatedLiveApmcRatesQuery>) => {
-    return fetch(UPDATED_APMC_API, {
+    const fetchApmcRatesApi = `${BASE_URL}/${STAGE}/${UPDATED_APMC_API}`
+    return fetch(fetchApmcRatesApi, {
         method: 'POST',
         // headers: getAuthHeader(),
         body: JSON.stringify(cropDetails)

@@ -1,17 +1,14 @@
 import React, { useState } from 'react';
-import { Col, Divider, Modal, Row, Typography } from 'antd';
+import { Col, Divider, Modal, Row } from 'antd';
 
 import { MatchRequirementModel } from '../../store/buyerReducer/types';
 import DefaultBtn from '../../app-components/defaultBtn';
 import TradeSumary from './tradeSummary';
 
-const { Title } = Typography;
-
 interface componentProps {
     openDetailsModal: boolean;
     setOpenDetailsModal: any;
-    // cropDetails: MatchRequirementModel;
-    cropDetails: any;
+    cropDetails: MatchRequirementModel;
 };
 
 const ViewCropDetails = (props: componentProps) => {

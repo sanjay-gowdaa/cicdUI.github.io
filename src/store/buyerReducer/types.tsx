@@ -28,7 +28,10 @@ export interface MatchRequirementModel {
     buyer_crop_id: string;
     seller_quantity: number;
     seller_remaining_quant: number;
-    buyer_remaining_quant: number;
+    buyer_remaining_quant?: number;
+    seller_final_price: number;
+    price: number;
+    buyer_actual_quantity: number;
 }
 
 export enum FullfillmentFlags {
