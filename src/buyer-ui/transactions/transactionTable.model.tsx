@@ -16,7 +16,7 @@ export const transactionColumns = [
         title: 'Produce',
         dataIndex: 'cropName',
         key: 'cropName',
-        render: (cropName: string, record: TransactioModel) => {
+        render: (cropName: string, record: any) => {
             return (
                 <div className='display-flex-row align-center'>
                 <Image

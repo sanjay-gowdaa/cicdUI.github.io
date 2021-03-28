@@ -21,9 +21,11 @@ const CROP_TYPES_API = 'getcrops';
 const CROP_SUB_TYPES_DETAILS_API = 'getcropdetails';
 const CROP_CATEGORY_DETAILS_API = 'getcropcategories';
 const APMC_LIVE_RATES = 'getliverates';
-const UPDATED_APMC_API = 'https://yldnzvpt6c.execute-api.ap-south-1.amazonaws.com/localApmcDb/getapmcprice';
+const UPDATED_APMC_API = 'apmc/price/';
 const INTENT_TO_SELL = 'sell';
 const USER_MANAGER_API = 'user';
+const MATCHES_API = `https://a73j5pnsxl.execute-api.ap-south-1.amazonaws.com/${STAGE}/matches`;
+const MATCHES_REJECT_API = `https://a73j5pnsxl.execute-api.ap-south-1.amazonaws.com/${STAGE}/reject`;
 
 const parseToken = (userToken: string) => {
     const sholudDecrypt = process.env.REACT_APP_ENV === 'prod';
@@ -164,7 +166,8 @@ export const getAllCrops = (sellerId: string) => {
 };
 
 export const getLiveApmcRateUpdated = (cropDetails: Array<UpdatedLiveApmcRatesQuery>) => {
-    return fetch(UPDATED_APMC_API, {
+    const fetchApmcRatesApi = `${BASE_URL}/${STAGE}/${UPDATED_APMC_API}`
+    return fetch(fetchApmcRatesApi, {
         method: 'POST',
         // headers: getAuthHeader(),
         body: JSON.stringify(cropDetails)
@@ -262,3 +265,26 @@ export const getMasterList = (buyerId: string) => {
     }).then((response: any) => response.json())
 }
 /* Buyer Apis End */
+
+/* Matches And Transactions */
+
+export const getBuyerMatchesList = (buyerId: string, cropIds: Array<string>) => {
+    const matchesApi = MATCHES_API;
+    const matchesBody = {buyer_id: buyerId, buyer_crop_id: cropIds}
+    return fetch(matchesApi, {
+        // headers: getAuthHeader(),
+        method: 'POST',
+        body: JSON.stringify(matchesBody)
+    }).then((response: any) => response.json())
+}
+
+export const rejectMatch = (rejectData: {buyer_id: string, buyer_crop_id: Array<string>}) => {
+    const matchesRejectApi = MATCHES_REJECT_API;
+    return fetch(matchesRejectApi, {
+        // headers: getAuthHeader(),
+        method: 'POST',
+        body: JSON.stringify(rejectData)
+    }).then((response: any) => response.json())
+}
+
+/* Matches And Transactions End */

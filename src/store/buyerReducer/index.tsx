@@ -1,8 +1,18 @@
-import { UPDATE_MASTER_LIST, GET_MASTER_LIST, UPDATE_PRODUCE_LIST, UPDATE_CROPS_LIST, UPDATE_VARIETY_LIST, UPDATE_MASTER_CROP_NAMES_LIST, UPDATE_TIME_STAMP } from './actions';
 import {
-    mockMatchedCropsList,
+    UPDATE_MASTER_LIST,
+    GET_MASTER_LIST,
+    UPDATE_PRODUCE_LIST,
+    UPDATE_CROPS_LIST,
+    UPDATE_VARIETY_LIST,
+    UPDATE_MASTER_CROP_NAMES_LIST,
+    UPDATE_TIME_STAMP,
+    UPDATE_MATCHES_LIST,
+    UPDATE_MATCHES_LIST_FOR_BUYER_CROP,
+    SET_MATCHES_LOADER
+} from './actions';
+
+import {
     mockReviewsList,
-    mockTransactionCropsList,
 } from './mockData.temp';
 import { BuyerStateModel } from './types';
 
@@ -12,10 +22,11 @@ const INITIAL_STATE: BuyerStateModel = {
     masterProduceList: [],
     produceList: [],
     masterCropNames: [],
-    matchesList: [], // mockMatchedCropsList,
-    transactionList: [], // mockTransactionCropsList,
+    matchesList: [],
+    transactionList: [],
     reviewsList: mockReviewsList,
-    timeStamp: {}
+    timeStamp: {},
+    isMatchesFetching: false
 };
 
 const reducer = (state = INITIAL_STATE, action: any) => {
@@ -26,6 +37,21 @@ const reducer = (state = INITIAL_STATE, action: any) => {
         
         case UPDATE_PRODUCE_LIST:
             return { ...state, produceList: action.payload }
+
+        case UPDATE_MATCHES_LIST:
+            return { ...state, matchesList: action.payload }
+
+
+        case SET_MATCHES_LOADER:
+            return { ...state, isMatchesFetching: action.payload}
+
+        /* Currently not in use */
+        case UPDATE_MATCHES_LIST_FOR_BUYER_CROP:
+            const {matchesList} = state;
+            const {buyerCropId, newMatchesList} = action.payload;
+            return { ...state, matchesList: action.payload }
+        /* Currently not in use */
+
 
         case UPDATE_CROPS_LIST:
             return {...state, cropsList: action.payload}
