@@ -9,7 +9,7 @@ const PrivacyPolicy = () => {
     return (
         <div className="general-terms">
             <Paragraph>
-                SamparkBindhu Solutions Private Limited (“<b>SamparkBindhu</b>/<b>Company</b>”) is a company 
+                SamparkBindhu Solutions Private Limited (“<a href="https://samparkbindhu.in" target="_blank"><b>SamparkBindhu</b></a>”) is a company 
                 registered under the Companies Act, 2013, bearing CIN U72900KA2020PTC137512 and having its 
                 registered office at #617, "Shivam", Royal Park Residency, J P Nagar 9th Phase, Bengaluru 
                 Bangalore, Karnataka - 560062, India.
@@ -18,7 +18,8 @@ const PrivacyPolicy = () => {
                 This Privacy Policy (“<b>Policy</b>”) sets forth the reasonable security practices and 
                 procedures adopted by SamparkBindhu and shall apply to the use and disclosure and sharing 
                 of sensitive personal data or information (“<b>Personal Identifiable Information</b>” or 
-                “<b>PII</b>”) provided by the registered users of the website [●] (“<b>Website</b>”), 
+                “<b>PII</b>”) provided by the registered users of the website <a href="https://vikasbandhu.in">
+                    https://vikasbandhu.in</a>, 
                 which is owned and operated by SamparkBindhu. This policy is equally applicable on the 
                 visitors to the Website. The Policy  outlines the various measures undertaken by 
                 SamparkBindhu to provide Users with a convenient and safe online/ experience, while 
@@ -269,6 +270,7 @@ const PrivacyPolicy = () => {
                 this Privacy Policy Users can contact us using the information below:
             </Paragraph>
             <Text>Email Id: {contactUs.emailId}</Text>
+            <br/><Text>Phone Number: {contactUs.phoneNumber}</Text>
             <br/><Text>
                 Address:
                 <address>617, "Shivam", Royal Park Residency, 
