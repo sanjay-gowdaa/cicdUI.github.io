@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Carousel, Image, Typography } from 'antd';
+import { Alert, Button, Carousel, Image, Typography } from 'antd';
 
 import Logo from '../static/assets/vbLogo.png';
 import VBOne from '../static/assets/Vikasbandhu_One.jpg';
@@ -19,7 +19,12 @@ const Home = () => {
     return (
         <div id="home">
             <div className="home-content-wrapper">
-            <Carousel autoplay autoplaySpeed={5000}>
+                <Alert
+                    className="animate-alert"
+                    message={<>Beware of any Fraudulent Websites. <b>Vikasbandhu does not charge any Registration fee</b>. Visit only https://vikasbandhu.in</>}
+                    banner
+                />
+                <Carousel autoplay autoplaySpeed={5000}>
                     <Image height={"87vh"} src={VBOne} preview={false} />
                     <Image height={"87vh"} src={VBTwo} preview={false} />
                     <Image height={"87vh"} src={VBThree} preview={false} />

@@ -108,15 +108,14 @@ const ConfirmOTPModal = ({showOTPModal, setShowOTPModal, currentType, history}: 
             <Row justify="center" className="margin-t-1em">
                 <Col>
                     <Space>
-                        {otp !== "" && 
-                            <PrimaryBtn
-                                onClick={() => {
-                                    dispatch(confirmOTP(formData?.number,otp));
-                                    dispatch(saveTimeStamp);
-                                }}
-                                content="Submit OTP"
-                            />
-                        }
+                        <PrimaryBtn
+                            disabled={otp.length !== 4}
+                            onClick={() => {
+                                dispatch(confirmOTP(formData?.number,otp));
+                                dispatch(saveTimeStamp);
+                            }}
+                            content="Submit OTP"
+                        />
                     </Space>
                 </Col>
             </Row>

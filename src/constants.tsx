@@ -18,7 +18,7 @@ export const headerBreadcrumb = {
 }
 
 export const contactUs = {
-    phoneNumber: "+91-99902956664",
+    phoneNumber: "+91-9902956664",
     emailId: "contactus@samparkbindhu.in"
 }
 
