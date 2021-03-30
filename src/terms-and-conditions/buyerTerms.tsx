@@ -39,7 +39,11 @@ const BuyerTerms = () => {
                         logistics and agricultural products transportation services to the Seller 
                         or the Buyer, at his/her(their) request
                     </li>
-                    <li>Payment Service Provider -̶ [●], with registered office at [●]</li>
+                    <li>Payment Service Provider -̶ <a href="https://www.cashfree.com/" target="_blank"><b>Cashfree</b></a>,
+                        with registered office at <address>Cashfree Payments India Private Limited,
+                        612/1, 4th Floor, 80 Feet Rd, Koramangala 4th Block,
+                        Bengaluru, Karnataka - 560034, India.</address>
+                    </li>
                     <li>
                         Platform -̶ an online platform developed by SamparkBindhu for the purchasing 
                         and selling of agricultural Products and logistics and agricultural Products 
@@ -650,7 +654,8 @@ const BuyerTerms = () => {
                         accessing the Platform, a notice informing them of such fact and a request for acceptance of the new 
                         Terms and Conditions. Without this acceptance, Buyer shall not be able to continue 
                         to access and use the Platform . Any notices of modification of these Terms and Conditions 
-                        shall also be published on the website: [●]. Changes made to the Terms and Conditions shall 
+                        shall also be published on the website: <a href="https://vikasbandhu.in" target="_blank">
+                            https://vikasbandhu.in</a>. Changes made to the Terms and Conditions shall 
                         not be retroactive and shall not take effect within a period of less than fourteen (14) days 
                         after their publication. Changes to the Terms and Conditions that result from (i) modifications 
                         or new features of the Platform , or (ii) legal impositions, which shall produce immediate effects, are excepted
