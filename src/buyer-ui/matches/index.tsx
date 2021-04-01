@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../store/rootReducer';
 import { componentCallBacksModel, matchesColumns } from './matchesTable.model';
 import ViewCropDetails from './viewCropDetails';
-import { getMatchesForBuyerCrops, rejectMatches } from '../../store/buyerReducer/actions';
+import { rejectMatches, getMatchesForBuyerCrops } from '../../store/buyerReducer/actions';
 import { FullfillmentFlags, MatchRequirementModel } from '../../store/buyerReducer/types';
 
 const { Title } = Typography;
@@ -31,8 +31,9 @@ const processFullfillmentData = (allMatchesList: Array<any>) => {
     allMatchesList.map((buyerMatchEntry) => {
         const [currentBuyerMatchEntryPair]: Array<any> = Object.entries(buyerMatchEntry);
         const buyerMatchesData: Array<any> = currentBuyerMatchEntryPair[1];
-        const genericData = buyerMatchesData[0];
-        for(let i=1; i < buyerMatchesData.length; i++) {
+        const matchesLength = buyerMatchesData.length;
+        const genericData = buyerMatchesData[matchesLength-1];
+        for(let i=0; i < (matchesLength-1); i++) {
             const fulfilmentData = {...buyerMatchesData[i], ...genericData};
             allFullfilments.push(fulfilmentData)
         }
@@ -61,7 +62,7 @@ const MatchedSection = () => {
     
 
     useEffect(() => {
-        dispatch(getMatchesForBuyerCrops())
+        // dispatch(getMatchesForBuyerCrops([]))
     }, [])
 
     useEffect(() => {

@@ -3,7 +3,7 @@ import { addProduce, getAllProduce, getCropCategoryList, getCropList, getSubCate
     updateMasterList, deleteProduce, patchProduce, getBuyerMatchesList, rejectMatch } from "../api";
 import { UserStateModel } from "../loginReducer/types";
 import { RootState } from "../rootReducer";
-import { MasterListApiFormat, ProduceModel } from "./types";
+import { BuyerStateModel, MasterListApiFormat, ProduceModel } from "./types";
 
 export const UPDATE_MASTER_LIST = 'UPDATE_MASTER_LIST';
 export const GET_MASTER_LIST = 'GET_MASTER_LIST';
@@ -105,14 +105,15 @@ export const updateMasterListData = (masterlist: Array<MasterListApiFormat>) => 
 
 export const addNewProduce = (/*produceFormData: ProduceModel*/ produceFormData: any) => {
     return async(dispatch: any, getState: any) => {
-        const {loginUser}: {loginUser: UserStateModel} = getState() as RootState;
+        const {loginUser, buyer: buyserState}: {loginUser: UserStateModel, buyer: BuyerStateModel} = getState() as RootState;
         // for testing, use USER-ID 
         // const username = '7892329983'
         const {username, district, zip} = loginUser
+        const {produceList} = buyserState;
         const addProduceResponse = await addProduce({...produceFormData, district, zip}, username);
         // console.log('addProduceResponse', addProduceResponse);
         dispatch(getProduceList())
-        dispatch(getMatchesForBuyerCrops());
+        dispatch(getMatchesForBuyerCrops(produceList));
     }
 }
 
@@ -148,7 +149,7 @@ export const getProduceList = () => {
         const {Items, Count} = getProduceListResponse || {Items: []}
         // console.log('getProduceList', Items);
         dispatch(updateProduceList(Items as Array<ProduceModel>))
-        dispatch(getMatchesForBuyerCrops());
+        dispatch(getMatchesForBuyerCrops(Items as Array<ProduceModel>));
     }
 }
 
@@ -176,14 +177,16 @@ export const fetchAllVariety = (crop: string) => {
     }
 }
 
-export const getMatchesForBuyerCrops = () => {
-    /* Hardcoded data */
-    const matchesBody = {
-        buyer_id: "user#123",
-        buyer_crop_ids: ["buyer_crop_id#201"]
-    }
-    /* Hardcoded data */
+export const getMatchesForBuyerCrops = (cropsList: Array<ProduceModel>) => {
+    const allCropListIds: Array<string> = cropsList.map((curCrop: ProduceModel) => curCrop.sk || '');
     return async(dispatch: any, getState: any) => {
+        const {loginUser}: {loginUser: UserStateModel} = getState() as RootState;
+        const {username} = loginUser;
+
+        const matchesBody = {
+            buyer_id: `user#${username}`,
+            buyer_crop_ids: allCropListIds
+        }
         dispatch(setMatchesLoadingFlag(true));
         const matchesList = await getBuyerMatchesList(matchesBody.buyer_id, matchesBody.buyer_crop_ids);
         dispatch(updateMatchesList(matchesList));
@@ -200,10 +203,12 @@ export const getMatchesForBuyerCrops = () => {
 
 export const rejectMatches = (rejectData: {buyer_id: string, buyer_crop_id: Array<string>}) => {
     return async(dispatch: any, getState: any) => {
+        const {buyer: buyerState}: {buyer: BuyerStateModel} = getState() as RootState;
+        const {produceList} = buyerState;
         const matchesList = await rejectMatch(rejectData);
         /* Re-calculate matches for all crop */
         /* Logic can be changed to specific crop if required */
-        dispatch(getMatchesForBuyerCrops());
+        dispatch(getMatchesForBuyerCrops(produceList));
     }
 }
 

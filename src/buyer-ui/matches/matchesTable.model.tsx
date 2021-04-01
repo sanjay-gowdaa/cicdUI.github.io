@@ -52,7 +52,7 @@ export const matchesColumns = (componentCallBacks: componentCallBacksModel) => [
             const FulfilmentComp = () => (fullFillment ? <Text className="full-match">FULL</Text> :
                 <Text className="partial-match">PARTIAL</Text>
             )
-            const quantityDisp = (fullFillment ? record.buyer_actual_quantity : record.buyer_actual_quantity - (record.buyer_remaining_quant || 0))
+            const quantityDisp = (fullFillment ? record.buyer_actual_quantity : record.buyer_actual_quantity - (record.seller_quantity || 0))
             return (
                 <>
                     <div>{`${quantityDisp} Qtl`}</div>

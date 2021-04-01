@@ -75,7 +75,7 @@ export interface TransactioModel extends MatchRequirementModel {
 
 export interface BuyerStateModel {
     masterProduceList: Array<MasterListApiFormat>;
-    produceList: Array<string>;
+    produceList: Array<ProduceModel>;
     masterCropNames: Array<string>;
     cropsList: Array<string>;
     varietyList: Array<any>;
