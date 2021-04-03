@@ -146,10 +146,12 @@ export const getProduceList = () => {
         
         const {username} = loginUser
         const getProduceListResponse = await getAllProduce(username);
-        const {Items, Count} = getProduceListResponse || {Items: []}
+        const {Items} = getProduceListResponse || {Items: []}
         // console.log('getProduceList', Items);
         dispatch(updateProduceList(Items as Array<ProduceModel>))
-        dispatch(getMatchesForBuyerCrops(Items as Array<ProduceModel>));
+        if(Items.length) {
+            dispatch(getMatchesForBuyerCrops(Items as Array<ProduceModel>));
+        }
     }
 }
 
@@ -188,7 +190,8 @@ export const getMatchesForBuyerCrops = (cropsList: Array<ProduceModel>) => {
             buyer_crop_ids: allCropListIds
         }
         dispatch(setMatchesLoadingFlag(true));
-        const matchesList = await getBuyerMatchesList(matchesBody.buyer_id, matchesBody.buyer_crop_ids);
+        const matchesListResponse = await getBuyerMatchesList(matchesBody.buyer_id, matchesBody.buyer_crop_ids);
+        const matchesList = matchesListResponse ? matchesListResponse : [];
         dispatch(updateMatchesList(matchesList));
         dispatch(setMatchesLoadingFlag(false));
     }
