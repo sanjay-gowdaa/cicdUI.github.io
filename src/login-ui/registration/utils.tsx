@@ -51,7 +51,7 @@ export const generateFormData = ({formSubmitValues, userType, addressForPin}: ge
 
     for(const property in formSubmitValues) {
         var key = property;
-        if(typeof(formSubmitValues[property]) === "object" && !isEmpty(formSubmitValues[property].originFileObj)) {
+        if(typeof(formSubmitValues[property]) === "object" && !isEmpty(formSubmitValues[property][0].originFileObj)) {
             const uploadedDocument = generateFileData(formSubmitValues[property][0].originFileObj, property);
             fileConversionPromises.push(uploadedDocument);
         }
