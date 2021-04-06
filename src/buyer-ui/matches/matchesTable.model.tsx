@@ -7,6 +7,17 @@ import ConnectMatch from './connectMatch';
 
 const { Title, Text } = Typography;
 
+const calculateQty = (record: MatchRequirementModel) => {
+    const {buyer_actual_quantity, seller_quantity, fulfillment_flag} = record;
+    switch(fulfillment_flag) {
+        case FullfillmentFlags.single_fulfillment:
+            return buyer_actual_quantity
+        
+        default:
+            return seller_quantity;
+    }
+}
+
 export interface componentCallBacksModel {
     showCropDetailsModal: any;
     populateCropDetails: any;
@@ -52,7 +63,7 @@ export const matchesColumns = (componentCallBacks: componentCallBacksModel) => [
             const FulfilmentComp = () => (fullFillment ? <Text className="full-match">FULL</Text> :
                 <Text className="partial-match">PARTIAL</Text>
             )
-            const quantityDisp = (fullFillment ? record.buyer_actual_quantity : record.buyer_actual_quantity - (record.seller_quantity || 0))
+            const quantityDisp = calculateQty(record);
             return (
                 <>
                     <div>{`${quantityDisp} Qtl`}</div>
