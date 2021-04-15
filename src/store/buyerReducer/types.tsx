@@ -32,6 +32,13 @@ export interface MatchRequirementModel {
     seller_final_price: number;
     price: number;
     buyer_actual_quantity: number;
+    buyer_location: string;
+    seller_crop_id: string;
+    buyer_final_price?: number;
+    buyer_transportation_cost?: number;
+    buyer_facilitation_cost?: number;
+    seller_facilitation_cost?: number;
+    seller_transportation_cost?: number;
 }
 
 export enum FullfillmentFlags {
@@ -43,9 +50,9 @@ export enum FullfillmentFlags {
 }
 
 export enum TransactionStatus {
-    pending = 'PENDING',
-    on_going = 'ON_GOING',
-    completed = 'COMPLETED',
+    pending = 'Pending',
+    on_going = 'active',
+    completed = 'complete',
 }
 
 export interface flatMasterListType { 
@@ -80,7 +87,11 @@ export interface BuyerStateModel {
     cropsList: Array<string>;
     varietyList: Array<any>;
     matchesList: Array<MatchRequirementModel>;
-    transactionList: Array<TransactioModel>;
+    transactionList: {
+        Pending: Array<TransactioModel>,
+        active: Array<TransactioModel>,
+        complete: Array<TransactioModel>
+    };
     reviewsList: Array<ReviewRating>;
     timeStamp: any;
     isMatchesFetching: boolean;

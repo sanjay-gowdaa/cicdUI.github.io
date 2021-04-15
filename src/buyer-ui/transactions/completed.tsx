@@ -9,7 +9,7 @@ const CompletedTransactions = ({
 }: {
     transactionList: Array<TransactioModel>;
 }) => {
-    return <Table className="margin-t-1em" columns={transactionColumns} dataSource={[]} />;
+    return <Table className="margin-t-1em" columns={transactionColumns} dataSource={transactionList} />;
 };
 
 export default CompletedTransactions;

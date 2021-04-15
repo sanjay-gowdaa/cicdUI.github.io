@@ -1,4 +1,5 @@
 import CryptoJS from 'crypto-js';
+import { TransactionStatus } from '../buyerReducer/types';
 import { LiveApmcRates, UpdatedLiveApmcRatesQuery } from '../genericTypes';
 const BASE_URL = process.env.REACT_APP_BASE_URL;
 const STAGE = process.env.REACT_APP_ENV;
@@ -26,6 +27,8 @@ const INTENT_TO_SELL = 'sell';
 const USER_MANAGER_API = 'user';
 const MATCHES_API = `https://a73j5pnsxl.execute-api.ap-south-1.amazonaws.com/${STAGE}/matches`;
 const MATCHES_REJECT_API = `https://a73j5pnsxl.execute-api.ap-south-1.amazonaws.com/${STAGE}/reject`;
+const TRANSACTION_API = 'transaction/create';
+const TRANSACTION_LIST_API = 'transaction/user';
 
 const parseToken = (userToken: string) => {
     const sholudDecrypt = process.env.REACT_APP_ENV === 'prod';
@@ -285,6 +288,20 @@ export const rejectMatch = (rejectData: {buyer_id: string, buyer_crop_id: Array<
         method: 'POST',
         body: JSON.stringify(rejectData)
     }).then((response: any) => response.json())
+}
+
+export const createTransaction = (transactionEntry: any) => {
+    const transactionApi = `${BASE_URL}/${STAGE}/${TRANSACTION_API}`;
+    return fetch(transactionApi, {
+        // headers: getAuthHeader(),
+        method: 'POST',
+        body: JSON.stringify(transactionEntry)
+    }).then((response: any) => response.json())
+}
+
+export const fetchTransactionList = (userName: string, transactionStatus: TransactionStatus) => {
+    const listApi = `${BASE_URL}/${STAGE}/${TRANSACTION_LIST_API}/${userName}?status=${transactionStatus}`;
+    return fetch(listApi).then((response: any) => response.json());
 }
 
 /* Matches And Transactions End */

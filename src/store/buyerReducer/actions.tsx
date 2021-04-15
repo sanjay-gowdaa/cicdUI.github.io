@@ -1,9 +1,9 @@
 import { getTimeStamp } from "../../app-components/utils";
 import { addProduce, getAllProduce, getCropCategoryList, getCropList, getSubCategoryList, getMasterList,
-    updateMasterList, deleteProduce, patchProduce, getBuyerMatchesList, rejectMatch } from "../api";
+    updateMasterList, deleteProduce, patchProduce, getBuyerMatchesList, rejectMatch, createTransaction, fetchTransactionList } from "../api";
 import { UserStateModel } from "../loginReducer/types";
 import { RootState } from "../rootReducer";
-import { BuyerStateModel, MasterListApiFormat, ProduceModel } from "./types";
+import { BuyerStateModel, MasterListApiFormat, ProduceModel, TransactionStatus } from "./types";
 
 export const UPDATE_MASTER_LIST = 'UPDATE_MASTER_LIST';
 export const GET_MASTER_LIST = 'GET_MASTER_LIST';
@@ -14,6 +14,7 @@ export const UPDATE_VARIETY_LIST = 'UPDATE_VARIETY_LIST';
 export const UPDATE_TIME_STAMP = 'UPDATE_TIME_STAMP';
 export const UPDATE_MATCHES_LIST = 'UPDATE_MATCHES_LIST';
 export const UPDATE_MATCHES_LIST_FOR_BUYER_CROP = 'UPDATE_MATCHES_LIST_FOR_BUYER_CROP';
+export const UPDATE_TRANSACTION_LIST = 'UPDATE_TRANSACTION_LIST';
 export const SET_MATCHES_LOADER = 'SET_MATCHES_LOADER';
 
 export const updateStoreMasterList = (masterlist: Array<any>) => {
@@ -79,6 +80,13 @@ export const updateMatchesListForID = (buyerCropId: string, matchesList: Array<a
     }
 }
 /* Not yet in use end */
+
+export const updateTransactionList = (transactionType: TransactionStatus, transactionListData: Array<any>) => {
+    return {
+        type: UPDATE_TRANSACTION_LIST,
+        payload: {transactionType, transactionListData}
+    }
+}
 
 export const getMasterProduceList = () => {
     return async(dispatch: any, getState: any) => {
@@ -212,6 +220,24 @@ export const rejectMatches = (rejectData: {buyer_id: string, buyer_crop_id: Arra
         /* Re-calculate matches for all crop */
         /* Logic can be changed to specific crop if required */
         dispatch(getMatchesForBuyerCrops(produceList));
+    }
+}
+
+export const connectMatch = (transactionEntry: any) => {
+    return async(dispatch: any, getState: any) => {
+        const {buyer: buyerState}: {buyer: BuyerStateModel} = getState() as RootState;
+        const {produceList} = buyerState;
+        const matchesList = await createTransaction(transactionEntry);
+        dispatch(getMatchesForBuyerCrops(produceList));
+    }
+}
+
+export const getTransactionList = (transactionStatus: TransactionStatus) => {
+    return async(dispatch: any, getState: any) => {
+        const {loginUser}: {loginUser: UserStateModel} = getState() as RootState;
+        const {username} = loginUser;
+        const transactionListResponse = await fetchTransactionList(username, transactionStatus);
+        dispatch(updateTransactionList(transactionStatus, transactionListResponse))
     }
 }
 
