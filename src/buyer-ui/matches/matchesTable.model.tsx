@@ -7,16 +7,16 @@ import ConnectMatch from './connectMatch';
 
 const { Title, Text } = Typography;
 
-const calculateQty = (record: MatchRequirementModel) => {
-    const {buyer_actual_quantity, seller_quantity, fulfillment_flag} = record;
-    switch(fulfillment_flag) {
-        case FullfillmentFlags.single_fulfillment:
-            return buyer_actual_quantity
+// const calculateQty = (record: MatchRequirementModel) => {
+//     const {buyer_actual_quantity, seller_quantity, fulfillment_flag} = record;
+//     switch(fulfillment_flag) {
+//         case FullfillmentFlags.single_fulfillment:
+//             return buyer_actual_quantity
         
-        default:
-            return seller_quantity;
-    }
-}
+//         default:
+//             return seller_quantity;
+//     }
+// }
 
 export interface componentCallBacksModel {
     showCropDetailsModal: any;
@@ -56,17 +56,17 @@ export const matchesColumns = (componentCallBacks: componentCallBacksModel) => [
     },
     {
         title: 'Quantity Available',
-        dataIndex: 'quantity',
-        key: 'quantity',
-        render: (quantity: number, record: MatchRequirementModel) => {
+        dataIndex: 'matched_quantity',
+        key: 'matched_quantity',
+        render: (matched_quantity: number, record: MatchRequirementModel) => {
             const fullFillment = record.fulfillment_flag === FullfillmentFlags.single_fulfillment;
             const FulfilmentComp = () => (fullFillment ? <Text className="full-match">FULL</Text> :
                 <Text className="partial-match">PARTIAL</Text>
             )
-            const quantityDisp = calculateQty(record);
+            // const quantityDisp = calculateQty(record);
             return (
                 <>
-                    <div>{`${quantityDisp} Qtl`}</div>
+                    <div>{`${matched_quantity} Qtl`}</div>
                     <FulfilmentComp /> 
                 </>
             );

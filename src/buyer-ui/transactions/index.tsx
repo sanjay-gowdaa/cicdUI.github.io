@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../../store/rootReducer';
 import { Tabs, Typography } from 'antd';
@@ -17,16 +17,21 @@ const TransactionSection = () => {
     const dispatch = useDispatch();
     const {transactionList} = buyerState;
 
-    const callback = (key: string) => {
-        console.log(key);
-        dispatch(getTransactionList(key as TransactionStatus))
+    const onSwitchTab = (key: string) => {
+        const transactionTypeKey = key as TransactionStatus;
+        if (transactionList[transactionTypeKey].length === 0 ) {
+            dispatch(getTransactionList(transactionTypeKey))
+        }
     }
 
-    console.log('transactionList', transactionList);
+    useEffect(() => {
+        dispatch(getTransactionList(TransactionStatus.on_going))
+    }, [])
+
     return (
         <div id="buyer-ui-transactions">
             <Title level={2}>My Transactions</Title>
-            <Tabs defaultActiveKey="1" size="large" onChange={callback}>
+            <Tabs defaultActiveKey="1" size="large" onChange={onSwitchTab}>
                 <TabPane tab="On Going" key={TransactionStatus.on_going}>
                     <OnGoingTransactions transactionList={transactionList[TransactionStatus.on_going]} />
                 </TabPane>

@@ -32,6 +32,7 @@ export interface MatchRequirementModel {
     seller_final_price: number;
     price: number;
     buyer_actual_quantity: number;
+    matched_quantity: number;
     buyer_location: string;
     seller_crop_id: string;
     buyer_final_price?: number;
