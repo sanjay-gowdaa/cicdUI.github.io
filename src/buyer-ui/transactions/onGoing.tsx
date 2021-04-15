@@ -5,13 +5,7 @@ import { TransactioModel, TransactionStatus } from '../../store/buyerReducer/typ
 import { transactionColumns } from './transactionTable.model';
 
 const OnGoingTransactions = ({ transactionList }: { transactionList: Array<TransactioModel> }) => {
-    /* Temproary change */
-    const onGoingList = transactionList.filter(
-        (transaction: TransactioModel) =>
-            transaction.transactionStatus === TransactionStatus.on_going,
-    );
-
-    return <Table className="margin-t-1em" columns={transactionColumns} dataSource={onGoingList} />;
+    return <Table className="margin-t-1em" columns={transactionColumns} dataSource={transactionList} />;
 };
 
 export default OnGoingTransactions;

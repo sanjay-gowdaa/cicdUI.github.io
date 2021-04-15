@@ -7,19 +7,57 @@ import PrimaryBtn from '../../app-components/primaryBtn';
 import InputOtp from '../../app-components/inputOtp';
 import { sendOTP } from '../../store/registrationReducer/actions';
 import { RootState } from '../../store/rootReducer';
-import { saveTimeStamp } from '../../store/buyerReducer/actions';
+import { connectMatch, saveTimeStamp } from '../../store/buyerReducer/actions';
+import { MatchRequirementModel } from '../../store/buyerReducer/types';
+import { UserStateModel } from '../../store/loginReducer/types';
 
 const { Text, Title } = Typography;
 
-const ConnectMatch = (props: any) => {
-    const {cropDetails} = props;  
+const getTransactionDataStructure = (cropDetails: MatchRequirementModel) => {
+    const {
+        fulfillment_flag, produce, 
+        seller_crop_id, seller_id, seller_quantity, seller_final_price, price, location, seller_facilitation_cost, seller_transportation_cost,
+        buyer_id, buyer_crop_id, buyer_location, buyer_facilitation_cost, buyer_transportation_cost, buyer_final_price, buyer_actual_quantity} = cropDetails;
+    const produceData: Array<string> = produce.split('_');
+    const transactionEntry = {
+        transaction_type: fulfillment_flag,
+        produce,
+        grade: "111",
+        buyer: [
+          {
+            buyer_id,
+            buyer_location,
+            buyer_quantity: buyer_actual_quantity,
+            buyer_price: 0,
+            buyer_final_price,
+            buyer_transportation_cost,
+            buyer_facilitation_cost,
+            buyer_crop_id
+          }
+        ],
+        seller: [
+          {
+            seller_id,
+            seller_location: location,
+            seller_quantity,
+            seller_price: price,
+            seller_transportation_cost,
+            seller_facilitation_cost,
+            seller_final_price,
+            seller_crop_id
+          }
+        ]
+      }
+      return transactionEntry;
+}
+
+const ConnectMatch = ({cropDetails}: {cropDetails: MatchRequirementModel}) => {
     const dispatch = useDispatch();
-    const userState = useSelector((state: RootState) => state.loginUser);
+    const userState: UserStateModel = useSelector((state: RootState) => state.loginUser);
+    const agreementNumber = `PA_${userState.username}_${cropDetails.seller_id}`;// Temp
     const [viewConnectAgreement, setConnectAgreement] = useState(false);
     const [otp, setOtp] = useState("");
-    const agreementNumber = `PA_${userState.id}_${cropDetails.sellerId}_1`;// Temp
     const [isAgreed, setAgreed] = useState(false); 
-    
     return (
         <>
             <PrimaryBtn
@@ -34,11 +72,14 @@ const ConnectMatch = (props: any) => {
                 footer={[
                     <PrimaryBtn
                         onClick={() => {
-                            console.log("otp", otp);
                             //Dispatch method which confirms otp
                             //timeStamp to be stored in BuyerStateModel
                             dispatch(saveTimeStamp);
                             setConnectAgreement(!viewConnectAgreement);
+                            
+                            const transactionEntry = getTransactionDataStructure(cropDetails)
+                            console.log('getDataStructure', transactionEntry);
+                            dispatch(connectMatch(transactionEntry));
                             //Download pdf of the Purchase Agreement
                         }}
                         content="Agree"

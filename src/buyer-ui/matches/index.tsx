@@ -23,7 +23,10 @@ const initialEmptyCropDetail = {
     buyer_remaining_quant: 0,
     seller_final_price: 0,
     price: 0,
-    buyer_actual_quantity: 0
+    buyer_actual_quantity: 0,
+    buyer_location: '',
+    seller_crop_id: '',
+    matched_quantity: 0
 };
 
 const processFullfillmentData = (allMatchesList: Array<any>) => {

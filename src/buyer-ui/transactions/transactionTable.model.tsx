@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Image, Typography } from 'antd';
+import { Button, Image, Typography, Tooltip } from 'antd';
 
 import { TransactioModel } from '../../store/buyerReducer/types';
 import RagiImg from '../../static/assets/ragi.png';
@@ -9,22 +9,35 @@ const { Text, Title } = Typography;
 export const transactionColumns = [
     {
         title: 'Id',
-        dataIndex: 'transactionId',
-        key: 'transactionId',
+        dataIndex: 'pk',
+        key: 'pk',
+        ellipsis: {
+            showTitle: false,
+        },
+        render: (pk: string) => {
+            const indexOfHash = pk.indexOf('#');
+            const actualID = pk.substr(indexOfHash+1);
+            return (
+                <Tooltip placement="topLeft" title={actualID}>
+                    <Text underline>{actualID}</Text>
+                </Tooltip>
+            );
+        },
     },
     {
         title: 'Produce',
-        dataIndex: 'cropName',
-        key: 'cropName',
-        render: (cropName: string, record: any) => {
+        dataIndex: 'produce',
+        key: 'produce',
+        width: 300,
+        render: (produce: string) => {
             return (
-                <div className='display-flex-row align-center'>
+            <div className='display-flex-row align-center'>
                 <Image
                     src={RagiImg}
                 />
                 <div className='margin-l-r-1em'>
-                    <Title level={5}>{cropName} - {record?.subCategory}</Title>
-                    <p>{record?.cropGrade}</p>
+                    {/* <Title level={5}>{cropName} - {record?.subCategory}</Title> */}
+                    <p>{produce}</p>
                 </div>
             </div>
             );
@@ -49,38 +62,43 @@ export const transactionColumns = [
     },
     {
         title: 'Total',
-        dataIndex: 'transactionTotalAmount',
-        key: 'transactionTotalAmount',
+        dataIndex: 'seller_final_price',
+        key: 'seller_final_price',
     },
     {
         title: 'Seller',
-        dataIndex: 'sellerId',
-        key: 'sellerId',
-        render: (sellerId: string) => {
+        dataIndex: 'seller_id',
+        key: 'seller_id',
+        ellipsis: {
+            showTitle: false,
+        },
+        render: (seller_id: string) => {
+            const indexOfHash = seller_id.indexOf('#');
+            const actualID = seller_id.substr(indexOfHash+1);
             return (
-                <>
-                    <Text underline>{sellerId}</Text>
-                </>
+                <Tooltip placement="topLeft" title={actualID}>
+                    <Text underline>{actualID}</Text>
+                </Tooltip>
             );
         },
     },
     {
         title: 'Location',
-        dataIndex: 'location',
-        key: 'location',
+        dataIndex: 'seller_location',
+        key: 'seller_location',
     },
-    {
-        title: 'Additional',
-        key: 'termsAndConditions',
-        dataIndex: 'termsAndConditions',
-        render: () => {
-            return (
-                <>
-                    <Button type="link">Additional Info</Button>
-                </>
-            );
-        },
-    },
+    // {
+    //     title: 'Additional',
+    //     key: 'termsAndConditions',
+    //     dataIndex: 'termsAndConditions',
+    //     render: () => {
+    //         return (
+    //             <>
+    //                 <Button type="link">Additional Info</Button>
+    //             </>
+    //         );
+    //     },
+    // },
     {
         title: 'Status',
         key: 'transactionStatusText',
