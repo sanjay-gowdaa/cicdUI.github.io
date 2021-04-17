@@ -1,9 +1,6 @@
 import React from 'react';
-import { Button, Image, Typography, Tooltip } from 'antd';
-
-import { TransactioModel } from '../../store/buyerReducer/types';
+import { Image, Typography, Tooltip } from 'antd';
 import RagiImg from '../../static/assets/ragi.png';
-
 const { Text, Title } = Typography;
 
 export const transactionColumns = [

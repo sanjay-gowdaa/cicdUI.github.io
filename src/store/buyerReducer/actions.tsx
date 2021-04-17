@@ -1,9 +1,10 @@
 import { getTimeStamp } from "../../app-components/utils";
+import { TransactionStatus } from "../../buyer-seller-commons/types";
 import { addProduce, getAllProduce, getCropCategoryList, getCropList, getSubCategoryList, getMasterList,
     updateMasterList, deleteProduce, patchProduce, getBuyerMatchesList, rejectMatch, createTransaction, fetchTransactionList } from "../api";
 import { UserStateModel } from "../loginReducer/types";
 import { RootState } from "../rootReducer";
-import { BuyerStateModel, MasterListApiFormat, ProduceModel, TransactionStatus } from "./types";
+import { BuyerStateModel, MasterListApiFormat, ProduceModel } from "./types";
 
 export const UPDATE_MASTER_LIST = 'UPDATE_MASTER_LIST';
 export const GET_MASTER_LIST = 'GET_MASTER_LIST';

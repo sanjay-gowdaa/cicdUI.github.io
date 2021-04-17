@@ -1,8 +1,7 @@
 import React from 'react';
 import { Table } from 'antd';
-
-import { TransactioModel } from '../../store/buyerReducer/types';
 import { transactionColumns } from './transactionTable.model';
+import { TransactioModel } from '../../buyer-seller-commons/types';
 
 const CompletedTransactions = ({
     transactionList,

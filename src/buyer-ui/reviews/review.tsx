@@ -1,8 +1,6 @@
 import React from 'react';
 import { Rate, Space, Typography } from 'antd';
-
-import { ReviewRating } from '../../store/buyerReducer/types';
-
+import { ReviewRating } from '../../buyer-seller-commons/types';
 const { Text, Title } = Typography;
 
 interface PropsType {

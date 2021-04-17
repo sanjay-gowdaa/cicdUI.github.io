@@ -1,8 +1,6 @@
 import React from 'react';
 import { Button, Typography } from 'antd';
-
-import { TransactioModel } from '../../store/sellerReducer/types';
-
+import { TransactioModel } from '../../buyer-seller-commons/types';
 const { Title, Text } = Typography;
 
 export const transactionColumns = [
@@ -13,15 +11,12 @@ export const transactionColumns = [
     },
     {
         title: 'Produce',
-        dataIndex: 'cropName',
-        key: 'cropName',
-        render: (cropName: string, record: TransactioModel) => {
+        dataIndex: 'produce',
+        key: 'produce',
+        render: (produce: string, record: TransactioModel) => {
             return (
                 <>
-                    <Title level={5}>
-                        {cropName} - {record?.subCategory}
-                    </Title>
-                    <p>{record?.cropGrade}</p>
+                    <p>{produce}</p>
                 </>
             );
         },

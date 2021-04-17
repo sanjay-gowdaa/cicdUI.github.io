@@ -1,9 +1,8 @@
 import React from 'react';
 import { Button, Image, Typography } from 'antd';
-
-import { MatchRequirementModel } from '../../store/sellerReducer/types';
 import RagiImg from '../../static/assets/ragi.png';
 import AcceptMatch from './acceptMatch';
+import { MatchRequirementModel } from '../../buyer-seller-commons/types';
 
 const { Title, Text } = Typography;
 
@@ -15,36 +14,32 @@ export interface componentCallBacksModel {
 export const matchesColumns = (componentCallBacks: componentCallBacksModel) => [
     {
         title: 'Buyer Id',
-        dataIndex: 'buyerId',
-        key: 'buyerId',
-        render: (buyerId: string) => {
+        dataIndex: 'buyer_id',
+        key: 'buyer_id',
+        render: (buyer_id: string) => {
+            const indexOfHash = buyer_id.indexOf('#');
+            const actualID = buyer_id.substr(indexOfHash+1);
             return (
                 <>
-                    <Text underline>{buyerId}</Text>
+                    <Text underline>{actualID}</Text>
                 </>
             );
         },
     },
     {
         title: 'Produce',
-        dataIndex: 'cropName',
-        key: 'cropName',
-        render: (cropName: string, record: MatchRequirementModel) => {
+        dataIndex: 'produce',
+        key: 'produce',
+        render: (produce: string, record: MatchRequirementModel) => {
             return (
                 <div className="display-flex-row align-center">
                     <Image src={RagiImg} />
                     <div className="margin-l-r-1em">
-                        <Title level={5}>{cropName}</Title>
-                        <p>{record?.subCategory}</p>
+                        <p>{produce}</p>
                     </div>
                 </div>
             );
         },
-    },
-    {
-        title: 'Grade',
-        dataIndex: 'cropGrade',
-        key: 'cropGrade',
     },
     {
         title: 'Qunatity Required',
@@ -64,8 +59,8 @@ export const matchesColumns = (componentCallBacks: componentCallBacksModel) => [
     },
     {
         title: 'Location',
-        dataIndex: 'location',
-        key: 'location',
+        dataIndex: 'buyer_location',
+        key: 'buyer_location',
     },
     {
         title: 'Additional',

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Col, Row, Typography } from 'antd';
-import { MatchRequirementModel } from '../../store/buyerReducer/types';
+import { MatchRequirementModel } from '../../buyer-seller-commons/types';
 
 const { Title } = Typography;
 
@@ -10,8 +10,7 @@ interface componentProps {
 
 const TradeSumary = (props: componentProps) => {
     const {cropDetails} = props;
-    const { seller_id, produce, buyer_actual_quantity, buyer_remaining_quant = 0,
-        location, price, seller_final_price } = cropDetails;
+    const { seller_id, produce, buyer_price_per_quintal, matched_quantity, location, seller_final_price } = cropDetails;
 
     return (
         <>
@@ -37,7 +36,7 @@ const TradeSumary = (props: componentProps) => {
                     Quantity
                 </Col>
                 <Col sm={24} md={12}>
-                    : {buyer_actual_quantity - buyer_remaining_quant}
+                    : {matched_quantity}
                 </Col>
             </Row>
             <Row>
@@ -45,7 +44,7 @@ const TradeSumary = (props: componentProps) => {
                     Price per quintal
                 </Col>
                 <Col sm={24} md={12}>
-                    : {price}
+                    : {buyer_price_per_quintal}
                 </Col>
             </Row>
             <Row>
