@@ -1,9 +1,8 @@
 import React from 'react';
 import { Button, Image, Typography } from 'antd';
-
-import { FullfillmentFlags, MatchRequirementModel } from '../../store/buyerReducer/types';
 import RagiImg from '../../static/assets/ragi.png';
 import ConnectMatch from './connectMatch';
+import { FullfillmentFlags, MatchRequirementModel } from '../../buyer-seller-commons/types';
 
 const { Title, Text } = Typography;
 

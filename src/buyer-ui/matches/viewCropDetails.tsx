@@ -1,9 +1,8 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Col, Divider, Modal, Row } from 'antd';
-
-import { MatchRequirementModel } from '../../store/buyerReducer/types';
 import DefaultBtn from '../../app-components/defaultBtn';
 import TradeSumary from './tradeSummary';
+import { MatchRequirementModel } from '../../buyer-seller-commons/types';
 
 interface componentProps {
     openDetailsModal: boolean;

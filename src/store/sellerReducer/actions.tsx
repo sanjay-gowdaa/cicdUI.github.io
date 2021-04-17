@@ -1,6 +1,7 @@
 import { sortBy, isEmpty, isNull } from "lodash";
 import { getTimeStamp } from "../../app-components/utils";
-import { getSubCategoryList, createCrop, getAllCrops, getCropCategoryList, getCropList, getLiveApmcRate, getLiveApmcRateUpdated, deleteProduce, patchCrop, intentToSell } from "../api";
+import { MatchRequirementModel, TransactioModel } from "../../buyer-seller-commons/types";
+import { getSubCategoryList, createCrop, getAllCrops, getCropCategoryList, getCropList, getLiveApmcRate, getLiveApmcRateUpdated, deleteProduce, patchCrop, intentToSell, fetchSellerMatches } from "../api";
 import { ApmcApiResponseBase, LiveApmcRates, UpdatedLiveApmcRatesQuery } from "../genericTypes";
 import { UserStateModel } from "../loginReducer/types";
 import { RootState } from "../rootReducer";
@@ -14,6 +15,7 @@ export const UPDATE_SELLER_CROPS_LIST = 'UPDATE_SELLER_CROPS_LIST';
 export const UPDATE_APMC_RATE = 'UPDATE_APMC_RATE';
 export const UPDATE_APMC_DATA_TO_CROPS = 'UPDATE_APMC_DATA_TO_CROPS';
 export const UPDATE_TIME_STAMP = 'UPDATE_TIME_STAMP';
+export const UPDATE_SELLER_MATCHES = 'UPDATE_SELLER_MATCHES';
 
 export const updateAllCategories = (categories: Array<string>) => {
     return {
@@ -57,6 +59,13 @@ export const updateTimeStamp = (timeStamp: any) => {
     }
 }
 
+export const updateSellerMatches = (matchesList: Array<MatchRequirementModel>) => {
+    return {
+        type: UPDATE_SELLER_MATCHES,
+        payload: matchesList
+    }
+}
+
 export const updateApmcListData = (
         allCropsApmcData: Array<ApmcApiResponseBase>,
         cropsList: Array<CropApiModel>
@@ -80,61 +89,6 @@ export const updateApmcListData = (
         payload: cropListUpdated
     }
 }
-
-// export const updateApmcCropRateData = (allProduceliveRates: Array<{
-//     region: string;
-//     commodity: string;
-//     variety: string;
-//     liveRates: any;
-// }>, cropsList: Array<CropApiModel>) => {
-//     const allProduceApmcData = allProduceliveRates.map((produceLiveRate) => {
-//         const {liveRates: curProduceLiveRate} = produceLiveRate;
-//         if(curProduceLiveRate?.length) {
-//             const [lastestEntry, prevEntry] = sortBy(curProduceLiveRate, ['timestamp']);
-//             const difference = lastestEntry.modal_price - prevEntry.modal_price;
-//             return {apmc_price: lastestEntry.modal_price, increase: difference};
-//         } else {
-//             return {apmc_price: '', increase: null};
-//         }
-//     });
-
-//     const cropListUpdated = cropsList.map((cropProduce: CropApiModel, index: number) => {
-//         return {...cropProduce, apmc_rate_data: allProduceApmcData[index]}
-//     })
-
-//     return {
-//         type: UPDATE_SELLER_CROPS_LIST,
-//         payload: cropListUpdated
-//     }
-// }
-
-// export const fetchLiveApmcRate = ({commodity, variety}: {commodity: string, variety: string}) => {
-//     return async(dispatch: any, getState: any) => {
-//         const { loginUser } = getState() as RootState;
-//         const { district } = loginUser;
-        
-//         // for testing
-//         // const district = 'hassan';
-//         // const commodity = 'Rice';
-//         // const variety = 'Sona';
-//         // for testing end
-
-//         const priceModel = await getLiveApmcRate([{region: district, commodity, variety}])
-//         const {liveRates} = priceModel || {liveRates: []};
-//         if(liveRates.length) {
-//             const {liveRates: liveRatesData} = liveRates[0];
-//             if (Object.keys(liveRatesData).length) {
-//                 const sortedData = sortBy(liveRatesData, ['timestamp']);
-//                 const apmcePrice = sortedData[1].modal_price;
-//                 dispatch(updateApmcCropRate(apmcePrice));
-//             } else {
-//                 dispatch(updateApmcCropRate('No records found'));    
-//             }
-//         } else {
-//             dispatch(updateApmcCropRate('No records found'));
-//         }
-//     }
-// }
 
 export const updatedFetchLiveApmcRate = ({
     grade,
@@ -256,6 +210,15 @@ export const getAllCropsList = () => {
             dispatch(fetchAllCropsApmcData(Items));
         }
     }   
+}
+
+export const getAllSellerMatches = () => {
+    return async(dispatch: any, getState: any) => {
+        const {loginUser}: {loginUser: UserStateModel} = getState() as RootState;
+        const {username} = loginUser;
+        const sellerMatches: Array<MatchRequirementModel> = await fetchSellerMatches(username);
+        dispatch(updateSellerMatches(sellerMatches));
+    }
 }
 
 export const saveTimeStamp = (dispatch: any) => {

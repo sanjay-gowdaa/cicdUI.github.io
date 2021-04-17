@@ -1,5 +1,5 @@
 import CryptoJS from 'crypto-js';
-import { TransactionStatus } from '../buyerReducer/types';
+import { TransactionStatus } from '../../buyer-seller-commons/types';
 import { LiveApmcRates, UpdatedLiveApmcRatesQuery } from '../genericTypes';
 const BASE_URL = process.env.REACT_APP_BASE_URL;
 const STAGE = process.env.REACT_APP_ENV;
@@ -301,6 +301,11 @@ export const createTransaction = (transactionEntry: any) => {
 
 export const fetchTransactionList = (userName: string, transactionStatus: TransactionStatus) => {
     const listApi = `${BASE_URL}/${STAGE}/${TRANSACTION_LIST_API}/${userName}?status=${transactionStatus}`;
+    return fetch(listApi).then((response: any) => response.json());
+}
+
+export const fetchSellerMatches = (userName: string) => {
+    const listApi = `${BASE_URL}/${STAGE}/${TRANSACTION_LIST_API}/${userName}?status=MatcH`;
     return fetch(listApi).then((response: any) => response.json());
 }
 

@@ -1,3 +1,5 @@
+import { CropCategoryModel, MatchRequirementModel, ReviewRating, TransactioModel } from "../../buyer-seller-commons/types";
+
 export interface CropApiModel {
     category_name: string;
     crop_name: string;
@@ -26,49 +28,18 @@ export interface CropModel {
     apmcRateChange: any;
 }
 
-export interface MatchRequirementModel extends CropModel {
-    buyerId: string;
-    quantityRequired: number;
-    location: string;
-}
-
-export enum TransactionStatus {
-    pending = 'PENDING',
-    on_going = 'ON_GOING',
-    completed = 'COMPLETED',
-}
-
-export interface TransactioModel extends MatchRequirementModel {
-    transactionId: string;
-    transactionStatus: TransactionStatus;
-    transactionTotalAmount: number;
-    transactionStatusText: string;
-}
-
 export interface SellerStateModel {
     categories: Array<string>;
     masterCrops: Array<string>;
     variety: Array<CropCategoryModel>;
     cropsList: Array<CropApiModel>;
     matchesList: Array<MatchRequirementModel>;
-    transactionList: Array<TransactioModel>;
+    transactionList: {
+        Pending: Array<TransactioModel>,
+        active: Array<TransactioModel>,
+        complete: Array<TransactioModel>
+    };
     reviewsList: Array<ReviewRating>;
     apmcCropPrice: string;
     timeStamp: any;
-}
-
-export interface ReviewRating {
-    rating: number;
-    buyerId: string;
-    buyerLocation: string;
-    date: string;
-    reviewtext: string;
-}
-
-export interface CropCategoryModel {
-    config_id: string;
-    config_name: string;
-    variety: string;
-    grade: string;
-    name: string;
 }

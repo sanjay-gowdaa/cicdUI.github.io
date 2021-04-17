@@ -1,9 +1,9 @@
 import React from 'react';
 import { Select } from 'antd';
 import { uniqBy } from 'lodash';
-import { CropCategoryModel } from '../../store/sellerReducer/types';
 import { camelToSnakeCase } from '../../store/utils';
 import { generateFileData } from '../../app-components/utils';
+import { CropCategoryModel } from '../../buyer-seller-commons/types';
 const {Option} = Select
 
 export const renderCategoryOptions = (categories: Array<string>) => {

@@ -1,8 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Col, Divider, Modal, Row, Typography } from 'antd';
-
-import { MatchRequirementModel } from '../../store/sellerReducer/types';
 import DefaultBtn from '../../app-components/defaultBtn';
+import { MatchRequirementModel } from '../../buyer-seller-commons/types';
 
 const { Title } = Typography;
 
@@ -14,7 +13,7 @@ interface componentProps {
 
 const ViewCropDetails = (props: componentProps) => {
     const { openDetailsModal, setOpenDetailsModal, cropDetails } = props;
-    const { buyerId, cropName, quantityRequired, pricePerQnt, location } = cropDetails;
+    const { buyer_id, produce, matched_quantity, buyer_location, seller_price } = cropDetails;
     const closeModal = () => setOpenDetailsModal(!openDetailsModal);
     return (
         <Modal visible={openDetailsModal} title="Details" onCancel={closeModal} footer={null}>
@@ -24,7 +23,7 @@ const ViewCropDetails = (props: componentProps) => {
                     Buyer Id
                 </Col>
                 <Col sm={24} md={12}>
-                    : {buyerId}
+                    : {buyer_id}
                 </Col>
             </Row>
             <Row>
@@ -32,7 +31,7 @@ const ViewCropDetails = (props: componentProps) => {
                     Produce
                 </Col>
                 <Col sm={24} md={12}>
-                    : {cropName}
+                    : {produce}
                 </Col>
             </Row>
             <Row>
@@ -40,7 +39,7 @@ const ViewCropDetails = (props: componentProps) => {
                     Quantity
                 </Col>
                 <Col sm={24} md={12}>
-                    : {quantityRequired}
+                    : {matched_quantity}
                 </Col>
             </Row>
             <Row>
@@ -48,7 +47,7 @@ const ViewCropDetails = (props: componentProps) => {
                     Price per quintal
                 </Col>
                 <Col sm={24} md={12}>
-                    : {pricePerQnt}
+                    : {}
                 </Col>
             </Row>
             <Row>
@@ -56,7 +55,7 @@ const ViewCropDetails = (props: componentProps) => {
                     Total price
                 </Col>
                 <Col sm={24} md={12}>
-                    : {quantityRequired * pricePerQnt}
+                    : {seller_price}
                 </Col>
             </Row>
             <Row>
@@ -64,7 +63,7 @@ const ViewCropDetails = (props: componentProps) => {
                     Location
                 </Col>
                 <Col sm={24} md={12}>
-                    : {location}
+                    : {buyer_location}
                 </Col>
             </Row>
             <Row>

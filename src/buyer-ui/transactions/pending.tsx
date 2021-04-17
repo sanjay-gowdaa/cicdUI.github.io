@@ -1,7 +1,6 @@
 import React from 'react';
 import { Table } from 'antd';
-
-import { TransactioModel, TransactionStatus } from '../../store/buyerReducer/types';
+import { TransactioModel } from '../../buyer-seller-commons/types';
 import { transactionColumns } from './transactionTable.model';
 
 const PendingTransactions = ({ transactionList }: { transactionList: Array<TransactioModel> }) => {

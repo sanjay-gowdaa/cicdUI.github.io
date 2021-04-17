@@ -8,19 +8,19 @@ import InputOtp from '../../app-components/inputOtp';
 import { sendOTP } from '../../store/registrationReducer/actions';
 import { RootState } from '../../store/rootReducer';
 import { connectMatch, saveTimeStamp } from '../../store/buyerReducer/actions';
-import { MatchRequirementModel } from '../../store/buyerReducer/types';
 import { UserStateModel } from '../../store/loginReducer/types';
+import { MatchRequirementModel } from '../../buyer-seller-commons/types';
 
 const { Text, Title } = Typography;
 
 const getTransactionDataStructure = (cropDetails: MatchRequirementModel) => {
     const {
-        fulfillment_flag, produce, 
-        seller_crop_id, seller_id, seller_quantity, seller_final_price, price, location, seller_facilitation_cost, seller_transportation_cost,
-        buyer_id, buyer_crop_id, buyer_location, buyer_facilitation_cost, buyer_transportation_cost, buyer_final_price, buyer_actual_quantity} = cropDetails;
-    const produceData: Array<string> = produce.split('_');
+        fulfillment_flag, produce, matched_quantity,
+        seller_crop_id, seller_id, seller_quantity, seller_final_price, seller_price, location, seller_facilitation_cost, seller_transportation_cost, seller_price_per_quintal,
+        buyer_id, buyer_crop_id, buyer_location, buyer_facilitation_cost, buyer_transportation_cost, buyer_final_price, buyer_actual_quantity, buyer_price_per_quintal} = cropDetails;
     const transactionEntry = {
         transaction_type: fulfillment_flag,
+        matched_quantity,
         produce,
         grade: "111",
         buyer: [
@@ -32,7 +32,8 @@ const getTransactionDataStructure = (cropDetails: MatchRequirementModel) => {
             buyer_final_price,
             buyer_transportation_cost,
             buyer_facilitation_cost,
-            buyer_crop_id
+            buyer_crop_id,
+            buyer_price_per_quintal
           }
         ],
         seller: [
@@ -40,11 +41,12 @@ const getTransactionDataStructure = (cropDetails: MatchRequirementModel) => {
             seller_id,
             seller_location: location,
             seller_quantity,
-            seller_price: price,
+            seller_price,
             seller_transportation_cost,
             seller_facilitation_cost,
             seller_final_price,
-            seller_crop_id
+            seller_crop_id,
+            seller_price_per_quintal
           }
         ]
       }
