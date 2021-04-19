@@ -52,3 +52,9 @@ export const getTimeStamp = () => {
 
     return timeStamp;
 }
+
+export const parseIDfromHash = (rawID: string) => {
+    const indexOfHash = rawID.indexOf('#');
+    const actualID = indexOfHash > 0 ? rawID.substr(indexOfHash+1) : '';
+    return actualID;
+}

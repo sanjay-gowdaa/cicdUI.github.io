@@ -1,5 +1,5 @@
 import CryptoJS from 'crypto-js';
-import { TransactionStatus } from '../../buyer-seller-commons/types';
+import { TransactionAction, TransactionStatus } from '../../buyer-seller-commons/types';
 import { LiveApmcRates, UpdatedLiveApmcRatesQuery } from '../genericTypes';
 const BASE_URL = process.env.REACT_APP_BASE_URL;
 const STAGE = process.env.REACT_APP_ENV;
@@ -27,8 +27,9 @@ const INTENT_TO_SELL = 'sell';
 const USER_MANAGER_API = 'user';
 const MATCHES_API = `https://a73j5pnsxl.execute-api.ap-south-1.amazonaws.com/${STAGE}/matches`;
 const MATCHES_REJECT_API = `https://a73j5pnsxl.execute-api.ap-south-1.amazonaws.com/${STAGE}/reject`;
-const TRANSACTION_API = 'transaction/create';
-const TRANSACTION_LIST_API = 'transaction/user';
+const TRANSACTION_API = 'transaction';
+const TRANSACTION_CREATE_API = `${TRANSACTION_API}/create`;
+const TRANSACTION_LIST_API = `${TRANSACTION_API}/user`;
 
 const parseToken = (userToken: string) => {
     const sholudDecrypt = process.env.REACT_APP_ENV === 'prod';
@@ -291,7 +292,7 @@ export const rejectMatch = (rejectData: {buyer_id: string, buyer_crop_id: Array<
 }
 
 export const createTransaction = (transactionEntry: any) => {
-    const transactionApi = `${BASE_URL}/${STAGE}/${TRANSACTION_API}`;
+    const transactionApi = `${BASE_URL}/${STAGE}/${TRANSACTION_CREATE_API}`;
     return fetch(transactionApi, {
         // headers: getAuthHeader(),
         method: 'POST',
@@ -307,6 +308,13 @@ export const fetchTransactionList = (userName: string, transactionStatus: Transa
 export const fetchSellerMatches = (userName: string) => {
     const listApi = `${BASE_URL}/${STAGE}/${TRANSACTION_LIST_API}/${userName}?status=MatcH`;
     return fetch(listApi).then((response: any) => response.json());
+}
+
+export const postSellerTransactionAction = (transactionID: string, actionName: TransactionAction) => {
+    const transactionActionApi = `${BASE_URL}/${STAGE}/${TRANSACTION_API}/${transactionID}/seller?action=${actionName}`
+    return fetch(transactionActionApi, {
+        method: 'POST'
+    }).then((response: any) => response.json());
 }
 
 /* Matches And Transactions End */

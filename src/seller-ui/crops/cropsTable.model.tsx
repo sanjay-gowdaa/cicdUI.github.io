@@ -6,13 +6,12 @@ import { CropApiModel } from '../../store/sellerReducer/types';
 import RagiImg from '../../static/assets/ragi.png';
 import ViewCropImages from './viewCropImages';
 import { isEmpty } from 'lodash';
+import { parseIDfromHash } from '../../app-components/utils';
 
 const { Title, Text } = Typography;
 
 const getCropId = (cropID: string) => {
-    const indexOfHash = cropID.indexOf('#');
-    const actualCropID = indexOfHash > 0 ? cropID.substr(indexOfHash+1) : '';
-    return actualCropID;
+    return parseIDfromHash(cropID);
 }
 
 const openAdditionalInfo = (content: any) => {

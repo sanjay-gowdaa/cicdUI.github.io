@@ -3,6 +3,7 @@ import { Button, Image, Typography } from 'antd';
 import RagiImg from '../../static/assets/ragi.png';
 import AcceptMatch from './acceptMatch';
 import { MatchRequirementModel } from '../../buyer-seller-commons/types';
+import { parseIDfromHash } from '../../app-components/utils';
 
 const { Title, Text } = Typography;
 
@@ -17,11 +18,9 @@ export const matchesColumns = (componentCallBacks: componentCallBacksModel) => [
         dataIndex: 'buyer_id',
         key: 'buyer_id',
         render: (buyer_id: string) => {
-            const indexOfHash = buyer_id.indexOf('#');
-            const actualID = buyer_id.substr(indexOfHash+1);
             return (
                 <>
-                    <Text underline>{actualID}</Text>
+                    <Text underline>{parseIDfromHash(buyer_id)}</Text>
                 </>
             );
         },

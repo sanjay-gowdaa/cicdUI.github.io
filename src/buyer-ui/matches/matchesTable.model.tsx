@@ -74,14 +74,7 @@ export const matchesColumns = (componentCallBacks: componentCallBacksModel) => [
     {
         title: 'Total price',
         dataIndex: 'seller_final_price',
-        key: 'seller_final_price',
-        render: (seller_final_price: number) => {
-            return (
-                <>
-                    {seller_final_price}
-                </>
-            );
-        },
+        key: 'seller_final_price'
     },
     {
         title: 'Location',

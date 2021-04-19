@@ -10,6 +10,7 @@ import './crops.scss';
 import { deleteSelectedProduce, getProduceList } from '../../store/buyerReducer/actions';
 import { ProduceModel } from '../../store/buyerReducer/types';
 import PrimaryBtn from '../../app-components/primaryBtn';
+import { parseIDfromHash } from '../../app-components/utils';
 
 const { Title } = Typography;
 
@@ -26,8 +27,7 @@ const CropsSection = () => {
     }, [])
 
     const deleteProduce = (produceId: string) => {
-        const indexOfHash = produceId.indexOf('#');
-        const actualProduceId = indexOfHash > 0 ? produceId.substr(indexOfHash+1) : '';
+        const actualProduceId = parseIDfromHash(produceId);
         dispatch(deleteSelectedProduce(actualProduceId));
     }
 

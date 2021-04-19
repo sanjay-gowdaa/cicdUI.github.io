@@ -5,13 +5,15 @@ import { useDispatch, useSelector } from 'react-redux';
 import TradeSummary from './tradeSummary';
 import PrimaryBtn from '../../app-components/primaryBtn';
 import InputOtp from '../../app-components/inputOtp';
-import { saveTimeStamp } from '../../store/sellerReducer/actions';
+import { saveTimeStamp, transactionAction } from '../../store/sellerReducer/actions';
 import { RootState } from '../../store/rootReducer';
 import { sendOTP } from '../../store/registrationReducer/actions';
+import { MatchRequirementModel, TransactionAction } from '../../buyer-seller-commons/types';
+import { parseIDfromHash } from '../../app-components/utils';
 
 const { Text, Title } = Typography;
 
-const AcceptMatch = (props: any) => {
+const AcceptMatch = (props: {cropDetails: MatchRequirementModel}) => {
     const { cropDetails } = props;
     const dispatch = useDispatch();
     const userState = useSelector((state: RootState) => state.loginUser);
@@ -19,6 +21,7 @@ const AcceptMatch = (props: any) => {
     const [otp, setOtp] = useState("");
     const [agreementNumber, setAgreementNumber] = useState(1);
     const [isAgreed, setAgreed] = useState(false);
+    const {pk = ''} = cropDetails;
 
     return (
         <>
@@ -39,6 +42,7 @@ const AcceptMatch = (props: any) => {
                             // timeStamp to be stored in SellerStateModel
                             dispatch(saveTimeStamp);
                             setViewAcceptAgreement(!viewAcceptAgreement);
+                            dispatch(transactionAction(parseIDfromHash(pk), TransactionAction.accept));
                             //Download pdf of the Purchase Agreement
                         }}
                         content="Agree"

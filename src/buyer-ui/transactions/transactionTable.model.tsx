@@ -1,7 +1,8 @@
 import React from 'react';
 import { Image, Typography, Tooltip } from 'antd';
 import RagiImg from '../../static/assets/ragi.png';
-const { Text, Title } = Typography;
+import { parseIDfromHash } from '../../app-components/utils';
+const { Text } = Typography;
 
 export const transactionColumns = [
     {
@@ -12,8 +13,7 @@ export const transactionColumns = [
             showTitle: false,
         },
         render: (pk: string) => {
-            const indexOfHash = pk.indexOf('#');
-            const actualID = pk.substr(indexOfHash+1);
+            const actualID = parseIDfromHash(pk);
             return (
                 <Tooltip placement="topLeft" title={actualID}>
                     <Text underline>{actualID}</Text>
@@ -70,8 +70,7 @@ export const transactionColumns = [
             showTitle: false,
         },
         render: (seller_id: string) => {
-            const indexOfHash = seller_id.indexOf('#');
-            const actualID = seller_id.substr(indexOfHash+1);
+            const actualID = parseIDfromHash(seller_id)
             return (
                 <Tooltip placement="topLeft" title={actualID}>
                     <Text underline>{actualID}</Text>
