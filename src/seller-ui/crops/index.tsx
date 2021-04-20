@@ -9,13 +9,12 @@ import { deleteSelectedCrop, getAllCropsList, sellerIntentToSell, updateCropData
 import { CropApiModel, SellerStateModel } from '../../store/sellerReducer/types';
 import PrimaryBtn from '../../app-components/primaryBtn';
 import { EditableCell, EditableRow } from './AddCrop/customTableComponents';
+import { parseIDfromHash } from '../../app-components/utils';
 
 const { Title } = Typography;
 
 const getCropId = (cropID: string) => {
-    const indexOfHash = cropID.indexOf('#');
-    const actualCropID = indexOfHash > 0 ? cropID.substr(indexOfHash+1) : '';
-    return actualCropID;
+    return parseIDfromHash(cropID);
 }
 
 const CropsSection = () => {

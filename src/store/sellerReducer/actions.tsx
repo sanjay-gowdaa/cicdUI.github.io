@@ -1,7 +1,8 @@
 import { sortBy, isEmpty, isNull } from "lodash";
 import { getTimeStamp } from "../../app-components/utils";
-import { MatchRequirementModel, TransactioModel } from "../../buyer-seller-commons/types";
-import { getSubCategoryList, createCrop, getAllCrops, getCropCategoryList, getCropList, getLiveApmcRate, getLiveApmcRateUpdated, deleteProduce, patchCrop, intentToSell, fetchSellerMatches } from "../api";
+import { MatchRequirementModel, TransactioModel, TransactionAction, TransactionStatus } from "../../buyer-seller-commons/types";
+import { getSubCategoryList, createCrop, getAllCrops, getCropCategoryList, getCropList, getLiveApmcRateUpdated,
+    deleteProduce, patchCrop, intentToSell, fetchSellerMatches, postSellerTransactionAction, fetchTransactionList } from "../api";
 import { ApmcApiResponseBase, LiveApmcRates, UpdatedLiveApmcRatesQuery } from "../genericTypes";
 import { UserStateModel } from "../loginReducer/types";
 import { RootState } from "../rootReducer";
@@ -16,6 +17,7 @@ export const UPDATE_APMC_RATE = 'UPDATE_APMC_RATE';
 export const UPDATE_APMC_DATA_TO_CROPS = 'UPDATE_APMC_DATA_TO_CROPS';
 export const UPDATE_TIME_STAMP = 'UPDATE_TIME_STAMP';
 export const UPDATE_SELLER_MATCHES = 'UPDATE_SELLER_MATCHES';
+export const UPDATE_SELLER_TRANSACTION_LIST = 'UPDATE_SELLER_TRANSACTION_LIST';
 
 export const updateAllCategories = (categories: Array<string>) => {
     return {
@@ -49,6 +51,13 @@ export const updateApmcCropRate = (modalPrice: string | number) => {
     return {
         type: UPDATE_APMC_RATE,
         payload: modalPrice
+    }
+}
+
+export const updateTransactionList = (transactionType: TransactionStatus, transactionListData: Array<any>) => {
+    return {
+        type: UPDATE_SELLER_TRANSACTION_LIST,
+        payload: {transactionType, transactionListData}
     }
 }
 
@@ -218,6 +227,22 @@ export const getAllSellerMatches = () => {
         const {username} = loginUser;
         const sellerMatches: Array<MatchRequirementModel> = await fetchSellerMatches(username);
         dispatch(updateSellerMatches(sellerMatches));
+    }
+}
+
+export const transactionAction = (tarnsactionID: string, action: TransactionAction) => {
+    return async(dispatch: any, getState: any) => {
+        const actionResponse = await postSellerTransactionAction(tarnsactionID, action);
+        dispatch(getAllSellerMatches())
+    }
+}
+
+export const getSellerTransactionList = (transactionStatus: TransactionStatus) => {
+    return async(dispatch: any, getState: any) => {
+        const {loginUser}: {loginUser: UserStateModel} = getState() as RootState;
+        const {username} = loginUser;
+        const transactionListResponse = await fetchTransactionList(username, transactionStatus);
+        dispatch(updateTransactionList(transactionStatus, transactionListResponse))
     }
 }
 

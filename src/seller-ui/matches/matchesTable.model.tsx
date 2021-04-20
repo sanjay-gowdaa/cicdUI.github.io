@@ -1,14 +1,18 @@
 import React from 'react';
-import { Button, Image, Typography } from 'antd';
+import { Button, Image, Typography, Modal } from 'antd';
 import RagiImg from '../../static/assets/ragi.png';
 import AcceptMatch from './acceptMatch';
 import { MatchRequirementModel } from '../../buyer-seller-commons/types';
+import { parseIDfromHash } from '../../app-components/utils';
+import { ExclamationCircleOutlined } from '@ant-design/icons';
+import RejectConfrimation from './rejectConfirmation';
 
 const { Title, Text } = Typography;
 
 export interface componentCallBacksModel {
-    showCropDetailsModal: Function;
-    populateCropDetails: Function;
+    showCropDetailsModal: any;
+    populateCropDetails: any;
+    rejectMatch: any;
 };
 
 export const matchesColumns = (componentCallBacks: componentCallBacksModel) => [
@@ -17,11 +21,9 @@ export const matchesColumns = (componentCallBacks: componentCallBacksModel) => [
         dataIndex: 'buyer_id',
         key: 'buyer_id',
         render: (buyer_id: string) => {
-            const indexOfHash = buyer_id.indexOf('#');
-            const actualID = buyer_id.substr(indexOfHash+1);
             return (
                 <>
-                    <Text underline>{actualID}</Text>
+                    <Text underline>{parseIDfromHash(buyer_id)}</Text>
                 </>
             );
         },
@@ -90,7 +92,22 @@ export const matchesColumns = (componentCallBacks: componentCallBacksModel) => [
                         View Details
                     </Button>
                     <AcceptMatch cropDetails={record} />
-                    <Button type="link" danger>
+                    <Button 
+                        type="link"
+                        danger
+                        onClick={() => {
+                            // componentCallBacks?.confirmReject(true);
+                            Modal.confirm({
+                                title: '',
+                                icon: <ExclamationCircleOutlined />,
+                                content: <RejectConfrimation  matchRecord={record} />,
+                                onOk() {
+                                    componentCallBacks?.rejectMatch(record.pk);
+                                  },
+                                  onCancel() {},
+                            })
+                        }}
+                    >
                         {' '}
                         Reject{' '}
                     </Button>

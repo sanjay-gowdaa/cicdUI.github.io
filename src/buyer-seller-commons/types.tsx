@@ -22,6 +22,8 @@ export interface MatchRequirementModel {
     seller_transportation_cost?: number;
     buyer_price_per_quintal?: number;
     seller_price_per_quintal?: number;
+    pk?: string;
+    sk?: string;
 }
 
 export enum FullfillmentFlags {
@@ -35,6 +37,11 @@ export enum TransactionStatus {
     pending = 'Pending',
     on_going = 'active',
     completed = 'complete',
+}
+
+export enum TransactionAction {
+    reject = 'reject',
+    accept = 'accept'
 }
 
 export interface TransactioModel extends MatchRequirementModel {
