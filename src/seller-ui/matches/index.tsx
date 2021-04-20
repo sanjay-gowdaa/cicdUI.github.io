@@ -6,20 +6,29 @@ import { RootState } from '../../store/rootReducer';
 import { componentCallBacksModel, matchesColumns } from './matchesTable.model';
 import ViewCropDetails from './viewCropDetails';
 import { initialEmptyCropDetail } from '../../buyer-seller-commons/constants';
-import { getAllSellerMatches } from '../../store/sellerReducer/actions';
+import { getAllSellerMatches, transactionAction } from '../../store/sellerReducer/actions';
+import { parseIDfromHash } from '../../app-components/utils';
+import { MatchRequirementModel, TransactionAction } from '../../buyer-seller-commons/types';
 
 const { Title } = Typography;
 
 const MatchedSection = () => {
     const [openDetailsModal, setOpenDetailsModal] = useState(false);
-    const [selectedCropDetails, setSelectedCropDetails] = useState(initialEmptyCropDetail);
+    // const [openRejectConfirmation, setOpenRejectConfirmation] = useState(false);
+    const [selectedCropDetails, setSelectedCropDetails] = useState(initialEmptyCropDetail as MatchRequirementModel);
     const dispatch = useDispatch();
     const sellerState = useSelector((state: RootState) => state.seller);
+    
+    const rejectMatch = (transactionID: string) => {
+        dispatch(transactionAction(parseIDfromHash(transactionID), TransactionAction.reject));
+    }
+
     const componentCallBacks: componentCallBacksModel = {
         showCropDetailsModal: setOpenDetailsModal,
         populateCropDetails: setSelectedCropDetails,
+        rejectMatch
     };
-    
+
     useEffect(() => {
         dispatch(getAllSellerMatches())
     }, [])

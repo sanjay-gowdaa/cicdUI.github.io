@@ -1,18 +1,31 @@
 import React from 'react';
-import { Button, Typography } from 'antd';
+import { Button, Typography, Tooltip } from 'antd';
 import { TransactioModel } from '../../buyer-seller-commons/types';
+import { parseIDfromHash } from '../../app-components/utils';
 const { Title, Text } = Typography;
 
 export const transactionColumns = [
     {
         title: 'Id',
-        dataIndex: 'transactionId',
-        key: 'transactionId',
+        dataIndex: 'pk',
+        key: 'pk',
+        ellipsis: {
+            showTitle: false,
+        },
+        render: (transactionID: string) => {
+            const transactionActId = parseIDfromHash(transactionID);
+            return (
+                <Tooltip placement="topLeft" title={transactionActId}>
+                    <Text underline>{transactionActId}</Text>
+                </Tooltip>
+            );
+        },
     },
     {
         title: 'Produce',
         dataIndex: 'produce',
         key: 'produce',
+        width: 300,
         render: (produce: string, record: TransactioModel) => {
             return (
                 <>
@@ -45,20 +58,24 @@ export const transactionColumns = [
     },
     {
         title: 'Buyer',
-        dataIndex: 'buyerId',
-        key: 'buyerId',
+        dataIndex: 'buyer_id',
+        key: 'buyer_id',
+        ellipsis: {
+            showTitle: false,
+        },
         render: (buyerId: string) => {
+            const actBuyerID = parseIDfromHash(buyerId)
             return (
-                <>
-                    <Text underline>{buyerId}</Text>
-                </>
+                <Tooltip placement="topLeft" title={actBuyerID}>
+                    <Text underline>{actBuyerID}</Text>
+                </Tooltip>
             );
         },
     },
     {
         title: 'Location',
-        dataIndex: 'location',
-        key: 'location',
+        dataIndex: 'buyer_location',
+        key: 'buyer_location',
     },
     {
         title: 'Additional',

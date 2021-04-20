@@ -1,7 +1,8 @@
 import { sortBy, isEmpty, isNull } from "lodash";
 import { getTimeStamp } from "../../app-components/utils";
 import { MatchRequirementModel, TransactioModel, TransactionAction, TransactionStatus } from "../../buyer-seller-commons/types";
-import { getSubCategoryList, createCrop, getAllCrops, getCropCategoryList, getCropList, getLiveApmcRate, getLiveApmcRateUpdated, deleteProduce, patchCrop, intentToSell, fetchSellerMatches, postSellerTransactionAction, fetchTransactionList } from "../api";
+import { getSubCategoryList, createCrop, getAllCrops, getCropCategoryList, getCropList, getLiveApmcRateUpdated,
+    deleteProduce, patchCrop, intentToSell, fetchSellerMatches, postSellerTransactionAction, fetchTransactionList } from "../api";
 import { ApmcApiResponseBase, LiveApmcRates, UpdatedLiveApmcRatesQuery } from "../genericTypes";
 import { UserStateModel } from "../loginReducer/types";
 import { RootState } from "../rootReducer";
@@ -236,7 +237,6 @@ export const transactionAction = (tarnsactionID: string, action: TransactionActi
     }
 }
 
-
 export const getSellerTransactionList = (transactionStatus: TransactionStatus) => {
     return async(dispatch: any, getState: any) => {
         const {loginUser}: {loginUser: UserStateModel} = getState() as RootState;
@@ -245,7 +245,6 @@ export const getSellerTransactionList = (transactionStatus: TransactionStatus) =
         dispatch(updateTransactionList(transactionStatus, transactionListResponse))
     }
 }
-
 
 export const saveTimeStamp = (dispatch: any) => {
     const timeStamp = getTimeStamp();
