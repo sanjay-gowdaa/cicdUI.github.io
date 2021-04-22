@@ -45,15 +45,15 @@ export const matchesColumns = (componentCallBacks: componentCallBacksModel) => [
     },
     {
         title: 'Qunatity Required',
-        dataIndex: 'quantity',
-        key: 'quantity',
-        render: (quantity: number) => {
-            // If buyer produce quantity is lesser than seller produce quantity isPartial is true else it is false.
-            const isPartial = true;
+        dataIndex: 'matched_quantity',
+        key: 'matched_quantity',
+        render: (matched_quantity: number, record: MatchRequirementModel) => {
+            const {seller_quantity} = record;
+            const isPartial = matched_quantity < seller_quantity;
             
             return (
                 <>
-                    <p style={{margin:"0"}}>{quantity} qtl</p>
+                    <p style={{margin:"0"}}>{matched_quantity} qtl</p>
                     {isPartial ? <Text className="partial-match">PARTIAL</Text> : <Text className="full-match">FULL</Text>}
                 </>
             );

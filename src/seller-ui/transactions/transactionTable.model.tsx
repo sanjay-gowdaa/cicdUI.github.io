@@ -36,8 +36,8 @@ export const transactionColumns = [
     },
     {
         title: 'Qunatity',
-        dataIndex: 'quantity',
-        key: 'quantity',
+        dataIndex: 'matched_quantity',
+        key: 'matched_quantity',
         render: (quantity: number) => {
             return (
                 <>
@@ -48,13 +48,19 @@ export const transactionColumns = [
     },
     {
         title: 'Price per qtl',
-        dataIndex: 'pricePerQnt',
-        key: 'pricePerQnt',
+        dataIndex: 'seller_price',
+        key: 'seller_price',
+        render: (seller_price: number, record: TransactioModel) => {
+            const {matched_quantity} = record;
+            return (
+                <p>{seller_price/matched_quantity}</p>
+            )
+        }
     },
     {
         title: 'Total',
-        dataIndex: 'transactionTotalAmount',
-        key: 'transactionTotalAmount',
+        dataIndex: 'buyer_final_price',
+        key: 'buyer_final_price',
     },
     {
         title: 'Buyer',

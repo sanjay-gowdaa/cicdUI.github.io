@@ -14,6 +14,7 @@ interface componentProps {
 const ViewCropDetails = (props: componentProps) => {
     const { openDetailsModal, setOpenDetailsModal, cropDetails } = props;
     const { buyer_id, produce, matched_quantity, buyer_location, seller_price } = cropDetails;
+    const sellerPricePerQnt =  seller_price/matched_quantity;
     const closeModal = () => setOpenDetailsModal(!openDetailsModal);
     return (
         <Modal visible={openDetailsModal} title="Details" onCancel={closeModal} footer={null}>
@@ -47,7 +48,7 @@ const ViewCropDetails = (props: componentProps) => {
                     Price per quintal
                 </Col>
                 <Col sm={24} md={12}>
-                    : {}
+                    : {sellerPricePerQnt}
                 </Col>
             </Row>
             <Row>
