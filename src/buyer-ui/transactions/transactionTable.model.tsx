@@ -42,20 +42,18 @@ export const transactionColumns = [
     },
     {
         title: 'Qunatity',
-        dataIndex: 'quantity',
-        key: 'quantity',
+        dataIndex: 'matched_quantity',
+        key: 'matched_quantity',
         render: (quantity: number) => {
             return (
-                <>
-                    <p>{quantity} qtl</p>
-                </>
+                <p>{quantity} qtl</p>
             );
         },
     },
     {
         title: 'Price per qtl',
-        dataIndex: 'pricePerQnt',
-        key: 'pricePerQnt',
+        dataIndex: 'buyer_price_per_quintal',
+        key: 'buyer_price_per_quintal',
     },
     {
         title: 'Total',
