@@ -234,6 +234,9 @@ export const transactionAction = (tarnsactionID: string, action: TransactionActi
     return async(dispatch: any, getState: any) => {
         const actionResponse = await postSellerTransactionAction(tarnsactionID, action);
         dispatch(getAllSellerMatches())
+        if (action === TransactionAction.accept) {
+            dispatch(getSellerTransactionList(TransactionStatus.pending));
+        }
     }
 }
 
