@@ -231,6 +231,7 @@ export const connectMatch = (transactionEntry: any) => {
         const matchesList = await createTransaction(transactionEntry);
         dispatch(getMatchesForBuyerCrops(produceList));
         dispatch(getTransactionList(TransactionStatus.pending));
+        return Promise.resolve('Successs');
     }
 }
 

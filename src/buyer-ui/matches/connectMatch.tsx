@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Checkbox, Modal, Typography } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
+import { CheckCircleFilled } from '@ant-design/icons';
 
 import TradeSumary from './tradeSummary';
 import PrimaryBtn from '../../app-components/primaryBtn';
@@ -53,6 +54,26 @@ const getTransactionDataStructure = (cropDetails: MatchRequirementModel) => {
       return transactionEntry;
 }
 
+const displayMatchSuccessModal = () => {
+   return Modal.success({
+        className: 'match-success-modal',
+        icon: '',
+        centered: true,
+        title: <CheckCircleFilled className='match-success-icon' />,
+        content: (
+            <>
+                <Title className='text-align-center' level={5}>
+                    Request has been sent to seller
+                </Title>
+                <Title className='text-align-center' level={5}>
+                    You will be notified from Vikasbandhu once the seller accepts/ rejects
+                </Title>
+            </>),
+        okText: 'Done',
+        okButtonProps: {type: 'default'}
+    });
+}
+
 const ConnectMatch = ({cropDetails}: {cropDetails: MatchRequirementModel}) => {
     const dispatch = useDispatch();
     const userState: UserStateModel = useSelector((state: RootState) => state.loginUser);
@@ -74,15 +95,13 @@ const ConnectMatch = ({cropDetails}: {cropDetails: MatchRequirementModel}) => {
                 footer={[
                     <PrimaryBtn
                         onClick={() => {
-                            //Dispatch method which confirms otp
-                            //timeStamp to be stored in BuyerStateModel
                             dispatch(saveTimeStamp);
                             setConnectAgreement(!viewConnectAgreement);
-                            
-                            const transactionEntry = getTransactionDataStructure(cropDetails)
-                            console.log('getDataStructure', transactionEntry);
-                            dispatch(connectMatch(transactionEntry));
-                            //Download pdf of the Purchase Agreement
+                            const transactionEntry = getTransactionDataStructure(cropDetails);
+                            /* HACK: To avoid using store variable to show popup */
+                            (dispatch(connectMatch(transactionEntry)) as any).then((data: any) => {
+                                displayMatchSuccessModal()
+                            })
                         }}
                         content="Agree"
                     />

@@ -139,6 +139,23 @@ $col-shade-green: #12805C;
     }
 }
 
+.match-success-modal {
+    .ant-modal-confirm-title {
+        text-align: center;
+    }
+
+    .ant-modal-confirm-btns {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+    }
+
+    .match-success-icon {
+        font-size: 41px;
+        color: $col-shade-green;
+    }
+}
+
 .partial-match {
     font-size: smaller;
     background-color: #f5a31a;
