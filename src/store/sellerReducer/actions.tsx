@@ -236,6 +236,8 @@ export const transactionAction = (tarnsactionID: string, action: TransactionActi
         dispatch(getAllSellerMatches())
         if (action === TransactionAction.accept) {
             dispatch(getSellerTransactionList(TransactionStatus.pending));
+        } else if (action === TransactionAction.reject) {
+            dispatch(getSellerTransactionList(TransactionStatus.completed));
         }
     }
 }
