@@ -30,6 +30,9 @@ const MATCHES_REJECT_API = `https://a73j5pnsxl.execute-api.ap-south-1.amazonaws.
 const TRANSACTION_API = 'transaction';
 const TRANSACTION_CREATE_API = `${TRANSACTION_API}/create`;
 const TRANSACTION_LIST_API = `${TRANSACTION_API}/user`;
+const USER_COMPLETE_DETAILS = 'getUserCompleteDetails';
+const USER_FILE_API = 'getuserfile';
+const UPDATE_USER_DETAILS = 'updateuserdetails';
 
 const parseToken = (userToken: string) => {
     const sholudDecrypt = process.env.REACT_APP_ENV === 'prod';
@@ -128,6 +131,29 @@ export const fetchUserDetails = (userAccessToken: string) => {
     return fetch(userProfileApi, {
         headers: getAuthHeader()
     }).then((response: any) => response.json());
+};
+
+export const kycUserDetails = (userFormData: any) => {	
+    const userUpdateApi = `${BASE_URL}/${STAGE}/${UPDATE_USER_DETAILS}`;	
+    return fetch(userUpdateApi,	
+        {	
+            method: 'POST',	
+            headers: getAuthHeader(),	
+            body: JSON.stringify(userFormData)	
+        }).then((response: any) => response.json());	
+};
+		
+export const fetchUserCompleteDetails = () => {	
+    const userDetailsAPI = `${BASE_URL}/${STAGE}/${USER_COMPLETE_DETAILS}`;	
+    return fetch(userDetailsAPI, {	
+        headers: getAuthHeader()	
+    }). then((response: any) => response.json());	
+};
+
+export const fetchUserFiles = (fileName: string) => {	
+    const getUserFileAPI = `${BASE_URL}/${STAGE}/${USER_FILE_API}/?filename=${fileName}`;	
+    return fetch(getUserFileAPI)	
+    .then((response: any) => response.json());	
 };
 
 /* Registration And Login Interface End*/
