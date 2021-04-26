@@ -1,0 +1,90 @@
+.profile-page {
+
+    .landing-page-header-bar {
+        position: unset;
+
+        .header-breadcrumb {
+            display: none;
+        }
+    }
+
+    .custom-breadcrumb {
+        display: none;
+    }
+
+    #profile {
+
+        .kyc-form-elements {
+            margin-left: 1em;
+
+            .kyc-form-label {
+                padding-left: 2em;
+            }
+
+            .required-arrow {
+                padding-left: 0.5em;
+                padding-right: 0.5em;
+            }
+        }
+
+        .profile-picture {
+            padding-left: 3em;
+        }
+
+        .kyc-input-field {
+            margin: 0.5em;
+        }
+
+        .add-details-text {
+            width: 100%;
+            position: relative;
+            border: 0.1em solid #dadada;
+            padding-left: 3em;
+            margin-bottom: 1em;
+        }
+
+        .add-bank-details {
+            background-color: #f2f2f2;
+            border: none !important;
+        }
+        
+        .width-85 {
+            width: 85%;
+        }
+    }
+
+    .kyc-required-doc-list {
+        position: fixed;
+        top: 16em;
+        background-color: #FFF0DA;
+        padding: 2em;
+        padding-left: 3em;
+        margin-left: 2rem;
+
+        ul {
+            list-style: none;
+        }
+
+        ul li::before {
+            content: "\2022";
+            color: #FF9900;
+            font-weight: bold;
+            font-size: large;
+            display: inline-block; 
+            width: 1em;
+            margin-left: -2em;
+          }
+    }
+
+    .kyc-required {
+        background-color: #FFF0DA;
+    }
+}
+
+.view-document-modal {
+    img {
+        max-width: 20em;
+        max-height: 40em;
+        padding: 0.7em;
+    }
+}
