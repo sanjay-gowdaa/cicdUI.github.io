@@ -1,14 +1,29 @@
 import CryptoJS from 'crypto-js';
-import { fetchUserDetails, getAccessToken } from '../api';
-import { handleResponse } from '../utils';
+
 import { UserDetailsModel } from './types';
 
+import {
+    fetchUserCompleteDetails,
+    fetchUserDetails,
+    fetchUserFiles,
+    getAccessToken,
+    getAllConfigs,
+    kycUserDetails
+} from '../api';
+import { handleResponse } from '../utils';
+
+import { converBase64toBlob } from '../../app-components/utils';
+
 const TOKEN_GRANT = process.env.REACT_APP_TOKEN_GRANT as string;
+
 export const UPDATE_FORM = 'UPDATE_LOGIN_DETAILS';
 export const UPDATE_USER = 'UPDATE_USER_DETAILS';
 export const SET_ACCESS_TOKEN = 'SET_ACCESS_TOKEN';
 export const SET_LOGIN_ERROR = 'SET_LOGIN_ERROR';
 export const SET_LOGIN_SUCCESS = 'SET_LOGIN_SUCCESS';
+
+export const UPDATE_CONFIGURATIONS = 'UPDATE_CONFIGURATIONS';
+export const SET_KYC_ERROR = 'SET_KYC_ERROR';
 
 export const updateUserDetails = (userDetails: Partial<UserDetailsModel>) => {
     return {
@@ -28,6 +43,57 @@ export const setLoginSuccess = () => {
     return {
         type: SET_LOGIN_SUCCESS,
         payload: true
+    }
+}
+
+export const setKycUpdateMsg = (errorMsg: string) => {
+    return {
+        type: SET_KYC_ERROR,
+        payload: errorMsg
+    };
+};
+
+export const getUserCompleteDetails = () => {
+    return async (dispatch: any, getState: any) => {
+        const userCompleteDetails = await fetchUserCompleteDetails();
+        const { result } = userCompleteDetails;
+        console.log("userCompleteDetails", userCompleteDetails);
+        dispatch(updateUserDetails(result));
+    }
+};
+
+
+export const  getConfigurations = () => {
+    return async (dispatch: any, getState: any) => {
+        const allConfigs = await getAllConfigs()
+        dispatch({
+            type: UPDATE_CONFIGURATIONS,
+            payload: allConfigs.results,
+        })
+    }
+};
+
+export const getUserFiles = (fileName: string, setImageSrc: Function, setPDF: Function) => {
+    return async (displatch: any, getState: any) => {
+        const fileData = await fetchUserFiles(fileName);
+        const extension = fileName.substring(fileName.lastIndexOf('.')).substring(1);
+        const {file} = fileData;
+        const blob = converBase64toBlob(file, `application/${extension}`);
+        const blobURL = URL.createObjectURL(blob);
+        (extension === "pdf") ? setPDF(true): setPDF(false);
+        setImageSrc(blobURL);
+    }
+};
+
+export const saveKyc = (userFormData: any) => {
+    return async(dispatch:any, getState: any) => {
+        const saveUserDetailsResponse = await kycUserDetails(userFormData);
+        const {updateResult} = saveUserDetailsResponse;
+        const {status = '', message} = updateResult;
+        dispatch(setKycUpdateMsg(message));
+        // Store the error message so that it can be displayed, if error is encountered
+        console.log("status", status);
+        console.log("message", message);
     }
 }
 

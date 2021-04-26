@@ -5,6 +5,8 @@ export interface UserDetailsModel {
     is_buyer?: boolean;
     is_seller?: boolean;
     name: string;
+    configs? : [];
+    kycErrorMsg?: string;
 }
 
 export interface UserStateModel extends UserDetailsModel {
