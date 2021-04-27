@@ -1,11 +1,13 @@
 
-import { SET_ACCESS_TOKEN, SET_LOGIN_ERROR, SET_LOGIN_SUCCESS, UPDATE_USER } from './actions';
+import { SET_ACCESS_TOKEN, SET_KYC_ERROR, SET_LOGIN_ERROR, SET_LOGIN_SUCCESS, UPDATE_CONFIGURATIONS, UPDATE_USER } from './actions';
 import { UserStateModel } from './types';
 
 const INITIAL_STATE: UserStateModel = {
     username: '',
     name: '',
-    signInState: {hasError: false, isVerified: false, msg: ''}
+    configs: [],
+    signInState: {hasError: false, isVerified: false, msg: ''},
+    kycErrorMsg: ''
 };
 
 const reducer = (state = INITIAL_STATE, action: any) => {
@@ -21,6 +23,12 @@ const reducer = (state = INITIAL_STATE, action: any) => {
 
         case SET_LOGIN_SUCCESS:
             return { ...state, signInState: { hasError: false, msg: '', isVerified: true } };
+
+        case UPDATE_CONFIGURATIONS:
+            return { ...state, configs: action.payload};
+        
+        case SET_KYC_ERROR:
+            return { ...state, kycErrorMsg: action.payload};
 
         default:
             return state;

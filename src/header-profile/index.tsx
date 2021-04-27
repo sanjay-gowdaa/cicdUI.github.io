@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { 
+    Avatar,
     Badge,
     Breadcrumb,
     Card,
@@ -14,28 +15,44 @@ import {
 } from 'antd';
 import { BellFilled, ContactsFilled, LogoutOutlined } from '@ant-design/icons';
 import MenuItem from 'antd/lib/menu/MenuItem';
+import { isEmpty } from 'lodash';
 
 import { LOGOUT_URL } from '../store/api';
 import { RootState } from '../store/rootReducer';
-import { UserStateModel } from '../store/loginReducer/types';
 import DefaultBtn from '../app-components/defaultBtn';
 import { contactUs, headerBreadcrumb, routesMap } from '../constants';
+import { getConfigurations, getUserCompleteDetails, getUserFiles } from '../store/loginReducer/actions';
 
 const { Text, Title } = Typography;
-const { terms } = routesMap;
+const { profile, terms } = routesMap;
 
-const UserHeader = () => {
-    const loginState: UserStateModel = useSelector((state: RootState) => state.loginUser);
+const UserHeader = (props: any) => {
+    const { history } = props;
+    const loginState = useSelector((state: RootState) => state.loginUser);
+    const dispatch = useDispatch();
     const fieldOfficer = "Mahesh Kumar";
     const fieldOfficerNumber = "9876543210";
     const [notificationNumber, setNotificationNumber] = useState(2);
     const [userType, setUserType] = useState('');
+    const [showProfile, setProfile] = useState(false);
+    const [imageSrc, setImageSrc] = useState();
+    const [isPDF, setPDF] = useState(false);
     const [breadCrumbs, setBreadCrumbs] = useState({produce: '', matches: '', transaction: '', feedback: '', crops: ''});
 
     useEffect(() => {
         loginState.is_buyer ? setUserType("#buyer") : setUserType("#seller");
         headerCrumbNames();
-    }, [userType])
+    }, [userType]);
+
+    useEffect(() => {
+        dispatch(getUserCompleteDetails());
+        dispatch(getConfigurations());
+    }, []);
+
+    useEffect(() => {
+        if(!isEmpty(loginState.profile_picture))
+            dispatch(getUserFiles(loginState?.profile_picture?.doc_key, setImageSrc, setPDF));
+    },[loginState]);
 
     const headerCrumbNames = () => {
         const produceName = userType + headerBreadcrumb.produce;
@@ -117,7 +134,6 @@ const UserHeader = () => {
             size="large"
             className="custom-dropdown-button"
         />
-        <Title level={4} className='margin-unset' style={{padding: "0.5em"}}>{loginState.name}</Title>
         {/* <p className='margin-unset'>Seller Id: {loginState.userId}</p> */}
         <Popconfirm
             title="Are you sure you want to logout?"
@@ -125,14 +141,29 @@ const UserHeader = () => {
             onConfirm={() => window.location.href = LOGOUT_URL}
             cancelText="No"
         >
-            <Tooltip title="logout">
+            <Tooltip title="Logout">
                 <DefaultBtn
                     icon={<LogoutOutlined style={{ fontSize: "large", paddingLeft: "0.3em"}}/>}
                     size="large"
                     shape="circle"
+                    style={{ marginLeft: "0.5em"}}
                 />
             </Tooltip>
         </Popconfirm>
+        <Title level={4} className='margin-unset' style={{padding: "0.5em"}}>{loginState.name}</Title>
+        <Tooltip title="Profile">
+            <a onClick={() => setProfile(true)}>
+                {
+                    isEmpty(imageSrc) ?
+                    <Avatar size="large">
+                        {loginState.name.charAt(0)}
+                    </Avatar> :
+                    <Avatar src={imageSrc} />
+                }
+                
+            </a>
+        </Tooltip>
+        { (showProfile && history.location.pathname !== profile) ? history.push(profile) : null}
       </div>
     );
 };

@@ -9,8 +9,9 @@ import { routesMap } from './constants';
 import GuardedRoute from './app-components/GuardedRoute';
 import { Terms } from './terms-and-conditions';
 import { PurchaseAgreement } from './purchase-agreement';
+import Profile from './profile';
 
-const { home, register_entity, seller_ui, buyer_ui, terms, purchase_agreement } = routesMap;
+const { buyer_ui, home, profile, purchase_agreement, register_entity, seller_ui,  terms } = routesMap;
 
 const HomePageRoutes = () => {
     return (
@@ -25,6 +26,7 @@ const HomePageRoutes = () => {
             {/* Protected route guard */}
             <GuardedRoute Component={SellerUI} path={seller_ui} auth={false} />
             <GuardedRoute Component={BuyerUI} path={buyer_ui} auth={false} />
+            <GuardedRoute Component={Profile} path={profile} auth={false} />
         </Switch>
     );
 };

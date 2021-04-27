@@ -46,7 +46,7 @@ const UserBasicActions = ({ history, popUpTrigger }: { history: any, popUpTrigge
 };
 
 const HeaderActions = ({ history, isLoggedIn, popUpTrigger }: { history: any, isLoggedIn: boolean, popUpTrigger: any }) => {
-    return isLoggedIn ? <UserHeader /> : <UserBasicActions history={history} popUpTrigger={popUpTrigger} />
+    return isLoggedIn ? <UserHeader history={history} /> : <UserBasicActions history={history} popUpTrigger={popUpTrigger} />
 };
 
 const Header = (headerProps: any) => {
