@@ -117,17 +117,18 @@ const BankDocuments = (props: any) => {
                                 >
                                     { !isEmpty(bank_doc) && !changeDocument &&
                                         <>
-                                            <a
+                                            <Button
+                                                type="link"
                                                 onClick={() => {
                                                     dispatch(getUserFiles(bank_doc.doc_key, setImageSrc, setPDF))
                                                     setShowDocument(true);
                                                 }}
                                             >
                                                 View Document&nbsp;
-                                            </a>|
-                                            <a onClick={() => setChangeDocument(true)}>
+                                            </Button>|
+                                            <Button type="link" onClick={() => setChangeDocument(true)}>
                                                 &nbsp; Change Document
-                                            </a>
+                                            </Button>
                                         </>
                                     }
                                     { displayWhenEmpty || displayWhenChange ?
