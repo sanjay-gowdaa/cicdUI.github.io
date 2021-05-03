@@ -33,7 +33,7 @@ import { UserTypes } from '../store/genericTypes';
 import { RootState } from '../store/rootReducer';
 import CancelBtn from '../app-components/cancelBtn';
 import PrimaryBtn from '../app-components/primaryBtn';
-import { saveKyc } from '../store/loginReducer/actions';
+import { getUserFiles, saveKyc } from '../store/loginReducer/actions';
 
 const { Title, Text } = Typography;
 
@@ -48,12 +48,14 @@ const Profile = (props: any) => {
     const [showConfirmation, setConfirmation] = useState(false);
     const [isSave, setSaveFlag] = useState(false);
     const [disableSave, setDisableSave] = useState(true);
+    const [imageSrc, setImageSrc] = useState();
+    const [isPDF, setPDF] = useState(false);
     const [kycFormValues, setKycFormValues] = useState({});
     const [formSubmitValue, setFormSubmitValue] = useState({});
     
     const loginState = useSelector((state: RootState) => state.loginUser);
-    const { bank_info, bank_doc, configs , working_hours, category } = loginState;
-    const { PAN, UIDAI, pan_card, aadhar_card, rtc, rtc_card, kisancard, kisancard_card, gstin, fpo } = loginState;
+    const { bank_info, bank_doc, configs , working_hours } = loginState;
+    const { PAN, UIDAI, pan_card, aadhar_card, rtc, rtc_card, kisancard, kisancard_card } = loginState;
     const userType = loginState.is_buyer ? UserTypes.BUYER : UserTypes.SELLER;
     const subType = userType === UserTypes.BUYER ? loginState.buyer_type : loginState.seller_type;
     const addBankInfo = isEmpty(bank_info?.account_holder_name) && isEmpty(bank_info?.account_no)
@@ -61,38 +63,44 @@ const Profile = (props: any) => {
 
     useEffect(() => {
         // Do this if the profile is not verified else set kyc flag to completed
-        const bankSubmitted = !isEmpty(bank_info?.account_holder_name) && !isEmpty(bank_info?.account_no)
-            && !isEmpty(bank_info?.ifsc_code) && !isEmpty(bank_doc);
+        const bankSubmitted = !isEmpty(loginState?.bank_info?.account_holder_name) && !isEmpty(loginState?.bank_info?.account_no)
+            && !isEmpty(loginState?.bank_info?.ifsc_code) && !isEmpty(loginState?.bank_doc);
         
-        const aadharSubmitted = !isEmpty(UIDAI) && !isEmpty(aadhar_card);
-        const panSubmitted = !isEmpty(PAN) && !isEmpty(pan_card);
-        const rtcSubmitted = !isEmpty(rtc) && !isEmpty(rtc_card);
-        const kisanSubmitted = !isEmpty(kisancard) && !isEmpty(kisancard_card);
+        const aadharSubmitted = !isEmpty(loginState.UIDAI) && !isEmpty(loginState?.aadhar_card);
+        const panSubmitted = !isEmpty(loginState.PAN) && !isEmpty(loginState?.pan_card);
+        const rtcSubmitted = !isEmpty(loginState.rtc) && !isEmpty(loginState?.rtc_card);
+        const kisanSubmitted = !isEmpty(loginState.kisancard) && !isEmpty(loginState?.kisancard_card);
 
-        if(userType === UserTypes.BUYER){
-            if(isEmpty(category)){
-                (panSubmitted && !isEmpty(gstin))?
+        if(loginState.userType === UserTypes.BUYER){
+            if(isEmpty(loginState.category)){
+                (panSubmitted && !isEmpty(loginState.gstin))?
                     setKycFlag("submitted") : setKycFlag("incomplete");
             } else {
                 (panSubmitted && aadharSubmitted) ?
                     setKycFlag("submitted") : setKycFlag("incomplete");
             }
         } else {
-            if(isEmpty(category)){
+            if(isEmpty(loginState.category)){
                 ((aadharSubmitted && bankSubmitted) &&
                     ((kisanSubmitted && !rtcSubmitted) || (!kisanSubmitted && rtcSubmitted)
                         || (kisanSubmitted && rtcSubmitted))) ?
                     setKycFlag("submitted") : setKycFlag("incomplete");
                 } else {
-                (panSubmitted && !isEmpty(gstin) && !isEmpty(fpo) && bankSubmitted) ?
+                (panSubmitted && !isEmpty(loginState.gstin) && !isEmpty(loginState.fpo) && bankSubmitted) ?
                     setKycFlag("submitted") : setKycFlag("incomplete");
             }
         }
-    },[]);
+    },[loginState]);
+
+    useEffect(() => {
+        if(!isEmpty(loginState.profile_picture))
+            dispatch(getUserFiles(loginState?.profile_picture?.doc_key, setImageSrc, setPDF));
+    },[loginState]);
 
     const uploadProfilePic = (event: any) => {
         (isEmpty(event.fileList)) ? setProfilePic(true) : setProfilePic(false);
         setDisableSave(false);
+        console.log(isPDF);
     };
 
     const setKycToComplete = (values: any) => {
@@ -196,7 +204,7 @@ const Profile = (props: any) => {
                         sunday: loginState.working_hours.sunday,
                         saturday: loginState.working_hours.saturday
                     }
-                    working_hours = !isEmpty(weekday) ? {... working_hours, weekday} : working_hours;
+                    working_hours = !isEmpty(weekday) ? {...working_hours, weekday} : working_hours;
                     working_hours = !isEmpty(saturday) ? {...working_hours, saturday}: working_hours;
                     working_hours = !isEmpty(sunday) ? {...working_hours, sunday}: working_hours;
                 }
@@ -262,22 +270,35 @@ const Profile = (props: any) => {
                             getValueFromEvent={normFile}
                             rules={[{ validator: (rule, value) => validateUpload(rule, value)}]}
                         >
-                            <Upload
-                                accept="image/*"
-                                beforeUpload={(file) => {
-                                    return false;
-                                }}
-                                name="picture"
-                                listType="picture-card"
-                                maxCount={1}
-                                onChange={uploadProfilePic}
-                            >
-                                { showProfilePic && <>
-                                    { isEmpty(loginState.profile_picture) ?
-                                        <Text>Upload Photo</Text> : <Text>Change Profile Picture</Text>
-                                    }
-                                </>}
-                            </Upload>
+                            { isEmpty(loginState.profile_picture) ?
+                                <Upload
+                                    accept="image/*"
+                                    beforeUpload={(file) => {
+                                        return false;
+                                    }}
+                                    name="picture"
+                                    listType="picture-card"
+                                    maxCount={1}
+                                    onChange={uploadProfilePic}
+                                >
+                                    <Text>Upload Photo</Text>
+                                </Upload>:
+                                <>
+                                    <Upload
+                                        accept="image/*"
+                                        beforeUpload={(file) => {
+                                            return false;
+                                        }}
+                                        name="picture"
+                                        listType="picture-card"
+                                        maxCount={1}
+                                        onChange={uploadProfilePic}
+                                    >
+                                        {showProfilePic? <img src={imageSrc}/>: null}
+                                    </Upload>
+                                    {showProfilePic? <Text className="change-profile-pic-text">Click on the Profile Picture to change</Text>: null}
+                                </>
+                            }
                         </Form.Item>
                         <div className={kycFlag === "incomplete" ? `add-details-text` : `display-none`}>
                             <Text>Add details of fields with <CaretRightFilled style={{ color: "#FF9900"}} /> to complete KYC</Text>
