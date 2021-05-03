@@ -51,6 +51,7 @@ const BuyerWorkingHours = (props: any) => {
                             <Select
                                 className="custom-select"
                                 defaultValue={saturday}
+                                onChange={() => setDisableSave(false)}
                             >
                                 { getWorkingHoursOptions() }
                             </Select>
@@ -62,6 +63,7 @@ const BuyerWorkingHours = (props: any) => {
                             <Select
                                 className="custom-select"
                                 defaultValue={sunday}
+                                onChange={() => setDisableSave(false)}
                             >
                                 { getWorkingHoursOptions() }
                             </Select>
