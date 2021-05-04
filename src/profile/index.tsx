@@ -54,7 +54,7 @@ const Profile = (props: any) => {
     const [formSubmitValue, setFormSubmitValue] = useState({});
     
     const loginState = useSelector((state: RootState) => state.loginUser);
-    const { bank_info, bank_doc, configs , working_hours } = loginState;
+    const { bank_info, bank_doc, configs , working_hours, category } = loginState;
     const { PAN, UIDAI, pan_card, aadhar_card, rtc, rtc_card, kisancard, kisancard_card } = loginState;
     const userType = loginState.is_buyer ? UserTypes.BUYER : UserTypes.SELLER;
     const subType = userType === UserTypes.BUYER ? loginState.buyer_type : loginState.seller_type;
@@ -71,12 +71,12 @@ const Profile = (props: any) => {
         const rtcSubmitted = !isEmpty(loginState.rtc) && !isEmpty(loginState?.rtc_card);
         const kisanSubmitted = !isEmpty(loginState.kisancard) && !isEmpty(loginState?.kisancard_card);
 
-        if(loginState.userType === UserTypes.BUYER){
+        if(userType === UserTypes.BUYER){
             if(isEmpty(loginState.category)){
-                (panSubmitted && !isEmpty(loginState.gstin))?
+                (panSubmitted && aadharSubmitted) ?
                     setKycFlag("submitted") : setKycFlag("incomplete");
             } else {
-                (panSubmitted && aadharSubmitted) ?
+                (panSubmitted && !isEmpty(loginState.gstin))?
                     setKycFlag("submitted") : setKycFlag("incomplete");
             }
         } else {
@@ -306,6 +306,29 @@ const Profile = (props: any) => {
                         <Col span={20} className="kyc-form-elements">
                             <Form.Item
                                 {...fieldLayout}
+                                label={<span className="kyc-form-label">User Type</span>}
+                                className="margin-zero"
+                            >
+                                : {userType}
+                            </Form.Item>
+                            <Form.Item
+                                {...fieldLayout}
+                                label={<span className="kyc-form-label">{userType} Type</span>}
+                                className="margin-zero"
+                            >
+                                <Text style={{textTransform: "capitalize"}}>: {subType}</Text>
+                            </Form.Item>
+                            { !isEmpty(category) ?
+                                <Form.Item
+                                    {...fieldLayout}
+                                    label={<span className="kyc-form-label">{userType} Category</span>}
+                                    className="margin-zero"
+                                >
+                                    <Text style={{textTransform: "capitalize"}}>: {category}</Text>
+                                </Form.Item> : null
+                            }
+                            <Form.Item
+                                {...fieldLayout}
                                 label={<span className="kyc-form-label">Name</span>}
                                 className="margin-zero"
                             >
@@ -348,7 +371,7 @@ const Profile = (props: any) => {
                                             </Button>
                                     }
                                 </> :
-                                <Text>{loginState.email}
+                                <Text>:&nbsp;{loginState.email}
                                     <Button type="link" className="email-change " onClick={() => setChangeEmail(true)}>Change</Button>
                                 </Text>}
                             </Form.Item>
