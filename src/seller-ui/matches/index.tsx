@@ -20,7 +20,13 @@ const MatchedSection = () => {
     const sellerState = useSelector((state: RootState) => state.seller);
     
     const rejectMatch = (transactionID: string) => {
-        dispatch(transactionAction(parseIDfromHash(transactionID), TransactionAction.reject));
+        dispatch(
+            transactionAction(
+                parseIDfromHash(transactionID),
+                TransactionAction.reject,
+                selectedCropDetails
+            )
+        );
     }
 
     const componentCallBacks: componentCallBacksModel = {

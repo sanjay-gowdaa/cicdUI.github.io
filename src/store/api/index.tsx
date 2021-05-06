@@ -1,5 +1,5 @@
 import CryptoJS from 'crypto-js';
-import { TransactionAction, TransactionStatus } from '../../buyer-seller-commons/types';
+import { MatchRequirementModel, TransactionAction, TransactionStatus } from '../../buyer-seller-commons/types';
 import { LiveApmcRates, UpdatedLiveApmcRatesQuery } from '../genericTypes';
 const BASE_URL = process.env.REACT_APP_BASE_URL;
 const STAGE = process.env.REACT_APP_ENV;
@@ -336,10 +336,15 @@ export const fetchSellerMatches = (userName: string) => {
     return fetch(listApi).then((response: any) => response.json());
 }
 
-export const postSellerTransactionAction = (transactionID: string, actionName: TransactionAction) => {
+export const postSellerTransactionAction = (
+    transactionID: string,
+    actionName: TransactionAction,
+    cropDetails: MatchRequirementModel
+) => {
     const transactionActionApi = `${BASE_URL}/${STAGE}/${TRANSACTION_API}/${transactionID}/seller?action=${actionName}`
     return fetch(transactionActionApi, {
-        method: 'POST'
+        method: 'POST',
+        body: JSON.stringify(cropDetails)
     }).then((response: any) => response.json());
 }
 

@@ -37,12 +37,17 @@ const AcceptMatch = (props: {cropDetails: MatchRequirementModel}) => {
                 footer = {[
                     <PrimaryBtn
                         onClick={() => {
-                            console.log("otp", otp);
                             //Dispatch method which confirms the otp.
                             // timeStamp to be stored in SellerStateModel
                             dispatch(saveTimeStamp);
                             setViewAcceptAgreement(!viewAcceptAgreement);
-                            dispatch(transactionAction(parseIDfromHash(pk), TransactionAction.accept));
+                            dispatch(
+                                transactionAction(
+                                    parseIDfromHash(pk),
+                                    TransactionAction.accept,
+                                    cropDetails
+                                )
+                            );
                             //Download pdf of the Purchase Agreement
                         }}
                         content="Agree"
