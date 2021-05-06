@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Image, Modal, Typography } from 'antd';
+import { Button, Image, Modal, Typography, Progress } from 'antd';
 import { isEmpty } from 'lodash';
 
 import { ProduceModel } from '../../store/buyerReducer/types';
@@ -50,7 +50,25 @@ export const produceColumns = ({deleteProduce, prepareForEditProduce}: produceCo
     {
         title: 'Quantity Required',
         dataIndex: 'quantity',
-        key: 'quantity'
+        key: 'quantity',
+        render: (quantity: string, record: ProduceModel) => {
+            const {currently_fulfilled_qty = 0} = record;
+            const quantityNum = parseInt(quantity, 10);
+            const percentageQty = (currently_fulfilled_qty/quantityNum)*100;
+            const currentReqQty = quantityNum - currently_fulfilled_qty;
+            return (
+                <>
+                    <p>{currentReqQty} qtl</p>
+                    <Progress
+                        strokeColor='#12805C'
+                        percent={percentageQty}
+                        status="active"
+                        format={() => `${quantity} qtl`}
+                    />
+                </>
+            )
+
+        }
     },
     {
         title: 'Delivery By',
@@ -58,7 +76,6 @@ export const produceColumns = ({deleteProduce, prepareForEditProduce}: produceCo
         key: 'delivery_by',
         render: (delivery_by: string) => {
             const dateObj = new Date(delivery_by);
-
             return dateObj.toLocaleDateString();
         }
     },
