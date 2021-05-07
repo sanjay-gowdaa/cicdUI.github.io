@@ -165,7 +165,7 @@ export const customUpiValidator = (rule: RuleObject, value: any) => {
 };
 
 export const emailValidator = (rule: RuleObject, value: any) => {
-    const regExp = /^[\w-]+@([\w-]+\.)+[\w-]{2,4}$/;
+    const regExp = /^[\w-/.]+@([\w-]+\.)+[\w-]{2,4}$/;
 
     if(regExp.test(value) || isEmpty(value)) {
         return Promise.resolve();

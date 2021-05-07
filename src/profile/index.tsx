@@ -294,7 +294,7 @@ const Profile = (props: any) => {
                                         maxCount={1}
                                         onChange={uploadProfilePic}
                                     >
-                                        {showProfilePic? <img src={imageSrc}/>: null}
+                                        {showProfilePic? <img className="changed-profile-picture" src={imageSrc}/>: null}
                                     </Upload>
                                     {showProfilePic? <Text className="change-profile-pic-text">Click on the Profile Picture to change</Text>: null}
                                 </>
