@@ -215,21 +215,17 @@ export const getMatchesForBuyerCrops = (cropsList: Array<ProduceModel>) => {
 
 export const rejectMatches = (rejectData: {buyer_id: string, buyer_crop_id: Array<string>}) => {
     return async(dispatch: any, getState: any) => {
-        const {buyer: buyerState}: {buyer: BuyerStateModel} = getState() as RootState;
-        const {produceList} = buyerState;
         const matchesList = await rejectMatch(rejectData);
         /* Re-calculate matches for all crop */
         /* Logic can be changed to specific crop if required */
-        dispatch(getMatchesForBuyerCrops(produceList));
+        dispatch(getProduceList());
     }
 }
 
 export const connectMatch = (transactionEntry: any) => {
     return async(dispatch: any, getState: any) => {
-        const {buyer: buyerState}: {buyer: BuyerStateModel} = getState() as RootState;
-        const {produceList} = buyerState;
         const matchesList = await createTransaction(transactionEntry);
-        dispatch(getMatchesForBuyerCrops(produceList));
+        dispatch(getProduceList());
         dispatch(getTransactionList(TransactionStatus.pending));
         return Promise.resolve('Successs');
     }
