@@ -65,18 +65,22 @@ export const cropColumns = ({
         title: 'Qunatity Remaining',
         dataIndex: 'quantity',
         key: 'quantity',
-        className: 'seller-quantity-remaining',
-        render: (quantity: string) => {
-            //Temporarily
-            const fullQuantity = quantity;
-            
+        render: (quantity: string, record: CropApiModel) => {
+            const {currently_fulfilled_qty = 0} = record;
+            const quantityNum = parseInt(quantity, 10);
+            const percentageQty = (currently_fulfilled_qty/quantityNum)*100;
+            const currentReqQty = quantityNum - currently_fulfilled_qty;
             return (
                 <>
-                    <p style={{margin: "0"}} >{quantity ? quantity.replace(/^0+/, '') : ''} qtl</p>
-                    <Progress className="custom-progress-bar" percent={100} showInfo={false} strokeColor="#12805C" />
-                    <Text style={{color: "#999999", fontSize: "smaller"}}>{fullQuantity} qtl</Text>
+                    <p>{currentReqQty} qtl</p>
+                    <Progress
+                        strokeColor='#12805C'
+                        percent={percentageQty}
+                        status="active"
+                        format={() => `${quantity} qtl`}
+                    />
                 </>
-            );
+            )
         },
     },
     {
