@@ -96,13 +96,12 @@ export const matchesColumns = (componentCallBacks: componentCallBacksModel) => [
                         type="link"
                         danger
                         onClick={() => {
-                            // componentCallBacks?.confirmReject(true);
                             Modal.confirm({
                                 title: '',
                                 icon: <ExclamationCircleOutlined />,
                                 content: <RejectConfrimation  matchRecord={record} />,
                                 onOk() {
-                                    componentCallBacks?.rejectMatch(record.pk);
+                                    componentCallBacks?.rejectMatch(record);
                                   },
                                   onCancel() {},
                             })

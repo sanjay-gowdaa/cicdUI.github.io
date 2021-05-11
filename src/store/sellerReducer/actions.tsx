@@ -237,6 +237,7 @@ export const transactionAction = (
     ) => {
     return async(dispatch: any, getState: any) => {
         const actionResponse = await postSellerTransactionAction(tarnsactionID, action, cropDetails);
+        dispatch(getAllCropsList())
         dispatch(getAllSellerMatches())
         if (action === TransactionAction.accept) {
             dispatch(getSellerTransactionList(TransactionStatus.pending));

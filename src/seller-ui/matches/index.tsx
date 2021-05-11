@@ -14,17 +14,17 @@ const { Title } = Typography;
 
 const MatchedSection = () => {
     const [openDetailsModal, setOpenDetailsModal] = useState(false);
-    // const [openRejectConfirmation, setOpenRejectConfirmation] = useState(false);
     const [selectedCropDetails, setSelectedCropDetails] = useState(initialEmptyCropDetail as MatchRequirementModel);
     const dispatch = useDispatch();
     const sellerState = useSelector((state: RootState) => state.seller);
-    
-    const rejectMatch = (transactionID: string) => {
+
+    const rejectMatch = (matchRecord: MatchRequirementModel) => {
+        const {pk = ''} = matchRecord;
         dispatch(
             transactionAction(
-                parseIDfromHash(transactionID),
+                parseIDfromHash(pk),
                 TransactionAction.reject,
-                selectedCropDetails
+                matchRecord
             )
         );
     }
