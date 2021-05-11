@@ -39,14 +39,14 @@ const CropsSection = () => {
 
     return (
         <div className="crops-container">
-            <Title level={2}>My Produce</Title>
+            <Title level={2}>My Requirements</Title>
             <PrimaryBtn
                 className="add-crop-btn vikas-btn-radius"
                 onClick={() => {
                     setIsEdit(false);
                     setModalVisible(true);
                 }}
-                content="Add Produce"
+                content="Add Requirements"
             />
             <AddProduce 
                 currentProduceRecord={currentProduceRecord}

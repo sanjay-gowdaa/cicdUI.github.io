@@ -106,18 +106,20 @@ const BankDocuments = (props: any) => {
                                 <Form.Item
                                     labelCol={{span: 13}}
                                     label={
-                                        <span className="kyc-form-label">
+                                        <span className="kyc-form-label" style={{paddingBottom: "2.5em"}}>
                                             { kycFlag === "incomplete" && userType === UserTypes.SELLER ?
                                                 <CaretRightFilled className="required-arrow" style={{ color: "#FF9900"}} />: null
                                             }
-                                            {list.label}
+                                            {list.label}<br/>
+                                            <Text className="font-size-small">Canceled Cheque/</Text><br/>
+                                            <Text className="font-size-small">Front page of Bank Passbook</Text>
                                         </span>
                                     }
                                     name={isEmpty(value) || isChangedClicked ? list.name : undefined}
                                     className={isEmpty(value) ? `margin-zero` : ``}
                                 >
                                     { !isEmpty(bank_doc) && !changeDocument &&
-                                        <>
+                                        <>: 
                                             <Button
                                                 type="link"
                                                 onClick={() => {
