@@ -180,7 +180,7 @@ const AddCropModal = ({
                             type="primary"
                             htmlType="submit"
                         >
-                            { isEdit ? 'Edit' : 'Add' } Produce
+                            { isEdit ? 'Edit' : 'Add' } Requirements
                         </Button>
                     </Col>
                 </Row>
