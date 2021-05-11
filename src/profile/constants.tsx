@@ -152,7 +152,7 @@ export const bankDocumentsList = [
     },
     {
         name: "bank_doc",
-        label: "Bank Statement",
+        label: "Bank Document",
         upload: true
     },
     {
