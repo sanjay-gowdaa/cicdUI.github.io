@@ -61,6 +61,7 @@ const Header = (headerProps: any) => {
                 <Breadcrumb.Item href="#commodities">Commodities</Breadcrumb.Item>
                 <Breadcrumb.Item href="#users">Users</Breadcrumb.Item>
                 <Breadcrumb.Item href="#aboutUs">About Us</Breadcrumb.Item>
+                <Breadcrumb.Item href="#team">Team</Breadcrumb.Item>
                 <Breadcrumb.Item href="#legal">Legal</Breadcrumb.Item>
                 <Breadcrumb.Item href="#contactUs">Contact Us</Breadcrumb.Item>
             </Breadcrumb>

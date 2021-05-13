@@ -16,7 +16,7 @@ $col-shade-green: #12805C;
     .home-content-wrapper {
         position: relative;
         top: 6rem;
-        height: 107.5vh;
+        height: 105.25vh;
         
         .animate-alert {
             animation: warning-banner 30s infinite 20s;
@@ -119,16 +119,12 @@ $col-shade-green: #12805C;
     }
     
     .aim-card-row {
-        position: relative;
-        bottom: 4rem;
-        padding-top: 2.5rem;
-        padding-left: 1.75rem;
         
         .aim-card {
             background-color: $col-shade-green;
             width: 12.5rem;
             border-radius: 0.5rem;
-            max-height: min-content;
+            height: 14rem;
             border-radius: 0.2rem;
             display: inline-flex;
             margin: 1rem auto;
@@ -167,6 +163,11 @@ $col-shade-green: #12805C;
                 border-right: 2.5rem solid transparent;
             }
         }
+    }
+
+    .aim-video-link {
+        font-size: 1.2rem;
+        margin: 0 6rem;
     }
 }
 
@@ -296,7 +297,7 @@ $col-shade-green: #12805C;
     margin: 2.5rem 0;
     margin-left: 16rem;
     width: 53rem;
-    height: 75rem;
+    height: 48rem;
     scroll-margin: 6rem;
     padding: 1rem 2rem;
     background-color: #fbfbfb;
@@ -344,8 +345,17 @@ $col-shade-green: #12805C;
         }
     }
 
-    .about-us-our-team {
-        bottom: 8rem;
+}
+
+#team {
+    margin: 2.5rem 0;
+    margin-left: 16rem;
+    width: 53rem;
+    scroll-margin: 6rem;
+    padding: 2rem 2rem;
+    background-color: #fbfbfb;
+    
+    .management-team {
         position: relative;
         text-align: center;
         width: fit-content;
@@ -356,7 +366,7 @@ $col-shade-green: #12805C;
         border-radius: 0.2rem;
         margin: 0 auto;
             
-        .our-team {
+        .management-our-team {
             .person-name {
                 margin: 0;
             }
@@ -371,7 +381,30 @@ $col-shade-green: #12805C;
             position: relative;
             top: 2rem;
         }
+    }
 
+    .advisors-team {
+        position: relative;
+        text-align: center;
+        width: fit-content;
+        justify-content: space-around;
+        padding: 2rem;
+        height: fit-content;
+        border: 0.2em solid #e0efea;
+        border-radius: 0.2rem;
+        margin: 0 auto;
+        margin-top: 1rem;
+
+        .advisors-card {
+            margin-top: 1rem;
+            margin-left: 1rem;
+            height: 30rem;
+
+            .advisors-pic {
+                border-radius: 50%;
+                border: 0.1em solid #e2e8d5;
+            }
+        }
     }
 }
 

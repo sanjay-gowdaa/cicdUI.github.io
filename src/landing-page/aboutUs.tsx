@@ -1,35 +1,15 @@
-import React, { useState } from 'react';
-import { Card, Col, Image, Modal, Row, Space, Typography } from 'antd';
+import React from 'react';
+import { Card, Col, Image, Row, Typography } from 'antd';
 
 import Outline from '../static/assets/Outline.svg';
 import Vision from '../static/assets/vision.svg';
 import Philosophy from '../static/assets/philosophy.svg';
-import Nagappa from '../static/assets/nagappa.png';
-import Suma from '../static/assets/suma.png';
-import Sadananda from '../static/assets/sadananda.png';
 
-const { Paragraph, Text, Title, Link } = Typography;
+const { Paragraph, Title } = Typography;
 
 const AboutUs = () => {
-    const [viewVideo, setVideo] = useState(false);
-
     return (
         <div id="aboutUs">
-            <Modal
-                visible={viewVideo}
-                onCancel={() => setVideo(!viewVideo)}
-                width={"95%"}
-                className="about-us-video-modal"
-                maskClosable={true}
-                footer={null}
-            >
-                <iframe
-                    width="95%"
-                    height="100%"
-                    src="https://www.youtube.com/embed/zTYLM3MLUWE?playlist=zTYLM3MLUWE&loop=1&autoplay=1&mute=1"
-                    allowFullScreen
-                />
-                </Modal>
             <Title className="col-green about-us-title" level={2}>About us</Title>
             <img className="outline-image" src={Outline} />
             <Paragraph className="outline-paragraph">
@@ -37,8 +17,7 @@ const AboutUs = () => {
                 for partnering Government's vision of Freedom, Protection, and 
                 Higher Income to farmer communities. We have worked tirelessly 
                 with farmers and everyone in the value chain to understand the needs.
-                We are committed to ensure a meaningful facilitation to the buyers and sellers. 
-                <br/><Link  onClick={() => setVideo(true)}>Click here to watch a video about us.</Link>
+                We are committed to ensure a meaningful facilitation to the buyers and sellers.
             </Paragraph>
             <Row>
                 <Col span={12}>
@@ -69,26 +48,6 @@ const AboutUs = () => {
                     reducing middlemen. This is our contribution to nation building and making it truly
                     'Atmanirbhar Bharat'.
                 </Paragraph>
-            </div>
-            <div className="about-us-our-team">
-                <Title className="col-green" level={3}>Our Team</Title>
-                <Space direction="horizontal">
-                    <div className="our-team">
-                        <Image src={Nagappa} preview={false} />
-                        <Title className="person-name" level={4}>G S Nagappa</Title>
-                        <Text>Director</Text>
-                    </div>
-                    <div className="our-team">
-                        <Image src={Suma} preview={false} />
-                        <Title className="person-name suma" level={4}>Suma Sadananda</Title>
-                        <Text className="suma">Director</Text>
-                    </div>
-                    <div className="our-team">
-                        <Image src={Sadananda} preview={false} />
-                        <Title className="person-name" level={4}>Sadananda Murthy</Title>
-                        <Text>Leads Engg. & Ops.</Text>
-                    </div>
-                </Space>
             </div>
         </div>
     );

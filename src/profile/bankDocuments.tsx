@@ -4,10 +4,9 @@ import { Button, Form, Input, Typography, Upload } from 'antd';
 import { CaretRightFilled, UploadOutlined } from '@ant-design/icons';
 import { isEmpty, toUpper } from 'lodash';
 
-import { bankDocumentsList, bankFieldValue, fieldLayout } from './constants';
+import { bankDocumentsList, bankFieldValue } from './constants';
 import {
     confirmAccountValidator,
-    customUpiValidator,
     normFile,
     validateInputField,
     validateUpload,
@@ -111,8 +110,8 @@ const BankDocuments = (props: any) => {
                                                 <CaretRightFilled className="required-arrow" style={{ color: "#FF9900"}} />: null
                                             }
                                             {list.label}<br/>
-                                            <Text className="font-size-small">Canceled Cheque/</Text><br/>
-                                            <Text className="font-size-small">Front page of Bank Passbook</Text>
+                                            <Text className="font-size-small">Front page of Bank Passbook/</Text><br/>
+                                            <Text className="font-size-small">Cancelled Cheque</Text>
                                         </span>
                                     }
                                     name={isEmpty(value) || isChangedClicked ? list.name : undefined}
