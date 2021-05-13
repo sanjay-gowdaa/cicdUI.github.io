@@ -7,6 +7,7 @@ import AboutUs from './aboutUs';
 import User from './user';
 import Legal from './legal';
 import ContactUs from './contactUs';
+import Team from './team';
 
 import './landingPage.scss';
 
@@ -18,6 +19,7 @@ const LandingPage = () => {
             <Commodities />
             <User />
             <AboutUs />
+            <Team />
             <Legal />
             <ContactUs />
         </>
