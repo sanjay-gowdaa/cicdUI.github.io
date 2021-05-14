@@ -42,7 +42,7 @@ const Team = () => {
                             <Image src={Chikkaramu} preview={false} className="advisors-pic" />
                             <Title className="person-name" level={4}>Chikkaramu S</Title>
                             <Text>Agricultural expert (B. Tech -Agriculture Engineering)
-                                with over 15 years of technical experience on thefield.
+                                with over 15 years of technical experience on the field.
                                 He is Guiding us with training, Quality, and technical ground operations.
                             </Text>
                         </Card>
@@ -62,7 +62,7 @@ const Team = () => {
                         <Card className="advisors-card">
                             <Image src={CVKulkarni} preview={false} className="advisors-pic" />
                             <Title className="person-name" level={4}>C V Kulkarni</Title>
-                            <Text>Sales and operations Professionalwith over three decades
+                            <Text>Sales and operations Professional with over three decades
                                 of experience with focus on FMCG and beverages. He is helping
                                 define and structure the sales and operations.
                             </Text>
