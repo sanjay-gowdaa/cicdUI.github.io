@@ -1,6 +1,7 @@
 import React from 'react';
 import { Col, Row, Typography } from 'antd';
 import { MatchRequirementModel } from '../../buyer-seller-commons/types';
+import { parseIDfromHash, maskData } from '../../app-components/utils';
 
 const { Title } = Typography;
 
@@ -20,7 +21,7 @@ const TradeSummary = (props: componentProps) => {
                     Buyer Id
                 </Col>
                 <Col sm={24} md={12}>
-                    : {buyer_id}
+                    : {maskData(parseIDfromHash(buyer_id))}
                 </Col>
             </Row>
             <Row>

@@ -3,7 +3,7 @@ import { Button, Image, Typography, Modal } from 'antd';
 import RagiImg from '../../static/assets/ragi.png';
 import AcceptMatch from './acceptMatch';
 import { MatchRequirementModel } from '../../buyer-seller-commons/types';
-import { parseIDfromHash } from '../../app-components/utils';
+import { parseIDfromHash, maskData } from '../../app-components/utils';
 import { ExclamationCircleOutlined } from '@ant-design/icons';
 import RejectConfrimation from './rejectConfirmation';
 
@@ -23,7 +23,7 @@ export const matchesColumns = (componentCallBacks: componentCallBacksModel) => [
         render: (buyer_id: string) => {
             return (
                 <>
-                    <Text underline>{parseIDfromHash(buyer_id)}</Text>
+                    <Text underline>{maskData(parseIDfromHash(buyer_id))}</Text>
                 </>
             );
         },

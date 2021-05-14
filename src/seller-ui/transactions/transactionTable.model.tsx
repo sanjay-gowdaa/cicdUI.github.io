@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button, Typography, Tooltip } from 'antd';
 import { TransactioModel } from '../../buyer-seller-commons/types';
-import { parseIDfromHash } from '../../app-components/utils';
+import { parseIDfromHash, maskData } from '../../app-components/utils';
 const { Title, Text } = Typography;
 
 export const transactionColumns = [
@@ -72,8 +72,8 @@ export const transactionColumns = [
         render: (buyerId: string) => {
             const actBuyerID = parseIDfromHash(buyerId)
             return (
-                <Tooltip placement="topLeft" title={actBuyerID}>
-                    <Text underline>{actBuyerID}</Text>
+                <Tooltip placement="topLeft" title={maskData(actBuyerID)}>
+                    <Text underline>{maskData(actBuyerID)}</Text>
                 </Tooltip>
             );
         },

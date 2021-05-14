@@ -1,7 +1,7 @@
 import React from 'react';
 import { Image, Typography, Tooltip } from 'antd';
 import RagiImg from '../../static/assets/ragi.png';
-import { parseIDfromHash } from '../../app-components/utils';
+import { parseIDfromHash, maskData } from '../../app-components/utils';
 const { Text } = Typography;
 
 export const transactionColumns = [
@@ -70,8 +70,8 @@ export const transactionColumns = [
         render: (seller_id: string) => {
             const actualID = parseIDfromHash(seller_id)
             return (
-                <Tooltip placement="topLeft" title={actualID}>
-                    <Text underline>{actualID}</Text>
+                <Tooltip placement="topLeft" title={maskData(actualID)}>
+                    <Text underline>{maskData(actualID)}</Text>
                 </Tooltip>
             );
         },
