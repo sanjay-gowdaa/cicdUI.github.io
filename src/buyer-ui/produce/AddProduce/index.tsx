@@ -7,7 +7,8 @@ import {
     Input,
     Modal,
     Row,
-    Select
+    Select,
+    InputNumber
 } from 'antd';
 import { useDispatch } from 'react-redux';
 
@@ -90,7 +91,7 @@ const AddCropModal = ({
             grade: grade.trim(),
             delivery_by: deliveryByIsoformat,
             additional_info,
-            quantity: quantity.replace(/^0+/, '') // truncate trailing zeros
+            quantity: quantity
         };
         const {sk, pk} = currentProduceRecord;
         console.log('addProducePayload', addProducePayload);
@@ -153,7 +154,12 @@ const AddCropModal = ({
                                 noStyle
                                 rules={[{ required: true, message: 'Please input the Qunatity!' }]}
                             >
-                                <Input style={{ width: 160 }} className="custom-input" placeholder="In quintal" />
+                                <InputNumber
+                                    style={{ width: 160 }}
+                                    className="custom-input"
+                                    placeholder="In quintal"
+                                    stringMode
+                                />
                             </Form.Item>
                             <span className="additional-text">Qtl</span>
                         </Form.Item>
