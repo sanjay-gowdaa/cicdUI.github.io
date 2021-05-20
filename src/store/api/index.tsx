@@ -26,7 +26,7 @@ const APMC_LIVE_RATES = 'getliverates';
 const UPDATED_APMC_API = 'apmc/price/';
 const INTENT_TO_SELL = 'sell';
 const USER_MANAGER_API = 'user';
-const MATCHES_API = `https://enzdzh0pw2.execute-api.ap-south-1.amazonaws.com/dev/getMatch`;
+const MATCHES_API = 'getMatch';
 const TRANSACTION_API = 'transaction';
 const MATCHES_REJECT_API = `${TRANSACTION_API}/reject`;
 const TRANSACTION_CREATE_API = `${TRANSACTION_API}/create`;
@@ -300,7 +300,7 @@ export const getMasterList = (buyerId: string) => {
 /* Matches And Transactions */
 
 export const getBuyerMatchesList = (buyerId: string, cropIds: Array<string>) => {
-    const matchesApi = MATCHES_API;
+    const matchesApi = `${BASE_URL}/${STAGE}/${MATCHES_API}`;
     const matchesBody = {buyer_id: buyerId, buyer_crop_id: cropIds}
     return fetch(matchesApi, {
         // headers: getAuthHeader(),
