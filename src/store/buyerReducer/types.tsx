@@ -55,3 +55,11 @@ export interface BuyerStateModel {
     timeStamp: any;
     isMatchesFetching: boolean;
 }
+
+export interface BuyerRejectMatch {
+    buyer_id: string;
+    buyer_crop_id: string;
+    seller_id: string;
+    seller_crop_id: string;
+    matched_quantity: number;
+}
