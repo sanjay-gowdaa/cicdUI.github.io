@@ -1,5 +1,6 @@
 import CryptoJS from 'crypto-js';
 import { MatchRequirementModel, TransactionAction, TransactionStatus } from '../../buyer-seller-commons/types';
+import { BuyerRejectMatch } from '../buyerReducer/types';
 import { LiveApmcRates, UpdatedLiveApmcRatesQuery } from '../genericTypes';
 const BASE_URL = process.env.REACT_APP_BASE_URL;
 const STAGE = process.env.REACT_APP_ENV;
@@ -26,8 +27,8 @@ const UPDATED_APMC_API = 'apmc/price/';
 const INTENT_TO_SELL = 'sell';
 const USER_MANAGER_API = 'user';
 const MATCHES_API = 'getMatch';
-const MATCHES_REJECT_API = `https://a73j5pnsxl.execute-api.ap-south-1.amazonaws.com/${STAGE}/reject`;
 const TRANSACTION_API = 'transaction';
+const MATCHES_REJECT_API = `${TRANSACTION_API}/reject`;
 const TRANSACTION_CREATE_API = `${TRANSACTION_API}/create`;
 const TRANSACTION_LIST_API = `${TRANSACTION_API}/user`;
 const USER_COMPLETE_DETAILS = 'getUserCompleteDetails';
@@ -308,10 +309,10 @@ export const getBuyerMatchesList = (buyerId: string, cropIds: Array<string>) => 
     }).then((response: any) => response.json())
 }
 
-export const rejectMatch = (rejectData: {buyer_id: string, buyer_crop_id: Array<string>}) => {
-    const matchesRejectApi = MATCHES_REJECT_API;
+export const rejectMatch = (rejectData: BuyerRejectMatch) => {
+    const matchesRejectApi = `${BASE_URL}/${STAGE}/${MATCHES_REJECT_API}`;
     return fetch(matchesRejectApi, {
-        // headers: getAuthHeader(),
+        headers: getAuthHeader(),
         method: 'POST',
         body: JSON.stringify(rejectData)
     }).then((response: any) => response.json())

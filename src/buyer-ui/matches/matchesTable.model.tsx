@@ -7,17 +7,6 @@ import { parseIDfromHash, maskData } from '../../app-components/utils';
 
 const { Title, Text } = Typography;
 
-// const calculateQty = (record: MatchRequirementModel) => {
-//     const {buyer_actual_quantity, seller_quantity, fulfillment_flag} = record;
-//     switch(fulfillment_flag) {
-//         case FullfillmentFlags.single_fulfillment:
-//             return buyer_actual_quantity
-        
-//         default:
-//             return seller_quantity;
-//     }
-// }
-
 export interface componentCallBacksModel {
     showCropDetailsModal: any;
     populateCropDetails: any;

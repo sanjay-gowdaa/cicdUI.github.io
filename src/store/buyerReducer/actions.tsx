@@ -4,7 +4,7 @@ import { addProduce, getAllProduce, getCropCategoryList, getCropList, getSubCate
     updateMasterList, deleteProduce, patchProduce, getBuyerMatchesList, rejectMatch, createTransaction, fetchTransactionList } from "../api";
 import { UserStateModel } from "../loginReducer/types";
 import { RootState } from "../rootReducer";
-import { BuyerStateModel, MasterListApiFormat, ProduceModel } from "./types";
+import { BuyerRejectMatch, BuyerStateModel, MasterListApiFormat, ProduceModel } from "./types";
 
 export const UPDATE_MASTER_LIST = 'UPDATE_MASTER_LIST';
 export const GET_MASTER_LIST = 'GET_MASTER_LIST';
@@ -213,7 +213,7 @@ export const getMatchesForBuyerCrops = (cropsList: Array<ProduceModel>) => {
 //     }
 // }
 
-export const rejectMatches = (rejectData: {buyer_id: string, buyer_crop_id: Array<string>}) => {
+export const rejectMatches = (rejectData: BuyerRejectMatch) => {
     return async(dispatch: any, getState: any) => {
         const matchesList = await rejectMatch(rejectData);
         /* Re-calculate matches for all crop */
