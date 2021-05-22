@@ -45,7 +45,7 @@ const App = (props: any) => {
                         <PrimaryBtn
                             onClick={() => setSignUpPopupVisible(!signUpPopupVisible)}
                             className="vikas-btn-radius join-us-reg"
-                            content="Register"
+                            content={t('home_page.registration_context.register')}
                         />
                         </Space>
                     </Card>

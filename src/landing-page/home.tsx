@@ -1,5 +1,6 @@
 import React from 'react';
 import { Alert, Button, Carousel, Image, Typography } from 'antd';
+import { Trans } from 'react-i18next'
 
 import Logo from '../static/assets/vbLogo.png';
 import VBOne from '../static/assets/Vikasbandhu_One.jpg';
@@ -21,7 +22,12 @@ const Home = () => {
             <div className="home-content-wrapper">
                 <Alert
                     className="animate-alert"
-                    message={<>Beware of any Fraudulent Websites. <b>Vikasbandhu does not charge any Registration fee</b>. Visit only https://vikasbandhu.in</>}
+                    message={
+                        <Trans
+                            i18nKey="home_page.flash_text"
+                            components={{ italic: <i />, bold: <strong /> }}
+                        />
+                    }
                     banner
                 />
                 <Carousel autoplay autoplaySpeed={5000}>
