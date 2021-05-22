@@ -13,6 +13,7 @@ import Join from './static/assets/friends.svg';
 
 import './App.scss';
 import 'antd/dist/antd.css';
+import { useTranslation } from 'react-i18next';
 
 const { Title } = Typography;
 
@@ -20,6 +21,7 @@ const App = (props: any) => {
     const { history } = props;
     const dispatch = useDispatch();
     const [signUpPopupVisible, setSignUpPopupVisible] = useState(false);
+    const [t, i18n] = useTranslation('common');
 
     useEffect(() => {
         dispatch(getConfigurations());
@@ -37,7 +39,7 @@ const App = (props: any) => {
                     <Card className="join-us">
                         <Space direction="vertical">
                         <Title className="col-green fixed-title" level={3}>
-                            Be part of VikasBandhu family!
+                            {t('home_page.floating_title')}
                         </Title>
                         <Image src={Join} preview={false} />
                         <PrimaryBtn
