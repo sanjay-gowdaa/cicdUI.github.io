@@ -114,15 +114,13 @@ export const updateMasterListData = (masterlist: Array<MasterListApiFormat>) => 
 
 export const addNewProduce = (/*produceFormData: ProduceModel*/ produceFormData: any) => {
     return async(dispatch: any, getState: any) => {
-        const {loginUser, buyer: buyserState}: {loginUser: UserStateModel, buyer: BuyerStateModel} = getState() as RootState;
+        const {loginUser}: {loginUser: UserStateModel} = getState() as RootState;
         // for testing, use USER-ID 
         // const username = '7892329983'
         const {username, district, zip} = loginUser
-        const {produceList} = buyserState;
         const addProduceResponse = await addProduce({...produceFormData, district, zip}, username);
         // console.log('addProduceResponse', addProduceResponse);
         dispatch(getProduceList())
-        dispatch(getMatchesForBuyerCrops(produceList));
     }
 }
 
