@@ -20,7 +20,6 @@ const getWorkingHoursOptions = () => {
 
 const BuyerWorkingHours = (props: any) => {
     const { workingHours, setDisableSave } = props;
-    const { saturday, sunday, weekday } = workingHours;
     const [change, setChange] = useState(false);
 
     return (
@@ -38,7 +37,7 @@ const BuyerWorkingHours = (props: any) => {
                         >
                             <Select
                                 className="custom-select"
-                                defaultValue={weekday}
+                                defaultValue={workingHours?.weekday}
                                 onChange={() => setDisableSave(false)}
                             >
                                 { getWorkingHoursOptions() }
@@ -50,7 +49,7 @@ const BuyerWorkingHours = (props: any) => {
                         >
                             <Select
                                 className="custom-select"
-                                defaultValue={saturday}
+                                defaultValue={workingHours?.saturday}
                                 onChange={() => setDisableSave(false)}
                             >
                                 { getWorkingHoursOptions() }
@@ -62,7 +61,7 @@ const BuyerWorkingHours = (props: any) => {
                         >
                             <Select
                                 className="custom-select"
-                                defaultValue={sunday}
+                                defaultValue={workingHours?.sunday}
                                 onChange={() => setDisableSave(false)}
                             >
                                 { getWorkingHoursOptions() }
@@ -71,9 +70,9 @@ const BuyerWorkingHours = (props: any) => {
                         <Button type="link" danger onClick={() => setChange(!change)}>Cancel</Button>
                     </> :
                     <>
-                        <Text>Monday to Friday: {startCase(weekday.replaceAll("_", " "))}</Text>
-                        <br/><Text>Saturday: {startCase(saturday.replaceAll("_", " "))}</Text>
-                        <br/><Text>Sunday: {startCase(sunday.replaceAll("_", " "))}</Text>
+                        <Text>Monday to Friday: {startCase(workingHours?.weekday.replaceAll("_", " "))}</Text>
+                        <br/><Text>Saturday: {startCase(workingHours?.saturday.replaceAll("_", " "))}</Text>
+                        <br/><Text>Sunday: {startCase(workingHours?.sunday.replaceAll("_", " "))}</Text>
                         <br/><Button type="link" onClick={() => setChange(!change)}>Change</Button>
                     </>
             }
