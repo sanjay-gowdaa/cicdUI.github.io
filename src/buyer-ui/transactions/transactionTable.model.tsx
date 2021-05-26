@@ -41,7 +41,7 @@ export const transactionColumns = [
         },
     },
     {
-        title: 'Qunatity',
+        title: 'Quantity',
         dataIndex: 'matched_quantity',
         key: 'matched_quantity',
         render: (quantity: number) => {

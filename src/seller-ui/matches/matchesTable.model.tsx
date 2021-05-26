@@ -44,7 +44,7 @@ export const matchesColumns = (componentCallBacks: componentCallBacksModel) => [
         },
     },
     {
-        title: 'Qunatity Required',
+        title: 'Quantity Required',
         dataIndex: 'matched_quantity',
         key: 'matched_quantity',
         render: (matched_quantity: number, record: MatchRequirementModel) => {
