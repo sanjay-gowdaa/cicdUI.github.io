@@ -37,12 +37,11 @@ import {
     submitRegister,
     updateForm
 } from '../../store/registrationReducer/actions';
-import { routesMap } from '../../constants';
 import DefaultBtn from '../../app-components/defaultBtn';
 import CancelBtn from '../../app-components/cancelBtn';
 import PrimaryBtn from '../../app-components/primaryBtn';
+import { customConsentValidator } from '../constants';
 
-const { home } = routesMap;
 const { TextArea } = Input;
 const { Text } = Typography;
 
@@ -109,7 +108,7 @@ const Seller = (props: any) => {
 
     const onReset = () => {
         dispatch(resetOtpState());
-        history.push(home);
+        window.history.back();
     };
 
     return (
@@ -321,6 +320,7 @@ const Seller = (props: any) => {
                                     }}
                                     name="logo"
                                     listType="text"
+                                    maxCount={1}
                                 >
                                     <DefaultBtn
                                         icon={<UploadOutlined />}
@@ -350,7 +350,7 @@ const Seller = (props: any) => {
                             <Form.Item
                                 name="consent"
                                 valuePropName="checked"
-                                rules={[{ required: true, message: 'Please accept the terms and conditions!' }]}
+                                rules={[{ required: true, validator: (rule, value) => customConsentValidator(rule,value) }]}
                             >
                                 <Checkbox className="custom-checkbox" >
                                     I certify that the information submitted above is true and correct to the best of my knowledge.

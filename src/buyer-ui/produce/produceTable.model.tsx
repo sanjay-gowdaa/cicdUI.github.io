@@ -71,7 +71,7 @@ export const produceColumns = ({deleteProduce, prepareForEditProduce}: produceCo
         }
     },
     {
-        title: 'Delivery By',
+        title: 'Request Delivery By',
         dataIndex: 'delivery_by',
         key: 'delivery_by',
         render: (delivery_by: string) => {

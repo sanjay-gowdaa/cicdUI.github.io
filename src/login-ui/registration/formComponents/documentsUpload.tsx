@@ -83,6 +83,7 @@ const SellerDocuments = (props: {documents_list: Array<any>, subType: string, us
                                                             }}
                                                             name={toLower(documentName)}
                                                             listType="text"
+                                                            maxCount={1}
                                                         >
                                                             <DefaultBtn
                                                                 icon={<UploadOutlined />}

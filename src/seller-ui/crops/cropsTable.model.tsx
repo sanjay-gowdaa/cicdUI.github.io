@@ -62,7 +62,7 @@ export const cropColumns = ({
         key: 'grade'
     },
     {
-        title: 'Qunatity Remaining',
+        title: 'Quantity Remaining',
         dataIndex: 'quantity',
         key: 'quantity',
         render: (quantity: string, record: CropApiModel) => {

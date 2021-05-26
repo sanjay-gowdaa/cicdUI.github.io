@@ -28,7 +28,7 @@ import RegisterConfirmation from './registerConfirmationModal';
 import DocumentsUploadComponents from './formComponents/documentsUpload';
 import RequestSubmittedPopup from './requestSubmittedPopup';
 
-import { workingHours } from '../constants';
+import { customConsentValidator, workingHours } from '../constants';
 
 import Header from '../../header';
 import { RootState } from '../../store/rootReducer';
@@ -39,12 +39,10 @@ import {
     submitRegister,
     updateForm
 } from '../../store/registrationReducer/actions';
-import { routesMap } from '../../constants';
 import PrimaryBtn from '../../app-components/primaryBtn';
 import DefaultBtn from '../../app-components/defaultBtn';
 import CancelBtn from '../../app-components/cancelBtn';
 
-const { home } = routesMap;
 const { Option } = Select;
 const { TextArea } = Input;
 const { Text } = Typography;
@@ -138,7 +136,7 @@ const Buyer = (props: any) => {
 
     const onReset = () => {
         dispatch(resetOtpState());
-        history.push(home);
+        window.history.back();
     };
 
     return (
@@ -458,6 +456,7 @@ const Buyer = (props: any) => {
                                     }}
                                     name="logo"
                                     listType="text"
+                                    maxCount={1}
                                 >
                                     <DefaultBtn
                                         icon={<UploadOutlined />}
@@ -487,7 +486,7 @@ const Buyer = (props: any) => {
                             <Form.Item
                                 name="consent"
                                 valuePropName="checked"
-                                rules={[{ required: true, message: 'Please accept the terms and conditions!' }]}
+                                rules={[{ required: true, validator: (rule, value) => customConsentValidator(rule,value) }]}
                             >
                                 <Checkbox className="custom-checkbox" >
                                     I certify that the information submitted above is true and correct to the best of my knowledge.
