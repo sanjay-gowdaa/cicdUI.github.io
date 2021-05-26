@@ -164,7 +164,7 @@ const AddCropModal = ({
                             <span className="additional-text">Qtl</span>
                         </Form.Item>
                         <Form.Item
-                            label="Delivery Required By"
+                            label="Request Delivery By"
                             name="delivery_by"
                             rules={[{ type: 'object', required: true, message: 'Please select time!' }]}
                         >
