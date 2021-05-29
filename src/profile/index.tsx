@@ -130,6 +130,9 @@ const Profile = (props: any) => {
         }
         if(count === length){
             setKycFlag("submitted");
+            return true;
+        } else {
+            return false;
         }
     };
 
@@ -145,11 +148,11 @@ const Profile = (props: any) => {
             title: "Bank field partially filled",
             content: "If you wish to enter the bank details, kindly enter all the fields together!"
         })
-    }
+    };
 
     const onSave = () => {
-        setKycToComplete(formSubmitValue);
-        const registerDataPromise = generateFormData(cloneDeep(kycFormValues));
+        const isSubmitted = setKycToComplete(formSubmitValue);
+        const registerDataPromise = generateFormData(cloneDeep({...kycFormValues, isSubmitted}));
         registerDataPromise.then((data) => 
             dispatch(saveKyc(data))
         );
@@ -217,7 +220,6 @@ const Profile = (props: any) => {
             var finalValues: any = {};
             for(const property in formSubmitValues){
                 if(!isEmpty(formSubmitValues[property])) {
-                    console.log("send value",[property],":", formSubmitValues[property]);
                     finalValues = {...finalValues, [property]: formSubmitValues[property]};
                 }
             }
