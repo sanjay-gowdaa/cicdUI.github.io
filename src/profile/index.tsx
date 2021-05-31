@@ -33,7 +33,7 @@ import { UserTypes } from '../store/genericTypes';
 import { RootState } from '../store/rootReducer';
 import CancelBtn from '../app-components/cancelBtn';
 import PrimaryBtn from '../app-components/primaryBtn';
-import { getUserFiles, saveKyc } from '../store/loginReducer/actions';
+import { getUserFiles, saveKyc, addBeneficiary,registerBuyerAtDestiny, registerSellerAtDestiny } from '../store/loginReducer/actions';
 
 const { Title, Text } = Typography;
 
@@ -151,11 +151,68 @@ const Profile = (props: any) => {
     };
 
     const onSave = () => {
+        
         const isSubmitted = setKycToComplete(formSubmitValue);
         const registerDataPromise = generateFormData(cloneDeep({...kycFormValues, isSubmitted}));
         registerDataPromise.then((data) => 
-            dispatch(saveKyc(data))
-        );
+            dispatch(saveKyc(data)),
+
+        ); 
+        console.log("formSubmitValue:", kycFormValues)
+       
+        var beneDetails = {
+            "BeneName": "kycFormValues.account_name" || "loginState.bank_info.account_holder_name",
+            "BeneAccountNo": "kycFormValues.account_number" || "loginState.bank_info.account_no",
+            "IfscCode": "kycFormValues.ifsc_code" || "loginState.bank_info.ifsc_code"
+        };
+        var buyerDetails = {
+            "Buyername": "loginState.name",
+            "MobileNo": "loginState.phone_no",
+            "Address": "loginState.address2",
+            "City": "loginState.taluk",
+            "District": "loginState.district",
+            "State": "loginState.state",
+            "PinCode": "loginState.zip",
+            "BuyerType": "loginState.buyer_type",
+            "BuyerCategory":"loginState.category",            
+            "PANNo": "loginState.PAN" || "kycFormValues.ifsc_code.PAN",
+            "EmailId": "loginState.email",
+            "AccountNumber": "loginState.bank_info.account_no" || "kycFormValues.account_number",           
+            "IFSCCode": "loginStatebank_info.ifsc_code" || "kycFormValues.ifsc_code",
+            "UPIID": "loginState.bank_info.upi_id",
+            "AdharNo": "loginState.UIDAI",
+            "ActivationDate": "loginState.updated_at",
+            "GSTnumber": "loginState.gstin"
+        };
+        var sellerDetails = {
+            "Sellername": "loginState.name",
+            "MobileNo": "loginState.phone_no",
+            "Address": "loginState.address2",
+            "City": "loginState.taluk",
+            "District": "loginState.district",
+            "State": "loginState.state",
+            "PinCode": "loginState.zip",
+            "SellerType": "loginState.seller_type",
+            "SellerSubType":"loginState.category",            
+            "PANNo": "loginState.PAN" || "kycFormValues.ifsc_code.PAN",
+            "AccountNumber": "loginState.bank_info.account_no" || "kycFormValues.account_number",             
+            "IFSCCode": "loginStatebank_info.ifsc_code" || "kycFormValues.ifsc_code",
+            "UPIID": "loginState.bank_info.upi_id",
+            "AdharNo": "loginState.UIDAI",
+            "RTCNO": "loginState.rtc",
+            "CreationDate": "loginState.created_at",
+            "GSTnumber": "loginState.gstin"
+        };
+
+        if(!loginState?.isSubmitted && isSubmitted && userType === UserTypes.BUYER){
+            registerBuyerAtDestiny(buyerDetails);
+
+        }
+        else if(!loginState?.isSubmitted && isSubmitted && userType === UserTypes.SELLER){
+            addBeneficiary(beneDetails);
+            registerSellerAtDestiny(sellerDetails);
+        }
+
     };
     
     const checkForError = (name: any, field: any) => {

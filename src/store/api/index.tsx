@@ -349,4 +349,34 @@ export const postSellerTransactionAction = (
     }).then((response: any) => response.json());
 }
 
+export const postAddBeneficiarydata = (userData: any) => {
+    const addBeneficiaryApi = 'https://enzdzh0pw2.execute-api.ap-south-1.amazonaws.com/dev/benemaintain';
+    console.log("api being called");
+    return fetch(addBeneficiaryApi, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', "Accept": "*" },
+        body: JSON.stringify(userData) 
+    }).then((response: any) => response.text);
+}
+
+export const postBuyerDetails = (userData: any) => {
+    const registerBuyerApi = 'https://enzdzh0pw2.execute-api.ap-south-1.amazonaws.com/dev/buyerReg';
+    console.log("api being called");
+    return fetch(registerBuyerApi, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', "Accept": "*" },
+        body: JSON.stringify(userData) 
+    }).then((response: any) => response.text);
+}
+
+export const postSellerDetails = (userData: any) => {
+    const registerSellerApi = 'https://enzdzh0pw2.execute-api.ap-south-1.amazonaws.com/dev/sellerReg';
+    console.log("api being called");
+    return fetch(registerSellerApi, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', "Accept": "*" },
+        body: JSON.stringify(userData) 
+    }).then((response: any) => response.text);
+}
+
 /* Matches And Transactions End */
