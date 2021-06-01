@@ -135,21 +135,21 @@ export const getAccessTokenAndFetchUserDetails = (userCode: string) => {
 };
 
 export const addBeneficiary = async (userData: any) => {
-    console.log("inside add beneficiary");
+    //console.log("inside add beneficiary");
     const paymentResponse = await postAddBeneficiarydata(userData);
     const { response } = paymentResponse;
     console.log("bene response", response);       
 }
 
 export const registerBuyerAtDestiny = async (userData: any) => {
-    console.log("inside register buyer");
+    //console.log("inside register buyer");
     const paymentResponse = await postBuyerDetails(userData);
     const { response } = paymentResponse;
     console.log("buyer response", response);       
 }
 
 export const registerSellerAtDestiny = async (userData: any) => {
-    console.log("inside register seller");
+    //console.log("inside register seller");
     const paymentResponse = await postSellerDetails(userData);
     const { response } = paymentResponse;
     console.log("seller response", response);       

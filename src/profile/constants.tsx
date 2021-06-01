@@ -278,3 +278,13 @@ export const requiredDocumentList = [
         title: "PAN Card Photo"
     }
 ];
+
+export const initialFormValues = {
+    account_name: '',
+    account_number: '',
+    ifsc_code: '',
+    pan: '',
+    uidai: '',
+    email: '',
+    gstin: ''
+};

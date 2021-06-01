@@ -20,7 +20,8 @@ import './profile.scss';
 import {
     fieldLayout,
     kycFlagDetails,
-    requiredDocumentList
+    requiredDocumentList,
+    initialFormValues
 } from './constants';
 import BankDocuments from './bankDocuments';
 import BuyerWorkingHours from './buyerWorkingHours';
@@ -50,7 +51,7 @@ const Profile = (props: any) => {
     const [disableSave, setDisableSave] = useState(true);
     const [imageSrc, setImageSrc] = useState();
     const [isPDF, setPDF] = useState(false);
-    const [kycFormValues, setKycFormValues] = useState({});
+    const [kycFormValues, setKycFormValues] = useState(initialFormValues);
     const [formSubmitValue, setFormSubmitValue] = useState({});
     
     const loginState = useSelector((state: RootState) => state.loginUser);
@@ -158,51 +159,53 @@ const Profile = (props: any) => {
             dispatch(saveKyc(data)),
 
         ); 
-        console.log("formSubmitValue:", kycFormValues)
+        //console.log("formSubmitValue:", formSubmitValue)
        
         var beneDetails = {
-            "BeneName": "kycFormValues.account_name" || "loginState.bank_info.account_holder_name",
-            "BeneAccountNo": "kycFormValues.account_number" || "loginState.bank_info.account_no",
-            "IfscCode": "kycFormValues.ifsc_code" || "loginState.bank_info.ifsc_code"
+            "username": loginState.username,
+            "BeneName": kycFormValues.account_name|| loginState.bank_info.account_holder_name,
+            "BeneAccountNo": kycFormValues. account_number || loginState.bank_info.account_no,
+            "IfscCode": kycFormValues.ifsc_code || loginState.bank_info.ifsc_code  
         };
         var buyerDetails = {
-            "Buyername": "loginState.name",
-            "MobileNo": "loginState.phone_no",
-            "Address": "loginState.address2",
-            "City": "loginState.taluk",
-            "District": "loginState.district",
-            "State": "loginState.state",
-            "PinCode": "loginState.zip",
-            "BuyerType": "loginState.buyer_type",
-            "BuyerCategory":"loginState.category",            
-            "PANNo": "loginState.PAN" || "kycFormValues.ifsc_code.PAN",
-            "EmailId": "loginState.email",
-            "AccountNumber": "loginState.bank_info.account_no" || "kycFormValues.account_number",           
-            "IFSCCode": "loginStatebank_info.ifsc_code" || "kycFormValues.ifsc_code",
-            "UPIID": "loginState.bank_info.upi_id",
-            "AdharNo": "loginState.UIDAI",
-            "ActivationDate": "loginState.updated_at",
-            "GSTnumber": "loginState.gstin"
+            "Buyername": loginState.name,
+            "MobileNo": loginState.phone_no,
+            "Address": loginState.address2,
+            "City": loginState.taluk,
+            "District": loginState.district,
+            "State": loginState.state,
+            "PinCode": loginState.zip,
+            "BuyerType": loginState.buyer_type,
+            "BuyerCategory":loginState.category,            
+            "PANNo": loginState.PAN || kycFormValues.pan,
+            "EmailId": loginState.email || kycFormValues.email,
+            "AccountNumber": loginState.bank_info.account_no || kycFormValues.account_number,           
+            "IFSCCode": loginState.bank_info.ifsc_code || kycFormValues.ifsc_code,
+            "UPIID": loginState.bank_info.upi_id ,
+            "AdharNo": loginState.UIDAI || kycFormValues.uidai,
+            "ActivationDate": loginState.updated_at,
+            "GSTnumber": loginState.gstin || kycFormValues.gstin
         };
         var sellerDetails = {
-            "Sellername": "loginState.name",
-            "MobileNo": "loginState.phone_no",
-            "Address": "loginState.address2",
-            "City": "loginState.taluk",
-            "District": "loginState.district",
-            "State": "loginState.state",
-            "PinCode": "loginState.zip",
-            "SellerType": "loginState.seller_type",
-            "SellerSubType":"loginState.category",            
-            "PANNo": "loginState.PAN" || "kycFormValues.ifsc_code.PAN",
-            "AccountNumber": "loginState.bank_info.account_no" || "kycFormValues.account_number",             
-            "IFSCCode": "loginStatebank_info.ifsc_code" || "kycFormValues.ifsc_code",
-            "UPIID": "loginState.bank_info.upi_id",
-            "AdharNo": "loginState.UIDAI",
-            "RTCNO": "loginState.rtc",
-            "CreationDate": "loginState.created_at",
-            "GSTnumber": "loginState.gstin"
+            "Sellername": loginState.name,
+            "MobileNo": loginState.phone_no,
+            "Address": loginState.address2,
+            "City": loginState.taluk,
+            "District": loginState.district,
+            "State": loginState.state,
+            "PinCode": loginState.zip,
+            "SellerType": loginState.seller_type,
+            "SellerSubType":loginState.category,            
+            "PANNo": loginState.PAN || kycFormValues.pan,
+            "AccountNumber": loginState.bank_info.account_no || kycFormValues.account_number,             
+            "IFSCCode": loginState.bank_info.ifsc_code || kycFormValues.ifsc_code,
+            "UPIID": loginState.bank_info.upi_id,
+            "AdharNo": loginState.UIDAI  || kycFormValues.uidai,
+            "RTCNO": loginState.rtc,
+            "CreationDate": loginState.created_at,
+            "GSTnumber": loginState.gstin || kycFormValues.gstin
         };
+        //console.log("beneDetails:", beneDetails)
 
         if(!loginState?.isSubmitted && isSubmitted && userType === UserTypes.BUYER){
             registerBuyerAtDestiny(buyerDetails);
