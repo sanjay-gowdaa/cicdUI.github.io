@@ -8,18 +8,17 @@ import CashCrop from '../static/assets/cashCrop.png';
 import OilSeed from '../static/assets/oilSeed.png';
 import Wheat from '../static/assets/wheat-1.svg';
 import Cardomom from '../static/assets/cardomom.jpg';
+import { useTranslation } from 'react-i18next';
 
 const { Paragraph, Text, Title } = Typography;
 
 const Commodities = () => {
+    const [t,i18n] = useTranslation('common')
     return (
         <div id="commodities">
-            <Title className="col-green commodities-title" level={2}>Commodities we facilitate</Title>
-            <Paragraph className="commodities-paragraph">
-                VikasBandhu focus is currently limited to the non perishable agricultural produce
-                from Farmers and Farmer Self help groups. The coverage initially is targetted in 
-                Karnataka covering the  major crops native to this region. The scope of produce 
-                is intended/limited to be below categories at this point.
+            <Title className={`col-green ${t('commodities_page.styles.commodities-title')}`} level={2}>{t('commodities_page.title')}</Title>
+            <Paragraph className={t('commodities_page.styles.commodities-paragraph')}>
+                {t('commodities_page.paragraph')}
             </Paragraph>
             <div className="commodities-list">
                 <Image
@@ -29,7 +28,7 @@ const Commodities = () => {
                     src={StapleCrop}
                     preview={false}
                 /><br/>
-                <Text className="commodities-name">Staple Crops</Text>
+                <Text className="commodities-name">{t('commodities_page.commodities_name.1')}</Text>
             </div>
             <div className="commodities-list">
                 <Image
@@ -39,7 +38,7 @@ const Commodities = () => {
                     src={Pulses}
                     preview={false}
                 /><br/>
-                <Text className="commodities-name">Pulses</Text>
+                <Text className="commodities-name">{t('commodities_page.commodities_name.2')}</Text>
             </div>
             <div className="commodities-list">
                 <Image
@@ -49,7 +48,7 @@ const Commodities = () => {
                     src={CashCrop}
                     preview={false}
                 /><br/>
-                <Text className="commodities-name">Cash Crops</Text>
+                <Text className="commodities-name">{t('commodities_page.commodities_name.3')}</Text>
             </div>
             <div className="commodities-list">
                 <Image
@@ -59,7 +58,7 @@ const Commodities = () => {
                     src={Cardomom}
                     preview={false}
                 /><br/>
-                <Text className="commodities-name">Spices</Text>
+                <Text className="commodities-name">{t('commodities_page.commodities_name.4')}</Text>
             </div>
             <div className="commodities-list">
                 <Image
@@ -69,7 +68,7 @@ const Commodities = () => {
                     src={OilSeed}
                     preview={false}
                 /><br/>
-                <Text className="commodities-name">Oil Seeds</Text>
+                <Text className="commodities-name">{t('commodities_page.commodities_name.5')}</Text>
             </div>
             <Image className="wheat-image" src={Wheat} preview={false} />
         </div>

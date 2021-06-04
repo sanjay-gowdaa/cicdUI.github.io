@@ -4,8 +4,11 @@ import { MailOutlined, PhoneOutlined } from '@ant-design/icons';
 import footerImg from '../static/assets/footer.png';
 import './footer.scss';
 import { contactUs } from '../constants';
+import { useTranslation } from 'react-i18next';
+
 
 const Footer = () => {
+    const [t, i18n] = useTranslation('common');
     return (
         <div className="app-footer-container display-flex-row justify-content-space-bet align-center">
             <div className="height-full">
@@ -14,6 +17,7 @@ const Footer = () => {
                 </p>
                 <p>
                     <PhoneOutlined /> {contactUs.phoneNumber}
+                    
                 </p>
             </div>
             <div>

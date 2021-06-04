@@ -8,15 +8,17 @@ import Sync from '../static/assets/sync.svg';
 import Lorry from '../static/assets/lorry.svg';
 import SocialCare from '../static/assets/social-care.svg';
 import Nature from '../static/assets/nature.svg';
+import { useTranslation } from 'react-i18next';
 
 const { Text, Title } = Typography;
 
 const Ecosystem = () => {
+    const [t, i18n] = useTranslation('common')
     return (
         <div id="ecosystem">
             <Image className="tractor-image" src={Tractor} preview={false} />
-            <div className="ecosystem-content">
-                <Title className="col-green ecosystem-title" level={2}>At VikasBandhu, we build an ecosystem that would</Title>
+            <div className={t('ecosystem_page.styles.ecosystem-content')}>
+                <Title className={`col-green ${t('ecosystem_page.styles.ecosystem-title')}`} level={2}>{t('ecosystem_page.title')}</Title>
                 <Row>
                     <Col span={2}>
                         <Space direction="vertical" className="bulletin-image" size="large">
@@ -28,21 +30,21 @@ const Ecosystem = () => {
                         </Space>
                     </Col>
                     <Col>
-                        <Space direction="vertical" className="bulletin-text" size="small">
+                        <Space direction="vertical" className={t('ecosystem_page.styles.bulletin-text')} size="small">
                         <Text className="bulletin-points">
-                            Connect buyers and sellers in a simple to use platform.<br/>
+                        {t('ecosystem_page.text_1')}<br/>
                         </Text>
                         <Text className="bulletin-points">
-                            <br/>Provide dynamic information on pricing.<br/>
+                            <br/>{t('ecosystem_page.text_2')}<br/>
                         </Text>
                         <Text className="bulletin-points">
-                            <br/>Meet demand and supply.<br/>
+                            <br/>{t('ecosystem_page.text_3')}<br/>
                         </Text>
                         <Text className="bulletin-points">
-                            <br/>Facilitate a Door-to-door solution of logistics.<br/>
+                            <br/>{t('ecosystem_page.text_4')}<br/>
                         </Text>
                         <Text className="bulletin-points">
-                            <br/>Boost rural economy by providing local employment.
+                            <br/>{t('ecosystem_page.text_5')}
                         </Text>
                         </Space>
                     </Col>

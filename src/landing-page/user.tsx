@@ -4,36 +4,33 @@ import { Card, Col, Image, Row, Typography } from 'antd';
 import SellerIcon from '../static/assets/man.svg';
 import BuyerIcon from '../static/assets/teacher.svg';
 import Transport from '../static/assets/transport.svg';
+import { useTranslation } from 'react-i18next';
 
 const { Paragraph, Title } = Typography;
 
 const User = () => {
+    const [t,i18n] = useTranslation('common')
     return (
         <div id="users">
-            <Title className="col-green user-title" level={2}>VikasBandhu for</Title>
+            <Title className={`col-green ${t('users_page.styles.user-title')}`} level={2}>{t('users_page.title')}</Title>
             <Row style={{paddingLeft: "15vw"}}>
                 <Col span={8} className="user-column">
                     <Card className="user-card">
-                        <Title className="col-green" level={2}>Sellers</Title>
-                        <Paragraph>Atmanirbar Farmers towards Atmanirbhar Bharat</Paragraph>
+                        <Title className="col-green" level={2}>{t('users_page.user_card1.title')}</Title>
+                        <Paragraph className={t('users_page.styles.card-subtitle')}>{t('users_page.user_card1.subtitle')}</Paragraph>
                         <Image width={125} height={125} src={SellerIcon} preview={false} />
-                        <Paragraph>
-                            The farmer and farmer-self help groups are the centre of our
-                            efforts. We help to connect sellers to buyers directly. We 
-                            aim to provide Logistics and better price for their produce 
-                            at their doorstep.
+                        <Paragraph className={t('users_page.styles.card-text')}>
+                            {t('users_page.user_card1.text')}
                         </Paragraph>
                     </Card>
                 </Col>
                 <Col span={8} className="user-column">
-                    <Card className="user-card">
-                        <Title className="col-green" level={2}>Buyers</Title>
-                        <Paragraph>Buyer Community Optimize and enable direct connect</Paragraph>
+                    <Card className={t('users_page.styles.user-card')}>
+                        <Title className="col-green" level={2}>{t('users_page.user_card2.title')}</Title>
+                        <Paragraph className={t('users_page.styles.card-subtitle')}>{t('users_page.user_card2.subtitle')}</Paragraph>
                         <Image width={125} height={125} src={BuyerIcon} preview={false} />
-                        <Paragraph>
-                            VikasBandhu attempts to identify the right quantity 
-                            source, taking care of the logistics, minimizing on 
-                            overheads with customized packing where requested.             
+                        <Paragraph className={t('users_page.styles.card-text')}>
+                        {t('users_page.user_card2.text')}       
                         </Paragraph>
                     </Card>
                 </Col>

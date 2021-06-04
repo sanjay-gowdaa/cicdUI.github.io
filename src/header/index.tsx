@@ -3,21 +3,24 @@ import { Breadcrumb, Image, Modal } from 'antd';
 
 import Register from '../login-ui/register';
 import UserHeader from '../header-profile';
-import Logo from '../static/assets/logo.jpg';
+import Logo from '../static/assets/vbLogo.png';
+import KannadaLogo from '../static/assets/kannadaLogo.png'
+// import Logo from '../static/assets/logo.jpg';
 import { LOGIN_URL } from '../store/api';
 import PrimaryBtn from '../app-components/primaryBtn';
 import DefaultBtn from '../app-components/defaultBtn';
 
 import './header.scss';
+import { useTranslation } from 'react-i18next';
 
 const UserBasicActions = ({ history, popUpTrigger }: { history: any, popUpTrigger: any }) => {
     const {signUpPopupVisible, setSignUpPopupVisible} = popUpTrigger;
-
+    const [ t , i18n ] = useTranslation('common')
     return (
         <div className="display-flex-row align-center">
             <DefaultBtn
                 className="vikas-btn-radius wid150 custom-login-button" 
-                content="Login"
+                content={t('landing_page.actions.login')}
                 onClick={() => window.location.href = LOGIN_URL} 
                 size="large"
             />
@@ -27,7 +30,7 @@ const UserBasicActions = ({ history, popUpTrigger }: { history: any, popUpTrigge
                 type="primary"
                 size="large"
                 onClick={() => setSignUpPopupVisible(!signUpPopupVisible)}
-                content="Register"
+                content={t('landing_page.actions.register')}
             />
             <Modal
                 title={null}
@@ -50,20 +53,22 @@ const HeaderActions = ({ history, isLoggedIn, popUpTrigger }: { history: any, is
 };
 
 const Header = (headerProps: any) => {
+    const [ t , i18n ] = useTranslation('common')
     const { history, showActions, isLoggedIn, popUpTrigger } = headerProps;
+    const logo = t("language") == "en" ? Logo : KannadaLogo;
     return (
         <div className="landing-page-header-bar">
-            <Image width={"7em"} height={"5.5em"} src={Logo} preview={false} />
+            <Image width={"7em"} height={"5.5em"} src={logo} preview={false} />
             <Breadcrumb className="header-breadcrumb" separator=" ">
-                <Breadcrumb.Item href="#home">Home</Breadcrumb.Item>
-                <Breadcrumb.Item href="#aim">Aim</Breadcrumb.Item>
-                <Breadcrumb.Item href="#ecosystem">EcoSystem</Breadcrumb.Item>
-                <Breadcrumb.Item href="#commodities">Commodities</Breadcrumb.Item>
-                <Breadcrumb.Item href="#users">Users</Breadcrumb.Item>
-                <Breadcrumb.Item href="#aboutUs">About Us</Breadcrumb.Item>
-                <Breadcrumb.Item href="#team">Team</Breadcrumb.Item>
-                <Breadcrumb.Item href="#legal">Legal</Breadcrumb.Item>
-                <Breadcrumb.Item href="#contactUs">Contact Us</Breadcrumb.Item>
+                <Breadcrumb.Item href="#home">{t('landing_page.header.breadcrumb.home')}</Breadcrumb.Item>
+                <Breadcrumb.Item href="#aim">{t('landing_page.header.breadcrumb.aim')}</Breadcrumb.Item>
+                <Breadcrumb.Item href="#ecosystem">{t('landing_page.header.breadcrumb.ecosystem')}</Breadcrumb.Item>
+                <Breadcrumb.Item href="#commodities">{t('landing_page.header.breadcrumb.commodities')}</Breadcrumb.Item>
+                <Breadcrumb.Item href="#users">{t('landing_page.header.breadcrumb.users')}</Breadcrumb.Item>
+                <Breadcrumb.Item href="#aboutUs">{t('landing_page.header.breadcrumb.about_us')}</Breadcrumb.Item>
+                <Breadcrumb.Item href="#team">{t('landing_page.header.breadcrumb.team')}</Breadcrumb.Item>
+                <Breadcrumb.Item href="#legal">{t('landing_page.header.breadcrumb.legal')}</Breadcrumb.Item>
+                <Breadcrumb.Item href="#contactUs">{t('landing_page.header.breadcrumb.contact_us')}</Breadcrumb.Item>
             </Breadcrumb>
             {showActions ? <HeaderActions isLoggedIn={isLoggedIn} history={history} popUpTrigger={popUpTrigger} /> : null}
         </div>

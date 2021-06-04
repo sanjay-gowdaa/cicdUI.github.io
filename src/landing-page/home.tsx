@@ -1,8 +1,10 @@
 import React from 'react';
 import { Alert, Button, Carousel, Image, Typography } from 'antd';
-import { Trans } from 'react-i18next'
+import { Trans, useTranslation } from 'react-i18next'
 
 import Logo from '../static/assets/vbLogo.png';
+import KannadaLogo from '../static/assets/kannadaLogo.png'
+//import Constants from '../static/translations/constants'
 import VBOne from '../static/assets/Vikasbandhu_One.jpg';
 import VBTwo from '../static/assets/Vikasbandhu_Two.jpg';
 import VBThree from '../static/assets/Vikasbandhu_Three.jpg';
@@ -12,7 +14,8 @@ import VBFive from '../static/assets/Vikasbandhu_Five.jpg';
 const { Title } = Typography;
 
 const Home = () => {
-
+    const [t,i18n]=useTranslation('common')
+    const logo =  t("language") == "en" ? Logo : KannadaLogo;
     const goToAim = (url: any) => {
         window.location = url;
     };
@@ -37,28 +40,28 @@ const Home = () => {
                     <Image height={"87vh"} src={VBFour} preview={false} />
                     <Image height={"87vh"} src={VBFive} preview={false} />
                 </Carousel>
-                <div className="home-content">
-                    <Image className="logo" height={100} width={100} src={Logo} preview={false} />
+                <div className={t('landing_page.actions.styles.home-content')}>
+                    <Image className="logo" height={100} width={100} src={logo} preview={false} />
                     <div className="home-paragraph">
                         <Title className="col-white" level={4}>
-                            VikasBandhu -
+                            {t('home_page.title')} -
                         </Title>
                         <Title className="col-white margin-none" level={5}>
-                            Friendly E-Market Place for
+                        {t('home_page.text_1')}
                         </Title>
                         <Title className="col-white margin-none" level={5}>
-                            Buyers and Sellers to connect,
+                        {t('home_page.text_2')}
                         </Title>
                         <Title className="col-white margin-none" level={5}>
-                            engage and transact seamlessly
+                        {t('home_page.text_3')}
                         </Title>
                         <Title className="col-white margin-none" level={5}>
-                            for win-win relationships
+                        {t('home_page.text_4')}
                         </Title>
                     </div>
                     <Button className="explore-vb-btn" onClick={() => goToAim("#aim")}>
                         <Title className="col-white margin-none" level={5}>
-                            Explore Vikasbandhu
+                           {t('landing_page.actions.explore')}
                         </Title>
                     </Button>
                 </div>
