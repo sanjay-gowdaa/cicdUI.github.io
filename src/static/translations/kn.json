@@ -172,6 +172,9 @@
             "email":"ಇಮೇಲ್",
             "phone":"ದೂರವಾಣಿ",
             "message":"ಸಂದೇಶ"
+        },
+        "styles":{
+            "contact-us-info":"contact-us-info-kn"
         }
     }
 }

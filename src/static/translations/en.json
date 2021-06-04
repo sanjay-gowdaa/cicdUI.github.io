@@ -172,6 +172,9 @@
             "email":"Email",
             "phone":"Phone",
             "message":"Message"
+        },
+        "styles":{
+            "contact-us-info":"contact-us-info"
         }
     }
 
