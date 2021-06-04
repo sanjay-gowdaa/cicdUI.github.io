@@ -34,6 +34,9 @@ const TRANSACTION_LIST_API = `${TRANSACTION_API}/user`;
 const USER_COMPLETE_DETAILS = 'getusercompletedetails';
 const USER_FILE_API = 'getuserfile';
 const UPDATE_USER_DETAILS = 'updateuserdetails';
+const ADD_BENEFICIARY_API = 'benemaintain';
+const ADD_BUYER_AT_DESTINY = 'buyerReg';
+const ADD_SELLER_AT_DESTINY = 'sellerReg';
 
 const parseToken = (userToken: string) => {
     const sholudDecrypt = process.env.REACT_APP_ENV === 'prod';
@@ -350,28 +353,25 @@ export const postSellerTransactionAction = (
 }
 
 export const postAddBeneficiarydata = (userData: any) => {
-    const addBeneficiaryApi = 'https://enzdzh0pw2.execute-api.ap-south-1.amazonaws.com/dev/benemaintain';
+    const addBeneficiaryApi = `${BASE_URL}/${STAGE}/${ADD_BENEFICIARY_API}`;
     return fetch(addBeneficiaryApi, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json', "Accept": "*" },
         body: JSON.stringify(userData) 
     }).then((response: any) => response.text);
 }
 
 export const postBuyerDetails = (userData: any) => {
-    const registerBuyerApi = 'https://enzdzh0pw2.execute-api.ap-south-1.amazonaws.com/dev/buyerReg';
+const registerBuyerApi = `${BASE_URL}/${STAGE}/${ADD_BUYER_AT_DESTINY}`;
     return fetch(registerBuyerApi, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json', "Accept": "*" },
         body: JSON.stringify(userData) 
     }).then((response: any) => response.text);
 }
 
 export const postSellerDetails = (userData: any) => {
-    const registerSellerApi = 'https://enzdzh0pw2.execute-api.ap-south-1.amazonaws.com/dev/sellerReg';
+    const registerSellerApi = `${BASE_URL}/${STAGE}/${ADD_SELLER_AT_DESTINY}`;
     return fetch(registerSellerApi, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json', "Accept": "*" },
         body: JSON.stringify(userData) 
     }).then((response: any) => response.text);
 }
