@@ -4,7 +4,6 @@ import { Trans, useTranslation } from 'react-i18next'
 
 import Logo from '../static/assets/vbLogo.png';
 import KannadaLogo from '../static/assets/kannadaLogo.png'
-//import Constants from '../static/translations/constants'
 import VBOne from '../static/assets/Vikasbandhu_One.jpg';
 import VBTwo from '../static/assets/Vikasbandhu_Two.jpg';
 import VBThree from '../static/assets/Vikasbandhu_Three.jpg';
@@ -14,7 +13,7 @@ import VBFive from '../static/assets/Vikasbandhu_Five.jpg';
 const { Title } = Typography;
 
 const Home = () => {
-    const [t,i18n]=useTranslation('common')
+    const [ t,i18n ]=useTranslation('common');
     const logo =  t("language") == "en" ? Logo : KannadaLogo;
     const goToAim = (url: any) => {
         window.location = url;

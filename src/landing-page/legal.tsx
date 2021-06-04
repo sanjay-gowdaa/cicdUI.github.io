@@ -1,17 +1,18 @@
 import React from 'react';
 import { Button, Image, Tabs, Typography } from 'antd';
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 import Accept from '../static/assets/Accept.svg';
 import { routesMap } from '../constants';
-import { useTranslation } from 'react-i18next';
 
 const { Paragraph, Title } = Typography;
 const { TabPane } = Tabs;
 const { terms } = routesMap;
 
 const Legal = () => {
-    const [t] = useTranslation('common')
+    const [ t ,i18n ] = useTranslation('common');
+
     return (
         <div id="legal">
             <Title className="col-white legal-title" level={2}>{t('legal_page.title')}</Title>

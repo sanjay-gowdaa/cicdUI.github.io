@@ -1,5 +1,6 @@
 import React from 'react';
 import { Card, Col, Image, Row, Space, Typography } from 'antd';
+import { useTranslation } from 'react-i18next';
 
 import Nagappa from '../static/assets/nagappa.png';
 import Suma from '../static/assets/suma.png';
@@ -7,12 +8,12 @@ import Sadananda from '../static/assets/sadananda.png';
 import Chikkaramu from '../static/assets/Chikkaramu.jpg';
 import Sachin from '../static/assets/Sachin.jpg';
 import CVKulkarni from '../static/assets/CVKulkarni.jpg';
-import { useTranslation } from 'react-i18next';
 
 const { Text, Title } = Typography;
 
 const Team = () => {
-    const [t] =useTranslation('common')
+    const [ t, i18n ] =useTranslation('common');
+
     return (
         <div id="team">
             <Title className="col-green" level={2}>{t('our_team.title')}</Title>

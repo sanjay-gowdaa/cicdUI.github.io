@@ -1,15 +1,16 @@
 import React from 'react';
 import { Card, Col, Image, Row, Typography } from 'antd';
+import { useTranslation } from 'react-i18next';
 
 import SellerIcon from '../static/assets/man.svg';
 import BuyerIcon from '../static/assets/teacher.svg';
 import Transport from '../static/assets/transport.svg';
-import { useTranslation } from 'react-i18next';
 
 const { Paragraph, Title } = Typography;
 
 const User = () => {
-    const [t,i18n] = useTranslation('common')
+    const [ t,i18n ] = useTranslation('common');
+
     return (
         <div id="users">
             <Title className={`col-green ${t('users_page.styles.user-title')}`} level={2}>{t('users_page.title')}</Title>

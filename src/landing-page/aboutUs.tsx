@@ -1,15 +1,17 @@
 import React from 'react';
 import { Card, Col, Image, Row, Typography } from 'antd';
+import { useTranslation } from 'react-i18next';
 
 import Outline from '../static/assets/Outline.svg';
 import Vision from '../static/assets/vision.svg';
 import Philosophy from '../static/assets/philosophy.svg';
-import { useTranslation } from 'react-i18next';
+
 
 const { Paragraph, Title } = Typography;
 
 const AboutUs = () => {
-    const [t,i18n] = useTranslation('common')
+    const [ t,i18n ] = useTranslation('common');
+
     return (
         <div id="aboutUs">
             <Title className={`col-green ${t('about_us.styles.about-us-title')}`} level={2}>{t('about_us.title')}</Title>

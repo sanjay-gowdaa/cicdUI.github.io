@@ -1,5 +1,6 @@
 import React from 'react';
 import { Col, Image, Row, Space, Typography } from 'antd';
+import { useTranslation } from 'react-i18next';
 
 import Tractor from '../static/assets/tractor.svg';
 import Network from '../static/assets/network.svg';
@@ -8,12 +9,12 @@ import Sync from '../static/assets/sync.svg';
 import Lorry from '../static/assets/lorry.svg';
 import SocialCare from '../static/assets/social-care.svg';
 import Nature from '../static/assets/nature.svg';
-import { useTranslation } from 'react-i18next';
 
 const { Text, Title } = Typography;
 
 const Ecosystem = () => {
-    const [t, i18n] = useTranslation('common')
+    const [ t, i18n ] = useTranslation('common');
+
     return (
         <div id="ecosystem">
             <Image className="tractor-image" src={Tractor} preview={false} />

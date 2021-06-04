@@ -1,20 +1,21 @@
 import React from 'react';
 import { Button, Col, Input, Row, Space, Typography } from 'antd';
 import { HomeOutlined, MailOutlined, PhoneOutlined } from '@ant-design/icons';
+import { useTranslation } from 'react-i18next';
 
 import { contactUs } from '../constants';
-import { useTranslation } from 'react-i18next';
 
 const { Text, Title } = Typography;
 const { TextArea } = Input;
 
 const ContactUs = () => {
-    const [t,i18n] = useTranslation('common')
+    const [ t,i18n ] = useTranslation('common');
+
     return (
         <div id="contactUs">
             <Title className="col-green contact-us-title" level={2}>{t('contact_us_page.title')}</Title>
             <Row>
-                <Col span={9} className="contact-us-info">
+                <Col span={9} className={t('contact_us_page.styles.contact-us-info')}>
                     <Space direction="vertical">
                         <Text><PhoneOutlined className="contact-us-icon" />{contactUs.phoneNumber}</Text>
                         <Text><MailOutlined className="contact-us-icon" />{contactUs.emailId}</Text>

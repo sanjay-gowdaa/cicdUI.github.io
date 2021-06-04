@@ -584,6 +584,39 @@ $col-shade-green: #12805C;
     }
 }
 
+// fixed card
+
+.fixed-card-join {
+    position: sticky;
+    float: right;
+    top: 15rem;
+    opacity: 1;
+
+    .join-us {
+        width: fit-content;
+        height: fit-content;
+        background-color: white;
+        border-radius: 0.2rem;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+        text-align: center;
+        opacity: 1;
+        padding: 0;
+        margin-right: 1rem;
+        
+        .fixed-title-kn {
+            font-size: large;
+            width: 10rem;
+            margin: 0;
+        }
+
+        .join-us-reg {
+            width: 10rem;
+            height: 3rem;
+            font-size: large;
+        }
+    }
+}
+
 // Aim page
 #aim {
     scroll-margin: 6rem;
@@ -904,35 +937,28 @@ $col-shade-green: #12805C;
 
 // contact us page
 
-// fixed card
-
-.fixed-card-join {
-    position: sticky;
-    float: right;
-    top: 15rem;
-    opacity: 1;
-
-    .join-us {
-        width: fit-content;
-        height: fit-content;
-        background-color: white;
-        border-radius: 0.2rem;
-        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-        text-align: center;
-        opacity: 1;
-        padding: 0;
-        margin-right: 1rem;
-        
-        .fixed-title-kn {
-            font-size: large;
-            width: 10rem;
-            margin: 0;
+#contactUs {
+    margin-top: 6rem;
+    margin-left: 16rem;
+    scroll-margin: 6rem;
+    
+    .contact-us-info-kn {
+        font-size: large;
+    
+        .anticon {
+            font-size: x-large;
+            color: #f5a31a;
+            padding: 1rem 1rem;
         }
+    }
 
-        .join-us-reg {
-            width: 10rem;
-            height: 3rem;
-            font-size: large;
+    .write-feedback {
+        background-color: #fbfbfb;
+        padding: 1rem;
+        margin-bottom: 2rem;
+
+        .feedback-form {
+            padding: 1.5rem;
         }
     }
 }

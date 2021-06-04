@@ -1,19 +1,19 @@
 import React from 'react';
 import { Image, Typography } from 'antd';
+import { useTranslation } from 'react-i18next';
 
 import StapleCrop from '../static/assets/stapleCrop.png';
 import Pulses from '../static/assets/pulses.png';
 import CashCrop from '../static/assets/cashCrop.png';
-// import Spices from '../static/assets/spices.png';
 import OilSeed from '../static/assets/oilSeed.png';
 import Wheat from '../static/assets/wheat-1.svg';
 import Cardomom from '../static/assets/cardomom.jpg';
-import { useTranslation } from 'react-i18next';
 
 const { Paragraph, Text, Title } = Typography;
 
 const Commodities = () => {
-    const [t,i18n] = useTranslation('common')
+    const [ t,i18n ] = useTranslation('common');
+
     return (
         <div id="commodities">
             <Title className={`col-green ${t('commodities_page.styles.commodities-title')}`} level={2}>{t('commodities_page.title')}</Title>
