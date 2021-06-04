@@ -1,21 +1,21 @@
 import React from 'react';
 import { Breadcrumb, Image, Modal } from 'antd';
+import { useTranslation } from 'react-i18next';
 
 import Register from '../login-ui/register';
 import UserHeader from '../header-profile';
 import Logo from '../static/assets/vbLogo.png';
-import KannadaLogo from '../static/assets/kannadaLogo.png'
-// import Logo from '../static/assets/logo.jpg';
+import KannadaLogo from '../static/assets/kannadaLogo.png';
 import { LOGIN_URL } from '../store/api';
 import PrimaryBtn from '../app-components/primaryBtn';
 import DefaultBtn from '../app-components/defaultBtn';
 
 import './header.scss';
-import { useTranslation } from 'react-i18next';
 
 const UserBasicActions = ({ history, popUpTrigger }: { history: any, popUpTrigger: any }) => {
     const {signUpPopupVisible, setSignUpPopupVisible} = popUpTrigger;
-    const [ t , i18n ] = useTranslation('common')
+    const [ t , i18n ] = useTranslation('common');
+
     return (
         <div className="display-flex-row align-center">
             <DefaultBtn
@@ -53,9 +53,10 @@ const HeaderActions = ({ history, isLoggedIn, popUpTrigger }: { history: any, is
 };
 
 const Header = (headerProps: any) => {
-    const [ t , i18n ] = useTranslation('common')
+    const [ t , i18n ] = useTranslation('common');
     const { history, showActions, isLoggedIn, popUpTrigger } = headerProps;
     const logo = t("language") == "en" ? Logo : KannadaLogo;
+
     return (
         <div className="landing-page-header-bar">
             <Image width={"7em"} height={"5.5em"} src={logo} preview={false} />

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Card, Col, Image, Modal, Row, Typography } from 'antd';
+import { useTranslation } from 'react-i18next';
 
 import Connect from '../static/assets/connection.svg';
 import Direct from '../static/assets/transmission.svg';
@@ -7,13 +8,13 @@ import BestPrize from '../static/assets/best.svg';
 import LiveInfo from '../static/assets/agronomy.svg';
 import Mission from '../static/assets/mission.svg';
 import Handshake from '../static/assets/handshake.svg';
-import { useTranslation } from 'react-i18next';
 
 const { Link, Text, Title } = Typography;
 
 const Aim = () => { 
     const [viewVideo, setVideo] = useState(false);
-    const [t,i18n] = useTranslation('common')
+    const [t,i18n] = useTranslation('common');
+
     return (
         <div id="aim">
             <Modal

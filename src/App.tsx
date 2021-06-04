@@ -1,6 +1,8 @@
 import React, {useEffect, useState} from 'react';
 import { useDispatch } from 'react-redux';
 import { Card, Image, Space, Typography } from 'antd';
+import 'antd/dist/antd.css';
+import { useTranslation } from 'react-i18next';
 
 import Header from './header';
 import Footer from './footer';
@@ -10,13 +12,9 @@ import Home from './landing-page/home';
 import PrimaryBtn from './app-components/primaryBtn';
 import Banner from './static/assets/banner.png';
 import KannadaBanner from './static/assets/banner_Kannada.png';
-
 import Join from './static/assets/friends.svg';
 
 import './App.scss';
-import 'antd/dist/antd.css';
-import { useTranslation } from 'react-i18next';
-import { title } from 'process';
 
 const { Title } = Typography;
 
@@ -26,18 +24,19 @@ const App = (props: any) => {
     const [signUpPopupVisible, setSignUpPopupVisible] = useState(false);
     const [t, i18n] = useTranslation('common');
     const banner = t("language") == "en" ? Banner : KannadaBanner ;
-    // const eng_title ="Vikasabandhu";
-    // const kan_title = "ವಿಕಾಸ ಬಂಧು"
-    // const tab_title = t("title")== "title_en" ? eng_title :kan_title;
-   
+
     useEffect(() => {
         dispatch(getConfigurations());
-        document.title = `${t('title')}`
+        document.title = `${t('title')}`;
     }, []);
-   
+
     return (
         <div className="app-container">
-            <Header history={history} showActions={true} popUpTrigger={{setSignUpPopupVisible, signUpPopupVisible}} />
+            <Header
+                history={history}
+                showActions={true}
+                popUpTrigger={{setSignUpPopupVisible, signUpPopupVisible}}
+            />
             <div className="main-content">
                 <Home />
                 <div className="fixed-landing-page-banner">
