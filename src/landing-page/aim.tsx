@@ -38,7 +38,9 @@ const Aim = () => {
                 <Col span={8}>
                     <Card className={t('aim_page.styles.aim-card')}>
                         <div className="hex1"></div>
-                        <div className="hex2"><Image className="icon-inside-hex" src={Connect} preview={false} /></div>
+                        <div className="hex2">
+                            <Image className="icon-inside-hex" src={Connect} preview={false} />
+                        </div>
                         <div className="hex3"></div>
                         <Text className="col-white">{t('aim_page.aim_card_1')}</Text>
                     </Card>
@@ -46,7 +48,9 @@ const Aim = () => {
                 <Col span={8}>
                     <Card className={t('aim_page.styles.aim-card')}>
                         <div className="hex1"></div>
-                        <div className="hex2"><Image className="icon-inside-hex" src={Direct} preview={false} /></div>
+                        <div className="hex2">
+                            <Image className="icon-inside-hex" src={Direct} preview={false} />
+                        </div>
                         <div className="hex3"></div> 
                         <Text className="col-white">{t('aim_page.aim_card_2')}</Text>
                     </Card>
@@ -54,7 +58,9 @@ const Aim = () => {
                 <Col span={8}>
                     <Card className={t('aim_page.styles.aim-card')}>
                         <div className="hex1"></div>
-                        <div className="hex2"><Image className="icon-inside-hex" src={BestPrize} preview={false} /></div>
+                        <div className="hex2">
+                            <Image className="icon-inside-hex" src={BestPrize} preview={false} />
+                        </div>
                         <div className="hex3"></div> 
                         <Text className="col-white">{t('aim_page.aim_card_3')}</Text>
                     </Card>
@@ -62,7 +68,9 @@ const Aim = () => {
                 <Col span={12}>
                     <Card className={t('aim_page.styles.aim-card')} style={{float: "right", marginRight: "5rem"}}>
                         <div className="hex1"></div>
-                        <div className="hex2"><Image className="icon-inside-hex" src={LiveInfo} preview={false} /></div>
+                        <div className="hex2">
+                            <Image className="icon-inside-hex" src={LiveInfo} preview={false} />
+                        </div>
                         <div className="hex3"></div>
                         <Text className="col-white">{t('aim_page.aim_card_4')}</Text>
                     </Card>
@@ -70,7 +78,9 @@ const Aim = () => {
                 <Col span={12}>
                     <Card className={t('aim_page.styles.aim-card')}>
                         <div className="hex1"></div>
-                        <div className="hex2"><Image className="icon-inside-hex" src={Mission} preview={false} /></div>
+                        <div className="hex2">
+                            <Image className="icon-inside-hex" src={Mission} preview={false} />
+                        </div>
                         <div className="hex3"></div>
                         <Text className="col-white">{t('aim_page.aim_card_5')}</Text>
                     </Card>

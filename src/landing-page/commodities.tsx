@@ -16,7 +16,9 @@ const Commodities = () => {
 
     return (
         <div id="commodities">
-            <Title className={`col-green ${t('commodities_page.styles.commodities-title')}`} level={2}>{t('commodities_page.title')}</Title>
+            <Title className={`col-green ${t('commodities_page.styles.commodities-title')}`} level={2}>
+                {t('commodities_page.title')}
+            </Title>
             <Paragraph className={t('commodities_page.styles.commodities-paragraph')}>
                 {t('commodities_page.paragraph')}
             </Paragraph>

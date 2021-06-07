@@ -44,24 +44,21 @@ const Team = () => {
                         <Card className={t('our_team.advisors.styles.advisors-card')}>
                             <Image src={Chikkaramu} preview={false} className="advisors-pic" />
                             <Title className="person-name" level={4}>{t('our_team.advisors.name.1')}</Title>
-                            <Text>{t('our_team.advisors.description.1')}
-                            </Text>
+                            <Text>{t('our_team.advisors.description.1')}</Text>
                         </Card>
                     </Col>
                     <Col span={8}>
                         <Card className={t('our_team.advisors.styles.advisors-card')}>
                             <Image src={Sachin} preview={false} className="advisors-pic" />
                             <Title className="person-name" level={4}>{t('our_team.advisors.name.2')}</Title>
-                            <Text>{t('our_team.advisors.description.2')}
-                            </Text>
+                            <Text>{t('our_team.advisors.description.2')}</Text>
                         </Card>
                     </Col>
                     <Col span={8}>
                         <Card className={t('our_team.advisors.styles.advisors-card')}>
                             <Image src={CVKulkarni} preview={false} className="advisors-pic" />
                             <Title className="person-name" level={4}>{t('our_team.advisors.name.3')}</Title>
-                            <Text>{t('our_team.advisors.description.3')}
-                            </Text>
+                            <Text>{t('our_team.advisors.description.3')}</Text>
                         </Card>
                     </Col>
                 </Row>

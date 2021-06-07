@@ -19,7 +19,9 @@ const Ecosystem = () => {
         <div id="ecosystem">
             <Image className="tractor-image" src={Tractor} preview={false} />
             <div className={t('ecosystem_page.styles.ecosystem-content')}>
-                <Title className={`col-green ${t('ecosystem_page.styles.ecosystem-title')}`} level={2}>{t('ecosystem_page.title')}</Title>
+                <Title className={`col-green ${t('ecosystem_page.styles.ecosystem-title')}`} level={2}>
+                    {t('ecosystem_page.title')}
+                </Title>
                 <Row>
                     <Col span={2}>
                         <Space direction="vertical" className="bulletin-image" size="large">
@@ -31,22 +33,26 @@ const Ecosystem = () => {
                         </Space>
                     </Col>
                     <Col>
-                        <Space direction="vertical" className={t('ecosystem_page.styles.bulletin-text')} size="small">
-                        <Text className="bulletin-points">
-                        {t('ecosystem_page.text_1')}<br/>
-                        </Text>
-                        <Text className="bulletin-points">
-                            <br/>{t('ecosystem_page.text_2')}<br/>
-                        </Text>
-                        <Text className="bulletin-points">
-                            <br/>{t('ecosystem_page.text_3')}<br/>
-                        </Text>
-                        <Text className="bulletin-points">
-                            <br/>{t('ecosystem_page.text_4')}<br/>
-                        </Text>
-                        <Text className="bulletin-points">
-                            <br/>{t('ecosystem_page.text_5')}
-                        </Text>
+                        <Space
+                            direction="vertical"
+                            className={t('ecosystem_page.styles.bulletin-text')}
+                            size="small"
+                        >
+                            <Text className="bulletin-points">
+                                {t('ecosystem_page.text_1')}<br/>
+                            </Text>
+                            <Text className="bulletin-points">
+                                <br/>{t('ecosystem_page.text_2')}<br/>
+                            </Text>
+                            <Text className="bulletin-points">
+                                <br/>{t('ecosystem_page.text_3')}<br/>
+                            </Text>
+                            <Text className="bulletin-points">
+                                <br/>{t('ecosystem_page.text_4')}<br/>
+                            </Text>
+                            <Text className="bulletin-points">
+                                <br/>{t('ecosystem_page.text_5')}
+                            </Text>
                         </Space>
                     </Col>
                 </Row>

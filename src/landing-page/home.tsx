@@ -39,23 +39,23 @@ const Home = () => {
                     <Image height={"87vh"} src={VBFour} preview={false} />
                     <Image height={"87vh"} src={VBFive} preview={false} />
                 </Carousel>
-                <div className={t('landing_page.actions.styles.home-content')}>
+                <div className={t('home_page.styles.home-content')}>
                     <Image className="logo" height={100} width={100} src={logo} preview={false} />
                     <div className="home-paragraph">
                         <Title className="col-white" level={4}>
                             {t('home_page.title')} -
                         </Title>
                         <Title className="col-white margin-none" level={5}>
-                        {t('home_page.text_1')}
+                            {t('home_page.text_1')}
                         </Title>
                         <Title className="col-white margin-none" level={5}>
-                        {t('home_page.text_2')}
+                            {t('home_page.text_2')}
                         </Title>
                         <Title className="col-white margin-none" level={5}>
-                        {t('home_page.text_3')}
+                            {t('home_page.text_3')}
                         </Title>
                         <Title className="col-white margin-none" level={5}>
-                        {t('home_page.text_4')}
+                            {t('home_page.text_4')}
                         </Title>
                     </div>
                     <Button className="explore-vb-btn" onClick={() => goToAim("#aim")}>

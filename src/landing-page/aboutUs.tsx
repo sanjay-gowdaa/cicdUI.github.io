@@ -6,7 +6,6 @@ import Outline from '../static/assets/Outline.svg';
 import Vision from '../static/assets/vision.svg';
 import Philosophy from '../static/assets/philosophy.svg';
 
-
 const { Paragraph, Title } = Typography;
 
 const AboutUs = () => {
@@ -14,7 +13,9 @@ const AboutUs = () => {
 
     return (
         <div id="aboutUs">
-            <Title className={`col-green ${t('about_us.styles.about-us-title')}`} level={2}>{t('about_us.title')}</Title>
+            <Title className={`col-green ${t('about_us.styles.about-us-title')}`} level={2}>
+                {t('about_us.title')}
+            </Title>
             <img className="outline-image" src={Outline} />
             <Paragraph className={t('about_us.styles.outline-paragraph')}>
                 {t('about_us.paragraph')}
@@ -23,7 +24,9 @@ const AboutUs = () => {
                 <Col span={12}>
                     <Card className="vision-card">
                         <Image src={Vision} preview={false} />
-                        <Title className="col-green card-title" level={3}>{t('about_us.vision_card.text')}</Title>
+                        <Title className="col-green card-title" level={3}>
+                            {t('about_us.vision_card.text')}
+                        </Title>
                         <Paragraph className={t('about_us.styles.card-paragraph')}>
                             {t('about_us.vision_card.description')}
                         </Paragraph>
@@ -32,8 +35,10 @@ const AboutUs = () => {
                 <Col span={12}>
                     <Card className="vision-card">
                         <Image src={Philosophy} preview={false} />
-                        <Title className="col-green card-title" level={3}>{t('about_us.philosophy_card.text')}</Title>
-                        <Paragraph  className={t('about_us.styles.card-paragraph')}>
+                        <Title className="col-green card-title" level={3}>
+                            {t('about_us.philosophy_card.text')}
+                        </Title>
+                        <Paragraph className={t('about_us.styles.card-paragraph')}>
                             {t('about_us.philosophy_card.description')}
                         </Paragraph>
                     </Card>

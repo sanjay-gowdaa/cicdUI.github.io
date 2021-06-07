@@ -13,20 +13,27 @@ const ContactUs = () => {
 
     return (
         <div id="contactUs">
-            <Title className="col-green contact-us-title" level={2}>{t('contact_us_page.title')}</Title>
+            <Title className="col-green contact-us-title" level={2}>
+                {t('contact_us_page.title')}
+            </Title>
             <Row>
-                <Col span={9} className={t('contact_us_page.styles.contact-us-info')}>
+                <Col span={9} className="contact-us-info">
                     <Space direction="vertical">
                         <Text><PhoneOutlined className="contact-us-icon" />{contactUs.phoneNumber}</Text>
                         <Text><MailOutlined className="contact-us-icon" />{contactUs.emailId}</Text>
-                        <address><HomeOutlined className="contact-us-icon" />{t('contact_us_page.address1')} 
-                        <br/>{t('contact_us_page.address2')}</address>
+                        <address>
+                            <HomeOutlined className="contact-us-icon" />
+                            {t('contact_us_page.address1')} 
+                            <br/>{t('contact_us_page.address2')}
+                        </address>
                     </Space>
                 </Col>
                 <Col span={9} className="write-feedback">
                     <Space direction="vertical">
                     <div className="feedback-form">
-                        <Title className="write-feedback-title" level={4}>{t('contact_us_page.contact_form.title')}</Title>
+                        <Title className="write-feedback-title" level={4}>
+                            {t('contact_us_page.contact_form.title')}
+                        </Title>
                         <Text>{t('contact_us_page.contact_form.full_name')}</Text>
                         <Input
                             className="custom-input"
@@ -43,7 +50,9 @@ const ContactUs = () => {
                         <Input className="custom-input" placeholder="Enter phone number" /><br/>
                         <Text>{t('contact_us_page.contact_form.message')}</Text>
                         <TextArea className="custom-input" /><br/><br/>
-                        <Button className="vikas-btn-radius primary-button" type="primary">{t('landing_page.actions.submit')}</Button>
+                        <Button className="vikas-btn-radius primary-button" type="primary">
+                            {t('landing_page.actions.submit')}
+                        </Button>
                     </div>
                     </Space>
                 </Col>

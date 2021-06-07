@@ -45,7 +45,7 @@ const App = (props: any) => {
                 <div className="fixed-card-join">
                     <Card className="join-us">
                         <Space direction="vertical">
-                        <Title className={`col-green ${t('styles.fixed-title')}`} level={3}>
+                        <Title className={`col-green ${t('home_page.styles.fixed-title')}`} level={3}>
                             {t('home_page.landing_page_card_title')}
                         </Title>
                         <Image src={Join} preview={false} />

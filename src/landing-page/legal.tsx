@@ -15,10 +15,16 @@ const Legal = () => {
 
     return (
         <div id="legal">
-            <Title className="col-white legal-title" level={2}>{t('legal_page.title')}</Title>
+            <Title className="col-white legal-title" level={2}>
+                {t('legal_page.title')}
+            </Title>
             <Image className="accept-image" src={Accept} preview={false} />
             <Tabs className="legal-tab" defaultActiveKey="1" type="card">
-                <TabPane className="tnc-tab" tab={t('landing_page.actions.terms_and_conditions')} key="1">
+                <TabPane
+                    className="tnc-tab"
+                    tab={t('landing_page.actions.terms_and_conditions')}
+                    key="1"
+                >
                     <Paragraph>
                         <ul>
                             <li>
@@ -55,7 +61,11 @@ const Legal = () => {
                         <Link to={terms} target="_blank">{t('landing_page.actions.read_more')}</Link>
                     </Button>
                 </TabPane>
-                <TabPane className="privacy-tab" tab={t('landing_page.actions.privacy_policy')} key="2">
+                <TabPane
+                    className="privacy-tab"
+                    tab={t('landing_page.actions.privacy_policy')}
+                    key="2"
+                >
                     <Paragraph>
                         <ul>
                             <li>
@@ -84,7 +94,7 @@ const Legal = () => {
                         </ul>
                     </Paragraph>
                     <Button className="read-more-button vikas-btn-radius">
-                        <Link to={terms} target="_blank">Read More</Link>
+                        <Link to={terms} target="_blank">{t('landing_page.actions.read_more')}</Link>
                     </Button>
                 </TabPane>
             </Tabs>
