@@ -35,11 +35,7 @@
         "text_1":"Friendly E-Market Place for",
         "text_2":"Buyers and Sellers to connect",
         "text_3":"engage and transact seamlessly",
-        "text_4":"for win-win relationships",
-        "styles":{
-            "home-content":"home-content",
-            "fixed-title":"fixed-title"
-        }
+        "text_4":"for win-win relationships"
     },
     
     "aim_page": {
@@ -50,12 +46,7 @@
         "aim_card_4":"Providing live information on pricing for study",
         "aim_card_5":"Partnering Government's vision",
         "video_link":"Please view this video to understand",
-        "link_name":"VikasBandhu aim and solution",
-        "styles":{
-            "aim-title":"aim-title",
-            "aim-card":"aim-card",
-            "aim-video-link":"aim-video-link"
-        }
+        "link_name":"VikasBandhu aim and solution"
     },
 
     "ecosystem_page": {
@@ -64,12 +55,7 @@
         "text_2":"Provide dynamic information on pricing.",
         "text_3":"Meet demand and supply.",
         "text_4":"Facilitate a Door-to-door solution of logistics.",
-        "text_5":"Boost rural economy by providing local employment.",
-        "styles":{
-            "ecosystem-content":"ecosystem-content",
-            "ecosystem-title":"ecosystem-title",
-            "bulletin-text":"bulletin-text"
-        }
+        "text_5":"Boost rural economy by providing local employment."
     },
 
     "commodities_page": {
@@ -81,10 +67,6 @@
             "3":"Cash Crops",
             "4":"Spices",
             "5":"Oil Seeds"
-        },
-        "styles": {
-            "commodities-title":"commodities-title",
-            "commodities-paragraph":"commodities-paragraph"
         }
     },
 
@@ -99,12 +81,6 @@
             "title":"Buyers",
             "subtitle":"Buyer Community Optimize and enable direct connect",
             "text":" VikasBandhu attempts to identify the right quantity source, taking care of the logistics, minimizing on overheads with customized packing where requested."
-        },
-        "styles": {
-            "user-title":"user-title",
-            "user-card":"user-card",
-            "card-subtitle":"card-subtitle",
-            "card-text":"card-text"
         }
     },
 
@@ -120,13 +96,7 @@
             "description":"Continuously improve our services to add value and Brand to our business, our partners and our communities. "
         },
         "title1":"Partnering Government's Vision",
-        "paragraph1":"We take pride in partnering Government's vision of doubling farmer's income by reducing middlemen. This is our contribution to nation building and making it truly 'Atmanirbhar Bharat'.",
-        "styles": {
-            "about-us-title":"about-us-title",
-            "outline-paragraph":"outline-paragraph",
-            "card-paragraph":"card-paragraph",
-            "vision-paragraph":"vision-paragraph"
-        }
+        "paragraph1":"We take pride in partnering Government's vision of doubling farmer's income by reducing middlemen. This is our contribution to nation building and making it truly 'Atmanirbhar Bharat'."
     },
 
     "our_team": {
@@ -137,13 +107,11 @@
             "2":"Suma Sadananda",
             "3":"Sadananda Murthy"
         },
-
         "designation": {
             "1":"Director",
             "2":"Director",
             "3":"Leads Engg. & Ops."
         },
-
         "advisors": {
             "title":"Advisors",
             "name": {
@@ -151,14 +119,10 @@
                 "2":"Sachin Narang",
                 "3":"C V Kulkarni"
             },
-
             "description": {
                 "1":"Agricultural expert (B. Tech -Agriculture Engineering) with over 15 years of technical experience on the field.He is Guiding us with training, Quality, and technical ground operations.",
                 "2":"Marketing Professional (MBA) withover two decades of marketing leadership experience at leading FMCG and lifestyle companies encompassing Personal Care and Food & Beverages. He is guiding us on the Go to Market strategies.",
                 "3":"Sales and operations Professional with over three decades of experience with focus on FMCG and beverages. He is helping define and structure the sales and operations."
-            },
-            "styles": {
-                "advisors-card":"advisors-card"
             }
         }
     },
