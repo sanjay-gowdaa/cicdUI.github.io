@@ -9,12 +9,15 @@ import VBTwo from '../static/assets/Vikasbandhu_Two.jpg';
 import VBThree from '../static/assets/Vikasbandhu_Three.jpg';
 import VBFour from '../static/assets/Vikasbandhu_Four.jpg';
 import VBFive from '../static/assets/Vikasbandhu_Five.jpg';
+import { englishStyling, isEnglish, kannadaStyling } from '../static/translations/constants';
 
 const { Title } = Typography;
 
 const Home = () => {
     const [ t,i18n ]=useTranslation('common');
-    const logo =  t("language") == "en" ? Logo : KannadaLogo;
+    const customStyles = isEnglish(t("language")) ? englishStyling : kannadaStyling;
+    const logo =  isEnglish(t("language")) ? Logo : KannadaLogo;
+
     const goToAim = (url: any) => {
         window.location = url;
     };
@@ -39,7 +42,7 @@ const Home = () => {
                     <Image height={"87vh"} src={VBFour} preview={false} />
                     <Image height={"87vh"} src={VBFive} preview={false} />
                 </Carousel>
-                <div className={t('home_page.styles.home-content')}>
+                <div className={customStyles.homeContent}>
                     <Image className="logo" height={100} width={100} src={logo} preview={false} />
                     <div className="home-paragraph">
                         <Title className="col-white" level={4}>

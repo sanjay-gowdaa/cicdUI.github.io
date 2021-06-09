@@ -8,12 +8,14 @@ import BestPrize from '../static/assets/best.svg';
 import LiveInfo from '../static/assets/agronomy.svg';
 import Mission from '../static/assets/mission.svg';
 import Handshake from '../static/assets/handshake.svg';
+import { englishStyling, isEnglish, kannadaStyling } from '../static/translations/constants';
 
 const { Link, Text, Title } = Typography;
 
 const Aim = () => { 
     const [viewVideo, setVideo] = useState(false);
     const [ t,i18n ] = useTranslation('common');
+    const customStyles = isEnglish(t("language")) ? englishStyling : kannadaStyling;
 
     return (
         <div id="aim">
@@ -32,11 +34,11 @@ const Aim = () => {
                     allowFullScreen
                 />
             </Modal>
-            <Title className={`col-green ${t("aim_page.styles.aim-title")}`}>{t('aim_page.title')}</Title>
+            <Title className={`col-green ${customStyles.aimTitle}`}>{t('aim_page.title')}</Title>
             <img className="handshake-image" src={Handshake} alt="handshake-image" />
             <Row className="aim-card-row">
                 <Col span={8}>
-                    <Card className={t('aim_page.styles.aim-card')}>
+                    <Card className={customStyles.aimCard}>
                         <div className="hex1"></div>
                         <div className="hex2">
                             <Image className="icon-inside-hex" src={Connect} preview={false} />
@@ -46,7 +48,7 @@ const Aim = () => {
                     </Card>
                 </Col>
                 <Col span={8}>
-                    <Card className={t('aim_page.styles.aim-card')}>
+                    <Card className={customStyles.aimCard}>
                         <div className="hex1"></div>
                         <div className="hex2">
                             <Image className="icon-inside-hex" src={Direct} preview={false} />
@@ -56,7 +58,7 @@ const Aim = () => {
                     </Card>
                 </Col>
                 <Col span={8}>
-                    <Card className={t('aim_page.styles.aim-card')}>
+                    <Card className={customStyles.aimCard}>
                         <div className="hex1"></div>
                         <div className="hex2">
                             <Image className="icon-inside-hex" src={BestPrize} preview={false} />
@@ -66,7 +68,7 @@ const Aim = () => {
                     </Card>
                 </Col>
                 <Col span={12}>
-                    <Card className={t('aim_page.styles.aim-card')} style={{float: "right", marginRight: "5rem"}}>
+                    <Card className={customStyles.aimCard} style={{float: "right", marginRight: "5rem"}}>
                         <div className="hex1"></div>
                         <div className="hex2">
                             <Image className="icon-inside-hex" src={LiveInfo} preview={false} />
@@ -76,7 +78,7 @@ const Aim = () => {
                     </Card>
                 </Col>
                 <Col span={12}>
-                    <Card className={t('aim_page.styles.aim-card')}>
+                    <Card className={customStyles.aimCard}>
                         <div className="hex1"></div>
                         <div className="hex2">
                             <Image className="icon-inside-hex" src={Mission} preview={false} />
@@ -86,7 +88,7 @@ const Aim = () => {
                     </Card>
                 </Col>
             </Row>
-            <Text className={t('aim_page.styles.aim-video-link')}>{t('aim_page.video_link')} &nbsp;
+            <Text className={customStyles.aimVideoLink}>{t('aim_page.video_link')} &nbsp;
                 <Link onClick={() => setVideo(true)} style={{textDecoration: "underline"}}>
                     {t('aim_page.link_name')}
                 </Link>

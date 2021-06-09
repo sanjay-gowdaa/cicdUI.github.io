@@ -9,17 +9,19 @@ import Sync from '../static/assets/sync.svg';
 import Lorry from '../static/assets/lorry.svg';
 import SocialCare from '../static/assets/social-care.svg';
 import Nature from '../static/assets/nature.svg';
+import { englishStyling, isEnglish, kannadaStyling } from '../static/translations/constants';
 
 const { Text, Title } = Typography;
 
 const Ecosystem = () => {
     const [ t, i18n ] = useTranslation('common');
+    const customStyles = isEnglish(t("language")) ? englishStyling : kannadaStyling;
 
     return (
         <div id="ecosystem">
             <Image className="tractor-image" src={Tractor} preview={false} />
-            <div className={t('ecosystem_page.styles.ecosystem-content')}>
-                <Title className={`col-green ${t('ecosystem_page.styles.ecosystem-title')}`} level={2}>
+            <div className={customStyles.ecosystemContent}>
+                <Title className={`col-green ${customStyles.ecosystemTitle}`} level={2}>
                     {t('ecosystem_page.title')}
                 </Title>
                 <Row>
@@ -35,7 +37,7 @@ const Ecosystem = () => {
                     <Col>
                         <Space
                             direction="vertical"
-                            className={t('ecosystem_page.styles.bulletin-text')}
+                            className={customStyles.bulletinText}
                             size="small"
                         >
                             <Text className="bulletin-points">

@@ -9,6 +9,7 @@ import KannadaLogo from '../static/assets/kannadaLogo.png';
 import { LOGIN_URL } from '../store/api';
 import PrimaryBtn from '../app-components/primaryBtn';
 import DefaultBtn from '../app-components/defaultBtn';
+import { isEnglish } from '../static/translations/constants';
 
 import './header.scss';
 
@@ -55,7 +56,7 @@ const HeaderActions = ({ history, isLoggedIn, popUpTrigger }: { history: any, is
 const Header = (headerProps: any) => {
     const [ t , i18n ] = useTranslation('common');
     const { history, showActions, isLoggedIn, popUpTrigger } = headerProps;
-    const logo = t("language") == "en" ? Logo : KannadaLogo;
+    const logo = isEnglish(t("language")) ? Logo : KannadaLogo;
 
     return (
         <div className="landing-page-header-bar">

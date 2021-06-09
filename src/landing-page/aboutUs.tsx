@@ -5,19 +5,21 @@ import { useTranslation } from 'react-i18next';
 import Outline from '../static/assets/Outline.svg';
 import Vision from '../static/assets/vision.svg';
 import Philosophy from '../static/assets/philosophy.svg';
+import { englishStyling, isEnglish, kannadaStyling } from '../static/translations/constants';
 
 const { Paragraph, Title } = Typography;
 
 const AboutUs = () => {
     const [ t,i18n ] = useTranslation('common');
+    const customStyles = isEnglish(t("language")) ? englishStyling : kannadaStyling;
 
     return (
         <div id="aboutUs">
-            <Title className={`col-green ${t('about_us.styles.about-us-title')}`} level={2}>
+            <Title className={`col-green ${customStyles.aboutUsTitle}`} level={2}>
                 {t('about_us.title')}
             </Title>
             <img className="outline-image" src={Outline} />
-            <Paragraph className={t('about_us.styles.outline-paragraph')}>
+            <Paragraph className={customStyles.outlineParagraph}>
                 {t('about_us.paragraph')}
             </Paragraph>
             <Row>
@@ -27,7 +29,7 @@ const AboutUs = () => {
                         <Title className="col-green card-title" level={3}>
                             {t('about_us.vision_card.text')}
                         </Title>
-                        <Paragraph className={t('about_us.styles.card-paragraph')}>
+                        <Paragraph className={customStyles.cardParagraph}>
                             {t('about_us.vision_card.description')}
                         </Paragraph>
                     </Card>
@@ -38,7 +40,7 @@ const AboutUs = () => {
                         <Title className="col-green card-title" level={3}>
                             {t('about_us.philosophy_card.text')}
                         </Title>
-                        <Paragraph className={t('about_us.styles.card-paragraph')}>
+                        <Paragraph className={customStyles.cardParagraph}>
                             {t('about_us.philosophy_card.description')}
                         </Paragraph>
                     </Card>
@@ -46,7 +48,7 @@ const AboutUs = () => {
             </Row>
             <div className="vision-div">
                 <Title className="col-green" level={3}>{t('about_us.title1')}</Title>
-                <Paragraph className={t('about_us.styles.vision-paragraph')}>
+                <Paragraph className={customStyles.visionParagraph}>
                     {t('about_us.paragraph1')}
                 </Paragraph>
             </div>

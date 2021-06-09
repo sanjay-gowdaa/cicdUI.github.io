@@ -8,18 +8,20 @@ import CashCrop from '../static/assets/cashCrop.png';
 import OilSeed from '../static/assets/oilSeed.png';
 import Wheat from '../static/assets/wheat-1.svg';
 import Cardomom from '../static/assets/cardomom.jpg';
+import { englishStyling, isEnglish, kannadaStyling } from '../static/translations/constants';
 
 const { Paragraph, Text, Title } = Typography;
 
 const Commodities = () => {
     const [ t,i18n ] = useTranslation('common');
+    const customStyles = isEnglish(t("language")) ? englishStyling : kannadaStyling;
 
     return (
         <div id="commodities">
-            <Title className={`col-green ${t('commodities_page.styles.commodities-title')}`} level={2}>
+            <Title className={`col-green ${customStyles.commoditiesTitle}`} level={2}>
                 {t('commodities_page.title')}
             </Title>
-            <Paragraph className={t('commodities_page.styles.commodities-paragraph')}>
+            <Paragraph className={customStyles.commoditiesParagraph}>
                 {t('commodities_page.paragraph')}
             </Paragraph>
             <div className="commodities-list">
