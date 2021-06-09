@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Card, Col, Image, Modal, Row, Typography } from 'antd';
+import { useTranslation } from 'react-i18next';
 
 import Connect from '../static/assets/connection.svg';
 import Direct from '../static/assets/transmission.svg';
@@ -7,11 +8,14 @@ import BestPrize from '../static/assets/best.svg';
 import LiveInfo from '../static/assets/agronomy.svg';
 import Mission from '../static/assets/mission.svg';
 import Handshake from '../static/assets/handshake.svg';
+import { englishStyling, isEnglish, kannadaStyling } from '../static/translations/constants';
 
 const { Link, Text, Title } = Typography;
 
 const Aim = () => { 
     const [viewVideo, setVideo] = useState(false);
+    const [ t,i18n ] = useTranslation('common');
+    const customStyles = isEnglish(t("language")) ? englishStyling : kannadaStyling;
 
     return (
         <div id="aim">
@@ -30,53 +34,63 @@ const Aim = () => {
                     allowFullScreen
                 />
             </Modal>
-            <Title className="col-green aim-title">VikasBandhu helps you in</Title>
+            <Title className={`col-green ${customStyles.aimTitle}`}>{t('aim_page.title')}</Title>
             <img className="handshake-image" src={Handshake} alt="handshake-image" />
             <Row className="aim-card-row">
                 <Col span={8}>
-                    <Card className="aim-card">
+                    <Card className={customStyles.aimCard}>
                         <div className="hex1"></div>
-                        <div className="hex2"><Image className="icon-inside-hex" src={Connect} preview={false} /></div>
+                        <div className="hex2">
+                            <Image className="icon-inside-hex" src={Connect} preview={false} />
+                        </div>
                         <div className="hex3"></div>
-                        <Text className="col-white">Connecting buyers and sellers</Text>
+                        <Text className="col-white">{t('aim_page.aim_card_1')}</Text>
                     </Card>
                 </Col>
                 <Col span={8}>
-                    <Card className="aim-card">
+                    <Card className={customStyles.aimCard}>
                         <div className="hex1"></div>
-                        <div className="hex2"><Image className="icon-inside-hex" src={Direct} preview={false} /></div>
+                        <div className="hex2">
+                            <Image className="icon-inside-hex" src={Direct} preview={false} />
+                        </div>
                         <div className="hex3"></div> 
-                        <Text className="col-white">Direct selling of agricultural produce</Text>
+                        <Text className="col-white">{t('aim_page.aim_card_2')}</Text>
                     </Card>
                 </Col>
                 <Col span={8}>
-                    <Card className="aim-card">
+                    <Card className={customStyles.aimCard}>
                         <div className="hex1"></div>
-                        <div className="hex2"><Image className="icon-inside-hex" src={BestPrize} preview={false} /></div>
+                        <div className="hex2">
+                            <Image className="icon-inside-hex" src={BestPrize} preview={false} />
+                        </div>
                         <div className="hex3"></div> 
-                        <Text className="col-white">Ensuring best price for both buyer and seller</Text>
+                        <Text className="col-white">{t('aim_page.aim_card_3')}</Text>
                     </Card>
                 </Col>
                 <Col span={12}>
-                    <Card className="aim-card" style={{float: "right", marginRight: "5rem"}}>
+                    <Card className={customStyles.aimCard} style={{float: "right", marginRight: "5rem"}}>
                         <div className="hex1"></div>
-                        <div className="hex2"><Image className="icon-inside-hex" src={LiveInfo} preview={false} /></div>
+                        <div className="hex2">
+                            <Image className="icon-inside-hex" src={LiveInfo} preview={false} />
+                        </div>
                         <div className="hex3"></div>
-                        <Text className="col-white">Providing live information on pricing for study</Text>
+                        <Text className="col-white">{t('aim_page.aim_card_4')}</Text>
                     </Card>
                 </Col>
                 <Col span={12}>
-                    <Card className="aim-card">
+                    <Card className={customStyles.aimCard}>
                         <div className="hex1"></div>
-                        <div className="hex2"><Image className="icon-inside-hex" src={Mission} preview={false} /></div>
+                        <div className="hex2">
+                            <Image className="icon-inside-hex" src={Mission} preview={false} />
+                        </div>
                         <div className="hex3"></div>
-                        <Text className="col-white">Partnering Government's vision</Text>
+                        <Text className="col-white">{t('aim_page.aim_card_5')}</Text>
                     </Card>
                 </Col>
             </Row>
-            <Text className="aim-video-link">Please view this video to understand &nbsp;
+            <Text className={customStyles.aimVideoLink}>{t('aim_page.video_link')} &nbsp;
                 <Link onClick={() => setVideo(true)} style={{textDecoration: "underline"}}>
-                    VikasBandhu aim and solution
+                    {t('aim_page.link_name')}
                 </Link>
                 .
             </Text>

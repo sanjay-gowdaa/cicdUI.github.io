@@ -1,5 +1,6 @@
 import React from 'react';
 import { Col, Image, Row, Space, Typography } from 'antd';
+import { useTranslation } from 'react-i18next';
 
 import Tractor from '../static/assets/tractor.svg';
 import Network from '../static/assets/network.svg';
@@ -8,15 +9,21 @@ import Sync from '../static/assets/sync.svg';
 import Lorry from '../static/assets/lorry.svg';
 import SocialCare from '../static/assets/social-care.svg';
 import Nature from '../static/assets/nature.svg';
+import { englishStyling, isEnglish, kannadaStyling } from '../static/translations/constants';
 
 const { Text, Title } = Typography;
 
 const Ecosystem = () => {
+    const [ t, i18n ] = useTranslation('common');
+    const customStyles = isEnglish(t("language")) ? englishStyling : kannadaStyling;
+
     return (
         <div id="ecosystem">
             <Image className="tractor-image" src={Tractor} preview={false} />
-            <div className="ecosystem-content">
-                <Title className="col-green ecosystem-title" level={2}>At VikasBandhu, we build an ecosystem that would</Title>
+            <div className={customStyles.ecosystemContent}>
+                <Title className={`col-green ${customStyles.ecosystemTitle}`} level={2}>
+                    {t('ecosystem_page.title')}
+                </Title>
                 <Row>
                     <Col span={2}>
                         <Space direction="vertical" className="bulletin-image" size="large">
@@ -28,22 +35,26 @@ const Ecosystem = () => {
                         </Space>
                     </Col>
                     <Col>
-                        <Space direction="vertical" className="bulletin-text" size="small">
-                        <Text className="bulletin-points">
-                            Connect buyers and sellers in a simple to use platform.<br/>
-                        </Text>
-                        <Text className="bulletin-points">
-                            <br/>Provide dynamic information on pricing.<br/>
-                        </Text>
-                        <Text className="bulletin-points">
-                            <br/>Meet demand and supply.<br/>
-                        </Text>
-                        <Text className="bulletin-points">
-                            <br/>Facilitate a Door-to-door solution of logistics.<br/>
-                        </Text>
-                        <Text className="bulletin-points">
-                            <br/>Boost rural economy by providing local employment.
-                        </Text>
+                        <Space
+                            direction="vertical"
+                            className={customStyles.bulletinText}
+                            size="small"
+                        >
+                            <Text className="bulletin-points">
+                                {t('ecosystem_page.text_1')}<br/>
+                            </Text>
+                            <Text className="bulletin-points">
+                                <br/>{t('ecosystem_page.text_2')}<br/>
+                            </Text>
+                            <Text className="bulletin-points">
+                                <br/>{t('ecosystem_page.text_3')}<br/>
+                            </Text>
+                            <Text className="bulletin-points">
+                                <br/>{t('ecosystem_page.text_4')}<br/>
+                            </Text>
+                            <Text className="bulletin-points">
+                                <br/>{t('ecosystem_page.text_5')}
+                            </Text>
                         </Space>
                     </Col>
                 </Row>
