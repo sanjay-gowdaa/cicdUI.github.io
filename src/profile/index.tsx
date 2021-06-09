@@ -20,7 +20,8 @@ import './profile.scss';
 import {
     fieldLayout,
     kycFlagDetails,
-    requiredDocumentList
+    requiredDocumentList,
+    initialFormValues
 } from './constants';
 import BankDocuments from './bankDocuments';
 import BuyerWorkingHours from './buyerWorkingHours';
@@ -33,7 +34,7 @@ import { UserTypes } from '../store/genericTypes';
 import { RootState } from '../store/rootReducer';
 import CancelBtn from '../app-components/cancelBtn';
 import PrimaryBtn from '../app-components/primaryBtn';
-import { getUserFiles, saveKyc } from '../store/loginReducer/actions';
+import { getUserFiles, saveKyc, addBeneficiary,registerBuyerAtDestiny, registerSellerAtDestiny } from '../store/loginReducer/actions';
 
 const { Title, Text } = Typography;
 
@@ -50,7 +51,7 @@ const Profile = (props: any) => {
     const [disableSave, setDisableSave] = useState(true);
     const [imageSrc, setImageSrc] = useState();
     const [isPDF, setPDF] = useState(false);
-    const [kycFormValues, setKycFormValues] = useState({});
+    const [kycFormValues, setKycFormValues] = useState(initialFormValues);
     const [formSubmitValue, setFormSubmitValue] = useState({});
     
     const loginState = useSelector((state: RootState) => state.loginUser);
@@ -151,11 +152,57 @@ const Profile = (props: any) => {
     };
 
     const onSave = () => {
+        
         const isSubmitted = setKycToComplete(formSubmitValue);
         const registerDataPromise = generateFormData(cloneDeep({...kycFormValues, isSubmitted}));
         registerDataPromise.then((data) => 
-            dispatch(saveKyc(data))
-        );
+            dispatch(saveKyc(data)),
+
+        ); 
+        //console.log("formSubmitValue:", formSubmitValue)
+       
+        const beneficiaryDetails = {
+            "username": loginState.username,
+            "BeneName": kycFormValues.account_name|| loginState.bank_info.account_holder_name,
+            "BeneAccountNo": kycFormValues. account_number || loginState.bank_info.account_no,
+            "IfscCode": kycFormValues.ifsc_code || loginState.bank_info.ifsc_code  
+        };
+
+        const userDetails = {
+            "Name": loginState.name,
+			"Address": loginState.address2,
+			"PinCode": loginState.zip,
+			"MobileNo": loginState.phone_no,
+			"SuppType": userType,
+			"CustSuppType": userType,
+			"CustSuppSubType": subType,
+			"GSTFilingPeriod": "Quarterly",
+			"ScandFileName": "",
+			"FoCode": "",
+			"SecondaryContactName": "",
+			"SecondContactNo": "",
+			"PANNo": loginState.PAN || kycFormValues.pan,
+			"BankName": "",
+			"BankAcNo": loginState.bank_info.account_no || kycFormValues.account_number,
+			"BankIFSC": loginState.bank_info.ifsc_code || kycFormValues.ifsc_code,
+			"BankUPIID": loginState.bank_info.upi_id,
+			"GSTIN": loginState.gstin || kycFormValues.gstin,
+			"EmailId": loginState.email || kycFormValues.email || '',
+			"RTCNo": loginState.rtc || '',
+			"AadharNo": loginState.UIDAI  || kycFormValues.uidai || '',
+			"IntroducedOnDate": loginState.created_at
+        }
+        //console.log("beneDetails:", beneDetails)
+
+        if(!loginState?.isSubmitted && isSubmitted && userType === UserTypes.BUYER){
+            registerBuyerAtDestiny(userDetails);
+
+        }
+        else if(!loginState?.isSubmitted && isSubmitted && userType === UserTypes.SELLER){
+            addBeneficiary(beneficiaryDetails);
+            registerSellerAtDestiny(userDetails);
+        }
+
     };
     
     const checkForError = (name: any, field: any) => {

@@ -8,7 +8,10 @@ import {
     fetchUserFiles,
     getAccessToken,
     getAllConfigs,
-    kycUserDetails
+    kycUserDetails,
+    postAddBeneficiarydata,
+    postBuyerDetails,
+    postSellerDetails
 } from '../api';
 import { handleResponse } from '../utils';
 
@@ -130,3 +133,24 @@ export const getAccessTokenAndFetchUserDetails = (userCode: string) => {
         // dispatch(getUserDetails(accessToken))
     }
 };
+
+export const addBeneficiary = async (userData: any) => {
+    //console.log("inside add beneficiary");
+    const beneficiaryResponse = await postAddBeneficiarydata(userData);
+    const { response } = beneficiaryResponse;
+           
+}
+
+export const registerBuyerAtDestiny = async (userData: any) => {
+    //console.log("inside register buyer");
+    const regBuyerResponse = await postBuyerDetails(userData);
+    const { response } = regBuyerResponse;
+          
+}
+
+export const registerSellerAtDestiny = async (userData: any) => {
+    //console.log("inside register seller");
+    const regSellerResponse = await postSellerDetails(userData);
+    const { response } = regSellerResponse;
+        
+}

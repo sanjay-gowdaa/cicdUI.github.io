@@ -34,6 +34,9 @@ const TRANSACTION_LIST_API = `${TRANSACTION_API}/user`;
 const USER_COMPLETE_DETAILS = 'getusercompletedetails';
 const USER_FILE_API = 'getuserfile';
 const UPDATE_USER_DETAILS = 'updateuserdetails';
+const ADD_BENEFICIARY_API = 'benemaintain';
+const ADD_BUYER_AT_DESTINY = 'buyerReg';
+const ADD_SELLER_AT_DESTINY = 'sellerReg';
 
 const parseToken = (userToken: string) => {
     const sholudDecrypt = process.env.REACT_APP_ENV === 'prod';
@@ -347,6 +350,30 @@ export const postSellerTransactionAction = (
         method: 'POST',
         body: JSON.stringify(cropDetails)
     }).then((response: any) => response.json());
+}
+
+export const postAddBeneficiarydata = (userData: any) => {
+    const addBeneficiaryApi = `${BASE_URL}/${STAGE}/${ADD_BENEFICIARY_API}`;
+    return fetch(addBeneficiaryApi, {
+        method: 'POST',
+        body: JSON.stringify(userData) 
+    }).then((response: any) => response.text);
+}
+
+export const postBuyerDetails = (userData: any) => {
+const registerBuyerApi = `${BASE_URL}/${STAGE}/${ADD_BUYER_AT_DESTINY}`;
+    return fetch(registerBuyerApi, {
+        method: 'POST',
+        body: JSON.stringify(userData) 
+    }).then((response: any) => response.text);
+}
+
+export const postSellerDetails = (userData: any) => {
+    const registerSellerApi = `${BASE_URL}/${STAGE}/${ADD_SELLER_AT_DESTINY}`;
+    return fetch(registerSellerApi, {
+        method: 'POST',
+        body: JSON.stringify(userData) 
+    }).then((response: any) => response.text);
 }
 
 /* Matches And Transactions End */
