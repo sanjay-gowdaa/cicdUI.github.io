@@ -56,9 +56,9 @@ const PayButton = (transDetails: any) => {
                     </Space>
                 </Col>
                 <Col span={12}>
-                    <form className="payment" method="POST" action="https://i4pu6pqe64.execute-api.ap-south-1.amazonaws.com/dev/request">
+                    <form className="payment" method="POST" action="https://whssx8tu8a.execute-api.ap-south-1.amazonaws.com/dev/request">
                         <Space direction="vertical">
-                        <Input className="custom-input" type="text" value="order_251" name="orderId" />
+                        <Input className="custom-input" type="text" value="order_263" name="orderId" />
                         <Input type="text" value="8000" name="orderAmount"/> 
                         <Input type="hidden" value="INR" name="orderCurrency" />  
                         <Input type="text" value="Test note" name="orderNote"/>
