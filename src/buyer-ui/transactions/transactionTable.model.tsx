@@ -105,12 +105,11 @@ export const transactionColumns = [
     {
         title: '',
         key: 'action',
-
         render: (record: TransactioModel) => {
             
         return(
             <PayButton tranDetails={record} />
-        )
+           )
 
         },
     },
