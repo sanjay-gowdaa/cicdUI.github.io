@@ -2,6 +2,7 @@ import React from 'react';
 import { Col, Divider, Modal, Row, Typography } from 'antd';
 import DefaultBtn from '../../app-components/defaultBtn';
 import { MatchRequirementModel } from '../../buyer-seller-commons/types';
+import { parseIDfromHash, maskData } from '../../app-components/utils';
 
 const { Title } = Typography;
 
@@ -24,7 +25,7 @@ const ViewCropDetails = (props: componentProps) => {
                     Buyer Id
                 </Col>
                 <Col sm={24} md={12}>
-                    : {buyer_id}
+                    : {maskData(parseIDfromHash(buyer_id))}
                 </Col>
             </Row>
             <Row>

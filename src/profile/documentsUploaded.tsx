@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { Form, Input, Typography, Upload } from 'antd';
+import { Button, Form, Input, Typography, Upload } from 'antd';
 import { CaretRightFilled, UploadOutlined } from '@ant-design/icons';
 import { filter, isEmpty, toUpper } from 'lodash';
 
@@ -51,7 +51,14 @@ const DocumentsUploaded = (props: any)=> {
                                     return (
                                         (key === documentName)?
                                             <Form.Item
-                                                label={<span>{kycFlag === "incomplete" && <CaretRightFilled className="required-arrow" style={{ color: "#FF9900"}} />}{label}</span>}
+                                                label={
+                                                    <span className="kyc-form-label">
+                                                        {kycFlag === "incomplete" &&
+                                                            <CaretRightFilled className="required-arrow" style={{ color: "#FF9900"}} />
+                                                        }
+                                                        {label}
+                                                    </span>
+                                                }
                                                 {...fieldLayout}
                                                 className="margin-zero"
                                                 onReset={() => console.log("on reset")}   
@@ -100,12 +107,13 @@ const DocumentsUploaded = (props: any)=> {
                                                                         <br/><Text className="font-size-small">Max file size: 1MB</Text>
                                                                     </Upload>
                                                                 </Form.Item> :
-                                                                <a
+                                                                <Button
+                                                                    type="link"
                                                                     onClick={() => {
                                                                         dispatch(getUserFiles(uploadValue.doc_key, setImageSrc, setPDF))
                                                                         setShowDocument(true);
                                                                     }}
-                                                                >&nbsp; &nbsp;View Document</a>
+                                                                >&nbsp; &nbsp;View Document</Button>
                                                             }
                                                         </>
                                                 }

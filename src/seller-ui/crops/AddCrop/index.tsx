@@ -12,7 +12,8 @@ import {
     Select,
     Space,
     Typography,
-    Upload
+    Upload,
+    InputNumber
 } from 'antd';
 import { InboxOutlined } from '@ant-design/icons';
 import { useDispatch, useSelector } from 'react-redux';
@@ -24,7 +25,7 @@ import {
     updatedFetchLiveApmcRate
 } from '../../../store/sellerReducer/actions';
 import { RootState } from '../../../store/rootReducer';
-import { CropApiModel, SellerStateModel } from '../../../store/sellerReducer/types';
+import { SellerStateModel } from '../../../store/sellerReducer/types';
 import {
     createSellerFormData,
     renderCategoryOptions,
@@ -33,7 +34,6 @@ import {
 } from '../cropUtils';
 import CancelBtn from '../../../app-components/cancelBtn';
 import { UserStateModel } from '../../../store/loginReducer/types';
-import { camelCase } from 'lodash';
 
 const { Text, Title } = Typography;
 const { Dragger } = Upload;
@@ -249,7 +249,12 @@ const AddCropModal = (addCropProps: PropsType) => {
                                     noStyle
                                     rules={[{ required: true, message: 'Please input the Qunatity!' }]}
                                 >
-                                    <Input style={{ width: 200 }} className="custom-input" placeholder="In quintal" />
+                                    <InputNumber
+                                        style={{ width: 200 }}
+                                        className="custom-input"
+                                        placeholder="In quintal"
+                                        stringMode
+                                    />
                                 </Form.Item>
                                 <span className="additional-text">Qtl</span>
                             </Form.Item>
@@ -262,7 +267,11 @@ const AddCropModal = (addCropProps: PropsType) => {
                                     }]}
                                     noStyle
                                 >
-                                    <Input className="custom-input" placeholder="In rupees" />
+                                    <InputNumber
+                                        className="custom-input"
+                                        placeholder="In rupees"
+                                        stringMode
+                                    />
                                 </Form.Item>
                                 <span className="additional-text">
                                     APMC Rate {loginUser.district}: {sellerStore.apmcCropPrice}

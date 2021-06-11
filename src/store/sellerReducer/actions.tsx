@@ -230,9 +230,14 @@ export const getAllSellerMatches = () => {
     }
 }
 
-export const transactionAction = (tarnsactionID: string, action: TransactionAction) => {
+export const transactionAction = (
+        tarnsactionID: string,
+        action: TransactionAction,
+        cropDetails: MatchRequirementModel
+    ) => {
     return async(dispatch: any, getState: any) => {
-        const actionResponse = await postSellerTransactionAction(tarnsactionID, action);
+        const actionResponse = await postSellerTransactionAction(tarnsactionID, action, cropDetails);
+        dispatch(getAllCropsList())
         dispatch(getAllSellerMatches())
         if (action === TransactionAction.accept) {
             dispatch(getSellerTransactionList(TransactionStatus.pending));

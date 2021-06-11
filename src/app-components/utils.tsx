@@ -53,8 +53,12 @@ export const getTimeStamp = () => {
     return timeStamp;
 }
 
-export const parseIDfromHash = (rawID: string) => {
+export const parseIDfromHash = (rawID: string): string => {
     const indexOfHash = rawID.indexOf('#');
     const actualID = indexOfHash > 0 ? rawID.substr(indexOfHash+1) : '';
     return actualID;
+}
+
+export const maskData = (toBeMaskedStr: string) => {
+    return toBeMaskedStr.replace(/^.{6}/, '******');
 }

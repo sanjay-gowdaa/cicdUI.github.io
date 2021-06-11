@@ -16,7 +16,8 @@ $col-shade-green: #12805C;
     .home-content-wrapper {
         position: relative;
         top: 6rem;
-        height: 107.5vh;
+        height: 105.25vh;
+        margin-bottom: 1rem;
         
         .animate-alert {
             animation: warning-banner 30s infinite 20s;
@@ -32,7 +33,7 @@ $col-shade-green: #12805C;
         .home-content {
             position: absolute;
             left: 5rem;
-            top: 3rem;
+            top: 6rem;
             width: fit-content;
             height: fit-content;
             padding: 2rem;
@@ -40,25 +41,39 @@ $col-shade-green: #12805C;
             backdrop-filter: blur(1.25rem);
             border-radius: 0.5rem;
             background-color: rgba($color: #000000, $alpha: 0.2);
+        }
+
+    // Kannada Styling
+        .home-content-kn {
+            position: absolute;
+            left: 5rem;
+            top: 6rem;
+            width: fit-content;
+            height: fit-content;
+            padding: 2rem;
+            -webkit-backdrop-filter: blur(1.25rem);
+            backdrop-filter: blur(1.25rem);
+            border-radius: 0.5rem;
+            background-color: rgba($color: #000000, $alpha: 0.2);
+        }
     
-            .logo {
-                border-radius: 0.5rem;
-            }
+        .logo {
+            border-radius: 0.5rem;
+        }
             
-            .home-paragraph {
-                margin-top: 2rem;
+        .home-paragraph {
+            margin-top: 2rem;
     
-                .margin-none {
-                    margin: 0;
-                }
+            .margin-none {
+                margin: 0;
             }
+        }
     
-            .explore-vb-btn {
-                background-color: #f5a31a !important;
-                border-color: #f5a31a !important;
-                border-radius: 0.2rem;
-                margin: 1rem 0;
-            }
+        .explore-vb-btn {
+            background-color: #f5a31a !important;
+            border-color: #f5a31a !important;
+            border-radius: 0.2rem;
+            margin: 1rem 0;
         }
     }
 }
@@ -94,6 +109,13 @@ $col-shade-green: #12805C;
             margin: 0;
         }
 
+    // Kannada Styling
+        .fixed-title-kn {
+            font-size: large;
+            width: 10rem;
+            margin: 0;
+        }
+
         .join-us-reg {
             width: 10rem;
             height: 3rem;
@@ -111,6 +133,13 @@ $col-shade-green: #12805C;
         margin-left: 18rem;
     }
 
+    // Kannada Styling
+    .aim-title-kn {
+        padding-top: 1rem;
+        font-size: 2rem;
+        margin-left: 18rem;
+    }
+
     .handshake-image {
         float: right;
         position: relative;
@@ -119,54 +148,75 @@ $col-shade-green: #12805C;
     }
     
     .aim-card-row {
-        position: relative;
-        bottom: 4rem;
-        padding-top: 2.5rem;
-        padding-left: 1.75rem;
         
         .aim-card {
             background-color: $col-shade-green;
             width: 12.5rem;
             border-radius: 0.5rem;
-            max-height: min-content;
+            height: 14rem;
             border-radius: 0.2rem;
             display: inline-flex;
             margin: 1rem auto;
             text-align: center;
             font-size: large;
             line-height: 1;
-            
-            .hex1 {
-                width: 0;
-                margin: 0 auto;
-                border-radius: 0.3rem;
-                margin-top: 1rem;
-                border-bottom: 1.5rem solid #32886C;
-                border-left: 2.5rem solid transparent;
-                border-right: 2.5rem solid transparent;
-            }
-            
-            .hex2 {
-                margin: 0 auto;
-                width: 4.78rem;
-                height: 2.5rem;
-                background-color: #32886C;
+        }
 
-                .icon-inside-hex {
-                    height: 3rem;
-                }
-            }
+    // Kannada Styling
+        .aim-card-kn {
+            background-color: $col-shade-green;
+            width: 12.5rem;
+            border-radius: 0.5rem;
+            height: 14rem;
+            border-radius: 0.2rem;
+            display: inline-flex;
+            margin: 1rem auto;
+            text-align: center;
+            font-size: small;
+            line-height: 1;
+        }
             
-            .hex3 {
-                margin: 0 auto;
-                border-radius: 0.3rem;
-                margin-bottom: 1rem;
-                width: 0;
-                border-top: 1.5rem solid #32886C;
-                border-left: 2.5rem solid transparent;
-                border-right: 2.5rem solid transparent;
+        .hex1 {
+            width: 0;
+            margin: 0 auto;
+            border-radius: 0.3rem;
+            margin-top: 1rem;
+            border-bottom: 1.5rem solid #32886C;
+            border-left: 2.5rem solid transparent;
+            border-right: 2.5rem solid transparent;
+        }
+            
+        .hex2 {
+            margin: 0 auto;
+            width: 4.78rem;
+            height: 2.5rem;
+            background-color: #32886C;
+
+            .icon-inside-hex {
+                height: 3rem;
             }
         }
+            
+        .hex3 {
+            margin: 0 auto;
+            border-radius: 0.3rem;
+            margin-bottom: 1rem;
+            width: 0;
+            border-top: 1.5rem solid #32886C;
+            border-left: 2.5rem solid transparent;
+            border-right: 2.5rem solid transparent;
+        }
+    }
+
+    // Kannada Styling
+    .aim-video-link-kn {
+        font-size: 1rem;
+        margin: 0 5rem;
+    }
+
+    .aim-video-link {
+        font-size: 1.2rem;
+        margin: 0 6rem;
     }
 }
 
@@ -178,7 +228,52 @@ $col-shade-green: #12805C;
         width: 30rem;
         margin: 0 auto;
     }
-    
+
+    .bulletin-image {
+        float: left;
+        padding: 1rem 1rem;
+        background-color: #e2e8d5;
+        border-radius: 3rem;
+        margin-bottom: 1.5rem;
+
+        img {
+            font-size: large;
+        }
+    }
+
+    .nature-image {
+        float: right;
+        position: relative;
+        bottom: 10rem;
+        right: 2rem;
+    }
+
+    // Kannada Styling
+    .ecosystem-content-kn {
+        color: #12805C !important;
+        background-color: #e0efea;
+        width: 50rem;
+        border-radius: 0.3rem;
+        height: fit-content;
+        margin: 0 auto;
+        margin-bottom: 1rem;
+        padding-left: 2rem;
+        
+        .ecosystem-title-kn {
+            padding-top: 1rem;
+            padding-right: 1rem;
+            margin-top: 0;
+            font-size: 2rem;
+        }
+
+        .bulletin-text-kn {
+            padding-top: 1rem;
+            padding-left: 1rem;
+            font-size: 1rem;
+            line-height: 1.7rem;
+        }
+    }
+
     .ecosystem-content {
         color: #12805C !important;
         background-color: #e0efea;
@@ -196,30 +291,11 @@ $col-shade-green: #12805C;
             font-size: 2rem;
         }
 
-        .bulletin-image {
-            float: left;
-            padding: 1rem 1rem;
-            background-color: #e2e8d5;
-            border-radius: 3rem;
-            margin-bottom: 1.5rem;
-
-            img {
-                font-size: large;
-            }
-        }
-
         .bulletin-text {
             padding-top: 1rem;
             padding-left: 1rem;
             font-size: 1.5rem;
             line-height: 1.7rem;
-        }
-
-        .nature-image {
-            float: right;
-            position: relative;
-            bottom: 10rem;
-            right: 2rem;
         }
     }
 }
@@ -228,8 +304,20 @@ $col-shade-green: #12805C;
     margin-left: 17rem;
     scroll-margin: 6rem;
     
+    // Kannada Styling
+    .commodities-title-kn {
+        font-size: 2rem;
+    }
+
     .commodities-title {
         font-size: 2.5rem;
+    }
+
+    // Kannada Styling
+    .commodities-paragraph-kn {
+        width: 50rem;
+        font-size: 1rem;
+        line-height: 2rem;
     }
 
     .commodities-paragraph {
@@ -262,6 +350,13 @@ $col-shade-green: #12805C;
 #users {
     scroll-margin: 6rem;
     
+    // Kannada Styling
+    .user-title-kn {
+        padding-top: 1rem;
+        font-size: 2rem;
+        margin-left: 30rem;
+    }
+
     .user-title {
         padding-top: 1rem;
         font-size: 3rem;
@@ -271,6 +366,15 @@ $col-shade-green: #12805C;
     .user-column {
         margin-left: 3rem;
         
+        // Kannada Styling
+        .user-card-kn {
+            background-color: #e0efea;
+            width: fit-content;
+            font-size: 1rem;
+            height: 26rem;
+            text-align: center;
+        }
+
         .user-card {
             background-color: #e0efea;
             width: fit-content;
@@ -278,6 +382,20 @@ $col-shade-green: #12805C;
             height: 26rem;
             text-align: center;
         }
+    }
+
+    // Kannada Styling
+    .card-subtitle-kn{
+        font-size: 1rem;
+    }
+
+    // Kannada Styling
+    .card-text-kn{
+        font-size: 0.9rem;
+    }
+
+    .card-text{
+        font-size: 1rem;
     }
 
     .transport-image {
@@ -296,11 +414,17 @@ $col-shade-green: #12805C;
     margin: 2.5rem 0;
     margin-left: 16rem;
     width: 53rem;
-    height: 75rem;
+    height: 48rem;
     scroll-margin: 6rem;
     padding: 1rem 2rem;
     background-color: #fbfbfb;
     
+    // Kannada Styling
+    .about-us-title-kn {
+        padding-top: 1rem;
+        font-size: 2rem;
+    }
+
     .about-us-title {
         padding-top: 1rem;
         font-size: 3rem;
@@ -310,6 +434,14 @@ $col-shade-green: #12805C;
         position: relative;
         bottom: 5rem;
         left: 39rem;
+    }
+
+    // Kannada Styling
+    .outline-paragraph-kn {
+        position: relative;
+        bottom: 10rem;
+        font-size: 1rem;
+        width: 40rem;
     }
 
     .outline-paragraph {
@@ -327,6 +459,13 @@ $col-shade-green: #12805C;
         background-color: #e0efea;
         text-align: center;
 
+        // Kannada Styling
+        .card-paragraph-kn {
+            width: 18rem;
+            font-size: 1rem;   
+            margin: 0 auto;
+        }
+
         .card-paragraph {
             width: 18rem;
             font-size: large;   
@@ -337,15 +476,29 @@ $col-shade-green: #12805C;
     .vision-div {
         bottom: 8rem;
         position: relative;
+
+        // Kannada Styling
+        .vision-paragraph-kn {
+            width: fit-content;
+            font-size: 1rem;
+        }
             
         .vision-paragraph {
             width: fit-content;
             font-size: large;
         }
     }
+}
 
-    .about-us-our-team {
-        bottom: 8rem;
+#team {
+    margin: 2.5rem 0;
+    margin-left: 16rem;
+    width: 53rem;
+    scroll-margin: 6rem;
+    padding: 2rem 2rem;
+    background-color: #fbfbfb;
+    
+    .management-team {
         position: relative;
         text-align: center;
         width: fit-content;
@@ -356,7 +509,7 @@ $col-shade-green: #12805C;
         border-radius: 0.2rem;
         margin: 0 auto;
             
-        .our-team {
+        .management-our-team {
             .person-name {
                 margin: 0;
             }
@@ -371,7 +524,38 @@ $col-shade-green: #12805C;
             position: relative;
             top: 2rem;
         }
+    }
 
+    .advisors-team {
+        position: relative;
+        text-align: center;
+        width: fit-content;
+        justify-content: space-around;
+        padding: 2rem;
+        height: fit-content;
+        border: 0.2em solid #e0efea;
+        border-radius: 0.2rem;
+        margin: 0 auto;
+        margin-top: 1rem;
+
+        // Kannada Styling
+        .advisors-card-kn {
+            margin-top: 1rem;
+            margin-left: 1rem;
+            height: 30rem;
+            font-size:0.8rem;
+        }
+
+        .advisors-card {
+            margin-top: 1rem;
+            margin-left: 1rem;
+            height: 30rem;
+        }
+        
+        .advisors-pic {
+            border-radius: 50%;
+            border: 0.1em solid #e2e8d5;
+        }
     }
 }
 
@@ -464,7 +648,7 @@ $col-shade-green: #12805C;
     
     .contact-us-info {
         font-size: large;
-    
+
         .anticon {
             font-size: x-large;
             color: #f5a31a;

@@ -121,6 +121,7 @@ export const bankFieldValue = (name: string, bankInfo: any) => {
         case "account_name": return bankInfo?.account_holder_name;
         case "account_number": return bankInfo?.account_no;
         case "ifsc_code": return bankInfo?.ifsc_code;
+        case "upi_id": return bankInfo?.upi_id;
     }
 };
 
@@ -151,8 +152,13 @@ export const bankDocumentsList = [
     },
     {
         name: "bank_doc",
-        label: "Bank Statement",
+        label: "Bank Document",
         upload: true
+    },
+    {
+        name: "upi_id",
+        label: "UPI ID",
+        upload: false
     }
 ];
 
@@ -272,3 +278,13 @@ export const requiredDocumentList = [
         title: "PAN Card Photo"
     }
 ];
+
+export const initialFormValues = {
+    account_name: '',
+    account_number: '',
+    ifsc_code: '',
+    pan: '',
+    uidai: '',
+    email: '',
+    gstin: ''
+};

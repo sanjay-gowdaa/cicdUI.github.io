@@ -3,19 +3,9 @@ import { Button, Image, Typography } from 'antd';
 import RagiImg from '../../static/assets/ragi.png';
 import ConnectMatch from './connectMatch';
 import { FullfillmentFlags, MatchRequirementModel } from '../../buyer-seller-commons/types';
+import { parseIDfromHash, maskData } from '../../app-components/utils';
 
 const { Title, Text } = Typography;
-
-// const calculateQty = (record: MatchRequirementModel) => {
-//     const {buyer_actual_quantity, seller_quantity, fulfillment_flag} = record;
-//     switch(fulfillment_flag) {
-//         case FullfillmentFlags.single_fulfillment:
-//             return buyer_actual_quantity
-        
-//         default:
-//             return seller_quantity;
-//     }
-// }
 
 export interface componentCallBacksModel {
     showCropDetailsModal: any;
@@ -31,7 +21,7 @@ export const matchesColumns = (componentCallBacks: componentCallBacksModel) => [
         render: (seller_id: string) => {
             return (
                 <>
-                    <Text underline>{seller_id}</Text>
+                    <Text underline>{maskData(parseIDfromHash(seller_id))}</Text>
                 </>
             );
         },

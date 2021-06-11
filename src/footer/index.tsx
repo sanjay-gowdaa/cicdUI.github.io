@@ -1,8 +1,9 @@
 import React from 'react';
 import { MailOutlined, PhoneOutlined } from '@ant-design/icons';
 
-import footerImg from '../static/assets/footer.png';
 import './footer.scss';
+
+import footerImg from '../static/assets/footer.png';
 import { contactUs } from '../constants';
 
 const Footer = () => {

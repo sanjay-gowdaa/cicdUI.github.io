@@ -20,6 +20,7 @@ import {
     updateEntityType,
 } from '../../store/registrationReducer/actions';
 import {
+    customConsentValidator,
     registerBasicFormMainLayout,
     registerBasicFormTailLayout
 } from '../constants';
@@ -208,7 +209,7 @@ const Register = ({ history, setSignUpPopupVisible }: { history: any, setSignUpP
                     {...registerBasicFormTailLayout}
                     name="remember"
                     valuePropName="checked"
-                    rules={[{ required: true, message: 'Please accept the terms and conditions!' }]}
+                    rules={[{ required: true, validator: (rule, value) => customConsentValidator(rule,value) }]}
                 >
                     <Checkbox className="custom-checkbox">
                         I have read and accept to

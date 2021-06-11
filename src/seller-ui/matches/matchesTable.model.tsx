@@ -3,7 +3,7 @@ import { Button, Image, Typography, Modal } from 'antd';
 import RagiImg from '../../static/assets/ragi.png';
 import AcceptMatch from './acceptMatch';
 import { MatchRequirementModel } from '../../buyer-seller-commons/types';
-import { parseIDfromHash } from '../../app-components/utils';
+import { parseIDfromHash, maskData } from '../../app-components/utils';
 import { ExclamationCircleOutlined } from '@ant-design/icons';
 import RejectConfrimation from './rejectConfirmation';
 
@@ -23,7 +23,7 @@ export const matchesColumns = (componentCallBacks: componentCallBacksModel) => [
         render: (buyer_id: string) => {
             return (
                 <>
-                    <Text underline>{parseIDfromHash(buyer_id)}</Text>
+                    <Text underline>{maskData(parseIDfromHash(buyer_id))}</Text>
                 </>
             );
         },
@@ -44,7 +44,7 @@ export const matchesColumns = (componentCallBacks: componentCallBacksModel) => [
         },
     },
     {
-        title: 'Qunatity Required',
+        title: 'Quantity Required',
         dataIndex: 'matched_quantity',
         key: 'matched_quantity',
         render: (matched_quantity: number, record: MatchRequirementModel) => {
@@ -96,13 +96,12 @@ export const matchesColumns = (componentCallBacks: componentCallBacksModel) => [
                         type="link"
                         danger
                         onClick={() => {
-                            // componentCallBacks?.confirmReject(true);
                             Modal.confirm({
                                 title: '',
                                 icon: <ExclamationCircleOutlined />,
                                 content: <RejectConfrimation  matchRecord={record} />,
                                 onOk() {
-                                    componentCallBacks?.rejectMatch(record.pk);
+                                    componentCallBacks?.rejectMatch(record);
                                   },
                                   onCancel() {},
                             })

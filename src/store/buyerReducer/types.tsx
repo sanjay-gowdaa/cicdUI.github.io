@@ -10,6 +10,7 @@ export interface ProduceModel {
     additionalInfo?: string | null;
     sk?: string;
     pk?: string;
+    currently_fulfilled_qty?: number;
 }
 
 export interface CropModel {
@@ -53,4 +54,12 @@ export interface BuyerStateModel {
     reviewsList: Array<ReviewRating>;
     timeStamp: any;
     isMatchesFetching: boolean;
+}
+
+export interface BuyerRejectMatch {
+    buyer_id: string;
+    buyer_crop_id: string;
+    seller_id: string;
+    seller_crop_id: string;
+    matched_quantity: number;
 }

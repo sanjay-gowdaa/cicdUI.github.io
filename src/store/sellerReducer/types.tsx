@@ -14,6 +14,7 @@ export interface CropApiModel {
     apmc_rate_data?: {apmc_price: string, increase: string};
     sk?: string;
     pk?: string;
+    currently_fulfilled_qty?: number;
 }
 
 export interface CropModel {

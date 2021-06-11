@@ -14,13 +14,19 @@ const { Title } = Typography;
 
 const MatchedSection = () => {
     const [openDetailsModal, setOpenDetailsModal] = useState(false);
-    // const [openRejectConfirmation, setOpenRejectConfirmation] = useState(false);
     const [selectedCropDetails, setSelectedCropDetails] = useState(initialEmptyCropDetail as MatchRequirementModel);
     const dispatch = useDispatch();
     const sellerState = useSelector((state: RootState) => state.seller);
-    
-    const rejectMatch = (transactionID: string) => {
-        dispatch(transactionAction(parseIDfromHash(transactionID), TransactionAction.reject));
+
+    const rejectMatch = (matchRecord: MatchRequirementModel) => {
+        const {pk = ''} = matchRecord;
+        dispatch(
+            transactionAction(
+                parseIDfromHash(pk),
+                TransactionAction.reject,
+                matchRecord
+            )
+        );
     }
 
     const componentCallBacks: componentCallBacksModel = {

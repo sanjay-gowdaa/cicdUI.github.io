@@ -1,5 +1,6 @@
 import CryptoJS from 'crypto-js';
-import { TransactionAction, TransactionStatus } from '../../buyer-seller-commons/types';
+import { MatchRequirementModel, TransactionAction, TransactionStatus } from '../../buyer-seller-commons/types';
+import { BuyerRejectMatch } from '../buyerReducer/types';
 import { LiveApmcRates, UpdatedLiveApmcRatesQuery } from '../genericTypes';
 const BASE_URL = process.env.REACT_APP_BASE_URL;
 const STAGE = process.env.REACT_APP_ENV;
@@ -25,14 +26,17 @@ const APMC_LIVE_RATES = 'getliverates';
 const UPDATED_APMC_API = 'apmc/price/';
 const INTENT_TO_SELL = 'sell';
 const USER_MANAGER_API = 'user';
-const MATCHES_API = `https://a73j5pnsxl.execute-api.ap-south-1.amazonaws.com/${STAGE}/matches`;
-const MATCHES_REJECT_API = `https://a73j5pnsxl.execute-api.ap-south-1.amazonaws.com/${STAGE}/reject`;
+const MATCHES_API = 'getMatch';
 const TRANSACTION_API = 'transaction';
+const MATCHES_REJECT_API = `${TRANSACTION_API}/reject`;
 const TRANSACTION_CREATE_API = `${TRANSACTION_API}/create`;
 const TRANSACTION_LIST_API = `${TRANSACTION_API}/user`;
-const USER_COMPLETE_DETAILS = 'getUserCompleteDetails';
+const USER_COMPLETE_DETAILS = 'getusercompletedetails';
 const USER_FILE_API = 'getuserfile';
 const UPDATE_USER_DETAILS = 'updateuserdetails';
+const ADD_BENEFICIARY_API = 'benemaintain';
+const ADD_BUYER_AT_DESTINY = 'buyerReg';
+const ADD_SELLER_AT_DESTINY = 'sellerReg';
 
 const parseToken = (userToken: string) => {
     const sholudDecrypt = process.env.REACT_APP_ENV === 'prod';
@@ -299,7 +303,7 @@ export const getMasterList = (buyerId: string) => {
 /* Matches And Transactions */
 
 export const getBuyerMatchesList = (buyerId: string, cropIds: Array<string>) => {
-    const matchesApi = MATCHES_API;
+    const matchesApi = `${BASE_URL}/${STAGE}/${MATCHES_API}`;
     const matchesBody = {buyer_id: buyerId, buyer_crop_id: cropIds}
     return fetch(matchesApi, {
         // headers: getAuthHeader(),
@@ -308,10 +312,10 @@ export const getBuyerMatchesList = (buyerId: string, cropIds: Array<string>) => 
     }).then((response: any) => response.json())
 }
 
-export const rejectMatch = (rejectData: {buyer_id: string, buyer_crop_id: Array<string>}) => {
-    const matchesRejectApi = MATCHES_REJECT_API;
+export const rejectMatch = (rejectData: BuyerRejectMatch) => {
+    const matchesRejectApi = `${BASE_URL}/${STAGE}/${MATCHES_REJECT_API}`;
     return fetch(matchesRejectApi, {
-        // headers: getAuthHeader(),
+        headers: getAuthHeader(),
         method: 'POST',
         body: JSON.stringify(rejectData)
     }).then((response: any) => response.json())
@@ -336,11 +340,40 @@ export const fetchSellerMatches = (userName: string) => {
     return fetch(listApi).then((response: any) => response.json());
 }
 
-export const postSellerTransactionAction = (transactionID: string, actionName: TransactionAction) => {
+export const postSellerTransactionAction = (
+    transactionID: string,
+    actionName: TransactionAction,
+    cropDetails: MatchRequirementModel
+) => {
     const transactionActionApi = `${BASE_URL}/${STAGE}/${TRANSACTION_API}/${transactionID}/seller?action=${actionName}`
     return fetch(transactionActionApi, {
-        method: 'POST'
+        method: 'POST',
+        body: JSON.stringify(cropDetails)
     }).then((response: any) => response.json());
+}
+
+export const postAddBeneficiarydata = (userData: any) => {
+    const addBeneficiaryApi = `${BASE_URL}/${STAGE}/${ADD_BENEFICIARY_API}`;
+    return fetch(addBeneficiaryApi, {
+        method: 'POST',
+        body: JSON.stringify(userData) 
+    }).then((response: any) => response.text);
+}
+
+export const postBuyerDetails = (userData: any) => {
+const registerBuyerApi = `${BASE_URL}/${STAGE}/${ADD_BUYER_AT_DESTINY}`;
+    return fetch(registerBuyerApi, {
+        method: 'POST',
+        body: JSON.stringify(userData) 
+    }).then((response: any) => response.text);
+}
+
+export const postSellerDetails = (userData: any) => {
+    const registerSellerApi = `${BASE_URL}/${STAGE}/${ADD_SELLER_AT_DESTINY}`;
+    return fetch(registerSellerApi, {
+        method: 'POST',
+        body: JSON.stringify(userData) 
+    }).then((response: any) => response.text);
 }
 
 /* Matches And Transactions End */

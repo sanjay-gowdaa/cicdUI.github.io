@@ -35,9 +35,12 @@ const MatchedSection = () => {
     const buyerState = useSelector((state: RootState) => state.buyer);
 
     const rejectTheMatch = (curMatchRecord: MatchRequirementModel) => {
-        const {buyer_id, buyer_crop_id} = curMatchRecord;
-        const rejectPayload = {buyer_id, buyer_crop_id: [buyer_crop_id]};
-        dispatch(rejectMatches(rejectPayload));
+        const {buyer_id, buyer_crop_id, seller_id,
+            seller_crop_id, matched_quantity} = curMatchRecord;
+        dispatch(
+            rejectMatches({buyer_id, buyer_crop_id, seller_id,
+                seller_crop_id, matched_quantity})
+        );
     }
 
     const componentCallBacks: componentCallBacksModel = {
@@ -45,11 +48,6 @@ const MatchedSection = () => {
         populateCropDetails: setSelectedCropDetails,
         rejectMatch: rejectTheMatch
     };
-    
-
-    useEffect(() => {
-        // dispatch(getMatchesForBuyerCrops([]))
-    }, [])
 
     useEffect(() => {
         const processedData = processFullfillmentData(buyerState.matchesList)

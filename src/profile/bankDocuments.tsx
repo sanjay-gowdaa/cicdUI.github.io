@@ -4,10 +4,9 @@ import { Button, Form, Input, Typography, Upload } from 'antd';
 import { CaretRightFilled, UploadOutlined } from '@ant-design/icons';
 import { isEmpty, toUpper } from 'lodash';
 
-import { bankDocumentsList, bankFieldValue, fieldLayout } from './constants';
+import { bankDocumentsList, bankFieldValue } from './constants';
 import {
     confirmAccountValidator,
-    customUpiValidator,
     normFile,
     validateInputField,
     validateUpload,
@@ -42,17 +41,18 @@ const BankDocuments = (props: any) => {
                         <div
                             className={
                                 kycFlag === "incomplete" &&
-                                userType === UserTypes.SELLER ? `kyc-required` : ``
+                                userType === UserTypes.SELLER &&
+                                list.name !== "upi_id" ? `kyc-required` : ``
                             }
                         >
                             <Form.Item className="margin-zero">
                             { !list.upload ?
                                 <>
                                     <Form.Item
-                                        {...fieldLayout}
+                                        labelCol={{span: 13}}
                                         label={
-                                            <span>
-                                                { kycFlag === "incomplete" && userType === UserTypes.SELLER ?
+                                            <span className="kyc-form-label">
+                                                { kycFlag === "incomplete" && userType === UserTypes.SELLER && list.name !== "upi_id" ?
                                                     <CaretRightFilled className="required-arrow" style={{ color: "#FF9900"}} />: null
                                                 }
                                                 {list.label}
@@ -80,9 +80,9 @@ const BankDocuments = (props: any) => {
                                     </Form.Item>
                                     { list.name === "account_number" && showConfirmAccountNumber &&
                                         <Form.Item
-                                            {...fieldLayout}
+                                            labelCol={{span: 13}}
                                             label={
-                                                <span>
+                                                <span className="kyc-form-label">
                                                     { kycFlag === "incomplete" && userType === UserTypes.SELLER ?
                                                         <CaretRightFilled className="required-arrow" style={{ color: "#FF9900"}} />: null
                                                     }
@@ -103,31 +103,34 @@ const BankDocuments = (props: any) => {
                                     }
                                 </> :
                                 <Form.Item
-                                    {...fieldLayout}
+                                    labelCol={{span: 13}}
                                     label={
-                                        <span className={userType === UserTypes.BUYER ? `kyc-form-label`: ``}>
+                                        <span className="kyc-form-label" style={{paddingBottom: "2.5em"}}>
                                             { kycFlag === "incomplete" && userType === UserTypes.SELLER ?
                                                 <CaretRightFilled className="required-arrow" style={{ color: "#FF9900"}} />: null
                                             }
-                                            {list.label}
+                                            {list.label}<br/>
+                                            <Text className="font-size-small">Front page of Bank Passbook/</Text><br/>
+                                            <Text className="font-size-small">Cancelled Cheque</Text>
                                         </span>
                                     }
                                     name={isEmpty(value) || isChangedClicked ? list.name : undefined}
                                     className={isEmpty(value) ? `margin-zero` : ``}
                                 >
                                     { !isEmpty(bank_doc) && !changeDocument &&
-                                        <>
-                                            <a
+                                        <>: 
+                                            <Button
+                                                type="link"
                                                 onClick={() => {
                                                     dispatch(getUserFiles(bank_doc.doc_key, setImageSrc, setPDF))
                                                     setShowDocument(true);
                                                 }}
                                             >
                                                 View Document&nbsp;
-                                            </a>|
-                                            <a onClick={() => setChangeDocument(true)}>
+                                            </Button>
+                                            <Button type="link" onClick={() => setChangeDocument(true)}>
                                                 &nbsp; Change Document
-                                            </a>
+                                            </Button>
                                         </>
                                     }
                                     { displayWhenEmpty || displayWhenChange ?
@@ -171,22 +174,6 @@ const BankDocuments = (props: any) => {
                     );
                 })
             }
-            <Form.Item
-                {...fieldLayout}
-                className="margin-zero"
-                name={(isEmpty(bankInfo?.upi_id) || isChangedClicked) ? "upi_id" : undefined}
-                label={<span className="kyc-form-label">UPI ID</span>}
-                rules={[{validator: (rule, value) => customUpiValidator(rule, value)}]}
-            >
-                { isAddClicked || isChangedClicked ?
-                    <Input
-                        className="custom-input kyc-input-field"
-                        defaultValue={bankInfo?.upi_id}
-                        onChange={() => setDisableSave(false)}
-                        contentEditable
-                    /> : <Text>: {bankInfo?.upi_id}</Text>
-                }
-            </Form.Item>
             { showDocument && <ViewDocument url={imageSrc} isPDF={isPDF} setShowDocument={setShowDocument} /> }
         </>
     );

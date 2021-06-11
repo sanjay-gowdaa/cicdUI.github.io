@@ -1,0 +1,146 @@
+{
+    "language":"en",
+    
+    "title":"VikasBandhu",
+    
+    "landing_page": {
+        "actions": {
+            "login": "Login",
+            "register": "Register",
+            "terms_and_conditions":"Terms and Conditions",
+            "privacy_policy":"Privacy Policy",
+            "read_more":"Read More",
+            "submit":"Submit",
+            "explore":"Explore Vikasbandhu"
+        },
+        "header": {
+            "breadcrumb": {
+                "home":"Home",
+                "aim": "Aim",
+                "ecosystem": "Ecosystem",
+                "commodities": "Commodities",
+                "users": "Users",
+                "about_us": "About Us",
+                "team": "Team",
+                "legal": "Legal",
+                "contact_us": "Contact Us"
+            }
+        }
+    },
+    
+    "home_page": {
+        "landing_page_card_title":"Be a part of Vikasbandhu family!",
+        "flash_text":"Beware of any Fraudulent Websites. <bold>Vikasbandhu does not charge any Registration fee</bold>. Visit only https://vikasbandhu.in",
+        "title":"VikasBandhu",
+        "text_1":"Friendly E-Market Place for",
+        "text_2":"Buyers and Sellers to connect",
+        "text_3":"engage and transact seamlessly",
+        "text_4":"for win-win relationships"
+    },
+    
+    "aim_page": {
+        "title":"VikasBandhu helps you in",
+        "aim_card_1":"Connecting buyers and sellers",
+        "aim_card_2":"Direct selling of agricultural produce",
+        "aim_card_3":"Ensuring best price for both buyer and seller",
+        "aim_card_4":"Providing live information on pricing for study",
+        "aim_card_5":"Partnering Government's vision",
+        "video_link":"Please view this video to understand",
+        "link_name":"VikasBandhu aim and solution"
+    },
+
+    "ecosystem_page": {
+        "title":"At VikasBandhu, we build an ecosystem that would",
+        "text_1":"Connect buyers and sellers in a simple to use platform.",
+        "text_2":"Provide dynamic information on pricing.",
+        "text_3":"Meet demand and supply.",
+        "text_4":"Facilitate a Door-to-door solution of logistics.",
+        "text_5":"Boost rural economy by providing local employment."
+    },
+
+    "commodities_page": {
+        "title":"Commodities we facilitate",
+        "paragraph":"VikasBandhu focus is currently limited to the non perishable agricultural produce from Farmers and Farmer Self help groups. The coverage initially is targetted in Karnataka covering the  major crops native to this region. The scope of produce is intended/limited to be below categories at this point.",
+        "commodities_name":{
+            "1":"Staple Crops",
+            "2":"Pulses",
+            "3":"Cash Crops",
+            "4":"Spices",
+            "5":"Oil Seeds"
+        }
+    },
+
+    "users_page": {
+        "title":"VikasBandhu for",
+        "user_card1": {
+            "title":"Sellers",
+            "subtitle":"Atmanirbar Farmers towards Atmanirbhar Bharat",
+            "text":"The farmer and farmer-self help groups are the centre of our efforts. We help to connect sellers to buyers directly. We aim to provide Logistics and better price for their produce at their doorstep."
+        },
+        "user_card2": {
+            "title":"Buyers",
+            "subtitle":"Buyer Community Optimize and enable direct connect",
+            "text":" VikasBandhu attempts to identify the right quantity source, taking care of the logistics, minimizing on overheads with customized packing where requested."
+        }
+    },
+
+    "about_us": {
+        "title":"About us",
+        "paragraph":"We are a young enterprise working with knowledge and passion for partnering Government's vision of Freedom, Protection, and Higher Income to farmer communities. We have worked tirelessly with farmers and everyone in the value chain to understand the needs.We are committed to ensure a meaningful facilitation to the buyers and sellers.",
+        "vision_card": {
+            "text":"Our Vision",
+            "description":"Ensure that we create a brand which is synonymous with trust and respect amongst communities in the agriculture space."
+        },
+        "philosophy_card": {
+            "text":"Our Philosophy",
+            "description":"Continuously improve our services to add value and Brand to our business, our partners and our communities. "
+        },
+        "title1":"Partnering Government's Vision",
+        "paragraph1":"We take pride in partnering Government's vision of doubling farmer's income by reducing middlemen. This is our contribution to nation building and making it truly 'Atmanirbhar Bharat'."
+    },
+
+    "our_team": {
+        "title":"Our Team",
+        "subtitle":"Management",
+        "name": {
+            "1":"G S Nagappa",
+            "2":"Suma Sadananda",
+            "3":"Sadananda Murthy"
+        },
+        "designation": {
+            "1":"Director",
+            "2":"Director",
+            "3":"Leads Engg. & Ops."
+        },
+        "advisors": {
+            "title":"Advisors",
+            "name": {
+                "1":"Chikkaramu S",
+                "2":"Sachin Narang",
+                "3":"C V Kulkarni"
+            },
+            "description": {
+                "1":"Agricultural expert (B. Tech -Agriculture Engineering) with over 15 years of technical experience on the field.He is Guiding us with training, Quality, and technical ground operations.",
+                "2":"Marketing Professional (MBA) withover two decades of marketing leadership experience at leading FMCG and lifestyle companies encompassing Personal Care and Food & Beverages. He is guiding us on the Go to Market strategies.",
+                "3":"Sales and operations Professional with over three decades of experience with focus on FMCG and beverages. He is helping define and structure the sales and operations."
+            }
+        }
+    },
+
+    "legal_page": {
+        "title":"Legal"
+    },
+
+    "contact_us_page": {
+        "title":"Contact Us",
+        "address1":"617, Shivam, Royal Park Residency,",
+        "address2":"J P Nagar 9th Phase, Bengaluru-560062",
+        "contact_form": {
+            "title":"We would like to hear from you!",
+            "full_name":"Full Name",
+            "email":"Email",
+            "phone":"Phone",
+            "message":"Message"
+        }
+    }
+}

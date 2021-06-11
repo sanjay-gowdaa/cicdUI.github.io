@@ -4,6 +4,7 @@ import {
     Avatar,
     Badge,
     Breadcrumb,
+    Button,
     Card,
     Dropdown,
     Menu,
@@ -17,6 +18,7 @@ import { BellFilled, ContactsFilled, LogoutOutlined } from '@ant-design/icons';
 import MenuItem from 'antd/lib/menu/MenuItem';
 import { isEmpty } from 'lodash';
 
+import '../header/header.scss';
 import { LOGOUT_URL } from '../store/api';
 import { RootState } from '../store/rootReducer';
 import DefaultBtn from '../app-components/defaultBtn';
@@ -30,9 +32,9 @@ const UserHeader = (props: any) => {
     const { history } = props;
     const loginState = useSelector((state: RootState) => state.loginUser);
     const dispatch = useDispatch();
-    const fieldOfficer = "Mahesh Kumar";
-    const fieldOfficerNumber = "9876543210";
-    const [notificationNumber, setNotificationNumber] = useState(2);
+    // const fieldOfficer = "Mahesh Kumar";
+    // const fieldOfficerNumber = "9876543210";
+    // const [notificationNumber, setNotificationNumber] = useState(2);
     const [userType, setUserType] = useState('');
     const [showProfile, setProfile] = useState(false);
     const [imageSrc, setImageSrc] = useState();
@@ -61,30 +63,38 @@ const UserHeader = (props: any) => {
         const feedbackName = userType + headerBreadcrumb.feedback;
         const cropsName = userType + headerBreadcrumb.crops;
         setBreadCrumbs({produce: produceName, matches: matchesName,transaction: transactionName, feedback: feedbackName, crops: cropsName});
+        console.log(isPDF);
     };
 
     // clear=true Means Clear one notification. clear=false Means Add one notification
-    const clearNotification = (clear: boolean) => {
-        if(clear){
-            setNotificationNumber((prevCount) => prevCount - 1);
-        } else {
-            setNotificationNumber((prevCount) => prevCount + 1);
-        }
-    };
+
+    // const clearNotification = (clear: boolean) => {
+    //     if(clear){
+    //         setNotificationNumber((prevCount) => prevCount - 1);
+    //     } else {
+    //         setNotificationNumber((prevCount) => prevCount + 1);
+    //     }
+    // };
 
     const openNotification = () => {
-        notification['info']({
-            message: 'Field Officer Assigned',
-            description: `You have been assigned a filed officer. The name of your field officer is ${fieldOfficer}`,
-            duration: 0,
-            onClose: () => clearNotification(true)
-        });
         notification['success']({
-            message: 'Verification Successful',
-            description: 'Your profile has been verified successfully.',
-            duration: 0, // Don't close automatically
-            onClose: () => clearNotification(true)
-        });
+            message: 'Welcome',
+            description: 'Thanks for registering with us.',
+            duration: 0,
+            style:{position: "relative", top: "5em"}
+        })
+        // notification['info']({
+        //     message: 'Field Officer Assigned',
+        //     description: `You have been assigned a filed officer. The name of your field officer is ${fieldOfficer}`,
+        //     duration: 0,
+        //     onClose: () => clearNotification(true)
+        // });
+        // notification['success']({
+        //     message: 'Verification Successful',
+        //     description: 'Your profile has been verified successfully.',
+        //     duration: 0, // Don't close automatically
+        //     onClose: () => clearNotification(true)
+        // });
     };
 
     const showContactInfo = () => {
@@ -94,8 +104,9 @@ const UserHeader = (props: any) => {
                     <Card>
                         <Title level={4}>Field Officer Info:</Title>
                         <Space direction="vertical">
-                            <Text>Name: {fieldOfficer}</Text>
-                            <Text>Phone No: {fieldOfficerNumber}</Text>
+                            {/* <Text>Name: {fieldOfficer}</Text>
+                            <Text>Phone No: {fieldOfficerNumber}</Text> */}
+                            <Text>Field Officer will be assigned shortly.</Text>
                         </Space>
                     </Card>
                 </MenuItem>
@@ -118,7 +129,10 @@ const UserHeader = (props: any) => {
             <Breadcrumb.Item href={breadCrumbs.feedback} >Feedback</Breadcrumb.Item>
             <Breadcrumb.Item href={terms}>Terms & Conditions</Breadcrumb.Item>
         </Breadcrumb>
-        <Badge count={notificationNumber} className="custom-badge">
+        <Badge
+            // count={notificationNumber}
+            className="custom-badge"
+        >
             <Tooltip title="Notifications">
                 <DefaultBtn 
                     shape="circle"
@@ -152,16 +166,15 @@ const UserHeader = (props: any) => {
         </Popconfirm>
         <Title level={4} className='margin-unset' style={{padding: "0.5em"}}>{loginState.name}</Title>
         <Tooltip title="Profile">
-            <a onClick={() => setProfile(true)}>
-                {
+            <Button shape="circle" size="large" onClick={() => setProfile(true)}
+                icon={
                     isEmpty(imageSrc) ?
-                    <Avatar size="large">
+                    <Avatar size="large" className="profile-avatar">
                         {loginState.name.charAt(0)}
                     </Avatar> :
-                    <Avatar src={imageSrc} />
-                }
-                
-            </a>
+                    <Avatar size="large" className="profile-avatar" src={imageSrc} />
+                }>
+            </Button>
         </Tooltip>
         { (showProfile && history.location.pathname !== profile) ? history.push(profile) : null}
       </div>

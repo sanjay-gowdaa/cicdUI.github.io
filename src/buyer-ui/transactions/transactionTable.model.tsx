@@ -1,9 +1,13 @@
 import React from 'react';
 import { Image, Typography, Tooltip } from 'antd';
 import RagiImg from '../../static/assets/ragi.png';
+<<<<<<< HEAD
 import { parseIDfromHash } from '../../app-components/utils';
 import { TransactioModel } from '../../buyer-seller-commons/types';
 import PayButton from './payButton';
+=======
+import { parseIDfromHash, maskData } from '../../app-components/utils';
+>>>>>>> 223c657f9ea0b3d7eeaa4b0a2bbdc9e7a0dad61e
 const { Text } = Typography;
 
 
@@ -45,7 +49,7 @@ export const transactionColumns = [
         },
     },
     {
-        title: 'Qunatity',
+        title: 'Quantity',
         dataIndex: 'matched_quantity',
         key: 'matched_quantity',
         render: (quantity: number) => {
@@ -74,8 +78,8 @@ export const transactionColumns = [
         render: (seller_id: string) => {
             const actualID = parseIDfromHash(seller_id)
             return (
-                <Tooltip placement="topLeft" title={actualID}>
-                    <Text underline>{actualID}</Text>
+                <Tooltip placement="topLeft" title={maskData(actualID)}>
+                    <Text underline>{maskData(actualID)}</Text>
                 </Tooltip>
             );
         },

@@ -29,6 +29,10 @@
 
         .profile-picture {
             padding-left: 3em;
+
+            .anticon-eye {
+                display: none;
+            }
         }
 
         .kyc-input-field {
@@ -83,8 +87,19 @@
 
 .view-document-modal {
     img {
-        max-width: 20em;
+        max-width: 50em;
         max-height: 40em;
         padding: 0.7em;
     }
+}
+
+.change-profile-pic-text {
+    position: relative;
+    top: 1em;
+    right: 1em;
+}
+
+.changed-profile-picture {
+    max-width: 12rem;
+    max-height: 12rem;
 }
