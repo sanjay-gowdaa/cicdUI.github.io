@@ -1,7 +1,21 @@
 import { getTimeStamp } from "../../app-components/utils";
 import { TransactionStatus } from "../../buyer-seller-commons/types";
-import { addProduce, getAllProduce, getCropCategoryList, getCropList, getSubCategoryList, getMasterList,
-    updateMasterList, deleteProduce, patchProduce, getBuyerMatchesList, rejectMatch, createTransaction, fetchTransactionList } from "../api";
+import {
+    addProduce,
+    getAllProduce,
+    getCropCategoryList,
+    getCropList,
+    getSubCategoryList,
+    getMasterList,
+    updateMasterList,
+    deleteProduce,
+    patchProduce,
+    getBuyerMatchesList,
+    rejectMatch,
+    createTransaction,
+    fetchTransactionList,
+    sellerConnectStatus
+} from "../api";
 import { UserStateModel } from "../loginReducer/types";
 import { RootState } from "../rootReducer";
 import { BuyerRejectMatch, BuyerStateModel, MasterListApiFormat, ProduceModel } from "./types";
@@ -204,13 +218,6 @@ export const getMatchesForBuyerCrops = (cropsList: Array<ProduceModel>) => {
     }
 }
 
-// export const getMatchesForBuyerCropsIDS = (buyerData: {buyer_id: string, buyer_crop_ids: Array<string>}) => {
-//     return async(dispatch: any, getState: any) => {
-//         const matchesList = await getBuyerMatchesList(buyerData.buyer_id, buyerData.buyer_crop_ids);
-//         // dispatch(updateMatchesListForID())
-//     }
-// }
-
 export const rejectMatches = (rejectData: BuyerRejectMatch) => {
     return async(dispatch: any, getState: any) => {
         const matchesList = await rejectMatch(rejectData);
@@ -226,6 +233,16 @@ export const connectMatch = (transactionEntry: any) => {
         dispatch(getProduceList());
         dispatch(getTransactionList(TransactionStatus.pending));
         return Promise.resolve('Successs');
+    }
+}
+
+export const checkSellerConnectedStatus = (sellerId: string, sellerCropId: string) => {
+    return async(dispatch: any, getState: any) => {
+        const connectedStatus = await sellerConnectStatus({
+            sellerId,
+            sellerCropId
+        });
+        return Promise.resolve(connectedStatus);
     }
 }
 

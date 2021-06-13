@@ -31,6 +31,7 @@ const TRANSACTION_API = 'transaction';
 const MATCHES_REJECT_API = `${TRANSACTION_API}/reject`;
 const TRANSACTION_CREATE_API = `${TRANSACTION_API}/create`;
 const TRANSACTION_LIST_API = `${TRANSACTION_API}/user`;
+const CONNECT_STATUS = 'sellerstatus/status';
 const USER_COMPLETE_DETAILS = 'getusercompletedetails';
 const USER_FILE_API = 'getuserfile';
 const UPDATE_USER_DETAILS = 'updateuserdetails';
@@ -349,6 +350,17 @@ export const postSellerTransactionAction = (
     return fetch(transactionActionApi, {
         method: 'POST',
         body: JSON.stringify(cropDetails)
+    }).then((response: any) => response.json());
+}
+
+export const sellerConnectStatus = ({
+    sellerId,
+    sellerCropId
+}: {sellerId: string, sellerCropId: string}) => {
+    const sellerConnectedApi = `${BASE_URL}/${STAGE}/${CONNECT_STATUS}`;
+    return fetch(sellerConnectedApi, {
+        method: 'POST',
+        body: JSON.stringify({seller_id: sellerId, seller_crop_id: sellerCropId})
     }).then((response: any) => response.json());
 }
 
