@@ -1,6 +1,7 @@
 import React, {useEffect} from 'react';
 import { Divider, Typography } from 'antd';
-import { useDispatch } from 'react-redux';
+import { useDispatch,  useSelector} from 'react-redux';
+import { RootState } from '../store/rootReducer';
 
 import Header from '../header';
 import Footer from '../footer';
@@ -10,6 +11,7 @@ import ReviewsSection from './reviews';
 import TransactionSection from './transactions';
 import ProduceSection from './produce';
 import AddProduceModal from './masterList';
+import PaymentResponseModel from './transactions/paymentResponsemodel';
 
 import Banner from '../static/assets/buyerBanner.jpg';
 
@@ -17,6 +19,8 @@ const {Title} = Typography;
 
 const BuyerUI = (props: any) => {
     const { history } = props;
+    const loginState = useSelector((state: RootState) => state.loginUser);
+    const isRedirected = loginState.isRedirected;
     return (
         <div className="buyer-ui-app" id="buyer-ui-app">
             <Header history={history} showActions isLoggedIn />
@@ -24,6 +28,7 @@ const BuyerUI = (props: any) => {
                 <Title level={2}>My Dashboard</Title>
                 <img className="buyer-banner" src={Banner} alt="buyer-banner" />
                 <Divider />
+                {isRedirected && <PaymentResponseModel/>}
                 <AddProduceModal />
                 <Divider />
                 <ProduceSection />

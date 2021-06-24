@@ -39,6 +39,16 @@ export interface MasterListApiFormat {
     grade_name: string;
 }
 
+export interface PaymentDetails{
+    orderID: string;
+    orderAmount: string;
+    paymentMode: string;
+    referenceId: string;
+    txMsg: string;
+    txStatus: string;
+    txTime: string;
+}
+
 export interface BuyerStateModel {
     masterProduceList: Array<MasterListApiFormat>;
     produceList: Array<ProduceModel>;
@@ -54,6 +64,7 @@ export interface BuyerStateModel {
     reviewsList: Array<ReviewRating>;
     timeStamp: any;
     isMatchesFetching: boolean;
+    paymentDetails:Array<PaymentDetails>;
 }
 
 export interface BuyerRejectMatch {

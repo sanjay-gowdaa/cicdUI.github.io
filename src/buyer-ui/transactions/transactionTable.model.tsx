@@ -1,14 +1,12 @@
 import React from 'react';
 import { Image, Typography, Tooltip } from 'antd';
 import RagiImg from '../../static/assets/ragi.png';
-<<<<<<< HEAD
-import { parseIDfromHash } from '../../app-components/utils';
+import { parseIDfromHash, maskData } from '../../app-components/utils';
 import { TransactioModel } from '../../buyer-seller-commons/types';
 import PayButton from './payButton';
-=======
-import { parseIDfromHash, maskData } from '../../app-components/utils';
->>>>>>> 223c657f9ea0b3d7eeaa4b0a2bbdc9e7a0dad61e
+
 const { Text } = Typography;
+
 
 
 

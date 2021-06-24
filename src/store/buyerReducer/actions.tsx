@@ -1,6 +1,6 @@
 import { getTimeStamp } from "../../app-components/utils";
 import { TransactionStatus } from "../../buyer-seller-commons/types";
-import { addProduce, getAllProduce, getCropCategoryList, getCropList, getSubCategoryList, getMasterList,
+import { addProduce, getAllProduce, getCropCategoryList, getCropList, getSubCategoryList, getMasterList,getPaymentList,
     updateMasterList, deleteProduce, patchProduce, getBuyerMatchesList, rejectMatch, createTransaction, fetchTransactionList } from "../api";
 import { UserStateModel } from "../loginReducer/types";
 import { RootState } from "../rootReducer";
@@ -17,11 +17,19 @@ export const UPDATE_MATCHES_LIST = 'UPDATE_MATCHES_LIST';
 export const UPDATE_MATCHES_LIST_FOR_BUYER_CROP = 'UPDATE_MATCHES_LIST_FOR_BUYER_CROP';
 export const UPDATE_TRANSACTION_LIST = 'UPDATE_TRANSACTION_LIST';
 export const SET_MATCHES_LOADER = 'SET_MATCHES_LOADER';
+export const UPDATE_PAYMENT_DETAILS = 'UPDATE_PAYMENT_DETAILS';
 
 export const updateStoreMasterList = (masterlist: Array<any>) => {
     return {
         type: UPDATE_MASTER_LIST,
         payload: masterlist,
+    };
+};
+
+export const updatePaymentDetails = (paymentDetails: Array<any>) => {
+    return {
+        type: UPDATE_PAYMENT_DETAILS,
+        payload: paymentDetails,
     };
 };
 
@@ -241,4 +249,17 @@ export const getTransactionList = (transactionStatus: TransactionStatus) => {
 export const saveTimeStamp = (dispatch: any) => {
     const timeStamp = getTimeStamp();
     dispatch(updateTimeStamp(timeStamp));
+}
+
+export const getPaymentDetails = () => {
+    return async(dispatch: any, getState: any) => {
+        const {loginUser}: {loginUser: UserStateModel} = getState() as RootState;
+        const {username} = loginUser;
+        const paymentDetails = await getPaymentList(username);
+        //console.log("paymentDetails:", paymentDetails)
+        // testing
+        // const masterProduceList = await getMasterList('7892329983');
+        //const masterList = masterProduceList || [];
+        dispatch(updatePaymentDetails(paymentDetails));
+    }
 }

@@ -3,7 +3,8 @@ import { useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { Alert, Spin } from 'antd';
 
-import { getAccessTokenAndFetchUserDetails} from '../store/loginReducer/actions';
+import { getRedirectionTokenAndFetchUserDetails } from '../store/loginReducer/actions';
+import { updateIsRedirected } from '../store/loginReducer/actions';
 import { RootState } from '../store/rootReducer';
 import { UserStateModel } from '../store/loginReducer/types';
 import { routesMap } from '../constants';
@@ -14,7 +15,7 @@ function useQuery() {
     return new URLSearchParams(useLocation().search);
 }
 
-const ValidateUserAuthentication = (props: any) => {
+const ValidateUserRedirection = (props: any) => {
     const { history } = props;
     const loginState: UserStateModel = useSelector((state: RootState) => state.loginUser);
     const { signInState, is_seller, is_buyer } = loginState;
@@ -22,8 +23,10 @@ const ValidateUserAuthentication = (props: any) => {
     const query = useQuery();
 
     useEffect(() => {
-        const accessCode = query.get('code') || '';
-        dispatch(getAccessTokenAndFetchUserDetails(accessCode));
+        const key = query.get('key') || '';
+        if(key){
+            dispatch(getRedirectionTokenAndFetchUserDetails(key));
+        }
     }, []);
 
     useEffect(() => {
@@ -31,6 +34,7 @@ const ValidateUserAuthentication = (props: any) => {
             if (is_seller) {
                 history.push(seller_ui);
             } else if (is_buyer) {
+                dispatch(updateIsRedirected(true));
                 history.push(buyer_ui);
             }
         }
@@ -49,4 +53,4 @@ const ValidateUserAuthentication = (props: any) => {
     );
 };
 
-export default ValidateUserAuthentication;
+export default ValidateUserRedirection;
