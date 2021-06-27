@@ -39,6 +39,7 @@ const ADD_BUYER_AT_DESTINY = 'buyerReg';
 const ADD_SELLER_AT_DESTINY = 'sellerReg';
 const GET_REDIRECTION_TOKEN = 'getredirectiontoken';
 const GET_PAYMENT_DETAILS = 'getpaymentdetails';
+const CONNECT_STATUS = 'sellerstatus/status';
 
 const parseToken = (userToken: string) => {
     const sholudDecrypt = process.env.REACT_APP_ENV === 'prod';
@@ -359,6 +360,17 @@ export const postSellerTransactionAction = (
     return fetch(transactionActionApi, {
         method: 'POST',
         body: JSON.stringify(cropDetails)
+    }).then((response: any) => response.json());
+}
+
+export const sellerConnectStatus = ({
+    sellerId,
+    sellerCropId
+}: {sellerId: string, sellerCropId: string}) => {
+    const sellerConnectedApi = `${BASE_URL}/${STAGE}/${CONNECT_STATUS}`;
+    return fetch(sellerConnectedApi, {
+        method: 'POST',
+        body: JSON.stringify({seller_id: sellerId, seller_crop_id: sellerCropId})
     }).then((response: any) => response.json());
 }
 
