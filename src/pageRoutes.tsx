@@ -5,6 +5,7 @@ import RegisterBuyer from './login-ui/registration';
 import SellerUI from './seller-ui/';
 import BuyerUI from './buyer-ui';
 import ValidateUserAuthentication from './validateUserAuthentication';
+import ValidateUserRedirection from './validateUserRedirection';
 import { routesMap } from './constants';
 import GuardedRoute from './app-components/GuardedRoute';
 import { Terms } from './terms-and-conditions';
@@ -21,6 +22,7 @@ const HomePageRoutes = () => {
             {/* <Route path={seller_ui} component={SellerUI} /> */}
             {/* <Route path={buyer_ui} component={BuyerUI} /> */}
             <Route path={'/login-user'} component={ValidateUserAuthentication} />
+            <Route path={'/redirected-user'} component={ValidateUserRedirection} />
             <Route path={terms} component={Terms} />
             <Route path={purchase_agreement} component={PurchaseAgreement} />
             {/* Protected route guard */}

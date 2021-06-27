@@ -38,6 +38,9 @@ const UPDATE_USER_DETAILS = 'updateuserdetails';
 const ADD_BENEFICIARY_API = 'benemaintain';
 const ADD_BUYER_AT_DESTINY = 'buyerReg';
 const ADD_SELLER_AT_DESTINY = 'sellerReg';
+const GET_REDIRECTION_TOKEN = 'getredirectiontoken';
+const GET_PAYMENT_DETAILS = 'getpaymentdetails';
+const CONNECT_STATUS = 'sellerstatus/status';
 
 const parseToken = (userToken: string) => {
     const sholudDecrypt = process.env.REACT_APP_ENV === 'prod';
@@ -135,6 +138,14 @@ export const fetchUserDetails = (userAccessToken: string) => {
     const userProfileApi = `${BASE_URL}/${STAGE}/${USER_PROFILE_API}`;
     return fetch(userProfileApi, {
         headers: getAuthHeader()
+    }).then((response: any) => response.json());
+};
+
+export const fetchRedirectedUserDetails = (userAccessToken: string) => {
+    //console.log("inside fun3", userAccessToken)
+    const userProfileApi = `${BASE_URL}/${STAGE}/${USER_PROFILE_API}`;
+    return fetch(userProfileApi, {
+        headers: {'Authorization': `Bearer ${userAccessToken}`}
     }).then((response: any) => response.json());
 };
 
@@ -388,4 +399,22 @@ export const postSellerDetails = (userData: any) => {
     }).then((response: any) => response.text);
 }
 
+export const getRedirectionToken = (userKey: string) => {
+    
+    const accessTokenApi = `${BASE_URL}/${STAGE}/${GET_REDIRECTION_TOKEN}`;
+    const accessTokenParam = JSON.stringify({
+        'key': userKey,
+    });
+    return fetch(accessTokenApi, {
+        method: 'POST',
+        body: accessTokenParam 
+    }).then((response: any) => response.json());
+};
+
+export const getPaymentList = (buyerId: string) => {
+    const paymentDetailsApi = `${BASE_URL}/${STAGE}/${GET_PAYMENT_DETAILS}?username=${buyerId}`;
+    return fetch(paymentDetailsApi, {
+        headers: getAuthHeader()
+    }).then((response: any) => response.json())
+}
 /* Matches And Transactions End */

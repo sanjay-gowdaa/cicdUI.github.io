@@ -7,6 +7,7 @@ export interface UserDetailsModel {
     name: string;
     configs? : [];
     kycErrorMsg?: string;
+    isRedirected?: boolean;
 }
 
 export interface UserStateModel extends UserDetailsModel {
