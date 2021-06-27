@@ -112,7 +112,7 @@ export const saveKyc = (userFormData: any) => {
 
 export const getUserDetails = (accessToken: string) => {
     return async (dispatch: any, getState: any) => {
-        console.log("inside fun2", accessToken)
+        //console.log("inside fun2", accessToken)
         const userDetailsData = await fetchUserDetails(accessToken);
         const {result} = userDetailsData || {result: {}}
         // const {status, data} = response || {status: '', data: ''}

@@ -12,8 +12,9 @@ const BASE_URL = process.env.REACT_APP_BASE_URL;
 const STAGE = process.env.REACT_APP_ENV;
 const PAYMENT_REQUEST = 'paymentrequest';
 
-const PayButton = (transDetails: any) => {
-    //console.log(transDetails);
+const PayButton = (tranDetails: any) => {
+    console.log(tranDetails);
+    const {buyer_final_price} = tranDetails
     const loginState = useSelector((state: RootState) => state.loginUser);
     const [viewPaymentDetails, setPaymentDetails] = useState(false);
     const [selecteduuid, setSelecteduuid] = useState('');
@@ -23,20 +24,6 @@ const PayButton = (transDetails: any) => {
     const seq = (Math.floor(Math.random() * 10000) + 10000).toString().substring(1);
     const id = "order_"+seq
     //console.log(seq);
-    
-    /* const payNow = () => {
-        console.log("Payment gateway to be called");
-        console.log("loginState", loginState);
-        const accessToken = (window as any).userToken ? (window as any).userToken : null;
-        console.log(accessToken)
-        setSelecteduuid(uuid);
-        const redirectData = {
-         key: uuid,
-         value: accessToken,
-        }
-        window.localStorage.setItem('user', JSON.stringify(redirectData));
-        setPaymentDetails(true)
-    }; */
 
     return (
         <>
@@ -66,10 +53,10 @@ const PayButton = (transDetails: any) => {
                     </Space>
                 </Col>
                 <Col span={12}>
-                    <form className="payment" method="POST" action="https://enzdzh0pw2.execute-api.ap-south-1.amazonaws.com/dev/request">
+                    <form className="payment" method="POST" action="https://enzdzh0pw2.execute-api.ap-south-1.amazonaws.com/dev/paymentrequest">
                         <Space direction="vertical">
                         <Input className="custom-input" type="text" value={id} name="orderId" />
-                        <Input type="text" value={transDetails} name="orderAmount"/> 
+                        <Input type="text" value={buyer_final_price} name="orderAmount"/> 
                         <Input type="hidden" value="INR" name="orderCurrency" />  
                         <Input type="text" value="Test note" name="orderNote"/>
                         <Input type="text" value={loginState.name} name="customerName"/>

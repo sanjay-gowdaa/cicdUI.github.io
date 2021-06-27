@@ -387,18 +387,7 @@ export const postSellerDetails = (userData: any) => {
 }
 
 export const getRedirectionToken = (userKey: string) => {
-    /* const keyData = window.localStorage.getItem('user');
-    if (keyData != null){
-        const parsedData =JSON.parse(keyData);
-        console.log("parsedData:", parsedData);
-        
-
-        if(parsedData.key == key){
-            var token = parsedData.value;
-        } 
-    }
-    //window.localStorage.removeItem('user');
-    return token; */
+    
     const accessTokenApi = `${BASE_URL}/${STAGE}/${GET_REDIRECTION_TOKEN}`;
     const accessTokenParam = JSON.stringify({
         'key': userKey,
