@@ -14,11 +14,12 @@ import {
     rejectMatch,
     createTransaction,
     fetchTransactionList,
-    sellerConnectStatus
+    sellerConnectStatus,
+    getPaymentList
 } from "../api";
 import { UserStateModel } from "../loginReducer/types";
 import { RootState } from "../rootReducer";
-import { BuyerRejectMatch, BuyerStateModel, MasterListApiFormat, ProduceModel } from "./types";
+import { BuyerRejectMatch, MasterListApiFormat, ProduceModel } from "./types";
 
 export const UPDATE_MASTER_LIST = 'UPDATE_MASTER_LIST';
 export const GET_MASTER_LIST = 'GET_MASTER_LIST';
