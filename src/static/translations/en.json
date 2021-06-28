@@ -11,7 +11,7 @@
             "privacy_policy":"Privacy Policy",
             "read_more":"Read More",
             "submit":"Submit",
-            "explore":"Explore Vikasbandhu"
+            "explore":"Explore VikasBandhu"
         },
         "header": {
             "breadcrumb": {
@@ -31,11 +31,11 @@
     "home_page": {
         "landing_page_card_title":"Be a part of Vikasbandhu family!",
         "flash_text":"Beware of any Fraudulent Websites. <bold>Vikasbandhu does not charge any Registration fee</bold>. Visit only https://vikasbandhu.in",
-        "title":"VikasBandhu",
         "text_1":"Friendly E-Market Place for",
         "text_2":"Buyers and Sellers to connect",
         "text_3":"engage and transact seamlessly",
-        "text_4":"for win-win relationships"
+        "text_4":"for win-win relationships",
+        "mobile_home_text": "A friendly digital E-market place for agricultural produce"
     },
     
     "aim_page": {
