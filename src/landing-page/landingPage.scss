@@ -1,4 +1,4 @@
-$col-shade-green: #12805C;
+$col-shade-green: #12805c;
 
 .col-green {
     color: $col-shade-green !important;
@@ -6,7 +6,7 @@ $col-shade-green: #12805C;
 
 #home {
     background-position: center center;
-    background-size: 100% auto;
+    background-size: 100rem auto;
     background-repeat: no-repeat;
     background-origin: padding-box;
     scroll-margin: 6rem;
@@ -16,18 +16,24 @@ $col-shade-green: #12805C;
     .home-content-wrapper {
         position: relative;
         top: 6rem;
-        height: 105.25vh;
+        height: 103vh;
         margin-bottom: 1rem;
-        
+
         .animate-alert {
             animation: warning-banner 30s infinite 20s;
             width: fit-content;
         }
 
         @keyframes warning-banner {
-            0% {left: 0%}
-            50% {left: 40%}
-            100% {left: 0%}
+            0% {
+                left: 0%;
+            }
+            50% {
+                left: 40%;
+            }
+            100% {
+                left: 0%;
+            }
         }
 
         .home-content {
@@ -43,7 +49,7 @@ $col-shade-green: #12805C;
             background-color: rgba($color: #000000, $alpha: 0.2);
         }
 
-    // Kannada Styling
+        // Kannada Styling
         .home-content-kn {
             position: absolute;
             left: 5rem;
@@ -56,19 +62,19 @@ $col-shade-green: #12805C;
             border-radius: 0.5rem;
             background-color: rgba($color: #000000, $alpha: 0.2);
         }
-    
+
         .logo {
             border-radius: 0.5rem;
         }
-            
+
         .home-paragraph {
             margin-top: 2rem;
-    
+
             .margin-none {
                 margin: 0;
             }
         }
-    
+
         .explore-vb-btn {
             background-color: #f5a31a !important;
             border-color: #f5a31a !important;
@@ -83,7 +89,7 @@ $col-shade-green: #12805C;
     position: sticky;
     top: 6rem;
     opacity: 1;
-    width: 17rem;
+    height: fit-content;
 }
 
 .fixed-card-join {
@@ -101,15 +107,15 @@ $col-shade-green: #12805C;
         text-align: center;
         opacity: 1;
         padding: 0;
-        margin-right: 1rem;
-        
+        margin-right: 0.5rem;
+
         .fixed-title {
-            font-size: x-large;
+            font-size: 1.5rem;
             width: 10rem;
             margin: 0;
         }
 
-    // Kannada Styling
+        // Kannada Styling
         .fixed-title-kn {
             font-size: large;
             width: 10rem;
@@ -119,7 +125,7 @@ $col-shade-green: #12805C;
         .join-us-reg {
             width: 10rem;
             height: 3rem;
-            font-size: large;
+            font-size: 1.2rem;
         }
     }
 }
@@ -128,27 +134,38 @@ $col-shade-green: #12805C;
     scroll-margin: 6rem;
 
     .aim-title {
-        padding-top: 1rem;
+        padding: 1rem;
+        padding-bottom: 0rem;
         font-size: 3rem;
-        margin-left: 18rem;
     }
 
     // Kannada Styling
     .aim-title-kn {
-        padding-top: 1rem;
+        padding: 1rem;
         font-size: 2rem;
-        margin-left: 18rem;
+        padding-bottom: 0rem;
     }
 
     .handshake-image {
         float: right;
         position: relative;
         bottom: 5rem;
-        left: 2rem;
     }
-    
+
     .aim-card-row {
-        
+        margin: auto;
+        width: 100%;
+        position: relative;
+        bottom: 10rem;
+
+        .card-col {
+            padding-left: 3rem;
+        }
+
+        .card-col-two {
+            padding-left: 8rem;
+        }
+
         .aim-card {
             background-color: $col-shade-green;
             width: 12.5rem;
@@ -162,7 +179,7 @@ $col-shade-green: #12805C;
             line-height: 1;
         }
 
-    // Kannada Styling
+        // Kannada Styling
         .aim-card-kn {
             background-color: $col-shade-green;
             width: 12.5rem;
@@ -175,34 +192,34 @@ $col-shade-green: #12805C;
             font-size: small;
             line-height: 1;
         }
-            
+
         .hex1 {
             width: 0;
             margin: 0 auto;
             border-radius: 0.3rem;
             margin-top: 1rem;
-            border-bottom: 1.5rem solid #32886C;
+            border-bottom: 1.5rem solid #32886c;
             border-left: 2.5rem solid transparent;
             border-right: 2.5rem solid transparent;
         }
-            
+
         .hex2 {
             margin: 0 auto;
             width: 4.78rem;
             height: 2.5rem;
-            background-color: #32886C;
+            background-color: #32886c;
 
             .icon-inside-hex {
                 height: 3rem;
             }
         }
-            
+
         .hex3 {
             margin: 0 auto;
             border-radius: 0.3rem;
             margin-bottom: 1rem;
             width: 0;
-            border-top: 1.5rem solid #32886C;
+            border-top: 1.5rem solid #32886c;
             border-left: 2.5rem solid transparent;
             border-right: 2.5rem solid transparent;
         }
@@ -212,21 +229,26 @@ $col-shade-green: #12805C;
     .aim-video-link-kn {
         font-size: 1rem;
         margin: 0 5rem;
+        position: relative;
+        bottom: 10rem;
     }
 
     .aim-video-link {
         font-size: 1.2rem;
         margin: 0 6rem;
+        position: relative;
+        bottom: 10rem;
     }
 }
 
 #ecosystem {
     scroll-margin: 6rem;
+    position: relative;
+    bottom: 10rem;
 
     .tractor-image {
         padding-top: 0.5rem;
-        width: 30rem;
-        margin: 0 auto;
+        margin-left: 3rem;
     }
 
     .bulletin-image {
@@ -237,7 +259,7 @@ $col-shade-green: #12805C;
         margin-bottom: 1.5rem;
 
         img {
-            font-size: large;
+            font-size: 1.2rem;
         }
     }
 
@@ -250,7 +272,7 @@ $col-shade-green: #12805C;
 
     // Kannada Styling
     .ecosystem-content-kn {
-        color: #12805C !important;
+        color: #12805c !important;
         background-color: #e0efea;
         width: 50rem;
         border-radius: 0.3rem;
@@ -258,7 +280,7 @@ $col-shade-green: #12805C;
         margin: 0 auto;
         margin-bottom: 1rem;
         padding-left: 2rem;
-        
+
         .ecosystem-title-kn {
             padding-top: 1rem;
             padding-right: 1rem;
@@ -275,15 +297,15 @@ $col-shade-green: #12805C;
     }
 
     .ecosystem-content {
-        color: #12805C !important;
+        color: #12805c !important;
         background-color: #e0efea;
-        width: 50rem;
+        width: 90%;
         border-radius: 0.3rem;
         height: fit-content;
         margin: 0 auto;
         margin-bottom: 1rem;
         padding-left: 2rem;
-        
+
         .ecosystem-title {
             padding-top: 1rem;
             padding-right: 1rem;
@@ -301,9 +323,11 @@ $col-shade-green: #12805C;
 }
 
 #commodities {
-    margin-left: 17rem;
+    position: relative;
+    bottom: 10rem;
     scroll-margin: 6rem;
-    
+    padding-left: 2.5rem;
+
     // Kannada Styling
     .commodities-title-kn {
         font-size: 2rem;
@@ -315,13 +339,13 @@ $col-shade-green: #12805C;
 
     // Kannada Styling
     .commodities-paragraph-kn {
-        width: 50rem;
+        width: 100%;
         font-size: 1rem;
         line-height: 2rem;
     }
 
     .commodities-paragraph {
-        width: 50rem;
+        width: 100%;
         font-size: 1rem;
         line-height: 2rem;
     }
@@ -342,30 +366,30 @@ $col-shade-green: #12805C;
     }
 
     .wheat-image {
-        margin: 2rem auto;
-        width: 50rem;
+        margin-top: 1rem;
+        width: 90%;
     }
 }
 
 #users {
     scroll-margin: 6rem;
-    
+    position: relative;
+    bottom: 10rem;
+
     // Kannada Styling
     .user-title-kn {
-        padding-top: 1rem;
+        text-align: center;
         font-size: 2rem;
-        margin-left: 30rem;
     }
 
     .user-title {
-        padding-top: 1rem;
-        font-size: 3rem;
-        margin-left: 30rem;
+        text-align: center;
+        font-size: 2.5rem;
     }
 
     .user-column {
         margin-left: 3rem;
-        
+
         // Kannada Styling
         .user-card-kn {
             background-color: #e0efea;
@@ -385,40 +409,45 @@ $col-shade-green: #12805C;
     }
 
     // Kannada Styling
-    .card-subtitle-kn{
+    .card-subtitle-kn {
         font-size: 1rem;
     }
 
     // Kannada Styling
-    .card-text-kn{
+    .card-text-kn {
         font-size: 0.9rem;
     }
 
-    .card-text{
+    .card-text {
         font-size: 1rem;
     }
 
+    .user-image {
+        width: 125px;
+        height: 125px;
+    }
+
     .transport-image {
-        margin: 2rem 16rem;
-        width: 50rem;
+        margin: 2rem;
+        width: 90%;
     }
 }
 
 .about-us-video-modal {
     .ant-modal-body {
-        height: 80vh;
+        height: 100%;
     }
 }
 
 #aboutUs {
-    margin: 2.5rem 0;
-    margin-left: 16rem;
-    width: 53rem;
-    height: 48rem;
+    margin: 2.5rem;
+    width: 95%;
     scroll-margin: 6rem;
     padding: 1rem 2rem;
+    position: relative;
+    bottom: 10rem;
     background-color: #fbfbfb;
-    
+
     // Kannada Styling
     .about-us-title-kn {
         padding-top: 1rem;
@@ -427,62 +456,56 @@ $col-shade-green: #12805C;
 
     .about-us-title {
         padding-top: 1rem;
-        font-size: 3rem;
+        font-size: 2.5rem;
     }
 
     .outline-image {
         position: relative;
+        float: right;
         bottom: 5rem;
-        left: 39rem;
+        height: 10rem;
     }
 
     // Kannada Styling
     .outline-paragraph-kn {
-        position: relative;
-        bottom: 10rem;
         font-size: 1rem;
-        width: 40rem;
+        width: 90%;
     }
 
     .outline-paragraph {
-        position: relative;
-        bottom: 10rem;
-        font-size: large;
-        width: 40rem;
+        font-size: 1.2rem;
+        width: 90%;
     }
 
-    .vision-card{
+    .vision-card {
         width: fit-content;
         height: 17rem;
-        bottom: 10rem;
-        position: relative;
         background-color: #e0efea;
         text-align: center;
 
         // Kannada Styling
         .card-paragraph-kn {
             width: 18rem;
-            font-size: 1rem;   
+            font-size: 1rem;
             margin: 0 auto;
         }
 
         .card-paragraph {
             width: 18rem;
-            font-size: large;   
+            font-size: large;
             margin: 0 auto;
         }
     }
 
     .vision-div {
-        bottom: 8rem;
-        position: relative;
+        padding-top: 1rem;
 
         // Kannada Styling
         .vision-paragraph-kn {
             width: fit-content;
             font-size: 1rem;
         }
-            
+
         .vision-paragraph {
             width: fit-content;
             font-size: large;
@@ -491,13 +514,14 @@ $col-shade-green: #12805C;
 }
 
 #team {
-    margin: 2.5rem 0;
-    margin-left: 16rem;
-    width: 53rem;
+    margin: 2.5rem;
+    position: relative;
+    bottom: 10rem;
+    width: 95%;
     scroll-margin: 6rem;
     padding: 2rem 2rem;
     background-color: #fbfbfb;
-    
+
     .management-team {
         position: relative;
         text-align: center;
@@ -508,21 +532,26 @@ $col-shade-green: #12805C;
         border: 0.2em solid #e0efea;
         border-radius: 0.2rem;
         margin: 0 auto;
-            
+
         .management-our-team {
             .person-name {
                 margin: 0;
             }
         }
 
-        .suma.person-name {
-            position: relative;
-            top: 1.8rem;
-        }
-
         .suma {
             position: relative;
-            top: 2rem;
+            top: 2.5rem;
+
+            .person-name {
+                position: relative;
+                top: 1.5rem;
+            }
+
+            .designation {
+                position: relative;
+                top: 1.3rem;
+            }
         }
     }
 
@@ -543,7 +572,7 @@ $col-shade-green: #12805C;
             margin-top: 1rem;
             margin-left: 1rem;
             height: 30rem;
-            font-size:0.8rem;
+            font-size: 0.8rem;
         }
 
         .advisors-card {
@@ -551,19 +580,22 @@ $col-shade-green: #12805C;
             margin-left: 1rem;
             height: 30rem;
         }
-        
+
         .advisors-pic {
             border-radius: 50%;
+            width: 10rem;
+            height: 10rem;
             border: 0.1em solid #e2e8d5;
         }
     }
 }
 
 #legal {
-    width: 55rem;
+    width: 95%;
     height: 43rem;
-    margin-top: 5rem;
-    margin-left: 15rem;
+    position: relative;
+    bottom: 10rem;
+    margin: 2.5rem;
     scroll-margin: 6rem;
     background-color: $col-shade-green;
     color: white;
@@ -578,13 +610,13 @@ $col-shade-green: #12805C;
         position: relative;
         bottom: 4rem;
         height: 6rem;
-        left: 45rem;
+        right: -42rem;
     }
 
     .legal-tab {
         position: relative;
         bottom: 7rem;
-        
+
         .ant-tabs-tab,
         .ant-tabs-tab-active {
             width: fit-content;
@@ -614,7 +646,7 @@ $col-shade-green: #12805C;
         }
 
         .ant-tabs-content-holder {
-            width: 48rem;
+            width: 100%;
             height: fit-content;
             position: relative;
             border-radius: 0.3rem;
@@ -623,7 +655,7 @@ $col-shade-green: #12805C;
             ul {
                 list-style-position: outside;
                 padding-left: 2em;
-                
+
                 li {
                     padding: 2em;
                     padding-bottom: 0;
@@ -642,12 +674,14 @@ $col-shade-green: #12805C;
 }
 
 #contactUs {
-    margin-top: 6rem;
-    margin-left: 16rem;
+    margin: 2.5rem;
+    position: relative;
+    bottom: 10rem;
+    height: 18rem;
     scroll-margin: 6rem;
-    
+
     .contact-us-info {
-        font-size: large;
+        font-size: 1.2rem;
 
         .anticon {
             font-size: x-large;
@@ -663,6 +697,692 @@ $col-shade-green: #12805C;
 
         .feedback-form {
             padding: 1.5rem;
+        }
+    }
+}
+
+// Styling for web page
+@media screen and (min-width: 767px) {
+    .mobile-home-content {
+        display: none;
+    }
+}
+
+//Styling for mobile or tab
+@media screen and (max-width: 767px) {
+    .mobile-display-none {
+        display: none !important;
+    }
+
+    .fixed-card-join {
+        position: fixed;
+        top: 82.2vh;
+        left: 0vw;
+        z-index: 1;
+
+        .join-us {
+            width: 100vw;
+            height: 12.5vh;
+            padding: 0;
+            margin: 0rem;
+            border-radius: 0.4rem;
+            text-align: left;
+
+            .fixed-title {
+                font-size: 1rem;
+                position: relative;
+                left: 5rem;
+            }
+
+            .join-image {
+                width: 12.5vw;
+                height: 12.5vw;
+                position: relative;
+                bottom: 3rem;
+            }
+
+            .join-us-reg {
+                width: 25vw;
+                height: 5vh;
+                font-size: 1rem;
+                position: relative;
+                bottom: 7rem;
+                left: 16rem;
+            }
+        }
+    }
+
+    #home {
+        height: 60vh;
+        margin-bottom: 3rem;
+
+        .home-content-wrapper {
+            .animate-alert,
+            .home-content,
+            .home-carousel {
+                display: none;
+            }
+
+            .mobile-home-content {
+                height: 55vh;
+                width: 100vw;
+                padding-top: 2rem;
+                text-align: center;
+                background-image: url('../static/assets/Vikasbandhu_One.jpg');
+                background-position: center center;
+                background-size: 100vw 55vh;
+                background-repeat: no-repeat;
+
+                .home-text {
+                    font-size: 1.25rem;
+                    margin-bottom: 15vh;
+                }
+
+                .explore-vb-btn {
+                    top: 24vh;
+                }
+            }
+        }
+    }
+
+    #aim {
+        width: 100vw;
+        background-color: #ffffff;
+
+        .aim-title {
+            margin-left: 1rem;
+            font-size: 1.25rem;
+            padding-top: 2rem;
+        }
+
+        .handshake-image {
+            float: right;
+            position: relative;
+            bottom: 3rem;
+            left: -1rem;
+            width: 5rem;
+            height: 5rem;
+        }
+
+        .aim-card-view {
+            width: 90vw;
+            height: 60vh;
+            border: 0.05rem solid #12805c84;
+            box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.16);
+            border-radius: 0.3rem;
+            margin: 0 auto;
+
+            .aim-card-row {
+                display: flex;
+                flex-direction: column;
+                position: relative;
+                bottom: 4rem;
+
+                .card-col {
+                    max-width: 100% !important;
+                    height: fit-content;
+                }
+
+                .aim-card-two {
+                    right: 30vw !important;
+                }
+
+                .aim-card {
+                    background-color: #ffffff;
+                    width: 85vw;
+                    border: none;
+                    border-radius: 0;
+                    position: relative;
+                    right: 11vw;
+                    height: fit-content;
+                    text-align: unset;
+
+                    .ant-card-body {
+                        padding: 0;
+                        padding-left: 2vw;
+                        width: 90%;
+
+                        .hex1,
+                        .hex2,
+                        .hex3 {
+                            margin: 0;
+                        }
+
+                        .hex2 {
+                            margin-left: 0.5vw;
+                            text-align: center !important;
+                        }
+
+                        .card-text {
+                            color: #182c3b !important;
+                            position: relative;
+                            bottom: 3rem;
+                            left: 5rem;
+                            font-size: 1rem;
+                        }
+                    }
+                }
+            }
+        }
+
+        .aim-video-link,
+        .aim-video-link-kn {
+            display: none;
+        }
+    }
+
+    #ecosystem {
+        width: 100vw;
+        bottom: -1vh;
+        background-color: #ffffff;
+
+        .tractor-image {
+            width: 90vw;
+            padding-top: 0;
+            margin-left: 2vh;
+        }
+
+        .ecosystem-content {
+            width: 95vw;
+            padding-left: 1rem;
+
+            .ecosystem-title {
+                font-size: 1.25rem;
+                padding-top: 2rem;
+                padding-right: 0;
+            }
+
+            .bulletin-image {
+                width: 5rem;
+                float: left;
+            }
+
+            .bulletin-col {
+                max-width: 90%;
+
+                .bulletin-text {
+                    padding-top: 1rem;
+                    padding-left: 1rem;
+                    font-size: 1rem;
+                    width: 85%;
+                    float: right;
+                    line-height: 1.5rem;
+                }
+            }
+
+            .nature-image {
+                display: none;
+            }
+        }
+    }
+
+    #commodities {
+        width: 100vw;
+        background-color: #ffffff;
+        bottom: 0vw;
+        padding-left: 0;
+
+        .commodities-title {
+            padding-left: 1rem;
+            font-size: 1.25rem;
+        }
+
+        .commodities-paragraph {
+            width: 95vw;
+            padding-left: 1rem;
+            font-size: 1rem;
+            line-height: 1.5rem;
+            margin-right: 0;
+        }
+
+        .commodities-list {
+            width: 7rem;
+            margin-left: 1rem;
+            margin-top: 0;
+            padding-bottom: 0px;
+        }
+
+        .commodities-name {
+            font-size: 1.2rem;
+        }
+
+        .commodities-image {
+            padding-top: 1rem;
+            width: 7rem;
+            height: 7.5rem;
+        }
+
+        .wheat-image {
+            width: 95vw;
+            padding-left: 2.5vw;
+        }
+    }
+
+    #users {
+        width: 100vw;
+        bottom: 0;
+        background-color: #ffffff;
+
+        .user-title {
+            font-size: 1.25rem;
+            margin-left: 1rem;
+            padding-top: 0;
+        }
+
+        .user-column {
+            width: 90vw;
+            margin-left: 5vw;
+
+            .user-card {
+                width: 90vw;
+                font-size: 1rem;
+                height: fit-content;
+                border-radius: 0.3rem;
+                padding: 0;
+
+                .user-card-title {
+                    font-size: 1.25rem;
+                }
+
+                .subtitle {
+                    font-size: 1rem;
+                    padding-left: 7rem;
+                    text-align: left;
+                }
+
+                .user-image {
+                    border: 1px solid white;
+                    background-color: #ffffff;
+                    border-radius: 0.3rem;
+                    width: 25vw;
+                    height: 25vw;
+                    position: absolute;
+                    bottom: 1.5rem;
+                    right: 3.5rem;
+                }
+
+                .user-paragraph {
+                    text-align: left;
+                    font-size: 1rem;
+                    margin: 0;
+                }
+            }
+        }
+
+        .buyer-column {
+            position: relative;
+            top: 20rem;
+            right: 12rem;
+        }
+
+        .transport-image {
+            margin-left: 2.5vw;
+            position: relative;
+            top: 18rem;
+            width: 95vw;
+            margin-bottom: 15rem;
+            margin-right: 0;
+        }
+    }
+
+    #aboutUs {
+        width: 100vw;
+        background-color: #ffffff;
+        height: 100vh;
+        margin: 0;
+        bottom: -6vh;
+        padding: 0rem !important;
+
+        .about-us-title {
+            font-size: 1.25rem;
+            padding: 2rem;
+        }
+
+        .outline-image {
+            position: relative;
+            bottom: 4rem;
+            height: 25vw;
+            margin-right: 2vw;
+            width: 25vw;
+        }
+
+        .outline-paragraph {
+            padding-left: 2rem;
+            font-size: 1rem;
+            width: 90vw;
+        }
+
+        .vision-card {
+            width: 90vw;
+            height: 22vh;
+            margin-left: 5vw;
+            text-align: left;
+
+            .about-us-card-image {
+                margin-top: 2vh;
+                width: 15vw;
+                height: 15vw;
+            }
+
+            .card-title {
+                text-align: center;
+                width: max-content;
+                float: right;
+                position: relative;
+                right: 9.5rem;
+                font-size: 1.25rem;
+            }
+
+            .card-paragraph {
+                width: 68vw;
+                float: right;
+                position: relative;
+                left: 1.8rem;
+                bottom: 3.5rem;
+                font-size: 1rem;
+            }
+        }
+
+        .phylosophy-card {
+            position: relative;
+            top: 12rem;
+            right: 13rem;
+            height: 20vh;
+            margin-bottom: 12rem;
+
+            .card-title {
+                right: 6.75rem;
+            }
+        }
+
+        .vision-div {
+            padding-left: 2rem;
+            width: 95vw;
+        }
+
+        .vision-div-title,
+        .vision-paragraph {
+            font-size: 1rem !important;
+        }
+    }
+
+    #team {
+        margin-top: 4rem;
+        margin-left: 0;
+        width: 100vw;
+        bottom: -6vh;
+        background-color: #ffffff;
+        padding: 0rem !important;
+        text-align: left;
+
+        .team-title {
+            font-size: 1.25rem;
+            padding-left: 2rem;
+            margin: 0 0;
+        }
+
+        .team-sub-title {
+            font-size: 1.25rem;
+            text-align: left;
+            padding: 1.5rem;
+            color: #182c3b !important;
+        }
+
+        .management-team,
+        .advisors-team {
+            width: 90vw;
+            padding: 0rem !important;
+            border: 0.05rem solid #12805c84;
+            background-color: #fbfbfb;
+
+            .team-column {
+                display: flex;
+                flex-direction: column;
+            }
+
+            .management-our-team {
+                height: 70vh;
+
+                .management-image {
+                    width: 50vw;
+                    height: 50vw;
+                }
+            }
+
+            .nagappa {
+                .person-name {
+                    font-size: 1rem;
+                    position: relative;
+                    bottom: 7rem;
+                    left: 11.8rem;
+                }
+
+                .designation {
+                    font-size: 1rem;
+                    position: relative;
+                    bottom: 7rem;
+                    left: 10.8rem;
+                    text-align: start;
+                }
+            }
+
+            .suma {
+                position: relative;
+                top: 25vh;
+                right: 5.8rem;
+
+                .management-image {
+                    width: 35vw;
+                    height: 35vw;
+                }
+
+                .person-name {
+                    text-align: start;
+                    width: max-content;
+                    font-size: 1rem;
+                    position: relative;
+                    top: -6.5rem;
+                    left: 11rem;
+                }
+
+                .designation {
+                    font-size: 1rem;
+                    position: relative;
+                    top: -6.5rem;
+                    left: 8.8rem;
+                    text-align: start;
+                }
+            }
+
+            .sadananda {
+                position: relative;
+                top: 43vh;
+                right: 15.3rem;
+
+                .person-name {
+                    width: max-content;
+                    font-size: 1rem;
+                    position: relative;
+                    bottom: 7rem;
+                    left: 13rem;
+                }
+
+                .designation {
+                    width: max-content;
+                    font-size: 1rem;
+                    position: relative;
+                    bottom: 7rem;
+                    text-align: start;
+                    left: 12.5rem;
+                }
+            }
+        }
+
+        .advisors-team {
+            justify-content: none;
+            text-align: left;
+            height: 135vh;
+
+            .advisors-card {
+                margin: 0rem;
+                background-color: #fbfbfb;
+                height: fit-content;
+                width: 89.5vw;
+                border: none;
+
+                .advisors-pic {
+                    width: 35vw;
+                    height: 35vw;
+                }
+
+                .person-name {
+                    position: relative;
+                    bottom: 7rem;
+                    text-align: right;
+                }
+
+                .description {
+                    position: relative;
+                    bottom: 1.5rem;
+                }
+            }
+
+            .advisor-card-two {
+                position: relative;
+                top: 40vh;
+                right: 7.7rem;
+            }
+
+            .advisor-card-three {
+                position: relative;
+                top: 80vh;
+                right: 15.4rem;
+            }
+        }
+    }
+
+    #legal {
+        margin: 5vw;
+        width: 90vw;
+        bottom: -5vh;
+        border-radius: 0.3rem;
+        height: max-content;
+        padding: 0;
+        padding-bottom: 2rem;
+
+        .legal-title {
+            padding: 2rem;
+            padding-bottom: 0rem;
+            margin: 0;
+            font-size: 1.2rem;
+        }
+
+        .accept-image {
+            display: none;
+        }
+
+        .legal-tab {
+            bottom: 0rem;
+            width: 80vw;
+            margin: 0 auto;
+
+            .ant-tabs-nav-operations {
+                display: none;
+            }
+
+            .ant-tabs-tab,
+            .ant-tabs-tab-active {
+                width: 39.8vw;
+                padding-left: 0.2rem;
+                font-size: 1rem;
+                border: 0.1rem solid #f5a31a;
+            }
+
+            .ant-tabs-content-holder {
+                width: 80vw;
+
+                ul {
+                    list-style-position: outside;
+                    padding-left: 1rem;
+
+                    li {
+                        padding: 0rem;
+                        padding-top: 1rem;
+                        font-size: 1rem;
+                    }
+                }
+
+                .read-more-button {
+                    padding-bottom: 2rem;
+                    font-size: 1.2rem;
+                    position: relative;
+                    right: 2.2rem;
+                }
+            }
+        }
+    }
+
+    #contactUs {
+        width: 100vw;
+        height: max-content;
+        background-color: #ffffff;
+        margin: 0;
+        margin-bottom: 5rem;
+        bottom: -5vh;
+
+        .contact-us-title {
+            font-size: 1.2rem;
+            padding: 2rem;
+            margin: 0;
+            padding-bottom: 0rem;
+        }
+
+        .contact-us-info {
+            width: max-content;
+            font-size: 1rem;
+            position: relative;
+            left: 2rem;
+            margin-top: 50vh;
+            height: max-content;
+
+            .anticon {
+                padding: 0rem;
+            }
+
+            .contact-details {
+                position: relative;
+                width: max-content;
+                padding-left: 1rem;
+                color: black;
+            }
+        }
+
+        .write-feedback {
+            position: relative;
+            right: 12.5rem;
+            height: fit-content;
+            margin-bottom: 0rem;
+            padding-bottom: 0rem;
+            background-color: #ffffff;
+
+            .write-feedback-title {
+                font-size: 1.2rem;
+            }
+
+            .feedback-form {
+                width: 90vw;
+                height: fit-content;
+                background-color: #fbfbfb;
+                padding: 6vw;
+            }
+
+            .custom-input {
+                width: 80vw;
+            }
+
+            .vikas-btn-radius {
+                width: 80vw;
+            }
         }
     }
 }

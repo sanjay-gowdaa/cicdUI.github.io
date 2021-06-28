@@ -27,8 +27,6 @@ const Commodities = () => {
             <div className="commodities-list">
                 <Image
                     className="commodities-image"
-                    width={150}
-                    height={150}
                     src={StapleCrop}
                     preview={false}
                 /><br/>
@@ -37,8 +35,6 @@ const Commodities = () => {
             <div className="commodities-list">
                 <Image
                     className="commodities-image"
-                    width={150}
-                    height={150}
                     src={Pulses}
                     preview={false}
                 /><br/>
@@ -47,8 +43,6 @@ const Commodities = () => {
             <div className="commodities-list">
                 <Image
                     className="commodities-image"
-                    width={150}
-                    height={150}
                     src={CashCrop}
                     preview={false}
                 /><br/>
@@ -57,8 +51,6 @@ const Commodities = () => {
             <div className="commodities-list">
                 <Image
                     className="commodities-image"
-                    width={150}
-                    height={150}
                     src={Cardomom}
                     preview={false}
                 /><br/>
@@ -67,8 +59,6 @@ const Commodities = () => {
             <div className="commodities-list">
                 <Image
                     className="commodities-image"
-                    width={150}
-                    height={150}
                     src={OilSeed}
                     preview={false}
                 /><br/>
