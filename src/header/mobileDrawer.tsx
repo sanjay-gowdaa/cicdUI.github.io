@@ -61,7 +61,7 @@ const MobileDrawer = () => {
                         {t('landing_page.header.breadcrumb.contact_us')}
                     </Breadcrumb.Item>
                 </Breadcrumb>
-                <Divider />
+                <Divider className="margin-zero" />
                 <div className="contact-details">
                     <p>{contactUs.phoneNumber}</p>
                     <p>{contactUs.emailId}</p>

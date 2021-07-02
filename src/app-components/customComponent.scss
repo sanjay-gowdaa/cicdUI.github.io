@@ -1,4 +1,4 @@
-$col-shade-green: #12805C;
+$col-shade-green: #12805c;
 
 .custom-primary-button {
     background-color: $col-shade-green !important;
@@ -38,8 +38,7 @@ $col-shade-green: #12805C;
     }
 } // Not working
 
-.custom-checkbox{
-
+.custom-checkbox {
     .ant-checkbox-checked .ant-checkbox-inner {
         background-color: $col-shade-green !important;
     }
@@ -55,13 +54,12 @@ $col-shade-green: #12805C;
     .ant-btn-icon-only {
         border-radius: 2em !important;
     }
-    
+
     .ant-btn-icon-only:hover,
     .ant-btn-icon-only:focus {
         border-color: $col-shade-green !important;
-        color:$col-shade-green !important;
+        color: $col-shade-green !important;
     }
-
 }
 
 .custom-breadcrumb {
@@ -78,4 +76,12 @@ $col-shade-green: #12805C;
 
 .custom-badge {
     padding-left: 1em !important;
+}
+
+.mobile-register-modal {
+    text-align: center;
+
+    .download-btn {
+        width: 100%;
+    }
 }

@@ -688,6 +688,12 @@ $col-shade-green: #12805c;
             color: #f5a31a;
             padding: 1rem 1rem;
         }
+
+        .contact-address {
+            position: relative;
+            bottom: 2.75rem;
+            left: 3.35rem;
+        }
     }
 
     .write-feedback {
@@ -815,8 +821,8 @@ $col-shade-green: #12805c;
             .aim-card-row {
                 display: flex;
                 flex-direction: column;
-                position: relative;
                 bottom: 4rem;
+                margin: 0;
 
                 .card-col {
                     max-width: 100% !important;
@@ -856,8 +862,10 @@ $col-shade-green: #12805c;
                         .card-text {
                             color: #182c3b !important;
                             position: relative;
+                            display: table-caption;
+                            width: 60vw;
                             bottom: 3rem;
-                            left: 5rem;
+                            left: 6rem;
                             font-size: 1rem;
                         }
                     }
@@ -1011,8 +1019,8 @@ $col-shade-green: #12805c;
 
         .buyer-column {
             position: relative;
-            top: 20rem;
-            right: 12rem;
+            top: 21rem;
+            right: 11.25rem;
         }
 
         .transport-image {
@@ -1074,10 +1082,10 @@ $col-shade-green: #12805c;
             }
 
             .card-paragraph {
-                width: 68vw;
+                width: 65vw;
                 float: right;
                 position: relative;
-                left: 1.8rem;
+                left: 1rem;
                 bottom: 3.5rem;
                 font-size: 1rem;
             }
@@ -1086,7 +1094,7 @@ $col-shade-green: #12805c;
         .phylosophy-card {
             position: relative;
             top: 12rem;
-            right: 13rem;
+            right: 12rem;
             height: 20vh;
             margin-bottom: 12rem;
 
@@ -1221,7 +1229,7 @@ $col-shade-green: #12805c;
         .advisors-team {
             justify-content: none;
             text-align: left;
-            height: 135vh;
+            height: 130vh;
 
             .advisors-card {
                 margin: 0rem;
@@ -1250,13 +1258,14 @@ $col-shade-green: #12805c;
             .advisor-card-two {
                 position: relative;
                 top: 40vh;
-                right: 7.7rem;
+                right: 7.18rem;
             }
 
             .advisor-card-three {
                 position: relative;
                 top: 80vh;
-                right: 15.4rem;
+                height: fit-content;
+                right: 14.33rem;
             }
         }
     }
@@ -1292,7 +1301,7 @@ $col-shade-green: #12805c;
 
             .ant-tabs-tab,
             .ant-tabs-tab-active {
-                width: 39.8vw;
+                width: 55%;
                 padding-left: 0.2rem;
                 font-size: 1rem;
                 border: 0.1rem solid #f5a31a;
@@ -1342,6 +1351,7 @@ $col-shade-green: #12805c;
             font-size: 1rem;
             position: relative;
             left: 2rem;
+            top: 2vh;
             margin-top: 50vh;
             height: max-content;
 
@@ -1354,6 +1364,12 @@ $col-shade-green: #12805c;
                 width: max-content;
                 padding-left: 1rem;
                 color: black;
+            }
+
+            .contact-address {
+                text-align: start;
+                bottom: 3vh;
+                left: 6vw;
             }
         }
 
