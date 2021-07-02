@@ -29,7 +29,7 @@ const ContactUs = () => {
                         </div>
                         <div>
                             <HomeOutlined className="contact-us-icon" />
-                            <address className="contact-details">
+                            <address className="contact-details contact-address">
                                 {t('contact_us_page.address1')} 
                                 <br/>{t('contact_us_page.address2')}
                             </address>
