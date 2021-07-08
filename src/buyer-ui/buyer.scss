@@ -1,4 +1,5 @@
 $col-shade-green: #12805C;
+$col-shade-error: #e90000;
 
 .buyer-ui-app {
 
@@ -153,6 +154,17 @@ $col-shade-green: #12805C;
     .match-success-icon {
         font-size: 41px;
         color: $col-shade-green;
+    }
+
+    .match-error-icon {
+        font-size: 41px;
+        color: $col-shade-error;
+    }
+
+    .modal-info-text {
+        text-align: center;
+        font-weight: bold;
+        margin-bottom: unset;
     }
 }
 

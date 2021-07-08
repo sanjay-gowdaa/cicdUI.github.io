@@ -19,7 +19,7 @@ import {
 } from "../api";
 import { UserStateModel } from "../loginReducer/types";
 import { RootState } from "../rootReducer";
-import { BuyerRejectMatch, BuyerStateModel, MasterListApiFormat, ProduceModel } from "./types";
+import { BuyerRejectMatch, MasterListApiFormat, ProduceModel } from "./types";
 
 export const UPDATE_MASTER_LIST = 'UPDATE_MASTER_LIST';
 export const GET_MASTER_LIST = 'GET_MASTER_LIST';
@@ -233,13 +233,6 @@ export const getMatchesForBuyerCrops = (cropsList: Array<ProduceModel>) => {
         dispatch(setMatchesLoadingFlag(false));
     }
 }
-
-// export const getMatchesForBuyerCropsIDS = (buyerData: {buyer_id: string, buyer_crop_ids: Array<string>}) => {
-//     return async(dispatch: any, getState: any) => {
-//         const matchesList = await getBuyerMatchesList(buyerData.buyer_id, buyerData.buyer_crop_ids);
-//         // dispatch(updateMatchesListForID())
-//     }
-// }
 
 export const rejectMatches = (rejectData: BuyerRejectMatch) => {
     return async(dispatch: any, getState: any) => {

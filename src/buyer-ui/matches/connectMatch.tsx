@@ -1,16 +1,22 @@
 import React, { useState } from 'react';
 import { Checkbox, Modal, Typography } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
-import { CheckCircleFilled } from '@ant-design/icons';
+import { CheckCircleFilled, ExclamationCircleFilled } from '@ant-design/icons';
 
 import TradeSumary from './tradeSummary';
 import PrimaryBtn from '../../app-components/primaryBtn';
 import InputOtp from '../../app-components/inputOtp';
 import { sendOTP } from '../../store/registrationReducer/actions';
 import { RootState } from '../../store/rootReducer';
-import { connectMatch, saveTimeStamp } from '../../store/buyerReducer/actions';
+import {
+    connectMatch,
+    saveTimeStamp,
+    checkSellerConnectedStatus,
+    getMatchesForBuyerCrops
+} from '../../store/buyerReducer/actions';
 import { UserStateModel } from '../../store/loginReducer/types';
 import { MatchRequirementModel } from '../../buyer-seller-commons/types';
+import { BuyerStateModel } from '../../store/buyerReducer/types';
 
 const { Text, Title } = Typography;
 
@@ -74,13 +80,56 @@ const displayMatchSuccessModal = () => {
     });
 }
 
+const displayConcurrentMatchError = () => {
+    return Modal.error({
+        className: 'match-success-modal',
+        icon: '',
+        centered: true,
+        title: <ExclamationCircleFilled className='match-error-icon' />,
+        content: (
+            <>
+                <p className='modal-info-text'>
+                    This request has timed out and is no longer valid. 
+                </p>
+                <p className='modal-info-text' >
+                    Vikasbandhu will search for a new seller
+                </p>
+            </>),
+        okText: 'Ok',
+        okButtonProps: {type: 'text'}
+    });
+}
+
 const ConnectMatch = ({cropDetails}: {cropDetails: MatchRequirementModel}) => {
     const dispatch = useDispatch();
     const userState: UserStateModel = useSelector((state: RootState) => state.loginUser);
+    const buyerState: BuyerStateModel = useSelector((state: RootState) => state.buyer);
+    const { produceList } = buyerState;
     const agreementNumber = `PA_${userState.username}_${cropDetails.seller_id}`;// Temp
     const [viewConnectAgreement, setConnectAgreement] = useState(false);
     const [otp, setOtp] = useState("");
     const [isAgreed, setAgreed] = useState(false); 
+
+    const onAcceptConnect = () => {
+        dispatch(saveTimeStamp);
+        setConnectAgreement(!viewConnectAgreement);
+        const transactionEntry = getTransactionDataStructure(cropDetails);
+        const {seller_crop_id, seller_id} = cropDetails;
+        (dispatch(checkSellerConnectedStatus(seller_id, seller_crop_id)) as any)
+        .then((data: {isBuyerConnected: string}) => {
+            const { isBuyerConnected } = data
+            if (isBuyerConnected === 'no') {
+                /* HACK: To avoid using store variable to show popup */
+                (dispatch(connectMatch(transactionEntry)) as any).then((data: any) => {
+                    displayMatchSuccessModal()
+                })
+            } else {
+                displayConcurrentMatchError()
+                dispatch(getMatchesForBuyerCrops(produceList));
+            }
+        })
+    }
+
     return (
         <>
             <PrimaryBtn
@@ -93,18 +142,7 @@ const ConnectMatch = ({cropDetails}: {cropDetails: MatchRequirementModel}) => {
                 title={<Title level={3}>Agreement To Buy</Title>}
                 onCancel={() => setConnectAgreement(!viewConnectAgreement)}
                 footer={[
-                    <PrimaryBtn
-                        onClick={() => {
-                            dispatch(saveTimeStamp);
-                            setConnectAgreement(!viewConnectAgreement);
-                            const transactionEntry = getTransactionDataStructure(cropDetails);
-                            /* HACK: To avoid using store variable to show popup */
-                            (dispatch(connectMatch(transactionEntry)) as any).then((data: any) => {
-                                displayMatchSuccessModal()
-                            })
-                        }}
-                        content="Agree"
-                    />
+                    <PrimaryBtn onClick={onAcceptConnect} content="Agree"/>
                 ]}
             >
                 <Text style={{float: "right"}}>Application no: {agreementNumber}</Text>

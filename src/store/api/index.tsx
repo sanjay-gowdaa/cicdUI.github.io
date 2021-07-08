@@ -31,6 +31,7 @@ const TRANSACTION_API = 'transaction';
 const MATCHES_REJECT_API = `${TRANSACTION_API}/reject`;
 const TRANSACTION_CREATE_API = `${TRANSACTION_API}/create`;
 const TRANSACTION_LIST_API = `${TRANSACTION_API}/user`;
+const CONNECT_STATUS = 'sellerstatus/status';
 const USER_COMPLETE_DETAILS = 'getusercompletedetails';
 const USER_FILE_API = 'getuserfile';
 const UPDATE_USER_DETAILS = 'updateuserdetails';
