@@ -4,7 +4,7 @@ import { RootState } from '../../store/rootReducer';
 import { useSelector } from 'react-redux';
 import { Col, Input, Row, Space, Modal, Typography } from 'antd';
 import { useDispatch } from 'react-redux';
-import { getPaymentDetails } from '../../store/buyerReducer/actions';
+//import { getPaymentDetails } from '../../store/loginReducer/actions';
 
 const { Text, Title } = Typography;
 
@@ -12,16 +12,20 @@ const PaymentResponseModel = (transDetails: any) => {
     const [viewPaymenResponsetDetails, setPaymentResponseDetails] = useState(true);
     const closeModal = () => setPaymentResponseDetails(!viewPaymenResponsetDetails);
     const dispatch = useDispatch();
+    const loginState = useSelector((state: RootState) => state.loginUser);
     const buyerState = useSelector((state: RootState) => state.buyer);
-    const paymentdetails = buyerState.paymentDetails;
-    const {orderID, orderAmount, paymentMode, referenceId, txMsg, txStatus, txTime} =   paymentdetails;  
-    //console.log("buyerState:", buyerState);
+    const paymentdetails = buyerState.paymentDetails; 
+    console.log("inside response page paymentdetails", buyerState)
+    const {orderId, orderAmount, paymentMode, referenceId, txMsg, txStatus, txTime} =   paymentdetails;   
+  
+ 
     
    
 
-    useEffect(() => {
+   /*  useEffect(() => {
          dispatch(getPaymentDetails())
-    }, []); 
+         
+    }, []);  */ 
 
     return (
         <>
@@ -36,8 +40,8 @@ const PaymentResponseModel = (transDetails: any) => {
                     OrderID:
                 </Col>
                 <Col sm={24} md={12}>
-                    : {orderID}
-                </Col>
+                    : {orderId}
+                                    </Col>
             </Row>
             <Row>
                 <Col sm={24} md={12}>

@@ -3,8 +3,8 @@ import { useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { Alert, Spin } from 'antd';
 
-import { getRedirectionTokenAndFetchUserDetails } from '../store/loginReducer/actions';
-import { updateIsRedirected } from '../store/loginReducer/actions';
+import { getRedirectionTokenAndFetchUserDetails, updateIsRedirected} from '../store/loginReducer/actions';
+import { updatePaymentRedirectionDetails, getPaymentDetails} from '../store/buyerReducer/actions';
 import { RootState } from '../store/rootReducer';
 import { UserStateModel } from '../store/loginReducer/types';
 import { routesMap } from '../constants';
@@ -21,12 +21,20 @@ const ValidateUserRedirection = (props: any) => {
     const { signInState, is_seller, is_buyer } = loginState;
     const dispatch = useDispatch();
     const query = useQuery();
+    
 
     useEffect(() => {
         const key = query.get('key') || '';
+        const id = query.get('id');
+        const redirectionData = [{
+            "transactionId": id,
+            "paymentNo": query.get('num')
+        }];
+        
         if(key){
             dispatch(getRedirectionTokenAndFetchUserDetails(key));
         }
+        dispatch(updatePaymentRedirectionDetails(redirectionData));
     }, []);
 
     useEffect(() => {
@@ -35,6 +43,7 @@ const ValidateUserRedirection = (props: any) => {
                 history.push(seller_ui);
             } else if (is_buyer) {
                 dispatch(updateIsRedirected(true));
+                dispatch(getPaymentDetails())
                 history.push(buyer_ui);
             }
         }

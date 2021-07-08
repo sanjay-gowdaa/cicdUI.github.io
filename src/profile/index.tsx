@@ -168,7 +168,7 @@ const Profile = (props: any) => {
             "IfscCode": kycFormValues.ifsc_code || loginState.bank_info.ifsc_code  
         };
 
-        const userDetails = {
+        const userDetails = [{
             "Name": loginState.name,
 			"Address": loginState.address2,
 			"PinCode": loginState.zip,
@@ -191,7 +191,7 @@ const Profile = (props: any) => {
 			"RTCNo": loginState.rtc || '',
 			"AadharNo": loginState.UIDAI  || kycFormValues.uidai || '',
 			"IntroducedOnDate": loginState.created_at
-        }
+        }]
         //console.log("beneDetails:", beneDetails)
 
         if(!loginState?.isSubmitted && isSubmitted && userType === UserTypes.BUYER){
