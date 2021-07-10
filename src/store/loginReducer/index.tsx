@@ -9,7 +9,6 @@ const INITIAL_STATE: UserStateModel = {
     signInState: {hasError: false, isVerified: false, msg: ''},
     kycErrorMsg: '',
     isRedirected: false,
-    
 };
 
 const reducer = (state = INITIAL_STATE, action: any) => {
@@ -34,8 +33,6 @@ const reducer = (state = INITIAL_STATE, action: any) => {
 
         case SET_IS_REDIRECTED:
             return { ... state, isRedirected: action.payload};
-
-        
 
         default:
             return state;

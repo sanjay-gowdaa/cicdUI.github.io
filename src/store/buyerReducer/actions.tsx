@@ -286,7 +286,6 @@ export const saveTimeStamp = (dispatch: any) => {
 
 export const getPaymentDetails = () => {
     return async(dispatch: any, getState: any) => {
-        //const buyerState = useSelector((state: RootState) => state.buyer);
         const {buyer}: {buyer: BuyerStateModel} = getState() as RootState;
         const paymentRedirectionDetails = buyer.paymentRedirectionDetails;
         const paymentDetails = await getPaymentList(paymentRedirectionDetails);

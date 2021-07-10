@@ -193,16 +193,3 @@ export const registerSellerAtDestiny = async (userData: any) => {
     const { response } = regSellerResponse;
         
 }
-
- /* export const getPaymentDetails = () => {
-    return async(dispatch: any, getState: any) => {
-        const buyerState = useSelector((state: RootState) => state.buyer);
-        const paymentRedirectionDetails = buyerState.paymentRedirectionDetails;
-        const paymentDetails = await getPaymentList(paymentRedirectionDetails);
-        //console.log("paymentDetails", paymentDetails)
-        dispatch(updatePaymentDetails(paymentDetails));
-        
-    }
-   
-} 
- */
