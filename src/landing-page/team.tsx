@@ -18,49 +18,55 @@ const Team = () => {
 
     return (
         <div id="team">
-            <Title className="col-green" level={2}>{t('our_team.title')}</Title>
+            <Title className="col-green team-title" level={2}>{t('our_team.title')}</Title>
             <div className="management-team">
-                <Title className="col-green margin-none" level={3}>{t('our_team.subtitle')}</Title>
-                <Space direction="horizontal">
-                    <div className="management-our-team">
-                        <Image src={Nagappa} preview={false} />
-                        <Title className="person-name" level={4}>{t('our_team.name.1')}</Title>
-                        <Text>{t('our_team.designation.1')}</Text>
-                    </div>
-                    <div className="management-our-team">
-                        <Image src={Suma} preview={false} />
-                        <Title className="person-name suma" level={4}>{t('our_team.name.2')}</Title>
-                        <Text className="suma">{t('our_team.designation.2')}</Text>
-                    </div>
-                    <div className="management-our-team">
-                        <Image src={Sadananda} preview={false} />
-                        <Title className="person-name" level={4}>{t('our_team.name.3')}</Title>
-                        <Text>{t('our_team.designation.3')}</Text>
-                    </div>
-                </Space>
+                <Title className="col-green margin-none team-sub-title" level={3}>{t('our_team.subtitle')}</Title>
+                <Row>
+                    <Col span={8} className="team-column">
+                        <div className="management-our-team nagappa">
+                            <img className="management-image" src={Nagappa} />
+                            <Title className="person-name" level={4}>{t('our_team.name.1')}</Title>
+                            <Text className="designation">{t('our_team.designation.1')}</Text>
+                        </div>
+                    </Col>
+                    <Col span={8} className="team-column">
+                        <div className="management-our-team suma">
+                            <img className="management-image" src={Suma} />
+                            <Title className="person-name" level={4}>{t('our_team.name.2')}</Title>
+                            <Text className="designation">{t('our_team.designation.2')}</Text>
+                        </div>
+                    </Col>
+                    <Col span={8} className="team-column">
+                        <div className="management-our-team sadananda">
+                            <img className="management-image" src={Sadananda} />
+                            <Title className="person-name" level={4}>{t('our_team.name.3')}</Title>
+                            <Text className="designation">{t('our_team.designation.3')}</Text>
+                        </div>
+                    </Col>
+                </Row>
             </div>
             <div className="advisors-team">
-                <Title className="col-green margin-none" level={3}>{t('our_team.advisors.title')}</Title>
+                <Title className="col-green margin-none team-sub-title" level={3}>{t('our_team.advisors.title')}</Title>
                 <Row>
-                    <Col span={8}>
+                    <Col span={8} className="team-column">
                         <Card className={customStyles.advisorsCard}>
-                            <Image src={Chikkaramu} preview={false} className="advisors-pic" />
+                            <img src={Chikkaramu} className="advisors-pic" />
                             <Title className="person-name" level={4}>{t('our_team.advisors.name.1')}</Title>
-                            <Text>{t('our_team.advisors.description.1')}</Text>
+                            <Text className="description">{t('our_team.advisors.description.1')}</Text>
                         </Card>
                     </Col>
-                    <Col span={8}>
-                        <Card className={customStyles.advisorsCard}>
-                            <Image src={Sachin} preview={false} className="advisors-pic" />
+                    <Col span={8} className="team-column">
+                        <Card className={`advisor-card-two ${customStyles.advisorsCard}`}>
+                            <img src={Sachin} className="advisors-pic" />
                             <Title className="person-name" level={4}>{t('our_team.advisors.name.2')}</Title>
-                            <Text>{t('our_team.advisors.description.2')}</Text>
+                            <Text className="description">{t('our_team.advisors.description.2')}</Text>
                         </Card>
                     </Col>
-                    <Col span={8}>
-                        <Card className={customStyles.advisorsCard}>
-                            <Image src={CVKulkarni} preview={false} className="advisors-pic" />
+                    <Col span={8} className="team-column">
+                        <Card className={`advisor-card-three ${customStyles.advisorsCard}`}>
+                            <img src={CVKulkarni} className="advisors-pic" />
                             <Title className="person-name" level={4}>{t('our_team.advisors.name.3')}</Title>
-                            <Text>{t('our_team.advisors.description.3')}</Text>
+                            <Text className="description">{t('our_team.advisors.description.3')}</Text>
                         </Card>
                     </Col>
                 </Row>

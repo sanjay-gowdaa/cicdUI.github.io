@@ -25,7 +25,7 @@ const AboutUs = () => {
             <Row>
                 <Col span={12}>
                     <Card className="vision-card">
-                        <Image src={Vision} preview={false} />
+                        <Image className="about-us-card-image" src={Vision} preview={false} />
                         <Title className="col-green card-title" level={3}>
                             {t('about_us.vision_card.text')}
                         </Title>
@@ -35,8 +35,8 @@ const AboutUs = () => {
                     </Card>
                 </Col>
                 <Col span={12}>
-                    <Card className="vision-card">
-                        <Image src={Philosophy} preview={false} />
+                    <Card className="vision-card phylosophy-card">
+                        <Image className="about-us-card-image" src={Philosophy} preview={false} />
                         <Title className="col-green card-title" level={3}>
                             {t('about_us.philosophy_card.text')}
                         </Title>
@@ -47,7 +47,7 @@ const AboutUs = () => {
                 </Col>
             </Row>
             <div className="vision-div">
-                <Title className="col-green" level={3}>{t('about_us.title1')}</Title>
+                <Title className="col-green vision-div-title" level={3}>{t('about_us.title1')}</Title>
                 <Paragraph className={customStyles.visionParagraph}>
                     {t('about_us.paragraph1')}
                 </Paragraph>

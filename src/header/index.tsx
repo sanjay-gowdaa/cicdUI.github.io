@@ -2,6 +2,9 @@ import React from 'react';
 import { Breadcrumb, Image, Modal } from 'antd';
 import { useTranslation } from 'react-i18next';
 
+import './header.scss';
+import MobileDrawer from './mobileDrawer';
+
 import Register from '../login-ui/register';
 import UserHeader from '../header-profile';
 import Logo from '../static/assets/vbLogo.png';
@@ -11,14 +14,12 @@ import PrimaryBtn from '../app-components/primaryBtn';
 import DefaultBtn from '../app-components/defaultBtn';
 import { isEnglish } from '../static/translations/constants';
 
-import './header.scss';
-
 const UserBasicActions = ({ history, popUpTrigger }: { history: any, popUpTrigger: any }) => {
     const {signUpPopupVisible, setSignUpPopupVisible} = popUpTrigger;
     const [ t , i18n ] = useTranslation('common');
 
     return (
-        <div className="display-flex-row align-center">
+        <div className="display-flex-row align-center action-buttons">
             <DefaultBtn
                 className="vikas-btn-radius wid150 custom-login-button" 
                 content={t('landing_page.actions.login')}
@@ -60,7 +61,7 @@ const Header = (headerProps: any) => {
 
     return (
         <div className="landing-page-header-bar">
-            <Image width={"7em"} height={"5.5em"} src={logo} preview={false} />
+            <Image className="logo" src={logo} preview={false} />
             <Breadcrumb className="header-breadcrumb" separator=" ">
                 <Breadcrumb.Item href="#home">{t('landing_page.header.breadcrumb.home')}</Breadcrumb.Item>
                 <Breadcrumb.Item href="#aim">{t('landing_page.header.breadcrumb.aim')}</Breadcrumb.Item>
@@ -72,6 +73,7 @@ const Header = (headerProps: any) => {
                 <Breadcrumb.Item href="#legal">{t('landing_page.header.breadcrumb.legal')}</Breadcrumb.Item>
                 <Breadcrumb.Item href="#contactUs">{t('landing_page.header.breadcrumb.contact_us')}</Breadcrumb.Item>
             </Breadcrumb>
+            <MobileDrawer />
             {showActions ? <HeaderActions isLoggedIn={isLoggedIn} history={history} popUpTrigger={popUpTrigger} /> : null}
         </div>
     );

@@ -34,7 +34,7 @@ const Ecosystem = () => {
                         <Image className="last-bulletin-image" src={SocialCare} preview={false} />
                         </Space>
                     </Col>
-                    <Col>
+                    <Col className="bulletin-col">
                         <Space
                             direction="vertical"
                             className={customStyles.bulletinText}

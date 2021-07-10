@@ -27,11 +27,11 @@
   "scripts": {
     "start:dev": "env-cmd -f .env.development react-scripts start",
     "start:dev-https": "env-cmd -f .env.development set HTTPS=true&&react-scripts start",
-    "start:staging": "env-cmd -f .env.staging react-scripts start",
+    "start:test": "env-cmd -f .env.test react-scripts start",
     "start:demo": "env-cmd -f .env.demo react-scripts start",
     "start:production": "env-cmd -f .env.production react-scripts start",
     "build:dev": "env-cmd -f .env.development react-scripts build",
-    "build:staging": "env-cmd -f .env.staging react-scripts build",
+    "build:test": "env-cmd -f .env.test react-scripts build",
     "build:demo": "env-cmd -f .env.demo react-scripts build",
     "build:production": "env-cmd -f .env.production react-scripts build",
     "test": "react-scripts test",
