@@ -10,7 +10,8 @@ import {
     UPDATE_MATCHES_LIST_FOR_BUYER_CROP,
     SET_MATCHES_LOADER,
     UPDATE_TRANSACTION_LIST,
-    UPDATE_PAYMENT_DETAILS
+    UPDATE_PAYMENT_DETAILS,
+    UPDATE_PAYMENT_REDIRECTION_DETAILS
 } from './actions';
 
 import {
@@ -29,7 +30,8 @@ const INITIAL_STATE: BuyerStateModel = {
     reviewsList: mockReviewsList,
     timeStamp: {},
     isMatchesFetching: false,
-    paymentDetails: []
+    paymentDetails: [],
+    paymentRedirectionDetails: {}
 };
 
 const reducer = (state = INITIAL_STATE, action: any) => {
@@ -72,6 +74,9 @@ const reducer = (state = INITIAL_STATE, action: any) => {
         case UPDATE_TIME_STAMP:
             return {...state, timeStamp: action.payload}
 
+        case UPDATE_PAYMENT_REDIRECTION_DETAILS:
+            return {...state, paymentRedirectionDetails: action.payload }
+        
         case UPDATE_PAYMENT_DETAILS:
             return {...state, paymentDetails: action.payload }
 

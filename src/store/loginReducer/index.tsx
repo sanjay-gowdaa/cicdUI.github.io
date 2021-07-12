@@ -1,5 +1,5 @@
 
-import { SET_ACCESS_TOKEN, SET_KYC_ERROR, SET_LOGIN_ERROR, SET_LOGIN_SUCCESS, UPDATE_CONFIGURATIONS, UPDATE_USER, SET_IS_REDIRECTED } from './actions';
+import { SET_ACCESS_TOKEN, SET_KYC_ERROR, SET_LOGIN_ERROR, SET_LOGIN_SUCCESS, UPDATE_CONFIGURATIONS, UPDATE_USER, SET_IS_REDIRECTED, } from './actions';
 import { UserStateModel } from './types';
 
 const INITIAL_STATE: UserStateModel = {
@@ -8,7 +8,7 @@ const INITIAL_STATE: UserStateModel = {
     configs: [],
     signInState: {hasError: false, isVerified: false, msg: ''},
     kycErrorMsg: '',
-    isRedirected: false
+    isRedirected: false,
 };
 
 const reducer = (state = INITIAL_STATE, action: any) => {

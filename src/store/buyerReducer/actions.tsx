@@ -18,6 +18,7 @@ import {
     getPaymentList
 } from "../api";
 import { UserStateModel } from "../loginReducer/types";
+import { BuyerStateModel } from "../buyerReducer/types";
 import { RootState } from "../rootReducer";
 import { BuyerRejectMatch, MasterListApiFormat, ProduceModel } from "./types";
 
@@ -32,12 +33,20 @@ export const UPDATE_MATCHES_LIST = 'UPDATE_MATCHES_LIST';
 export const UPDATE_MATCHES_LIST_FOR_BUYER_CROP = 'UPDATE_MATCHES_LIST_FOR_BUYER_CROP';
 export const UPDATE_TRANSACTION_LIST = 'UPDATE_TRANSACTION_LIST';
 export const SET_MATCHES_LOADER = 'SET_MATCHES_LOADER';
-export const UPDATE_PAYMENT_DETAILS = 'UPDATE_PAYMENT_DETAILS';
+export const UPDATE_PAYMENT_REDIRECTION_DETAILS = 'UPDATE_PAYMENT_REDIRECTION_DETAILS';
+export const UPDATE_PAYMENT_DETAILS = 'UPDATE_PAYMENT_DETAILS'
 
 export const updateStoreMasterList = (masterlist: Array<any>) => {
     return {
         type: UPDATE_MASTER_LIST,
         payload: masterlist,
+    };
+};
+
+export const updatePaymentRedirectionDetails = (paymentRedirectionDetails: any) => {
+    return {
+        type: UPDATE_PAYMENT_REDIRECTION_DETAILS,
+        payload: paymentRedirectionDetails,
     };
 };
 
@@ -47,7 +56,6 @@ export const updatePaymentDetails = (paymentDetails: Array<any>) => {
         payload: paymentDetails,
     };
 };
-
 export const updateProduceList = (produceList: Array<ProduceModel>) => {
     return {
         type: UPDATE_PRODUCE_LIST,
@@ -269,15 +277,16 @@ export const saveTimeStamp = (dispatch: any) => {
     dispatch(updateTimeStamp(timeStamp));
 }
 
+
 export const getPaymentDetails = () => {
     return async(dispatch: any, getState: any) => {
-        const {loginUser}: {loginUser: UserStateModel} = getState() as RootState;
-        const {username} = loginUser;
-        const paymentDetails = await getPaymentList(username);
-        //console.log("paymentDetails:", paymentDetails)
-        // testing
-        // const masterProduceList = await getMasterList('7892329983');
-        //const masterList = masterProduceList || [];
+        const {buyer}: {buyer: BuyerStateModel} = getState() as RootState;
+        const paymentRedirectionDetails = buyer.paymentRedirectionDetails;
+        const paymentDetails = await getPaymentList(paymentRedirectionDetails);
+        //console.log("paymentDetails", paymentDetails)
         dispatch(updatePaymentDetails(paymentDetails));
+        
     }
-}
+   
+} 
+

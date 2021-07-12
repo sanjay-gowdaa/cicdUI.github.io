@@ -13,15 +13,14 @@ const PaymentResponseModel = (transDetails: any) => {
     const closeModal = () => setPaymentResponseDetails(!viewPaymenResponsetDetails);
     const dispatch = useDispatch();
     const buyerState = useSelector((state: RootState) => state.buyer);
-    const paymentdetails = buyerState.paymentDetails;
-    const {orderID, orderAmount, paymentMode, referenceId, txMsg, txStatus, txTime} =   paymentdetails;  
-    //console.log("buyerState:", buyerState);
+    const {paymentDetails } = buyerState; 
     
-   
-
-    useEffect(() => {
+    //const {orderId, orderAmount, paymentMode, referenceId, txMsg, txStatus, txTime} =   paymentDetails;   
+  
+  useEffect(() => {
          dispatch(getPaymentDetails())
-    }, []); 
+         console.log("inside response page paymentdetails", buyerState)
+    }, [paymentDetails]);  
 
     return (
         <>
@@ -36,7 +35,7 @@ const PaymentResponseModel = (transDetails: any) => {
                     OrderID:
                 </Col>
                 <Col sm={24} md={12}>
-                    : {orderID}
+                    : {paymentDetails[0]?.orderId}
                 </Col>
             </Row>
             <Row>
@@ -44,7 +43,7 @@ const PaymentResponseModel = (transDetails: any) => {
                     OrderAmount:
                 </Col>
                 <Col sm={24} md={12}>
-                    : {orderAmount}
+                    : {paymentDetails[0]?.orderAmount}
                 </Col>
             </Row>
             <Row>
@@ -52,7 +51,7 @@ const PaymentResponseModel = (transDetails: any) => {
                     Reference ID:
                 </Col>
                 <Col sm={24} md={12}>
-                    : {referenceId}
+                    : {paymentDetails[0]?.referenceId}
                 </Col>
             </Row>
             <Row>
@@ -60,7 +59,7 @@ const PaymentResponseModel = (transDetails: any) => {
                     Transaction Status:
                 </Col>
                 <Col sm={24} md={12}>
-                    : {txStatus}
+                    : {paymentDetails[0]?.txStatus}
                 </Col>
             </Row>
             <Row>
@@ -68,7 +67,7 @@ const PaymentResponseModel = (transDetails: any) => {
                     Payment Mode:
                 </Col>
                 <Col sm={24} md={12}>
-                    : {paymentMode}
+                    : {paymentDetails[0]?.paymentMode}
                 </Col>
             </Row>
             <Row>
@@ -76,7 +75,7 @@ const PaymentResponseModel = (transDetails: any) => {
                     Message:
                 </Col>
                 <Col sm={24} md={12}>
-                    : {txMsg}
+                    : {paymentDetails[0]?.txMsg}
                 </Col>
             </Row>
             <Row>
@@ -84,7 +83,7 @@ const PaymentResponseModel = (transDetails: any) => {
                     Transaction Time:
                 </Col>
                 <Col sm={24} md={12}>
-                    : {txTime}
+                    : {paymentDetails[0]?.txTime}
                 </Col>
             </Row>
             <Row>

@@ -1,4 +1,5 @@
 import CryptoJS from 'crypto-js';
+import { useSelector } from 'react-redux';
 
 import { UserDetailsModel } from './types';
 
@@ -16,6 +17,7 @@ import {
     fetchRedirectedUserDetails
 } from '../api';
 import { handleResponse } from '../utils';
+import { RootState } from "../rootReducer";
 
 import { converBase64toBlob } from '../../app-components/utils';
 
@@ -29,7 +31,8 @@ export const SET_LOGIN_SUCCESS = 'SET_LOGIN_SUCCESS';
 
 export const UPDATE_CONFIGURATIONS = 'UPDATE_CONFIGURATIONS';
 export const SET_KYC_ERROR = 'SET_KYC_ERROR';
-export const SET_IS_REDIRECTED = 'SSET_IS_REDIRECTED';
+export const SET_IS_REDIRECTED = 'SET_IS_REDIRECTED';
+
 
 export const updateIsRedirected = (isRedirected: boolean) => {
     return {
