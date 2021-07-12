@@ -2,7 +2,7 @@ import React from 'react';
 import { Image, Typography, Tooltip } from 'antd';
 import RagiImg from '../../static/assets/ragi.png';
 import { parseIDfromHash, maskData } from '../../app-components/utils';
-import { TransactioModel } from '../../buyer-seller-commons/types';
+import { TransactioModel, TransactionStatus} from '../../buyer-seller-commons/types';
 import PayButton from './payButton';
 
 const { Text } = Typography;
@@ -107,10 +107,13 @@ export const transactionColumns = [
     {
         title: '',
         key: 'action',
-        render: (record: TransactioModel) => {
+        render: (record: any) => {
             
         return(
+            record?.gsi_status !== TransactionStatus.completed  && 
             <PayButton tranDetails={record} />
+
+            
            )
 
         },

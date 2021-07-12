@@ -18,6 +18,7 @@ import {
     getPaymentList
 } from "../api";
 import { UserStateModel } from "../loginReducer/types";
+import { BuyerStateModel } from "../buyerReducer/types";
 import { RootState } from "../rootReducer";
 import { BuyerRejectMatch, MasterListApiFormat, ProduceModel } from "./types";
 

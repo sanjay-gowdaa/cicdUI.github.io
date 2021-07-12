@@ -40,8 +40,7 @@ const ADD_BUYER_AT_DESTINY = 'buyerReg';
 const ADD_SELLER_AT_DESTINY = 'sellerReg';
 const GET_REDIRECTION_TOKEN = 'getredirectiontoken';
 const GET_PAYMENT_DETAILS = 'getpaymentdetails';
-const CONNECT_STATUS = 'sellerstatus/status';
-const PAYMENT_DETAILS = 'payment/pay'
+
 
 const parseToken = (userToken: string) => {
     const sholudDecrypt = process.env.REACT_APP_ENV === 'prod';
@@ -411,15 +410,6 @@ export const getRedirectionToken = (userKey: string) => {
         body: accessTokenParam 
     }).then((response: any) => response.json());
 };
-
-/* export const postPaymentList = (paymentdetails: any) => {
-    console.log("inside postpaymentlist")
-    const registerSellerApi = 'https://enzdzh0pw2.execute-api.ap-south-1.amazonaws.com/dev/payment/pay';
-    return fetch(registerSellerApi, {
-        method: 'POST',
-        body: JSON.stringify(paymentdetails) 
-    }).then((response: any) => response.text);
-} */
 
 export const getPaymentList = (transactionData: any) => {
     //console.log("transaction data", transactionData)
