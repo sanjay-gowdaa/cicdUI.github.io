@@ -421,4 +421,12 @@ export const getPaymentList = (transactionData: any) => {
         method: 'GET',
     }).then((response: any) => response.json())
 }
+
+export const getStatusDetails = (Data: any) => {
+    //const paymentDetailsApi = `${BASE_URL}/${STAGE}/${GET_PAYMENT_DETAILS}?paymentNo=${paymentNo}&transactionId=${transactionId}`;
+    const statusDetailsApi = 'http://localhost:3000/dev/transaction/cdd9d8a910b1378f2f3d6c31c0d70d1a80be1d92/events/?user=seller&transport=false&event=all'
+    return fetch(statusDetailsApi, {
+        method: 'GET',
+    }).then((response: any) => response.json())
+}
 /* Matches And Transactions End */

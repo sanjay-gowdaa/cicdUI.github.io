@@ -14,7 +14,8 @@ import {
     postBuyerDetails,
     postSellerDetails,
     getRedirectionToken,
-    fetchRedirectedUserDetails
+    fetchRedirectedUserDetails,
+    getStatusDetails
 } from '../api';
 import { handleResponse } from '../utils';
 import { RootState } from "../rootReducer";
@@ -191,5 +192,13 @@ export const registerSellerAtDestiny = async (userData: any) => {
     //console.log("inside register seller");
     const regSellerResponse = await postSellerDetails(userData);
     const { response } = regSellerResponse;
+        
+}
+
+export const StatusDetails = async (userData: any) => {
+    //console.log("inside register seller");
+    const regSellerResponse = await getStatusDetails(userData);
+    const { response } = regSellerResponse;
+    console.log("Status Detail", response)
         
 }
