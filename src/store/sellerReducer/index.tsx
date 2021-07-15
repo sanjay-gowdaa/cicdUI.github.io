@@ -1,4 +1,4 @@
-import { ADD_NEW_CROP, UPDATE_APMC_RATE, UPDATE_CATEGORIES, UPDATE_MASTER_CROPS, UPDATE_SELLER_CROPS_LIST, UPDATE_SELLER_MATCHES, UPDATE_SELLER_TRANSACTION_LIST, UPDATE_VARIETY } from './actions';
+import { ADD_NEW_CROP, UPDATE_APMC_RATE, UPDATE_CATEGORIES, UPDATE_MASTER_CROPS, UPDATE_SELLER_CROPS_LIST, UPDATE_SELLER_MATCHES, UPDATE_SELLER_TRANSACTION_LIST, UPDATE_VARIETY, UPDATE_STATUS_DETAILS } from './actions';
 import {
     mockReviewsList,
 } from './mockData.temp';
@@ -13,7 +13,9 @@ const INITIAL_STATE: SellerStateModel = {
     reviewsList: mockReviewsList,
     categories: [],
     apmcCropPrice: '',
-    timeStamp: {}
+    timeStamp: {},
+    statusDetails: []
+
 };
 
 const reducer = (state = INITIAL_STATE, action: any) => {
@@ -46,6 +48,8 @@ const reducer = (state = INITIAL_STATE, action: any) => {
             const {transactionList} = state;
             const updatedTransactionList = {...transactionList, [transactionType]: transactionListData};
             return { ...state, transactionList: updatedTransactionList }
+        case UPDATE_STATUS_DETAILS:
+            return {...state, statusDetails: action.payload }
 
         default:
             return state;

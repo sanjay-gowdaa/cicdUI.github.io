@@ -15,7 +15,8 @@ import {
     createTransaction,
     fetchTransactionList,
     sellerConnectStatus,
-    getPaymentList
+    getPaymentList,
+    getStatusDetails
 } from "../api";
 import { UserStateModel } from "../loginReducer/types";
 import { BuyerStateModel } from "../buyerReducer/types";
@@ -35,6 +36,7 @@ export const UPDATE_TRANSACTION_LIST = 'UPDATE_TRANSACTION_LIST';
 export const SET_MATCHES_LOADER = 'SET_MATCHES_LOADER';
 export const UPDATE_PAYMENT_REDIRECTION_DETAILS = 'UPDATE_PAYMENT_REDIRECTION_DETAILS';
 export const UPDATE_PAYMENT_DETAILS = 'UPDATE_PAYMENT_DETAILS'
+export const UPDATE_STATUS_DETAILS = 'UPDATE_STATUS_DETAILS'
 
 export const updateStoreMasterList = (masterlist: Array<any>) => {
     return {
@@ -54,6 +56,13 @@ export const updatePaymentDetails = (paymentDetails: Array<any>) => {
     return {
         type: UPDATE_PAYMENT_DETAILS,
         payload: paymentDetails,
+    };
+};
+
+export const updateStatusDetails = (statusDetails: Array<any>) => {
+    return {
+        type: UPDATE_STATUS_DETAILS,
+        payload: statusDetails,
     };
 };
 export const updateProduceList = (produceList: Array<ProduceModel>) => {
@@ -289,4 +298,13 @@ export const getPaymentDetails = () => {
     }
    
 } 
+
+export const StatusDetails = () => {
+    //console.log("inside register seller");
+    return async(dispatch: any, getState: any) => {
+        const regSellerResponse = await getStatusDetails();
+        dispatch(updateStatusDetails(regSellerResponse));
+        //console.log("Status Detail", regSellerResponse)
+    }
+}
 

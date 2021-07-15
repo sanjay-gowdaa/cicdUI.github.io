@@ -2,6 +2,7 @@ import React from 'react';
 import { Button, Typography, Tooltip } from 'antd';
 import { TransactioModel } from '../../buyer-seller-commons/types';
 import { parseIDfromHash, maskData } from '../../app-components/utils';
+import StatusDetailsModel from './viewStatusDetails';
 const { Title, Text } = Typography;
 
 export const transactionColumns = [
@@ -99,5 +100,16 @@ export const transactionColumns = [
         title: 'Status',
         key: 'transactionStatusText',
         dataIndex: 'transactionStatusText',
+    },
+
+    {
+        title: '',
+        key: 'action',
+        render: (text: any, record: any) => {
+            return (
+                <StatusDetailsModel data ={record} />
+                    
+            );
+        }
     },
 ];

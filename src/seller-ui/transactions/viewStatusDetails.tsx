@@ -3,7 +3,7 @@ import  DefaultBtn  from '../../app-components/defaultBtn';
 import { RootState } from '../../store/rootReducer';
 import { useSelector, useDispatch } from 'react-redux';
 import { Col, Button, Row, Space, Modal, Typography } from 'antd';
-import {StatusDetails} from '../../store/buyerReducer/actions'
+import {StatusDetails} from '../../store/sellerReducer/actions'
 
 const { Text, Title } = Typography;
 
@@ -12,9 +12,9 @@ const StatusDetailsModel = (props: any) => {
     const [viewStatusDetails, setviewStatusDetails] = useState(false);
     const closeModal = () => setviewStatusDetails(!viewStatusDetails);
     const dispatch = useDispatch();
-    const buyerState = useSelector((state: RootState) => state.buyer);
+    const sellerState = useSelector((state: RootState) => state.seller);
    // console.log("inside response page paymentdetails", buyerState)
-    const {statusDetails } = buyerState; 
+    const {statusDetails } = sellerState; 
 
 
     useEffect(() => {

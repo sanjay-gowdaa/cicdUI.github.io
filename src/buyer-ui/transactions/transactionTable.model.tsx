@@ -4,10 +4,10 @@ import RagiImg from '../../static/assets/ragi.png';
 import { parseIDfromHash, maskData } from '../../app-components/utils';
 import { TransactioModel, TransactionStatus} from '../../buyer-seller-commons/types';
 import PayButton from './payButton';
-import {StatusDetails} from '../../store/loginReducer/actions'
+import StatusDetailsModel from './viewStatusDetails';
+
 
 const { Text } = Typography;
-
 
 
 
@@ -111,14 +111,8 @@ export const transactionColumns = [
         key: 'action',
         render: (text: any, record: any) => {
             return (
-                    <Button
-                        type="link"
-                        onClick={() => {
-                            StatusDetails(record)
-                        }}
-                    >
-                        View Details
-                    </Button>
+                <StatusDetailsModel data ={record} />
+                    
             );
         }
     },
