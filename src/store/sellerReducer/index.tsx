@@ -48,6 +48,7 @@ const reducer = (state = INITIAL_STATE, action: any) => {
             const {transactionList} = state;
             const updatedTransactionList = {...transactionList, [transactionType]: transactionListData};
             return { ...state, transactionList: updatedTransactionList }
+       
         case UPDATE_STATUS_DETAILS:
             return {...state, statusDetails: action.payload }
 

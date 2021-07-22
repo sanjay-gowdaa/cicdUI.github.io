@@ -16,7 +16,8 @@ import {
     fetchTransactionList,
     sellerConnectStatus,
     getPaymentList,
-    getStatusDetails
+    getStatusDetails,
+    getCurrentStatusDetails
 } from "../api";
 import { UserStateModel } from "../loginReducer/types";
 import { BuyerStateModel } from "../buyerReducer/types";
@@ -302,9 +303,16 @@ export const getPaymentDetails = () => {
 export const StatusDetails = () => {
     //console.log("inside register seller");
     return async(dispatch: any, getState: any) => {
-        const regSellerResponse = await getStatusDetails();
-        dispatch(updateStatusDetails(regSellerResponse));
+        const statusResponse = await getStatusDetails();
+        dispatch(updateStatusDetails(statusResponse));
         //console.log("Status Detail", regSellerResponse)
     }
 }
 
+export const CurrentStatusDetails = async() => {
+        const currentStatusResponse = await getCurrentStatusDetails();
+        //console.log("currentStatusResponse", currentStatusResponse[0])
+        const status = currentStatusResponse[0].event_description
+        return status;
+        
+}

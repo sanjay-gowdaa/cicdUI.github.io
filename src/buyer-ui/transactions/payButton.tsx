@@ -4,12 +4,9 @@ import { RootState } from '../../store/rootReducer';
 import { useSelector } from 'react-redux';
 import { v4 as uuidv4 } from 'uuid';
 import { Col, Input, Row, Space, Modal, Typography } from 'antd';
-import { TransactioModel } from '../../buyer-seller-commons/types';
-const TOKEN_GRANT = process.env.REACT_APP_TOKEN_GRANT as string;
+
 const { Text, Title } = Typography;
-const BASE_URL = process.env.REACT_APP_BASE_URL;
-const STAGE = process.env.REACT_APP_ENV;
-const PAYMENT_REQUEST = 'paymentrequest';
+
 
 
 

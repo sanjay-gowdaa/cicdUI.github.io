@@ -5,6 +5,7 @@ import { parseIDfromHash, maskData } from '../../app-components/utils';
 import { TransactioModel, TransactionStatus} from '../../buyer-seller-commons/types';
 import PayButton from './payButton';
 import StatusDetailsModel from './viewStatusDetails';
+import {CurrentStatusDetails} from '../../store/buyerReducer/actions';
 
 
 const { Text } = Typography;
@@ -104,6 +105,13 @@ export const transactionColumns = [
         title: 'Status',
         key: 'transactionStatusText',
         dataIndex: 'transactionStatusText',
+        render: (transactionStatusText: string) => {
+            const status = CurrentStatusDetails();
+            return (
+                <p>{transactionStatusText}</p>
+            );
+        },
+
     },
 
     {

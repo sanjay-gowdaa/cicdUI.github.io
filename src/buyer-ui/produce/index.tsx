@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Table, Typography } from 'antd';
+import { Table, Typography, Button, Tooltip } from 'antd';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { RootState } from '../../store/rootReducer';
@@ -16,11 +16,17 @@ const { Title } = Typography;
 
 const CropsSection = () => {
     const buyerState = useSelector((state: RootState) => state.buyer);
+    const loginState = useSelector((state: RootState) => state.loginUser);
     const dispatch = useDispatch();
     const [isEdit, setIsEdit] = useState(false);
     const [currentProduceRecord, setCurrentProduceRecord] = useState({} as ProduceModel);
     const [modalVisible, setModalVisible] = useState(false);
     const {masterProduceList} = buyerState;
+    var isApproved;
+    if(loginState.kyc_flag === "approved")
+    {
+        isApproved = 'true' ;
+    }
     
     useEffect(() => {
         dispatch(getProduceList())
@@ -40,14 +46,19 @@ const CropsSection = () => {
     return (
         <div className="crops-container">
             <Title level={2}>My Requirements</Title>
-            <PrimaryBtn
-                className="add-crop-btn vikas-btn-radius"
-                onClick={() => {
-                    setIsEdit(false);
-                    setModalVisible(true);
-                }}
-                content="Add Requirements"
-            />
+            <Tooltip title="Please comlete your KYC to add requirements" >
+                <Button
+                    //className="add-crop-btn vikas-btn-radius"
+                    className={isApproved? "custom-primary-button add-crop-btn vikas-btn-radius": "add-crop-btn vikas-btn-radius custom-default-button "}
+                    onClick={() => {
+                        setIsEdit(false);
+                        setModalVisible(true);
+                    }}
+                    style={!isApproved ? { display: "none" } : {}}
+                    disabled={!isApproved }>Add Requirements
+                    
+                </Button>
+            </Tooltip>
             <AddProduce 
                 currentProduceRecord={currentProduceRecord}
                 isEdit={isEdit}
