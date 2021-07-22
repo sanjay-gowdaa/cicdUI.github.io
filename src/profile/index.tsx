@@ -71,24 +71,36 @@ const Profile = (props: any) => {
         const panSubmitted = !isEmpty(loginState.PAN) && !isEmpty(loginState?.pan_card);
         const rtcSubmitted = !isEmpty(loginState.rtc) && !isEmpty(loginState?.rtc_card);
         const kisanSubmitted = !isEmpty(loginState.kisancard) && !isEmpty(loginState?.kisancard_card);
+        const isApproved = loginState.kyc_flag === "approved" ? true : false;
 
         if(userType === UserTypes.BUYER){
-            if(isEmpty(loginState.category)){
-                (panSubmitted && aadharSubmitted) ?
+            if(isApproved){
+                setKycFlag("complete");
+            }
+            else{
+                if(isEmpty(loginState.category)){
+                
+                    (panSubmitted && aadharSubmitted) ?
                     setKycFlag("submitted") : setKycFlag("incomplete");
-            } else {
-                (panSubmitted && !isEmpty(loginState.gstin))?
+                } else {
+                    (panSubmitted && !isEmpty(loginState.gstin))?
                     setKycFlag("submitted") : setKycFlag("incomplete");
+                }
             }
         } else {
-            if(isEmpty(loginState.category)){
-                ((aadharSubmitted && bankSubmitted) &&
+            if(isApproved){
+                setKycFlag("complete");
+            }
+            else{
+                if(isEmpty(loginState.category)){
+                    ((aadharSubmitted && bankSubmitted) &&
                     ((kisanSubmitted && !rtcSubmitted) || (!kisanSubmitted && rtcSubmitted)
                         || (kisanSubmitted && rtcSubmitted))) ?
                     setKycFlag("submitted") : setKycFlag("incomplete");
                 } else {
                 (panSubmitted && !isEmpty(loginState.gstin) && !isEmpty(loginState.fpo) && bankSubmitted) ?
                     setKycFlag("submitted") : setKycFlag("incomplete");
+                }
             }
         }
     },[loginState]);
@@ -270,6 +282,8 @@ const Profile = (props: any) => {
                     finalValues = {...finalValues, [property]: formSubmitValues[property]};
                 }
             }
+            finalValues["kyc_flag"] = "isSubmitted"
+            console.log("finalValues:", finalValues)
             setKycFormValues(finalValues);
             if(!isEmpty(finalValues)){
                 setSaveFlag(true);
