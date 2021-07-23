@@ -1,18 +1,19 @@
 import React from 'react';
 import { Button, Image, Modal, Progress, Statistic, Typography } from 'antd';
 import { CaretUpOutlined, CaretDownOutlined } from '@ant-design/icons';
+import { isEmpty } from 'lodash';
+
+import ViewCropImages from './viewCropImages';
 
 import { CropApiModel } from '../../store/sellerReducer/types';
 import RagiImg from '../../static/assets/ragi.png';
-import ViewCropImages from './viewCropImages';
-import { isEmpty } from 'lodash';
 import { parseIDfromHash } from '../../app-components/utils';
 
-const { Title, Text } = Typography;
+const { Title } = Typography;
 
 const getCropId = (cropID: string) => {
     return parseIDfromHash(cropID);
-}
+};
 
 const openAdditionalInfo = (content: any) => {
     Modal.info({
@@ -30,7 +31,7 @@ type cropColumnsCallback = {
     isEdit: boolean;
     currentCropId: string;
     updateCropDetails: any;
-}
+};
 
 export const cropColumns = ({
         deleteCrop,

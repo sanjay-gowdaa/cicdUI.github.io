@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { Table, Typography, Tooltip, Button} from 'antd';
 import { useSelector, useDispatch } from 'react-redux';
-import { RootState } from '../../store/rootReducer';
+
 import { cropColumns } from './cropsTable.model';
 import './crops.scss';
+import { EditableCell, EditableRow } from './AddCrop/customTableComponents';
 import AddCropModal from './AddCrop';
+
+import { RootState } from '../../store/rootReducer';
 import { deleteSelectedCrop, getAllCropsList, sellerIntentToSell, updateCropData } from '../../store/sellerReducer/actions';
 import { CropApiModel, SellerStateModel } from '../../store/sellerReducer/types';
-import PrimaryBtn from '../../app-components/primaryBtn';
-import { EditableCell, EditableRow } from './AddCrop/customTableComponents';
 import { parseIDfromHash } from '../../app-components/utils';
 
 const { Title } = Typography;
