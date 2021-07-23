@@ -1,13 +1,15 @@
 import React from 'react';
 import { Button, Image, Typography, Modal } from 'antd';
-import RagiImg from '../../static/assets/ragi.png';
-import AcceptMatch from './acceptMatch';
-import { MatchRequirementModel } from '../../buyer-seller-commons/types';
-import { parseIDfromHash, maskData } from '../../app-components/utils';
 import { ExclamationCircleOutlined } from '@ant-design/icons';
+
+import AcceptMatch from './acceptMatch';
 import RejectConfrimation from './rejectConfirmation';
 
-const { Title, Text } = Typography;
+import RagiImg from '../../static/assets/ragi.png';
+import { MatchRequirementModel } from '../../buyer-seller-commons/types';
+import { parseIDfromHash, maskData } from '../../app-components/utils';
+
+const { Text } = Typography;
 
 export interface componentCallBacksModel {
     showCropDetailsModal: any;

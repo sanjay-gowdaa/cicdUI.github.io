@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import Nagappa from '../static/assets/nagappa.png';
 import Suma from '../static/assets/suma.png';
 import Sadananda from '../static/assets/sadananda.png';
-import Chikkaramu from '../static/assets/Chikkaramu.jpg';
+import SatishChandra from '../static/assets/SatishChandra.jpg';
 import Sachin from '../static/assets/Sachin.jpg';
 import CVKulkarni from '../static/assets/CVKulkarni.jpg';
 import { englishStyling, isEnglish, kannadaStyling } from '../static/translations/constants';
@@ -50,8 +50,9 @@ const Team = () => {
                 <Row>
                     <Col span={8} className="team-column">
                         <Card className={customStyles.advisorsCard}>
-                            <img src={Chikkaramu} className="advisors-pic" />
+                            <img src={SatishChandra} className="advisors-pic" />
                             <Title className="person-name" level={4}>{t('our_team.advisors.name.1')}</Title>
+                            <Title className="margin-zero" level={5}>{t('our_team.advisors.designation.1')}</Title>
                             <Text className="description">{t('our_team.advisors.description.1')}</Text>
                         </Card>
                     </Col>
@@ -59,6 +60,7 @@ const Team = () => {
                         <Card className={`advisor-card-two ${customStyles.advisorsCard}`}>
                             <img src={Sachin} className="advisors-pic" />
                             <Title className="person-name" level={4}>{t('our_team.advisors.name.2')}</Title>
+                            <Title className="margin-zero" level={5}>{t('our_team.advisors.designation.2')}</Title>
                             <Text className="description">{t('our_team.advisors.description.2')}</Text>
                         </Card>
                     </Col>
@@ -66,6 +68,7 @@ const Team = () => {
                         <Card className={`advisor-card-three ${customStyles.advisorsCard}`}>
                             <img src={CVKulkarni} className="advisors-pic" />
                             <Title className="person-name" level={4}>{t('our_team.advisors.name.3')}</Title>
+                            <Title className="margin-zero" level={5}>{t('our_team.advisors.designation.3')}</Title>
                             <Text className="description">{t('our_team.advisors.description.3')}</Text>
                         </Card>
                     </Col>
