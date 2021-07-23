@@ -115,14 +115,19 @@
         "advisors": {
             "title":"Advisors",
             "name": {
-                "1":"Chikkaramu S",
+                "1":"Satish Chandra C S",
                 "2":"Sachin Narang",
                 "3":"C V Kulkarni"
             },
+            "designation": {
+                "1":"Agriculture Technology and Finance",
+                "2":"Marketing Professional(MBA)",
+                "3":"Sales Proffessional"
+            },
             "description": {
-                "1":"Agricultural expert (B. Tech -Agriculture Engineering) with over 15 years of technical experience on the field.He is Guiding us with training, Quality, and technical ground operations.",
-                "2":"Marketing Professional (MBA) withover two decades of marketing leadership experience at leading FMCG and lifestyle companies encompassing Personal Care and Food & Beverages. He is guiding us on the Go to Market strategies.",
-                "3":"Sales and operations Professional with over three decades of experience with focus on FMCG and beverages. He is helping define and structure the sales and operations."
+                "1":"Over three decades of experience as a valuator, finance researcher, mentor in Agri Tech. He is guiding us a mentor providing the needed support on Agriculture Strategy, roadmap and finance.",
+                "2":"Over two decades of marketing leadership experience at leading FMCG and lifestyle companies. He is guiding us on the go-to-market strategies.",
+                "3":"Sales professional with over three decades of experience in FMCG and beverages. He is helping define and structure sales and operations."
             }
         }
     },
