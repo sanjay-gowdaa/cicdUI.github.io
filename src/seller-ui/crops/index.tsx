@@ -63,7 +63,7 @@ const CropsSection = () => {
     return (
         <div className="crops-container" id="seller-ui-crops">
             <Title level={2}>My Produce</Title>
-            <Tooltip title="Please comlete your KYC to add requirements" >
+            <Tooltip title="Please complete your KYC to add produce" >
                 <Button
                     //className="add-crop-btn vikas-btn-radius"
                     className={isApproved? "custom-primary-button add-crop-btn vikas-btn-radius": "add-crop-btn vikas-btn-radius custom-default-button "}

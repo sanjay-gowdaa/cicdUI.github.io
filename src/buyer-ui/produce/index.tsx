@@ -46,7 +46,7 @@ const CropsSection = () => {
     return (
         <div className="crops-container">
             <Title level={2}>My Requirements</Title>
-            <Tooltip title="Please comlete your KYC to add requirements" >
+            <Tooltip title="Please complete your KYC to add requirements" >
                 <Button
                     //className="add-crop-btn vikas-btn-radius"
                     className={isApproved? "custom-primary-button add-crop-btn vikas-btn-radius": "add-crop-btn vikas-btn-radius custom-default-button "}
