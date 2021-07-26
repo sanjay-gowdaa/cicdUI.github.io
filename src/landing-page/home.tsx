@@ -36,11 +36,11 @@ const Home = () => {
                     banner
                 />
                 <Carousel className="home-carousel" autoplay autoplaySpeed={5000}>
-                    <Image height={"87vh"} src={VBOne} preview={false} />
-                    <Image height={"87vh"} src={VBTwo} preview={false} />
-                    <Image height={"87vh"} src={VBThree} preview={false} />
-                    <Image height={"87vh"} src={VBFour} preview={false} />
-                    <Image height={"87vh"} src={VBFive} preview={false} />
+                    <Image height={"87vh"} width={"100%"} src={VBOne} preview={false} />
+                    <Image height={"87vh"} width={"100%"} src={VBTwo} preview={false} />
+                    <Image height={"87vh"} width={"100%"} src={VBThree} preview={false} />
+                    <Image height={"87vh"} width={"100%"} src={VBFour} preview={false} />
+                    <Image height={"87vh"} width={"100%"} src={VBFive} preview={false} />
                 </Carousel>
                 <div className="mobile-home-content">
                     <Title className="col-white home-title" level={1}>

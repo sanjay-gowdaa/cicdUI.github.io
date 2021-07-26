@@ -13,30 +13,32 @@ import {
 import { uniqBy } from 'lodash';
 import { useDispatch, useSelector } from 'react-redux';
 
+import ConfirmOTPModal from './confirmOTPModal';
+import { emailRequired, validatePhoneNumber, validateUserName } from './utils';
+
+import {
+    customConsentValidator,
+    registerBasicFormMainLayout,
+    registerBasicFormTailLayout
+} from '../constants';
+
 import { RootState } from '../../store/rootReducer';
 import {
     sendOTP,
     updateBasicRegistrationData,
     updateEntityType,
 } from '../../store/registrationReducer/actions';
-import {
-    customConsentValidator,
-    registerBasicFormMainLayout,
-    registerBasicFormTailLayout
-} from '../constants';
 import { UserTypes } from '../../store/genericTypes';
 import DefaultBtn from '../../app-components/defaultBtn';
 import PrimaryBtn from '../../app-components/primaryBtn';
 import { TAndCPopup } from '../../terms-and-conditions/index';
-
-import ConfirmOTPModal from './confirmOTPModal';
-import { emailRequired, validatePhoneNumber, validateUserName } from './utils';
 
 const { Option } = Select;
 const { Title } = Typography;
 
 const getUserTypeOption = (configs: [any], currentType: string) => {
     const filterUserTypeOptns = uniqBy(configs.filter(config => config.type === currentType), 'sub_type');
+
     return (
         filterUserTypeOptns.map((userSubType) => {
             const { sub_type } = userSubType;
@@ -127,7 +129,6 @@ const Register = ({ history, setSignUpPopupVisible }: { history: any, setSignUpP
                     />
                 </Col>
             </Row>
-
             <Form
                 {...registerBasicFormMainLayout}
                 name="basic"
@@ -144,14 +145,13 @@ const Register = ({ history, setSignUpPopupVisible }: { history: any, setSignUpP
                     <Select
                         className="custom-select"
                         placeholder={`Select ${currentType} type`}
-                        onSelect={(type: any) => onSelectType(type, currentType) }
+                        onSelect={(type: any) => onSelectType(type, currentType)}
                         allowClear
                     >
                         {getUserTypeOption(configs, currentType)}
                     </Select>
                 </Form.Item>
-                {
-                    showCategory ?
+                { showCategory ?
                     <Form.Item
                         label="Category"
                         name="category"
@@ -179,7 +179,6 @@ const Register = ({ history, setSignUpPopupVisible }: { history: any, setSignUpP
                 >
                     <Input className="custom-input" />
                 </Form.Item>
-
                 <Form.Item
                     label="Phone Number"
                     name="number"
@@ -190,9 +189,7 @@ const Register = ({ history, setSignUpPopupVisible }: { history: any, setSignUpP
                 >
                     <Input className="custom-input" />
                 </Form.Item>
-
-                {
-                    (currentType === UserTypes.BUYER) || (currentType === UserTypes.SELLER && showCategory) ?
+                { (currentType === UserTypes.BUYER) || (currentType === UserTypes.SELLER && showCategory) ?
                     <Form.Item
                         label="Email"
                         name="email"
@@ -204,7 +201,6 @@ const Register = ({ history, setSignUpPopupVisible }: { history: any, setSignUpP
                         <Input className="custom-input" />
                     </Form.Item> : null
                 }
-
                 <Form.Item
                     {...registerBasicFormTailLayout}
                     name="remember"
@@ -219,7 +215,6 @@ const Register = ({ history, setSignUpPopupVisible }: { history: any, setSignUpP
                         .
                     </Checkbox>
                 </Form.Item>
-
                 <Form.Item {...registerBasicFormTailLayout}>
                     <PrimaryBtn style={{width: "50%"}} htmlType="submit" content="Request OTP" />
                     <DefaultBtn style={{width: "50%"}} onClick={() => setSignUpPopupVisible(false)} content="Cancel" />
