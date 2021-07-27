@@ -64,6 +64,7 @@ const CropsSection = () => {
                 title="Check if the KYC is approved in Profile Page"
                 visible={!isApproved}
                 trigger="hover"
+                placement="right"
             >
                 <PrimaryBtn
                     className="add-crop-btn vikas-btn-radius"
