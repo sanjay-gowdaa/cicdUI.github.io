@@ -63,8 +63,8 @@ export const matchesColumns = (componentCallBacks: componentCallBacksModel) => [
     },
     {
         title: 'Total price',
-        dataIndex: 'seller_final_price',
-        key: 'seller_final_price'
+        dataIndex: 'buyer_final_price',
+        key: 'buyer_final_price'
     },
     {
         title: 'Location',

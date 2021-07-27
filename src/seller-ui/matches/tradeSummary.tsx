@@ -10,12 +10,13 @@ interface componentProps {
 }
 
 const TradeSummary = (props: componentProps) => {
-    const {cropDetails} = props;
-    const { buyer_id, produce, matched_quantity, buyer_location, seller_price } = cropDetails;
-    const sellerPricePerQnt =  seller_price/matched_quantity;
+    const { cropDetails } = props;
+    const { buyer_id, produce, matched_quantity, buyer_location, seller_price_per_quintal, seller_quantity, seller_price } = cropDetails;
+    const totalPrice =  (seller_price/seller_quantity) * matched_quantity;
+
     return (
         <>
-            <Title level={4}>Trade summary</Title>
+            <Title level={4}>Trade Summary</Title>
             <Row>
                 <Col sm={24} md={12}>
                     Buyer Id
@@ -45,7 +46,7 @@ const TradeSummary = (props: componentProps) => {
                     Price per quintal
                 </Col>
                 <Col sm={24} md={12}>
-                    : {sellerPricePerQnt}
+                    : {seller_price_per_quintal}
                 </Col>
             </Row>
             <Row>
@@ -53,7 +54,7 @@ const TradeSummary = (props: componentProps) => {
                     Total price
                 </Col>
                 <Col sm={24} md={12}>
-                    : {seller_price}
+                    : {totalPrice}
                 </Col>
             </Row>
             <Row>

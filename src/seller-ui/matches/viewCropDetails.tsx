@@ -1,81 +1,24 @@
 import React from 'react';
-import { Col, Divider, Modal, Row, Typography } from 'antd';
-import DefaultBtn from '../../app-components/defaultBtn';
-import { MatchRequirementModel } from '../../buyer-seller-commons/types';
-import { parseIDfromHash, maskData } from '../../app-components/utils';
+import { Col, Divider, Modal, Row } from 'antd';
 
-const { Title } = Typography;
+import TradeSummary from './tradeSummary';
+
+import { MatchRequirementModel } from '../../buyer-seller-commons/types';
+import DefaultBtn from '../../app-components/defaultBtn';
 
 interface componentProps {
     openDetailsModal: boolean;
     setOpenDetailsModal: Function;
     cropDetails: MatchRequirementModel;
-}
+};
 
 const ViewCropDetails = (props: componentProps) => {
     const { openDetailsModal, setOpenDetailsModal, cropDetails } = props;
-    const { buyer_id, produce, matched_quantity, buyer_location, seller_price } = cropDetails;
-    const sellerPricePerQnt =  seller_price/matched_quantity;
     const closeModal = () => setOpenDetailsModal(!openDetailsModal);
+    
     return (
         <Modal visible={openDetailsModal} title="Details" onCancel={closeModal} footer={null}>
-            <Title level={4}>Trade summary</Title>
-            <Row>
-                <Col sm={24} md={12}>
-                    Buyer Id
-                </Col>
-                <Col sm={24} md={12}>
-                    : {maskData(parseIDfromHash(buyer_id))}
-                </Col>
-            </Row>
-            <Row>
-                <Col sm={24} md={12}>
-                    Produce
-                </Col>
-                <Col sm={24} md={12}>
-                    : {produce}
-                </Col>
-            </Row>
-            <Row>
-                <Col sm={24} md={12}>
-                    Quantity
-                </Col>
-                <Col sm={24} md={12}>
-                    : {matched_quantity}
-                </Col>
-            </Row>
-            <Row>
-                <Col sm={24} md={12}>
-                    Price per quintal
-                </Col>
-                <Col sm={24} md={12}>
-                    : {sellerPricePerQnt}
-                </Col>
-            </Row>
-            <Row>
-                <Col sm={24} md={12}>
-                    Total price
-                </Col>
-                <Col sm={24} md={12}>
-                    : {seller_price}
-                </Col>
-            </Row>
-            <Row>
-                <Col sm={24} md={12}>
-                    Location
-                </Col>
-                <Col sm={24} md={12}>
-                    : {buyer_location}
-                </Col>
-            </Row>
-            <Row>
-                <Col sm={24} md={12}>
-                    Tentative pickup
-                </Col>
-                <Col sm={24} md={12}>
-                    : {'12/08/2020 to 15/08/2020'}
-                </Col>
-            </Row>
+            <TradeSummary cropDetails={cropDetails} />
             <Divider />
             <Row justify="center">
                 <Col>

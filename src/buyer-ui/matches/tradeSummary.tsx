@@ -11,7 +11,7 @@ interface componentProps {
 
 const TradeSumary = (props: componentProps) => {
     const {cropDetails} = props;
-    const { seller_id, produce, buyer_price_per_quintal, matched_quantity, location, seller_final_price } = cropDetails;
+    const { seller_id, produce, buyer_price_per_quintal, matched_quantity, location, buyer_final_price } = cropDetails;
 
     return (
         <>
@@ -53,7 +53,7 @@ const TradeSumary = (props: componentProps) => {
                     Total price
                 </Col>
                 <Col sm={24} md={12}>
-                    : {seller_final_price}
+                    : {buyer_final_price}
                 </Col>
             </Row>
             <Row>
