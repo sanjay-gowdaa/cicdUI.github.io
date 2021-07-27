@@ -11,11 +11,11 @@ import {
     InputNumber
 } from 'antd';
 import { useDispatch } from 'react-redux';
+import moment from 'moment';
 
 import { addNewProduce, editProduce } from '../../../store/buyerReducer/actions';
 import CancelBtn from '../../../app-components/cancelBtn';
 import { MasterListApiFormat, ProduceModel } from '../../../store/buyerReducer/types';
-import moment from 'moment';
 
 const { TextArea } = Input;
 const { Option } = Select;
@@ -36,14 +36,16 @@ type AddCropModalProps = {
     currentProduceRecord: ProduceModel;
     setModalVisible: any;
     modalVisible: boolean;
-}
+};
 
 const getMasterProduceListOpts = ({masterProduceList}: {masterProduceList: Array<MasterListApiFormat>}) => {
+
     return (
         <>
             {
                 masterProduceList.map((masterProduceItem: MasterListApiFormat) => {
                     const {produce_name = '', crop_name = '', category_name = '', grade_name = ''} = masterProduceItem;
+
                     return (
                         <Option
                             key={`${produce_name}-${crop_name}-${category_name}-${grade_name}`}
@@ -114,9 +116,9 @@ const AddCropModal = ({
     const processOnEditInitValues = (currentProduceRecord: ProduceModel) => {
         const {crop_name, category, sub_type, grade} = currentProduceRecord;
         const produce_name = `${crop_name}-${category}-${sub_type}-${grade}`;
-        const deliveryByProcessed = moment(currentProduceRecord.delivery_by)
+        const deliveryByProcessed = moment(currentProduceRecord.delivery_by);
         return {...currentProduceRecord, delivery_by: deliveryByProcessed, produce_name};
-    }
+    };
 
     return (
         <Modal
@@ -148,20 +150,19 @@ const AddCropModal = ({
                                 {getMasterProduceListOpts({masterProduceList})}
                             </Select>
                         </Form.Item>
-                        <Form.Item {...fieldwithInfoLayout} label="Qunatity">
-                            <Form.Item
-                                name="quantity"
-                                noStyle
-                                rules={[{ required: true, message: 'Please input the Qunatity!' }]}
-                            >
-                                <InputNumber
-                                    style={{ width: 160 }}
-                                    className="custom-input"
-                                    placeholder="In quintal"
-                                    stringMode
-                                />
-                            </Form.Item>
-                            <span className="additional-text">Qtl</span>
+                        <Form.Item
+                            {...fieldwithInfoLayout}
+                            label="Quantity"
+                            name="quantity"
+                            rules={[{ required: true, message: 'Please input the Qunatity!' }]}
+                        >
+                            <InputNumber
+                                style={{ width: 160 }}
+                                className="custom-input"
+                                placeholder="In quintal"
+                                stringMode
+                            />
+                            &nbsp; &nbsp; Qtl
                         </Form.Item>
                         <Form.Item
                             label="Request Delivery By"
