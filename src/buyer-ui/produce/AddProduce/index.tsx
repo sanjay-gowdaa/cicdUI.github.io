@@ -116,7 +116,7 @@ const AddCropModal = ({
     const processOnEditInitValues = (currentProduceRecord: ProduceModel) => {
         const {crop_name, category, sub_type, grade} = currentProduceRecord;
         const produce_name = `${crop_name}-${category}-${sub_type}-${grade}`;
-        const deliveryByProcessed = moment(currentProduceRecord.delivery_by)
+        const deliveryByProcessed = moment(currentProduceRecord.delivery_by);
         return {...currentProduceRecord, delivery_by: deliveryByProcessed, produce_name};
     };
 
@@ -150,20 +150,19 @@ const AddCropModal = ({
                                 {getMasterProduceListOpts({masterProduceList})}
                             </Select>
                         </Form.Item>
-                        <Form.Item {...fieldwithInfoLayout} label="Quantity">
-                            <Form.Item
-                                name="quantity"
-                                noStyle
-                                rules={[{ required: true, message: 'Please input the Qunatity!' }]}
-                            >
-                                <InputNumber
-                                    style={{ width: 160 }}
-                                    className="custom-input"
-                                    placeholder="In quintal"
-                                    stringMode
-                                />
-                            </Form.Item>
-                            <span className="additional-text">Qtl</span>
+                        <Form.Item
+                            {...fieldwithInfoLayout}
+                            label="Quantity"
+                            name="quantity"
+                            rules={[{ required: true, message: 'Please input the Qunatity!' }]}
+                        >
+                            <InputNumber
+                                style={{ width: 160 }}
+                                className="custom-input"
+                                placeholder="In quintal"
+                                stringMode
+                            />
+                            &nbsp; &nbsp; Qtl
                         </Form.Item>
                         <Form.Item
                             label="Request Delivery By"

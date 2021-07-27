@@ -230,39 +230,35 @@ const AddCropModal = (addCropProps: PropsType) => {
                                     {selectedVariety ? renderGradeOptionsForSubCategory(sellerStore.variety, selectedVariety) : []}
                                 </Select>
                             </Form.Item>
-                            <Form.Item {...fieldwithInfoLayout} label="Quantity">
-                                <Form.Item
-                                    name="quantity"
-                                    noStyle
-                                    rules={[{ required: true, message: 'Please input the Qunatity!' }]}
-                                >
-                                    <InputNumber
-                                        style={{ width: 200 }}
-                                        className="custom-input"
-                                        placeholder="In quintal"
-                                        stringMode
-                                    />
-                                </Form.Item>
-                                <span className="additional-text">Qtl</span>
+                            <Form.Item
+                                {...fieldwithInfoLayout}
+                                label="Quantity"
+                                name="quantity"
+                                rules={[{ required: true, message: 'Please input the Qunatity!' }]}
+                            >
+                                <InputNumber
+                                    style={{ width: 200 }}
+                                    className="custom-input"
+                                    placeholder="In quintal"
+                                    stringMode
+                                />
+                                &nbsp; &nbsp; Qtl
                             </Form.Item>
-                            <Form.Item {...fieldwithInfoLayout} label="Price per quintal">
-                                <Form.Item
-                                    name="pricePerQnt"
-                                    rules={[{
-                                        required: true,
-                                        message: 'Please input the Price per quintal!',
-                                    }]}
-                                    noStyle
-                                >
-                                    <InputNumber
-                                        className="custom-input"
-                                        placeholder="In rupees"
-                                        stringMode
-                                    />
-                                </Form.Item>
-                                <span className="additional-text">
-                                    APMC Rate {loginUser.district}: {sellerStore.apmcCropPrice}
-                                </span>
+                            <Form.Item
+                                {...fieldwithInfoLayout}
+                                label="Price per quintal"
+                                name="pricePerQnt"
+                                rules={[{
+                                    required: true,
+                                    message: 'Please input the Price per quintal!',
+                                }]}
+                            >
+                                <InputNumber
+                                    className="custom-input"
+                                    placeholder="In rupees"
+                                    stringMode
+                                />
+                                &nbsp; &nbsp; APMC Rate {loginUser.district}: {sellerStore.apmcCropPrice}
                             </Form.Item>
                             <Form.Item
                                 label="Intent to Sell?"
