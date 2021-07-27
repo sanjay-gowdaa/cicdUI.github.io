@@ -195,13 +195,6 @@ const AddCropModal = (addCropProps: PropsType) => {
                                     {renderCategoryOptions(sellerStore.masterCrops)}
                                 </Select>
                             </Form.Item>
-                            {/* Addition crop name msg */}
-                            <Space direction="horizontal">
-                                <Text type="secondary">Unable to find your produce?</Text>
-                                <Text type="secondary" underline>
-                                    Add Produce
-                                </Text>
-                            </Space>
                             <Form.Item
                                 label="Select Variety"
                                 name="subCategory"
@@ -217,12 +210,6 @@ const AddCropModal = (addCropProps: PropsType) => {
                                 </Select>
                             </Form.Item>
                             {/* Addition Sub Category msg */}
-                            <Space direction="horizontal">
-                                <Text type="secondary">Unable to find your sub variety?</Text>
-                                <Text type="secondary" underline>
-                                    Add Variety
-                                </Text>
-                            </Space>
                             <Form.Item
                                 label="Select Grade"
                                 name="grade"
@@ -243,7 +230,7 @@ const AddCropModal = (addCropProps: PropsType) => {
                                     {selectedVariety ? renderGradeOptionsForSubCategory(sellerStore.variety, selectedVariety) : []}
                                 </Select>
                             </Form.Item>
-                            <Form.Item {...fieldwithInfoLayout} label="Qunatity">
+                            <Form.Item {...fieldwithInfoLayout} label="Quantity">
                                 <Form.Item
                                     name="quantity"
                                     noStyle
