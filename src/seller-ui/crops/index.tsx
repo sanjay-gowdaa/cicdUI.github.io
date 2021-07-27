@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Table, Typography, Tooltip, Button} from 'antd';
+import { Table, Typography, Tooltip } from 'antd';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { cropColumns } from './cropsTable.model';
@@ -11,12 +11,13 @@ import { RootState } from '../../store/rootReducer';
 import { deleteSelectedCrop, getAllCropsList, sellerIntentToSell, updateCropData } from '../../store/sellerReducer/actions';
 import { CropApiModel, SellerStateModel } from '../../store/sellerReducer/types';
 import { parseIDfromHash } from '../../app-components/utils';
+import PrimaryBtn from '../../app-components/primaryBtn';
 
 const { Title } = Typography;
 
 const getCropId = (cropID: string) => {
     return parseIDfromHash(cropID);
-}
+};
 
 const CropsSection = () => {
     const sellerState: SellerStateModel = useSelector((state: RootState) => state.seller);
@@ -26,16 +27,11 @@ const CropsSection = () => {
     const [currentProduceRecord, setCurrentProduceRecord] = useState({} as CropApiModel);
     const [modalVisible, setModalVisible] = useState(false);
     const dispatch = useDispatch();
-    var isApproved;
-    if(loginState.kyc_flag === "approved")
-    {
-        isApproved = 'true' ;
-    }
-    
+    const isApproved = (loginState.kyc_flag === "approved");
 
     useEffect(() => {
         dispatch(getAllCropsList());
-    }, [])
+    }, []);
 
     const prepareForEditCrop = (cropData: CropApiModel) => {
         const {sk} = cropData;
@@ -43,12 +39,12 @@ const CropsSection = () => {
         setCurrentCropId(actualCropID)
         setIsEdit(true);
         setCurrentProduceRecord(cropData);
-    }
+    };
 
     const deleteCrop = (cropID: string) => {
         const actualCropID = getCropId(cropID);
         dispatch(deleteSelectedCrop(actualCropID));
-    }
+    };
 
     const updateCropDetails = (updatedCropData: CropApiModel, isPriceUpdated?: boolean) => {
         const {sk} = updatedCropData;
@@ -59,23 +55,26 @@ const CropsSection = () => {
         } else {
             dispatch(updateCropData({...updatedCropData, is_delete: "no"}));
         }
-    }
+    };
 
     return (
         <div className="crops-container" id="seller-ui-crops">
             <Title level={2}>My Produce</Title>
-            <Tooltip title="Please complete your KYC to add produce" >
-                <Button
-                    //className="add-crop-btn vikas-btn-radius"
-                    className={isApproved? "custom-primary-button add-crop-btn vikas-btn-radius": "add-crop-btn vikas-btn-radius custom-default-button "}
+            <Tooltip
+                title="Check if the KYC is approved in Profile Page"
+                visible={!isApproved}
+                trigger="hover"
+                placement="right"
+            >
+                <PrimaryBtn
+                    className="add-crop-btn vikas-btn-radius"
                     onClick={() => {
                         setIsEdit(false);
                         setModalVisible(true);
                     }}
-                    style={!isApproved ? { display: "none" } : {}}
-                    disabled={!isApproved }>Add Produce
-                    
-                </Button>
+                    disabled={!isApproved}
+                    content="Add Produce"
+                />
             </Tooltip>
             <AddCropModal
                 setModalVisible={setModalVisible}

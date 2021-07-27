@@ -2,13 +2,10 @@ import React from 'react';
 import { Image, Typography, Tooltip } from 'antd';
 import RagiImg from '../../static/assets/ragi.png';
 import { parseIDfromHash, maskData } from '../../app-components/utils';
-import { TransactioModel, TransactionStatus} from '../../buyer-seller-commons/types';
+import { TransactionStatus } from '../../buyer-seller-commons/types';
 import PayButton from './payButton';
 
 const { Text } = Typography;
-
-
-
 
 export const transactionColumns = [
     {
@@ -63,8 +60,8 @@ export const transactionColumns = [
     },
     {
         title: 'Total',
-        dataIndex: 'seller_final_price',
-        key: 'seller_final_price',
+        dataIndex: 'buyer_final_price',
+        key: 'buyer_final_price',
     },
     {
         title: 'Seller',
@@ -85,24 +82,12 @@ export const transactionColumns = [
     {
         title: 'Location',
         dataIndex: 'seller_location',
-        key: 'seller_location',
+        key: 'seller_location'
     },
-    // {
-    //     title: 'Additional',
-    //     key: 'termsAndConditions',
-    //     dataIndex: 'termsAndConditions',
-    //     render: () => {
-    //         return (
-    //             <>
-    //                 <Button type="link">Additional Info</Button>
-    //             </>
-    //         );
-    //     },
-    // },
     {
         title: 'Status',
         key: 'transactionStatusText',
-        dataIndex: 'transactionStatusText',
+        dataIndex: 'transactionStatusText'
     },
     {
         title: '',
@@ -111,11 +96,8 @@ export const transactionColumns = [
             
         return(
             record?.gsi_status !== TransactionStatus.completed  && 
-            <PayButton tranDetails={record} />
-
-            
-           )
-
+                <PayButton tranDetails={record} />
+            );
         },
     },
 ];

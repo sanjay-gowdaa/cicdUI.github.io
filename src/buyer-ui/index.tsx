@@ -1,10 +1,7 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import { Divider, Typography } from 'antd';
-import { useDispatch,  useSelector} from 'react-redux';
-import { RootState } from '../store/rootReducer';
+import { useSelector} from 'react-redux';
 
-import Header from '../header';
-import Footer from '../footer';
 import './buyer.scss';
 import MatchedSection from './matches';
 import ReviewsSection from './reviews';
@@ -13,6 +10,10 @@ import ProduceSection from './produce';
 import AddProduceModal from './masterList';
 import PaymentResponseModel from './transactions/paymentResponsemodel';
 
+import Header from '../header';
+import Footer from '../footer';
+
+import { RootState } from '../store/rootReducer';
 import Banner from '../static/assets/buyerBanner.jpg';
 
 const {Title} = Typography;
@@ -21,6 +22,7 @@ const BuyerUI = (props: any) => {
     const { history } = props;
     const loginState = useSelector((state: RootState) => state.loginUser);
     const isRedirected = loginState.isRedirected;
+
     return (
         <div className="buyer-ui-app" id="buyer-ui-app">
             <Header history={history} showActions isLoggedIn />

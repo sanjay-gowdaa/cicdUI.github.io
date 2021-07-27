@@ -1,8 +1,10 @@
 import React from 'react';
 import { Col, Divider, Modal, Row } from 'antd';
-import DefaultBtn from '../../app-components/defaultBtn';
-import TradeSumary from './tradeSummary';
+
+import TradeSummary from './tradeSummary';
+
 import { MatchRequirementModel } from '../../buyer-seller-commons/types';
+import DefaultBtn from '../../app-components/defaultBtn';
 
 interface componentProps {
     openDetailsModal: boolean;
@@ -16,7 +18,7 @@ const ViewCropDetails = (props: componentProps) => {
     
     return (
         <Modal visible={openDetailsModal} title="Details" onCancel={closeModal} footer={null}>
-            <TradeSumary cropDetails={cropDetails} />
+            <TradeSummary cropDetails={cropDetails} />
             <Divider />
             <Row justify="center">
                 <Col>

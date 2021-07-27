@@ -47,12 +47,14 @@ const UserHeader = (props: any) => {
     }, [userType]);
 
     useEffect(() => {
-        
         dispatch(getConfigurations());
     }, []);
 
     useEffect(() => {
         dispatch(getUserCompleteDetails());
+    }, [loginState.kyc_flag]);
+
+    useEffect(() => {
         if(!isEmpty(loginState.profile_picture))
             dispatch(getUserFiles(loginState?.profile_picture?.doc_key, setImageSrc, setPDF));
     },[loginState]);
