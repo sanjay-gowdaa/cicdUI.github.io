@@ -236,13 +236,15 @@ const AddCropModal = (addCropProps: PropsType) => {
                                 name="quantity"
                                 rules={[{ required: true, message: 'Please input the Qunatity!' }]}
                             >
-                                <InputNumber
-                                    style={{ width: 200 }}
-                                    className="custom-input"
-                                    placeholder="In quintal"
-                                    stringMode
-                                />
-                                &nbsp; &nbsp; Qtl
+                                <Form.Item name="quantity">
+                                    <InputNumber
+                                        style={{ width: 200 }}
+                                        className="custom-input"
+                                        placeholder="In quintal"
+                                        stringMode
+                                    />
+                                </Form.Item>
+                                <span className="additional-text">Qtl</span>
                             </Form.Item>
                             <Form.Item
                                 {...fieldwithInfoLayout}
@@ -253,12 +255,14 @@ const AddCropModal = (addCropProps: PropsType) => {
                                     message: 'Please input the Price per quintal!',
                                 }]}
                             >
-                                <InputNumber
-                                    className="custom-input"
-                                    placeholder="In rupees"
-                                    stringMode
-                                />
-                                &nbsp; &nbsp; APMC Rate {loginUser.district}: {sellerStore.apmcCropPrice}
+                                <Form.Item name="pricePerQnt">
+                                    <InputNumber
+                                        className="custom-input"
+                                        placeholder="In rupees"
+                                        stringMode
+                                    />
+                                </Form.Item>
+                                <span className="additional-text">APMC Rate {loginUser.district}: {sellerStore.apmcCropPrice}</span>
                             </Form.Item>
                             <Form.Item
                                 label="Intent to Sell?"

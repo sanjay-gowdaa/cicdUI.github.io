@@ -156,13 +156,15 @@ const AddCropModal = ({
                             name="quantity"
                             rules={[{ required: true, message: 'Please input the Qunatity!' }]}
                         >
-                            <InputNumber
-                                style={{ width: 160 }}
-                                className="custom-input"
-                                placeholder="In quintal"
-                                stringMode
-                            />
-                            &nbsp; &nbsp; Qtl
+                            <Form.Item name="quantity">
+                                <InputNumber
+                                    style={{ width: 160 }}
+                                    className="custom-input"
+                                    placeholder="In quintal"
+                                    stringMode
+                                />
+                            </Form.Item>
+                            <span className="additional-text">Qtl</span>
                         </Form.Item>
                         <Form.Item
                             label="Request Delivery By"
