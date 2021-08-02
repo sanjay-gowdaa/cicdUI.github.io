@@ -23,6 +23,7 @@ import { UserStateModel } from "../loginReducer/types";
 import { BuyerStateModel } from "../buyerReducer/types";
 import { RootState } from "../rootReducer";
 import { BuyerRejectMatch, MasterListApiFormat, ProduceModel } from "./types";
+import { isEmpty } from "lodash";
 
 export const UPDATE_MASTER_LIST = 'UPDATE_MASTER_LIST';
 export const GET_MASTER_LIST = 'GET_MASTER_LIST';
@@ -38,6 +39,7 @@ export const SET_MATCHES_LOADER = 'SET_MATCHES_LOADER';
 export const UPDATE_PAYMENT_REDIRECTION_DETAILS = 'UPDATE_PAYMENT_REDIRECTION_DETAILS';
 export const UPDATE_PAYMENT_DETAILS = 'UPDATE_PAYMENT_DETAILS'
 export const UPDATE_STATUS_DETAILS = 'UPDATE_STATUS_DETAILS'
+export const UPDATE_CURRENT_STATUS_DETAILS = 'UPDATE_CURRENT_STATUS_DETAILS'
 
 export const updateStoreMasterList = (masterlist: Array<any>) => {
     return {
@@ -64,6 +66,13 @@ export const updateStatusDetails = (statusDetails: Array<any>) => {
     return {
         type: UPDATE_STATUS_DETAILS,
         payload: statusDetails,
+    };
+};
+
+export const updateCurrentStatusDetails = (currentStatusDetails: any) => {
+    return {
+        type: UPDATE_CURRENT_STATUS_DETAILS,
+        payload: currentStatusDetails,
     };
 };
 export const updateProduceList = (produceList: Array<ProduceModel>) => {
@@ -310,10 +319,19 @@ export const StatusDetails = (userData:any) => {
     }
 }
 
-export const CurrentStatusDetails = async() => {
-        const currentStatusResponse = await getCurrentStatusDetails();
-        //console.log("currentStatusResponse", currentStatusResponse[0])
-        const status = currentStatusResponse[0].event_description
-        return status;
-        
+export const CurrentStatusDetails = ( userData: any, pk: any) => {
+        return async(dispatch: any, getState: any) => {
+            const currentStatusResponse = await getCurrentStatusDetails(userData);
+            
+            if(!isEmpty(currentStatusResponse)) {
+                // for(const property in currentStatusResponse) {
+                //     console.log("pk:", currentStatusResponse[property].pk === pk);
+                //     if(currentStatusResponse[property].pk === pk) {
+                        const status = currentStatusResponse;
+                        console.log("status inside async", status);
+                        dispatch(updateCurrentStatusDetails(status));
+                    // }
+                // }
+            }
+        }
 }

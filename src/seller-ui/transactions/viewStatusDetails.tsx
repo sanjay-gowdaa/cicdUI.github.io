@@ -16,19 +16,17 @@ const StatusDetailsModel = (pk: any) => {
    // console.log("inside response page paymentdetails", buyerState)
     const {statusDetails } = sellerState; 
     var id = pk.data;
-    console.log("id", id)
     id= id.substring(12);
-    console.log("id", id)
     const data ={
         "transactionId": id,
-        "user": "buyer"
+        "user": "seller"
     }
 
 
-    useEffect(() => {
+   /*  useEffect(() => {
         //dispatch(StatusDetails(data))
         //console.log("inside response page paymentdetails", buyerState)
-   }, [statusDetails]);    
+   }, [statusDetails]);  */   
 
 
     return (

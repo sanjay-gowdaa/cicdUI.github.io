@@ -12,7 +12,8 @@ import {
     UPDATE_TRANSACTION_LIST,
     UPDATE_PAYMENT_DETAILS,
     UPDATE_PAYMENT_REDIRECTION_DETAILS,
-    UPDATE_STATUS_DETAILS
+    UPDATE_STATUS_DETAILS,
+    UPDATE_CURRENT_STATUS_DETAILS
 } from './actions';
 
 import {
@@ -33,7 +34,9 @@ const INITIAL_STATE: BuyerStateModel = {
     isMatchesFetching: false,
     paymentDetails: [],
     paymentRedirectionDetails: {},
-    statusDetails: []
+    statusDetails: [],
+    currentStatusDetails: ""
+
 };
 
 const reducer = (state = INITIAL_STATE, action: any) => {
@@ -85,6 +88,9 @@ const reducer = (state = INITIAL_STATE, action: any) => {
         case UPDATE_STATUS_DETAILS:
             return {...state, statusDetails: action.payload }
 
+        case UPDATE_CURRENT_STATUS_DETAILS:
+            return {...state, currentStatusDetails: action.payload }
+    
         default:
             return state;
     }

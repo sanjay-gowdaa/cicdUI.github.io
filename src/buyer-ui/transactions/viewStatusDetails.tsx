@@ -14,22 +14,21 @@ const StatusDetailsModel = (pk: any) => {
     const closeModal = () => setviewStatusDetails(!viewStatusDetails);
     const dispatch = useDispatch();
     const buyerState = useSelector((state: RootState) => state.buyer);
-    console.log("inside statusdetails", pk)
+    //console.log("inside statusdetails", pk)
     const {statusDetails } = buyerState; 
     var id = pk.data;
     console.log("id", id)
     id= id.substring(12);
-    console.log("id", id)
     const data ={
         "transactionId": id,
         "user": "buyer"
     }
 
 
-    useEffect(() => {
+   /*  useEffect(() => {
         //dispatch(StatusDetails(data))
         //console.log("inside response page paymentdetails", buyerState)
-   }, [buyerState]);    
+   }, [buyerState]); */    
 
 
     return (

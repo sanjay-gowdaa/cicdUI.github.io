@@ -1,16 +1,50 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button, Image, Typography, Tooltip } from 'antd';
 import RagiImg from '../../static/assets/ragi.png';
 import { parseIDfromHash, maskData } from '../../app-components/utils';
 import { TransactioModel, TransactionStatus} from '../../buyer-seller-commons/types';
 import PayButton from './payButton';
 import StatusDetailsModel from './viewStatusDetails';
+import { RootState } from '../../store/rootReducer';
+import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import {CurrentStatusDetails} from '../../store/buyerReducer/actions';
+import { isEmpty } from 'lodash';
 
 
 const { Text } = Typography;
 
-
+export const GetCurrentStatusDetails = (pk: any) =>{
+    const buyerState = useSelector((state: RootState) => state.buyer);
+    const status = buyerState.currentStatusDetails;
+    const [userStatus, setUserStatus] = useState();
+    const dispatch = useDispatch();
+    var id = pk.data;
+    id = id.substring(12);
+    const data = {
+        "transactionId" : id,
+        "user": "buyer"
+    }
+    
+    useEffect(() => {
+        dispatch(CurrentStatusDetails(data, pk.data));
+        console.log("______________________:", status ,":________________");
+        if(!isEmpty(status)){
+            console.log("inbside if", status);
+            for(const property in status) {
+                console.log("pk:", status[property].pk === pk.data);
+                if(status[property].pk === pk.data) {
+                    setUserStatus(status[property].event_description);
+                    console.log("status", userStatus);
+                }
+            }
+           }
+    }, [!isEmpty(status)]);
+   
+    return (
+        <p>{userStatus}</p>
+    );
+}
 
 export const transactionColumns = [
     {
@@ -103,14 +137,14 @@ export const transactionColumns = [
     // },
     {
         title: 'Status',
-        key: 'transactionStatusText',
-        dataIndex: 'transactionStatusText',
-        render: (transactionStatusText: string) => {
-            //const status = CurrentStatusDetails();
+        key: 'action',
+        render: (record: any) => {
+            const transactionId = record.pk;
             return (
-                <p>{transactionStatusText}</p>
+                    <GetCurrentStatusDetails data ={transactionId} />
+                        
             );
-        },
+        }, 
 
     },
 
@@ -130,10 +164,9 @@ export const transactionColumns = [
         title: '',
         key: 'action',
         render: (record: any) => {
-            const transactionId = record.pk;
         return(
             record?.gsi_status !== TransactionStatus.completed  && 
-            <PayButton tranDetails={record} />
+            <PayButton record={record} />
          )
 
         },

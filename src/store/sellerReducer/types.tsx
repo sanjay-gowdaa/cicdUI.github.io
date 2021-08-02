@@ -33,6 +33,10 @@ export interface StatusDetails{
     event_timestamp: string;
    
 }
+export interface CurrentStatusDetails{
+    transactionStatusText: string;
+   
+}
 
 export interface SellerStateModel {
     categories: Array<string>;
@@ -49,4 +53,5 @@ export interface SellerStateModel {
     apmcCropPrice: string;
     timeStamp: any;
     statusDetails:Array<StatusDetails>
+    currentStatusDetails: any;
 }
