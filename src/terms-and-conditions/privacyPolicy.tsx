@@ -18,7 +18,7 @@ const PrivacyPolicy = () => {
                 This Privacy Policy (“<b>Policy</b>”) sets forth the reasonable security practices and 
                 procedures adopted by SamparkBindhu and shall apply to the use and disclosure and sharing 
                 of sensitive personal data or information (“<b>Personal Identifiable Information</b>” or 
-                “<b>PII</b>”) provided by the registered users of the website <a href="https://vikasbandhu.in">
+                “<b>PII</b>”) provided by the registered users of the website <a href="https://vikasbandhu.in" target="_blank">
                     https://vikasbandhu.in</a>, 
                 which is owned and operated by SamparkBindhu. This policy is equally applicable on the 
                 visitors to the Website. The Policy  outlines the various measures undertaken by 

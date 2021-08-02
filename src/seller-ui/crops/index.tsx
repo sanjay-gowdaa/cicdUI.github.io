@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import { Table, Typography } from 'antd';
+import { Table, Typography, Tooltip, Button} from 'antd';
 import { useSelector, useDispatch } from 'react-redux';
-import { RootState } from '../../store/rootReducer';
+
 import { cropColumns } from './cropsTable.model';
 import './crops.scss';
+import { EditableCell, EditableRow } from './AddCrop/customTableComponents';
 import AddCropModal from './AddCrop';
+
+import { RootState } from '../../store/rootReducer';
 import { deleteSelectedCrop, getAllCropsList, sellerIntentToSell, updateCropData } from '../../store/sellerReducer/actions';
 import { CropApiModel, SellerStateModel } from '../../store/sellerReducer/types';
-import PrimaryBtn from '../../app-components/primaryBtn';
-import { EditableCell, EditableRow } from './AddCrop/customTableComponents';
 import { parseIDfromHash } from '../../app-components/utils';
 
 const { Title } = Typography;
@@ -19,11 +20,18 @@ const getCropId = (cropID: string) => {
 
 const CropsSection = () => {
     const sellerState: SellerStateModel = useSelector((state: RootState) => state.seller);
+    const loginState = useSelector((state: RootState) => state.loginUser);
     const [isEdit, setIsEdit] = useState(false);
     const [currentCropId, setCurrentCropId] = useState('');
     const [currentProduceRecord, setCurrentProduceRecord] = useState({} as CropApiModel);
     const [modalVisible, setModalVisible] = useState(false);
     const dispatch = useDispatch();
+    var isApproved;
+    if(loginState.kyc_flag === "approved")
+    {
+        isApproved = 'true' ;
+    }
+    
 
     useEffect(() => {
         dispatch(getAllCropsList());
@@ -56,14 +64,19 @@ const CropsSection = () => {
     return (
         <div className="crops-container" id="seller-ui-crops">
             <Title level={2}>My Produce</Title>
-            <PrimaryBtn
-                className="add-crop-btn vikas-btn-radius"
-                onClick={() => {
-                    setIsEdit(false);
-                    setModalVisible(true)
-                }}
-                content="Add Produce"
-            />
+            <Tooltip title="Please complete your KYC to add produce" >
+                <Button
+                    //className="add-crop-btn vikas-btn-radius"
+                    className={isApproved? "custom-primary-button add-crop-btn vikas-btn-radius": "add-crop-btn vikas-btn-radius custom-default-button "}
+                    onClick={() => {
+                        setIsEdit(false);
+                        setModalVisible(true);
+                    }}
+                    style={!isApproved ? { display: "none" } : {}}
+                    disabled={!isApproved }>Add Produce
+                    
+                </Button>
+            </Tooltip>
             <AddCropModal
                 setModalVisible={setModalVisible}
                 modalVisible={modalVisible}

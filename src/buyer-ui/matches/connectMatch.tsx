@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { CheckCircleFilled, ExclamationCircleFilled } from '@ant-design/icons';
 
 import TradeSumary from './tradeSummary';
+
 import PrimaryBtn from '../../app-components/primaryBtn';
 import InputOtp from '../../app-components/inputOtp';
 import { sendOTP } from '../../store/registrationReducer/actions';
@@ -25,13 +26,13 @@ const getTransactionDataStructure = (cropDetails: MatchRequirementModel) => {
         fulfillment_flag, produce, matched_quantity,
         seller_crop_id, seller_id, seller_quantity, seller_final_price, seller_price, location, seller_facilitation_cost, seller_transportation_cost, seller_price_per_quintal,
         buyer_id, buyer_crop_id, buyer_location, buyer_facilitation_cost, buyer_transportation_cost, buyer_final_price, buyer_actual_quantity, buyer_price_per_quintal} = cropDetails;
+
     const transactionEntry = {
         transaction_type: fulfillment_flag,
         matched_quantity,
         produce,
         grade: "111",
-        buyer: [
-          {
+        buyer: [{
             buyer_id,
             buyer_location,
             buyer_quantity: buyer_actual_quantity,
@@ -41,10 +42,8 @@ const getTransactionDataStructure = (cropDetails: MatchRequirementModel) => {
             buyer_facilitation_cost,
             buyer_crop_id,
             buyer_price_per_quintal
-          }
-        ],
-        seller: [
-          {
+        }],
+        seller: [{
             seller_id,
             seller_location: location,
             seller_quantity,
@@ -54,11 +53,11 @@ const getTransactionDataStructure = (cropDetails: MatchRequirementModel) => {
             seller_final_price,
             seller_crop_id,
             seller_price_per_quintal
-          }
-        ]
-      }
-      return transactionEntry;
-}
+        }]
+    };
+
+    return transactionEntry;
+};
 
 const displayMatchSuccessModal = () => {
    return Modal.success({
@@ -78,7 +77,7 @@ const displayMatchSuccessModal = () => {
         okText: 'Done',
         okButtonProps: {type: 'default'}
     });
-}
+};
 
 const displayConcurrentMatchError = () => {
     return Modal.error({
@@ -98,7 +97,7 @@ const displayConcurrentMatchError = () => {
         okText: 'Ok',
         okButtonProps: {type: 'text'}
     });
-}
+};
 
 const ConnectMatch = ({cropDetails}: {cropDetails: MatchRequirementModel}) => {
     const dispatch = useDispatch();
@@ -128,7 +127,7 @@ const ConnectMatch = ({cropDetails}: {cropDetails: MatchRequirementModel}) => {
                 dispatch(getMatchesForBuyerCrops(produceList));
             }
         })
-    }
+    };
 
     return (
         <>
