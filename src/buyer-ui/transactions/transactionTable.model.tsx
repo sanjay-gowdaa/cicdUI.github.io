@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Button, Image, Typography, Tooltip } from 'antd';
 import RagiImg from '../../static/assets/ragi.png';
 import { parseIDfromHash, maskData } from '../../app-components/utils';
-import { TransactioModel, TransactionStatus} from '../../buyer-seller-commons/types';
+import { TransactionStatus } from '../../buyer-seller-commons/types';
 import PayButton from './payButton';
 import StatusDetailsModel from './viewStatusDetails';
 import { RootState } from '../../store/rootReducer';
@@ -99,8 +99,8 @@ export const transactionColumns = [
     },
     {
         title: 'Total',
-        dataIndex: 'seller_final_price',
-        key: 'seller_final_price',
+        dataIndex: 'buyer_final_price',
+        key: 'buyer_final_price',
     },
     {
         title: 'Seller',
@@ -121,20 +121,8 @@ export const transactionColumns = [
     {
         title: 'Location',
         dataIndex: 'seller_location',
-        key: 'seller_location',
+        key: 'seller_location'
     },
-    // {
-    //     title: 'Additional',
-    //     key: 'termsAndConditions',
-    //     dataIndex: 'termsAndConditions',
-    //     render: () => {
-    //         return (
-    //             <>
-    //                 <Button type="link">Additional Info</Button>
-    //             </>
-    //         );
-    //     },
-    // },
     {
         title: 'Status',
         key: 'action',
@@ -145,7 +133,6 @@ export const transactionColumns = [
                         
             );
         }, 
-
     },
 
     {
@@ -168,6 +155,7 @@ export const transactionColumns = [
             record?.gsi_status !== TransactionStatus.completed  && 
             <PayButton record={record} />
          )
+
 
         },
     },

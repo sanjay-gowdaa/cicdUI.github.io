@@ -52,7 +52,7 @@ const Team = () => {
                         <Card className={customStyles.advisorsCard}>
                             <img src={SatishChandra} className="advisors-pic" />
                             <Title className="person-name" level={4}>{t('our_team.advisors.name.1')}</Title>
-                            <Title className="margin-zero" level={5}>{t('our_team.advisors.designation.1')}</Title>
+                            <Title className="margin-zero designation" level={5}>{t('our_team.advisors.designation.1')}</Title>
                             <Text className="description">{t('our_team.advisors.description.1')}</Text>
                         </Card>
                     </Col>
@@ -60,7 +60,7 @@ const Team = () => {
                         <Card className={`advisor-card-two ${customStyles.advisorsCard}`}>
                             <img src={Sachin} className="advisors-pic" />
                             <Title className="person-name" level={4}>{t('our_team.advisors.name.2')}</Title>
-                            <Title className="margin-zero" level={5}>{t('our_team.advisors.designation.2')}</Title>
+                            <Title className="margin-zero designation" level={5}>{t('our_team.advisors.designation.2')}</Title>
                             <Text className="description">{t('our_team.advisors.description.2')}</Text>
                         </Card>
                     </Col>
@@ -68,7 +68,7 @@ const Team = () => {
                         <Card className={`advisor-card-three ${customStyles.advisorsCard}`}>
                             <img src={CVKulkarni} className="advisors-pic" />
                             <Title className="person-name" level={4}>{t('our_team.advisors.name.3')}</Title>
-                            <Title className="margin-zero" level={5}>{t('our_team.advisors.designation.3')}</Title>
+                            <Title className="margin-zero designation" level={5}>{t('our_team.advisors.designation.3')}</Title>
                             <Text className="description">{t('our_team.advisors.description.3')}</Text>
                         </Card>
                     </Col>
