@@ -269,10 +269,10 @@ export const saveTimeStamp = (dispatch: any) => {
     dispatch(updateTimeStamp(timeStamp));
 }
 
-export const StatusDetails = () => {
+export const StatusDetails = (userData:any) => {
     //console.log("inside register seller");
     return async(dispatch: any, getState: any) => {
-        const regSellerResponse = await getStatusDetails();
+        const regSellerResponse = await getStatusDetails(userData);
         dispatch(updateStatusDetails(regSellerResponse));
         //console.log("Status Detail", regSellerResponse)
     }

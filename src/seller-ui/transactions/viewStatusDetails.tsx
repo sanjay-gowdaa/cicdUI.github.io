@@ -8,17 +8,25 @@ import {StatusDetails} from '../../store/sellerReducer/actions'
 const { Text, Title } = Typography;
 
 
-const StatusDetailsModel = (props: any) => {
+const StatusDetailsModel = (pk: any) => {
     const [viewStatusDetails, setviewStatusDetails] = useState(false);
     const closeModal = () => setviewStatusDetails(!viewStatusDetails);
     const dispatch = useDispatch();
     const sellerState = useSelector((state: RootState) => state.seller);
    // console.log("inside response page paymentdetails", buyerState)
     const {statusDetails } = sellerState; 
+    var id = pk.data;
+    console.log("id", id)
+    id= id.substring(12);
+    console.log("id", id)
+    const data ={
+        "transactionId": id,
+        "user": "buyer"
+    }
 
 
     useEffect(() => {
-        dispatch(StatusDetails())
+        //dispatch(StatusDetails(data))
         //console.log("inside response page paymentdetails", buyerState)
    }, [statusDetails]);    
 
@@ -29,7 +37,7 @@ const StatusDetailsModel = (props: any) => {
                         type="link"
                         onClick={() => {
                             setviewStatusDetails(true);
-                            //dispatch(StatusDetails(props))
+                            dispatch(StatusDetails(data))
                         }}
                     >
                         View Details

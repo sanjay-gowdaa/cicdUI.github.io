@@ -55,7 +55,7 @@ const PayButton = (tranDetails: any) => {
                     </Space>
                 </Col>
                 <Col span={12}>
-                    <form className="payment" method="POST" action="https://enzdzh0pw2.execute-api.ap-south-1.amazonaws.com/dev/paymentrequest">
+                    <form className="payment" method="POST" action="http://13.233.91.84:8082/paymentrequest">
                         <Space direction="vertical">
                         <Input className="custom-input" type="text" value={id} name="orderId" />
                         <Input type="text" value={ buyerState.transactionList.Pending[0].buyer_final_price} name="orderAmount"/> 

@@ -106,8 +106,9 @@ export const transactionColumns = [
         title: '',
         key: 'action',
         render: (text: any, record: any) => {
+            const transactionId = record.pk;
             return (
-                <StatusDetailsModel data ={record} />
+                <StatusDetailsModel data ={transactionId} />
                     
             );
         }

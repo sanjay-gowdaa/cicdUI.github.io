@@ -1,4 +1,5 @@
 import CryptoJS from 'crypto-js';
+import { identity } from 'lodash';
 import { MatchRequirementModel, TransactionAction, TransactionStatus } from '../../buyer-seller-commons/types';
 import { BuyerRejectMatch } from '../buyerReducer/types';
 import { LiveApmcRates, UpdatedLiveApmcRatesQuery } from '../genericTypes';
@@ -422,8 +423,9 @@ export const getPaymentList = (transactionData: any) => {
     }).then((response: any) => response.json())
 }
 
-export const getStatusDetails = () => {
-    const statusDetailsApi = `${BASE_URL}/${STAGE}/${TRANSACTION_API}/1c5447d6a837ea6c37bb13f88326cecac4815338/events/?user=buyer&transport=false&event=all`
+export const getStatusDetails = (userData:any) => {
+    //var id = userData.transactionId
+    const statusDetailsApi = `${BASE_URL}/${STAGE}/${TRANSACTION_API}/${userData.transactionId}/events/?user=${userData.user}&transport=false&event=all`
     return fetch(statusDetailsApi, {
         method: 'GET',
     }).then((response: any) => response.json())

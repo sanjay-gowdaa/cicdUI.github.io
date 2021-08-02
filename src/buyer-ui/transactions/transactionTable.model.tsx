@@ -106,7 +106,7 @@ export const transactionColumns = [
         key: 'transactionStatusText',
         dataIndex: 'transactionStatusText',
         render: (transactionStatusText: string) => {
-            const status = CurrentStatusDetails();
+            //const status = CurrentStatusDetails();
             return (
                 <p>{transactionStatusText}</p>
             );
@@ -118,8 +118,9 @@ export const transactionColumns = [
         title: '',
         key: 'action',
         render: (text: any, record: any) => {
+            const transactionId = record.pk;
             return (
-                <StatusDetailsModel data ={record} />
+                <StatusDetailsModel data ={transactionId} />
                     
             );
         }
@@ -129,7 +130,7 @@ export const transactionColumns = [
         title: '',
         key: 'action',
         render: (record: any) => {
-            
+            const transactionId = record.pk;
         return(
             record?.gsi_status !== TransactionStatus.completed  && 
             <PayButton tranDetails={record} />
