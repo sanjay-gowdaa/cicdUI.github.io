@@ -411,10 +411,8 @@ export const getRedirectionToken = (userKey: string) => {
 };
 
 export const getPaymentList = (transactionData: any) => {
-    //console.log("transaction data", transactionData)
-    const transactionId = transactionData[0].transactionId
-    const paymentNo = transactionData[0].paymentNo
-    //console.log(transactionId, paymentNo)
+    const transactionId = transactionData[0].transactionId;
+    const paymentNo = transactionData[0].paymentNo;
     const paymentDetailsApi = `${BASE_URL}/${STAGE}/${GET_PAYMENT_DETAILS}?paymentNo=${paymentNo}&transactionId=${transactionId}`;
     return fetch(paymentDetailsApi, {
         method: 'GET',
@@ -422,17 +420,14 @@ export const getPaymentList = (transactionData: any) => {
 };
 
 export const getStatusDetails = (userData:any) => {
-    //var id = userData.transactionId
-    //console.log("inside getstatus", userData.transactionId)
-    const statusDetailsApi = `${BASE_URL}/${STAGE}/${TRANSACTION_API}/${userData.transactionId}/events/?user=${userData.user}&transport=false&event=both`
+    const statusDetailsApi = `${BASE_URL}/${STAGE}/${TRANSACTION_API}/${userData.transactionId}/events/?user=${userData.user}&transport=false&event=all`;
     return fetch(statusDetailsApi, {
         method: 'GET',
     }).then((response: any) => response.json())
 };
 
 export const getCurrentStatusDetails = (userData: any) => {
-    console.log("inside getstatus", userData.transactionId)
-    const currentStatusDetailsApi = `${BASE_URL}/${STAGE}/${TRANSACTION_API}/${userData.transactionId}/events/?user=${userData.user}&transport=false&event=current`
+    const currentStatusDetailsApi = `${BASE_URL}/${STAGE}/${TRANSACTION_API}/${userData.transactionId}/events/?user=${userData.user}&transport=false&event=current`;
     return fetch(currentStatusDetailsApi, {
         method: 'GET',
     }).then((response: any) => response.json())
