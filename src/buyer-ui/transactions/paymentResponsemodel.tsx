@@ -8,28 +8,24 @@ import { getPaymentDetails } from '../../store/buyerReducer/actions';
 
 const { Text, Title } = Typography;
 
-const PaymentResponseModel = (transDetails: any) => {
+const PaymentResponseModel = () => {
     const [viewPaymenResponsetDetails, setPaymentResponseDetails] = useState(true);
     const closeModal = () => setPaymentResponseDetails(!viewPaymenResponsetDetails);
     const dispatch = useDispatch();
     const buyerState = useSelector((state: RootState) => state.buyer);
-    const {paymentDetails } = buyerState; 
-    
-    //const {orderId, orderAmount, paymentMode, referenceId, txMsg, txStatus, txTime} =   paymentDetails;   
-  
-  useEffect(() => {
-         dispatch(getPaymentDetails())
-         console.log("inside response page paymentdetails", buyerState)
-    }, [paymentDetails]);  
+    const { paymentDetails } = buyerState; 
+
+    useEffect(() => {
+        dispatch(getPaymentDetails());
+    }, []);
 
     return (
-        <>
-             <Modal
-                    visible={viewPaymenResponsetDetails}
-                    title={<Title level={3}>Payment Response Details</Title>}
-                    onCancel={closeModal}
-                    footer = {null}
-            >
+        <Modal
+            visible={viewPaymenResponsetDetails}
+            title={<Title level={3}>Payment Response Details</Title>}
+            onCancel={closeModal}
+            footer = {null}
+        >
             <Row>
                 <Col sm={24} md={12}>
                     OrderID:
@@ -87,13 +83,10 @@ const PaymentResponseModel = (transDetails: any) => {
                 </Col>
             </Row>
             <Row>
-                <DefaultBtn onClick={closeModal} content="ok" />
+                <DefaultBtn onClick={closeModal} content="Ok" />
             </Row>
-            </Modal> 
-        </>
-           
-        );
-     
+        </Modal>   
+    ); 
 };
 
 export default PaymentResponseModel;

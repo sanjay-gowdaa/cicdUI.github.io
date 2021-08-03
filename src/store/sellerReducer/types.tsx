@@ -28,6 +28,15 @@ export interface CropModel {
     termsAndConditions?: string;
     apmcRateChange: any;
 }
+export interface StatusDetails{
+    event_description: string;
+    event_timestamp: string;
+   
+}
+export interface CurrentStatusDetails{
+    transactionStatusText: string;
+   
+}
 
 export interface SellerStateModel {
     categories: Array<string>;
@@ -43,4 +52,6 @@ export interface SellerStateModel {
     reviewsList: Array<ReviewRating>;
     apmcCropPrice: string;
     timeStamp: any;
+    statusDetails:Array<StatusDetails>
+    currentStatusDetails: any;
 }

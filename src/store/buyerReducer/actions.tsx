@@ -15,12 +15,15 @@ import {
     createTransaction,
     fetchTransactionList,
     sellerConnectStatus,
-    getPaymentList
+    getPaymentList,
+    getStatusDetails,
+    getCurrentStatusDetails
 } from "../api";
 import { UserStateModel } from "../loginReducer/types";
 import { BuyerStateModel } from "../buyerReducer/types";
 import { RootState } from "../rootReducer";
 import { BuyerRejectMatch, MasterListApiFormat, ProduceModel } from "./types";
+import { isEmpty } from "lodash";
 
 export const UPDATE_MASTER_LIST = 'UPDATE_MASTER_LIST';
 export const GET_MASTER_LIST = 'GET_MASTER_LIST';
@@ -35,6 +38,8 @@ export const UPDATE_TRANSACTION_LIST = 'UPDATE_TRANSACTION_LIST';
 export const SET_MATCHES_LOADER = 'SET_MATCHES_LOADER';
 export const UPDATE_PAYMENT_REDIRECTION_DETAILS = 'UPDATE_PAYMENT_REDIRECTION_DETAILS';
 export const UPDATE_PAYMENT_DETAILS = 'UPDATE_PAYMENT_DETAILS'
+export const UPDATE_STATUS_DETAILS = 'UPDATE_STATUS_DETAILS'
+export const UPDATE_CURRENT_STATUS_DETAILS = 'UPDATE_CURRENT_STATUS_DETAILS'
 
 export const updateStoreMasterList = (masterlist: Array<any>) => {
     return {
@@ -54,6 +59,20 @@ export const updatePaymentDetails = (paymentDetails: Array<any>) => {
     return {
         type: UPDATE_PAYMENT_DETAILS,
         payload: paymentDetails,
+    };
+};
+
+export const updateStatusDetails = (statusDetails: Array<any>) => {
+    return {
+        type: UPDATE_STATUS_DETAILS,
+        payload: statusDetails,
+    };
+};
+
+export const updateCurrentStatusDetails = (currentStatusDetails: any) => {
+    return {
+        type: UPDATE_CURRENT_STATUS_DETAILS,
+        payload: currentStatusDetails,
     };
 };
 export const updateProduceList = (produceList: Array<ProduceModel>) => {
@@ -290,3 +309,24 @@ export const getPaymentDetails = () => {
    
 } 
 
+export const StatusDetails = (userData:any) => {
+    //console.log("inside register seller");
+    return async(dispatch: any, getState: any) => {
+        const statusResponse = await getStatusDetails(userData);
+        console.log("statusResponse", statusResponse)
+        dispatch(updateStatusDetails(statusResponse));
+        //console.log("Status Detail", regSellerResponse)
+    }
+}
+
+export const CurrentStatusDetails = ( userData: any) => {
+        return async(dispatch: any, getState: any) => {
+            const currentStatusResponse = await getCurrentStatusDetails(userData);
+            
+            if(!isEmpty(currentStatusResponse)) {
+                const status = currentStatusResponse;
+                //console.log("status inside async", status);
+                dispatch(updateCurrentStatusDetails(status));
+            }
+        }
+}

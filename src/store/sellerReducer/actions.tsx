@@ -2,7 +2,7 @@ import { sortBy, isEmpty, isNull } from "lodash";
 import { getTimeStamp } from "../../app-components/utils";
 import { MatchRequirementModel, TransactioModel, TransactionAction, TransactionStatus } from "../../buyer-seller-commons/types";
 import { getSubCategoryList, createCrop, getAllCrops, getCropCategoryList, getCropList, getLiveApmcRateUpdated,
-    deleteProduce, patchCrop, intentToSell, fetchSellerMatches, postSellerTransactionAction, fetchTransactionList } from "../api";
+    deleteProduce, patchCrop, intentToSell, fetchSellerMatches, postSellerTransactionAction, fetchTransactionList, getStatusDetails,getCurrentStatusDetails } from "../api";
 import { ApmcApiResponseBase, LiveApmcRates, UpdatedLiveApmcRatesQuery } from "../genericTypes";
 import { UserStateModel } from "../loginReducer/types";
 import { RootState } from "../rootReducer";
@@ -18,6 +18,22 @@ export const UPDATE_APMC_DATA_TO_CROPS = 'UPDATE_APMC_DATA_TO_CROPS';
 export const UPDATE_TIME_STAMP = 'UPDATE_TIME_STAMP';
 export const UPDATE_SELLER_MATCHES = 'UPDATE_SELLER_MATCHES';
 export const UPDATE_SELLER_TRANSACTION_LIST = 'UPDATE_SELLER_TRANSACTION_LIST';
+export const UPDATE_STATUS_DETAILS = 'UPDATE_STATUS_DETAILS'
+export const UPDATE_CURRENT_STATUS_DETAILS = 'UPDATE_CURRENT_STATUS_DETAILS'
+
+export const updateStatusDetails = (statusDetails: Array<any>) => {
+    return {
+        type: UPDATE_STATUS_DETAILS,
+        payload: statusDetails,
+    };
+};
+
+export const updateCurrentStatusDetails = (currentStatusDetails: any) => {
+    return {
+        type: UPDATE_CURRENT_STATUS_DETAILS,
+        payload: currentStatusDetails,
+    };
+};
 
 export const updateAllCategories = (categories: Array<string>) => {
     return {
@@ -259,4 +275,26 @@ export const getSellerTransactionList = (transactionStatus: TransactionStatus) =
 export const saveTimeStamp = (dispatch: any) => {
     const timeStamp = getTimeStamp();
     dispatch(updateTimeStamp(timeStamp));
+}
+
+export const StatusDetails = (userData:any) => {
+    //console.log("inside register seller");
+    return async(dispatch: any, getState: any) => {
+        const regSellerResponse = await getStatusDetails(userData);
+        dispatch(updateStatusDetails(regSellerResponse));
+        //console.log("Status Detail", regSellerResponse)
+    }
+}
+
+
+export const CurrentStatusDetails = ( userData: any) => {
+    return async(dispatch: any, getState: any) => {
+        const currentStatusResponse = await getCurrentStatusDetails(userData);
+        
+        if(!isEmpty(currentStatusResponse)) {
+            const status = currentStatusResponse;
+            console.log("status inside async", status);
+            dispatch(updateCurrentStatusDetails(status));
+        }
+    }
 }

@@ -1,8 +1,43 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button, Typography, Tooltip } from 'antd';
 import { TransactioModel } from '../../buyer-seller-commons/types';
 import { parseIDfromHash, maskData } from '../../app-components/utils';
+import StatusDetailsModel from './viewStatusDetails';
+import { RootState } from '../../store/rootReducer';
+import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import {CurrentStatusDetails} from '../../store/buyerReducer/actions';
+import { isEmpty } from 'lodash';
 const { Title, Text } = Typography;
+
+export const GetCurrentStatusDetails = (pk: any) =>{
+    const buyerState = useSelector((state: RootState) => state.buyer);
+    const status = buyerState.currentStatusDetails;
+    const [userStatus, setUserStatus] = useState();
+    const dispatch = useDispatch();
+    var id = pk.data;
+    id = id.substring(12);
+    const data = {
+        "transactionId" : id,
+        "user": "seller"
+    }
+    
+    useEffect(() => {
+        dispatch(CurrentStatusDetails(data));
+        if(!isEmpty(status)){
+            for(const property in status) {
+                //console.log("pk:", status[property].pk === pk.data);
+                if(status[property].pk === pk.data) {
+                    setUserStatus(status[property].event_description);
+                }
+            }
+           }
+    }, [!isEmpty(status)]);
+   
+    return (
+        <p>{userStatus}</p>
+    );
+}
 
 export const transactionColumns = [
     {
@@ -97,7 +132,25 @@ export const transactionColumns = [
     },
     {
         title: 'Status',
-        key: 'transactionStatusText',
-        dataIndex: 'transactionStatusText',
+        key: 'action',
+        render: (record: any) => {
+            const transactionId = record.pk;
+            return (
+                    <GetCurrentStatusDetails data ={transactionId} />
+                        
+            );
+        }, 
+    },
+
+    {
+        title: '',
+        key: 'action',
+        render: (text: any, record: any) => {
+            const transactionId = record.pk;
+            return (
+                <StatusDetailsModel data ={transactionId} />
+                    
+            );
+        }
     },
 ];

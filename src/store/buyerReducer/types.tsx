@@ -54,6 +54,16 @@ export interface PaymentRedirectionDetails{
     paymentNo: string;
 }
 
+export interface StatusDetails{
+    event_description: string;
+    event_timestamp: string;
+   
+}
+export interface CurrentStatusDetails{
+    transactionStatusText: string;
+   
+}
+
 export interface BuyerStateModel {
     masterProduceList: Array<MasterListApiFormat>;
     produceList: Array<ProduceModel>;
@@ -71,6 +81,9 @@ export interface BuyerStateModel {
     isMatchesFetching: boolean;
     paymentDetails:Array<PaymentDetails>;
     paymentRedirectionDetails: any;
+    statusDetails:Array<StatusDetails>;
+    currentStatusDetails: any;
+
 }
 
 export interface BuyerRejectMatch {

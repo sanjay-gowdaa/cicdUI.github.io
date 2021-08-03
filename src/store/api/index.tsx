@@ -1,4 +1,5 @@
 import CryptoJS from 'crypto-js';
+import { identity } from 'lodash';
 import { MatchRequirementModel, TransactionAction, TransactionStatus } from '../../buyer-seller-commons/types';
 import { BuyerRejectMatch } from '../buyerReducer/types';
 import { LiveApmcRates, UpdatedLiveApmcRatesQuery } from '../genericTypes';
@@ -418,6 +419,23 @@ export const getPaymentList = (transactionData: any) => {
     //console.log(transactionId, paymentNo)
     const paymentDetailsApi = `${BASE_URL}/${STAGE}/${GET_PAYMENT_DETAILS}?paymentNo=${paymentNo}&transactionId=${transactionId}`;
     return fetch(paymentDetailsApi, {
+        method: 'GET',
+    }).then((response: any) => response.json())
+}
+
+export const getStatusDetails = (userData:any) => {
+    //var id = userData.transactionId
+    //console.log("inside getstatus", userData.transactionId)
+    const statusDetailsApi = `${BASE_URL}/${STAGE}/${TRANSACTION_API}/${userData.transactionId}/events/?user=${userData.user}&transport=false&event=both`
+    return fetch(statusDetailsApi, {
+        method: 'GET',
+    }).then((response: any) => response.json())
+}
+
+export const getCurrentStatusDetails = (userData: any) => {
+    console.log("inside getstatus", userData.transactionId)
+    const currentStatusDetailsApi = `${BASE_URL}/${STAGE}/${TRANSACTION_API}/${userData.transactionId}/events/?user=${userData.user}&transport=false&event=current`
+    return fetch(currentStatusDetailsApi, {
         method: 'GET',
     }).then((response: any) => response.json())
 }
