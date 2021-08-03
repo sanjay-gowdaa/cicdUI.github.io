@@ -37,9 +37,9 @@ export const UPDATE_MATCHES_LIST_FOR_BUYER_CROP = 'UPDATE_MATCHES_LIST_FOR_BUYER
 export const UPDATE_TRANSACTION_LIST = 'UPDATE_TRANSACTION_LIST';
 export const SET_MATCHES_LOADER = 'SET_MATCHES_LOADER';
 export const UPDATE_PAYMENT_REDIRECTION_DETAILS = 'UPDATE_PAYMENT_REDIRECTION_DETAILS';
-export const UPDATE_PAYMENT_DETAILS = 'UPDATE_PAYMENT_DETAILS'
-export const UPDATE_STATUS_DETAILS = 'UPDATE_STATUS_DETAILS'
-export const UPDATE_CURRENT_STATUS_DETAILS = 'UPDATE_CURRENT_STATUS_DETAILS'
+export const UPDATE_PAYMENT_DETAILS = 'UPDATE_PAYMENT_DETAILS';
+export const UPDATE_STATUS_DETAILS = 'UPDATE_STATUS_DETAILS';
+export const UPDATE_CURRENT_STATUS_DETAILS = 'UPDATE_CURRENT_STATUS_DETAILS';
 
 export const updateStoreMasterList = (masterlist: Array<any>) => {
     return {
@@ -75,61 +75,63 @@ export const updateCurrentStatusDetails = (currentStatusDetails: any) => {
         payload: currentStatusDetails,
     };
 };
+
 export const updateProduceList = (produceList: Array<ProduceModel>) => {
     return {
         type: UPDATE_PRODUCE_LIST,
         payload: produceList
     }
-}
+};
 
 export const updateMasterCropNamesList = (masterCropNames: Array<string>) => {
     return {
         type: UPDATE_MASTER_CROP_NAMES_LIST,
         payload: masterCropNames
     }
-}
+};
 
 export const updateCropsList = (cropsList: Array<string>) => {
     return {
         type: UPDATE_CROPS_LIST,
         payload: cropsList
     }
-}
+};
 
 export const updateVarietyList = (varietyList: Array<string>) => {
     return {
         type: UPDATE_VARIETY_LIST,
         payload: varietyList
     }
-}
+};
 
 export const updateTimeStamp = (timeStamp: any) => {
     return {
         type: UPDATE_TIME_STAMP,
         payload: timeStamp
     }
-}
+};
 
 export const updateMatchesList = (matchesList: Array<any>) => {
     return {
         type: UPDATE_MATCHES_LIST,
         payload: matchesList
     }
-}
+};
 
 export const setMatchesLoadingFlag = (loadingFlag: boolean) => {
     return {
         type: SET_MATCHES_LOADER,
         payload: loadingFlag
     }
-}
+};
+
 /* Not yet in use */
 export const updateMatchesListForID = (buyerCropId: string, matchesList: Array<any>) => {
     return {
         type: UPDATE_MATCHES_LIST_FOR_BUYER_CROP,
         payload: {buyerCropId, newMatchesList: matchesList}
     }
-}
+};
 /* Not yet in use end */
 
 export const updateTransactionList = (transactionType: TransactionStatus, transactionListData: Array<any>) => {
@@ -137,7 +139,7 @@ export const updateTransactionList = (transactionType: TransactionStatus, transa
         type: UPDATE_TRANSACTION_LIST,
         payload: {transactionType, transactionListData}
     }
-}
+};
 
 export const getMasterProduceList = () => {
     return async(dispatch: any, getState: any) => {
@@ -149,7 +151,7 @@ export const getMasterProduceList = () => {
         const masterList = masterProduceList || [];
         dispatch(updateStoreMasterList(masterList));
     }
-}
+};
 
 export const updateMasterListData = (masterlist: Array<MasterListApiFormat>) => {
     return async(dispatch: any, getState: any) => {
@@ -160,7 +162,7 @@ export const updateMasterListData = (masterlist: Array<MasterListApiFormat>) => 
         // const updateMasterListResponse = await updateMasterList(masterlist, '7892329983');
         dispatch(getMasterProduceList());
     }
-}
+};
 
 export const addNewProduce = (/*produceFormData: ProduceModel*/ produceFormData: any) => {
     return async(dispatch: any, getState: any) => {
@@ -172,7 +174,7 @@ export const addNewProduce = (/*produceFormData: ProduceModel*/ produceFormData:
         // console.log('addProduceResponse', addProduceResponse);
         dispatch(getProduceList())
     }
-}
+};
 
 export const editProduce = (/*produceFormData: ProduceModel*/ produceFormData: any) => {
     return async(dispatch: any, getState: any) => {
@@ -181,19 +183,20 @@ export const editProduce = (/*produceFormData: ProduceModel*/ produceFormData: a
         // const username = '7892329983'
         const {username, district, zip} = loginUser
         const addProduceResponse = await patchProduce({...produceFormData, district, zip}, username);
-        // console.log('addProduceResponse', addProduceResponse);
+        console.log('addProduceResponse', addProduceResponse);
         dispatch(getProduceList())
     }
-}
+};
 
 export const deleteSelectedProduce = (produceID: string) => {
     return async(dispatch: any, getState: any) => {
         const {loginUser}: {loginUser: UserStateModel} = getState() as RootState;
         const {username, district, is_buyer} = loginUser;
         const deletedResponse = await deleteProduce(username, produceID, is_buyer);
+        console.log('deletedResponse', deletedResponse);
         dispatch(getProduceList());
     }
-}
+};
 
 export const getProduceList = () => {
     return async(dispatch: any, getState: any) => {
@@ -210,7 +213,7 @@ export const getProduceList = () => {
             dispatch(getMatchesForBuyerCrops(Items as Array<ProduceModel>));
         }
     }
-}
+};
 
 export const fetchAllProduce = () => {
     return async(dispatch: any, getState: any) => {
@@ -218,7 +221,7 @@ export const fetchAllProduce = () => {
         const {categories} = allProduceList || []
         dispatch(updateMasterCropNamesList(categories))
     }
-}
+};
 
 export const fetchAllCrops = (category: string) => {
     return async(dispatch: any, getState: any) => {
@@ -226,7 +229,7 @@ export const fetchAllCrops = (category: string) => {
         const {crops} = allCropsList || []
         dispatch(updateCropsList(crops));
     }
-}
+};
 
 export const fetchAllVariety = (crop: string) => {
     return async(dispatch: any, getState: any) => {
@@ -234,7 +237,7 @@ export const fetchAllVariety = (crop: string) => {
         const { crops: {Items: variety}} = allVarietyList || {variety: []}
         dispatch(updateVarietyList(variety));    
     }
-}
+};
 
 export const getMatchesForBuyerCrops = (cropsList: Array<ProduceModel>) => {
     const allCropListIds: Array<string> = cropsList.map((curCrop: ProduceModel) => curCrop.sk || '');
@@ -252,7 +255,7 @@ export const getMatchesForBuyerCrops = (cropsList: Array<ProduceModel>) => {
         dispatch(updateMatchesList(matchesList));
         dispatch(setMatchesLoadingFlag(false));
     }
-}
+};
 
 export const rejectMatches = (rejectData: BuyerRejectMatch) => {
     return async(dispatch: any, getState: any) => {
@@ -261,7 +264,7 @@ export const rejectMatches = (rejectData: BuyerRejectMatch) => {
         /* Logic can be changed to specific crop if required */
         dispatch(getProduceList());
     }
-}
+};
 
 export const connectMatch = (transactionEntry: any) => {
     return async(dispatch: any, getState: any) => {
@@ -270,7 +273,7 @@ export const connectMatch = (transactionEntry: any) => {
         dispatch(getTransactionList(TransactionStatus.pending));
         return Promise.resolve('Successs');
     }
-}
+};
 
 export const checkSellerConnectedStatus = (sellerId: string, sellerCropId: string) => {
     return async(dispatch: any, getState: any) => {
@@ -280,7 +283,7 @@ export const checkSellerConnectedStatus = (sellerId: string, sellerCropId: strin
         });
         return Promise.resolve(connectedStatus);
     }
-}
+};
 
 export const getTransactionList = (transactionStatus: TransactionStatus) => {
     return async(dispatch: any, getState: any) => {
@@ -289,44 +292,36 @@ export const getTransactionList = (transactionStatus: TransactionStatus) => {
         const transactionListResponse = await fetchTransactionList(username, transactionStatus);
         dispatch(updateTransactionList(transactionStatus, transactionListResponse))
     }
-}
+};
 
 export const saveTimeStamp = (dispatch: any) => {
     const timeStamp = getTimeStamp();
     dispatch(updateTimeStamp(timeStamp));
-}
-
+};
 
 export const getPaymentDetails = () => {
     return async(dispatch: any, getState: any) => {
         const {buyer}: {buyer: BuyerStateModel} = getState() as RootState;
         const paymentRedirectionDetails = buyer.paymentRedirectionDetails;
         const paymentDetails = await getPaymentList(paymentRedirectionDetails);
-        //console.log("paymentDetails", paymentDetails)
-        dispatch(updatePaymentDetails(paymentDetails));
-        
+        dispatch(updatePaymentDetails(paymentDetails));        
     }
-   
-} 
+};
 
 export const StatusDetails = (userData:any) => {
-    //console.log("inside register seller");
     return async(dispatch: any, getState: any) => {
         const statusResponse = await getStatusDetails(userData);
-        console.log("statusResponse", statusResponse)
         dispatch(updateStatusDetails(statusResponse));
-        //console.log("Status Detail", regSellerResponse)
     }
-}
+};
 
 export const CurrentStatusDetails = ( userData: any) => {
-        return async(dispatch: any, getState: any) => {
-            const currentStatusResponse = await getCurrentStatusDetails(userData);
-            
-            if(!isEmpty(currentStatusResponse)) {
-                const status = currentStatusResponse;
-                //console.log("status inside async", status);
-                dispatch(updateCurrentStatusDetails(status));
-            }
+    return async(dispatch: any, getState: any) => {
+        const currentStatusResponse = await getCurrentStatusDetails(userData);
+    
+        if(!isEmpty(currentStatusResponse)) {
+            const status = currentStatusResponse;
+            dispatch(updateCurrentStatusDetails(status));
         }
-}
+    }
+};

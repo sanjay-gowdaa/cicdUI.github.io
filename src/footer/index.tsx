@@ -25,7 +25,7 @@ const Footer = () => {
             </div>
             <div>
                 <p className='powered-by-text'>Powered by</p>
-                <img className="image" src={footerImg} />
+                <img className="image" src={footerImg} alt="footer" />
             </div>
         </div>
     );
