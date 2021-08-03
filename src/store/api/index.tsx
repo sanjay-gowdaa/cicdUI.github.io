@@ -426,7 +426,7 @@ export const getPaymentList = (transactionData: any) => {
 export const getStatusDetails = (userData:any) => {
     //var id = userData.transactionId
     //console.log("inside getstatus", userData.transactionId)
-    const statusDetailsApi = `${BASE_URL}/${STAGE}/${TRANSACTION_API}/${userData.transactionId}/events/?user=${userData.user}&transport=false&event=both`
+    const statusDetailsApi = `${BASE_URL}/${STAGE}/${TRANSACTION_API}/${userData.transactionId}/events/?user=${userData.user}&transport=false&event=all`
     return fetch(statusDetailsApi, {
         method: 'GET',
     }).then((response: any) => response.json())
