@@ -10,7 +10,7 @@ import { englishStyling, isEnglish, kannadaStyling } from '../static/translation
 const { Paragraph, Title } = Typography;
 
 const User = () => {
-    const [ t,i18n ] = useTranslation('common');
+    const { t } = useTranslation('common');
     const customStyles = isEnglish(t("language")) ? englishStyling : kannadaStyling;
 
     return (
@@ -48,7 +48,7 @@ const User = () => {
                     </Card>
                 </Col>
             </Row>
-            <img className="transport-image" src={Transport} />
+            <img className="transport-image" src={Transport} alt="transport" />
         </div>
     );
 };

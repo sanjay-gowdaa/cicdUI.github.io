@@ -14,7 +14,7 @@ const { Link, Text, Title } = Typography;
 
 const Aim = () => { 
     const [viewVideo, setVideo] = useState(false);
-    const [ t,i18n ] = useTranslation('common');
+    const { t } = useTranslation('common');
     const customStyles = isEnglish(t("language")) ? englishStyling : kannadaStyling;
 
     return (
@@ -28,6 +28,7 @@ const Aim = () => {
                 footer={null}
             >
                 <iframe
+                    title="about-us-video"
                     width="95%"
                     height="100%"
                     src="https://www.youtube.com/embed/p4CZAGgJ-wM?playlist=p4CZAGgJ-wM&loop=1&autoplay=1&mute=1"
@@ -35,7 +36,7 @@ const Aim = () => {
                 />
             </Modal>
             <Title className={`col-green ${customStyles.aimTitle}`}>{t('aim_page.title')}</Title>
-            <img className="handshake-image" src={Handshake} alt="handshake-image" />
+            <img className="handshake-image" src={Handshake} alt="handshake" />
             <div className="aim-card-view">
                 <Row className="aim-card-row">
                     <Col span={8} className="card-col">

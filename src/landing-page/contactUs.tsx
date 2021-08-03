@@ -9,7 +9,7 @@ const { Text, Title } = Typography;
 const { TextArea } = Input;
 
 const ContactUs = () => {
-    const [ t,i18n ] = useTranslation('common');
+    const { t } = useTranslation('common');
 
     return (
         <div id="contactUs">
