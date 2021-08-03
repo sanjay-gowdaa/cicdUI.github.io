@@ -1,5 +1,4 @@
 import CryptoJS from 'crypto-js';
-import { useSelector } from 'react-redux';
 
 import { UserDetailsModel } from './types';
 
@@ -15,10 +14,8 @@ import {
     postSellerDetails,
     getRedirectionToken,
     fetchRedirectedUserDetails
-    
 } from '../api';
 import { handleResponse } from '../utils';
-import { RootState } from "../rootReducer";
 
 import { converBase64toBlob } from '../../app-components/utils';
 
@@ -40,7 +37,7 @@ export const updateIsRedirected = (isRedirected: boolean) => {
         type: SET_IS_REDIRECTED,
         payload: isRedirected
     }
-}
+};
 
 export const updateUserDetails = (userDetails: Partial<UserDetailsModel>) => {
     return {
@@ -54,14 +51,14 @@ export const setLoginError = (errorMsg: string) => {
         type: SET_LOGIN_ERROR,
         payload: errorMsg
     }
-}
+};
 
 export const setLoginSuccess = () => {
     return {
         type: SET_LOGIN_SUCCESS,
         payload: true
     }
-}
+};
 
 export const setKycUpdateMsg = (errorMsg: string) => {
     return {
@@ -74,11 +71,9 @@ export const getUserCompleteDetails = () => {
     return async (dispatch: any, getState: any) => {
         const userCompleteDetails = await fetchUserCompleteDetails();
         const { result } = userCompleteDetails;
-        console.log("userCompleteDetails", userCompleteDetails);
         dispatch(updateUserDetails(result));
     }
 };
-
 
 export const  getConfigurations = () => {
     return async (dispatch: any, getState: any) => {
@@ -112,11 +107,10 @@ export const saveKyc = (userFormData: any) => {
         console.log("status", status);
         console.log("message", message);
     }
-}
+};
 
 export const getUserDetails = (accessToken: string) => {
     return async (dispatch: any, getState: any) => {
-        //console.log("inside fun2", accessToken)
         const userDetailsData = await fetchUserDetails(accessToken);
         const {result} = userDetailsData || {result: {}}
         // const {status, data} = response || {status: '', data: ''}
@@ -127,16 +121,16 @@ export const getUserDetails = (accessToken: string) => {
         dispatch(updateUserDetails(result))
         dispatch(setLoginSuccess())
     }
-}
+};
+
 export const getRedirectedUserDetails = (accessToken: string) => {
     return async (dispatch: any, getState: any) => {
-        //console.log("inside fun2", accessToken)
         const userDetailsData = await fetchRedirectedUserDetails(accessToken);
         const {result} = userDetailsData || {result: {}}
         dispatch(updateUserDetails(result))
         dispatch(setLoginSuccess())
     }
-}
+};
 
 export const getAccessTokenAndFetchUserDetails = (userCode: string) => {
     return async (dispatch: any, getState: any) => {
@@ -165,32 +159,28 @@ export const getRedirectionTokenAndFetchUserDetails = (userKey: string) => {
         if(accessToken){
             const sholudEncrypt = process.env.REACT_APP_ENV === 'prod';
             (window as any).userToken = sholudEncrypt ? CryptoJS.AES.encrypt(JSON.stringify(accessToken), TOKEN_GRANT).toString() : accessToken;
-            //console.log("inside fun1", accessToken)
-            dispatch(getRedirectedUserDetails(accessToken))
+            dispatch(getRedirectedUserDetails(accessToken));
         }
         else{
-            dispatch(setLoginError("invalid token"))
+            dispatch(setLoginError("invalid token"));
         }
     }
 };
 
 export const addBeneficiary = async (userData: any) => {
-    //console.log("inside add beneficiary");
     const beneficiaryResponse = await postAddBeneficiarydata(userData);
     const { response } = beneficiaryResponse;
-           
-}
+    console.log("response", response);
+};
 
 export const registerBuyerAtDestiny = async (userData: any) => {
-    //console.log("inside register buyer");
     const regBuyerResponse = await postBuyerDetails(userData);
     const { response } = regBuyerResponse;
-          
-}
+    console.log("response", response);
+};
 
 export const registerSellerAtDestiny = async (userData: any) => {
-    //console.log("inside register seller");
     const regSellerResponse = await postSellerDetails(userData);
     const { response } = regSellerResponse;
-        
-}
+    console.log("response", response);
+};

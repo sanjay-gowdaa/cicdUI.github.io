@@ -10,7 +10,7 @@ import { englishStyling, isEnglish, kannadaStyling } from '../static/translation
 const { Paragraph, Title } = Typography;
 
 const AboutUs = () => {
-    const [ t,i18n ] = useTranslation('common');
+    const { t } = useTranslation('common');
     const customStyles = isEnglish(t("language")) ? englishStyling : kannadaStyling;
 
     return (

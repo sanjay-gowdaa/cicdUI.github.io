@@ -6,11 +6,12 @@ import { Col, Input, Row, Space, Modal, Typography } from 'antd';
 import PrimaryBtn from '../../app-components/primaryBtn';
 import { RootState } from '../../store/rootReducer';
 
-const TOKEN_GRANT = process.env.REACT_APP_TOKEN_GRANT as string;
 const { Text, Title } = Typography;
-const BASE_URL = process.env.REACT_APP_BASE_URL;
-const STAGE = process.env.REACT_APP_ENV;
-const PAYMENT_REQUEST = 'paymentrequest';
+
+// const TOKEN_GRANT = process.env.REACT_APP_TOKEN_GRANT as string;
+// const BASE_URL = process.env.REACT_APP_BASE_URL;
+// const STAGE = process.env.REACT_APP_ENV;
+// const PAYMENT_REQUEST = 'paymentrequest';
 
 const PayButton = (props: any) => {
     const { record } = props;
@@ -20,10 +21,9 @@ const PayButton = (props: any) => {
     const accessToken = (window as any).userToken ? (window as any).userToken : null;
     
     const seq = (Math.floor(Math.random() * 10000) + 10000).toString().substring(1);
-    const id = "order_"+seq
-    
+    const id = "order_" + seq;
+
     const user = loginState. is_buyer && "buyer";
-    
 
     return (
         <>
@@ -32,26 +32,26 @@ const PayButton = (props: any) => {
             onClick={() => setPaymentDetails(true)}
             content="Pay Now"
         />
-            <Modal
-                visible={viewPaymentDetails}
-                title={<Title level={3}>Payment Details</Title>}
-                onCancel={() => setPaymentDetails(!viewPaymentDetails)}
-                footer = {null}
-            >
-                <Row>
-                    <Col span={12}>
+        <Modal
+            visible={viewPaymentDetails}
+            title={<Title level={3}>Payment Details</Title>}
+            onCancel={() => setPaymentDetails(!viewPaymentDetails)}
+            footer = {null}
+        >
+            <Row>
+                <Col span={12}>
+                    <Space direction="vertical">
+                        <Text>OrderNumber:</Text>
+                        <Text>OrderAmount:</Text>
+                        <Text>OrderNote:</Text>
+                        <Text>Name:</Text>
+                        <Text>EmailId:</Text>
+                        <Text>PhoneNumber:</Text>
+                    </Space>
+                </Col>
+                <Col span={12}>
+                    <form className="payment" method="POST" action="http://13.233.91.84:8082/paymentrequest">
                         <Space direction="vertical">
-                            <Text>OrderNumber:</Text>
-                            <Text>OrderAmount:</Text>
-                            <Text>OrderNote:</Text>
-                            <Text>Name:</Text>
-                            <Text>EmailId:</Text>
-                            <Text>PhoneNumber:</Text>
-                        </Space>
-                    </Col>
-                    <Col span={12}>
-                        <form className="payment" method="POST" action="http://13.233.91.84:8082/paymentrequest">
-                            <Space direction="vertical">
                             <Input className="custom-input" type="text" value={id} name="orderId" />
                             <Input type="text" value={ record.buyer_final_price} name="orderAmount"/> 
                             <Input type="hidden" value="INR" name="orderCurrency" />
@@ -69,11 +69,11 @@ const PayButton = (props: any) => {
                             <Input type="hidden" value={uuid} name="uuid"/>
                             <Input type="hidden" value={accessToken} name="token"/>
                             <button className="pay-button" type="submit" value="Pay">Pay</button>
-                            </Space>
-                        </form>
-                    </Col>
-                </Row>
-            </Modal>
+                        </Space>
+                    </form>
+                </Col>
+            </Row>
+        </Modal>
         </>
     );
 };

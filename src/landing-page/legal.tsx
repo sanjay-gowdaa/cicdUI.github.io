@@ -11,7 +11,7 @@ const { TabPane } = Tabs;
 const { terms } = routesMap;
 
 const Legal = () => {
-    const [ t ,i18n ] = useTranslation('common');
+    const { t } = useTranslation('common');
 
     return (
         <div id="legal">

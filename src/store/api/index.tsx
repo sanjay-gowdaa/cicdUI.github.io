@@ -1,8 +1,10 @@
 import CryptoJS from 'crypto-js';
-import { identity } from 'lodash';
-import { MatchRequirementModel, TransactionAction, TransactionStatus } from '../../buyer-seller-commons/types';
+
 import { BuyerRejectMatch } from '../buyerReducer/types';
 import { LiveApmcRates, UpdatedLiveApmcRatesQuery } from '../genericTypes';
+
+import { MatchRequirementModel, TransactionAction, TransactionStatus } from '../../buyer-seller-commons/types';
+
 const BASE_URL = process.env.REACT_APP_BASE_URL;
 const STAGE = process.env.REACT_APP_ENV;
 const TOKEN_GRANT = process.env.REACT_APP_TOKEN_GRANT as string;
@@ -42,13 +44,12 @@ const ADD_SELLER_AT_DESTINY = 'sellerReg';
 const GET_REDIRECTION_TOKEN = 'getredirectiontoken';
 const GET_PAYMENT_DETAILS = 'getpaymentdetails';
 
-
 const parseToken = (userToken: string) => {
     const sholudDecrypt = process.env.REACT_APP_ENV === 'prod';
     const decryptedToken = sholudDecrypt ? CryptoJS.AES.decrypt(userToken, TOKEN_GRANT) : userToken;
     const userAccessToken = sholudDecrypt ? JSON.parse(decryptedToken.toString(CryptoJS.enc.Utf8)) : decryptedToken;
     return userAccessToken;
-}
+};
 
 const getAuthHeader = () =>  {
     const userToken = (window as any).userToken ? (window as any).userToken : '';
@@ -60,7 +61,7 @@ const getAuthHeader = () =>  {
     }
     // For testing: Bypass auth from UI
     //return ({'Authorization': `Bearer ${''}`});
-}
+};
 
 /* OTP Interface */
 export const sendOtp = (number: string) => {
@@ -152,12 +153,11 @@ export const fetchRedirectedUserDetails = (userAccessToken: string) => {
 
 export const kycUserDetails = (userFormData: any) => {	
     const userUpdateApi = `${BASE_URL}/${STAGE}/${UPDATE_USER_DETAILS}`;	
-    return fetch(userUpdateApi,	
-        {	
-            method: 'POST',	
-            headers: getAuthHeader(),	
-            body: JSON.stringify(userFormData)	
-        }).then((response: any) => response.json());	
+    return fetch(userUpdateApi, {
+        method: 'POST',
+        headers: getAuthHeader(),
+        body: JSON.stringify(userFormData)
+    }).then((response: any) => response.json());
 };
 		
 export const fetchUserCompleteDetails = () => {	
@@ -202,8 +202,7 @@ export const patchCrop = (cropData: any, sellerId: string) => {
         body: bodyParamData,
         headers: getAuthHeader()
     }).then((response: any) => response.json());
-}
-
+};
 
 export const getAllCrops = (sellerId: string) => {
     const fetcCropsApi = `${BASE_URL}/${STAGE}/seller/${sellerId}/crop`;
@@ -219,7 +218,7 @@ export const getLiveApmcRateUpdated = (cropDetails: Array<UpdatedLiveApmcRatesQu
         // headers: getAuthHeader(),
         body: JSON.stringify(cropDetails)
     }).then((response: any) => response.json());
-}
+};
 
 export const getLiveApmcRate = (cropDetails: Array<LiveApmcRates>) => {
     const apmcLiveRateBody = {crops: cropDetails}
@@ -229,7 +228,7 @@ export const getLiveApmcRate = (cropDetails: Array<LiveApmcRates>) => {
         headers: getAuthHeader(),
         body: JSON.stringify({crops: cropDetails})
     }).then((response: any) => response.json());
-}
+};
 
 export const intentToSell = (userID: string, produceId: string) => {
     const intentToSellForSeller = `${BASE_URL}/${STAGE}/seller/${userID}/crop/${produceId}/${INTENT_TO_SELL}`
@@ -237,7 +236,7 @@ export const intentToSell = (userID: string, produceId: string) => {
         method: 'POST',
         headers: getAuthHeader()
     }).then((response: any) => response.json());
-}
+};
 
 /* Seller Apis End */
 
@@ -260,7 +259,7 @@ export const patchProduce = (produceData: any, buyerId: string) => {
         body: bodyParamData,
         headers: getAuthHeader()
     }).then((response: any) => response.json());
-}
+};
 
 export const deleteProduce = (userID: string, produceId: string, is_buyer?: boolean) => {
     const userType = is_buyer ? 'buyer' : 'seller';
@@ -269,7 +268,7 @@ export const deleteProduce = (userID: string, produceId: string, is_buyer?: bool
         method: 'DELETE',
         headers: getAuthHeader()
     }).then((response: any) => response);
-}
+};
 
 export const getAllProduce = (buyerId: string) => {
     const getAllProduceApi = `${BASE_URL}/${STAGE}/buyer/${buyerId}/crop`;
@@ -294,7 +293,6 @@ export const getCropCategoryList = () => {
     }).then((response: any) => response.json());
 };
 
-
 export const updateMasterList = (updateMasterList: any, buyerId: string) => {
     const masterListApi = `${BASE_URL}/${STAGE}/buyer/${buyerId}/master_list`;
     const bodyParamData = JSON.stringify(updateMasterList);
@@ -303,14 +301,14 @@ export const updateMasterList = (updateMasterList: any, buyerId: string) => {
         body: bodyParamData,
         headers: getAuthHeader()
     }).then((response: any) => response.json())
-}
+};
 
 export const getMasterList = (buyerId: string) => {
     const masterListApi = `${BASE_URL}/${STAGE}/buyer/${buyerId}/master_list`;
     return fetch(masterListApi, {
         headers: getAuthHeader()
     }).then((response: any) => response.json())
-}
+};
 /* Buyer Apis End */
 
 /* Matches And Transactions */
@@ -323,7 +321,7 @@ export const getBuyerMatchesList = (buyerId: string, cropIds: Array<string>) => 
         method: 'POST',
         body: JSON.stringify(matchesBody)
     }).then((response: any) => response.json())
-}
+};
 
 export const rejectMatch = (rejectData: BuyerRejectMatch) => {
     const matchesRejectApi = `${BASE_URL}/${STAGE}/${MATCHES_REJECT_API}`;
@@ -332,7 +330,7 @@ export const rejectMatch = (rejectData: BuyerRejectMatch) => {
         method: 'POST',
         body: JSON.stringify(rejectData)
     }).then((response: any) => response.json())
-}
+};
 
 export const createTransaction = (transactionEntry: any) => {
     const transactionApi = `${BASE_URL}/${STAGE}/${TRANSACTION_CREATE_API}`;
@@ -341,17 +339,17 @@ export const createTransaction = (transactionEntry: any) => {
         method: 'POST',
         body: JSON.stringify(transactionEntry)
     }).then((response: any) => response.json())
-}
+};
 
 export const fetchTransactionList = (userName: string, transactionStatus: TransactionStatus) => {
     const listApi = `${BASE_URL}/${STAGE}/${TRANSACTION_LIST_API}/${userName}?status=${transactionStatus}`;
     return fetch(listApi).then((response: any) => response.json());
-}
+};
 
 export const fetchSellerMatches = (userName: string) => {
     const listApi = `${BASE_URL}/${STAGE}/${TRANSACTION_LIST_API}/${userName}?status=MatcH`;
     return fetch(listApi).then((response: any) => response.json());
-}
+};
 
 export const postSellerTransactionAction = (
     transactionID: string,
@@ -363,7 +361,7 @@ export const postSellerTransactionAction = (
         method: 'POST',
         body: JSON.stringify(cropDetails)
     }).then((response: any) => response.json());
-}
+};
 
 export const sellerConnectStatus = ({
     sellerId,
@@ -374,7 +372,7 @@ export const sellerConnectStatus = ({
         method: 'POST',
         body: JSON.stringify({seller_id: sellerId, seller_crop_id: sellerCropId})
     }).then((response: any) => response.json());
-}
+};
 
 export const postAddBeneficiarydata = (userData: any) => {
     const addBeneficiaryApi = `${BASE_URL}/${STAGE}/${ADD_BENEFICIARY_API}`;
@@ -382,7 +380,7 @@ export const postAddBeneficiarydata = (userData: any) => {
         method: 'POST',
         body: JSON.stringify(userData) 
     }).then((response: any) => response.text);
-}
+};
 
 export const postBuyerDetails = (userData: any) => {
 const registerBuyerApi = `${BASE_URL}/${STAGE}/${ADD_BUYER_AT_DESTINY}`;
@@ -390,7 +388,7 @@ const registerBuyerApi = `${BASE_URL}/${STAGE}/${ADD_BUYER_AT_DESTINY}`;
         method: 'POST',
         body: JSON.stringify(userData) 
     }).then((response: any) => response.text);
-}
+};
 
 export const postSellerDetails = (userData: any) => {
     const registerSellerApi = `${BASE_URL}/${STAGE}/${ADD_SELLER_AT_DESTINY}`;
@@ -398,7 +396,7 @@ export const postSellerDetails = (userData: any) => {
         method: 'POST',
         body: JSON.stringify(userData) 
     }).then((response: any) => response.text);
-}
+};
 
 export const getRedirectionToken = (userKey: string) => {
     
@@ -413,30 +411,25 @@ export const getRedirectionToken = (userKey: string) => {
 };
 
 export const getPaymentList = (transactionData: any) => {
-    //console.log("transaction data", transactionData)
-    const transactionId = transactionData[0].transactionId
-    const paymentNo = transactionData[0].paymentNo
-    //console.log(transactionId, paymentNo)
+    const transactionId = transactionData[0].transactionId;
+    const paymentNo = transactionData[0].paymentNo;
     const paymentDetailsApi = `${BASE_URL}/${STAGE}/${GET_PAYMENT_DETAILS}?paymentNo=${paymentNo}&transactionId=${transactionId}`;
     return fetch(paymentDetailsApi, {
         method: 'GET',
     }).then((response: any) => response.json())
-}
+};
 
 export const getStatusDetails = (userData:any) => {
-    //var id = userData.transactionId
-    //console.log("inside getstatus", userData.transactionId)
-    const statusDetailsApi = `${BASE_URL}/${STAGE}/${TRANSACTION_API}/${userData.transactionId}/events/?user=${userData.user}&transport=false&event=both`
+    const statusDetailsApi = `${BASE_URL}/${STAGE}/${TRANSACTION_API}/${userData.transactionId}/events/?user=${userData.user}&transport=false&event=all`;
     return fetch(statusDetailsApi, {
         method: 'GET',
     }).then((response: any) => response.json())
-}
+};
 
 export const getCurrentStatusDetails = (userData: any) => {
-    console.log("inside getstatus", userData.transactionId)
-    const currentStatusDetailsApi = `${BASE_URL}/${STAGE}/${TRANSACTION_API}/${userData.transactionId}/events/?user=${userData.user}&transport=false&event=current`
+    const currentStatusDetailsApi = `${BASE_URL}/${STAGE}/${TRANSACTION_API}/${userData.transactionId}/events/?user=${userData.user}&transport=false&event=current`;
     return fetch(currentStatusDetailsApi, {
         method: 'GET',
     }).then((response: any) => response.json())
-}
+};
 /* Matches And Transactions End */

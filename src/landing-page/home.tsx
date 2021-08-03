@@ -14,7 +14,7 @@ import { englishStyling, isEnglish, kannadaStyling } from '../static/translation
 const { Text, Title } = Typography;
 
 const Home = () => {
-    const [ t,i18n ]=useTranslation('common');
+    const { t } = useTranslation('common');
     const customStyles = isEnglish(t("language")) ? englishStyling : kannadaStyling;
     const logo =  isEnglish(t("language")) ? Logo : KannadaLogo;
 

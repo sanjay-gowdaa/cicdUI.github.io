@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
+import { Col, Row, Modal, Typography } from 'antd';
+import { useDispatch, useSelector } from 'react-redux';
+
 import  DefaultBtn  from '../../app-components/defaultBtn';
 import { RootState } from '../../store/rootReducer';
-import { useSelector } from 'react-redux';
-import { Col, Input, Row, Space, Modal, Typography } from 'antd';
-import { useDispatch } from 'react-redux';
 import { getPaymentDetails } from '../../store/buyerReducer/actions';
 
-const { Text, Title } = Typography;
+const { Title } = Typography;
 
 const PaymentResponseModel = () => {
     const [viewPaymenResponsetDetails, setPaymentResponseDetails] = useState(true);

@@ -4,6 +4,14 @@ $col-shade-green: #12805c;
     color: $col-shade-green !important;
 }
 
+.col-orange {
+    color: #f5a31a !important;
+}
+
+.box-shadow {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
 #home {
     background-position: center center;
     background-size: 100rem auto;
@@ -524,69 +532,18 @@ $col-shade-green: #12805c;
 
     .management-team {
         position: relative;
-        text-align: center;
-        width: fit-content;
-        justify-content: space-around;
         padding: 2rem;
-        height: fit-content;
         border: 0.2em solid #e0efea;
         border-radius: 0.2rem;
-        margin: 0 auto;
-
-        .management-our-team {
-            .person-name {
-                margin: 0;
-            }
-        }
-
-        .suma {
-            position: relative;
-            top: 2.5rem;
-
-            .person-name {
-                position: relative;
-                top: 1.5rem;
-            }
-
-            .designation {
-                position: relative;
-                top: 1.3rem;
-            }
-        }
+        margin-bottom: 1rem;
     }
 
     .advisors-team {
         position: relative;
-        text-align: center;
         width: fit-content;
-        justify-content: space-around;
         padding: 2rem;
-        height: fit-content;
         border: 0.2em solid #e0efea;
         border-radius: 0.2rem;
-        margin: 0 auto;
-        margin-top: 1rem;
-
-        // Kannada Styling
-        .advisors-card-kn {
-            margin-top: 1rem;
-            margin-left: 1rem;
-            height: 32rem;
-            font-size: 0.8rem;
-        }
-
-        .advisors-card {
-            margin-top: 1rem;
-            margin-left: 1rem;
-            height: 30rem;
-        }
-
-        .advisors-pic {
-            border-radius: 50%;
-            width: 10rem;
-            height: 10rem;
-            border: 0.1em solid #e2e8d5;
-        }
     }
 }
 
@@ -1134,144 +1091,6 @@ $col-shade-green: #12805c;
             text-align: left;
             padding: 1.5rem;
             color: #182c3b !important;
-        }
-
-        .management-team,
-        .advisors-team {
-            width: 90vw;
-            padding: 0rem !important;
-            border: 0.05rem solid #12805c84;
-            background-color: #fbfbfb;
-
-            .team-column {
-                display: flex;
-                flex-direction: column;
-            }
-
-            .management-our-team {
-                height: 70vh;
-
-                .management-image {
-                    width: 50vw;
-                    height: 50vw;
-                }
-            }
-
-            .nagappa {
-                .person-name {
-                    font-size: 1rem;
-                    position: relative;
-                    bottom: 7rem;
-                    left: 11.8rem;
-                }
-
-                .designation {
-                    font-size: 1rem;
-                    position: relative;
-                    bottom: 7rem;
-                    left: 10.8rem;
-                    text-align: start;
-                }
-            }
-
-            .suma {
-                position: relative;
-                top: 25vh;
-                right: 5.8rem;
-
-                .management-image {
-                    width: 35vw;
-                    height: 35vw;
-                }
-
-                .person-name {
-                    text-align: start;
-                    width: max-content;
-                    font-size: 1rem;
-                    position: relative;
-                    top: -6.5rem;
-                    left: 11rem;
-                }
-
-                .designation {
-                    font-size: 1rem;
-                    position: relative;
-                    top: -6.5rem;
-                    left: 8.8rem;
-                    text-align: start;
-                }
-            }
-
-            .sadananda {
-                position: relative;
-                top: 43vh;
-                right: 15.3rem;
-
-                .person-name {
-                    width: max-content;
-                    font-size: 1rem;
-                    position: relative;
-                    bottom: 7rem;
-                    left: 13rem;
-                }
-
-                .designation {
-                    width: max-content;
-                    font-size: 1rem;
-                    position: relative;
-                    bottom: 7rem;
-                    text-align: start;
-                    left: 12.5rem;
-                }
-            }
-        }
-
-        .advisors-team {
-            justify-content: none;
-            text-align: left;
-            height: 130vh;
-
-            .advisors-card {
-                margin: 0rem;
-                background-color: #fbfbfb;
-                height: fit-content;
-                width: 89.5vw;
-                border: none;
-
-                .advisors-pic {
-                    width: 35vw;
-                    height: 35vw;
-                }
-
-                .person-name {
-                    position: relative;
-                    bottom: 7rem;
-                    text-align: right;
-                }
-
-                .designation {
-                    position: relative;
-                    bottom: 2rem;
-                }
-
-                .description {
-                    position: relative;
-                    bottom: 1.5rem;
-                }
-            }
-
-            .advisor-card-two {
-                position: relative;
-                top: 40vh;
-                right: 7.18rem;
-            }
-
-            .advisor-card-three {
-                position: relative;
-                top: 80vh;
-                height: fit-content;
-                right: 14.33rem;
-            }
         }
     }
 

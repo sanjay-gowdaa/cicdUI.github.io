@@ -164,19 +164,16 @@ const Profile = (props: any) => {
     };
 
     const onSave = () => {
-        
         const isSubmitted = setKycToComplete(formSubmitValue);
         const registerDataPromise = generateFormData(cloneDeep({...kycFormValues, isSubmitted}));
         registerDataPromise.then((data) => 
-            dispatch(saveKyc(data)),
-
-        ); 
-        //console.log("formSubmitValue:", formSubmitValue)
+            dispatch(saveKyc(data))
+        );
        
         const beneficiaryDetails = {
             "username": loginState.username,
             "BeneName": kycFormValues.account_name|| loginState.bank_info.account_holder_name,
-            "BeneAccountNo": kycFormValues. account_number || loginState.bank_info.account_no,
+            "BeneAccountNo": kycFormValues.account_number || loginState.bank_info.account_no,
             "IfscCode": kycFormValues.ifsc_code || loginState.bank_info.ifsc_code  
         };
 
@@ -357,7 +354,7 @@ const Profile = (props: any) => {
                                         maxCount={1}
                                         onChange={uploadProfilePic}
                                     >
-                                        {showProfilePic? <img className="changed-profile-picture" src={imageSrc}/>: null}
+                                        {showProfilePic? <img className="changed-profile-picture" src={imageSrc} alt="profile" />: null}
                                     </Upload>
                                     {showProfilePic? <Text className="change-profile-pic-text">Click on the Profile Picture to change</Text>: null}
                                 </>

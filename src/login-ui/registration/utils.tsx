@@ -1,9 +1,6 @@
 import { RuleObject } from "antd/lib/form";
 import { isEmpty, toUpper } from "lodash";
-import { generateFileData, proccessFileToBase64 } from "../../app-components/utils";
 
-import { getLocationByPin } from "../../store/api";
-import { UserTypes } from "../../store/genericTypes";
 import {
     AADHAAR_12_DIGIT_MSG,
     AADHAAR_NOT_NUMBER,
@@ -28,6 +25,10 @@ import {
     PIN_REQUIRED_MSG,
     UPI_ID_INVALID_MSG,
 } from "../constants";
+
+import { getLocationByPin } from "../../store/api";
+import { UserTypes } from "../../store/genericTypes";
+import { generateFileData } from "../../app-components/utils";
 
 type generateFormDataProps = {
     formSubmitValues: any,

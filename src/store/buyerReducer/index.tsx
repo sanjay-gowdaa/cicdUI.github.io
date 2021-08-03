@@ -1,6 +1,5 @@
 import {
     UPDATE_MASTER_LIST,
-    GET_MASTER_LIST,
     UPDATE_PRODUCE_LIST,
     UPDATE_CROPS_LIST,
     UPDATE_VARIETY_LIST,
@@ -15,7 +14,6 @@ import {
     UPDATE_STATUS_DETAILS,
     UPDATE_CURRENT_STATUS_DETAILS
 } from './actions';
-
 import {
     mockReviewsList,
 } from './mockData.temp';
@@ -36,7 +34,6 @@ const INITIAL_STATE: BuyerStateModel = {
     paymentRedirectionDetails: {},
     statusDetails: [],
     currentStatusDetails: ""
-
 };
 
 const reducer = (state = INITIAL_STATE, action: any) => {
@@ -56,8 +53,8 @@ const reducer = (state = INITIAL_STATE, action: any) => {
 
         /* Currently not in use */
         case UPDATE_MATCHES_LIST_FOR_BUYER_CROP:
-            const {matchesList} = state;
-            const {buyerCropId, newMatchesList} = action.payload;
+            // const {matchesList} = state;
+            // const {buyerCropId, newMatchesList} = action.payload;
             return { ...state, matchesList: action.payload }
         /* Currently not in use */
 

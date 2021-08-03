@@ -5,12 +5,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../store/rootReducer';
 import { componentCallBacksModel, matchesColumns } from './matchesTable.model';
 import ViewCropDetails from './viewCropDetails';
-import { rejectMatches, getMatchesForBuyerCrops } from '../../store/buyerReducer/actions';
+import { rejectMatches } from '../../store/buyerReducer/actions';
 import { initialEmptyCropDetail } from '../../buyer-seller-commons/constants';
 import { MatchRequirementModel } from '../../buyer-seller-commons/types';
 
 const { Title } = Typography;
-
 
 const processFullfillmentData = (allMatchesList: Array<any>) => {
     let allFullfilments: any = [];
@@ -25,7 +24,7 @@ const processFullfillmentData = (allMatchesList: Array<any>) => {
         }
     });
     return allFullfilments;
-}
+};
 
 const MatchedSection = () => {
     const dispatch = useDispatch();
@@ -41,7 +40,7 @@ const MatchedSection = () => {
             rejectMatches({buyer_id, buyer_crop_id, seller_id,
                 seller_crop_id, matched_quantity})
         );
-    }
+    };
 
     const componentCallBacks: componentCallBacksModel = {
         showCropDetailsModal: setOpenDetailsModal,
@@ -52,7 +51,7 @@ const MatchedSection = () => {
     useEffect(() => {
         const processedData = processFullfillmentData(buyerState.matchesList)
         setProcessedMatches(processedData);
-    }, [buyerState.matchesList])
+    }, [buyerState.matchesList]);
 
     return (
         <div id="buyer-ui-matches">
