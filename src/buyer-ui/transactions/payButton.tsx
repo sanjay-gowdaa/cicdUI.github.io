@@ -22,10 +22,8 @@ const PayButton = (props: any) => {
     const seq = (Math.floor(Math.random() * 10000) + 10000).toString().substring(1);
     const id = "order_"+seq
     
-    var user;
-    if(loginState. is_buyer){
-        user = "buyer"
-    };
+    const user = loginState. is_buyer && "buyer";
+    
 
     return (
         <>

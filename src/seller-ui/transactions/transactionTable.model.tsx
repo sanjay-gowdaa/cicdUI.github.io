@@ -23,15 +23,12 @@ export const GetCurrentStatusDetails = (pk: any) =>{
     }
     
     useEffect(() => {
-        dispatch(CurrentStatusDetails(data, pk.data));
-        console.log("______________________:", status ,":________________");
+        dispatch(CurrentStatusDetails(data));
         if(!isEmpty(status)){
-            console.log("inbside if", status);
             for(const property in status) {
-                console.log("pk:", status[property].pk === pk.data);
+                //console.log("pk:", status[property].pk === pk.data);
                 if(status[property].pk === pk.data) {
                     setUserStatus(status[property].event_description);
-                    console.log("status", userStatus);
                 }
             }
            }

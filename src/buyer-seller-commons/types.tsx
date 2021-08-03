@@ -48,15 +48,8 @@ export interface TransactioModel extends MatchRequirementModel {
     transactionId: string;
     transactionStatus: TransactionStatus;
     transactionTotalAmount: number;
-    transactionStatusText: TransactionCurrentStatus;
+    transactionStatusText: string;
 }
-
-interface TransactionCurrentStatus {
-    pk?: string;
-    sk?: string;
-    event_description?: string;
-    event_timestamp?: any;
-};
 
 export interface ReviewRating {
     rating: number;

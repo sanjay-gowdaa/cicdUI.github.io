@@ -319,19 +319,14 @@ export const StatusDetails = (userData:any) => {
     }
 }
 
-export const CurrentStatusDetails = ( userData: any, pk: any) => {
+export const CurrentStatusDetails = ( userData: any) => {
         return async(dispatch: any, getState: any) => {
             const currentStatusResponse = await getCurrentStatusDetails(userData);
             
             if(!isEmpty(currentStatusResponse)) {
-                // for(const property in currentStatusResponse) {
-                //     console.log("pk:", currentStatusResponse[property].pk === pk);
-                //     if(currentStatusResponse[property].pk === pk) {
-                        const status = currentStatusResponse;
-                        console.log("status inside async", status);
-                        dispatch(updateCurrentStatusDetails(status));
-                    // }
-                // }
+                const status = currentStatusResponse;
+                //console.log("status inside async", status);
+                dispatch(updateCurrentStatusDetails(status));
             }
         }
 }
