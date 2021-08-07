@@ -52,7 +52,7 @@ const PayButton = (props: any) => {
                 }
 
             onClick={() => setPaymentDetails(true)}
-            content={iserror? "pay retry" : "Pay Now"}
+            content={iserror? "Pay Retry" : "Pay Now"}
         />
         {console.log("iserror", iserror)}
         {console.log("displayPay", displayPay)}
