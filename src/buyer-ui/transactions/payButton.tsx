@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { v4 as uuidv4 } from 'uuid';
 import { Col, Input, Row, Space, Modal, Typography } from 'antd';
 
 import PrimaryBtn from '../../app-components/primaryBtn';
 import { RootState } from '../../store/rootReducer';
+import { isEmpty } from 'lodash';
 
 const { Text, Title } = Typography;
 
@@ -16,6 +17,9 @@ const { Text, Title } = Typography;
 const PayButton = (props: any) => {
     const { record } = props;
     const loginState = useSelector((state: RootState) => state.loginUser);
+    const buyerState = useSelector((state: RootState) => state.buyer);
+    const status = buyerState.currentStatusDetails;
+    const [userStatus, setUserStatus] = useState('');
     const [viewPaymentDetails, setPaymentDetails] = useState(false);
     const uuid = uuidv4() ;
     const accessToken = (window as any).userToken ? (window as any).userToken : null;
@@ -24,13 +28,33 @@ const PayButton = (props: any) => {
     const id = "order_" + seq;
 
     const user = loginState. is_buyer && "buyer";
+    const displayPay = 
+        (userStatus === "pay advance of 20 %") ||
+            (userStatus === "Sorry error occured, payment unsucessfull")
+                ? true : false;
+    const isError = userStatus === "Sorry error occured, payment unsucessfull"? true : false;
+
+    useEffect(() => {
+        if(!isEmpty(status)) {
+            for(let i=0; i<status.length; i++) {
+                if(status[i].pk === record.pk) {
+                    setUserStatus(status[i].event_description);
+                }
+            }
+        }
+    }, [status]);
 
     return (
         <>
         <PrimaryBtn
-            className="vikas-btn-radius"
+            className={
+                displayPay ?
+                    isError ? 
+                        "pay-retry": "vikas-btn-radius" :
+                    "display-none"
+                }
             onClick={() => setPaymentDetails(true)}
-            content="Pay Now"
+            content={isError? "Retry and Pay" : "Pay Now"}
         />
         <Modal
             visible={viewPaymentDetails}

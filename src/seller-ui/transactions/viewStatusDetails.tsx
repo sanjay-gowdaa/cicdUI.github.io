@@ -3,7 +3,7 @@ import { Col, Button, Row, Modal, Typography } from 'antd';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { RootState } from '../../store/rootReducer';
-import {StatusDetails} from '../../store/sellerReducer/actions'
+import { getStatus } from '../../store/sellerReducer/actions'
 
 const { Title } = Typography;
 
@@ -21,17 +21,13 @@ const StatusDetailsModel = (pk: any) => {
         "user": "seller"
     };
 
-    // useEffect(() => {
-    //     dispatch(StatusDetails(data))
-    // }, [statusDetails]);
-
     return (
         <>
             <Button
                 type="link"
                 onClick={() => {
                     setviewStatusDetails(true);
-                    dispatch(StatusDetails(data))
+                    dispatch(getStatus(data))
                 }}
             >
                 View Details

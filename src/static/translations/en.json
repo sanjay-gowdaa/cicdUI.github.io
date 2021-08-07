@@ -40,11 +40,12 @@
     
     "aim_page": {
         "title": "VikasBandhu helps you in",
-        "aim_card_1": "Connecting buyers and sellers",
-        "aim_card_2": "Direct selling of agricultural produce",
-        "aim_card_3": "Ensuring best price for both buyer and seller",
-        "aim_card_4": "Providing live information on pricing for study",
-        "aim_card_5": "Partnering Government's vision",
+        "aim_card_1": "Enable Informed decisions using Technology via Price Discovery",
+        "aim_card_2": "Big data driven ranking system ensuring a smart match",
+        "aim_card_3": "FAAS - value and linkages for  Farm to Door Solution",
+        "aim_card_4": "Deployment of Local Resource Persons to support technology to last mile",
+        "aim_card_5": "100% digital transactions with full clarity",
+        "aim_card_6": "Partnering Government's vision",
         "video_link": "Please view this video to understand",
         "link_name": "VikasBandhu aim and solution"
     },

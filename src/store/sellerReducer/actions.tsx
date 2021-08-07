@@ -1,12 +1,17 @@
-import { sortBy, isEmpty, isNull } from "lodash";
-import { getTimeStamp } from "../../app-components/utils";
-import { MatchRequirementModel, TransactioModel, TransactionAction, TransactionStatus } from "../../buyer-seller-commons/types";
-import { getSubCategoryList, createCrop, getAllCrops, getCropCategoryList, getCropList, getLiveApmcRateUpdated,
-    deleteProduce, patchCrop, intentToSell, fetchSellerMatches, postSellerTransactionAction, fetchTransactionList, getStatusDetails,getCurrentStatusDetails } from "../api";
-import { ApmcApiResponseBase, LiveApmcRates, UpdatedLiveApmcRatesQuery } from "../genericTypes";
+import { isEmpty, isNull } from "lodash";
+
+import { CropApiModel, SellerStateModel } from "./types";
+
+import { getSubCategoryList, createCrop, getAllCrops, getCropCategoryList, getCropList,
+    getLiveApmcRateUpdated, deleteProduce, patchCrop, intentToSell, fetchSellerMatches,
+    postSellerTransactionAction, fetchTransactionList, getStatusDetails,getCurrentStatusDetails
+} from "../api";
+import { ApmcApiResponseBase, UpdatedLiveApmcRatesQuery } from "../genericTypes";
 import { UserStateModel } from "../loginReducer/types";
 import { RootState } from "../rootReducer";
-import { CropApiModel, SellerStateModel } from "./types";
+
+import { getTimeStamp } from "../../app-components/utils";
+import { MatchRequirementModel, TransactionAction, TransactionStatus } from "../../buyer-seller-commons/types";
 
 export const UPDATE_CATEGORIES = 'UPDATE_CATEGORIES';
 export const UPDATE_MASTER_CROPS = 'UPDATE_MASTER_CROPS';
@@ -18,8 +23,8 @@ export const UPDATE_APMC_DATA_TO_CROPS = 'UPDATE_APMC_DATA_TO_CROPS';
 export const UPDATE_TIME_STAMP = 'UPDATE_TIME_STAMP';
 export const UPDATE_SELLER_MATCHES = 'UPDATE_SELLER_MATCHES';
 export const UPDATE_SELLER_TRANSACTION_LIST = 'UPDATE_SELLER_TRANSACTION_LIST';
-export const UPDATE_STATUS_DETAILS = 'UPDATE_STATUS_DETAILS'
-export const UPDATE_CURRENT_STATUS_DETAILS = 'UPDATE_CURRENT_STATUS_DETAILS'
+export const UPDATE_STATUS_DETAILS = 'UPDATE_STATUS_DETAILS';
+export const UPDATE_CURRENT_STATUS_DETAILS = 'UPDATE_CURRENT_STATUS_DETAILS';
 
 export const updateStatusDetails = (statusDetails: Array<any>) => {
     return {
@@ -40,14 +45,14 @@ export const updateAllCategories = (categories: Array<string>) => {
         type: UPDATE_CATEGORIES,
         payload: categories
     }
-}
+};
 
 export const updateMasterCrops = (produce: Array<string>) => {
     return {
         type: UPDATE_MASTER_CROPS,
         payload: produce
     }
-}
+};
 
 export const updateVariety = (variety: Array<any>) => {
     return {
@@ -61,35 +66,35 @@ export const updateSellerCropsList = (cropsList: Array<any>) => {
         type: UPDATE_SELLER_CROPS_LIST,
         payload: cropsList
     }
-}
+};
 
 export const updateApmcCropRate = (modalPrice: string | number) => {
     return {
         type: UPDATE_APMC_RATE,
         payload: modalPrice
     }
-}
+};
 
 export const updateTransactionList = (transactionType: TransactionStatus, transactionListData: Array<any>) => {
     return {
         type: UPDATE_SELLER_TRANSACTION_LIST,
         payload: {transactionType, transactionListData}
     }
-}
+};
 
 export const updateTimeStamp = (timeStamp: any) => {
     return {
         type: UPDATE_TIME_STAMP,
         payload: timeStamp
     }
-}
+};
 
 export const updateSellerMatches = (matchesList: Array<MatchRequirementModel>) => {
     return {
         type: UPDATE_SELLER_MATCHES,
         payload: matchesList
     }
-}
+};
 
 export const updateApmcListData = (
         allCropsApmcData: Array<ApmcApiResponseBase>,
@@ -113,7 +118,7 @@ export const updateApmcListData = (
         type: UPDATE_SELLER_CROPS_LIST,
         payload: cropListUpdated
     }
-}
+};
 
 export const updatedFetchLiveApmcRate = ({
     grade,
@@ -139,7 +144,7 @@ export const updatedFetchLiveApmcRate = ({
         }
         
     }
-}
+};
 
 export const fetchAllCategories = () => {
     return async(dispatch: any, getState: any) => {
@@ -147,7 +152,7 @@ export const fetchAllCategories = () => {
         const {categories} = allCategoriesList || []
         dispatch(updateAllCategories(categories))
     }
-}
+};
 
 export const fetchAllMasterCrops = (category: string) => {
     return async(dispatch: any, getState: any) => {
@@ -155,7 +160,7 @@ export const fetchAllMasterCrops = (category: string) => {
         const {crops} = allCropList || []
         dispatch(updateMasterCrops(crops))
     }
-}
+};
 
 export const fetchAllVariety = (cropName: string) => {
     return async(dispatch: any, getState: any) => {
@@ -163,7 +168,7 @@ export const fetchAllVariety = (cropName: string) => {
         const {crops: {Items: variety}} = allVarietyList || { variety: []}
         dispatch(updateVariety(variety))
     }
-}
+};
 
 export const addNewCropData = (cropData: FormData) => {
     return async(dispatch: any, getState: any) => {
@@ -174,7 +179,7 @@ export const addNewCropData = (cropData: FormData) => {
         const cropAdded = await createCrop(cropData, username)
         dispatch(getAllCropsList());
     }
-}
+};
 
 export const updateCropData = (cropData: any) => {
     return async(dispatch: any, getState: any) => {
@@ -185,7 +190,7 @@ export const updateCropData = (cropData: any) => {
         const cropAdded = await patchCrop(cropData, username);
         dispatch(getAllCropsList());
     }
-}
+};
 
 export const sellerIntentToSell = (cropData: any, cropID: string, isPriceUpdated?: boolean) => {
     return async(dispatch: any, getState: any) => {
@@ -197,7 +202,7 @@ export const sellerIntentToSell = (cropData: any, cropID: string, isPriceUpdated
         const cropUpdated = await intentToSell(username, cropID);
         dispatch(getAllCropsList());
     }
-}
+};
 
 export const deleteSelectedCrop = (cropID: string) => {
     return async(dispatch: any, getState: any) => {
@@ -206,7 +211,7 @@ export const deleteSelectedCrop = (cropID: string) => {
         const deletedResponse = await deleteProduce(username, cropID, !is_seller);
         dispatch(getAllCropsList());
     }
-}
+};
 
 export const fetchAllCropsApmcData = (Items: Array<CropApiModel>) => {
     return async(dispatch: any, getState: any) => {
@@ -220,7 +225,7 @@ export const fetchAllCropsApmcData = (Items: Array<CropApiModel>) => {
         const allCropsPriceModelDetails = ( !isEmpty(allCropsPriceModel) && !isNull(allCropsPriceModel) ) ? allCropsPriceModel : [];
         dispatch(updateApmcListData(allCropsPriceModelDetails, cropsList))
     }
-}
+};
 
 export const getAllCropsList = () => {
     return async(dispatch: any, getState: any) => {
@@ -235,7 +240,7 @@ export const getAllCropsList = () => {
             dispatch(fetchAllCropsApmcData(Items));
         }
     }   
-}
+};
 
 export const getAllSellerMatches = () => {
     return async(dispatch: any, getState: any) => {
@@ -244,7 +249,7 @@ export const getAllSellerMatches = () => {
         const sellerMatches: Array<MatchRequirementModel> = await fetchSellerMatches(username);
         dispatch(updateSellerMatches(sellerMatches));
     }
-}
+};
 
 export const transactionAction = (
         tarnsactionID: string,
@@ -261,7 +266,7 @@ export const transactionAction = (
             dispatch(getSellerTransactionList(TransactionStatus.completed));
         }
     }
-}
+};
 
 export const getSellerTransactionList = (transactionStatus: TransactionStatus) => {
     return async(dispatch: any, getState: any) => {
@@ -270,31 +275,27 @@ export const getSellerTransactionList = (transactionStatus: TransactionStatus) =
         const transactionListResponse = await fetchTransactionList(username, transactionStatus);
         dispatch(updateTransactionList(transactionStatus, transactionListResponse))
     }
-}
+};
 
 export const saveTimeStamp = (dispatch: any) => {
     const timeStamp = getTimeStamp();
     dispatch(updateTimeStamp(timeStamp));
-}
+};
 
-export const StatusDetails = (userData:any) => {
-    //console.log("inside register seller");
+export const getStatus = (userData:any) => {
     return async(dispatch: any, getState: any) => {
         const regSellerResponse = await getStatusDetails(userData);
         dispatch(updateStatusDetails(regSellerResponse));
-        //console.log("Status Detail", regSellerResponse)
     }
-}
+};
 
-
-export const CurrentStatusDetails = ( userData: any) => {
+export const currentStatusDetails = ( userData: any) => {
     return async(dispatch: any, getState: any) => {
         const currentStatusResponse = await getCurrentStatusDetails(userData);
         
         if(!isEmpty(currentStatusResponse)) {
             const status = currentStatusResponse;
-            console.log("status inside async", status);
             dispatch(updateCurrentStatusDetails(status));
         }
     }
-}
+};
