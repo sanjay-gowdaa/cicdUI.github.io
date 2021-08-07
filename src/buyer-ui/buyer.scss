@@ -183,3 +183,13 @@ $col-shade-error: #e90000;
     border-radius: 0.5em;
     padding: 0 0.3em;
 }
+
+.pay-retry {
+    background-color: #f5a31a !important;
+    border-color: #f5a31a !important;
+    border-radius: 3px
+}
+
+.heading-alerttext {
+    color:$col-shade-error;
+  }

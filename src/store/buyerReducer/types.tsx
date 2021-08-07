@@ -60,8 +60,10 @@ export interface StatusDetails{
    
 }
 export interface CurrentStatusDetails{
-    transactionStatusText: string;
-   
+    pk: string;
+    sk: string;
+    event_description: string;
+    event_timestamp: string;
 }
 
 export interface BuyerStateModel {
@@ -82,8 +84,7 @@ export interface BuyerStateModel {
     paymentDetails:Array<PaymentDetails>;
     paymentRedirectionDetails: any;
     statusDetails:Array<StatusDetails>;
-    currentStatusDetails: any;
-
+    currentStatusDetails: Array<CurrentStatusDetails>;
 }
 
 export interface BuyerRejectMatch {

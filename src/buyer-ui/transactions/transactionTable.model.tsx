@@ -1,48 +1,50 @@
 import React, { useEffect, useState } from 'react';
-import { Button, Image, Typography, Tooltip } from 'antd';
+import { Image, Typography, Tooltip } from 'antd';
+import { useDispatch, useSelector } from 'react-redux';
+import { isEmpty, uniq, uniqBy } from 'lodash';
+
+import PayButton from './payButton';
+
 import RagiImg from '../../static/assets/ragi.png';
 import { parseIDfromHash, maskData } from '../../app-components/utils';
 import { TransactionStatus } from '../../buyer-seller-commons/types';
-import PayButton from './payButton';
 import StatusDetailsModel from './viewStatusDetails';
 import { RootState } from '../../store/rootReducer';
-import { useSelector } from 'react-redux';
-import { useDispatch } from 'react-redux';
-import {CurrentStatusDetails} from '../../store/buyerReducer/actions';
-import { isEmpty } from 'lodash';
-
+import { CurrentStatusDetails } from '../../store/buyerReducer/actions';
 
 const { Text } = Typography;
 
 export const GetCurrentStatusDetails = (pk: any) =>{
     const buyerState = useSelector((state: RootState) => state.buyer);
     const status = buyerState.currentStatusDetails;
-    const [userStatus, setUserStatus] = useState();
+    const [userStatus, setUserStatus] = useState('');
     const dispatch = useDispatch();
     var id = pk.data;
     id = id.substring(12);
+
     const data = {
         "transactionId" : id,
         "user": "buyer"
-    }
-    
+    };
+
     useEffect(() => {
         dispatch(CurrentStatusDetails(data));
-        if(!isEmpty(status)){
-            for(const property in status) {
-                console.log("pk:", status[property].pk === pk.data);
-                if(status[property].pk === pk.data) {
-                    setUserStatus(status[property].event_description);
-                    console.log("status", userStatus);
+    }, []);
+    
+    useEffect(() => {
+        if(!isEmpty(status)) {
+                    for( var i=0;i<status.length;i++) {
+                        if(status[i].pk === pk.data) {
+                            setUserStatus(status[i].event_description);
+                        }
+                     }
                 }
-            }
-           }
-    }, [!isEmpty(status)]);
-   
+    }, [status]);
+
     return (
         <p>{userStatus}</p>
     );
-}
+};
 
 export const transactionColumns = [
     {
@@ -73,7 +75,6 @@ export const transactionColumns = [
                     src={RagiImg}
                 />
                 <div className='margin-l-r-1em'>
-                    {/* <Title level={5}>{cropName} - {record?.subCategory}</Title> */}
                     <p>{produce}</p>
                 </div>
             </div>
@@ -127,12 +128,10 @@ export const transactionColumns = [
         render: (record: any) => {
             const transactionId = record.pk;
             return (
-                    <GetCurrentStatusDetails data ={transactionId} />
-                        
+                <GetCurrentStatusDetails data ={transactionId} />                      
             );
         }, 
     },
-
     {
         title: '',
         key: 'action',
@@ -144,17 +143,16 @@ export const transactionColumns = [
             );
         }
     },
-
     {
         title: '',
         key: 'action',
         render: (record: any) => {
-        return(
-            record?.gsi_status !== TransactionStatus.completed  && 
-            <PayButton record={record} />
-         )
-
-
+            return(
+                record?.gsi_status !== TransactionStatus.completed &&
+                <PayButton record={record} />
+            );
         },
     },
 ];
+
+

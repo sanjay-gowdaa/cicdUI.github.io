@@ -15,7 +15,7 @@ const INITIAL_STATE: SellerStateModel = {
     apmcCropPrice: '',
     timeStamp: {},
     statusDetails: [],
-    currentStatusDetails: ""
+    currentStatusDetails: []
 
 };
 
@@ -54,7 +54,7 @@ const reducer = (state = INITIAL_STATE, action: any) => {
             return {...state, statusDetails: action.payload }
        
         case UPDATE_CURRENT_STATUS_DETAILS:
-            return {...state, currentStatusDetails: action.payload }
+            return {...state, currentStatusDetails: [...state.currentStatusDetails, action.payload] }
 
         default:
             return state;

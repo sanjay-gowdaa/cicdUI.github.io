@@ -34,8 +34,10 @@ export interface StatusDetails{
    
 }
 export interface CurrentStatusDetails{
-    transactionStatusText: string;
-   
+    pk: string;
+    sk: string;
+    event_description: string;
+    event_timestamp: string;
 }
 
 export interface SellerStateModel {

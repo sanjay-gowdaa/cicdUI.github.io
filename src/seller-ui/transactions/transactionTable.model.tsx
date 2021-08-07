@@ -13,31 +13,34 @@ const { Title, Text } = Typography;
 export const GetCurrentStatusDetails = (pk: any) =>{
     const buyerState = useSelector((state: RootState) => state.buyer);
     const status = buyerState.currentStatusDetails;
-    const [userStatus, setUserStatus] = useState();
+    const [userStatus, setUserStatus] = useState('');
     const dispatch = useDispatch();
     var id = pk.data;
     id = id.substring(12);
+
     const data = {
         "transactionId" : id,
         "user": "seller"
-    }
-    
+    };
+
     useEffect(() => {
         dispatch(CurrentStatusDetails(data));
-        if(!isEmpty(status)){
-            for(const property in status) {
-                //console.log("pk:", status[property].pk === pk.data);
-                if(status[property].pk === pk.data) {
-                    setUserStatus(status[property].event_description);
+    }, []);
+    
+    useEffect(() => {
+        if(!isEmpty(status)) {
+                    for( var i=0;i<status.length;i++) {
+                        if(status[i].pk === pk.data) {
+                            setUserStatus(status[i].event_description);
+                        }
+                     }
                 }
-            }
-           }
-    }, [!isEmpty(status)]);
-   
+    }, [status]);
+
     return (
         <p>{userStatus}</p>
     );
-}
+};
 
 export const transactionColumns = [
     {
@@ -136,8 +139,7 @@ export const transactionColumns = [
         render: (record: any) => {
             const transactionId = record.pk;
             return (
-                    <GetCurrentStatusDetails data ={transactionId} />
-                        
+                <GetCurrentStatusDetails data ={transactionId} />                      
             );
         }, 
     },

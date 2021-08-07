@@ -53,7 +53,7 @@ const TradeSumary = (props: componentProps) => {
                     Total price
                 </Col>
                 <Col sm={24} md={12}>
-                    : {buyer_final_price}
+                    : {buyer_final_price} <span className="heading-alerttext">*</span>
                 </Col>
             </Row>
             <Row>
@@ -71,6 +71,9 @@ const TradeSumary = (props: componentProps) => {
                 <Col sm={24} md={12}>
                     : {'12/08/2020 to 15/08/2020'}
                 </Col>
+            </Row>
+            <Row>
+            <h5 className="heading-alerttext"> *The Total price exluded of all taxes</h5>
             </Row>
         </>
     );
