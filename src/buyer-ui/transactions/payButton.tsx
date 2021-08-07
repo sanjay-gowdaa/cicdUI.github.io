@@ -54,7 +54,7 @@ const PayButton = (props: any) => {
                     "display-none"
                 }
             onClick={() => setPaymentDetails(true)}
-            content={isError? "pay retry" : "Pay Now"}
+            content={isError? "Retry and Pay" : "Pay Now"}
         />
         <Modal
             visible={viewPaymentDetails}
