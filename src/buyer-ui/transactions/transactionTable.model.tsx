@@ -10,14 +10,14 @@ import { parseIDfromHash, maskData } from '../../app-components/utils';
 import { TransactionStatus } from '../../buyer-seller-commons/types';
 import StatusDetailsModel from './viewStatusDetails';
 import { RootState } from '../../store/rootReducer';
-import { CurrentStatusDetails } from '../../store/buyerReducer/actions';
+import { currentStatusDetails } from '../../store/buyerReducer/actions';
 
 const { Text } = Typography;
 
 export const GetCurrentStatusDetails = (pk: any) =>{
     const buyerState = useSelector((state: RootState) => state.buyer);
     const status = buyerState.currentStatusDetails;
-    const [userStatus, setUserStatus] = useState();
+    const [userStatus, setUserStatus] = useState('');
     const dispatch = useDispatch();
     var id = pk.data;
     id = id.substring(12);
@@ -28,17 +28,18 @@ export const GetCurrentStatusDetails = (pk: any) =>{
     };
 
     useEffect(() => {
-        dispatch(CurrentStatusDetails(data));
-        if(!isEmpty(status)){
-            for(const property in status) {
-                console.log("pk:", status[property].pk === pk.data);
-                if(status[property].pk === pk.data) {
-                    setUserStatus(status[property].event_description);
-                    console.log("status", userStatus);
+        dispatch(currentStatusDetails(data));
+    }, []);
+
+    useEffect(() => {
+        if(!isEmpty(status)) {
+            for(let i=0; i<status.length; i++) {
+                if(status[i].pk === pk.data) {
+                    setUserStatus(status[i].event_description);
                 }
             }
-           }
-    }, [!isEmpty(status)]);
+        }
+    }, [status]);
 
     return (
         <p>{userStatus}</p>
@@ -148,7 +149,7 @@ export const transactionColumns = [
         render: (record: any) => {
             return(
                 record?.gsi_status !== TransactionStatus.completed  && 
-                <PayButton record={record} />
+                    <PayButton record={record} />
             );
         },
     },

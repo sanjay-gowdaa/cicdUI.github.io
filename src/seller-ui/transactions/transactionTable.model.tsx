@@ -7,7 +7,7 @@ import { TransactioModel } from '../../buyer-seller-commons/types';
 import { parseIDfromHash, maskData } from '../../app-components/utils';
 import StatusDetailsModel from './viewStatusDetails';
 import { RootState } from '../../store/rootReducer';
-import {CurrentStatusDetails} from '../../store/buyerReducer/actions';
+import { currentStatusDetails } from '../../store/sellerReducer/actions';
 
 const { Text } = Typography;
 
@@ -25,15 +25,18 @@ export const GetCurrentStatusDetails = (pk: any) =>{
     };
     
     useEffect(() => {
-        dispatch(CurrentStatusDetails(data));
-        if(!isEmpty(status)){
-            for(const property in status) {
-                if(status[property].pk === pk.data) {
-                    setUserStatus(status[property].event_description);
+        dispatch(currentStatusDetails(data));
+    }, []);
+
+    useEffect(() => {
+        if(!isEmpty(status)) {
+            for(let i=0; i<status.length; i++) {
+                if(status[i].pk === pk.data) {
+                    setUserStatus(status[i].event_description);
                 }
             }
-           }
-    }, [!isEmpty(status)]);
+        }
+    }, [status]);
 
     return (
         <p>{userStatus}</p>

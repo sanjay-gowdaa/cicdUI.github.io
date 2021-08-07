@@ -18,6 +18,7 @@ import {
 import { UserStateModel } from '../../store/loginReducer/types';
 import { MatchRequirementModel } from '../../buyer-seller-commons/types';
 import { BuyerStateModel } from '../../store/buyerReducer/types';
+import { parseIDfromHash, maskData } from '../../app-components/utils';
 
 const { Text, Title } = Typography;
 
@@ -104,7 +105,7 @@ const ConnectMatch = ({cropDetails}: {cropDetails: MatchRequirementModel}) => {
     const userState: UserStateModel = useSelector((state: RootState) => state.loginUser);
     const buyerState: BuyerStateModel = useSelector((state: RootState) => state.buyer);
     const { produceList } = buyerState;
-    const agreementNumber = `PA_${userState.username}_${cropDetails.seller_id}`;// Temp
+    const agreementNumber = `PA_${userState.username}_${maskData(parseIDfromHash(cropDetails.seller_id))}`;// Temp
     const [viewConnectAgreement, setConnectAgreement] = useState(false);
     const [otp, setOtp] = useState("");
     const [isAgreed, setAgreed] = useState(false); 
