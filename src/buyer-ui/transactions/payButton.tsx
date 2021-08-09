@@ -83,7 +83,7 @@ const PayButton = (props: any) => {
                     </Space>
                 </Col>
                 <Col span={12}>
-                    <form className="payment" method="POST" action="http://13.233.91.84:8082/paymentrequest">
+                    <form className="payment" method="POST" action="http://13.233.91.84:8086/paymentrequest">
                         <Space direction="vertical">
                             <Input className="custom-input" type="text" value={id} name="orderId" />
                             <Input type="text" value={ amount} name="orderAmount"/> 
