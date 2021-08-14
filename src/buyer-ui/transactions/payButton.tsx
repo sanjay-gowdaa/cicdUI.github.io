@@ -28,7 +28,7 @@ const PayButton = (props: any) => {
     const id = "order_" + seq;
 
     const user = loginState. is_buyer && "buyer";
-    const displayPay = userStatus === "pay advance of 20 %" || userStatus === "Sorry error occured, payment unsucessfull" 
+    const displayPay = userStatus === "pay advance of 20 %" || userStatus === " pay advance of 40%" || userStatus === "Sorry error occured, payment unsucessfull" 
         ? true : false
     const iserror = userStatus === "Sorry error occured, payment unsucessfull"? true : false
     
