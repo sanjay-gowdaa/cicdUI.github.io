@@ -1,16 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { Image, Typography, Tooltip } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
-import { isEmpty, uniq, uniqBy } from 'lodash';
-
+import { isEmpty } from 'lodash';
 import PayButton from './payButton';
-
 import RagiImg from '../../static/assets/ragi.png';
 import { parseIDfromHash, maskData } from '../../app-components/utils';
 import { TransactionStatus } from '../../buyer-seller-commons/types';
 import StatusDetailsModel from './viewStatusDetails';
 import { RootState } from '../../store/rootReducer';
-import { CurrentStatusDetails } from '../../store/buyerReducer/actions';
+import { currentStatusDetails } from '../../store/buyerReducer/actions';
+
 
 const { Text } = Typography;
 
@@ -28,17 +27,17 @@ export const GetCurrentStatusDetails = (pk: any) =>{
     };
 
     useEffect(() => {
-        dispatch(CurrentStatusDetails(data));
+        dispatch(currentStatusDetails(data));
     }, []);
-    
+
     useEffect(() => {
         if(!isEmpty(status)) {
-                    for( var i=0;i<status.length;i++) {
-                        if(status[i].pk === pk.data) {
-                            setUserStatus(status[i].event_description);
-                        }
-                     }
+            for(let i=0; i<status.length; i++) {
+                if(status[i].pk === pk.data) {
+                    setUserStatus(status[i].event_description);
                 }
+            }
+        }
     }, [status]);
 
     return (
@@ -148,8 +147,8 @@ export const transactionColumns = [
         key: 'action',
         render: (record: any) => {
             return(
-                record?.gsi_status !== TransactionStatus.completed &&
-                <PayButton record={record} />
+                record?.gsi_status !== TransactionStatus.completed  && 
+                    <PayButton record={record} />
             );
         },
     },

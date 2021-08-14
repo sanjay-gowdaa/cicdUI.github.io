@@ -8,7 +8,7 @@ import MobileRegisterModal from '../app-components/mobileRegisterModal';
 import { contactUs } from '../constants';
 
 const MobileDrawer = () => {
-    const [ t , i18n ] = useTranslation('common');
+    const { t } = useTranslation('common');
     const [visible, setVisible] = useState(false);
     const [openMobileRegModel, setMobileRegModal] = useState(false);
 

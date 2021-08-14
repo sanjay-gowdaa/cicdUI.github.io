@@ -1,8 +1,7 @@
-$col-shade-green: #12805C;
+$col-shade-green: #12805c;
 $col-shade-error: #e90000;
 
 .buyer-ui-app {
-
     .landing-page-header-bar {
         position: unset;
 
@@ -10,7 +9,7 @@ $col-shade-error: #e90000;
             display: none;
         }
     }
-    
+
     .buyer-ui-dashboard {
         padding: 2em;
 
@@ -18,7 +17,7 @@ $col-shade-error: #e90000;
             width: 100%;
         }
     }
-  
+
     .add-produce-btn {
         width: 280px;
         height: 52px;
@@ -26,11 +25,10 @@ $col-shade-error: #e90000;
         font-size: 18px;
     }
 }
-  
+
 .add-produce-modal .ant-modal-content {
     padding: 2em !important;
 }
-
 
 .custom-masterlist-modal {
     .ant-modal-header {
@@ -59,14 +57,14 @@ $col-shade-error: #e90000;
         }
 
         .produce-scroll-bar {
-            overflow-y: scroll;    
+            overflow-y: scroll;
         }
 
         .custom-search {
             width: 70%;
             padding-left: 0.5em;
             padding-bottom: 0.5em;
-            
+
             .ant-input-group > .ant-input:first-child {
                 border-radius: 0.3em;
                 font-size: smaller;
@@ -82,7 +80,7 @@ $col-shade-error: #e90000;
                 color: #c1c1c1;
             }
         }
-        
+
         .produce-list-item:hover,
         .variety-list-item:hover {
             background-color: #fce3ba;
@@ -97,7 +95,7 @@ $col-shade-error: #e90000;
         .selected-variety-item {
             background-color: #fce3ba;
             border-left: 0.5em solid #f5a31a;
-            
+
             .anticon-caret-right {
                 color: black;
             }
@@ -111,7 +109,7 @@ $col-shade-error: #e90000;
             }
         }
     }
-    
+
     .selected-grade-item {
         background-color: #fce3ba;
 
@@ -187,9 +185,10 @@ $col-shade-error: #e90000;
 .pay-retry {
     background-color: #f5a31a !important;
     border-color: #f5a31a !important;
-    border-radius: 3px
+    border-radius: 3px;
 }
 
 .heading-alerttext {
-    color:$col-shade-error;
-  }
+    color: $col-shade-error !important;
+}
+

@@ -13,7 +13,7 @@ import { englishStyling, isEnglish, kannadaStyling } from '../static/translation
 const { Paragraph, Text, Title } = Typography;
 
 const Commodities = () => {
-    const [ t,i18n ] = useTranslation('common');
+    const { t } = useTranslation('common');
     const customStyles = isEnglish(t("language")) ? englishStyling : kannadaStyling;
 
     return (

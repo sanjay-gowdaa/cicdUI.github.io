@@ -28,11 +28,12 @@ export interface CropModel {
     termsAndConditions?: string;
     apmcRateChange: any;
 }
+
 export interface StatusDetails{
     event_description: string;
     event_timestamp: string;
-   
 }
+
 export interface CurrentStatusDetails{
     pk: string;
     sk: string;
@@ -55,5 +56,5 @@ export interface SellerStateModel {
     apmcCropPrice: string;
     timeStamp: any;
     statusDetails:Array<StatusDetails>
-    currentStatusDetails: any;
+    currentStatusDetails: Array<CurrentStatusDetails>;
 }

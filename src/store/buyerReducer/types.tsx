@@ -38,6 +38,7 @@ export interface MasterListApiFormat {
     category_name: string;
     grade_name: string;
 }
+
 export interface PaymentDetails{
     orderID: string;
     orderAmount: string;
@@ -48,7 +49,6 @@ export interface PaymentDetails{
     txTime: string;
 }
 
-
 export interface PaymentRedirectionDetails{
     transactionId: string;
     paymentNo: string;
@@ -57,8 +57,8 @@ export interface PaymentRedirectionDetails{
 export interface StatusDetails{
     event_description: string;
     event_timestamp: string;
-   
 }
+
 export interface CurrentStatusDetails{
     pk: string;
     sk: string;
@@ -81,9 +81,9 @@ export interface BuyerStateModel {
     reviewsList: Array<ReviewRating>;
     timeStamp: any;
     isMatchesFetching: boolean;
-    paymentDetails:Array<PaymentDetails>;
+    paymentDetails: Array<PaymentDetails>;
     paymentRedirectionDetails: any;
-    statusDetails:Array<StatusDetails>;
+    statusDetails: Array<StatusDetails>;
     currentStatusDetails: Array<CurrentStatusDetails>;
 }
 

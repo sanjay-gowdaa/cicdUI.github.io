@@ -1,11 +1,13 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Tabs, Typography } from 'antd';
-import { RootState } from '../../store/rootReducer';
-import { TransactionStatus } from '../../buyer-seller-commons/types';
+
 import OnGoingTransactions from './onGoing';
 import CompletedTransactions from './completed';
 import PendingTransactions from './pending';
+
+import { RootState } from '../../store/rootReducer';
+import { TransactionStatus } from '../../buyer-seller-commons/types';
 import { getSellerTransactionList } from '../../store/sellerReducer/actions';
 
 const { Title } = Typography;

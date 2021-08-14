@@ -28,34 +28,35 @@ const PayButton = (props: any) => {
     const id = "order_" + seq;
 
     const user = loginState. is_buyer && "buyer";
-    const displayPay = userStatus === "pay advance of 20 %" || userStatus === " pay advance of 40%" || userStatus === "Sorry error occured, payment unsucessfull" 
-        ? true : false
-    const iserror = userStatus === "Sorry error occured, payment unsucessfull"? true : false
-    
+    const displayPay = 
+        (userStatus === "pay advance of 20 %") || 
+            (userStatus === " pay advance of 40%") ||
+                (userStatus === "Sorry error occured, payment unsucessfull")
+                ? true : false;
+    const isError = userStatus === "Sorry error occured, payment unsucessfull"? true : false;
+
     useEffect(() => {
         if(!isEmpty(status)) {
-                    for( var i=0;i<status.length;i++) {
-                        if(status[i].pk === record.pk) {
-                            setUserStatus(status[i].event_description);
-                        }
-                     }
+            for(let i=0; i<status.length; i++) {
+                if(status[i].pk === record.pk) {
+                    setUserStatus(status[i].event_description);
                 }
+            }
+        }
     }, [status]);
+
     return (
         <>
         <PrimaryBtn
             className={
                 displayPay ?
-                    iserror ? 
-                    "pay-retry": "vikas-btn-radius" :
+                    isError ? 
+                        "pay-retry": "vikas-btn-radius" :
                     "display-none"
                 }
-
             onClick={() => setPaymentDetails(true)}
-            content={iserror? "Pay Retry" : "Pay Now"}
+            content={isError? "Retry and Pay" : "Pay Now"}
         />
-        {console.log("iserror", iserror)}
-        {console.log("displayPay", displayPay)}
         <Modal
             visible={viewPaymentDetails}
             title={<Title level={3}>Payment Details</Title>}

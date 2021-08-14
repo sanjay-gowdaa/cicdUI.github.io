@@ -25,7 +25,7 @@ const App = (props: any) => {
     const dispatch = useDispatch();
     const [signUpPopupVisible, setSignUpPopupVisible] = useState(false);
     const [openMobileRegModel, setMobileRegModal] = useState(false);
-    const [t, i18n] = useTranslation('common');
+    const { t } = useTranslation('common');
     const customStyles = isEnglish(t("language")) ? englishStyling : kannadaStyling;
     const banner = isEnglish(t("language")) ? Banner : KannadaBanner ;
 

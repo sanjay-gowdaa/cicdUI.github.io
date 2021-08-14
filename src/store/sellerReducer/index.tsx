@@ -16,7 +16,6 @@ const INITIAL_STATE: SellerStateModel = {
     timeStamp: {},
     statusDetails: [],
     currentStatusDetails: []
-
 };
 
 const reducer = (state = INITIAL_STATE, action: any) => {

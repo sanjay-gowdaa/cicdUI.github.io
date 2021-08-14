@@ -16,7 +16,7 @@ import { isEnglish } from '../static/translations/constants';
 
 const UserBasicActions = ({ history, popUpTrigger }: { history: any, popUpTrigger: any }) => {
     const {signUpPopupVisible, setSignUpPopupVisible} = popUpTrigger;
-    const [ t , i18n ] = useTranslation('common');
+    const { t } = useTranslation('common');
 
     return (
         <div className="display-flex-row align-center action-buttons">
@@ -55,7 +55,7 @@ const HeaderActions = ({ history, isLoggedIn, popUpTrigger }: { history: any, is
 };
 
 const Header = (headerProps: any) => {
-    const [ t , i18n ] = useTranslation('common');
+    const { t } = useTranslation('common');
     const { history, showActions, isLoggedIn, popUpTrigger } = headerProps;
     const logo = isEnglish(t("language")) ? Logo : KannadaLogo;
 

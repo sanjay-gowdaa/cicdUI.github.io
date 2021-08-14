@@ -14,7 +14,7 @@ import { englishStyling, isEnglish, kannadaStyling } from '../static/translation
 const { Text, Title } = Typography;
 
 const Ecosystem = () => {
-    const [ t, i18n ] = useTranslation('common');
+    const { t } = useTranslation('common');
     const customStyles = isEnglish(t("language")) ? englishStyling : kannadaStyling;
 
     return (
@@ -58,7 +58,7 @@ const Ecosystem = () => {
                         </Space>
                     </Col>
                 </Row>
-                <img className="nature-image" src={Nature} alt="nature-image" />
+                <img className="nature-image" src={Nature} alt="nature" />
             </div>
         </div>
     );

@@ -1,21 +1,21 @@
 {
-    "language":"en",
+    "language": "en",
     
-    "title":"VikasBandhu",
+    "title": "VikasBandhu",
     
     "landing_page": {
         "actions": {
             "login": "Login",
             "register": "Register",
-            "terms_and_conditions":"Terms and Conditions",
-            "privacy_policy":"Privacy Policy",
-            "read_more":"Read More",
-            "submit":"Submit",
-            "explore":"Explore VikasBandhu"
+            "terms_and_conditions": "Terms and Conditions",
+            "privacy_policy": "Privacy Policy",
+            "read_more": "Read More",
+            "submit": "Submit",
+            "explore": "Explore VikasBandhu"
         },
         "header": {
             "breadcrumb": {
-                "home":"Home",
+                "home": "Home",
                 "aim": "Aim",
                 "ecosystem": "Ecosystem",
                 "commodities": "Commodities",
@@ -29,123 +29,135 @@
     },
     
     "home_page": {
-        "landing_page_card_title":"Be a part of Vikasbandhu family!",
-        "flash_text":"Beware of any Fraudulent Websites. <bold>Vikasbandhu does not charge any Registration fee</bold>. Visit only https://vikasbandhu.in",
-        "text_1":"Friendly E-Market Place for",
-        "text_2":"Buyers and Sellers to connect",
-        "text_3":"engage and transact seamlessly",
-        "text_4":"for win-win relationships",
+        "landing_page_card_title": "Be a part of Vikasbandhu family!",
+        "flash_text": "Beware of any Fraudulent Websites. <bold>Vikasbandhu does not charge any Registration fee</bold>. Visit only https://vikasbandhu.in",
+        "text_1": "Friendly E-Market Place for",
+        "text_2": "Buyers and Sellers to connect",
+        "text_3": "engage and transact seamlessly",
+        "text_4": "for win-win relationships",
         "mobile_home_text": "A friendly digital E-market place for agricultural produce"
     },
     
     "aim_page": {
-        "title":"VikasBandhu helps you in",
-        "aim_card_1":"Connecting buyers and sellers",
-        "aim_card_2":"Direct selling of agricultural produce",
-        "aim_card_3":"Ensuring best price for both buyer and seller",
-        "aim_card_4":"Providing live information on pricing for study",
-        "aim_card_5":"Partnering Government's vision",
-        "video_link":"Please view this video to understand",
-        "link_name":"VikasBandhu aim and solution"
+        "title": "VikasBandhu helps you in",
+        "aim_card_1": "Enable Informed decisions using Technology via Price Discovery",
+        "aim_card_2": "Big data driven ranking system ensuring a smart match",
+        "aim_card_3": "FAAS - value and linkages for  Farm to Door Solution",
+        "aim_card_4": "Deployment of Local Resource Persons to support technology to last mile",
+        "aim_card_5": "100% digital transactions with full clarity",
+        "aim_card_6": "Partnering Government's vision",
+        "video_link": "Please view this video to understand",
+        "link_name": "VikasBandhu aim and solution"
     },
 
     "ecosystem_page": {
-        "title":"At VikasBandhu, we build an ecosystem that would",
-        "text_1":"Connect buyers and sellers in a simple to use platform.",
-        "text_2":"Provide dynamic information on pricing.",
-        "text_3":"Meet demand and supply.",
-        "text_4":"Facilitate a Door-to-door solution of logistics.",
-        "text_5":"Boost rural economy by providing local employment."
+        "title": "At VikasBandhu, we build an ecosystem that would",
+        "text_1": "Connect buyers and sellers in a simple to use platform.",
+        "text_2": "Provide dynamic information on pricing.",
+        "text_3": "Meet demand and supply.",
+        "text_4": "Facilitate a Door-to-door solution of logistics.",
+        "text_5": "Boost rural economy by providing local employment."
     },
 
     "commodities_page": {
-        "title":"Commodities we facilitate",
-        "paragraph":"VikasBandhu focus is currently limited to the non perishable agricultural produce from Farmers and Farmer Self help groups. The coverage initially is targetted in Karnataka covering the  major crops native to this region. The scope of produce is intended/limited to be below categories at this point.",
+        "title": "Commodities we facilitate",
+        "paragraph": "VikasBandhu focus is currently limited to the non perishable agricultural produce from Farmers and Farmer Self help groups. The coverage initially is targetted in Karnataka covering the  major crops native to this region. The scope of produce is intended/limited to be below categories at this point.",
         "commodities_name":{
-            "1":"Staple Crops",
-            "2":"Pulses",
-            "3":"Cash Crops",
-            "4":"Spices",
-            "5":"Oil Seeds"
+            "1": "Staple Crops",
+            "2": "Pulses",
+            "3": "Cash Crops",
+            "4": "Spices",
+            "5": "Oil Seeds"
         }
     },
 
     "users_page": {
-        "title":"VikasBandhu for",
+        "title": "VikasBandhu for",
         "user_card1": {
-            "title":"Sellers",
-            "subtitle":"Atmanirbar Farmers towards Atmanirbhar Bharat",
-            "text":"The farmer and farmer-self help groups are the centre of our efforts. We help to connect sellers to buyers directly. We aim to provide Logistics and better price for their produce at their doorstep."
+            "title": "Sellers",
+            "subtitle": "Atmanirbar Farmers towards Atmanirbhar Bharat",
+            "text": "The farmer and farmer-self help groups are the centre of our efforts. We help to connect sellers to buyers directly. We aim to provide Logistics and better price for their produce at their doorstep."
         },
         "user_card2": {
-            "title":"Buyers",
-            "subtitle":"Buyer Community Optimize and enable direct connect",
-            "text":" VikasBandhu attempts to identify the right quantity source, taking care of the logistics, minimizing on overheads with customized packing where requested."
+            "title": "Buyers",
+            "subtitle": "Buyer Community Optimize and enable direct connect",
+            "text": "VikasBandhu attempts to identify the right quantity source, taking care of the logistics, minimizing on overheads with customized packing where requested."
         }
     },
 
     "about_us": {
-        "title":"About us",
-        "paragraph":"We are a young enterprise working with knowledge and passion for partnering Government's vision of Freedom, Protection, and Higher Income to farmer communities. We have worked tirelessly with farmers and everyone in the value chain to understand the needs.We are committed to ensure a meaningful facilitation to the buyers and sellers.",
+        "title": "About us",
+        "paragraph": "We are a young enterprise working with knowledge and passion for partnering Government's vision of Freedom, Protection, and Higher Income to farmer communities. We have worked tirelessly with farmers and everyone in the value chain to understand the needs.We are committed to ensure a meaningful facilitation to the buyers and sellers.",
         "vision_card": {
-            "text":"Our Vision",
-            "description":"Ensure that we create a brand which is synonymous with trust and respect amongst communities in the agriculture space."
+            "text": "Our Vision",
+            "description": "Ensure that we create a brand which is synonymous with trust and respect amongst communities in the agriculture space."
         },
         "philosophy_card": {
-            "text":"Our Philosophy",
-            "description":"Continuously improve our services to add value and Brand to our business, our partners and our communities. "
+            "text": "Our Philosophy",
+            "description": "Continuously improve our services to add value and Brand to our business, our partners and our communities. "
         },
-        "title1":"Partnering Government's Vision",
-        "paragraph1":"We take pride in partnering Government's vision of doubling farmer's income by reducing middlemen. This is our contribution to nation building and making it truly 'Atmanirbhar Bharat'."
+        "title1": "Partnering Government's Vision",
+        "paragraph1": "We take pride in partnering Government's vision of doubling farmer's income by reducing middlemen. This is our contribution to nation building and making it truly 'Atmanirbhar Bharat'."
     },
 
     "our_team": {
-        "title":"Our Team",
-        "subtitle":"Management",
-        "name": {
-            "1":"G S Nagappa",
-            "2":"Suma Sadananda",
-            "3":"Sadananda Murthy"
-        },
-        "designation": {
-            "1":"Director",
-            "2":"Director",
-            "3":"Leads Engg. & Ops."
-        },
-        "advisors": {
-            "title":"Advisors",
+        "title": "Our Team",
+        "founders": {
+            "title": "Management",
             "name": {
-                "1":"Satish Chandra C S",
-                "2":"Sachin Narang",
-                "3":"C V Kulkarni"
+                "1": "G SADANANDA MURTHY",
+                "2": "G S NAGAPPA",
+                "3": "SUMA SADANANDA",
+                "4": "Satish Chandra C S"
             },
             "designation": {
-                "1":"Agriculture Technology and Finance",
-                "2":"Marketing Professional(MBA)",
-                "3":"Sales Proffessional"
+                "1": "Director, <bold>Eng. and Technology</bold>",
+                "2": "Director, <bold>Marketing and Sales</bold>",
+                "3": "Director, <bold>Administration</bold>",
+                "4": "Agriculture Technology and Finance"
+            },
+            "subDesignation": {
+                "1": "(Ex. Broadcom, NetApp, Motorola)",
+                "2": "(Ex. COO Diageo India)"
             },
             "description": {
-                "1":"Over three decades of experience as a valuator, finance researcher, mentor in Agri Tech. He is guiding us a mentor providing the needed support on Agriculture Strategy, roadmap and finance.",
-                "2":"Over two decades of marketing leadership experience at leading FMCG and lifestyle companies. He is guiding us on the go-to-market strategies.",
-                "3":"Sales professional with over three decades of experience in FMCG and beverages. He is helping define and structure sales and operations."
+                "1": "Sadananda Murthy is a management & delivery Leader with more than two decades of Experience in building software products, running Programs and operations at <bold>Fortune 500</bold> companies. He is focusing his efforts to develop and drive digital transformation to enable local community and groups at large.",
+                "2": "G S Nagappa’s has over four decades of leadership experience. He retired as COO at Diageo India. Today, as a veteran and philanthropist, he continues to passionately work towards building new businesses by understanding new opportunities in Indian market. He has a deep commitment to community and aims to achieve shared success.",
+                "3": "Suma Sadananda is deeply committed to Social endeavours that  lead her to take up teaching profession in the initial years. After focusing on family , she has started her second innings to pursue her interests. She is keen to promote product lines that solve local problems.",
+                "4": "Over three decades of experience as a valuator, finance researcher, mentor in Agri Tech. He is guiding us a mentor providing the needed support on Agriculture Strategy, roadmap and finance."
+            }    
+        },
+        "advisors": {
+            "title": "Advisors",
+            "name": {
+                "1": "Sachin Narang",
+                "2": "C V Kulkarni"
+            },
+            "designation": {
+                "1": "Marketing Professional(MBA)",
+                "2": "Sales Proffessional"
+            },
+            "description": {
+                "1": "Over two decades of marketing leadership experience at leading FMCG and lifestyle companies. He is guiding us on the go-to-market strategies.",
+                "2": "Sales professional with over three decades of experience in FMCG and beverages. He is helping define and structure sales and operations."
             }
         }
     },
 
     "legal_page": {
-        "title":"Legal"
+        "title": "Legal"
     },
 
     "contact_us_page": {
-        "title":"Contact Us",
-        "address1":"617, Shivam, Royal Park Residency,",
-        "address2":"J P Nagar 9th Phase, Bengaluru-560062",
+        "title": "Contact Us",
+        "address1": "617, Shivam, Royal Park Residency,",
+        "address2": "J P Nagar 9th Phase, Bengaluru-560062",
         "contact_form": {
-            "title":"We would like to hear from you!",
-            "full_name":"Full Name",
-            "email":"Email",
-            "phone":"Phone",
-            "message":"Message"
+            "title": "We would like to hear from you!",
+            "full_name": "Full Name",
+            "email": "Email",
+            "phone": "Phone",
+            "message": "Message"
         }
     }
 }

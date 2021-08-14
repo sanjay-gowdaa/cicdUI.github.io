@@ -1,15 +1,17 @@
 import React from 'react';
 import { Divider, Rate, Typography } from 'antd';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
+
+import Review from './review';
 
 import { RootState } from '../../store/rootReducer';
-import Review from './review';
 
 const { Title } = Typography;
 
 const ReviewsSection = () => {
     const buyerState = useSelector((state: RootState) => state.buyer);
     const { reviewsList } = buyerState;
+
     return (
         <div id="buyer-ui-feedback">
             <Title level={2}>Reviews</Title>
