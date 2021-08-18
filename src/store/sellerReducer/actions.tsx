@@ -33,10 +33,10 @@ export const updateStatusDetails = (statusDetails: Array<any>) => {
     };
 };
 
-export const updateCurrentStatusDetails = (currentStatusDetails: any) => {
+export const updateCurrentStatusDetails = (status: string) => {
     return {
         type: UPDATE_CURRENT_STATUS_DETAILS,
-        payload: currentStatusDetails,
+        payload: status,
     };
 };
 
@@ -292,10 +292,10 @@ export const getStatus = (userData:any) => {
 export const currentStatusDetails = ( userData: any) => {
     return async(dispatch: any, getState: any) => {
         const currentStatusResponse = await getCurrentStatusDetails(userData);
-        
         if(!isEmpty(currentStatusResponse)) {
             const status = currentStatusResponse;
-            dispatch(updateCurrentStatusDetails(status));
+            dispatch(updateCurrentStatusDetails(status[0]));
         }
     }
 };
+
