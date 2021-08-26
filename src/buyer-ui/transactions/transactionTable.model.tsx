@@ -7,6 +7,7 @@ import RagiImg from '../../static/assets/ragi.png';
 import { parseIDfromHash, maskData } from '../../app-components/utils';
 import { TransactionStatus } from '../../buyer-seller-commons/types';
 import StatusDetailsModel from './viewStatusDetails';
+import TransactionDetailsModel from './viewTransactionDetails';
 import { RootState } from '../../store/rootReducer';
 import { currentStatusDetails } from '../../store/buyerReducer/actions';
 
@@ -75,6 +76,7 @@ export const transactionColumns = [
                 />
                 <div className='margin-l-r-1em'>
                     <p>{produce}</p>
+                    <TransactionDetailsModel/>
                 </div>
             </div>
             );
