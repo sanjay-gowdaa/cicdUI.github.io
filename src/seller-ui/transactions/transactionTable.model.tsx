@@ -14,7 +14,7 @@ const { Text } = Typography;
 export const GetCurrentStatusDetails = (pk: any) =>{
     const buyerState = useSelector((state: RootState) => state.buyer);
     const status = buyerState.currentStatusDetails;
-    const [userStatus, setUserStatus] = useState();
+    const [userStatus, setUserStatus] = useState('');
     const dispatch = useDispatch();
     var id = pk.data;
     id = id.substring(12);

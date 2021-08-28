@@ -28,10 +28,14 @@ const PayButton = (props: any) => {
     const id = "order_" + seq;
 
     const user = loginState. is_buyer && "buyer";
-    const displayPay = 
-        (userStatus === "pay advance of 20 %") ||
-            (userStatus === "Sorry error occured, payment unsucessfull")
-                ? true : false;
+    const getDisplay = (status: string) => {
+        var substring = status.substring(0,4).toLowerCase();
+        if(substring === "pay " || status === "Sorry error occured, payment unsucessfull") {
+            return true;
+        }
+        return false;
+    };
+    const displayPay  = getDisplay(userStatus);
     const isError = userStatus === "Sorry error occured, payment unsucessfull"? true : false;
 
     useEffect(() => {
