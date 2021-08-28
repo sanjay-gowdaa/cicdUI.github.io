@@ -24,40 +24,33 @@ const Ecosystem = () => {
                 <Title className={`col-green ${customStyles.ecosystemTitle}`} level={2}>
                     {t('ecosystem_page.title')}
                 </Title>
-                <Row>
-                    <Col span={2}>
-                        <Space direction="vertical" className="bulletin-image" size="large">
-                        <Image className="first-bulletin-image" src={Network} preview={false} />
-                        <Image src={Rupee} preview={false} />
-                        <Image src={Sync} preview={false} />
-                        <Image src={Lorry} preview={false} />
-                        <Image className="last-bulletin-image" src={SocialCare} preview={false} />
-                        </Space>
-                    </Col>
-                    <Col className="bulletin-col">
-                        <Space
-                            direction="vertical"
-                            className={customStyles.bulletinText}
-                            size="small"
-                        >
-                            <Text className="bulletin-points">
-                                {t('ecosystem_page.text_1')}<br/>
-                            </Text>
-                            <Text className="bulletin-points">
-                                <br/>{t('ecosystem_page.text_2')}<br/>
-                            </Text>
-                            <Text className="bulletin-points">
-                                <br/>{t('ecosystem_page.text_3')}<br/>
-                            </Text>
-                            <Text className="bulletin-points">
-                                <br/>{t('ecosystem_page.text_4')}<br/>
-                            </Text>
-                            <Text className="bulletin-points">
-                                <br/>{t('ecosystem_page.text_5')}
-                            </Text>
-                        </Space>
-                    </Col>
-                </Row>
+                <Space
+                    direction="vertical"
+                    className={customStyles.bulletinText}
+                    style={{height: "20rem"}}
+                    size="small"
+                >
+                    <Text>
+                        <Image style={{paddingRight: '1rem'}} src={Network} preview={false} />
+                        {t('ecosystem_page.text_1')}<br/>
+                    </Text>
+                    <Text>
+                        <Image style={{paddingRight: '1rem'}} src={Rupee} preview={false} />
+                        {t('ecosystem_page.text_2')}<br/>
+                    </Text>
+                    <Text>
+                        <Image style={{paddingRight: '1.5rem'}} src={Sync} preview={false} />
+                        {t('ecosystem_page.text_3')}<br/>
+                    </Text>
+                    <Text>
+                        <Image style={{paddingRight: '1rem'}} src={Lorry} preview={false} />
+                        {t('ecosystem_page.text_4')}<br/>
+                    </Text>
+                    <Text>
+                        <Image style={{paddingRight: '1rem'}} src={SocialCare} preview={false} />
+                        {t('ecosystem_page.text_5')}
+                    </Text>
+                </Space>
                 <img className="nature-image" src={Nature} alt="nature" />
             </div>
         </div>

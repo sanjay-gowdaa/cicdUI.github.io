@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { Table, Typography } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
+import { ReloadOutlined } from '@ant-design/icons';
+
+import ViewCropDetails from './viewCropDetails';
+import { componentCallBacksModel, matchesColumns } from './matchesTable.model';
 
 import { RootState } from '../../store/rootReducer';
-import { componentCallBacksModel, matchesColumns } from './matchesTable.model';
-import ViewCropDetails from './viewCropDetails';
-import { rejectMatches } from '../../store/buyerReducer/actions';
+import { getProduceList, rejectMatches } from '../../store/buyerReducer/actions';
 import { initialEmptyCropDetail } from '../../buyer-seller-commons/constants';
 import { MatchRequirementModel } from '../../buyer-seller-commons/types';
 
@@ -31,11 +33,12 @@ const MatchedSection = () => {
     const [openDetailsModal, setOpenDetailsModal] = useState(false);
     const [selectedCropDetails, setSelectedCropDetails] = useState(initialEmptyCropDetail);
     const [processedMatches, setProcessedMatches] = useState([]);
+    const [reloadClicked, setReloadClicked] = useState(0);
     const buyerState = useSelector((state: RootState) => state.buyer);
 
     const rejectTheMatch = (curMatchRecord: MatchRequirementModel) => {
-        const {buyer_id, buyer_crop_id, seller_id,
-            seller_crop_id, matched_quantity} = curMatchRecord;
+        const { buyer_id, buyer_crop_id, seller_id,
+            seller_crop_id, matched_quantity } = curMatchRecord;
         dispatch(
             rejectMatches({buyer_id, buyer_crop_id, seller_id,
                 seller_crop_id, matched_quantity})
@@ -53,9 +56,18 @@ const MatchedSection = () => {
         setProcessedMatches(processedData);
     }, [buyerState.matchesList]);
 
+    useEffect(() => {
+        if(reloadClicked !==0)
+            dispatch(getProduceList());
+    }, [reloadClicked]);
+
     return (
         <div id="buyer-ui-matches">
             <Title level={2}>My Matches</Title>
+            <ReloadOutlined
+                className={reloadClicked === 5 ? `display-none` : `on-reload-matches`}
+                onClick={() => setReloadClicked(reloadClicked + 1)}
+            />
             <Table
                 loading={buyerState.isMatchesFetching}
                 className="margin-t-1em"

@@ -8,7 +8,8 @@ import {
     Modal,
     Row,
     Select,
-    InputNumber
+    Divider,
+    Typography
 } from 'antd';
 import { useDispatch } from 'react-redux';
 import moment from 'moment';
@@ -17,8 +18,10 @@ import { addNewProduce, editProduce } from '../../../store/buyerReducer/actions'
 import CancelBtn from '../../../app-components/cancelBtn';
 import { MasterListApiFormat, ProduceModel } from '../../../store/buyerReducer/types';
 
+const { Text } = Typography;
 const { TextArea } = Input;
 const { Option } = Select;
+const { RangePicker } = DatePicker;
 
 const singleLabelFieldLayout = {
     labelCol: { span: 24 },
@@ -69,7 +72,12 @@ const AddCropModal = ({
     }: AddCropModalProps) => {
     const [form] = Form.useForm();
     const dispatch = useDispatch();
-    const [formInitialize, setFormInitValues] = useState({produce_name: '', quantity: '', delivery_by: '', additional_info: ''});
+    const defaultDateStart = new Date();
+    const defaultDateEnd = new Date();
+    defaultDateStart.setDate(defaultDateStart.getDate() + 4);
+    defaultDateEnd.setDate(defaultDateEnd.getDate() + 20);
+    const [formInitialize, setFormInitValues] =
+        useState({produce_name: '', quantity: '', delivery_by: '', additional_info: ''});
 
     useEffect(() => {
         if(modalVisible) {
@@ -120,6 +128,10 @@ const AddCropModal = ({
         return {...currentProduceRecord, delivery_by: deliveryByProcessed, produce_name};
     };
 
+    const disabledDate: any = (currentDate: any) => {
+        return currentDate < moment(defaultDateStart, 'YYYY-MM-DD') || currentDate > moment(defaultDateEnd, 'YYYY-MM-DD');
+    };
+
     return (
         <Modal
             title="Add Interested Crops"
@@ -157,24 +169,87 @@ const AddCropModal = ({
                             rules={[{ required: true, message: 'Please input the Qunatity!' }]}
                         >
                             <Form.Item name="quantity">
-                                <InputNumber
+                                <Input
                                     style={{ width: 160 }}
                                     className="custom-input"
                                     placeholder="In quintal"
-                                    stringMode
+                                    suffix="Qtl"
                                 />
                             </Form.Item>
-                            <span className="additional-text">Qtl</span>
                         </Form.Item>
                         <Form.Item
                             label="Request Delivery By"
                             name="delivery_by"
                             rules={[{ type: 'object', required: true, message: 'Please select time!' }]}
                         >
-                            <DatePicker className="custom-input" />
+                            <DatePicker
+                                className="custom-input"
+                                format="YYYY-MM-DD"
+                                defaultValue={moment(defaultDateStart, 'YYYY-MM-DD')}
+                                disabledDate={disabledDate}
+                            />
                         </Form.Item>
-                        <Form.Item label="Additional Information" name="additional_info">
-                            <TextArea className="custom-input" rows={4} />
+                    </Col>
+                    <Divider className="height-full" type="vertical" style={{height: "25rem", color: "black" }} />
+                    <Col span={12}>
+                        <Form.Item label={<Text style={{fontWeight: 700}} >Seller Specifications</Text>}>
+                            <Form.Item
+                                labelCol={{ span: 10 }}
+                                wrapperCol={{ span: 12 }}
+                                labelAlign="left"
+                                label="Moisture"
+                                name="moisture"
+                            >
+                                <Input
+                                    className="custom-input"
+                                    placeholder="Moisture in %"
+                                />
+                            </Form.Item>
+                            <Form.Item
+                                labelCol={{ span: 10 }}
+                                wrapperCol={{ span: 12 }}
+                                labelAlign="left"
+                                label="Fungus"
+                                name="fungus"
+                            >
+                                <Input
+                                    className="custom-input"
+                                    placeholder="Fungus in %"
+                                />
+                            </Form.Item>
+                            <Form.Item
+                                labelCol={{ span: 10 }}
+                                wrapperCol={{ span: 12 }}
+                                labelAlign="left"
+                                label="Packing Type"
+                                name="packing_type"
+                            >
+                                <Input
+                                    className="custom-input"
+                                    placeholder="Packing type"
+                                />
+                            </Form.Item>
+                            <Form.Item
+                                labelCol={{ span: 10 }}
+                                wrapperCol={{ span: 12 }}
+                                labelAlign="left"
+                                label="Packing Size"
+                                name="packing_size"
+                            >
+                                <Input
+                                    className="custom-input"
+                                    placeholder="Packing size in kg"
+                                />
+                            </Form.Item>
+                            <Form.Item
+                                labelCol={{ span: 10 }}
+                                wrapperCol={{ span: 12 }}
+                                labelAlign="left"
+                                label="Other Information"
+                                name="other_info"
+                            >
+                                <TextArea className="custom-input" rows={4} />
+                            </Form.Item>
                         </Form.Item>
                     </Col>
                 </Row>

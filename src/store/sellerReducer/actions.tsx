@@ -138,11 +138,12 @@ export const updatedFetchLiveApmcRate = ({
         const apmcPriceDetails = (!isEmpty(apmcPriceResponse) && !isNull(apmcPriceResponse)) ? apmcPriceResponse : [];
         if(apmcPriceDetails.length) {
             const {latest_apmc_price} = apmcPriceDetails[0] || {}
-            dispatch(updateApmcCropRate(latest_apmc_price));
-        } else {
-            dispatch(updateApmcCropRate('No records found'));
+            if(latest_apmc_price !== undefined) {
+                dispatch(updateApmcCropRate(latest_apmc_price));
+            } else {
+                dispatch(updateApmcCropRate('No records found'));
+            }
         }
-        
     }
 };
 

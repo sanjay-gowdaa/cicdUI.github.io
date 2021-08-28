@@ -43,6 +43,7 @@ const ADD_BUYER_AT_DESTINY = 'buyerReg';
 const ADD_SELLER_AT_DESTINY = 'sellerReg';
 const GET_REDIRECTION_TOKEN = 'getredirectiontoken';
 const GET_PAYMENT_DETAILS = 'getpaymentdetails';
+const USER_ALREADY_EXISTS = 'userAlreadyExists';
 
 const parseToken = (userToken: string) => {
     const sholudDecrypt = process.env.REACT_APP_ENV === 'prod';
@@ -99,6 +100,12 @@ export const getUserManager = (phoneNumber: string) => {
     .then((response: any) => response.json());
 };
 /* USer Manager API End */
+
+export const checkIfUserAlreadyExists = (phoneNumber: string) => {
+    const userAlreadyExistsApi = `${BASE_URL}/${STAGE}/${USER_MANAGER_API}/${USER_ALREADY_EXISTS}/?userName=${phoneNumber}`;
+    return fetch(userAlreadyExistsApi)
+    .then((response: any) => response.json());
+};
 
 /* Location interface */
 export const getLocationByPin = (pincode: string) => {
@@ -212,7 +219,7 @@ export const getAllCrops = (sellerId: string) => {
 };
 
 export const getLiveApmcRateUpdated = (cropDetails: Array<UpdatedLiveApmcRatesQuery>) => {
-    const fetchApmcRatesApi = `${BASE_URL}/${STAGE}/${UPDATED_APMC_API}`
+    const fetchApmcRatesApi = `${BASE_URL}/${STAGE}/${UPDATED_APMC_API}`;
     return fetch(fetchApmcRatesApi, {
         method: 'POST',
         // headers: getAuthHeader(),
@@ -221,7 +228,7 @@ export const getLiveApmcRateUpdated = (cropDetails: Array<UpdatedLiveApmcRatesQu
 };
 
 export const getLiveApmcRate = (cropDetails: Array<LiveApmcRates>) => {
-    const apmcLiveRateBody = {crops: cropDetails}
+    const apmcLiveRateBody = { crops: cropDetails };
     const getApmcPriceApi = `${BASE_URL}/${STAGE}/${APMC_LIVE_RATES}`;
     return fetch(getApmcPriceApi, {
         method: 'POST',
@@ -315,6 +322,7 @@ export const getMasterList = (buyerId: string) => {
 
 export const getBuyerMatchesList = (buyerId: string, cropIds: Array<string>) => {
     const matchesApi = `${BASE_URL}/${STAGE}/${MATCHES_API}`;
+    console.log("getBuyerMatchesList being called in api");
     const matchesBody = {buyer_id: buyerId, buyer_crop_id: cropIds}
     return fetch(matchesApi, {
         // headers: getAuthHeader(),

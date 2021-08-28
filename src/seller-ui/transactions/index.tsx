@@ -1,6 +1,7 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Tabs, Typography } from 'antd';
+import { ReloadOutlined } from '@ant-design/icons';
 
 import OnGoingTransactions from './onGoing';
 import CompletedTransactions from './completed';
@@ -16,22 +17,27 @@ const { TabPane } = Tabs;
 const TransactionSection = () => {
     const sellerState = useSelector((state: RootState) => state.seller);
     const dispatch = useDispatch();
-    const {transactionList} = sellerState;
+    const [reloadClicked, setReloadClicked] = useState(0);
+    const { transactionList } = sellerState;
 
     const onSwitchTab = (key: string) => {
         const transactionTypeKey = key as TransactionStatus;
         if (transactionList[transactionTypeKey].length === 0 ) {
-            dispatch(getSellerTransactionList(transactionTypeKey))
+            dispatch(getSellerTransactionList(transactionTypeKey));
         }
-    }
+    };
 
     useEffect(() => {
-        dispatch(getSellerTransactionList(TransactionStatus.on_going))
-    }, [])
+        dispatch(getSellerTransactionList(TransactionStatus.on_going));
+    }, [reloadClicked]);
 
     return (
         <div id="seller-ui-transactions">
             <Title level={2}>My Transactions</Title>
+            <ReloadOutlined
+                className={reloadClicked === 5 ? `display-none` : `on-reload-matches`}
+                onClick={() => setReloadClicked(reloadClicked + 1)}
+            />
             <Tabs defaultActiveKey="1" size="large" onChange={onSwitchTab}>
                 <TabPane tab="On Going" key={TransactionStatus.on_going}>
                     <OnGoingTransactions transactionList={transactionList[TransactionStatus.on_going]} />

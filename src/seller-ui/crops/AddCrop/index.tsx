@@ -10,13 +10,20 @@ import {
     Radio,
     Row,
     Select,
-    Space,
     Typography,
-    Upload,
-    InputNumber
+    Upload
 } from 'antd';
 import { InboxOutlined } from '@ant-design/icons';
 import { useDispatch, useSelector } from 'react-redux';
+
+import {
+    createSellerFormData,
+    renderCategoryOptions,
+    renderGradeOptionsForSubCategory,
+    renderSubCategoryOptions,
+    validateSellerPrice
+} from '../cropUtils';
+
 import {
     addNewCropData,
     fetchAllCategories,
@@ -26,12 +33,6 @@ import {
 } from '../../../store/sellerReducer/actions';
 import { RootState } from '../../../store/rootReducer';
 import { SellerStateModel } from '../../../store/sellerReducer/types';
-import {
-    createSellerFormData,
-    renderCategoryOptions,
-    renderGradeOptionsForSubCategory,
-    renderSubCategoryOptions
-} from '../cropUtils';
 import CancelBtn from '../../../app-components/cancelBtn';
 import { UserStateModel } from '../../../store/loginReducer/types';
 
@@ -52,7 +53,7 @@ const fieldwithInfoLayout = {
 type PropsType = {
     setModalVisible: any;
     modalVisible: boolean;
-}
+};
 
 const AddCropModal = (addCropProps: PropsType) => {
     const {setModalVisible, modalVisible} = addCropProps;
@@ -66,7 +67,8 @@ const AddCropModal = (addCropProps: PropsType) => {
     const [showAlert, setAlert] = useState(false);
     const [formInitialize, setFormInitValues] = useState({
         intentToSell: 'No',
-        additionalInfo: '',
+        transportRequired: 'No',
+        additionalInfo: null,
         categoryName: null,
         cropName: null,
         subCategory: null,
@@ -81,7 +83,8 @@ const AddCropModal = (addCropProps: PropsType) => {
         if(modalVisible) {
             const formInitValues = {
                 intentToSell: 'No',
-                additionalInfo: '',
+                transportRequired: 'No',
+                additionalInfo: null,
                 categoryName: null,
                 cropName: null,
                 subCategory: null,
@@ -94,8 +97,22 @@ const AddCropModal = (addCropProps: PropsType) => {
 
     const onFinish = (values: any) => {
         // console.log('Success:', values);
+        const additionalInfo = {
+            moisture: values.moisture,
+            other_info: values.other_info,
+            packing_size: values.packing_size,
+            packing_type: values.packing_type,
+            fungus: values.fungus
+        };
+        delete values.moisture;
+        delete values.other_info;
+        delete values.packing_size;
+        delete values.packing_type;
+        delete values.fungus;
+
         const updatedValueWithApmcRates = {
             ...values,
+            additionalInfo,
             district: loginUser.district,
             zip: loginUser.zip
         }
@@ -103,7 +120,7 @@ const AddCropModal = (addCropProps: PropsType) => {
         // For testing uncomment below and comment above
         // const updatedValueWithApmcRates = {...values, district: 'Gadag'};
         createSellerFormData(updatedValueWithApmcRates).then((sellerFromData) => {
-            dispatch(addNewCropData(sellerFromData));
+            // dispatch(addNewCropData(sellerFromData));
             resetAllState()
         });
     };
@@ -234,17 +251,19 @@ const AddCropModal = (addCropProps: PropsType) => {
                                 {...fieldwithInfoLayout}
                                 label="Quantity"
                                 name="quantity"
-                                rules={[{ required: true, message: 'Please input the Qunatity!' }]}
+                                rules={[{
+                                    required: true,
+                                    message: 'Please input the Qunatity!'
+                                }]}
                             >
                                 <Form.Item name="quantity">
-                                    <InputNumber
+                                    <Input
                                         style={{ width: 200 }}
                                         className="custom-input"
                                         placeholder="In quintal"
-                                        stringMode
+                                        suffix="Qtl"
                                     />
                                 </Form.Item>
-                                <span className="additional-text">Qtl</span>
                             </Form.Item>
                             <Form.Item
                                 {...fieldwithInfoLayout}
@@ -252,17 +271,27 @@ const AddCropModal = (addCropProps: PropsType) => {
                                 name="pricePerQnt"
                                 rules={[{
                                     required: true,
-                                    message: 'Please input the Price per quintal!',
+                                    message: 'Please input the Price per quintal!'
                                 }]}
                             >
-                                <Form.Item name="pricePerQnt">
-                                    <InputNumber
+                                <Form.Item
+                                    name="pricePerQtl"
+                                    rules={[{
+                                        required: true,
+                                        validator: (rule, value) => validateSellerPrice(rule, value, sellerStore.apmcCropPrice)
+                                    }]}
+                                >
+                                    <Input
+                                        style={{ width: 200 }}
                                         className="custom-input"
                                         placeholder="In rupees"
-                                        stringMode
+                                        prefix="₹"
                                     />
                                 </Form.Item>
-                                <span className="additional-text">APMC Rate {loginUser.district}: {sellerStore.apmcCropPrice}</span>
+                                <span className="additional-text">
+                                    APMC Rate {loginUser.district}: 
+                                    <span style={{fontWeight: 700}}>&nbsp;&nbsp;{sellerStore.apmcCropPrice}</span>
+                                </span>
                             </Form.Item>
                             <Form.Item
                                 label="Intent to Sell?"
@@ -275,17 +304,34 @@ const AddCropModal = (addCropProps: PropsType) => {
                                 <Radio.Group
                                     className="custom-radio"
                                     name="intentToSell"
+                                    disabled={true}
                                     onChange={changeIntentToSell}
                                 >
                                     <Radio value={"Yes"}>Yes</Radio>
                                     <Radio value={"No"}>No</Radio>
                                 </Radio.Group>
                             </Form.Item>
-                            {showAlert && 
-                                <Alert type="warning" message={<>You can not edit if intent to sell is set to "<b>Yes</b>"</>}/>}
+                            <Text>Change intent to sell as "Yes", in edit once confirmed.</Text>
+                            { showAlert && 
+                                <Alert type="warning" message={<>You can not edit if intent to sell is set to "<b>Yes</b>"</>} />
+                            }
                         </Col>
-                        <Divider className="height-full" type="vertical" style={{height: "25em", color: "black" }} />
+                        <Divider className="height-full" type="vertical" style={{height: "45rem", color: "black" }} />
                         <Col span={12}>
+                            <Form.Item
+                                label="Transportation Required?"
+                                name="transportRequired"
+                                rules={[{ required: true }]}
+                            >
+                                <Radio.Group
+                                    className="custom-radio"
+                                    name="transportRequired"
+                                    onChange={() => console.log("changeTransportRequired")}
+                                >
+                                    <Radio value={"Yes"}>Yes</Radio>
+                                    <Radio value={"No"}>No</Radio>
+                                </Radio.Group>
+                            </Form.Item>
                             <Form.Item label="Add Produce Photos" name="cropImages" required={showAlert}>
                                 <Dragger
                                     className="crop-images-upload"
@@ -313,9 +359,67 @@ const AddCropModal = (addCropProps: PropsType) => {
                                     </div>
                                 </Dragger>
                             </Form.Item>
-                            <Form.Item label="Additional Information" name="additionalInfo">
-                                <TextArea className="custom-input" rows={4} />
+                            <div className="specifications">
+                                <Form.Item label={<Text style={{fontWeight: 700}} >Seller Specifications</Text>}>
+                                <Form.Item
+                                    labelCol={{ span: 10 }}
+                                    wrapperCol={{ span: 12 }}
+                                    labelAlign="left"
+                                    label="Moisture"
+                                    name="moisture"
+                                >
+                                    <Input
+                                        className="custom-input"
+                                        placeholder="Moisture in %"
+                                    />
+                                </Form.Item>
+                                <Form.Item
+                                    labelCol={{ span: 10 }}
+                                    wrapperCol={{ span: 12 }}
+                                    labelAlign="left"
+                                    label="Fungus"
+                                    name="fungus"
+                                >
+                                    <Input
+                                        className="custom-input"
+                                        placeholder="Fungus in %"
+                                    />
+                                </Form.Item>
+                                <Form.Item
+                                    labelCol={{ span: 10 }}
+                                    wrapperCol={{ span: 12 }}
+                                    labelAlign="left"
+                                    label="Packing Type"
+                                    name="packing_type"
+                                >
+                                    <Input
+                                        className="custom-input"
+                                        placeholder="Packing type"
+                                    />
+                                </Form.Item>
+                                <Form.Item
+                                    labelCol={{ span: 10 }}
+                                    wrapperCol={{ span: 12 }}
+                                    labelAlign="left"
+                                    label="Packing Size"
+                                    name="packing_size"
+                                >
+                                    <Input
+                                        className="custom-input"
+                                        placeholder="Packing size in kg"
+                                    />
+                                </Form.Item>
+                                <Form.Item
+                                    labelCol={{ span: 10 }}
+                                    wrapperCol={{ span: 12 }}
+                                    labelAlign="left"
+                                    label="Other Information"
+                                    name="other_info"
+                                >
+                                    <TextArea className="custom-input" rows={4} />
+                                </Form.Item>
                             </Form.Item>
+                            </div>
                         </Col>
                     </Row>
                     <Row justify="center">

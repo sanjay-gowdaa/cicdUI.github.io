@@ -1,5 +1,5 @@
 import { getTimeStamp } from '../../app-components/utils';
-import { sendOtp, getAllConfigs, verifyOtp, registerUser, resendOtp } from '../api';
+import { sendOtp, getAllConfigs, verifyOtp, registerUser, resendOtp, checkIfUserAlreadyExists } from '../api';
 import { ResponseStatus } from '../genericTypes';
 import { RootState } from '../rootReducer';
 import { RegitrationFullFormModel, RegsitrationFormModel } from './types';
@@ -42,49 +42,49 @@ export const setOtpErrorFlag = (errorFlag: boolean) => {
         type: SET_OTP_ERROR_FLAG,
         payload: errorFlag
     }
-}
+};
 
 export const setOtpErrorMsg = (errorMsg: string) => {
     return {
         type: SET_OTP_ERROR_MSG,
         payload: errorMsg
     }
-}
+};
 
 export const setOtpVerifiedFlag = (verifiedFlag: boolean) => {
     return {
         type: SET_OTP_VERIFIED_FLAG,
         payload: verifiedFlag
     }
-}
+};
 
 export const setRegisterMsg = (errorMsg: string) => {
     return {
         type: SET_REGISTER_ERROR_MSG,
         payload: errorMsg
     }
-}
+};
 
 export const setResgiterVerifiedFlag = (verifiedFlag: boolean) => {
     return {
         type: SET_REGISTER_VERIFIED_FLAG,
         payload: verifiedFlag
     }
-}
+};
 
 export const setProcessingFlag = (isProcessing: boolean) => {
     return {
         type: SET_LOADING_FLAG,
         payload: isProcessing
     }
-}
+};
 
 export const setTimeStamp = (timeStamp: any) => {
     return {
         type: SET_TIME_STAMP,
         payload: timeStamp
     }
-}
+};
 
 export const  getConfigurations = () => {
     return async (dispatch: any, getState: any) => {
@@ -100,7 +100,7 @@ export const sendOTP = (otpNumber: string) => {
     return async (dispatch: any, getState: any) => {
         sendOtp(otpNumber);
     }
-}
+};
 
 export const resendOTP = () => {
     return async (dispatch: any, getState: any) => {
@@ -109,7 +109,7 @@ export const resendOTP = () => {
         const {number} = formData
         resendOtp(`91${number}`);
     }
-}
+};
 
 export const resetOtpState = () => {
     return (dispatch: any) => {
@@ -117,7 +117,7 @@ export const resetOtpState = () => {
         dispatch(setOtpErrorFlag(false))
         dispatch(setOtpVerifiedFlag(false))
     }
-}
+};
 
 export const confirmOTP = (number: string, otp: string) => {
     return async (dispatch: any, getState: any) => {
@@ -134,7 +134,7 @@ export const confirmOTP = (number: string, otp: string) => {
         }
         dispatch(setProcessingFlag(false));
     }
-}
+};
 
 export const submitRegister = (userType: string, userFormData: any) => {
     return async(dispatch: any, getState: any) => {
@@ -150,9 +150,9 @@ export const submitRegister = (userType: string, userFormData: any) => {
         }
         dispatch(setProcessingFlag(false));
     }
-}
+};
 
 export const saveTimeStamp = (dispatch: any) => {
     const timeStamp = getTimeStamp();
     dispatch(setTimeStamp(timeStamp));
-}
+};
