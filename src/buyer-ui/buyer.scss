@@ -192,3 +192,13 @@ $col-shade-error: #e90000;
     color: $col-shade-error !important;
 }
 
+.custom-color-change {
+    color: #cacaca !important;
+    
+    .ant-statistic-content-value {
+        color: #cacaca !important;
+        font-size: initial;
+        padding-bottom: 0.5em;
+    }
+}
+
