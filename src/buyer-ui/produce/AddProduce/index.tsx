@@ -192,7 +192,7 @@ const AddCropModal = ({
                     </Col>
                     <Divider className="height-full" type="vertical" style={{height: "25rem", color: "black" }} />
                     <Col span={12}>
-                        <Form.Item label={<Text style={{fontWeight: 700}} >Seller Specifications</Text>}>
+                        <Form.Item label={<Text style={{fontWeight: 700}} >Buyer Specifications</Text>}>
                             <Form.Item
                                 labelCol={{ span: 10 }}
                                 wrapperCol={{ span: 12 }}

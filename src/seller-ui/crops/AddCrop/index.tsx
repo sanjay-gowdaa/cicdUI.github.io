@@ -120,7 +120,7 @@ const AddCropModal = (addCropProps: PropsType) => {
         // For testing uncomment below and comment above
         // const updatedValueWithApmcRates = {...values, district: 'Gadag'};
         createSellerFormData(updatedValueWithApmcRates).then((sellerFromData) => {
-            // dispatch(addNewCropData(sellerFromData));
+            dispatch(addNewCropData(sellerFromData));
             resetAllState()
         });
     };
