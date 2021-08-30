@@ -2,15 +2,14 @@ import React, { useEffect, useState } from 'react';
 import { Image, Typography, Tooltip } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import { isEmpty } from 'lodash';
-
 import PayButton from './payButton';
-
 import RagiImg from '../../static/assets/ragi.png';
 import { parseIDfromHash, maskData } from '../../app-components/utils';
 import { TransactionStatus } from '../../buyer-seller-commons/types';
 import StatusDetailsModel from './viewStatusDetails';
 import { RootState } from '../../store/rootReducer';
 import { currentStatusDetails } from '../../store/buyerReducer/actions';
+
 
 const { Text } = Typography;
 
@@ -154,3 +153,5 @@ export const transactionColumns = [
         },
     },
 ];
+
+
