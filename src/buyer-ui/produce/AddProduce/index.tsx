@@ -21,7 +21,6 @@ import { MasterListApiFormat, ProduceModel } from '../../../store/buyerReducer/t
 const { Text } = Typography;
 const { TextArea } = Input;
 const { Option } = Select;
-const { RangePicker } = DatePicker;
 
 const singleLabelFieldLayout = {
     labelCol: { span: 24 },
@@ -70,6 +69,7 @@ const AddCropModal = ({
         setModalVisible,
         modalVisible
     }: AddCropModalProps) => {
+
     const [form] = Form.useForm();
     const dispatch = useDispatch();
     const defaultDateStart = new Date();
@@ -91,9 +91,16 @@ const AddCropModal = ({
     }, [modalVisible]);
 
     const onFinish = (fieldsValue: any) => {
-        const {produce_name, delivery_by, quantity, additional_info} = fieldsValue;
+        const {produce_name, delivery_by, quantity} = fieldsValue;
         const [masterProduce, category, sub_type, grade] = produce_name.split('-');
         const deliveryByIsoformat = new Date(delivery_by).toISOString();
+        const additional_info = {
+            moisture: fieldsValue.moisture,
+            other_info: fieldsValue.other_info,
+            packing_size: fieldsValue.packing_size,
+            packing_type: fieldsValue.packing_type,
+            fungus: fieldsValue.fungus
+        };
         const addProducePayload = {
             crop_name: masterProduce.trim(),
             category: category.trim(),

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Image, Modal, Progress, Statistic, Typography } from 'antd';
+import { Button, Image, Modal, Progress, Statistic, Table, Typography } from 'antd';
 import { CaretUpOutlined, CaretDownOutlined } from '@ant-design/icons';
 import { isEmpty } from 'lodash';
 
@@ -9,16 +9,60 @@ import { CropApiModel } from '../../store/sellerReducer/types';
 import RagiImg from '../../static/assets/ragi.png';
 import { parseIDfromHash } from '../../app-components/utils';
 
-const { Title } = Typography;
+const { Text, Title } = Typography;
 
 const getCropId = (cropID: string) => {
     return parseIDfromHash(cropID);
 };
 
 const openAdditionalInfo = (content: any) => {
+    const data = [
+        {
+            key: 1,
+            label: "Moisture",
+            value: content.moisture === undefined ? '' : `${content.moisture} %`
+        },
+        {
+            key: 2,
+            label: "Fungus",
+            value: content.fungus === undefined ? '' : `${content.fungus} %`
+        },
+        {
+            key: 3,
+            label: "Packing Type",
+            value: content.packing_type
+        },
+        {
+            key: 4,
+            label: "Package Size",
+            value: content.packing_size === undefined ? '' : `${content.packing_size} kg`
+        },
+        {
+            key: 5,
+            label: "Other Information",
+            value: content.other_info
+        }
+    ];
+
+    const column = [
+        {
+            title: 'Specifications',
+            dataItem: 'label',
+            key: 'label',
+            render: (list: any) => <Text>{list.label}</Text>
+        },
+        {
+            title: 'Value',
+            dataItem: 'value',
+            key: 'value',
+            render: (list: any) => <Text>{list.value}</Text>
+        }
+    ]
     Modal.info({
-        title: 'Additional Info',
-        content: `${content}`,
+        title: 'Specification',
+        content: (
+            <Table dataSource={data} columns={column} pagination={false} />
+        ),
         okText: 'Ok',
         icon: null
     });
@@ -148,12 +192,14 @@ export const cropColumns = ({
         key: 'additional_info',
         dataIndex: 'additional_info',
         width: '10%',
-        render: (additional_info: string, record: CropApiModel) => {
+        render: (additional_info: any, record: CropApiModel) => {
+            const { intent_to_sell } = record;
+
             return (
                 <>
                     <Button
                         type="link"
-                        disabled={isEmpty(additional_info)}
+                        disabled={intent_to_sell.toLowerCase() === 'yes' && isEmpty(additional_info)}
                         onClick={() => openAdditionalInfo(additional_info)}
                     >
                         Additional Info

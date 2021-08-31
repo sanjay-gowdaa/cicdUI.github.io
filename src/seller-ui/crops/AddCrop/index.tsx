@@ -249,14 +249,16 @@ const AddCropModal = (addCropProps: PropsType) => {
                             </Form.Item>
                             <Form.Item
                                 {...fieldwithInfoLayout}
-                                label="Quantity"
                                 name="quantity"
-                                rules={[{
-                                    required: true,
-                                    message: 'Please input the Qunatity!'
-                                }]}
                             >
-                                <Form.Item name="quantity">
+                                <Form.Item
+                                    label="Quantity"
+                                    name="quantity"
+                                    rules={[{
+                                        required: true,
+                                        message: 'Please input the Quantity!'
+                                    }]}
+                                >
                                     <Input
                                         style={{ width: 200 }}
                                         className="custom-input"
@@ -267,15 +269,11 @@ const AddCropModal = (addCropProps: PropsType) => {
                             </Form.Item>
                             <Form.Item
                                 {...fieldwithInfoLayout}
-                                label="Price per quintal"
                                 name="pricePerQnt"
-                                rules={[{
-                                    required: true,
-                                    message: 'Please input the Price per quintal!'
-                                }]}
                             >
                                 <Form.Item
-                                    name="pricePerQtl"
+                                    label="Price per quintal"
+                                    name="pricePerQnt"
                                     rules={[{
                                         required: true,
                                         validator: (rule, value) => validateSellerPrice(rule, value, sellerStore.apmcCropPrice)
