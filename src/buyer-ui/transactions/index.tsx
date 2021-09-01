@@ -7,7 +7,7 @@ import OnGoingTransactions from './onGoing';
 import CompletedTransactions from './completed';
 import PendingTransactions from './pending';
 import { TransactionStatus } from '../../buyer-seller-commons/types';
-import { getTransactionList } from '../../store/buyerReducer/actions';
+import { getTransactionList, eventTemplate } from '../../store/buyerReducer/actions';
 
 const { Title } = Typography;
 const { TabPane } = Tabs;
@@ -26,6 +26,7 @@ const TransactionSection = () => {
 
     useEffect(() => {
         dispatch(getTransactionList(TransactionStatus.on_going))
+        dispatch(eventTemplate())
     }, [])
 
     return (

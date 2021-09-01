@@ -43,6 +43,7 @@ const ADD_BUYER_AT_DESTINY = 'buyerReg';
 const ADD_SELLER_AT_DESTINY = 'sellerReg';
 const GET_REDIRECTION_TOKEN = 'getredirectiontoken';
 const GET_PAYMENT_DETAILS = 'getpaymentdetails';
+const GET_EVENT_TEMPLATE = 'VB/Get_Buyer_Seller_Status'
 
 const parseToken = (userToken: string) => {
     const sholudDecrypt = process.env.REACT_APP_ENV === 'prod';
@@ -429,6 +430,13 @@ export const getStatusDetails = (userData:any) => {
 export const getCurrentStatusDetails = (userData: any) => {
     const currentStatusDetailsApi = `${BASE_URL}/${STAGE}/${TRANSACTION_API}/${userData.transactionId}/events/?user=${userData.user}&transport=false&event=current`;
     return fetch(currentStatusDetailsApi, {
+        method: 'GET',
+    }).then((response: any) => response.json())
+};
+
+export const getEventTemplate = () => {
+    const eventTemplateApi = `${BASE_URL}/${STAGE}/${GET_EVENT_TEMPLATE}?user=Buyer`;
+    return fetch(eventTemplateApi, {
         method: 'GET',
     }).then((response: any) => response.json())
 };

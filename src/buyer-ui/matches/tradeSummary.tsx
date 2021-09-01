@@ -54,7 +54,7 @@ const TradeSumary = (props: componentProps) => {
                 </Col>
                 <Col sm={24} md={12}>
 
-                    : {buyer_final_price}<span className="heading-alerttext">*</span>
+                    : {buyer_final_price}<span className="heading-alerttext">(excl. all taxes)</span>
                 </Col>
             </Row>
             <Row>

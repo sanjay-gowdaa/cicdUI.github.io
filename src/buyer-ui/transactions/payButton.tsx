@@ -25,7 +25,12 @@ const PayButton = (props: any) => {
     const accessToken = (window as any).userToken ? (window as any).userToken : null;
     
     const seq = (Math.floor(Math.random() * 10000) + 10000).toString().substring(1);
-    const id = "order_" + seq;
+    const id = "order_" + seq
+
+    var statussub = userStatus.split(" ");
+    var lastele = statussub[statussub.length-1]
+    const amount = lastele.substring(1, lastele.length-1)
+    
 
     const user = loginState. is_buyer && "buyer";
     const getDisplay = (status: string) => {
@@ -81,7 +86,7 @@ const PayButton = (props: any) => {
                     <form className="payment" method="POST" action="http://13.233.91.84:8082/paymentrequest">
                         <Space direction="vertical">
                             <Input className="custom-input" type="text" value={id} name="orderId" />
-                            <Input type="text" value={ record.buyer_final_price} name="orderAmount"/> 
+                            <Input type="text" value={ amount} name="orderAmount"/> 
                             <Input type="hidden" value="INR" name="orderCurrency" />
                             <Input type="text" value="Test note" name="orderNote"/>
                             <Input type="text" value={loginState.name} name="customerName"/>
