@@ -8,6 +8,7 @@ import RagiImg from '../../static/assets/ragi.png';
 const { Text, Title } = Typography;
 
 const openAdditionalInfo = (content: any) => {
+    const showTable = typeof (content) !== 'string';
     const data = [
         {
             key: 1,
@@ -49,11 +50,13 @@ const openAdditionalInfo = (content: any) => {
             key: 'value',
             render: (list: any) => <Text>{list.value}</Text>
         }
-    ]
+    ];
+
     Modal.info({
         title: 'Specification',
-        content: (
+        content: (showTable ?
             <Table dataSource={data} columns={column} pagination={false} />
+            : <Text>{content}</Text>
         ),
         okText: 'Ok',
         icon: null
@@ -63,15 +66,15 @@ const openAdditionalInfo = (content: any) => {
 type produceColumnCallbacks = {
     deleteProduce: any;
     prepareForEditProduce: any;
-}
+};
 
-export const produceColumns = ({deleteProduce, prepareForEditProduce}: produceColumnCallbacks) => [
+export const produceColumns = ({ deleteProduce, prepareForEditProduce }: produceColumnCallbacks) => [
     {
         title: 'Produce',
         dataIndex: 'crop_name',
         key: 'crop_name',
         render: (cropName: string, record: ProduceModel) => {
-            const {category, sub_type: subType} = record;
+            const { category, sub_type: subType } = record;
 
             return (
                 <div className='display-flex-row align-center'>
@@ -96,9 +99,9 @@ export const produceColumns = ({deleteProduce, prepareForEditProduce}: produceCo
         dataIndex: 'quantity',
         key: 'quantity',
         render: (quantity: string, record: ProduceModel) => {
-            const {currently_fulfilled_qty = 0} = record;
+            const { currently_fulfilled_qty = 0 } = record;
             const quantityNum = parseInt(quantity, 10);
-            const percentageQty = (currently_fulfilled_qty/quantityNum)*100;
+            const percentageQty = (currently_fulfilled_qty / quantityNum) * 100;
             const currentReqQty = quantityNum - currently_fulfilled_qty;
             return (
                 <>
@@ -127,7 +130,7 @@ export const produceColumns = ({deleteProduce, prepareForEditProduce}: produceCo
         title: 'Additional',
         key: 'additional_info',
         dataIndex: 'additional_info',
-        render: (additionalInfo: string) => {
+        render: (additionalInfo: any) => {
             return (
                 <Button
                     type="link"
@@ -145,21 +148,16 @@ export const produceColumns = ({deleteProduce, prepareForEditProduce}: produceCo
         render: (text: string, record: ProduceModel) => {
             return (
                 <>
-                    <Button 
+                    <Button
                         type="link"
-                        onClick={() => {
-                                prepareForEditProduce(record)
-                            }
-                        }
+                        onClick={() => prepareForEditProduce(record)}
                     >
                         Edit
                     </Button>
                     <Button
-                        type="link" 
+                        type="link"
                         danger
-                        onClick={
-                            () => deleteProduce(record.sk)
-                        }
+                        onClick={() => deleteProduce(record.sk)}
                     >
                         Delete
                     </Button>

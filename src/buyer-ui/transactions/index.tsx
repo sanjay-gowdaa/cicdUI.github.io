@@ -8,7 +8,10 @@ import CompletedTransactions from './completed';
 import PendingTransactions from './pending';
 
 import { TransactionStatus } from '../../buyer-seller-commons/types';
-import { getTransactionList } from '../../store/buyerReducer/actions';
+import {
+    getTransactionList,
+    getTransactionListOnReload
+} from '../../store/buyerReducer/actions';
 import { RootState } from '../../store/rootReducer';
 
 const { Title } = Typography;
@@ -18,17 +21,23 @@ const TransactionSection = () => {
     const buyerState = useSelector((state: RootState) => state.buyer);
     const dispatch = useDispatch();
     const [reloadClicked, setReloadClicked] = useState(0);
+    const [transactionKey, setTransactionKey] = useState(TransactionStatus.on_going);
     const { transactionList } = buyerState;
 
     const onSwitchTab = (key: string) => {
         const transactionTypeKey = key as TransactionStatus;
-        if (transactionList[transactionTypeKey].length === 0 ) {
+        setTransactionKey(transactionTypeKey);
+        if (transactionList[transactionTypeKey].length === 0) {
             dispatch(getTransactionList(transactionTypeKey))
         }
     };
 
     useEffect(() => {
         dispatch(getTransactionList(TransactionStatus.on_going));
+    }, []);
+
+    useEffect(() => {
+        dispatch(getTransactionListOnReload(transactionKey));
     }, [reloadClicked]);
 
     return (

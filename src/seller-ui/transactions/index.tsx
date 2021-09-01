@@ -9,7 +9,10 @@ import PendingTransactions from './pending';
 
 import { RootState } from '../../store/rootReducer';
 import { TransactionStatus } from '../../buyer-seller-commons/types';
-import { getSellerTransactionList } from '../../store/sellerReducer/actions';
+import {
+    getSellerTransactionList,
+    getTransactionListOnReload
+} from '../../store/sellerReducer/actions';
 
 const { Title } = Typography;
 const { TabPane } = Tabs;
@@ -18,17 +21,23 @@ const TransactionSection = () => {
     const sellerState = useSelector((state: RootState) => state.seller);
     const dispatch = useDispatch();
     const [reloadClicked, setReloadClicked] = useState(0);
+    const [transactionKey, setTransactionKey] = useState(TransactionStatus.on_going);
     const { transactionList } = sellerState;
 
     const onSwitchTab = (key: string) => {
         const transactionTypeKey = key as TransactionStatus;
-        if (transactionList[transactionTypeKey].length === 0 ) {
+        setTransactionKey(transactionTypeKey);
+        if (transactionList[transactionTypeKey].length === 0) {
             dispatch(getSellerTransactionList(transactionTypeKey));
         }
     };
 
     useEffect(() => {
         dispatch(getSellerTransactionList(TransactionStatus.on_going));
+    }, []);
+
+    useEffect(() => {
+        dispatch(getTransactionListOnReload(transactionKey));
     }, [reloadClicked]);
 
     return (
