@@ -28,8 +28,8 @@ const PayButton = (props: any) => {
     const id = "order_" + seq
 
     var statussub = userStatus.split(" ");
-    var lastele = statussub[statussub.length-1]
-    const amount = lastele.substring(1, lastele.length-1)
+    const lastele = statussub[statussub.length-1];
+    const amount = lastele.substring(1, lastele.length-1);
     
 
     const user = loginState. is_buyer && "buyer";
