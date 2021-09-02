@@ -1,29 +1,27 @@
-$col-shade-green: #12805C;
+$col-shade-green: #12805c;
 
 .seller-ui-app {
-    
     .landing-page-header-bar {
         position: unset;
-    
+
         .header-breadcrumb {
             display: none;
         }
     }
-    
-    .seller-ui-dashboard {
-      padding: 2em;
 
-      .seller-banner {
-          width: 100%;
-      }
+    .seller-ui-dashboard {
+        padding: 2em;
+
+        .seller-banner {
+            width: 100%;
+        }
     }
 }
-  
-.custom-view-crop-photos {
 
+.custom-view-crop-photos {
     .ant-drawer-header {
         background-color: $col-shade-green;
-        
+
         .ant-drawer-title {
             color: white;
         }
@@ -54,4 +52,15 @@ $col-shade-green: #12805C;
     color: white !important;
     border-radius: 0.5em;
     padding: 0 0.3em;
+}
+
+.on-reload-matches {
+    font-size: x-large;
+    float: right;
+}
+
+.specifications {
+    border: 0.1rem solid lightgrey;
+    padding: 1rem;
+    border-radius: 0.25rem;
 }

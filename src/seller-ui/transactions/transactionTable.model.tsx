@@ -3,15 +3,16 @@ import { Button, Typography, Tooltip } from 'antd';
 import { isEmpty } from 'lodash';
 import { useDispatch, useSelector } from 'react-redux';
 
+import StatusDetailsModel from './viewStatusDetails';
+
 import { TransactioModel } from '../../buyer-seller-commons/types';
 import { parseIDfromHash, maskData } from '../../app-components/utils';
-import StatusDetailsModel from './viewStatusDetails';
 import { RootState } from '../../store/rootReducer';
 import { currentStatusDetails } from '../../store/sellerReducer/actions';
 
 const { Text } = Typography;
 
-export const GetCurrentStatusDetails = (pk: any) =>{
+const GetCurrentStatusDetails = (pk: any) => {
     const buyerState = useSelector((state: RootState) => state.buyer);
     const status = buyerState.currentStatusDetails;
     const [userStatus, setUserStatus] = useState('');
@@ -20,18 +21,18 @@ export const GetCurrentStatusDetails = (pk: any) =>{
     id = id.substring(12);
 
     const data = {
-        "transactionId" : id,
+        "transactionId": id,
         "user": "seller"
     };
-    
+
     useEffect(() => {
         dispatch(currentStatusDetails(data));
     }, []);
 
     useEffect(() => {
-        if(!isEmpty(status)) {
-            for(let i=0; i<status.length; i++) {
-                if(status[i].pk === pk.data) {
+        if (!isEmpty(status)) {
+            for (let i = 0; i < status.length; i++) {
+                if (status[i].pk === pk.data) {
                     setUserStatus(status[i].event_description);
                 }
             }
@@ -86,9 +87,9 @@ export const transactionColumns = [
         dataIndex: 'seller_price',
         key: 'seller_price',
         render: (seller_price: number, record: TransactioModel) => {
-            const {matched_quantity} = record;
+            const { matched_quantity } = record;
             return (
-                <p>{seller_price/matched_quantity}</p>
+                <p>{seller_price / matched_quantity}</p>
             );
         }
     },
@@ -134,7 +135,7 @@ export const transactionColumns = [
         render: (record: any) => {
             const transactionId = record.pk;
             return (
-                <GetCurrentStatusDetails data ={transactionId} />            
+                <GetCurrentStatusDetails data={transactionId} />
             );
         },
     },
@@ -144,7 +145,7 @@ export const transactionColumns = [
         render: (text: any, record: any) => {
             const transactionId = record.pk;
             return (
-                <StatusDetailsModel data ={transactionId} />              
+                <StatusDetailsModel data={transactionId} />
             );
         }
     },

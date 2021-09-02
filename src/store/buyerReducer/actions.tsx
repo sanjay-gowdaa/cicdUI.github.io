@@ -1,5 +1,7 @@
-import { getTimeStamp } from "../../app-components/utils";
-import { TransactionStatus } from "../../buyer-seller-commons/types";
+import { isEmpty } from "lodash";
+
+import { BuyerRejectMatch, MasterListApiFormat, ProduceModel } from "./types";
+
 import {
     addProduce,
     getAllProduce,
@@ -23,8 +25,9 @@ import {
 import { UserStateModel } from "../loginReducer/types";
 import { BuyerStateModel } from "../buyerReducer/types";
 import { RootState } from "../rootReducer";
-import { BuyerRejectMatch, MasterListApiFormat, ProduceModel } from "./types";
-import { isEmpty } from "lodash";
+
+import { getTimeStamp } from "../../app-components/utils";
+import { TransactionStatus } from "../../buyer-seller-commons/types";
 
 export const UPDATE_MASTER_LIST = 'UPDATE_MASTER_LIST';
 export const GET_MASTER_LIST = 'GET_MASTER_LIST';
@@ -138,7 +141,7 @@ export const setMatchesLoadingFlag = (loadingFlag: boolean) => {
 export const updateMatchesListForID = (buyerCropId: string, matchesList: Array<any>) => {
     return {
         type: UPDATE_MATCHES_LIST_FOR_BUYER_CROP,
-        payload: {buyerCropId, newMatchesList: matchesList}
+        payload: { buyerCropId, newMatchesList: matchesList }
     }
 };
 /* Not yet in use end */
@@ -146,14 +149,14 @@ export const updateMatchesListForID = (buyerCropId: string, matchesList: Array<a
 export const updateTransactionList = (transactionType: TransactionStatus, transactionListData: Array<any>) => {
     return {
         type: UPDATE_TRANSACTION_LIST,
-        payload: {transactionType, transactionListData}
+        payload: { transactionType, transactionListData }
     }
 };
 
 export const getMasterProduceList = () => {
-    return async(dispatch: any, getState: any) => {
-        const {loginUser}: {loginUser: UserStateModel} = getState() as RootState;
-        const {username} = loginUser;
+    return async (dispatch: any, getState: any) => {
+        const { loginUser }: { loginUser: UserStateModel } = getState() as RootState;
+        const { username } = loginUser;
         const masterProduceList = await getMasterList(username);
         // testing
         // const masterProduceList = await getMasterList('7892329983');
@@ -163,9 +166,9 @@ export const getMasterProduceList = () => {
 };
 
 export const updateMasterListData = (masterlist: Array<MasterListApiFormat>) => {
-    return async(dispatch: any, getState: any) => {
-        const {loginUser}: {loginUser: UserStateModel} = getState() as RootState;
-        const {username} = loginUser;
+    return async (dispatch: any, getState: any) => {
+        const { loginUser }: { loginUser: UserStateModel } = getState() as RootState;
+        const { username } = loginUser;
         const updateMasterListResponse = await updateMasterList(masterlist, username);
         // testing
         // const updateMasterListResponse = await updateMasterList(masterlist, '7892329983');
@@ -174,33 +177,33 @@ export const updateMasterListData = (masterlist: Array<MasterListApiFormat>) => 
 };
 
 export const addNewProduce = (/*produceFormData: ProduceModel*/ produceFormData: any) => {
-    return async(dispatch: any, getState: any) => {
-        const {loginUser}: {loginUser: UserStateModel} = getState() as RootState;
+    return async (dispatch: any, getState: any) => {
+        const { loginUser }: { loginUser: UserStateModel } = getState() as RootState;
         // for testing, use USER-ID 
         // const username = '7892329983'
-        const {username, district, zip} = loginUser
-        const addProduceResponse = await addProduce({...produceFormData, district, zip}, username);
+        const { username, district, zip } = loginUser
+        const addProduceResponse = await addProduce({ ...produceFormData, district, zip }, username);
         // console.log('addProduceResponse', addProduceResponse);
         dispatch(getProduceList())
     }
 };
 
 export const editProduce = (/*produceFormData: ProduceModel*/ produceFormData: any) => {
-    return async(dispatch: any, getState: any) => {
-        const {loginUser}: {loginUser: UserStateModel} = getState() as RootState;
+    return async (dispatch: any, getState: any) => {
+        const { loginUser }: { loginUser: UserStateModel } = getState() as RootState;
         // for testing, use USER-ID 
         // const username = '7892329983'
-        const {username, district, zip} = loginUser
-        const addProduceResponse = await patchProduce({...produceFormData, district, zip}, username);
+        const { username, district, zip } = loginUser
+        const addProduceResponse = await patchProduce({ ...produceFormData, district, zip }, username);
         console.log('addProduceResponse', addProduceResponse);
         dispatch(getProduceList())
     }
 };
 
 export const deleteSelectedProduce = (produceID: string) => {
-    return async(dispatch: any, getState: any) => {
-        const {loginUser}: {loginUser: UserStateModel} = getState() as RootState;
-        const {username, district, is_buyer} = loginUser;
+    return async (dispatch: any, getState: any) => {
+        const { loginUser }: { loginUser: UserStateModel } = getState() as RootState;
+        const { username, district, is_buyer } = loginUser;
         const deletedResponse = await deleteProduce(username, produceID, is_buyer);
         console.log('deletedResponse', deletedResponse);
         dispatch(getProduceList());
@@ -208,51 +211,51 @@ export const deleteSelectedProduce = (produceID: string) => {
 };
 
 export const getProduceList = () => {
-    return async(dispatch: any, getState: any) => {
-        const {loginUser}: {loginUser: UserStateModel} = getState() as RootState;
+    return async (dispatch: any, getState: any) => {
+        const { loginUser }: { loginUser: UserStateModel } = getState() as RootState;
         // for tesing, use USER-ID 
         // const {username} = {username: '7892329983'}; 
-        
-        const {username} = loginUser
+
+        const { username } = loginUser
         const getProduceListResponse = await getAllProduce(username);
-        const {Items} = getProduceListResponse || {Items: []}
+        const { Items } = getProduceListResponse || { Items: [] }
         // console.log('getProduceList', Items);
         dispatch(updateProduceList(Items as Array<ProduceModel>))
-        if(Items.length) {
+        if (Items.length) {
             dispatch(getMatchesForBuyerCrops(Items as Array<ProduceModel>));
         }
     }
 };
 
 export const fetchAllProduce = () => {
-    return async(dispatch: any, getState: any) => {
+    return async (dispatch: any, getState: any) => {
         const allProduceList = await getCropCategoryList();
-        const {categories} = allProduceList || []
+        const { categories } = allProduceList || []
         dispatch(updateMasterCropNamesList(categories))
     }
 };
 
 export const fetchAllCrops = (category: string) => {
-    return async(dispatch: any, getState: any) => {
+    return async (dispatch: any, getState: any) => {
         const allCropsList = await getCropList(category);
-        const {crops} = allCropsList || []
+        const { crops } = allCropsList || []
         dispatch(updateCropsList(crops));
     }
 };
 
 export const fetchAllVariety = (crop: string) => {
-    return async(dispatch: any, getState: any) => {
+    return async (dispatch: any, getState: any) => {
         const allVarietyList = await getSubCategoryList(crop);
-        const { crops: {Items: variety}} = allVarietyList || {variety: []}
-        dispatch(updateVarietyList(variety));    
+        const { crops: { Items: variety } } = allVarietyList || { variety: [] }
+        dispatch(updateVarietyList(variety));
     }
 };
 
 export const getMatchesForBuyerCrops = (cropsList: Array<ProduceModel>) => {
     const allCropListIds: Array<string> = cropsList.map((curCrop: ProduceModel) => curCrop.sk || '');
-    return async(dispatch: any, getState: any) => {
-        const {loginUser}: {loginUser: UserStateModel} = getState() as RootState;
-        const {username} = loginUser;
+    return async (dispatch: any, getState: any) => {
+        const { loginUser }: { loginUser: UserStateModel } = getState() as RootState;
+        const { username } = loginUser;
 
         const matchesBody = {
             buyer_id: `user#${username}`,
@@ -267,7 +270,7 @@ export const getMatchesForBuyerCrops = (cropsList: Array<ProduceModel>) => {
 };
 
 export const rejectMatches = (rejectData: BuyerRejectMatch) => {
-    return async(dispatch: any, getState: any) => {
+    return async (dispatch: any, getState: any) => {
         const matchesList = await rejectMatch(rejectData);
         /* Re-calculate matches for all crop */
         /* Logic can be changed to specific crop if required */
@@ -276,7 +279,7 @@ export const rejectMatches = (rejectData: BuyerRejectMatch) => {
 };
 
 export const connectMatch = (transactionEntry: any) => {
-    return async(dispatch: any, getState: any) => {
+    return async (dispatch: any, getState: any) => {
         const matchesList = await createTransaction(transactionEntry);
         dispatch(getProduceList());
         dispatch(getTransactionList(TransactionStatus.pending));
@@ -285,7 +288,7 @@ export const connectMatch = (transactionEntry: any) => {
 };
 
 export const checkSellerConnectedStatus = (sellerId: string, sellerCropId: string) => {
-    return async(dispatch: any, getState: any) => {
+    return async (dispatch: any, getState: any) => {
         const connectedStatus = await sellerConnectStatus({
             sellerId,
             sellerCropId
@@ -295,11 +298,27 @@ export const checkSellerConnectedStatus = (sellerId: string, sellerCropId: strin
 };
 
 export const getTransactionList = (transactionStatus: TransactionStatus) => {
-    return async(dispatch: any, getState: any) => {
-        const {loginUser}: {loginUser: UserStateModel} = getState() as RootState;
-        const {username} = loginUser;
+    return async (dispatch: any, getState: any) => {
+        const { loginUser }: { loginUser: UserStateModel } = getState() as RootState;
+        const { username } = loginUser;
         const transactionListResponse = await fetchTransactionList(username, transactionStatus);
-        dispatch(updateTransactionList(transactionStatus, transactionListResponse))
+        dispatch(updateTransactionList(transactionStatus, transactionListResponse));
+    }
+};
+
+export const getTransactionListOnReload = (transactionStatus: TransactionStatus) => {
+    return async (dispatch: any, getState: any) => {
+        const { loginUser }: { loginUser: UserStateModel } = getState() as RootState;
+        const { username, is_buyer } = loginUser;
+        const transactionListResponse = await fetchTransactionList(username, transactionStatus);
+        for (var i = 0; i < transactionListResponse.length; i++) {
+            const data = {
+                "transactionId": transactionListResponse[i].pk.substring(12),
+                "user": is_buyer ? "buyer" : "seller"
+            };
+            dispatch(currentStatusDetails(data));
+        }
+        dispatch(updateTransactionList(transactionStatus, transactionListResponse));
     }
 };
 
@@ -309,27 +328,25 @@ export const saveTimeStamp = (dispatch: any) => {
 };
 
 export const getPaymentDetails = () => {
-    return async(dispatch: any, getState: any) => {
-        const {buyer}: {buyer: BuyerStateModel} = getState() as RootState;
+    return async (dispatch: any, getState: any) => {
+        const { buyer }: { buyer: BuyerStateModel } = getState() as RootState;
         const paymentRedirectionDetails = buyer.paymentRedirectionDetails;
         const paymentDetails = await getPaymentList(paymentRedirectionDetails);
-        dispatch(updatePaymentDetails(paymentDetails));        
+        dispatch(updatePaymentDetails(paymentDetails));
     }
 };
 
-
-export const getStatus = (userData:any) => {
-    return async(dispatch: any, getState: any) => {
+export const getStatus = (userData: any) => {
+    return async (dispatch: any, getState: any) => {
         const statusResponse = await getStatusDetails(userData);
         dispatch(updateStatusDetails(statusResponse));
     }
 };
 
-
-export const currentStatusDetails = ( userData: any) => {
-    return async(dispatch: any, getState: any) => {
+export const currentStatusDetails = (userData: any) => {
+    return async (dispatch: any, getState: any) => {
         const currentStatusResponse = await getCurrentStatusDetails(userData);
-        if(!isEmpty(currentStatusResponse)) {
+        if (!isEmpty(currentStatusResponse)) {
             const status = currentStatusResponse;
             dispatch(updateCurrentStatusDetails(status[0]));
         }

@@ -2,18 +2,19 @@ import React, { useEffect, useState } from 'react';
 import { Image, Typography, Tooltip } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import { isEmpty } from 'lodash';
+
 import PayButton from './payButton';
+import StatusDetailsModel from './viewStatusDetails';
+
 import RagiImg from '../../static/assets/ragi.png';
 import { parseIDfromHash, maskData } from '../../app-components/utils';
 import { TransactionStatus } from '../../buyer-seller-commons/types';
-import StatusDetailsModel from './viewStatusDetails';
 import { RootState } from '../../store/rootReducer';
 import { currentStatusDetails } from '../../store/buyerReducer/actions';
 
-
 const { Text } = Typography;
 
-export const GetCurrentStatusDetails = (pk: any) =>{
+const GetCurrentStatusDetails = (pk: any) => {
     const buyerState = useSelector((state: RootState) => state.buyer);
     const status = buyerState.currentStatusDetails;
     const [userStatus, setUserStatus] = useState('');
@@ -22,7 +23,7 @@ export const GetCurrentStatusDetails = (pk: any) =>{
     id = id.substring(12);
 
     const data = {
-        "transactionId" : id,
+        "transactionId": id,
         "user": "buyer"
     };
 
@@ -31,9 +32,9 @@ export const GetCurrentStatusDetails = (pk: any) =>{
     }, []);
 
     useEffect(() => {
-        if(!isEmpty(status)) {
-            for(let i=0; i<status.length; i++) {
-                if(status[i].pk === pk.data) {
+        if (!isEmpty(status)) {
+            for (let i = 0; i < status.length; i++) {
+                if (status[i].pk === pk.data) {
                     setUserStatus(status[i].event_description);
                 }
             }
@@ -69,14 +70,14 @@ export const transactionColumns = [
         width: 300,
         render: (produce: string) => {
             return (
-            <div className='display-flex-row align-center'>
-                <Image
-                    src={RagiImg}
-                />
-                <div className='margin-l-r-1em'>
-                    <p>{produce}</p>
+                <div className='display-flex-row align-center'>
+                    <Image
+                        src={RagiImg}
+                    />
+                    <div className='margin-l-r-1em'>
+                        <p>{produce}</p>
+                    </div>
                 </div>
-            </div>
             );
         },
     },
@@ -127,9 +128,9 @@ export const transactionColumns = [
         render: (record: any) => {
             const transactionId = record.pk;
             return (
-                <GetCurrentStatusDetails data ={transactionId} />                      
+                <GetCurrentStatusDetails data={transactionId} />
             );
-        }, 
+        },
     },
     {
         title: '',
@@ -137,8 +138,7 @@ export const transactionColumns = [
         render: (text: any, record: any) => {
             const transactionId = record.pk;
             return (
-                <StatusDetailsModel data ={transactionId} />
-                    
+                <StatusDetailsModel data={transactionId} />
             );
         }
     },
@@ -146,12 +146,10 @@ export const transactionColumns = [
         title: '',
         key: 'action',
         render: (record: any) => {
-            return(
-                record?.gsi_status !== TransactionStatus.completed  && 
-                    <PayButton record={record} />
+            return (
+                record?.gsi_status !== TransactionStatus.completed &&
+                <PayButton record={record} />
             );
         },
     },
 ];
-
-
