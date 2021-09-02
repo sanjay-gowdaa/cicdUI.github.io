@@ -10,7 +10,7 @@ import ReviewsSection from './reviews';
 import TransactionSection from './transactions';
 import Footer from '../footer';
 
-import SellerBanner from '../static/assets/sellerBanner.jpg';
+import SellerBanner from '../static/assets/sellerBanner.png';
 
 import './seller.scss';
 
