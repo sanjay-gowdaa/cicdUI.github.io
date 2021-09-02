@@ -8,7 +8,6 @@ import { getStatus } from '../../store/buyerReducer/actions';
 
 const { Step } = Steps;
 
-
 const TransactionDetailsModel = (pk: any) => { 
     var completedEvents = [""];
     const dispatch = useDispatch();
@@ -22,57 +21,40 @@ const TransactionDetailsModel = (pk: any) => {
         "user": "buyer"
     };
     useEffect(() =>{
-        console.log("pk", pk);
         dispatch(getStatus(data))
     }, []);
 
     for(let i = 0; i < statusDetails.length; i++){
-        console.log("inside for:", i);
         completedEvents.push(statusDetails[i].event_description);
     }
     eventTemplate.splice(0, completedEvents.length, ...completedEvents)
-    console.log("eventTemplate", eventTemplate)
-    //Array.prototype.splice.apply(eventTemplate, [0, length].concat(completedEvents));
     const getEvent = (event: string) => {
-        console.log("++++++++++++++++++++++++++");
-        console.log("getEvents called:", event);
         for(let i = 0; i < completedEvents.length; i++){
             if( completedEvents[i]=== event){
-               console.log("inside if: true");
                 return true;
            }
         }
         return false;
     };
 
-  
     return(
-            <>
-                <Steps direction="vertical" current={1} responsive={true} labelPlacement="vertical">
-                    {  
-                   
-                   //statusDetails.map((list: any) => {
-                        eventTemplate.map((ele: any) => {
-                            const isComplete = getEvent(ele);
-                            console.log(":isComplete:", isComplete);
-                            return (
-                                
-                                <Step
-                                    className= {isComplete? "ant-steps-item-finish" : "ant-steps-item-wait"}
-                                    title={ele}
-                                    subTitle={isComplete? "Complete " : null} 
-                                    status={isComplete? "finish": "wait"}
-                                    // description="This is a description."
-                                />
-                               
-                            )
-                        })
-                    //})
-                    
-                    } 
-                     </Steps>
-            </>
-
+        <>
+            <Steps direction="vertical" current={1} responsive={true} labelPlacement="vertical">
+                {  
+                    eventTemplate.map((ele: any) => {
+                        const isComplete = getEvent(ele);
+                        return (    
+                            <Step
+                                className= {isComplete? "ant-steps-item-finish" : "ant-steps-item-wait"}
+                                title={ele}
+                                subTitle={isComplete? "Complete " : null} 
+                                status={isComplete? "finish": "wait"}
+                            />
+                        )
+                    })
+                }
+            </Steps>
+        </>
     );
 }
 
