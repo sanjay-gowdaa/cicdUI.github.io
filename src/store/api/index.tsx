@@ -9,7 +9,7 @@ const BASE_URL = process.env.REACT_APP_BASE_URL;
 const STAGE = process.env.REACT_APP_ENV;
 const TOKEN_GRANT = process.env.REACT_APP_TOKEN_GRANT as string;
 
-export const REDIRECT_URL =  `https://${window.location.host}/login-user`;
+export const REDIRECT_URL = `https://${window.location.host}/login-user`;
 export const LOGOUT_REDIRECT = `https://${window.location.host}/`;
 export const LOGIN_URL = `${process.env.REACT_APP_LOGIN_URL_BASE_URL}/login?client_id=${process.env.REACT_APP_COGNITO_CLIENT_ID}&response_type=code&redirect_uri=${REDIRECT_URL}`;
 export const LOGOUT_URL = `${process.env.REACT_APP_LOGOUT_BASE_URL}/logout?client_id=${process.env.REACT_APP_COGNITO_CLIENT_ID}&logout_uri=${LOGOUT_REDIRECT}`;
@@ -53,13 +53,13 @@ const parseToken = (userToken: string) => {
     return userAccessToken;
 };
 
-const getAuthHeader = () =>  {
+const getAuthHeader = () => {
     const userToken = (window as any).userToken ? (window as any).userToken : '';
     if (userToken) {
         const userAccessToken = parseToken(userToken);
-        return ({'Authorization': `Bearer ${userAccessToken}`});
+        return ({ 'Authorization': `Bearer ${userAccessToken}` });
     } else {
-        return ({'Authorization': `Bearer `});
+        return ({ 'Authorization': `Bearer ` });
     }
     // For testing: Bypass auth from UI
     //return ({'Authorization': `Bearer ${''}`});
@@ -68,7 +68,7 @@ const getAuthHeader = () =>  {
 /* OTP Interface */
 export const sendOtp = (number: string) => {
     const sendOtpApi = `${BASE_URL}/${STAGE}/${OTP_SEND_API}`;
-    const bodyParam = JSON.stringify({number});
+    const bodyParam = JSON.stringify({ number });
     return fetch(sendOtpApi, {
         method: 'post',
         body: bodyParam
@@ -77,7 +77,7 @@ export const sendOtp = (number: string) => {
 
 export const resendOtp = (number: string) => {
     const resendOtpApi = `${BASE_URL}/${STAGE}/${OTP_RESEND_API}`;
-    const bodyParam = JSON.stringify({number});
+    const bodyParam = JSON.stringify({ number });
     return fetch(resendOtpApi, {
         method: 'post',
         body: bodyParam
@@ -86,7 +86,7 @@ export const resendOtp = (number: string) => {
 
 export const verifyOtp = (number: string, otp: string) => {
     const sendOtpApi = `${BASE_URL}/${STAGE}/${OTP_VERIFY_API}`;
-    const bodyParam = JSON.stringify({number, otp});
+    const bodyParam = JSON.stringify({ number, otp });
     return fetch(sendOtpApi, {
         method: 'post',
         body: bodyParam
@@ -98,14 +98,14 @@ export const verifyOtp = (number: string, otp: string) => {
 export const getUserManager = (phoneNumber: string) => {
     const userManagerApi = `${BASE_URL}/${STAGE}/${USER_MANAGER_API}/${phoneNumber}`;
     return fetch(userManagerApi)
-    .then((response: any) => response.json());
+        .then((response: any) => response.json());
 };
 /* USer Manager API End */
 
 export const checkIfUserAlreadyExists = (phoneNumber: string) => {
     const userAlreadyExistsApi = `${BASE_URL}/${STAGE}/${USER_MANAGER_API}/${USER_ALREADY_EXISTS}/?userName=${phoneNumber}`;
     return fetch(userAlreadyExistsApi)
-    .then((response: any) => response.json());
+        .then((response: any) => response.json());
 };
 
 /* Location interface */
@@ -155,30 +155,30 @@ export const fetchRedirectedUserDetails = (userAccessToken: string) => {
     //console.log("inside fun3", userAccessToken)
     const userProfileApi = `${BASE_URL}/${STAGE}/${USER_PROFILE_API}`;
     return fetch(userProfileApi, {
-        headers: {'Authorization': `Bearer ${userAccessToken}`}
+        headers: { 'Authorization': `Bearer ${userAccessToken}` }
     }).then((response: any) => response.json());
 };
 
-export const kycUserDetails = (userFormData: any) => {	
-    const userUpdateApi = `${BASE_URL}/${STAGE}/${UPDATE_USER_DETAILS}`;	
+export const kycUserDetails = (userFormData: any) => {
+    const userUpdateApi = `${BASE_URL}/${STAGE}/${UPDATE_USER_DETAILS}`;
     return fetch(userUpdateApi, {
         method: 'POST',
         headers: getAuthHeader(),
         body: JSON.stringify(userFormData)
     }).then((response: any) => response.json());
 };
-		
-export const fetchUserCompleteDetails = () => {	
-    const userDetailsAPI = `${BASE_URL}/${STAGE}/${USER_COMPLETE_DETAILS}`;	
-    return fetch(userDetailsAPI, {	
-        headers: getAuthHeader()	
-    }). then((response: any) => response.json());	
+
+export const fetchUserCompleteDetails = () => {
+    const userDetailsAPI = `${BASE_URL}/${STAGE}/${USER_COMPLETE_DETAILS}`;
+    return fetch(userDetailsAPI, {
+        headers: getAuthHeader()
+    }).then((response: any) => response.json());
 };
 
-export const fetchUserFiles = (fileName: string) => {	
-    const getUserFileAPI = `${BASE_URL}/${STAGE}/${USER_FILE_API}/?filename=${fileName}`;	
-    return fetch(getUserFileAPI)	
-    .then((response: any) => response.json());	
+export const fetchUserFiles = (fileName: string) => {
+    const getUserFileAPI = `${BASE_URL}/${STAGE}/${USER_FILE_API}/?filename=${fileName}`;
+    return fetch(getUserFileAPI)
+        .then((response: any) => response.json());
 };
 
 /* Registration And Login Interface End*/
@@ -234,7 +234,7 @@ export const getLiveApmcRate = (cropDetails: Array<LiveApmcRates>) => {
     return fetch(getApmcPriceApi, {
         method: 'POST',
         headers: getAuthHeader(),
-        body: JSON.stringify({crops: cropDetails})
+        body: JSON.stringify({ crops: cropDetails })
     }).then((response: any) => response.json());
 };
 
@@ -323,8 +323,7 @@ export const getMasterList = (buyerId: string) => {
 
 export const getBuyerMatchesList = (buyerId: string, cropIds: Array<string>) => {
     const matchesApi = `${BASE_URL}/${STAGE}/${MATCHES_API}`;
-    console.log("getBuyerMatchesList being called in api");
-    const matchesBody = {buyer_id: buyerId, buyer_crop_id: cropIds}
+    const matchesBody = { buyer_id: buyerId, buyer_crop_id: cropIds }
     return fetch(matchesApi, {
         // headers: getAuthHeader(),
         method: 'POST',
@@ -375,11 +374,11 @@ export const postSellerTransactionAction = (
 export const sellerConnectStatus = ({
     sellerId,
     sellerCropId
-}: {sellerId: string, sellerCropId: string}) => {
+}: { sellerId: string, sellerCropId: string }) => {
     const sellerConnectedApi = `${BASE_URL}/${STAGE}/${CONNECT_STATUS}`;
     return fetch(sellerConnectedApi, {
         method: 'POST',
-        body: JSON.stringify({seller_id: sellerId, seller_crop_id: sellerCropId})
+        body: JSON.stringify({ seller_id: sellerId, seller_crop_id: sellerCropId })
     }).then((response: any) => response.json());
 };
 
@@ -387,15 +386,15 @@ export const postAddBeneficiarydata = (userData: any) => {
     const addBeneficiaryApi = `${BASE_URL}/${STAGE}/${ADD_BENEFICIARY_API}`;
     return fetch(addBeneficiaryApi, {
         method: 'POST',
-        body: JSON.stringify(userData) 
+        body: JSON.stringify(userData)
     }).then((response: any) => response.text);
 };
 
 export const postBuyerDetails = (userData: any) => {
-const registerBuyerApi = `${BASE_URL}/${STAGE}/${ADD_BUYER_AT_DESTINY}`;
+    const registerBuyerApi = `${BASE_URL}/${STAGE}/${ADD_BUYER_AT_DESTINY}`;
     return fetch(registerBuyerApi, {
         method: 'POST',
-        body: JSON.stringify(userData) 
+        body: JSON.stringify(userData)
     }).then((response: any) => response.text);
 };
 
@@ -403,19 +402,18 @@ export const postSellerDetails = (userData: any) => {
     const registerSellerApi = `${BASE_URL}/${STAGE}/${ADD_SELLER_AT_DESTINY}`;
     return fetch(registerSellerApi, {
         method: 'POST',
-        body: JSON.stringify(userData) 
+        body: JSON.stringify(userData)
     }).then((response: any) => response.text);
 };
 
 export const getRedirectionToken = (userKey: string) => {
-    
     const accessTokenApi = `${BASE_URL}/${STAGE}/${GET_REDIRECTION_TOKEN}`;
     const accessTokenParam = JSON.stringify({
         'key': userKey,
     });
     return fetch(accessTokenApi, {
         method: 'POST',
-        body: accessTokenParam 
+        body: accessTokenParam
     }).then((response: any) => response.json());
 };
 
@@ -428,7 +426,7 @@ export const getPaymentList = (transactionData: any) => {
     }).then((response: any) => response.json())
 };
 
-export const getStatusDetails = (userData:any) => {
+export const getStatusDetails = (userData: any) => {
     const statusDetailsApi = `${BASE_URL}/${STAGE}/${TRANSACTION_API}/${userData.transactionId}/events/?user=${userData.user}&transport=false&event=all`;
     return fetch(statusDetailsApi, {
         method: 'GET',

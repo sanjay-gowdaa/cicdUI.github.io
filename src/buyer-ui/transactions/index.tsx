@@ -40,7 +40,6 @@ const TransactionSection = () => {
 
     useEffect(() => {
         dispatch(getTransactionListOnReload(transactionKey));
-        dispatch(eventTemplate());
     }, [reloadClicked]);
 
     return (

@@ -1,5 +1,6 @@
 import React from 'react';
 import { Col, Row, Typography } from 'antd';
+
 import { MatchRequirementModel } from '../../buyer-seller-commons/types';
 import { parseIDfromHash, maskData } from '../../app-components/utils';
 
@@ -10,12 +11,12 @@ interface componentProps {
 };
 
 const TradeSumary = (props: componentProps) => {
-    const {cropDetails} = props;
+    const { cropDetails } = props;
     const { seller_id, produce, buyer_price_per_quintal, matched_quantity, location, buyer_final_price } = cropDetails;
 
     return (
         <>
-        <Title level={4}>Trade summary</Title>
+            <Title level={4}>Trade summary</Title>
             <Row>
                 <Col sm={24} md={12}>
                     Seller Id
@@ -53,8 +54,7 @@ const TradeSumary = (props: componentProps) => {
                     Total price
                 </Col>
                 <Col sm={24} md={12}>
-
-                    : {buyer_final_price}<span className="heading-alerttext">(excl. all taxes)</span>
+                    : {buyer_final_price}<span className="heading-alerttext">&nbsp;(excl. all taxes)</span>
                 </Col>
             </Row>
             <Row>
@@ -72,10 +72,6 @@ const TradeSumary = (props: componentProps) => {
                 <Col sm={24} md={12}>
                     : {'12/08/2020 to 15/08/2020'}
                 </Col>
-            </Row>
-            <Row>
-
-                <Title level={5} className="heading-alerttext"> * The Total price is exluded of all taxes.</Title>
             </Row>
         </>
     );
