@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Checkbox, Modal, Typography, Space, Statistic, Row, Col} from 'antd';
+import { Checkbox, Modal, Typography, Space, Statistic, Row, Col, Alert} from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import { CheckCircleFilled, ExclamationCircleFilled } from '@ant-design/icons';
 
@@ -103,13 +103,16 @@ const displayConcurrentMatchError = () => {
 
 
 
-const ConnectMatch = ({cropDetails}: {cropDetails: MatchRequirementModel}) => {
+const ConnectMatch = ({cropDetails}: {cropDetails: MatchRequirementModel}, {showOTPModal, setShowOTPModal, currentType, history}: {showOTPModal: boolean, setShowOTPModal: Function, currentType: string, history: any}) => {
     const dispatch = useDispatch();
     const userState: UserStateModel = useSelector((state: RootState) => state.loginUser);
     const buyerState: BuyerStateModel = useSelector((state: RootState) => state.buyer);
     const { produceList } = buyerState;
     const agreementNumber = `PA_${userState.username}_${maskData(parseIDfromHash(cropDetails.seller_id))}`;// Temp
     const [viewConnectAgreement, setConnectAgreement] = useState(false);
+    const registrationState = useSelector((state: RootState) => state.registration);
+
+    const { otpError} = registrationState;
     const [otp, setOtp] = useState("");
     const [otpTimer, setOtpTimer] = useState(0);
     const [resend, showResend] = useState(false);
@@ -121,6 +124,13 @@ const ConnectMatch = ({cropDetails}: {cropDetails: MatchRequirementModel}) => {
             setOtpTimer(Date.now() + 1000*60);
         }
     }, [isAgreed]); */
+    useEffect(() => {
+        if (otpError.verified) {
+            setShowOTPModal(!showOTPModal);
+           // return history.push(`buyer/${currentType.toLocaleLowerCase()}`);
+        }
+    }, [otpError.verified]);
+
 
     const retryOtpSend = () => {
         setOtpResent(true);
@@ -208,6 +218,14 @@ const ConnectMatch = ({cropDetails}: {cropDetails: MatchRequirementModel}) => {
                         }
                         </Space>
                         </Row>
+                        {
+                            otpError.showError && (
+                            <Row className="margin-t-1em">
+                            <Col span="24">
+                                <Alert message={otpError.errorMg} type="error" showIcon />
+                            </Col>
+                            </Row> )
+                        }
                         <Row justify="center" className="margin-t-1em">
                             <Col>
                                 <Space>

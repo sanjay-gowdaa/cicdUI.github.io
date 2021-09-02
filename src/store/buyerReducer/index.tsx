@@ -35,7 +35,8 @@ const INITIAL_STATE: BuyerStateModel = {
     paymentRedirectionDetails: {},
     statusDetails: [],
     currentStatusDetails: [],
-    eventTemplate: []
+    eventTemplate: [],
+  
 };
 
 const reducer = (state = INITIAL_STATE, action: any) => {
@@ -92,6 +93,9 @@ const reducer = (state = INITIAL_STATE, action: any) => {
 
         case UPDATE_EVENT_TEMPLATE:
             return {...state, eventTemplate: action.payload }
+
+        
+     
     
         default:
             return state;
