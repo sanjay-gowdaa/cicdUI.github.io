@@ -66,6 +66,10 @@ export interface CurrentStatusDetails{
     event_timestamp: string;
 }
 
+export interface EventTemplate{
+    event_list: any
+}
+
 export interface BuyerStateModel {
     masterProduceList: Array<MasterListApiFormat>;
     produceList: Array<ProduceModel>;
@@ -85,6 +89,7 @@ export interface BuyerStateModel {
     paymentRedirectionDetails: any;
     statusDetails: Array<StatusDetails>;
     currentStatusDetails: Array<CurrentStatusDetails>;
+    eventTemplate: Array<EventTemplate>;
 }
 
 export interface BuyerRejectMatch {

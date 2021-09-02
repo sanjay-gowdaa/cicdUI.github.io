@@ -12,7 +12,8 @@ import {
     UPDATE_PAYMENT_DETAILS,
     UPDATE_PAYMENT_REDIRECTION_DETAILS,
     UPDATE_STATUS_DETAILS,
-    UPDATE_CURRENT_STATUS_DETAILS
+    UPDATE_CURRENT_STATUS_DETAILS,
+    UPDATE_EVENT_TEMPLATE
 } from './actions';
 import {
     mockReviewsList,
@@ -33,7 +34,8 @@ const INITIAL_STATE: BuyerStateModel = {
     paymentDetails: [],
     paymentRedirectionDetails: {},
     statusDetails: [],
-    currentStatusDetails: []
+    currentStatusDetails: [],
+    eventTemplate: []
 };
 
 const reducer = (state = INITIAL_STATE, action: any) => {
@@ -87,6 +89,9 @@ const reducer = (state = INITIAL_STATE, action: any) => {
 
         case UPDATE_CURRENT_STATUS_DETAILS:
             return {...state, currentStatusDetails: [...state.currentStatusDetails, action.payload] }
+
+        case UPDATE_EVENT_TEMPLATE:
+            return {...state, eventTemplate: action.payload }
     
         default:
             return state;

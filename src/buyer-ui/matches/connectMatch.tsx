@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Checkbox, Modal, Typography } from 'antd';
+import React, { useEffect, useState } from 'react';
+import { Checkbox, Modal, Typography, Space, Statistic, Row, Col} from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import { CheckCircleFilled, ExclamationCircleFilled } from '@ant-design/icons';
 
@@ -7,7 +7,7 @@ import TradeSumary from './tradeSummary';
 
 import PrimaryBtn from '../../app-components/primaryBtn';
 import InputOtp from '../../app-components/inputOtp';
-import { sendOTP } from '../../store/registrationReducer/actions';
+import { confirmOTP, sendOTP, resendOTP } from '../../store/registrationReducer/actions';
 import { RootState } from '../../store/rootReducer';
 import {
     connectMatch,
@@ -21,6 +21,7 @@ import { BuyerStateModel } from '../../store/buyerReducer/types';
 import { parseIDfromHash, maskData } from '../../app-components/utils';
 
 const { Text, Title } = Typography;
+const { Countdown } = Statistic
 
 const getTransactionDataStructure = (cropDetails: MatchRequirementModel) => {
     const {
@@ -100,6 +101,8 @@ const displayConcurrentMatchError = () => {
     });
 };
 
+
+
 const ConnectMatch = ({cropDetails}: {cropDetails: MatchRequirementModel}) => {
     const dispatch = useDispatch();
     const userState: UserStateModel = useSelector((state: RootState) => state.loginUser);
@@ -108,10 +111,25 @@ const ConnectMatch = ({cropDetails}: {cropDetails: MatchRequirementModel}) => {
     const agreementNumber = `PA_${userState.username}_${maskData(parseIDfromHash(cropDetails.seller_id))}`;// Temp
     const [viewConnectAgreement, setConnectAgreement] = useState(false);
     const [otp, setOtp] = useState("");
+    const [otpTimer, setOtpTimer] = useState(0);
+    const [resend, showResend] = useState(false);
+    const [otpResent, setOtpResent] = useState(false);
     const [isAgreed, setAgreed] = useState(false); 
+
+    /* useEffect(() => {
+        if(isAgreed) {
+            setOtpTimer(Date.now() + 1000*60);
+        }
+    }, [isAgreed]); */
+
+    const retryOtpSend = () => {
+        setOtpResent(true);
+        dispatch(resendOTP());
+    };
 
     const onAcceptConnect = () => {
         dispatch(saveTimeStamp);
+        dispatch(confirmOTP(userState.username, otp));
         setConnectAgreement(!viewConnectAgreement);
         const transactionEntry = getTransactionDataStructure(cropDetails);
         const {seller_crop_id, seller_id} = cropDetails;
@@ -141,9 +159,7 @@ const ConnectMatch = ({cropDetails}: {cropDetails: MatchRequirementModel}) => {
                 visible={viewConnectAgreement}
                 title={<Title level={3}>Agreement To Buy</Title>}
                 onCancel={() => setConnectAgreement(!viewConnectAgreement)}
-                footer={[
-                    <PrimaryBtn onClick={onAcceptConnect} content="Agree"/>
-                ]}
+                footer={null}
             >
                 <Text style={{float: "right"}}>Application no: {agreementNumber}</Text>
                 <TradeSumary cropDetails={cropDetails} />
@@ -153,6 +169,7 @@ const ConnectMatch = ({cropDetails}: {cropDetails: MatchRequirementModel}) => {
                         if (event.target.checked) {
                             dispatch(sendOTP(`91${userState.username}`));
                             setAgreed(true);
+                            setOtpTimer(Date.now() + 1000*60);
                         } else {
                             setAgreed(false);
                         }
@@ -164,11 +181,46 @@ const ConnectMatch = ({cropDetails}: {cropDetails: MatchRequirementModel}) => {
                     </a>
                     and agree to digitally sign the same using OTP.
                 </Checkbox>
-                { isAgreed && 
+                { isAgreed &&  
                     <>
-                        <Text>Please enter the Digital OTP recieved</Text>
-                        <InputOtp setInput={setOtp} />
+                        <Row justify="center">
+                        <Col>
+                            <Text>Please enter 4 digit OTP number sent to your phone number +91-{maskData(userState.username)}</Text>
+                        </Col>
+                        <Col>
+                            <InputOtp setInput={setOtp} />
+                        </Col>
+                        </Row>
+                        <Row>
+                        <Space>
+                        <Text>Didn't receive OTP?</Text>
+                        {
+                            !resend ? ( 
+                                <>
+                                    <Text className="custom-color-change"> Resend Code in </Text>
+                                    <Countdown
+                                    className="custom-color-change"
+                                    value={otpTimer} format="mm:ss"
+                                    onFinish={() => showResend(true)}
+                                    />
+                                </>
+                            ) : (!otpResent ? <PrimaryBtn className="add-margin-bottom" onClick={retryOtpSend} content="Resend OTP" /> : null)
+                        }
+                        </Space>
+                        </Row>
+                        <Row justify="center" className="margin-t-1em">
+                            <Col>
+                                <Space>
+                                <PrimaryBtn
+                                disabled={otp.length !== 4}
+                                onClick={onAcceptConnect}
+                                content="Verify OTP & Agree"
+                                />
+                                </Space>
+                            </Col>
+                        </Row>
                     </>
+
                 }
             </Modal>
         </>

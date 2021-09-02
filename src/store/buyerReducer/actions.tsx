@@ -19,7 +19,8 @@ import {
     sellerConnectStatus,
     getPaymentList,
     getStatusDetails,
-    getCurrentStatusDetails
+    getCurrentStatusDetails,
+    getEventTemplate
 } from "../api";
 import { UserStateModel } from "../loginReducer/types";
 import { BuyerStateModel } from "../buyerReducer/types";
@@ -43,6 +44,7 @@ export const UPDATE_PAYMENT_REDIRECTION_DETAILS = 'UPDATE_PAYMENT_REDIRECTION_DE
 export const UPDATE_PAYMENT_DETAILS = 'UPDATE_PAYMENT_DETAILS';
 export const UPDATE_STATUS_DETAILS = 'UPDATE_STATUS_DETAILS';
 export const UPDATE_CURRENT_STATUS_DETAILS = 'UPDATE_CURRENT_STATUS_DETAILS';
+export const UPDATE_EVENT_TEMPLATE = 'UPDATE_EVENT_TEMPLATE';
 
 export const updateStoreMasterList = (masterlist: Array<any>) => {
     return {
@@ -69,6 +71,13 @@ export const updateStatusDetails = (statusDetails: Array<any>) => {
     return {
         type: UPDATE_STATUS_DETAILS,
         payload: statusDetails,
+    };
+};
+
+export const updateEventList = (eventTemplate: Array<any>) => {
+    return {
+        type: UPDATE_EVENT_TEMPLATE,
+        payload: eventTemplate,
     };
 };
 
@@ -340,6 +349,16 @@ export const currentStatusDetails = (userData: any) => {
         if (!isEmpty(currentStatusResponse)) {
             const status = currentStatusResponse;
             dispatch(updateCurrentStatusDetails(status[0]));
+        }
+    }
+};
+
+export const eventTemplate = () => {
+    return async(dispatch: any, getState: any) => {
+        const template = await getEventTemplate();
+        //console.log("template:", template);
+        if(!isEmpty(template)) {
+            dispatch(updateEventList(template));
         }
     }
 };
