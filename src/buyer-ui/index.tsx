@@ -1,6 +1,6 @@
-import React from 'react';
-import { Divider, Typography } from 'antd';
-import { useSelector} from 'react-redux';
+import React, { useState } from 'react';
+import { Button, Divider, Modal, Typography } from 'antd';
+import { useDispatch, useSelector } from 'react-redux';
 
 import './buyer.scss';
 import MatchedSection from './matches';
@@ -15,13 +15,23 @@ import Footer from '../footer';
 
 import { RootState } from '../store/rootReducer';
 import Banner from '../static/assets/buyerBanner.jpg';
+import { saveKyc } from '../store/loginReducer/actions';
 
-const {Title} = Typography;
+const { Title } = Typography;
 
 const BuyerUI = (props: any) => {
     const { history } = props;
     const loginState = useSelector((state: RootState) => state.loginUser);
-    const isRedirected = loginState.isRedirected;
+    const { isRedirected, isLogin, name } = loginState;
+    const [welcomeModal, setWelcomeModal] = useState(isLogin);
+    const dispatch = useDispatch();
+
+    const explore = () => {
+        if (isLogin) {
+            dispatch(saveKyc({ isLogin: false }));
+        }
+        setWelcomeModal(!welcomeModal);
+    };
 
     return (
         <div className="buyer-ui-app" id="buyer-ui-app">
@@ -30,7 +40,17 @@ const BuyerUI = (props: any) => {
                 <Title level={2}>My Dashboard</Title>
                 <img className="buyer-banner" src={Banner} alt="buyer-banner" />
                 <Divider />
-                {isRedirected && <PaymentResponseModel/>}
+                {isRedirected && <PaymentResponseModel />}
+                <Modal
+                    visible={welcomeModal}
+                    className="welcome-modal"
+                    onCancel={explore}
+                    footer={null}
+                >
+                    <Title level={4} className="dear-name-text">Dear {name},</Title>
+                    <Title level={3} className="welcome-text">Welcome to VikasBandhu!</Title>
+                    <Button type="primary" className="welcome-explore" onClick={explore}>Explore</Button>
+                </Modal>
                 <AddProduceModal />
                 <Divider />
                 <ProduceSection />
