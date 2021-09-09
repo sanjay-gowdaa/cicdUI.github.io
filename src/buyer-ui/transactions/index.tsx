@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Tabs, Typography } from 'antd';
-import { ReloadOutlined } from '@ant-design/icons';
+import { Button, Tabs, Typography } from 'antd';
 
 import OnGoingTransactions from './onGoing';
 import CompletedTransactions from './completed';
@@ -14,8 +13,9 @@ import {
     getTransactionListOnReload
 } from '../../store/buyerReducer/actions';
 import { RootState } from '../../store/rootReducer';
+import Refresh from '../../static/assets/refresh.png';
 
-const { Title } = Typography;
+const { Text, Title } = Typography;
 const { TabPane } = Tabs;
 
 const TransactionSection = () => {
@@ -39,16 +39,28 @@ const TransactionSection = () => {
     }, []);
 
     useEffect(() => {
-        dispatch(getTransactionListOnReload(transactionKey));
+        if (reloadClicked === 5) {
+            setTimeout(() => {
+                setReloadClicked(0);
+            }, 500000);
+        }
     }, [reloadClicked]);
 
     return (
         <div id="buyer-ui-transactions">
             <Title level={2}>My Transactions</Title>
-            <ReloadOutlined
-                className={reloadClicked === 5 ? `display-none` : `on-reload-matches`}
-                onClick={() => setReloadClicked(reloadClicked + 1)}
-            />
+            <Button
+                type="link"
+                disabled={reloadClicked === 5}
+                style={{ float: 'right' }}
+                onClick={() => {
+                    setReloadClicked(reloadClicked + 1);
+                    dispatch(getTransactionListOnReload(transactionKey));
+                }}
+            >
+                <Text style={{ color: '#4285F4' }}>Refresh &nbsp;</Text>
+                <img src={Refresh} alt="refresh" />
+            </Button>
             <Tabs defaultActiveKey="1" size="large" onChange={onSwitchTab}>
                 <TabPane tab="On Going" key={TransactionStatus.on_going}>
                     <OnGoingTransactions transactionList={transactionList[TransactionStatus.on_going]} />

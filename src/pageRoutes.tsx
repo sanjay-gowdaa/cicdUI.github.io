@@ -1,5 +1,6 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
+
 import Home from './App';
 import RegisterBuyer from './login-ui/registration';
 import SellerUI from './seller-ui/';
@@ -12,7 +13,7 @@ import { Terms } from './terms-and-conditions';
 import { PurchaseAgreement } from './purchase-agreement';
 import Profile from './profile';
 
-const { buyer_ui, home, profile, purchase_agreement, register_entity, seller_ui,  terms } = routesMap;
+const { buyer_ui, home, profile, purchase_agreement, register_entity, seller_ui, terms } = routesMap;
 
 const HomePageRoutes = () => {
     return (
@@ -23,12 +24,12 @@ const HomePageRoutes = () => {
             {/* <Route path={buyer_ui} component={BuyerUI} /> */}
             <Route path={'/login-user'} component={ValidateUserAuthentication} />
             <Route path={'/redirected-user'} component={ValidateUserRedirection} />
-            <Route path={terms} component={Terms} />
-            <Route path={purchase_agreement} component={PurchaseAgreement} />
+            <Route exact path={terms} component={Terms} />
+            <Route exact path={purchase_agreement} component={PurchaseAgreement} />
             {/* Protected route guard */}
-            <GuardedRoute Component={SellerUI} path={seller_ui} auth={false} />
-            <GuardedRoute Component={BuyerUI} path={buyer_ui} auth={false} />
-            <GuardedRoute Component={Profile} path={profile} auth={false} />
+            <GuardedRoute exact Component={SellerUI} path={seller_ui} auth={false} />
+            <GuardedRoute exact Component={BuyerUI} path={buyer_ui} auth={false} />
+            <GuardedRoute exact Component={Profile} path={profile} auth={false} />
         </Switch>
     );
 };

@@ -1,4 +1,5 @@
 import CryptoJS from 'crypto-js';
+import { isEmpty } from 'lodash';
 
 import { BuyerRejectMatch } from '../buyerReducer/types';
 import { LiveApmcRates, UpdatedLiveApmcRatesQuery } from '../genericTypes';
@@ -55,8 +56,9 @@ const parseToken = (userToken: string) => {
 
 const getAuthHeader = () => {
     const userToken = (window as any).userToken ? (window as any).userToken : '';
-    if (userToken) {
-        const userAccessToken = parseToken(userToken);
+    if (userToken || localStorage.getItem("token")) {
+        const token = isEmpty(userToken) ? localStorage.getItem("token") : userToken;
+        const userAccessToken = parseToken(token);
         return ({ 'Authorization': `Bearer ${userAccessToken}` });
     } else {
         return ({ 'Authorization': `Bearer ` });
