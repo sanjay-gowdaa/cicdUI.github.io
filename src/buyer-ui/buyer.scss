@@ -253,3 +253,35 @@ $col-shade-error: #e90000;
     }
     }
 }
+
+.transaction-timeline {
+    margin-top: 2rem;
+
+    .ant-timeline-item-label {
+        text-align: center !important;
+    }
+
+    .ant-timeline-item-content {
+        width: 300% !important;
+    }
+
+    .ant-timeline-item-head {
+        font-size: large !important;
+    }
+
+    .is-complete {
+        .ant-timeline-item-tail {
+            border-left: 2px solid #000000 !important;
+        }
+    }
+
+    .is-pending {
+        .ant-timeline-item-tail {
+            border-left: 2px dotted #000000 !important;
+        }
+    }
+}
+
+.table-crop-image {
+    width: 5rem !important;
+}
