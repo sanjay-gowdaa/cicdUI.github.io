@@ -6,11 +6,11 @@ import { isEmpty } from 'lodash';
 import PayButton from './payButton';
 import StatusDetailsModel from './viewStatusDetails';
 
-import RagiImg from '../../static/assets/ragi.png';
 import { parseIDfromHash, maskData } from '../../app-components/utils';
 import { TransactionStatus } from '../../buyer-seller-commons/types';
 import { RootState } from '../../store/rootReducer';
 import { currentStatusDetails } from '../../store/buyerReducer/actions';
+import { showCropImage } from '../../buyer-seller-commons/constants';
 
 const { Text } = Typography;
 
@@ -69,11 +69,12 @@ export const transactionColumns = [
         key: 'produce',
         width: 300,
         render: (produce: string) => {
+            const [masterCategory = '', produceCateogry = '', cropType = '', grade = ''] = produce.split('-');
+            const imageSrc = showCropImage(masterCategory);
+
             return (
                 <div className='display-flex-row align-center'>
-                    <Image
-                        src={RagiImg}
-                    />
+                    <Image src={imageSrc} className="table-crop-image" />
                     <div className='margin-l-r-1em'>
                         <p>{produce}</p>
                     </div>
