@@ -1,6 +1,7 @@
 import React from 'react';
 import { Divider, Typography } from 'antd';
 import { useSelector } from 'react-redux';
+import { isEmpty } from 'lodash';
 
 import './buyer.scss';
 import MatchedSection from './matches';
@@ -22,7 +23,8 @@ const { Title } = Typography;
 const BuyerUI = (props: any) => {
     const { history } = props;
     const loginState = useSelector((state: RootState) => state.loginUser);
-    const { isRedirected } = loginState;
+    const { isRedirected, username } = loginState;
+    !isEmpty(username) && localStorage.setItem("userName", username);
 
     return (
         <div className="buyer-ui-app" id="buyer-ui-app">
