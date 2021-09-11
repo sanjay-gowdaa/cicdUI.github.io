@@ -215,7 +215,8 @@ export const patchCrop = (cropData: any, sellerId: string) => {
 };
 
 export const getAllCrops = (sellerId: string) => {
-    const fetcCropsApi = `${BASE_URL}/${STAGE}/seller/${sellerId}/crop`;
+    const userId = isEmpty(sellerId) ? localStorage.getItem("userName") : sellerId;
+    const fetcCropsApi = `${BASE_URL}/${STAGE}/seller/${userId}/crop`;
     return fetch(fetcCropsApi, {
         headers: getAuthHeader()
     }).then((response: any) => response.json());
@@ -352,12 +353,14 @@ export const createTransaction = (transactionEntry: any) => {
 };
 
 export const fetchTransactionList = (userName: string, transactionStatus: TransactionStatus) => {
-    const listApi = `${BASE_URL}/${STAGE}/${TRANSACTION_LIST_API}/${userName}?status=${transactionStatus}`;
+    const userId = isEmpty(userName) ? localStorage.getItem("userName") : userName;
+    const listApi = `${BASE_URL}/${STAGE}/${TRANSACTION_LIST_API}/${userId}?status=${transactionStatus}`;
     return fetch(listApi).then((response: any) => response.json());
 };
 
 export const fetchSellerMatches = (userName: string) => {
-    const listApi = `${BASE_URL}/${STAGE}/${TRANSACTION_LIST_API}/${userName}?status=MatcH`;
+    const userId = isEmpty(userName) ? localStorage.getItem("userName") : userName;
+    const listApi = `${BASE_URL}/${STAGE}/${TRANSACTION_LIST_API}/${userId}?status=MatcH`;
     return fetch(listApi).then((response: any) => response.json());
 };
 
