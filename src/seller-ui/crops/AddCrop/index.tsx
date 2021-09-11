@@ -307,14 +307,12 @@ const AddCropModal = (addCropProps: PropsType) => {
                                 <Radio.Group
                                     className="custom-radio"
                                     name="intentToSell"
-                                    disabled={true}
                                     onChange={changeIntentToSell}
                                 >
                                     <Radio value={"Yes"}>Yes</Radio>
                                     <Radio value={"No"}>No</Radio>
                                 </Radio.Group>
                             </Form.Item>
-                            <Text>Change intent to sell as "Yes", in edit once confirmed.</Text>
                             {showAlert &&
                                 <Alert type="warning" message={<>You can not edit if intent to sell is set to "<b>Yes</b>"</>} />
                             }
