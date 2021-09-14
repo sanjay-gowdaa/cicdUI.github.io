@@ -136,6 +136,7 @@ const ConnectMatch = ({ cropDetails }: { cropDetails: MatchRequirementModel }) =
                         dispatch(getMatchesForBuyerCrops(produceList));
                     }
                 })
+            setConnectAgreement(!viewConnectAgreement);
         }
     }, [otpError.verified]);
 
@@ -147,7 +148,6 @@ const ConnectMatch = ({ cropDetails }: { cropDetails: MatchRequirementModel }) =
     const onAcceptConnect = () => {
         dispatch(saveTimeStamp);
         dispatch(confirmOTP(userState.username, otp));
-        setConnectAgreement(!viewConnectAgreement);
     };
 
     return (
