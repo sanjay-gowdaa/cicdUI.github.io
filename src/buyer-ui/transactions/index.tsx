@@ -61,7 +61,7 @@ const TransactionSection = () => {
                 <Text style={{ color: '#4285F4' }}>Refresh &nbsp;</Text>
                 <img src={Refresh} alt="refresh" />
             </Button>
-            <Tabs defaultActiveKey="1" size="large" onChange={onSwitchTab}>
+            <Tabs defaultActiveKey="1" size="large" style={{ width: "100%" }} onChange={onSwitchTab}>
                 <TabPane tab="On Going" key={TransactionStatus.on_going}>
                     <OnGoingTransactions transactionList={transactionList[TransactionStatus.on_going]} />
                 </TabPane>

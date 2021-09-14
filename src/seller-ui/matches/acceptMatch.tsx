@@ -3,6 +3,7 @@ import { Alert, Checkbox, Col, Modal, Row, Space, Statistic, Typography } from '
 import { useDispatch, useSelector } from 'react-redux';
 
 import TradeSummary from './tradeSummary';
+
 import PrimaryBtn from '../../app-components/primaryBtn';
 import InputOtp from '../../app-components/inputOtp';
 import { saveTimeStamp, transactionAction } from '../../store/sellerReducer/actions';
@@ -18,7 +19,7 @@ const AcceptMatch = (props: { cropDetails: MatchRequirementModel }) => {
     const { cropDetails } = props;
     const dispatch = useDispatch();
     const userState = useSelector((state: RootState) => state.loginUser);
-    const agreementNumber = `PA_${userState.username}_${maskData(parseIDfromHash(cropDetails.seller_id))}`;// Temp
+    const agreementNumber = `PA_${userState.username}_${maskData(parseIDfromHash(cropDetails.buyer_id))}`;// Temp
     const [viewAcceptAgreement, setViewAcceptAgreement] = useState(false);
     const registrationState = useSelector((state: RootState) => state.registration);
 
@@ -44,13 +45,13 @@ const AcceptMatch = (props: { cropDetails: MatchRequirementModel }) => {
                     cropDetails
                 )
             );
+            setViewAcceptAgreement(!viewAcceptAgreement);
         }
     }, [otpError.verified]);
 
     const onAccept = () => {
         dispatch(saveTimeStamp);
         dispatch(confirmOTP(userState.username, otp));
-        setViewAcceptAgreement(!viewAcceptAgreement);
     };
 
     return (
