@@ -16,6 +16,7 @@ export interface ProduceModel {
     sk?: string;
     pk?: string;
     currently_fulfilled_qty?: number;
+    isEditable?: boolean;
 };
 
 export interface CropModel {
