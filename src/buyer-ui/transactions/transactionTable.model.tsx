@@ -134,6 +134,7 @@ export const transactionColumns = [
     },
     {
         title: '',
+        className: 'pay-button',
         key: 'action',
         render: (record: any) => {
             return (

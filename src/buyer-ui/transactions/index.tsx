@@ -61,12 +61,12 @@ const TransactionSection = () => {
                 <Text style={{ color: '#4285F4' }}>Refresh &nbsp;</Text>
                 <img src={Refresh} alt="refresh" />
             </Button>
-            <Tabs defaultActiveKey="1" size="large" style={{ width: "100%" }} onChange={onSwitchTab}>
-                <TabPane tab="On Going" key={TransactionStatus.on_going}>
-                    <OnGoingTransactions transactionList={transactionList[TransactionStatus.on_going]} />
-                </TabPane>
+            <Tabs defaultActiveKey={TransactionStatus.on_going} size="large" style={{ width: "100%" }} onChange={onSwitchTab}>
                 <TabPane tab="Pending" key={TransactionStatus.pending}>
                     <PendingTransactions transactionList={transactionList[TransactionStatus.pending]} />
+                </TabPane>
+                <TabPane tab="On Going" key={TransactionStatus.on_going}>
+                    <OnGoingTransactions transactionList={transactionList[TransactionStatus.on_going]} />
                 </TabPane>
                 <TabPane tab="Completed" key={TransactionStatus.completed}>
                     <CompletedTransactions transactionList={transactionList[TransactionStatus.completed]} />

@@ -8,12 +8,12 @@ import TransactionDetailsModel from './viewTransactionDetails';
 import { TransactioModel } from '../../buyer-seller-commons/types';
 
 const OnGoingTransactions = ({ transactionList }: { transactionList: Array<TransactioModel> }) => {
-    return <Table className="margin-t-1em" columns={transactionColumns}
+    return <Table className="margin-t-1em transaction-on-going-table" columns={transactionColumns}
         dataSource={transactionList}
         expandable={{
             expandedRowRender: record => <TransactionDetailsModel data={record.pk} />,
             rowExpandable: record => true,
-            expandIconColumnIndex: 0,
+            expandIconColumnIndex: 8,
             expandIcon: ({ expanded, onExpand, record }) =>
                 <Tooltip title="Click to view transaction details" placement="bottomLeft">
                     {expanded ?

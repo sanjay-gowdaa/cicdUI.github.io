@@ -280,3 +280,14 @@ $col-shade-error: #e90000;
 .table-crop-image {
     width: 5rem !important;
 }
+
+.transaction-on-going-table {
+    .ant-table-row-expand-icon-cell {
+        padding-left: 0;
+        text-align: start !important;
+    }
+
+    .pay-button {
+        padding: 0;
+    }
+}
