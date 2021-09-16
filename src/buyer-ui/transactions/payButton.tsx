@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch} from 'react-redux';
 import { v4 as uuidv4 } from 'uuid';
 import { Col, Input, Row, Space, Modal, Typography } from 'antd';
 import { isEmpty } from 'lodash';
-
 import PrimaryBtn from '../../app-components/primaryBtn';
 import { RootState } from '../../store/rootReducer';
+import { getAmount } from '../../store/buyerReducer/actions';
 
 const { Text, Title } = Typography;
 
@@ -16,9 +16,11 @@ const { Text, Title } = Typography;
 
 const PayButton = (props: any) => {
     const { record } = props;
+    const dispatch = useDispatch();
     const loginState = useSelector((state: RootState) => state.loginUser);
     const buyerState = useSelector((state: RootState) => state.buyer);
     const status = buyerState.currentStatusDetails;
+    const {amount} = buyerState.paymentAmount;
     const [userStatus, setUserStatus] = useState('');
     const [viewPaymentDetails, setPaymentDetails] = useState(false);
     const uuid = uuidv4();
@@ -27,9 +29,9 @@ const PayButton = (props: any) => {
     const seq = (Math.floor(Math.random() * 10000) + 10000).toString().substring(1);
     const id = "order_" + seq;
 
-    const statussub = userStatus.split(" ");
-    const lastele = statussub[statussub.length - 1];
-    const amount = lastele.substring(1, lastele.length - 1);
+    // const statussub = userStatus.split(" ");
+    // const lastele = statussub[statussub.length - 1];
+    // const amount = lastele.substring(1, lastele.length - 1);
 
 
     const user = loginState.is_buyer && "buyer";
@@ -52,6 +54,11 @@ const PayButton = (props: any) => {
             }
         }
     }, [status]);
+
+    useEffect(() => {
+        dispatch(getAmount(record.pk));
+        console.log("amount", amount);
+    }, []);
 
     return (
         <>

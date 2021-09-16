@@ -46,6 +46,7 @@ const GET_REDIRECTION_TOKEN = 'getredirectiontoken';
 const GET_PAYMENT_DETAILS = 'getpaymentdetails';
 const USER_ALREADY_EXISTS = 'userAlreadyExists';
 const GET_EVENT_TEMPLATE = 'VB/Get_Buyer_Seller_Status';
+const GET_AMOUNT_API = 'getamounttodisplay';
 
 const parseToken = (userToken: string) => {
     const sholudDecrypt = process.env.REACT_APP_ENV === 'prod';
@@ -448,6 +449,13 @@ export const getCurrentStatusDetails = (userData: any) => {
 export const getEventTemplate = () => {
     const eventTemplateApi = `${BASE_URL}/${STAGE}/${GET_EVENT_TEMPLATE}?user=Buyer`;
     return fetch(eventTemplateApi, {
+        method: 'GET',
+    }).then((response: any) => response.json())
+};
+
+export const getPaymentAmount = (userData: string) => {
+    const getamountApi = `${BASE_URL}/${STAGE}/${TRANSACTION_API}/${GET_AMOUNT_API}?transactionId=${userData}&user=Buyer`;
+    return fetch(getamountApi, {
         method: 'GET',
     }).then((response: any) => response.json())
 };

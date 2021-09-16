@@ -20,7 +20,8 @@ import {
     getPaymentList,
     getStatusDetails,
     getCurrentStatusDetails,
-    getEventTemplate
+    getEventTemplate,
+    getPaymentAmount
 } from "../api";
 import { UserStateModel } from "../loginReducer/types";
 import { BuyerStateModel } from "../buyerReducer/types";
@@ -45,6 +46,7 @@ export const UPDATE_PAYMENT_DETAILS = 'UPDATE_PAYMENT_DETAILS';
 export const UPDATE_STATUS_DETAILS = 'UPDATE_STATUS_DETAILS';
 export const UPDATE_CURRENT_STATUS_DETAILS = 'UPDATE_CURRENT_STATUS_DETAILS';
 export const UPDATE_EVENT_TEMPLATE = 'UPDATE_EVENT_TEMPLATE';
+export const UPDATE_PAYMENT_AMOUNT = 'UPDATE_PAYMENT_AMOUNT';
 
 export const updateStoreMasterList = (masterlist: Array<any>) => {
     return {
@@ -57,6 +59,13 @@ export const updatePaymentRedirectionDetails = (paymentRedirectionDetails: any) 
     return {
         type: UPDATE_PAYMENT_REDIRECTION_DETAILS,
         payload: paymentRedirectionDetails,
+    };
+};
+
+export const updatePaymentAmount = (paymentAmount: any) => {
+    return {
+        type: UPDATE_PAYMENT_AMOUNT,
+        payload: paymentAmount,
     };
 };
 
@@ -362,3 +371,13 @@ export const eventTemplate = () => {
         }
     }
 };
+
+export const getAmount = (userData: string) => {
+    return async (dispatch: any, getState: any) => {
+        var id = userData;
+        id= id.substring(12);
+        const amount = await getPaymentAmount(id);
+        dispatch(updatePaymentAmount(amount));
+    }
+};
+

@@ -70,6 +70,10 @@ export interface EventTemplate{
     event_list: any
 }
 
+export interface PaymentAmount{
+    amount: number;
+}
+
 export interface BuyerStateModel {
     masterProduceList: Array<MasterListApiFormat>;
     produceList: Array<ProduceModel>;
@@ -90,6 +94,7 @@ export interface BuyerStateModel {
     statusDetails: Array<StatusDetails>;
     currentStatusDetails: Array<CurrentStatusDetails>;
     eventTemplate: Array<EventTemplate>;
+    paymentAmount: any;
 }
 
 export interface BuyerRejectMatch {
