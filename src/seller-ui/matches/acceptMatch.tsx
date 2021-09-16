@@ -6,11 +6,12 @@ import TradeSummary from './tradeSummary';
 
 import PrimaryBtn from '../../app-components/primaryBtn';
 import InputOtp from '../../app-components/inputOtp';
-import { saveTimeStamp, transactionAction } from '../../store/sellerReducer/actions';
+import { confirmOTP, resetOTPFields, saveTimeStamp, setProduceNameOnAccept, transactionAction } from '../../store/sellerReducer/actions';
 import { RootState } from '../../store/rootReducer';
-import { confirmOTP, resendOTP, sendOTP } from '../../store/registrationReducer/actions';
+import { resendOTP, sendOTP } from '../../store/registrationReducer/actions';
 import { MatchRequirementModel, TransactionAction } from '../../buyer-seller-commons/types';
 import { maskData, parseIDfromHash } from '../../app-components/utils';
+import { SellerStateModel } from '../../store/sellerReducer/types';
 
 const { Text, Title } = Typography;
 const { Countdown } = Statistic;
@@ -19,11 +20,11 @@ const AcceptMatch = (props: { cropDetails: MatchRequirementModel }) => {
     const { cropDetails } = props;
     const dispatch = useDispatch();
     const userState = useSelector((state: RootState) => state.loginUser);
+    const sellerState: SellerStateModel = useSelector((state: RootState) => state.seller);
+    const { otpError } = sellerState;
     const agreementNumber = `PA_${userState.username}_${maskData(parseIDfromHash(cropDetails.buyer_id))}`;// Temp
-    const [viewAcceptAgreement, setViewAcceptAgreement] = useState(false);
-    const registrationState = useSelector((state: RootState) => state.registration);
 
-    const { otpError } = registrationState;
+    const [viewAcceptAgreement, setViewAcceptAgreement] = useState(false);
     const [otp, setOtp] = useState("");
     const [otpTimer, setOtpTimer] = useState(0);
     const [resend, showResend] = useState(false);
@@ -37,7 +38,7 @@ const AcceptMatch = (props: { cropDetails: MatchRequirementModel }) => {
     };
 
     useEffect(() => {
-        if (otpError.verified) {
+        if (otpError.verified && otpError.produce === cropDetails.buyer_crop_id) {
             dispatch(
                 transactionAction(
                     parseIDfromHash(pk),
@@ -45,6 +46,7 @@ const AcceptMatch = (props: { cropDetails: MatchRequirementModel }) => {
                     cropDetails
                 )
             );
+            dispatch(resetOTPFields());
             setViewAcceptAgreement(!viewAcceptAgreement);
         }
     }, [otpError.verified]);
@@ -52,6 +54,7 @@ const AcceptMatch = (props: { cropDetails: MatchRequirementModel }) => {
     const onAccept = () => {
         dispatch(saveTimeStamp);
         dispatch(confirmOTP(userState.username, otp));
+        dispatch(setProduceNameOnAccept(cropDetails.buyer_crop_id));
     };
 
     return (
@@ -75,6 +78,7 @@ const AcceptMatch = (props: { cropDetails: MatchRequirementModel }) => {
                         if (event.target.checked) {
                             dispatch(sendOTP(`91${userState.username}`))
                             setAgreed(true);
+                            setOtpTimer(Date.now() + 1000 * 60);
                         } else {
                             setAgreed(false);
                         }
