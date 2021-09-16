@@ -20,7 +20,8 @@ import {
     getPaymentList,
     getStatusDetails,
     getCurrentStatusDetails,
-    getEventTemplate
+    getEventTemplate,
+    verifyOtp
 } from "../api";
 import { UserStateModel } from "../loginReducer/types";
 import { BuyerStateModel } from "../buyerReducer/types";
@@ -28,6 +29,7 @@ import { RootState } from "../rootReducer";
 
 import { getTimeStamp } from "../../app-components/utils";
 import { TransactionStatus } from "../../buyer-seller-commons/types";
+import { ResponseStatus } from "../genericTypes";
 
 export const UPDATE_MASTER_LIST = 'UPDATE_MASTER_LIST';
 export const GET_MASTER_LIST = 'GET_MASTER_LIST';
@@ -45,6 +47,38 @@ export const UPDATE_PAYMENT_DETAILS = 'UPDATE_PAYMENT_DETAILS';
 export const UPDATE_STATUS_DETAILS = 'UPDATE_STATUS_DETAILS';
 export const UPDATE_CURRENT_STATUS_DETAILS = 'UPDATE_CURRENT_STATUS_DETAILS';
 export const UPDATE_EVENT_TEMPLATE = 'UPDATE_EVENT_TEMPLATE';
+export const OTP_ERROR_ON_CONNECT = 'OTP_ERROR_ON_CONNECT';
+export const OTP_ERROR_MSG_ON_CONNECT = 'OTP_ERROR_MSG_ON_CONNECT';
+export const OTP_VERIFIED_ON_CONNECT = 'OTP_VERIFIED_ON_CONNECT';
+export const PRODUCE_NAME_ON_CONNECT = 'PRODUCE_NAME_ON_CONNECT';
+
+export const setProduceNameOnConnect = (produce: string) => {
+    return {
+        type: PRODUCE_NAME_ON_CONNECT,
+        payload: produce
+    };
+};
+
+export const setOtpErrorOnConnect = (errorFlag: Boolean) => {
+    return {
+        type: OTP_ERROR_ON_CONNECT,
+        payload: errorFlag
+    };
+};
+
+export const setOtpErrorMsgOnConnect = (errorMg: String) => {
+    return {
+        type: OTP_ERROR_MSG_ON_CONNECT,
+        payload: errorMg
+    };
+};
+
+export const setVerifiedOnConnect = (isVerified: Boolean) => {
+    return {
+        type: OTP_VERIFIED_ON_CONNECT,
+        payload: isVerified
+    };
+};
 
 export const updateStoreMasterList = (masterlist: Array<any>) => {
     return {
@@ -92,49 +126,49 @@ export const updateProduceList = (produceList: Array<ProduceModel>) => {
     return {
         type: UPDATE_PRODUCE_LIST,
         payload: produceList
-    }
+    };
 };
 
 export const updateMasterCropNamesList = (masterCropNames: Array<string>) => {
     return {
         type: UPDATE_MASTER_CROP_NAMES_LIST,
         payload: masterCropNames
-    }
+    };
 };
 
 export const updateCropsList = (cropsList: Array<string>) => {
     return {
         type: UPDATE_CROPS_LIST,
         payload: cropsList
-    }
+    };
 };
 
 export const updateVarietyList = (varietyList: Array<string>) => {
     return {
         type: UPDATE_VARIETY_LIST,
         payload: varietyList
-    }
+    };
 };
 
 export const updateTimeStamp = (timeStamp: any) => {
     return {
         type: UPDATE_TIME_STAMP,
         payload: timeStamp
-    }
+    };
 };
 
 export const updateMatchesList = (matchesList: Array<any>) => {
     return {
         type: UPDATE_MATCHES_LIST,
         payload: matchesList
-    }
+    };
 };
 
 export const setMatchesLoadingFlag = (loadingFlag: boolean) => {
     return {
         type: SET_MATCHES_LOADER,
         payload: loadingFlag
-    }
+    };
 };
 
 /* Not yet in use */
@@ -142,7 +176,7 @@ export const updateMatchesListForID = (buyerCropId: string, matchesList: Array<a
     return {
         type: UPDATE_MATCHES_LIST_FOR_BUYER_CROP,
         payload: { buyerCropId, newMatchesList: matchesList }
-    }
+    };
 };
 /* Not yet in use end */
 
@@ -150,7 +184,7 @@ export const updateTransactionList = (transactionType: TransactionStatus, transa
     return {
         type: UPDATE_TRANSACTION_LIST,
         payload: { transactionType, transactionListData }
-    }
+    };
 };
 
 export const getMasterProduceList = () => {
@@ -354,11 +388,35 @@ export const currentStatusDetails = (userData: any) => {
 };
 
 export const eventTemplate = () => {
-    return async(dispatch: any, getState: any) => {
+    return async (dispatch: any, getState: any) => {
         const template = await getEventTemplate();
         //console.log("template:", template);
-        if(!isEmpty(template)) {
+        if (!isEmpty(template)) {
             dispatch(updateEventList(template));
         }
     }
+};
+
+export const confirmOTP = (number: string, otp: string) => {
+    return async (dispatch: any, getState: any) => {
+        const verifyOtpResponse = await verifyOtp(`91${number}`, otp);
+        const { OTPResp = {} } = verifyOtpResponse || {}
+        const { type = '', message } = OTPResp
+        if (type === ResponseStatus.ERROR) {
+            dispatch(setOtpErrorOnConnect(true))
+            dispatch(setOtpErrorMsgOnConnect(message))
+        } else if (type === ResponseStatus.SUCCESS) {
+            dispatch(setOtpErrorOnConnect(false))
+            dispatch(setVerifiedOnConnect(true))
+        }
+    }
+};
+
+export const resetOTPFields = () => {
+    return async (dispatch: any, getState: any) => {
+        dispatch(setOtpErrorOnConnect(false));
+        dispatch(setOtpErrorMsgOnConnect(''));
+        dispatch(setVerifiedOnConnect(false));
+        dispatch(setProduceNameOnConnect(''));
+    };
 };
