@@ -3,8 +3,6 @@ import { Button, Image, Typography, Tooltip } from 'antd';
 import { isEmpty } from 'lodash';
 import { useDispatch, useSelector } from 'react-redux';
 
-import StatusDetailsModel from './viewStatusDetails';
-
 import { TransactioModel } from '../../buyer-seller-commons/types';
 import { parseIDfromHash, maskData } from '../../app-components/utils';
 import { RootState } from '../../store/rootReducer';
@@ -146,15 +144,5 @@ export const transactionColumns = [
                 <GetCurrentStatusDetails data={transactionId} />
             );
         },
-    },
-    {
-        title: '',
-        key: 'action',
-        render: (text: any, record: any) => {
-            const transactionId = record.pk;
-            return (
-                <StatusDetailsModel data={transactionId} />
-            );
-        }
-    },
+    }
 ];

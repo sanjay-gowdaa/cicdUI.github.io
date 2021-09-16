@@ -13,7 +13,7 @@ const OnGoingTransactions = ({ transactionList }: { transactionList: Array<Trans
         expandable={{
             expandedRowRender: record => <TransactionDetailsModal data={record.pk} />,
             rowExpandable: record => true,
-            expandIconColumnIndex: 0,
+            expandIconColumnIndex: 8,
             expandIcon: ({ expanded, onExpand, record }) =>
                 <Tooltip title="Click to view transaction details" placement="bottomLeft">
                     {expanded ?

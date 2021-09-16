@@ -62,4 +62,5 @@ export interface SellerStateModel {
     timeStamp: any;
     statusDetails: Array<StatusDetails>
     currentStatusDetails: Array<CurrentStatusDetails>;
+    otpError: { showError: Boolean, errorMg: String, verified: Boolean, produce: String }
 };

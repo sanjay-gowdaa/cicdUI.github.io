@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { isEmpty } from 'lodash';
 
 import PayButton from './payButton';
-import StatusDetailsModel from './viewStatusDetails';
 
 import { parseIDfromHash, maskData } from '../../app-components/utils';
 import { TransactionStatus } from '../../buyer-seller-commons/types';
@@ -135,16 +134,7 @@ export const transactionColumns = [
     },
     {
         title: '',
-        key: 'action',
-        render: (text: any, record: any) => {
-            const transactionId = record.pk;
-            return (
-                <StatusDetailsModel data={transactionId} />
-            );
-        }
-    },
-    {
-        title: '',
+        className: 'pay-button',
         key: 'action',
         render: (record: any) => {
             return (
