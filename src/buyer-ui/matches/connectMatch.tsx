@@ -121,7 +121,7 @@ const ConnectMatch = ({ cropDetails }: { cropDetails: MatchRequirementModel }) =
     const [isAgreed, setAgreed] = useState(false);
 
     useEffect(() => {
-        if (otpError.verified && otpError.produce === cropDetails.buyer_crop_id) {
+        if (otpError.verified && otpError.produce === cropDetails.seller_crop_id) {
             const transactionEntry = getTransactionDataStructure(cropDetails);
             const { seller_crop_id, seller_id } = cropDetails;
             (dispatch(checkSellerConnectedStatus(seller_id, seller_crop_id)) as any)
@@ -150,7 +150,7 @@ const ConnectMatch = ({ cropDetails }: { cropDetails: MatchRequirementModel }) =
     const onAcceptConnect = () => {
         dispatch(saveTimeStamp);
         dispatch(confirmOTP(userState.username, otp));
-        dispatch(setProduceNameOnConnect(cropDetails.buyer_crop_id));
+        dispatch(setProduceNameOnConnect(cropDetails.seller_crop_id));
     };
 
     return (

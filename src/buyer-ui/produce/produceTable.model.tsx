@@ -149,6 +149,7 @@ export const produceColumns = ({ deleteProduce, prepareForEditProduce }: produce
                 <>
                     <Button
                         type="link"
+                        disabled={!record.isEditable}
                         onClick={() => prepareForEditProduce(record)}
                     >
                         Edit
@@ -156,6 +157,7 @@ export const produceColumns = ({ deleteProduce, prepareForEditProduce }: produce
                     <Button
                         type="link"
                         danger
+                        disabled={!record.isEditable}
                         onClick={() => deleteProduce(record.sk)}
                     >
                         Delete
