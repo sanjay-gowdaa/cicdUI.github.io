@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { Modal, Space, Table, Typography } from 'antd';
+import { Table, Typography, Tooltip } from 'antd';
 import { useSelector, useDispatch } from 'react-redux';
-import { WarningFilled } from '@ant-design/icons';
-import { Link } from 'react-router-dom';
 
-import './crops.scss';
 import { cropColumns } from './cropsTable.model';
+import './crops.scss';
 import { EditableCell, EditableRow } from './AddCrop/customTableComponents';
 import AddCropModal from './AddCrop';
 
@@ -14,16 +12,14 @@ import { deleteSelectedCrop, getAllCropsList, sellerIntentToSell, updateCropData
 import { CropApiModel, SellerStateModel } from '../../store/sellerReducer/types';
 import { parseIDfromHash } from '../../app-components/utils';
 import PrimaryBtn from '../../app-components/primaryBtn';
-import { routesMap } from '../../constants';
 
-const { Text, Title } = Typography;
+const { Title } = Typography;
 
 const getCropId = (cropID: string) => {
     return parseIDfromHash(cropID);
 };
 
-const CropsSection = (props: any) => {
-    const { history } = props;
+const CropsSection = () => {
     const sellerState: SellerStateModel = useSelector((state: RootState) => state.seller);
     const loginState = useSelector((state: RootState) => state.loginUser);
     const [isEdit, setIsEdit] = useState(false);
@@ -38,7 +34,7 @@ const CropsSection = (props: any) => {
     }, []);
 
     const prepareForEditCrop = (cropData: CropApiModel) => {
-        const { sk } = cropData;
+        const {sk} = cropData;
         const actualCropID = getCropId(sk || '');
         setCurrentCropId(actualCropID)
         setIsEdit(true);
@@ -51,53 +47,35 @@ const CropsSection = (props: any) => {
     };
 
     const updateCropDetails = (updatedCropData: CropApiModel, isPriceUpdated?: boolean) => {
-        const { sk } = updatedCropData;
+        const {sk} = updatedCropData;
         const actualCropID = getCropId(sk || '');
-        const { intent_to_sell } = updatedCropData;
-        if (intent_to_sell.toLowerCase() === 'yes') {
+        const {intent_to_sell} = updatedCropData;
+        if(intent_to_sell.toLowerCase() === 'yes') {
             dispatch(sellerIntentToSell(updatedCropData, actualCropID, isPriceUpdated))
         } else {
-            dispatch(updateCropData({ ...updatedCropData, is_delete: "no" }));
+            dispatch(updateCropData({...updatedCropData, is_delete: "no"}));
         }
-    };
-
-    const showKycRequiredModal = () => {
-        Modal.info({
-            className: "kyc-required-modal",
-            content:
-                <>
-                    <Text>Please update your KYC information to add produce</Text><br />
-                    <Text>Profile &gt; KYC Information</Text>
-                </>
-            ,
-            okText: 'Update Now',
-            closable: true,
-            onOk: () => history.push(routesMap.profile),
-        });
     };
 
     return (
         <div className="crops-container" id="seller-ui-crops">
             <Title level={2}>My Produce</Title>
-            <PrimaryBtn
-                className="add-crop-btn vikas-btn-radius"
-                onClick={() => {
-                    if (isApproved) {
+            <Tooltip
+                title="Check if the KYC is approved in Profile Page"
+                visible={!isApproved}
+                trigger="hover"
+                placement="right"
+            >
+                <PrimaryBtn
+                    className="add-crop-btn vikas-btn-radius"
+                    onClick={() => {
                         setIsEdit(false);
                         setModalVisible(true);
-                    } else {
-                        showKycRequiredModal();
-                    }
-                }}
-                content="Add Produce"
-            />
-            {!isApproved &&
-                <Space className="kyc-pending-message" direction="horizontal" >
-                    <WarningFilled className="warning-icon" />
-                    <Title level={5} className="kyc-pending-text">KYC Pending.</Title>
-                    <Link to={routesMap.profile} className="update-text">Update Now</Link>
-                </Space>
-            }
+                    }}
+                    disabled={!isApproved}
+                    content="Add Produce"
+                />
+            </Tooltip>
             <AddCropModal
                 setModalVisible={setModalVisible}
                 modalVisible={modalVisible}
@@ -106,11 +84,11 @@ const CropsSection = (props: any) => {
                 className="margin-t-1em"
                 components={{
                     body: {
-                        row: EditableRow,
-                        cell: EditableCell,
+                      row: EditableRow,
+                      cell: EditableCell,
                     },
                 }}
-                columns={cropColumns({ deleteCrop, prepareForEditCrop, updateCropDetails, setIsEdit, isEdit, currentCropId }) as any}
+                columns={cropColumns({deleteCrop, prepareForEditCrop, updateCropDetails, setIsEdit, isEdit, currentCropId}) as any}
                 dataSource={sellerState.cropsList}
             />
         </div>

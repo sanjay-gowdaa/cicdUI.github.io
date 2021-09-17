@@ -75,7 +75,7 @@ export const getUserCompleteDetails = () => {
     }
 };
 
-export const getConfigurations = () => {
+export const  getConfigurations = () => {
     return async (dispatch: any, getState: any) => {
         const allConfigs = await getAllConfigs()
         dispatch({
@@ -89,19 +89,19 @@ export const getUserFiles = (fileName: string, setImageSrc: Function, setPDF: Fu
     return async (displatch: any, getState: any) => {
         const fileData = await fetchUserFiles(fileName);
         const extension = fileName.substring(fileName.lastIndexOf('.')).substring(1);
-        const { file } = fileData;
+        const {file} = fileData;
         const blob = converBase64toBlob(file, `application/${extension}`);
         const blobURL = URL.createObjectURL(blob);
-        (extension === "pdf") ? setPDF(true) : setPDF(false);
+        (extension === "pdf") ? setPDF(true): setPDF(false);
         setImageSrc(blobURL);
     }
 };
 
 export const saveKyc = (userFormData: any) => {
-    return async (dispatch: any, getState: any) => {
-        const saveUserDetailsResponse = await kycUserDetails({ user_req: userFormData });
-        const { updateResult } = saveUserDetailsResponse;
-        const { status = '', message } = updateResult;
+    return async(dispatch:any, getState: any) => {
+        const saveUserDetailsResponse = await kycUserDetails(userFormData);
+        const {updateResult} = saveUserDetailsResponse;
+        const {status = '', message} = updateResult;
         dispatch(setKycUpdateMsg(message));
         // Store the error message so that it can be displayed, if error is encountered
         console.log("status", status);
@@ -109,10 +109,10 @@ export const saveKyc = (userFormData: any) => {
     }
 };
 
-export const getUserDetails = (accessToken: any) => {
+export const getUserDetails = (accessToken: string) => {
     return async (dispatch: any, getState: any) => {
         const userDetailsData = await fetchUserDetails(accessToken);
-        const { result } = userDetailsData || { result: {} }
+        const {result} = userDetailsData || {result: {}}
         // const {status, data} = response || {status: '', data: ''}
         // if (handleResponse(status)) {
         //     dispatch(updateUserDetails(data))
@@ -126,7 +126,7 @@ export const getUserDetails = (accessToken: any) => {
 export const getRedirectedUserDetails = (accessToken: string) => {
     return async (dispatch: any, getState: any) => {
         const userDetailsData = await fetchRedirectedUserDetails(accessToken);
-        const { result } = userDetailsData || { result: {} }
+        const {result} = userDetailsData || {result: {}}
         dispatch(updateUserDetails(result))
         dispatch(setLoginSuccess())
     }
@@ -135,15 +135,15 @@ export const getRedirectedUserDetails = (accessToken: string) => {
 export const getAccessTokenAndFetchUserDetails = (userCode: string) => {
     return async (dispatch: any, getState: any) => {
         const accessTokenDetails = await getAccessToken(userCode)
-        const { result } = accessTokenDetails || { result: {} }
-        const { status, data } = result || { status: '', data: '' }
+        const {result} = accessTokenDetails || {result: {}}
+        const {status, data} = result || {status: '', data: ''}
 
         if (handleResponse(status)) {
             const sholudEncrypt = process.env.REACT_APP_ENV === 'prod';
             (window as any).userToken = sholudEncrypt ? CryptoJS.AES.encrypt(JSON.stringify(data), TOKEN_GRANT).toString() : data;
             dispatch(getUserDetails(data))
         } else {
-            const { statusText, err: { error = '' } } = result || { statusText: '', err: {} }
+            const {statusText, err: {error = ''}} = result || {statusText: '', err: {}}
             dispatch(setLoginError(`${statusText}: ${error}`))
         }
         // testing purp
@@ -156,12 +156,12 @@ export const getRedirectionTokenAndFetchUserDetails = (userKey: string) => {
     return async (dispatch: any, getState: any) => {
         const accessTokenDetails = await getRedirectionToken(userKey)
         const accessToken = accessTokenDetails.token;
-        if (accessToken) {
+        if(accessToken){
             const sholudEncrypt = process.env.REACT_APP_ENV === 'prod';
             (window as any).userToken = sholudEncrypt ? CryptoJS.AES.encrypt(JSON.stringify(accessToken), TOKEN_GRANT).toString() : accessToken;
             dispatch(getRedirectedUserDetails(accessToken));
         }
-        else {
+        else{
             dispatch(setLoginError("invalid token"));
         }
     }

@@ -1,7 +1,6 @@
 import React from 'react';
 import { Divider, Typography } from 'antd';
-import { useSelector } from 'react-redux';
-import { isEmpty } from 'lodash';
+import { useSelector} from 'react-redux';
 
 import './buyer.scss';
 import MatchedSection from './matches';
@@ -16,15 +15,13 @@ import Footer from '../footer';
 
 import { RootState } from '../store/rootReducer';
 import Banner from '../static/assets/buyerBanner.jpg';
-import WelcomeModal from '../app-components/welcomeModal';
 
-const { Title } = Typography;
+const {Title} = Typography;
 
 const BuyerUI = (props: any) => {
     const { history } = props;
     const loginState = useSelector((state: RootState) => state.loginUser);
-    const { isRedirected, username } = loginState;
-    !isEmpty(username) && localStorage.setItem("userName", username);
+    const isRedirected = loginState.isRedirected;
 
     return (
         <div className="buyer-ui-app" id="buyer-ui-app">
@@ -33,11 +30,10 @@ const BuyerUI = (props: any) => {
                 <Title level={2}>My Dashboard</Title>
                 <img className="buyer-banner" src={Banner} alt="buyer-banner" />
                 <Divider />
-                {isRedirected && <PaymentResponseModel />}
-                <WelcomeModal />
+                {isRedirected && <PaymentResponseModel/>}
                 <AddProduceModal />
                 <Divider />
-                <ProduceSection history={history} />
+                <ProduceSection />
                 <Divider />
                 <MatchedSection />
                 <Divider />

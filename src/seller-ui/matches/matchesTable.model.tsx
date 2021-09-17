@@ -5,9 +5,9 @@ import { ExclamationCircleOutlined } from '@ant-design/icons';
 import AcceptMatch from './acceptMatch';
 import RejectConfrimation from './rejectConfirmation';
 
+import RagiImg from '../../static/assets/ragi.png';
 import { MatchRequirementModel } from '../../buyer-seller-commons/types';
 import { parseIDfromHash, maskData } from '../../app-components/utils';
-import { showCropImage } from '../../buyer-seller-commons/constants';
 
 const { Text } = Typography;
 
@@ -35,12 +35,9 @@ export const matchesColumns = (componentCallBacks: componentCallBacksModel) => [
         dataIndex: 'produce',
         key: 'produce',
         render: (produce: string, record: MatchRequirementModel) => {
-            const [masterCategory = '', produceCateogry = '', cropType = '', grade = ''] = produce.split('-');
-            const imageSrc = showCropImage(masterCategory);
-
             return (
                 <div className="display-flex-row align-center">
-                    <Image className="table-crop-image" src={imageSrc} />
+                    <Image src={RagiImg} />
                     <div className="margin-l-r-1em">
                         <p>{produce}</p>
                     </div>
@@ -53,12 +50,12 @@ export const matchesColumns = (componentCallBacks: componentCallBacksModel) => [
         dataIndex: 'matched_quantity',
         key: 'matched_quantity',
         render: (matched_quantity: number, record: MatchRequirementModel) => {
-            const { seller_quantity } = record;
+            const {seller_quantity} = record;
             const isPartial = matched_quantity < seller_quantity;
-
+            
             return (
                 <>
-                    <p style={{ margin: "0" }}>{matched_quantity} qtl</p>
+                    <p style={{margin:"0"}}>{matched_quantity} qtl</p>
                     {isPartial ? <Text className="partial-match">PARTIAL</Text> : <Text className="full-match">FULL</Text>}
                 </>
             );
@@ -97,18 +94,18 @@ export const matchesColumns = (componentCallBacks: componentCallBacksModel) => [
                         View Details
                     </Button>
                     <AcceptMatch cropDetails={record} />
-                    <Button
+                    <Button 
                         type="link"
                         danger
                         onClick={() => {
                             Modal.confirm({
                                 title: '',
                                 icon: <ExclamationCircleOutlined />,
-                                content: <RejectConfrimation matchRecord={record} />,
+                                content: <RejectConfrimation  matchRecord={record} />,
                                 onOk() {
                                     componentCallBacks?.rejectMatch(record);
-                                },
-                                onCancel() { },
+                                  },
+                                  onCancel() {},
                             })
                         }}
                     >
