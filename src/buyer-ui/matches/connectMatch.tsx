@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { Alert, Checkbox, Col, Modal, Row, Space, Statistic, Typography } from 'antd';
+import React, { useState } from 'react';
+import { Checkbox, Modal, Typography, Space, Statistic, Row, Col } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import { CheckCircleFilled, ExclamationCircleFilled } from '@ant-design/icons';
 
@@ -7,16 +7,13 @@ import TradeSumary from './tradeSummary';
 
 import PrimaryBtn from '../../app-components/primaryBtn';
 import InputOtp from '../../app-components/inputOtp';
-import { sendOTP, resendOTP } from '../../store/registrationReducer/actions';
+import { confirmOTP, sendOTP, resendOTP } from '../../store/registrationReducer/actions';
 import { RootState } from '../../store/rootReducer';
 import {
     connectMatch,
     saveTimeStamp,
     checkSellerConnectedStatus,
-    getMatchesForBuyerCrops,
-    confirmOTP,
-    setProduceNameOnConnect,
-    resetOTPFields
+    getMatchesForBuyerCrops
 } from '../../store/buyerReducer/actions';
 import { UserStateModel } from '../../store/loginReducer/types';
 import { MatchRequirementModel } from '../../buyer-seller-commons/types';
@@ -24,7 +21,7 @@ import { BuyerStateModel } from '../../store/buyerReducer/types';
 import { parseIDfromHash, maskData } from '../../app-components/utils';
 
 const { Text, Title } = Typography;
-const { Countdown } = Statistic;
+const { Countdown } = Statistic
 
 const getTransactionDataStructure = (cropDetails: MatchRequirementModel) => {
     const {
@@ -110,9 +107,8 @@ const ConnectMatch = ({ cropDetails }: { cropDetails: MatchRequirementModel }) =
     const dispatch = useDispatch();
     const userState: UserStateModel = useSelector((state: RootState) => state.loginUser);
     const buyerState: BuyerStateModel = useSelector((state: RootState) => state.buyer);
-    const { produceList, otpError } = buyerState;
+    const { produceList } = buyerState;
     const agreementNumber = `PA_${userState.username}_${maskData(parseIDfromHash(cropDetails.seller_id))}`;// Temp
-
     const [viewConnectAgreement, setConnectAgreement] = useState(false);
     const [otp, setOtp] = useState("");
     const [otpTimer, setOtpTimer] = useState(0);
@@ -120,27 +116,11 @@ const ConnectMatch = ({ cropDetails }: { cropDetails: MatchRequirementModel }) =
     const [otpResent, setOtpResent] = useState(false);
     const [isAgreed, setAgreed] = useState(false);
 
-    useEffect(() => {
-        if (otpError.verified && otpError.produce === cropDetails.seller_crop_id) {
-            const transactionEntry = getTransactionDataStructure(cropDetails);
-            const { seller_crop_id, seller_id } = cropDetails;
-            (dispatch(checkSellerConnectedStatus(seller_id, seller_crop_id)) as any)
-                .then((data: { isBuyerConnected: string }) => {
-                    const { isBuyerConnected } = data
-                    if (isBuyerConnected === 'no') {
-                        /* HACK: To avoid using store variable to show popup */
-                        (dispatch(connectMatch(transactionEntry)) as any).then((data: any) => {
-                            displayMatchSuccessModal()
-                        })
-                    } else {
-                        displayConcurrentMatchError()
-                        dispatch(getMatchesForBuyerCrops(produceList));
-                    }
-                })
-            dispatch(resetOTPFields());
-            setConnectAgreement(!viewConnectAgreement);
+    /* useEffect(() => {
+        if(isAgreed) {
+            setOtpTimer(Date.now() + 1000*60);
         }
-    }, [otpError.verified]);
+    }, [isAgreed]); */
 
     const retryOtpSend = () => {
         setOtpResent(true);
@@ -149,8 +129,23 @@ const ConnectMatch = ({ cropDetails }: { cropDetails: MatchRequirementModel }) =
 
     const onAcceptConnect = () => {
         dispatch(saveTimeStamp);
-        dispatch(confirmOTP(userState.username, otp));
-        dispatch(setProduceNameOnConnect(cropDetails.seller_crop_id));
+        // dispatch(confirmOTP(userState.username, otp));
+        setConnectAgreement(!viewConnectAgreement);
+        const transactionEntry = getTransactionDataStructure(cropDetails);
+        const { seller_crop_id, seller_id } = cropDetails;
+        (dispatch(checkSellerConnectedStatus(seller_id, seller_crop_id)) as any)
+            .then((data: { isBuyerConnected: string }) => {
+                const { isBuyerConnected } = data
+                if (isBuyerConnected === 'no') {
+                    /* HACK: To avoid using store variable to show popup */
+                    (dispatch(connectMatch(transactionEntry)) as any).then((data: any) => {
+                        displayMatchSuccessModal()
+                    })
+                } else {
+                    displayConcurrentMatchError()
+                    dispatch(getMatchesForBuyerCrops(produceList));
+                }
+            })
     };
 
     return (
@@ -199,29 +194,20 @@ const ConnectMatch = ({ cropDetails }: { cropDetails: MatchRequirementModel }) =
                         <Row>
                             <Space>
                                 <Text>Didn't receive OTP?</Text>
-                                {!resend ?
-                                    <>
-                                        <Text className="custom-color-change"> Resend Code in </Text>
-                                        <Countdown
-                                            className="custom-color-change"
-                                            value={otpTimer} format="mm:ss"
-                                            onFinish={() => showResend(true)}
-                                        />
-                                    </> :
-                                    (!otpResent ?
-                                        <PrimaryBtn className="add-margin-bottom" onClick={retryOtpSend} content="Resend OTP" />
-                                        : null
-                                    )
+                                {
+                                    !resend ? (
+                                        <>
+                                            <Text className="custom-color-change"> Resend Code in </Text>
+                                            <Countdown
+                                                className="custom-color-change"
+                                                value={otpTimer} format="mm:ss"
+                                                onFinish={() => showResend(true)}
+                                            />
+                                        </>
+                                    ) : (!otpResent ? <PrimaryBtn className="add-margin-bottom" onClick={retryOtpSend} content="Resend OTP" /> : null)
                                 }
                             </Space>
                         </Row>
-                        {otpError.showError &&
-                            <Row className="margin-t-1em">
-                                <Col span="24">
-                                    <Alert message={otpError.errorMg} type="error" showIcon />
-                                </Col>
-                            </Row>
-                        }
                         <Row justify="center" className="margin-t-1em">
                             <Col>
                                 <Space>
@@ -234,6 +220,7 @@ const ConnectMatch = ({ cropDetails }: { cropDetails: MatchRequirementModel }) =
                             </Col>
                         </Row>
                     </>
+
                 }
             </Modal>
         </>

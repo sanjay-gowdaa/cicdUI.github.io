@@ -1,11 +1,9 @@
 import React from 'react';
 import { Button, Image, Typography } from 'antd';
-
+import RagiImg from '../../static/assets/ragi.png';
 import ConnectMatch from './connectMatch';
-
 import { FullfillmentFlags, MatchRequirementModel } from '../../buyer-seller-commons/types';
 import { parseIDfromHash, maskData } from '../../app-components/utils';
-import { showCropImage } from '../../buyer-seller-commons/constants';
 
 const { Title, Text } = Typography;
 
@@ -33,12 +31,10 @@ export const matchesColumns = (componentCallBacks: componentCallBacksModel) => [
         dataIndex: 'produce',
         key: 'produce',
         render: (produce: string, record: MatchRequirementModel) => {
-            const [masterCategory = '', produceCateogry = '', cropType = '', grade = ''] = produce.split('-');
-            const imageSrc = showCropImage(masterCategory);
-
+            const [masterCategory = '', produceCateogry = '', cropType = '', grade = ''] = produce.split('-')
             return (
                 <div className="display-flex-row align-center">
-                    <Image src={imageSrc} className="table-crop-image" />
+                    <Image src={RagiImg} />
                     <div className="margin-l-r-1em">
                         <Title level={5}>{produceCateogry.trim()} - {cropType.trim()}</Title>
                         <p>{grade.trim()}</p>
@@ -60,7 +56,7 @@ export const matchesColumns = (componentCallBacks: componentCallBacksModel) => [
             return (
                 <>
                     <div>{`${matched_quantity} Qtl`}</div>
-                    <FulfilmentComp />
+                    <FulfilmentComp /> 
                 </>
             );
         },
@@ -79,8 +75,7 @@ export const matchesColumns = (componentCallBacks: componentCallBacksModel) => [
         title: '',
         key: 'action',
         render: (text: any, record: MatchRequirementModel) => {
-            const { populateCropDetails, showCropDetailsModal, rejectMatch } = componentCallBacks;
-
+            const {populateCropDetails, showCropDetailsModal, rejectMatch} = componentCallBacks;
             return (
                 <div className="display-flex-row">
                     <Button

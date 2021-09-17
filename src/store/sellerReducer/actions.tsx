@@ -3,23 +3,11 @@ import { isEmpty, isNull } from "lodash";
 import { CropApiModel, SellerStateModel } from "./types";
 
 import {
-    getSubCategoryList,
-    createCrop,
-    getAllCrops,
-    getCropCategoryList,
-    getCropList,
-    getLiveApmcRateUpdated,
-    deleteProduce,
-    patchCrop,
-    intentToSell,
-    fetchSellerMatches,
-    postSellerTransactionAction,
-    fetchTransactionList,
-    getStatusDetails,
-    getCurrentStatusDetails,
-    verifyOtp
+    getSubCategoryList, createCrop, getAllCrops, getCropCategoryList, getCropList,
+    getLiveApmcRateUpdated, deleteProduce, patchCrop, intentToSell, fetchSellerMatches,
+    postSellerTransactionAction, fetchTransactionList, getStatusDetails, getCurrentStatusDetails
 } from "../api";
-import { ApmcApiResponseBase, ResponseStatus, UpdatedLiveApmcRatesQuery } from "../genericTypes";
+import { ApmcApiResponseBase, UpdatedLiveApmcRatesQuery } from "../genericTypes";
 import { UserStateModel } from "../loginReducer/types";
 import { RootState } from "../rootReducer";
 
@@ -38,38 +26,6 @@ export const UPDATE_SELLER_MATCHES = 'UPDATE_SELLER_MATCHES';
 export const UPDATE_SELLER_TRANSACTION_LIST = 'UPDATE_SELLER_TRANSACTION_LIST';
 export const UPDATE_STATUS_DETAILS = 'UPDATE_STATUS_DETAILS';
 export const UPDATE_CURRENT_STATUS_DETAILS = 'UPDATE_CURRENT_STATUS_DETAILS';
-export const OTP_ERROR_ON_ACCEPT = 'OTP_ERROR_ON_ACCEPT';
-export const OTP_ERROR_MSG_ON_ACCEPT = 'OTP_ERROR_MSG_ON_ACCEPT';
-export const OTP_VERIFIED_ON_ACCEPT = 'OTP_VERIFIED_ON_ACCEPT';
-export const PRODUCE_NAME_ON_ACCEPT = 'PRODUCE_NAME_ON_ACCEPT';
-
-export const setProduceNameOnAccept = (produce: string) => {
-    return {
-        type: PRODUCE_NAME_ON_ACCEPT,
-        payload: produce
-    };
-};
-
-export const setOtpErrorOnAccept = (errorFlag: Boolean) => {
-    return {
-        type: OTP_ERROR_ON_ACCEPT,
-        payload: errorFlag
-    };
-};
-
-export const setOtpErrorMsgOnAccept = (errorMg: String) => {
-    return {
-        type: OTP_ERROR_MSG_ON_ACCEPT,
-        payload: errorMg
-    };
-};
-
-export const setVerifiedOnAccept = (isVerified: Boolean) => {
-    return {
-        type: OTP_VERIFIED_ON_ACCEPT,
-        payload: isVerified
-    };
-};
 
 export const updateStatusDetails = (statusDetails: Array<any>) => {
     return {
@@ -359,28 +315,4 @@ export const currentStatusDetails = (userData: any) => {
             dispatch(updateCurrentStatusDetails(status[0]));
         }
     }
-};
-
-export const confirmOTP = (number: string, otp: string) => {
-    return async (dispatch: any, getState: any) => {
-        const verifyOtpResponse = await verifyOtp(`91${number}`, otp);
-        const { OTPResp = {} } = verifyOtpResponse || {}
-        const { type = '', message } = OTPResp
-        if (type === ResponseStatus.ERROR) {
-            dispatch(setOtpErrorOnAccept(true))
-            dispatch(setOtpErrorMsgOnAccept(message))
-        } else if (type === ResponseStatus.SUCCESS) {
-            dispatch(setOtpErrorOnAccept(false))
-            dispatch(setVerifiedOnAccept(true))
-        }
-    }
-};
-
-export const resetOTPFields = () => {
-    return async (dispatch: any, getState: any) => {
-        dispatch(setOtpErrorOnAccept(false));
-        dispatch(setOtpErrorMsgOnAccept(''));
-        dispatch(setVerifiedOnAccept(false));
-        dispatch(setProduceNameOnAccept(''));
-    };
 };

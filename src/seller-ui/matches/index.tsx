@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { Button, Table, Typography } from 'antd';
+import { Table, Typography } from 'antd';
 import { useSelector, useDispatch } from 'react-redux';
+import { ReloadOutlined } from '@ant-design/icons';
 
 import ViewCropDetails from './viewCropDetails';
 import { componentCallBacksModel, matchesColumns } from './matchesTable.model';
@@ -10,9 +11,8 @@ import { initialEmptyCropDetail } from '../../buyer-seller-commons/constants';
 import { getAllSellerMatches, transactionAction } from '../../store/sellerReducer/actions';
 import { parseIDfromHash } from '../../app-components/utils';
 import { MatchRequirementModel, TransactionAction } from '../../buyer-seller-commons/types';
-import Refresh from '../../static/assets/refresh.png';
 
-const { Text, Title } = Typography;
+const { Title } = Typography;
 
 const MatchedSection = () => {
     const [openDetailsModal, setOpenDetailsModal] = useState(false);
@@ -40,28 +40,16 @@ const MatchedSection = () => {
     };
 
     useEffect(() => {
-        if (reloadClicked === 5) {
-            setTimeout(() => {
-                setReloadClicked(0);
-            }, 500000);
-        }
+        dispatch(getAllSellerMatches());
     }, [reloadClicked]);
 
     return (
         <div id="seller-ui-matches">
             <Title level={2}>My Matches</Title>
-            <Button
-                type="link"
-                disabled={reloadClicked === 5}
-                style={{ float: 'right' }}
-                onClick={() => {
-                    setReloadClicked(reloadClicked + 1);
-                    dispatch(getAllSellerMatches());
-                }}
-            >
-                <Text style={{ color: '#4285F4' }}>Refresh &nbsp;</Text>
-                <img src={Refresh} alt="refresh" />
-            </Button>
+            <ReloadOutlined
+                className={reloadClicked === 5 ? `display-none` : `on-reload-matches`}
+                onClick={() => setReloadClicked(reloadClicked + 1)}
+            />
             <Table
                 className="margin-t-1em"
                 columns={matchesColumns(componentCallBacks)}

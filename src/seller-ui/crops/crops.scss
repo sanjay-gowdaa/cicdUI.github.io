@@ -32,38 +32,3 @@
         margin-top: 1em !important;
     }
 }
-
-.kyc-pending-message {
-    display: inline-flex;
-    padding-left: 2rem;
-    font-size: 1rem;
-
-    .warning-icon {
-        color: #EE404C;
-    }
-
-    .kyc-pending-text {
-        font-weight: 700;
-        position: relative;
-        top: 0.27rem;
-    }
-
-    .update-text {
-        text-decoration: underline;
-    }
-}
-
-.kyc-required-modal {
-    .ant-modal-confirm-body-wrapper {
-        text-align: center;
-        align-content: center;
-
-        .anticon {
-            float: none;
-        }
-
-        .ant-modal-confirm-btns {
-            float: none;
-        }
-    }
-}

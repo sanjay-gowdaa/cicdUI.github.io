@@ -18,21 +18,3 @@ export const initialEmptyCropDetail = {
     seller_crop_id: '',
     matched_quantity: 0
 };
-
-const CropImages = {
-    stapleCrops: require('../static/assets/stapleCrop.png'),
-    pulses: require('../static/assets/pulses.png'),
-    cashCrops: require('../static/assets/cashCrop.png'),
-    spices: require('../static/assets/cardomom.jpg'),
-    oilSeeds: require('../static/assets/oilSeed.png')
-};
-
-export const showCropImage = (category: string) => {
-    switch (category) {
-        case "Staple Crops": return CropImages.stapleCrops;
-        case "Pulses": return CropImages.pulses;
-        case "Cash Crops": return CropImages.cashCrops;
-        case "Spices": return CropImages.spices;
-        case "Oil Seeds": return CropImages.oilSeeds;
-    }
-};

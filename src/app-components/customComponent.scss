@@ -85,30 +85,3 @@ $col-shade-green: #12805c;
         width: 100%;
     }
 }
-
-.welcome-modal {
-    text-align: center;
-
-    .dear-name-text {
-        margin-bottom: 0%;
-        font-weight: 500;
-    }
-
-    .welcome-text {
-        font-size: 2rem;
-        font-weight: 700;
-        width: 20rem;
-        margin: 0 auto;
-    }
-    
-    h3.ant-typography {
-        margin-top: 1rem;
-        margin-bottom: 0.5rem;
-    }
-
-    .welcome-explore {
-        width: 12rem;
-        margin-top: 1rem;
-        font-weight: 500;
-    }
-}

@@ -3,7 +3,7 @@ import { Button, Image, Modal, Typography, Progress, Table } from 'antd';
 import { isEmpty } from 'lodash';
 
 import { ProduceModel } from '../../store/buyerReducer/types';
-import { showCropImage } from '../../buyer-seller-commons/constants';
+import RagiImg from '../../static/assets/ragi.png';
 
 const { Text, Title } = Typography;
 
@@ -74,12 +74,13 @@ export const produceColumns = ({ deleteProduce, prepareForEditProduce }: produce
         dataIndex: 'crop_name',
         key: 'crop_name',
         render: (cropName: string, record: ProduceModel) => {
-            const { category, crop_name, sub_type: subType } = record;
-            const imageSrc = showCropImage(crop_name);
+            const { category, sub_type: subType } = record;
 
             return (
                 <div className='display-flex-row align-center'>
-                    <Image src={imageSrc} className="table-crop-image" />
+                    <Image
+                        src={RagiImg}
+                    />
                     <div className='margin-l-r-1em'>
                         <Title level={5}>{category}</Title>
                         <p>{subType}</p>
@@ -149,7 +150,6 @@ export const produceColumns = ({ deleteProduce, prepareForEditProduce }: produce
                 <>
                     <Button
                         type="link"
-                        disabled={!record.isEditable}
                         onClick={() => prepareForEditProduce(record)}
                     >
                         Edit
@@ -157,7 +157,6 @@ export const produceColumns = ({ deleteProduce, prepareForEditProduce }: produce
                     <Button
                         type="link"
                         danger
-                        disabled={!record.isEditable}
                         onClick={() => deleteProduce(record.sk)}
                     >
                         Delete

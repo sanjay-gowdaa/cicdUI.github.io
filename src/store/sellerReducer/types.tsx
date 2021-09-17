@@ -1,9 +1,4 @@
-import {
-    CropCategoryModel,
-    MatchRequirementModel,
-    ReviewRating,
-    TransactioModel
-} from "../../buyer-seller-commons/types";
+import { CropCategoryModel, MatchRequirementModel, ReviewRating, TransactioModel } from "../../buyer-seller-commons/types";
 
 export interface CropApiModel {
     category_name: string;
@@ -16,11 +11,11 @@ export interface CropApiModel {
     intent_to_sell: string;
     additional_info: string;
     district: string;
-    apmc_rate_data?: { apmc_price: string, increase: string };
+    apmc_rate_data?: {apmc_price: string, increase: string};
     sk?: string;
     pk?: string;
     currently_fulfilled_qty?: number;
-};
+}
 
 export interface CropModel {
     cropName: string;
@@ -32,19 +27,19 @@ export interface CropModel {
     intentToSell: boolean;
     termsAndConditions?: string;
     apmcRateChange: any;
-};
+}
 
-export interface StatusDetails {
+export interface StatusDetails{
     event_description: string;
     event_timestamp: string;
-};
+}
 
-export interface CurrentStatusDetails {
+export interface CurrentStatusDetails{
     pk: string;
     sk: string;
     event_description: string;
     event_timestamp: string;
-};
+}
 
 export interface SellerStateModel {
     categories: Array<string>;
@@ -58,9 +53,8 @@ export interface SellerStateModel {
         complete: Array<TransactioModel>
     };
     reviewsList: Array<ReviewRating>;
-    apmcCropPrice: any;
+    apmcCropPrice: string;
     timeStamp: any;
-    statusDetails: Array<StatusDetails>
+    statusDetails:Array<StatusDetails>
     currentStatusDetails: Array<CurrentStatusDetails>;
-    otpError: { showError: Boolean, errorMg: String, verified: Boolean, produce: String }
-};
+}

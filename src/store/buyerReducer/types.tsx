@@ -1,9 +1,4 @@
-import {
-    CropCategoryModel,
-    MatchRequirementModel,
-    ReviewRating,
-    TransactioModel
-} from "../../buyer-seller-commons/types";
+import { CropCategoryModel, MatchRequirementModel, ReviewRating, TransactioModel } from "../../buyer-seller-commons/types";
 
 export interface ProduceModel {
     crop_name: string;
@@ -16,8 +11,7 @@ export interface ProduceModel {
     sk?: string;
     pk?: string;
     currently_fulfilled_qty?: number;
-    isEditable?: boolean;
-};
+}
 
 export interface CropModel {
     cropName: string;
@@ -25,9 +19,9 @@ export interface CropModel {
     cropGrade?: string;
     quantity: number;
     pricePerQnt: number;
-};
+}
 
-export interface flatMasterListType {
+export interface flatMasterListType { 
     produce_id: string;
     produce_name: string;
     crop_id: string;
@@ -36,16 +30,16 @@ export interface flatMasterListType {
     category_name: string;
     grade_id: string;
     grade_name: string;
-};
+}
 
 export interface MasterListApiFormat {
     produce_name: string;
     crop_name: string;
     category_name: string;
     grade_name: string;
-};
+}
 
-export interface PaymentDetails {
+export interface PaymentDetails{
     orderID: string;
     orderAmount: string;
     paymentMode: string;
@@ -53,31 +47,27 @@ export interface PaymentDetails {
     txMsg: string;
     txStatus: string;
     txTime: string;
-};
+}
 
-export interface PaymentRedirectionDetails {
+export interface PaymentRedirectionDetails{
     transactionId: string;
     paymentNo: string;
-};
+}
 
-export interface StatusDetails {
+export interface StatusDetails{
     event_description: string;
     event_timestamp: string;
-};
+}
 
-export interface CurrentStatusDetails {
+export interface CurrentStatusDetails{
     pk: string;
     sk: string;
     event_description: string;
     event_timestamp: string;
-};
+}
 
-export interface EventTemplate {
+export interface EventTemplate{
     event_list: any
-};
-
-export interface PaymentAmount{
-    amount: number;
 }
 
 export interface BuyerStateModel {
@@ -100,9 +90,7 @@ export interface BuyerStateModel {
     statusDetails: Array<StatusDetails>;
     currentStatusDetails: Array<CurrentStatusDetails>;
     eventTemplate: Array<EventTemplate>;
-    paymentAmount: any;
-    otpError: { showError: Boolean, errorMg: String, verified: Boolean, produce: String }
-};
+}
 
 export interface BuyerRejectMatch {
     buyer_id: string;
@@ -110,4 +98,4 @@ export interface BuyerRejectMatch {
     seller_id: string;
     seller_crop_id: string;
     matched_quantity: number;
-};
+}
