@@ -9,9 +9,10 @@ import { getStatus } from '../../store/buyerReducer/actions';
 
 const { Text } = Typography;
 
-const TransactionDetailsModel = (pk: any) => {
+const TransactionDetailsModal = (pk: any) => {
     var completedEvents = [""];
     const dispatch = useDispatch();
+    // Should be changed to seller
     const buyerState = useSelector((state: RootState) => state.buyer);
     const { statusDetails, eventTemplate } = buyerState;
     var id = pk.data;
@@ -19,7 +20,7 @@ const TransactionDetailsModel = (pk: any) => {
 
     const data = {
         "transactionId": id,
-        "user": "buyer"
+        "user": "seller"
     };
 
     useEffect(() => {
@@ -77,4 +78,4 @@ const TransactionDetailsModel = (pk: any) => {
     );
 }
 
-export default TransactionDetailsModel;
+export default TransactionDetailsModal;

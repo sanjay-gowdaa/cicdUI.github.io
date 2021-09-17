@@ -1,14 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { Button, Typography, Tooltip } from 'antd';
+import { Button, Image, Typography, Tooltip } from 'antd';
 import { isEmpty } from 'lodash';
 import { useDispatch, useSelector } from 'react-redux';
-
-import StatusDetailsModel from './viewStatusDetails';
 
 import { TransactioModel } from '../../buyer-seller-commons/types';
 import { parseIDfromHash, maskData } from '../../app-components/utils';
 import { RootState } from '../../store/rootReducer';
 import { currentStatusDetails } from '../../store/sellerReducer/actions';
+import { showCropImage } from '../../buyer-seller-commons/constants';
 
 const { Text } = Typography;
 
@@ -67,8 +66,15 @@ export const transactionColumns = [
         key: 'produce',
         width: 300,
         render: (produce: string) => {
+            const [masterCategory = '', produceCateogry = '', cropType = '', grade = ''] = produce.split('-');
+            const imageSrc = showCropImage(masterCategory);
             return (
-                <p>{produce}</p>
+                <div className='display-flex-row align-center'>
+                    <Image src={imageSrc} className="table-crop-image" />
+                    <div className='margin-l-r-1em'>
+                        <p>{produce}</p>
+                    </div>
+                </div>
             );
         },
     },
@@ -138,15 +144,5 @@ export const transactionColumns = [
                 <GetCurrentStatusDetails data={transactionId} />
             );
         },
-    },
-    {
-        title: '',
-        key: 'action',
-        render: (text: any, record: any) => {
-            const transactionId = record.pk;
-            return (
-                <StatusDetailsModel data={transactionId} />
-            );
-        }
-    },
+    }
 ];

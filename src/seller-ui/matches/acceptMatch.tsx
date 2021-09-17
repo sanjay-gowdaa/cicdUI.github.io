@@ -1,27 +1,61 @@
-import React, { useState } from 'react';
-import { Checkbox, Modal, Typography } from 'antd';
+import React, { useEffect, useState } from 'react';
+import { Alert, Checkbox, Col, Modal, Row, Space, Statistic, Typography } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 
 import TradeSummary from './tradeSummary';
+
 import PrimaryBtn from '../../app-components/primaryBtn';
 import InputOtp from '../../app-components/inputOtp';
-import { saveTimeStamp, transactionAction } from '../../store/sellerReducer/actions';
+import { confirmOTP, resetOTPFields, saveTimeStamp, setProduceNameOnAccept, transactionAction } from '../../store/sellerReducer/actions';
 import { RootState } from '../../store/rootReducer';
-import { sendOTP } from '../../store/registrationReducer/actions';
+import { resendOTP, sendOTP } from '../../store/registrationReducer/actions';
 import { MatchRequirementModel, TransactionAction } from '../../buyer-seller-commons/types';
-import { parseIDfromHash } from '../../app-components/utils';
+import { maskData, parseIDfromHash } from '../../app-components/utils';
+import { SellerStateModel } from '../../store/sellerReducer/types';
 
 const { Text, Title } = Typography;
+const { Countdown } = Statistic;
 
-const AcceptMatch = (props: {cropDetails: MatchRequirementModel}) => {
+const AcceptMatch = (props: { cropDetails: MatchRequirementModel }) => {
     const { cropDetails } = props;
     const dispatch = useDispatch();
     const userState = useSelector((state: RootState) => state.loginUser);
+    const sellerState: SellerStateModel = useSelector((state: RootState) => state.seller);
+    const { otpError } = sellerState;
+    const agreementNumber = `PA_${userState.username}_${maskData(parseIDfromHash(cropDetails.buyer_id))}`;// Temp
+
     const [viewAcceptAgreement, setViewAcceptAgreement] = useState(false);
     const [otp, setOtp] = useState("");
-    const [agreementNumber, setAgreementNumber] = useState(1);
+    const [otpTimer, setOtpTimer] = useState(0);
+    const [resend, showResend] = useState(false);
+    const [otpResent, setOtpResent] = useState(false);
     const [isAgreed, setAgreed] = useState(false);
-    const {pk = ''} = cropDetails;
+    const { pk = '' } = cropDetails;
+
+    const retryOtpSend = () => {
+        setOtpResent(true);
+        dispatch(resendOTP());
+    };
+
+    useEffect(() => {
+        if (otpError.verified && otpError.produce === cropDetails.buyer_crop_id) {
+            dispatch(
+                transactionAction(
+                    parseIDfromHash(pk),
+                    TransactionAction.accept,
+                    cropDetails
+                )
+            );
+            dispatch(resetOTPFields());
+            setViewAcceptAgreement(!viewAcceptAgreement);
+        }
+    }, [otpError.verified]);
+
+    const onAccept = () => {
+        dispatch(saveTimeStamp);
+        dispatch(confirmOTP(userState.username, otp));
+        dispatch(setProduceNameOnAccept(cropDetails.buyer_crop_id));
+    };
 
     return (
         <>
@@ -30,31 +64,13 @@ const AcceptMatch = (props: {cropDetails: MatchRequirementModel}) => {
                 onClick={() => setViewAcceptAgreement(true)}
                 content="Accept"
             />
-            <Modal 
+            <Modal
                 visible={viewAcceptAgreement}
                 title={<Title level={3}>Agreement To Sell</Title>}
                 onCancel={() => setViewAcceptAgreement(!viewAcceptAgreement)}
-                footer = {[
-                    <PrimaryBtn
-                        onClick={() => {
-                            //Dispatch method which confirms the otp.
-                            // timeStamp to be stored in SellerStateModel
-                            dispatch(saveTimeStamp);
-                            setViewAcceptAgreement(!viewAcceptAgreement);
-                            dispatch(
-                                transactionAction(
-                                    parseIDfromHash(pk),
-                                    TransactionAction.accept,
-                                    cropDetails
-                                )
-                            );
-                            //Download pdf of the Purchase Agreement
-                        }}
-                        content="Agree"
-                    />
-                ]}
+                footer={null}
             >
-                <Text style={{float:"right"}}>Application no: {agreementNumber}</Text>
+                <Text style={{ float: "right" }}>Application no: {agreementNumber}</Text>
                 <TradeSummary cropDetails={cropDetails} />
                 <Checkbox
                     className="custom-checkbox"
@@ -62,21 +78,69 @@ const AcceptMatch = (props: {cropDetails: MatchRequirementModel}) => {
                         if (event.target.checked) {
                             dispatch(sendOTP(`91${userState.username}`))
                             setAgreed(true);
+                            setOtpTimer(Date.now() + 1000 * 60);
                         } else {
                             setAgreed(false);
                         }
                     }}
                 >
                     I have read the
-                    <a href="/agreement" target="_blank" style={{padding: "0.2em"}}>
+                    <a href="/agreement" target="_blank" style={{ padding: "0.2em" }}>
                         Purchaser Agreement
                     </a>
                     and agree to digitally sign the same using OTP.
                 </Checkbox>
-                { isAgreed && 
+                {isAgreed &&
                     <>
-                        <Text>Please enter the Digital OTP recieved</Text>
-                        <InputOtp setInput={setOtp} />
+                        <Row justify="center">
+                            <Col>
+                                <Text>Please enter 4 digit OTP number sent to your phone number +91-{maskData(userState.username)}</Text>
+                            </Col>
+                            <Col>
+                                <InputOtp setInput={setOtp} />
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Space>
+                                <Text>Didn't receive OTP?</Text>
+                                {!resend ?
+                                    <>
+                                        <Text className="custom-color-change"> Resend Code in </Text>
+                                        <Countdown
+                                            className="custom-color-change"
+                                            value={otpTimer} format="mm:ss"
+                                            onFinish={() => showResend(true)}
+                                        />
+                                    </> :
+                                    (!otpResent ?
+                                        <PrimaryBtn
+                                            className="add-margin-bottom"
+                                            onClick={retryOtpSend}
+                                            content="Resend OTP"
+                                        />
+                                        : null
+                                    )
+                                }
+                            </Space>
+                        </Row>
+                        {otpError.showError &&
+                            <Row className="margin-t-1em">
+                                <Col span="24">
+                                    <Alert message={otpError.errorMg} type="error" showIcon />
+                                </Col>
+                            </Row>
+                        }
+                        <Row justify="center" className="margin-t-1em">
+                            <Col>
+                                <Space>
+                                    <PrimaryBtn
+                                        disabled={otp.length !== 4}
+                                        onClick={onAccept}
+                                        content="Verify OTP & Agree"
+                                    />
+                                </Space>
+                            </Col>
+                        </Row>
                     </>
                 }
             </Modal>
