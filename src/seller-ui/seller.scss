@@ -54,13 +54,40 @@ $col-shade-green: #12805c;
     padding: 0 0.3em;
 }
 
-.on-reload-matches {
-    font-size: x-large;
-    float: right;
-}
-
 .specifications {
     border: 0.1rem solid lightgrey;
     padding: 1rem;
     border-radius: 0.25rem;
+}
+
+.transaction-timeline {
+    margin-top: 2rem;
+
+    .ant-timeline-item-label {
+        text-align: center !important;
+    }
+
+    .ant-timeline-item-content {
+        width: 300% !important;
+    }
+
+    .ant-timeline-item-head {
+        font-size: large !important;
+    }
+
+    .is-complete {
+        .ant-timeline-item-tail {
+            border-left: 2px solid #000000 !important;
+        }
+    }
+
+    .is-pending {
+        .ant-timeline-item-tail {
+            border-left: 2px dotted #000000 !important;
+        }
+    }
+}
+
+.table-crop-image {
+    width: 5rem !important;
 }

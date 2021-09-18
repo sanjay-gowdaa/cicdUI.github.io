@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Tabs, Typography } from 'antd';
-import { ReloadOutlined } from '@ant-design/icons';
+import { Button, Tabs, Typography } from 'antd';
 
 import OnGoingTransactions from './onGoing';
 import CompletedTransactions from './completed';
@@ -13,8 +12,9 @@ import {
     getSellerTransactionList,
     getTransactionListOnReload
 } from '../../store/sellerReducer/actions';
+import Refresh from '../../static/assets/refresh.png';
 
-const { Title } = Typography;
+const { Text, Title } = Typography;
 const { TabPane } = Tabs;
 
 const TransactionSection = () => {
@@ -37,22 +37,34 @@ const TransactionSection = () => {
     }, []);
 
     useEffect(() => {
-        dispatch(getTransactionListOnReload(transactionKey));
+        if (reloadClicked === 5) {
+            setTimeout(() => {
+                setReloadClicked(0);
+            }, 500000);
+        }
     }, [reloadClicked]);
 
     return (
         <div id="seller-ui-transactions">
             <Title level={2}>My Transactions</Title>
-            <ReloadOutlined
-                className={reloadClicked === 5 ? `display-none` : `on-reload-matches`}
-                onClick={() => setReloadClicked(reloadClicked + 1)}
-            />
-            <Tabs defaultActiveKey="1" size="large" onChange={onSwitchTab}>
-                <TabPane tab="On Going" key={TransactionStatus.on_going}>
-                    <OnGoingTransactions transactionList={transactionList[TransactionStatus.on_going]} />
-                </TabPane>
+            <Button
+                type="link"
+                disabled={reloadClicked === 5}
+                style={{ float: 'right' }}
+                onClick={() => {
+                    setReloadClicked(reloadClicked + 1);
+                    dispatch(getTransactionListOnReload(transactionKey));
+                }}
+            >
+                <Text style={{ color: '#4285F4' }}>Refresh &nbsp;</Text>
+                <img src={Refresh} alt="refresh" />
+            </Button>
+            <Tabs defaultActiveKey={TransactionStatus.on_going} size="large" style={{ width: "100%" }} onChange={onSwitchTab}>
                 <TabPane tab="Pending" key={TransactionStatus.pending}>
                     <PendingTransactions transactionList={transactionList[TransactionStatus.pending]} />
+                </TabPane>
+                <TabPane tab="On Going" key={TransactionStatus.on_going}>
+                    <OnGoingTransactions transactionList={transactionList[TransactionStatus.on_going]} />
                 </TabPane>
                 <TabPane tab="Completed" key={TransactionStatus.completed}>
                     <CompletedTransactions transactionList={transactionList[TransactionStatus.completed]} />

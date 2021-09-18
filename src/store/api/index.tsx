@@ -1,4 +1,5 @@
 import CryptoJS from 'crypto-js';
+import { isEmpty } from 'lodash';
 
 import { BuyerRejectMatch } from '../buyerReducer/types';
 import { LiveApmcRates, UpdatedLiveApmcRatesQuery } from '../genericTypes';
@@ -45,6 +46,7 @@ const GET_REDIRECTION_TOKEN = 'getredirectiontoken';
 const GET_PAYMENT_DETAILS = 'getpaymentdetails';
 const USER_ALREADY_EXISTS = 'userAlreadyExists';
 const GET_EVENT_TEMPLATE = 'VB/Get_Buyer_Seller_Status';
+const GET_AMOUNT_API = 'getamounttodisplay';
 
 const parseToken = (userToken: string) => {
     const sholudDecrypt = process.env.REACT_APP_ENV === 'prod';
@@ -55,8 +57,9 @@ const parseToken = (userToken: string) => {
 
 const getAuthHeader = () => {
     const userToken = (window as any).userToken ? (window as any).userToken : '';
-    if (userToken) {
-        const userAccessToken = parseToken(userToken);
+    if (userToken || localStorage.getItem("token")) {
+        const token = isEmpty(userToken) ? localStorage.getItem("token") : userToken;
+        const userAccessToken = parseToken(token);
         return ({ 'Authorization': `Bearer ${userAccessToken}` });
     } else {
         return ({ 'Authorization': `Bearer ` });
@@ -152,7 +155,6 @@ export const fetchUserDetails = (userAccessToken: string) => {
 };
 
 export const fetchRedirectedUserDetails = (userAccessToken: string) => {
-    //console.log("inside fun3", userAccessToken)
     const userProfileApi = `${BASE_URL}/${STAGE}/${USER_PROFILE_API}`;
     return fetch(userProfileApi, {
         headers: { 'Authorization': `Bearer ${userAccessToken}` }
@@ -194,7 +196,8 @@ export const getSubCategoryList = (categoryId: string) => {
 };
 
 export const createCrop = (cropData: any, sellerId: string) => {
-    const addCropApi = `${BASE_URL}/${STAGE}/seller/${sellerId}/crop`;
+    const userId = isEmpty(sellerId) ? localStorage.getItem("userName") : sellerId;
+    const addCropApi = `${BASE_URL}/${STAGE}/seller/${userId}/crop`;
     return fetch(addCropApi, {
         method: 'POST',
         body: JSON.stringify(cropData),
@@ -203,7 +206,8 @@ export const createCrop = (cropData: any, sellerId: string) => {
 };
 
 export const patchCrop = (cropData: any, sellerId: string) => {
-    const addProduceApi = `${BASE_URL}/${STAGE}/seller/${sellerId}/crop`;
+    const userId = isEmpty(sellerId) ? localStorage.getItem("userName") : sellerId;
+    const addProduceApi = `${BASE_URL}/${STAGE}/seller/${userId}/crop`;
     const bodyParamData = JSON.stringify(cropData);
     return fetch(addProduceApi, {
         method: 'PATCH',
@@ -213,7 +217,8 @@ export const patchCrop = (cropData: any, sellerId: string) => {
 };
 
 export const getAllCrops = (sellerId: string) => {
-    const fetcCropsApi = `${BASE_URL}/${STAGE}/seller/${sellerId}/crop`;
+    const userId = isEmpty(sellerId) ? localStorage.getItem("userName") : sellerId;
+    const fetcCropsApi = `${BASE_URL}/${STAGE}/seller/${userId}/crop`;
     return fetch(fetcCropsApi, {
         headers: getAuthHeader()
     }).then((response: any) => response.json());
@@ -239,7 +244,8 @@ export const getLiveApmcRate = (cropDetails: Array<LiveApmcRates>) => {
 };
 
 export const intentToSell = (userID: string, produceId: string) => {
-    const intentToSellForSeller = `${BASE_URL}/${STAGE}/seller/${userID}/crop/${produceId}/${INTENT_TO_SELL}`
+    const userId = isEmpty(userID) ? localStorage.getItem("userName") : userID;
+    const intentToSellForSeller = `${BASE_URL}/${STAGE}/seller/${userId}/crop/${produceId}/${INTENT_TO_SELL}`
     return fetch(intentToSellForSeller, {
         method: 'POST',
         headers: getAuthHeader()
@@ -250,7 +256,8 @@ export const intentToSell = (userID: string, produceId: string) => {
 
 /* Buyer Apis */
 export const addProduce = (produceData: any, buyerId: string) => {
-    const addProduceApi = `${BASE_URL}/${STAGE}/buyer/${buyerId}/crop`;
+    const userId = isEmpty(buyerId) ? localStorage.getItem("userName") : buyerId;
+    const addProduceApi = `${BASE_URL}/${STAGE}/buyer/${userId}/crop`;
     const bodyParamData = JSON.stringify(produceData);
     return fetch(addProduceApi, {
         method: 'POST',
@@ -260,7 +267,8 @@ export const addProduce = (produceData: any, buyerId: string) => {
 };
 
 export const patchProduce = (produceData: any, buyerId: string) => {
-    const addProduceApi = `${BASE_URL}/${STAGE}/buyer/${buyerId}/crop`;
+    const userId = isEmpty(buyerId) ? localStorage.getItem("userName") : buyerId;
+    const addProduceApi = `${BASE_URL}/${STAGE}/buyer/${userId}/crop`;
     const bodyParamData = JSON.stringify(produceData);
     return fetch(addProduceApi, {
         method: 'PATCH',
@@ -271,7 +279,8 @@ export const patchProduce = (produceData: any, buyerId: string) => {
 
 export const deleteProduce = (userID: string, produceId: string, is_buyer?: boolean) => {
     const userType = is_buyer ? 'buyer' : 'seller';
-    const produceApi = `${BASE_URL}/${STAGE}/${userType}/${userID}/crop/${produceId}`;
+    const userId = isEmpty(userID) ? localStorage.getItem("userName") : userID;
+    const produceApi = `${BASE_URL}/${STAGE}/${userType}/${userId}/crop/${produceId}`;
     return fetch(produceApi, {
         method: 'DELETE',
         headers: getAuthHeader()
@@ -279,7 +288,8 @@ export const deleteProduce = (userID: string, produceId: string, is_buyer?: bool
 };
 
 export const getAllProduce = (buyerId: string) => {
-    const getAllProduceApi = `${BASE_URL}/${STAGE}/buyer/${buyerId}/crop`;
+    const userId = isEmpty(buyerId) ? localStorage.getItem("userName") : buyerId;
+    const getAllProduceApi = `${BASE_URL}/${STAGE}/buyer/${userId}/crop`;
     return fetch(getAllProduceApi, {
         headers: getAuthHeader()
     }).then((response: any) => response.json());
@@ -302,7 +312,8 @@ export const getCropCategoryList = () => {
 };
 
 export const updateMasterList = (updateMasterList: any, buyerId: string) => {
-    const masterListApi = `${BASE_URL}/${STAGE}/buyer/${buyerId}/master_list`;
+    const userId = isEmpty(buyerId) ? localStorage.getItem("userName") : buyerId;
+    const masterListApi = `${BASE_URL}/${STAGE}/buyer/${userId}/master_list`;
     const bodyParamData = JSON.stringify(updateMasterList);
     return fetch(masterListApi, {
         method: 'POST',
@@ -312,7 +323,8 @@ export const updateMasterList = (updateMasterList: any, buyerId: string) => {
 };
 
 export const getMasterList = (buyerId: string) => {
-    const masterListApi = `${BASE_URL}/${STAGE}/buyer/${buyerId}/master_list`;
+    const userId = isEmpty(buyerId) ? localStorage.getItem("userName") : buyerId;
+    const masterListApi = `${BASE_URL}/${STAGE}/buyer/${userId}/master_list`;
     return fetch(masterListApi, {
         headers: getAuthHeader()
     }).then((response: any) => response.json())
@@ -350,12 +362,14 @@ export const createTransaction = (transactionEntry: any) => {
 };
 
 export const fetchTransactionList = (userName: string, transactionStatus: TransactionStatus) => {
-    const listApi = `${BASE_URL}/${STAGE}/${TRANSACTION_LIST_API}/${userName}?status=${transactionStatus}`;
+    const userId = isEmpty(userName) ? localStorage.getItem("userName") : userName;
+    const listApi = `${BASE_URL}/${STAGE}/${TRANSACTION_LIST_API}/${userId}?status=${transactionStatus}`;
     return fetch(listApi).then((response: any) => response.json());
 };
 
 export const fetchSellerMatches = (userName: string) => {
-    const listApi = `${BASE_URL}/${STAGE}/${TRANSACTION_LIST_API}/${userName}?status=MatcH`;
+    const userId = isEmpty(userName) ? localStorage.getItem("userName") : userName;
+    const listApi = `${BASE_URL}/${STAGE}/${TRANSACTION_LIST_API}/${userId}?status=MatcH`;
     return fetch(listApi).then((response: any) => response.json());
 };
 
@@ -443,6 +457,13 @@ export const getCurrentStatusDetails = (userData: any) => {
 export const getEventTemplate = () => {
     const eventTemplateApi = `${BASE_URL}/${STAGE}/${GET_EVENT_TEMPLATE}?user=Buyer`;
     return fetch(eventTemplateApi, {
+        method: 'GET',
+    }).then((response: any) => response.json())
+};
+
+export const getPaymentAmount = (userData: string) => {
+    const getamountApi = `${BASE_URL}/${STAGE}/${TRANSACTION_API}/${GET_AMOUNT_API}?transactionId=${userData}&user=Buyer`;
+    return fetch(getamountApi, {
         method: 'GET',
     }).then((response: any) => response.json())
 };

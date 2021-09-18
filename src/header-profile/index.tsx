@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { 
+import {
     Avatar,
     Badge,
     Breadcrumb,
@@ -39,10 +39,10 @@ const UserHeader = (props: any) => {
     const [showProfile, setProfile] = useState(false);
     const [imageSrc, setImageSrc] = useState();
     const [isPDF, setPDF] = useState(false);
-    const [breadCrumbs, setBreadCrumbs] = useState({produce: '', matches: '', transaction: '', feedback: '', crops: ''});
+    const [breadCrumbs, setBreadCrumbs] = useState({ produce: '', matches: '', transaction: '', feedback: '', crops: '' });
 
     useEffect(() => {
-        loginState.is_buyer ? setUserType("#buyer") : setUserType("#seller");
+        loginState.is_buyer ? setUserType("/buyer#buyer") : setUserType("/seller#seller");
         headerCrumbNames();
     }, [userType]);
 
@@ -55,10 +55,9 @@ const UserHeader = (props: any) => {
     }, [loginState.kyc_flag]);
 
     useEffect(() => {
-
-        if(!isEmpty(loginState.profile_picture))
+        if (!isEmpty(loginState.profile_picture))
             dispatch(getUserFiles(loginState?.profile_picture?.doc_key, setImageSrc, setPDF));
-    },[loginState]);
+    }, [loginState]);
 
     const headerCrumbNames = () => {
         const produceName = userType + headerBreadcrumb.produce;
@@ -66,8 +65,13 @@ const UserHeader = (props: any) => {
         const transactionName = userType + headerBreadcrumb.transaction;
         const feedbackName = userType + headerBreadcrumb.feedback;
         const cropsName = userType + headerBreadcrumb.crops;
-        setBreadCrumbs({produce: produceName, matches: matchesName,transaction: transactionName, feedback: feedbackName, crops: cropsName});
-        console.log(isPDF);
+        setBreadCrumbs({
+            produce: produceName,
+            matches: matchesName,
+            transaction: transactionName,
+            feedback: feedbackName,
+            crops: cropsName
+        });
     };
 
     // clear=true Means Clear one notification. clear=false Means Add one notification
@@ -85,7 +89,7 @@ const UserHeader = (props: any) => {
             message: 'Welcome',
             description: 'Thanks for registering with us.',
             duration: 0,
-            style:{position: "relative", top: "5em"}
+            style: { position: "relative", top: "5em" }
         })
         // notification['info']({
         //     message: 'Field Officer Assigned',
@@ -125,63 +129,66 @@ const UserHeader = (props: any) => {
     };
 
     return (
-      <div className="display-flex-row align-center">
-        <Breadcrumb separator=" " className="custom-breadcrumb">
-            <Breadcrumb.Item href={breadCrumbs.crops} >Produce</Breadcrumb.Item>
-            <Breadcrumb.Item href={breadCrumbs.matches} >Matches</Breadcrumb.Item>
-            <Breadcrumb.Item href={breadCrumbs.transaction} >Transaction</Breadcrumb.Item>
-            <Breadcrumb.Item href={breadCrumbs.feedback} >Feedback</Breadcrumb.Item>
-            <Breadcrumb.Item href={terms}>Terms & Conditions</Breadcrumb.Item>
-        </Breadcrumb>
-        <Badge
-            // count={notificationNumber}
-            className="custom-badge"
-        >
-            <Tooltip title="Notifications">
-                <DefaultBtn 
-                    shape="circle"
-                    size="large"
-                    icon={<BellFilled style={{ fontSize: "large", paddingLeft: "0.3em"}} />}
-                    onClick={openNotification}
-                />
+        <div className="display-flex-row align-center">
+            <Breadcrumb separator=" " className="custom-breadcrumb">
+                <Breadcrumb.Item href={breadCrumbs.crops} >Produce</Breadcrumb.Item>
+                <Breadcrumb.Item href={breadCrumbs.matches} >Matches</Breadcrumb.Item>
+                <Breadcrumb.Item href={breadCrumbs.transaction} >Transaction</Breadcrumb.Item>
+                <Breadcrumb.Item href={breadCrumbs.feedback} >Feedback</Breadcrumb.Item>
+                <Breadcrumb.Item href={terms}>Terms & Conditions</Breadcrumb.Item>
+            </Breadcrumb>
+            <Badge
+                // count={notificationNumber}
+                className="custom-badge"
+            >
+                <Tooltip title="Notifications">
+                    <DefaultBtn
+                        shape="circle"
+                        size="large"
+                        icon={<BellFilled style={{ fontSize: "large", paddingLeft: "0.3em" }} />}
+                        onClick={openNotification}
+                    />
+                </Tooltip>
+            </Badge>
+            <Dropdown.Button
+                overlay={showContactInfo}
+                icon={<ContactsFilled style={{ fontSize: "large" }} />}
+                size="large"
+                className="custom-dropdown-button"
+            />
+            {/* <p className='margin-unset'>Seller Id: {loginState.userId}</p> */}
+            <Popconfirm
+                title="Are you sure you want to logout?"
+                okText="Yes"
+                onConfirm={() => {
+                    window.location.href = LOGOUT_URL;
+                    localStorage.clear();
+                }}
+                cancelText="No"
+            >
+                <Tooltip title="Logout">
+                    <DefaultBtn
+                        icon={<LogoutOutlined style={{ fontSize: "large", paddingLeft: "0.3em" }} />}
+                        size="large"
+                        shape="circle"
+                        style={{ marginLeft: "0.5em" }}
+                    />
+                </Tooltip>
+            </Popconfirm>
+            <Title level={4} className='margin-unset' style={{ padding: "0.5em" }}>{loginState.name}</Title>
+            <Tooltip title="Profile">
+                <Button shape="circle" size="large" onClick={() => setProfile(true)}
+                    icon={
+                        isEmpty(imageSrc) ?
+                            <Avatar size="large" className="profile-avatar">
+                                {loginState.name.charAt(0)}
+                            </Avatar> :
+                            <Avatar size="large" className="profile-avatar" src={imageSrc} />
+                    }>
+                </Button>
             </Tooltip>
-        </Badge>
-        <Dropdown.Button 
-            overlay={showContactInfo}
-            icon={<ContactsFilled style={{ fontSize: "large" }} />}
-            size="large"
-            className="custom-dropdown-button"
-        />
-        {/* <p className='margin-unset'>Seller Id: {loginState.userId}</p> */}
-        <Popconfirm
-            title="Are you sure you want to logout?"
-            okText="Yes"
-            onConfirm={() => window.location.href = LOGOUT_URL}
-            cancelText="No"
-        >
-            <Tooltip title="Logout">
-                <DefaultBtn
-                    icon={<LogoutOutlined style={{ fontSize: "large", paddingLeft: "0.3em"}}/>}
-                    size="large"
-                    shape="circle"
-                    style={{ marginLeft: "0.5em"}}
-                />
-            </Tooltip>
-        </Popconfirm>
-        <Title level={4} className='margin-unset' style={{padding: "0.5em"}}>{loginState.name}</Title>
-        <Tooltip title="Profile">
-            <Button shape="circle" size="large" onClick={() => setProfile(true)}
-                icon={
-                    isEmpty(imageSrc) ?
-                    <Avatar size="large" className="profile-avatar">
-                        {loginState.name.charAt(0)}
-                    </Avatar> :
-                    <Avatar size="large" className="profile-avatar" src={imageSrc} />
-                }>
-            </Button>
-        </Tooltip>
-        { (showProfile && history.location.pathname !== profile) ? history.push(profile) : null}
-      </div>
+            {(showProfile && history.location.pathname !== profile) ? history.push(profile) : null}
+        </div>
     );
 };
 

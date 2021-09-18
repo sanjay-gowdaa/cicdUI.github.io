@@ -108,6 +108,7 @@ const AddCropModal = ({
             grade: grade.trim(),
             delivery_by: deliveryByIsoformat,
             additional_info,
+            isEditable: true,
             quantity: quantity
         };
         const {sk, pk} = currentProduceRecord;
