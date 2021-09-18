@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { Table, Typography } from 'antd';
+import { Button, Table, Typography } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
-import { ReloadOutlined } from '@ant-design/icons';
 
 import ViewCropDetails from './viewCropDetails';
 import { componentCallBacksModel, matchesColumns } from './matchesTable.model';
@@ -10,8 +9,9 @@ import { RootState } from '../../store/rootReducer';
 import { getProduceList, rejectMatches } from '../../store/buyerReducer/actions';
 import { initialEmptyCropDetail } from '../../buyer-seller-commons/constants';
 import { MatchRequirementModel } from '../../buyer-seller-commons/types';
+import Refresh from '../../static/assets/refresh.png';
 
-const { Title } = Typography;
+const { Text, Title } = Typography;
 
 const processFullfillmentData = (allMatchesList: Array<any>) => {
     let allFullfilments: any = [];
@@ -19,9 +19,9 @@ const processFullfillmentData = (allMatchesList: Array<any>) => {
         const [currentBuyerMatchEntryPair]: Array<any> = Object.entries(buyerMatchEntry);
         const buyerMatchesData: Array<any> = currentBuyerMatchEntryPair[1];
         const matchesLength = buyerMatchesData.length;
-        const genericData = buyerMatchesData[matchesLength-1];
-        for(let i=0; i < (matchesLength-1); i++) {
-            const fulfilmentData = {...buyerMatchesData[i], ...genericData};
+        const genericData = buyerMatchesData[matchesLength - 1];
+        for (let i = 0; i < (matchesLength - 1); i++) {
+            const fulfilmentData = { ...buyerMatchesData[i], ...genericData };
             allFullfilments.push(fulfilmentData)
         }
     });
@@ -40,8 +40,10 @@ const MatchedSection = () => {
         const { buyer_id, buyer_crop_id, seller_id,
             seller_crop_id, matched_quantity } = curMatchRecord;
         dispatch(
-            rejectMatches({buyer_id, buyer_crop_id, seller_id,
-                seller_crop_id, matched_quantity})
+            rejectMatches({
+                buyer_id, buyer_crop_id, seller_id,
+                seller_crop_id, matched_quantity
+            })
         );
     };
 
@@ -57,17 +59,28 @@ const MatchedSection = () => {
     }, [buyerState.matchesList]);
 
     useEffect(() => {
-        if(reloadClicked !==0)
-            dispatch(getProduceList());
+        if (reloadClicked === 5) {
+            setTimeout(() => {
+                setReloadClicked(0);
+            }, 500000);
+        }
     }, [reloadClicked]);
 
     return (
         <div id="buyer-ui-matches">
             <Title level={2}>My Matches</Title>
-            <ReloadOutlined
-                className={reloadClicked === 5 ? `display-none` : `on-reload-matches`}
-                onClick={() => setReloadClicked(reloadClicked + 1)}
-            />
+            <Button
+                type="link"
+                disabled={reloadClicked === 5}
+                style={{ float: 'right' }}
+                onClick={() => {
+                    setReloadClicked(reloadClicked + 1);
+                    dispatch(getProduceList());
+                }}
+            >
+                <Text style={{ color: '#4285F4' }}>Refresh &nbsp;</Text>
+                <img src={Refresh} alt="refresh" />
+            </Button>
             <Table
                 loading={buyerState.isMatchesFetching}
                 className="margin-t-1em"

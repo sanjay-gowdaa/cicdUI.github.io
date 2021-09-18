@@ -13,7 +13,7 @@ import {
     Typography,
     Upload
 } from 'antd';
-import { InboxOutlined } from '@ant-design/icons';
+import { BarChartOutlined, InboxOutlined } from '@ant-design/icons';
 import { useDispatch, useSelector } from 'react-redux';
 
 import {
@@ -56,7 +56,7 @@ type PropsType = {
 };
 
 const AddCropModal = (addCropProps: PropsType) => {
-    const {setModalVisible, modalVisible} = addCropProps;
+    const { setModalVisible, modalVisible } = addCropProps;
     const [form] = Form.useForm();
     const dispatch = useDispatch();
     const sellerStore: SellerStateModel = useSelector((state: RootState) => state.seller);
@@ -80,7 +80,7 @@ const AddCropModal = (addCropProps: PropsType) => {
     }, []);
 
     useEffect(() => {
-        if(modalVisible) {
+        if (modalVisible) {
             const formInitValues = {
                 intentToSell: 'No',
                 transportRequired: 'No',
@@ -137,7 +137,7 @@ const AddCropModal = (addCropProps: PropsType) => {
 
     const onSelectCategory = (category: string) => {
         /* Reset other fields */
-        form.setFieldsValue({cropName: null, subCategory: null, grade: null});
+        form.setFieldsValue({ cropName: null, subCategory: null, grade: null });
         setSelectedMasterCrop('');
         setSelectedVariety('');
         /* Reset other fields end */
@@ -146,7 +146,7 @@ const AddCropModal = (addCropProps: PropsType) => {
 
     const onMasterCrops = (produce: string) => {
         /* Reset other fields */
-        form.setFieldsValue({subCategory: null, grade: null});
+        form.setFieldsValue({ subCategory: null, grade: null });
         setSelectedVariety('');
         /* Reset other fields end */
         setSelectedMasterCrop(produce);
@@ -155,7 +155,7 @@ const AddCropModal = (addCropProps: PropsType) => {
 
     const onSelectVariety = (variety: string) => {
         /* Reset other fields */
-        form.setFieldsValue({grade: null});
+        form.setFieldsValue({ grade: null });
         /* Reset other fields end */
         setSelectedVariety(variety);
     };
@@ -287,8 +287,13 @@ const AddCropModal = (addCropProps: PropsType) => {
                                     />
                                 </Form.Item>
                                 <span className="additional-text">
-                                    APMC Rate {loginUser.district}: 
-                                    <span style={{fontWeight: 700}}>&nbsp;&nbsp;{sellerStore.apmcCropPrice}</span>
+                                    APMC Rate {loginUser.district}:
+                                    <span style={{ fontWeight: 700 }}>&nbsp;&nbsp;{sellerStore.apmcCropPrice}</span>
+                                    {typeof (sellerStore.apmcCropPrice) === "number" &&
+                                        <Button type="link">
+                                            View Details <BarChartOutlined />
+                                        </Button>
+                                    }
                                 </span>
                             </Form.Item>
                             <Form.Item
@@ -302,19 +307,17 @@ const AddCropModal = (addCropProps: PropsType) => {
                                 <Radio.Group
                                     className="custom-radio"
                                     name="intentToSell"
-                                    disabled={true}
                                     onChange={changeIntentToSell}
                                 >
                                     <Radio value={"Yes"}>Yes</Radio>
                                     <Radio value={"No"}>No</Radio>
                                 </Radio.Group>
                             </Form.Item>
-                            <Text>Change intent to sell as "Yes", in edit once confirmed.</Text>
-                            { showAlert && 
+                            {showAlert &&
                                 <Alert type="warning" message={<>You can not edit if intent to sell is set to "<b>Yes</b>"</>} />
                             }
                         </Col>
-                        <Divider className="height-full" type="vertical" style={{height: "45rem", color: "black" }} />
+                        <Divider className="height-full" type="vertical" style={{ height: "45rem", color: "black" }} />
                         <Col span={12}>
                             <Form.Item
                                 label="Transportation Required?"
@@ -336,7 +339,7 @@ const AddCropModal = (addCropProps: PropsType) => {
                                     multiple={true}
                                     accept="image/*"
                                     listType="picture-card"
-                                    beforeUpload= {(file) => {
+                                    beforeUpload={(file) => {
                                         return false
                                     }}
                                 >
@@ -358,65 +361,65 @@ const AddCropModal = (addCropProps: PropsType) => {
                                 </Dragger>
                             </Form.Item>
                             <div className="specifications">
-                                <Form.Item label={<Text style={{fontWeight: 700}} >Seller Specifications</Text>}>
-                                <Form.Item
-                                    labelCol={{ span: 10 }}
-                                    wrapperCol={{ span: 12 }}
-                                    labelAlign="left"
-                                    label="Moisture"
-                                    name="moisture"
-                                >
-                                    <Input
-                                        className="custom-input"
-                                        placeholder="Moisture in %"
-                                    />
+                                <Form.Item label={<Text style={{ fontWeight: 700 }} >Seller Specifications</Text>}>
+                                    <Form.Item
+                                        labelCol={{ span: 10 }}
+                                        wrapperCol={{ span: 12 }}
+                                        labelAlign="left"
+                                        label="Moisture"
+                                        name="moisture"
+                                    >
+                                        <Input
+                                            className="custom-input"
+                                            placeholder="Moisture in %"
+                                        />
+                                    </Form.Item>
+                                    <Form.Item
+                                        labelCol={{ span: 10 }}
+                                        wrapperCol={{ span: 12 }}
+                                        labelAlign="left"
+                                        label="Fungus"
+                                        name="fungus"
+                                    >
+                                        <Input
+                                            className="custom-input"
+                                            placeholder="Fungus in %"
+                                        />
+                                    </Form.Item>
+                                    <Form.Item
+                                        labelCol={{ span: 10 }}
+                                        wrapperCol={{ span: 12 }}
+                                        labelAlign="left"
+                                        label="Packing Type"
+                                        name="packing_type"
+                                    >
+                                        <Input
+                                            className="custom-input"
+                                            placeholder="Packing type"
+                                        />
+                                    </Form.Item>
+                                    <Form.Item
+                                        labelCol={{ span: 10 }}
+                                        wrapperCol={{ span: 12 }}
+                                        labelAlign="left"
+                                        label="Packing Size"
+                                        name="packing_size"
+                                    >
+                                        <Input
+                                            className="custom-input"
+                                            placeholder="Packing size in kg"
+                                        />
+                                    </Form.Item>
+                                    <Form.Item
+                                        labelCol={{ span: 10 }}
+                                        wrapperCol={{ span: 12 }}
+                                        labelAlign="left"
+                                        label="Other Information"
+                                        name="other_info"
+                                    >
+                                        <TextArea className="custom-input" rows={4} />
+                                    </Form.Item>
                                 </Form.Item>
-                                <Form.Item
-                                    labelCol={{ span: 10 }}
-                                    wrapperCol={{ span: 12 }}
-                                    labelAlign="left"
-                                    label="Fungus"
-                                    name="fungus"
-                                >
-                                    <Input
-                                        className="custom-input"
-                                        placeholder="Fungus in %"
-                                    />
-                                </Form.Item>
-                                <Form.Item
-                                    labelCol={{ span: 10 }}
-                                    wrapperCol={{ span: 12 }}
-                                    labelAlign="left"
-                                    label="Packing Type"
-                                    name="packing_type"
-                                >
-                                    <Input
-                                        className="custom-input"
-                                        placeholder="Packing type"
-                                    />
-                                </Form.Item>
-                                <Form.Item
-                                    labelCol={{ span: 10 }}
-                                    wrapperCol={{ span: 12 }}
-                                    labelAlign="left"
-                                    label="Packing Size"
-                                    name="packing_size"
-                                >
-                                    <Input
-                                        className="custom-input"
-                                        placeholder="Packing size in kg"
-                                    />
-                                </Form.Item>
-                                <Form.Item
-                                    labelCol={{ span: 10 }}
-                                    wrapperCol={{ span: 12 }}
-                                    labelAlign="left"
-                                    label="Other Information"
-                                    name="other_info"
-                                >
-                                    <TextArea className="custom-input" rows={4} />
-                                </Form.Item>
-                            </Form.Item>
                             </div>
                         </Col>
                     </Row>

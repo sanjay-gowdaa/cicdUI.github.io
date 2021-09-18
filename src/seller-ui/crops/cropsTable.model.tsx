@@ -6,8 +6,8 @@ import { isEmpty } from 'lodash';
 import ViewCropImages from './viewCropImages';
 
 import { CropApiModel } from '../../store/sellerReducer/types';
-import RagiImg from '../../static/assets/ragi.png';
 import { parseIDfromHash } from '../../app-components/utils';
+import { showCropImage } from '../../buyer-seller-commons/constants';
 
 const { Text, Title } = Typography;
 
@@ -94,9 +94,12 @@ export const cropColumns = ({
             dataIndex: 'crop_name',
             key: 'crop_name',
             render: (cropName: string, record: CropApiModel) => {
+                const { category_name } = record;
+                const imageSrc = showCropImage(category_name);
+
                 return (
                     <div className="display-flex-row align-center">
-                        <Image src={RagiImg} />
+                        <Image className="table-crop-image" src={imageSrc} />
                         <div className="margin-l-r-1em">
                             <Title level={5}>{cropName}</Title>
                             <p>{record?.sub_category}</p>
