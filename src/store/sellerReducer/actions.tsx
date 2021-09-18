@@ -376,6 +376,19 @@ export const confirmOTP = (number: string, otp: string) => {
     }
 };
 
+export const byPassOTP = (otp: string) => {
+    return async (dispatch: any, getState: any) => {
+        const verified = otp === '1234';
+        if (!verified) {
+            dispatch(setOtpErrorOnAccept(true));
+            dispatch(setOtpErrorMsgOnAccept('OTP Mismatched!'));
+        } else {
+            dispatch(setOtpErrorOnAccept(false));
+            dispatch(setVerifiedOnAccept(true));
+        }
+    }
+};
+
 export const resetOTPFields = () => {
     return async (dispatch: any, getState: any) => {
         dispatch(setOtpErrorOnAccept(false));

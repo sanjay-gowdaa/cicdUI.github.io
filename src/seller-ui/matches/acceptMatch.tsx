@@ -6,7 +6,14 @@ import TradeSummary from './tradeSummary';
 
 import PrimaryBtn from '../../app-components/primaryBtn';
 import InputOtp from '../../app-components/inputOtp';
-import { confirmOTP, resetOTPFields, saveTimeStamp, setProduceNameOnAccept, transactionAction } from '../../store/sellerReducer/actions';
+import {
+    byPassOTP,
+    // confirmOTP,
+    resetOTPFields,
+    saveTimeStamp,
+    setProduceNameOnAccept,
+    transactionAction
+} from '../../store/sellerReducer/actions';
 import { RootState } from '../../store/rootReducer';
 import { resendOTP, sendOTP } from '../../store/registrationReducer/actions';
 import { MatchRequirementModel, TransactionAction } from '../../buyer-seller-commons/types';
@@ -53,7 +60,8 @@ const AcceptMatch = (props: { cropDetails: MatchRequirementModel }) => {
 
     const onAccept = () => {
         dispatch(saveTimeStamp);
-        dispatch(confirmOTP(userState.username, otp));
+        // dispatch(confirmOTP(userState.username, otp));
+        dispatch(byPassOTP(otp));
         dispatch(setProduceNameOnAccept(cropDetails.buyer_crop_id));
     };
 

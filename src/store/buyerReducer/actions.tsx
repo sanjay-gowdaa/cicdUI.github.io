@@ -350,6 +350,7 @@ export const getTransactionList = (transactionStatus: TransactionStatus) => {
         const { username } = loginUser;
         const transactionListResponse = await fetchTransactionList(username, transactionStatus);
         dispatch(updateTransactionList(transactionStatus, transactionListResponse));
+        dispatch(getProduceList());
     }
 };
 
@@ -366,6 +367,7 @@ export const getTransactionListOnReload = (transactionStatus: TransactionStatus)
             dispatch(currentStatusDetails(data));
         }
         dispatch(updateTransactionList(transactionStatus, transactionListResponse));
+        dispatch(getProduceList());
     }
 };
 
@@ -403,7 +405,6 @@ export const currentStatusDetails = (userData: any) => {
 export const eventTemplate = () => {
     return async (dispatch: any, getState: any) => {
         const template = await getEventTemplate();
-        //console.log("template:", template);
         if (!isEmpty(template)) {
             dispatch(updateEventList(template));
         }
@@ -414,7 +415,7 @@ export const eventTemplate = () => {
 export const getAmount = (userData: string) => {
     return async (dispatch: any, getState: any) => {
         var id = userData;
-        id= id.substring(12);
+        id = id.substring(12);
         const amount = await getPaymentAmount(id);
         console.log("inside getamount", amount)
         dispatch(updatePaymentAmount(amount));
@@ -431,6 +432,19 @@ export const confirmOTP = (number: string, otp: string) => {
             dispatch(setOtpErrorOnConnect(true))
             dispatch(setOtpErrorMsgOnConnect(message))
         } else if (type === ResponseStatus.SUCCESS) {
+            dispatch(setOtpErrorOnConnect(false))
+            dispatch(setVerifiedOnConnect(true))
+        }
+    }
+};
+
+export const byPassOTP = (otp: string) => {
+    return async (dispatch: any, getState: any) => {
+        const verified = otp === '1234';
+        if (!verified) {
+            dispatch(setOtpErrorOnConnect(true));
+            dispatch(setOtpErrorMsgOnConnect('OTP Mismatched!'));
+        } else {
             dispatch(setOtpErrorOnConnect(false))
             dispatch(setVerifiedOnConnect(true))
         }
