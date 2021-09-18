@@ -20,8 +20,9 @@ const PayButton = (props: any) => {
     const loginState = useSelector((state: RootState) => state.loginUser);
     const buyerState = useSelector((state: RootState) => state.buyer);
     const status = buyerState.currentStatusDetails;
-    const {amount} = buyerState.paymentAmount;
+    
     const [userStatus, setUserStatus] = useState('');
+    const [orderAmount, setorderAmount] = useState('');
     const [viewPaymentDetails, setPaymentDetails] = useState(false);
     const uuid = uuidv4();
     const accessToken = (window as any).userToken ? (window as any).userToken : null;
@@ -55,10 +56,14 @@ const PayButton = (props: any) => {
         }
     }, [status]);
 
-    useEffect(() => {
+    
+    const payNow = () => {
+        setPaymentDetails(true);
         dispatch(getAmount(record.pk));
-        console.log("amount", amount);
-    }, []);
+        const {amount} = buyerState.paymentAmount;
+        console.log("amount", amount)
+        setorderAmount(amount);
+    }
 
     return (
         <>
@@ -69,7 +74,7 @@ const PayButton = (props: any) => {
                             "pay-retry" : "vikas-btn-radius" :
                         "display-none"
                 }
-                onClick={() => setPaymentDetails(true)}
+                onClick={() => payNow()}
                 content={isError ? "Retry and Pay" : "Pay Now"}
             />
             <Modal
@@ -93,7 +98,7 @@ const PayButton = (props: any) => {
                         <form className="payment" method="POST" action="http://13.233.91.84:8082/paymentrequest">
                             <Space direction="vertical">
                                 <Input className="custom-input" type="text" value={id} name="orderId" />
-                                <Input type="text" value={amount} name="orderAmount" />
+                                <Input type="text" value={orderAmount} name="orderAmount" />
                                 <Input type="hidden" value="INR" name="orderCurrency" />
                                 <Input type="text" value="Test note" name="orderNote" />
                                 <Input type="text" value={loginState.name} name="customerName" />
