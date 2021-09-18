@@ -14,9 +14,10 @@ import {
     saveTimeStamp,
     checkSellerConnectedStatus,
     getMatchesForBuyerCrops,
-    confirmOTP,
+    // confirmOTP,
     setProduceNameOnConnect,
-    resetOTPFields
+    resetOTPFields,
+    byPassOTP
 } from '../../store/buyerReducer/actions';
 import { UserStateModel } from '../../store/loginReducer/types';
 import { MatchRequirementModel } from '../../buyer-seller-commons/types';
@@ -149,7 +150,8 @@ const ConnectMatch = ({ cropDetails }: { cropDetails: MatchRequirementModel }) =
 
     const onAcceptConnect = () => {
         dispatch(saveTimeStamp);
-        dispatch(confirmOTP(userState.username, otp));
+        // dispatch(confirmOTP(userState.username, otp));
+        dispatch(byPassOTP(otp));
         dispatch(setProduceNameOnConnect(cropDetails.seller_crop_id));
     };
 
