@@ -417,7 +417,6 @@ export const getAmount = (userData: string) => {
         var id = userData;
         id = id.substring(12);
         const amount = await getPaymentAmount(id);
-        console.log("inside getamount", amount)
         dispatch(updatePaymentAmount(amount));
     }
 };

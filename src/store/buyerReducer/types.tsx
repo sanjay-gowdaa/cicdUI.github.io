@@ -77,7 +77,7 @@ export interface EventTemplate {
 };
 
 export interface PaymentAmount{
-    amount: number;
+    amount: string;
 }
 
 export interface BuyerStateModel {

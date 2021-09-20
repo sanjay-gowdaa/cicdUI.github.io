@@ -42,7 +42,7 @@ const INITIAL_STATE: BuyerStateModel = {
     statusDetails: [],
     currentStatusDetails: [],
     eventTemplate: [],
-    paymentAmount: {},
+    paymentAmount: '',
     otpError: { showError: false, errorMg: '', verified: false, produce: '' }
 
 };
@@ -122,8 +122,8 @@ const reducer = (state = INITIAL_STATE, action: any) => {
             const updateProduceName = { ...errorProduceObj, produce: action.payload }
             return { ...state, otpError: updateProduceName };
        
-            case UPDATE_PAYMENT_AMOUNT:
-            return {...state, eventTemplate: action.payload }
+        case UPDATE_PAYMENT_AMOUNT:
+            return {...state, paymentAmount: action.payload }
      
 
         default:
