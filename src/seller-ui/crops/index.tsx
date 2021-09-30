@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Modal, Space, Table, Typography } from 'antd';
+import { Modal, Space, Table, Typography, Tag } from 'antd';
 import { useSelector, useDispatch } from 'react-redux';
 import { WarningFilled } from '@ant-design/icons';
 import { Link } from 'react-router-dom';
@@ -30,12 +30,40 @@ const CropsSection = (props: any) => {
     const [currentCropId, setCurrentCropId] = useState('');
     const [currentProduceRecord, setCurrentProduceRecord] = useState({} as CropApiModel);
     const [modalVisible, setModalVisible] = useState(false);
+    const [isActiveFlag, setIsActiveFlag] = useState("");
     const dispatch = useDispatch();
     const isApproved = (loginState.kyc_flag === "approved");
+    const is_Active  = (loginState?.is_active === "Add Produce Blocked");
 
     useEffect(() => {
         dispatch(getAllCropsList());
-    }, []);
+        if (loginState?.is_active != null){
+            setIsActiveFlag (loginState?.is_active);
+        }
+    }, [loginState]);
+
+    const userStatus = [
+        {
+            flag: "Active",
+            title: "Active",
+            backgroundColor: "#f2f2f2",
+            color: "#12805C",
+            icon: true
+        },
+        {
+            flag: "Matches Blocked",
+            title: "Matches Blocked",
+            backgroundColor: "yellow",
+            color: "black"
+        },
+        {
+            flag: "Add Produce Blocked",
+            title: "Add Produce Blocked",
+            backgroundColor: "#ffc700",
+            color: "black"
+        },
+        
+    ];
 
     const prepareForEditCrop = (cropData: CropApiModel) => {
         const { sk } = cropData;
@@ -78,11 +106,19 @@ const CropsSection = (props: any) => {
 
     return (
         <div className="crops-container" id="seller-ui-crops">
+            {
+                    userStatus.map((list) => {
+                        return (isActiveFlag === list.flag) ?
+                            <Tag color={list.backgroundColor} style={{ color: list.color, fontSize: "large", padding: "0.5em" }} >
+                            {list.title} </Tag> :
+                            <Tag style={{ display: 'none' }}></Tag>
+                    })
+                }
             <Title level={2}>My Produce</Title>
             <PrimaryBtn
                 className="add-crop-btn vikas-btn-radius"
                 onClick={() => {
-                    if (isApproved) {
+                    if (isApproved || is_Active) {
                         setIsEdit(false);
                         setModalVisible(true);
                     } else {

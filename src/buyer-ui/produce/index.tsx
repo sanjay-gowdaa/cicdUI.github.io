@@ -25,6 +25,8 @@ const ProduceSection = (props: any) => {
     const [modalVisible, setModalVisible] = useState(false);
     const { masterProduceList } = buyerState;
     const isApproved = (loginState.kyc_flag === "approved");
+    const is_Active  = (loginState?.is_active === "Add Requirement Blocked");
+    
 
     useEffect(() => {
         dispatch(getProduceList());
@@ -62,7 +64,7 @@ const ProduceSection = (props: any) => {
             <PrimaryBtn
                 className="add-crop-btn vikas-btn-radius"
                 onClick={() => {
-                    if (isApproved) {
+                    if (isApproved || is_Active) {
                         setIsEdit(false);
                         setModalVisible(true);
                     } else {

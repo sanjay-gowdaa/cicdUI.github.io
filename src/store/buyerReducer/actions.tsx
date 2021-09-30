@@ -22,7 +22,8 @@ import {
     getCurrentStatusDetails,
     getEventTemplate,
     getPaymentAmount,
-    verifyOtp
+    verifyOtp,
+    getRejectCount
 
 } from "../api";
 import { UserStateModel } from "../loginReducer/types";
@@ -32,6 +33,7 @@ import { RootState } from "../rootReducer";
 import { getTimeStamp } from "../../app-components/utils";
 import { TransactionStatus } from "../../buyer-seller-commons/types";
 import { ResponseStatus } from "../genericTypes";
+import { getUserCompleteDetails, getUserDetails } from "../loginReducer/actions";
 
 export const UPDATE_MASTER_LIST = 'UPDATE_MASTER_LIST';
 export const GET_MASTER_LIST = 'GET_MASTER_LIST';
@@ -56,6 +58,7 @@ export const OTP_ERROR_ON_CONNECT = 'OTP_ERROR_ON_CONNECT';
 export const OTP_ERROR_MSG_ON_CONNECT = 'OTP_ERROR_MSG_ON_CONNECT';
 export const OTP_VERIFIED_ON_CONNECT = 'OTP_VERIFIED_ON_CONNECT';
 export const PRODUCE_NAME_ON_CONNECT = 'PRODUCE_NAME_ON_CONNECT';
+export const UPDATE_REJECT_COUNT = 'UPDATE_REJECT_COUNT';
 
 export const setProduceNameOnConnect = (produce: string) => {
     return {
@@ -181,6 +184,13 @@ export const setMatchesLoadingFlag = (loadingFlag: boolean) => {
     return {
         type: SET_MATCHES_LOADER,
         payload: loadingFlag
+    };
+};
+
+export const updateRejectCount = (rejectCount: any) => {
+    return {
+        type: UPDATE_REJECT_COUNT,
+        payload: rejectCount,
     };
 };
 
@@ -322,6 +332,16 @@ export const rejectMatches = (rejectData: BuyerRejectMatch) => {
         /* Re-calculate matches for all crop */
         /* Logic can be changed to specific crop if required */
         dispatch(getProduceList());
+        dispatch(getUserCompleteDetails());
+    }
+};
+
+export const rejectMatchesCount = (rejectData: any) => {
+    return async (dispatch: any, getState: any) => {
+        const count = await getRejectCount(rejectData);
+        console.log("count", count)
+        dispatch(updateRejectCount(count))
+        
     }
 };
 

@@ -18,7 +18,8 @@ import {
     OTP_ERROR_ON_CONNECT,
     OTP_ERROR_MSG_ON_CONNECT,
     OTP_VERIFIED_ON_CONNECT,
-    PRODUCE_NAME_ON_CONNECT
+    PRODUCE_NAME_ON_CONNECT,
+    UPDATE_REJECT_COUNT
 
 } from './actions';
 import {
@@ -43,6 +44,7 @@ const INITIAL_STATE: BuyerStateModel = {
     currentStatusDetails: [],
     eventTemplate: [],
     paymentAmount: '',
+    rejectCount: '',
     otpError: { showError: false, errorMg: '', verified: false, produce: '' }
 
 };
@@ -124,6 +126,9 @@ const reducer = (state = INITIAL_STATE, action: any) => {
        
         case UPDATE_PAYMENT_AMOUNT:
             return {...state, paymentAmount: action.payload }
+
+        case UPDATE_REJECT_COUNT:
+            return {...state, rejectCount: action.payload }
      
 
         default:

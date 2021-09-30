@@ -45,6 +45,9 @@ export interface CurrentStatusDetails {
     event_description: string;
     event_timestamp: string;
 };
+export interface RejectCount {
+    reject_count: string
+}
 
 export interface SellerStateModel {
     categories: Array<string>;
@@ -62,5 +65,6 @@ export interface SellerStateModel {
     timeStamp: any;
     statusDetails: Array<StatusDetails>
     currentStatusDetails: Array<CurrentStatusDetails>;
+    rejectCount: any;
     otpError: { showError: Boolean, errorMg: String, verified: Boolean, produce: String }
 };

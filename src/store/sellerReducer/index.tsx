@@ -11,7 +11,8 @@ import {
     UPDATE_CURRENT_STATUS_DETAILS,
     OTP_ERROR_MSG_ON_ACCEPT,
     OTP_VERIFIED_ON_ACCEPT,
-    PRODUCE_NAME_ON_ACCEPT
+    PRODUCE_NAME_ON_ACCEPT,
+    UPDATE_REJECT_COUNT
 } from './actions';
 import {
     mockReviewsList,
@@ -30,6 +31,7 @@ const INITIAL_STATE: SellerStateModel = {
     timeStamp: {},
     statusDetails: [],
     currentStatusDetails: [],
+    rejectCount: '',
     otpError: { showError: false, errorMg: '', verified: false, produce: '' }
 };
 
@@ -84,6 +86,9 @@ const reducer = (state = INITIAL_STATE, action: any) => {
             const { otpError: errorProduceObj } = state;
             const updateProduceName = { ...errorProduceObj, produce: action.payload }
             return { ...state, otpError: updateProduceName };
+        
+        case UPDATE_REJECT_COUNT:
+            return {...state, rejectCount: action.payload }
 
         default:
             return state;

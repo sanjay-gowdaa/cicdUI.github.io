@@ -17,7 +17,8 @@ import {
     fetchTransactionList,
     getStatusDetails,
     getCurrentStatusDetails,
-    verifyOtp
+    verifyOtp,
+    getRejectCount
 } from "../api";
 import { ApmcApiResponseBase, ResponseStatus, UpdatedLiveApmcRatesQuery } from "../genericTypes";
 import { UserStateModel } from "../loginReducer/types";
@@ -42,6 +43,14 @@ export const OTP_ERROR_ON_ACCEPT = 'OTP_ERROR_ON_ACCEPT';
 export const OTP_ERROR_MSG_ON_ACCEPT = 'OTP_ERROR_MSG_ON_ACCEPT';
 export const OTP_VERIFIED_ON_ACCEPT = 'OTP_VERIFIED_ON_ACCEPT';
 export const PRODUCE_NAME_ON_ACCEPT = 'PRODUCE_NAME_ON_ACCEPT';
+export const UPDATE_REJECT_COUNT = 'UPDATE_REJECT_COUNT';
+
+export const updateRejectCount = (rejectCount: any) => {
+    return {
+        type: UPDATE_REJECT_COUNT,
+        payload: rejectCount,
+    };
+};
 
 export const setProduceNameOnAccept = (produce: string) => {
     return {
@@ -396,4 +405,13 @@ export const resetOTPFields = () => {
         dispatch(setVerifiedOnAccept(false));
         dispatch(setProduceNameOnAccept(''));
     };
+};
+
+export const rejectMatchesCount = (rejectData: any) => {
+    return async (dispatch: any, getState: any) => {
+        const count = await getRejectCount(rejectData);
+        console.log("count", count)
+        dispatch(updateRejectCount(count))
+        
+    }
 };

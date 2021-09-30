@@ -80,6 +80,9 @@ export interface PaymentAmount{
     amount: string;
 }
 
+export interface RejectCount {
+    reject_count: string
+}
 export interface BuyerStateModel {
     masterProduceList: Array<MasterListApiFormat>;
     produceList: Array<ProduceModel>;
@@ -101,6 +104,7 @@ export interface BuyerStateModel {
     currentStatusDetails: Array<CurrentStatusDetails>;
     eventTemplate: Array<EventTemplate>;
     paymentAmount: any;
+    rejectCount: any;
     otpError: { showError: Boolean, errorMg: String, verified: Boolean, produce: String }
 };
 

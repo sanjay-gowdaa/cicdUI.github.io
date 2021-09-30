@@ -5,6 +5,7 @@ import { BuyerRejectMatch } from '../buyerReducer/types';
 import { LiveApmcRates, UpdatedLiveApmcRatesQuery } from '../genericTypes';
 
 import { MatchRequirementModel, TransactionAction, TransactionStatus } from '../../buyer-seller-commons/types';
+import { StringLiteralLike } from 'typescript';
 
 const BASE_URL = process.env.REACT_APP_BASE_URL;
 const STAGE = process.env.REACT_APP_ENV;
@@ -47,6 +48,7 @@ const GET_PAYMENT_DETAILS = 'getpaymentdetails';
 const USER_ALREADY_EXISTS = 'userAlreadyExists';
 const GET_EVENT_TEMPLATE = 'VB/Get_Buyer_Seller_Status';
 const GET_AMOUNT_API = 'getamounttodisplay';
+const GET_REJECT_COUNT = 'getrejectcount';
 
 const parseToken = (userToken: string) => {
     const sholudDecrypt = process.env.REACT_APP_ENV === 'prod';
@@ -345,6 +347,8 @@ export const getBuyerMatchesList = (buyerId: string, cropIds: Array<string>) => 
 
 export const rejectMatch = (rejectData: BuyerRejectMatch) => {
     const matchesRejectApi = `${BASE_URL}/${STAGE}/${MATCHES_REJECT_API}`;
+    //const matchesRejectApi = `http://localhost:4000/dev/${MATCHES_REJECT_API}`;
+    
     return fetch(matchesRejectApi, {
         headers: getAuthHeader(),
         method: 'POST',
@@ -463,6 +467,14 @@ export const getEventTemplate = () => {
 
 export const getPaymentAmount = (userData: string) => {
     const getamountApi = `${BASE_URL}/${STAGE}/${TRANSACTION_API}/${GET_AMOUNT_API}?transactionId=${userData}&user=Buyer`;
+    return fetch(getamountApi, {
+        method: 'GET',
+    }).then((response: any) => response.json())
+};
+
+export const getRejectCount = (userData: any) => {
+    //const getamountApi = `${BASE_URL}/${STAGE}/${TRANSACTION_API}/${GET_REJECT_COUNT}?user_id=${userData.user_id}&crop_id=${userData.crop_id}&user=${userData.user}`;
+    const getamountApi = `http://localhost:4000/dev/transaction/${GET_REJECT_COUNT}?user_id=${userData.user_id}&crop_id=${userData.crop_id}&user=${userData.user}`
     return fetch(getamountApi, {
         method: 'GET',
     }).then((response: any) => response.json())
