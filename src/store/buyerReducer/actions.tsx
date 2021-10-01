@@ -437,6 +437,7 @@ export const getAmount = (userData: string) => {
         var id = userData;
         id = id.substring(12);
         const amount = await getPaymentAmount(id);
+        console.log("amount", amount);
         dispatch(updatePaymentAmount(amount));
     }
 };

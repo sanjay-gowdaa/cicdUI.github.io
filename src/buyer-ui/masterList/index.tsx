@@ -41,21 +41,16 @@ const AddProduceModal = (props: any) => {
         {
             flag: "Matches Blocked",
             title: "Matches Blocked",
-            backgroundColor: "yellow",
+            backgroundColor: "#ffc700",
             color: "black"
         },
         {
             flag: "Add Requirement Blocked",
             title: "Add Requirement Blocked",
-            backgroundColor: "#ffc700",
-            color: "black"
-        },
-        {
-            flag: "Account Blocked",
-            title: "Account Blocked",
-            backgroundColor: "red",
+            backgroundColor: "#red",
             color: "black"
         }
+        
     ];
 
     const showKycRequiredModal = () => {

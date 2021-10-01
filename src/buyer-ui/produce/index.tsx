@@ -63,6 +63,7 @@ const ProduceSection = (props: any) => {
             <Title level={2}>My Requirements</Title>
             <PrimaryBtn
                 className="add-crop-btn vikas-btn-radius"
+                disabled={is_Active}
                 onClick={() => {
                     if (isApproved || is_Active) {
                         setIsEdit(false);

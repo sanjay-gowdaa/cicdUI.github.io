@@ -473,8 +473,8 @@ export const getPaymentAmount = (userData: string) => {
 };
 
 export const getRejectCount = (userData: any) => {
-    //const getamountApi = `${BASE_URL}/${STAGE}/${TRANSACTION_API}/${GET_REJECT_COUNT}?user_id=${userData.user_id}&crop_id=${userData.crop_id}&user=${userData.user}`;
-    const getamountApi = `http://localhost:4000/dev/transaction/${GET_REJECT_COUNT}?user_id=${userData.user_id}&crop_id=${userData.crop_id}&user=${userData.user}`
+    const getamountApi = `${BASE_URL}/${STAGE}/${TRANSACTION_API}/${GET_REJECT_COUNT}?user_id=${userData.user_id}&crop_id=${userData.crop_id}&user=${userData.user}`;
+   // const getamountApi = `http://localhost:4000/dev/transaction/${GET_REJECT_COUNT}?user_id=${userData.user_id}&crop_id=${userData.crop_id}&user=${userData.user}`
     return fetch(getamountApi, {
         method: 'GET',
     }).then((response: any) => response.json())

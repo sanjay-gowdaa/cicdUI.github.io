@@ -57,13 +57,14 @@ const PayButton = (props: any) => {
 
     const payNow = () => {
         dispatch(getAmount(record.pk));
+        setPaymentDetails(true);
     }
 
-    useEffect(() => {
-        if(buyerState.paymentAmount !== '') {
-            setPaymentDetails(true);
-        }
-    }, [buyerState.paymentAmount]);
+    // useEffect(() => {
+    //     if(buyerState.paymentAmount != '') {
+            
+    //     }
+    // }, []);
 
     return (
         <>
@@ -97,13 +98,13 @@ const PayButton = (props: any) => {
                     <Col span={12}>
                         <form className="payment" method="POST" action="http://13.233.91.84:8082/paymentrequest">
                             <Space direction="vertical">
-                                <Input className="custom-input" type="text" value={id} name="orderId" />
-                                <Input type="text" value={buyerState.paymentAmount} name="orderAmount" />
+                                <Input className="payment-custom-input" type="text" value={id} name="orderId" />
+                                <Input className="payment-custom-input" type="text" value={buyerState.paymentAmount} name="orderAmount" />
+                                <Input className="payment-custom-input" type="text" value="Test note" name="orderNote" />
+                                <Input className="payment-custom-input" type="text" value={loginState.name} name="customerName" />
+                                <Input className="payment-custom-input" type="email" value={loginState.email} name="customerEmail" />
+                                <Input className="payment-custom-input" type="tel" value={loginState.phone_no} name="customerPhone" />
                                 <Input type="hidden" value="INR" name="orderCurrency" />
-                                <Input type="text" value="Test note" name="orderNote" />
-                                <Input type="text" value={loginState.name} name="customerName" />
-                                <Input type="email" value={loginState.email} name="customerEmail" />
-                                <Input type="tel" value={loginState.phone_no} name="customerPhone" />
                                 <Input type="hidden" value={user} name="user" />
                                 <Input type="hidden" value={loginState.pk} name="userId" />
                                 <Input type="hidden" value={record.pk} name="transactionId" />
