@@ -16,7 +16,7 @@ const { Paragraph, Text, Title } = Typography;
 const AddProduceModal = (props: any) => {
     const { history } = props;
     const [modalVisible, setModalVisible] = useState(false);
-    const [isActiveFlag, setIsActiveFlag] = useState("");
+    const [isActiveFlag, setIsActiveFlag] = useState("Active");
     const dispatch = useDispatch();
     const loginState = useSelector((state: RootState) => state.loginUser);
     const isApproved = (loginState.kyc_flag === "approved");
@@ -39,6 +39,13 @@ const AddProduceModal = (props: any) => {
             icon: true
         },
         {
+            flag: "Active/F",
+            title: "Active/F",
+            backgroundColor: "yellow",
+            color: "#12805C",
+            
+        },
+        {
             flag: "Matches Blocked",
             title: "Matches Blocked",
             backgroundColor: "#ffc700",
@@ -47,7 +54,7 @@ const AddProduceModal = (props: any) => {
         {
             flag: "Add Requirement Blocked",
             title: "Add Requirement Blocked",
-            backgroundColor: "#red",
+            backgroundColor: "red",
             color: "black"
         }
         

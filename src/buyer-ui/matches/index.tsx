@@ -62,7 +62,7 @@ const MatchedSection = () => {
                             })
                         )},
                 cancelText: 'Cancel',
-                onCancel() {console.log("on cancel") },
+                onCancel() { },
                 
             
             })

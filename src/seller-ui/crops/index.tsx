@@ -30,7 +30,7 @@ const CropsSection = (props: any) => {
     const [currentCropId, setCurrentCropId] = useState('');
     const [currentProduceRecord, setCurrentProduceRecord] = useState({} as CropApiModel);
     const [modalVisible, setModalVisible] = useState(false);
-    const [isActiveFlag, setIsActiveFlag] = useState("");
+    const [isActiveFlag, setIsActiveFlag] = useState("Active");
     const dispatch = useDispatch();
     const isApproved = (loginState.kyc_flag === "approved");
     const is_Active  = (loginState?.is_active === "Add Produce Blocked");
@@ -51,6 +51,13 @@ const CropsSection = (props: any) => {
             icon: true
         },
         {
+            flag: "Active/F",
+            title: "Active/F",
+            backgroundColor: "yellow",
+            color: "#12805C",
+            
+        },
+        {
             flag: "Matches Blocked",
             title: "Matches Blocked",
             backgroundColor: "yellow",
@@ -59,7 +66,7 @@ const CropsSection = (props: any) => {
         {
             flag: "Add Produce Blocked",
             title: "Add Produce Blocked",
-            backgroundColor: "#ffc700",
+            backgroundColor: "red",
             color: "black"
         },
         
