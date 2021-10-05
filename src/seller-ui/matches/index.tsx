@@ -38,7 +38,7 @@ const MatchedSection = () => {
             Modal.confirm({
                 title: '',
                 icon: <WarningOutlined/>,
-                content: 'You are rejecting the match for the 3rd time, If you wish to continue, your matches will be blocked, and you will not be getting any new matches you are not able to add any requirements for next 7 days, your account will be blocked',
+                content: 'You are rejecting the match for the 3rd time, If you wish to continue, your matches will be blocked, and you will not be getting any new matches and you are not able to add any produces for next 7 days, your account will be blocked',
                 okText: 'Reject',
                 onOk() {dispatch(
                         transactionAction(

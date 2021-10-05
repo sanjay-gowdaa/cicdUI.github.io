@@ -46,14 +46,14 @@ const MatchedSection = () => {
 
         dispatch( rejectMatchesCount(rejectCountData))
         const { rejectCount } = buyerState; 
-        console.log("rejectCount", rejectCount);
-        console.log(rejectCount === 3)
-        if(rejectCount === 3|| rejectCount === 5){
+        //console.log("rejectCount", rejectCount);
+        //console.log(rejectCount === 3)
+        if(rejectCount === 2|| rejectCount === 4){
             
             Modal.confirm({
                 title: '',
                 icon: <WarningOutlined/>,
-                content: rejectCount === 3 ? 'You are rejecting the match for the 3rd time, If you wish to continue, your matches will be blocked, and you will not be getting any new matches.'
+                content: rejectCount === 2 ? 'You are rejecting the match for the 3rd time, If you wish to continue, your matches will be blocked, and you will not be getting any new matches.'
                  : 'You are rejecting the match for the 5th time, If you wish to continue, you are not able to add any requirements for next 7 days, your account will be blocked',
                 okText: 'Reject',
                 onOk() {dispatch(rejectMatches({
