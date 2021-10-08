@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { useSelector, useDispatch} from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { v4 as uuidv4 } from 'uuid';
 import { Col, Input, Row, Space, Modal, Typography } from 'antd';
 import { isEmpty } from 'lodash';
+import moment from 'moment';
+
 import PrimaryBtn from '../../app-components/primaryBtn';
 import { RootState } from '../../store/rootReducer';
-import { getAmount } from '../../store/buyerReducer/actions';
+import { getAmount, rejectMatches } from '../../store/buyerReducer/actions';
 
 const { Text, Title } = Typography;
 
@@ -20,7 +22,7 @@ const PayButton = (props: any) => {
     const loginState = useSelector((state: RootState) => state.loginUser);
     const buyerState = useSelector((state: RootState) => state.buyer);
     const status = buyerState.currentStatusDetails;
-    
+
     const [userStatus, setUserStatus] = useState('');
     const [viewPaymentDetails, setPaymentDetails] = useState(false);
     const uuid = uuidv4();
@@ -32,7 +34,6 @@ const PayButton = (props: any) => {
     // const statussub = userStatus.split(" ");
     // const lastele = statussub[statussub.length - 1];
     // const amount = lastele.substring(1, lastele.length - 1);
-
 
     const user = loginState.is_buyer && "buyer";
     const getDisplay = (status: string) => {
@@ -55,16 +56,54 @@ const PayButton = (props: any) => {
         }
     }, [status]);
 
+    useEffect(() => {
+        if (!isEmpty(record)) {
+            const newDate = new Date();
+            const updatedDate = record.updated_timestamp;
+
+            const diffInDays = parseInt(moment(newDate).format("YYYYMMDD")) - parseInt(moment(updatedDate).format("YYYYMMDD"));
+
+            if (diffInDays === 1) {
+                Modal.info({
+                    title: "Kindly pay the seller within 24hrs!",
+                    content: (
+                        <p>
+                            Kindly do the payment for <b>{record.produce}</b> within 24hrs or the transaction will be terminated!
+                        </p>
+                    )
+                });
+            }
+
+            if (diffInDays >= 2) {
+                Modal.info({
+                    title: "No action were taken in the last 48 hrs",
+                    content: (
+                        <p>
+                            The <b>{record.produce}</b> transaction is auto rejected since there were no actions taken in 48hrs!
+                        </p>
+                    )
+                });
+                // Change the transaction status to complete
+                const { buyer_crop_id, seller_id, seller_crop_id, matched_quantity, pk } = record;
+                const rejectData = {
+                    buyer_id: loginState.pk,
+                    buyer_crop_id,
+                    seller_id,
+                    seller_crop_id,
+                    matched_quantity,
+                    transaction_id: pk,
+                    buyer_event: 'auto_reject'
+                }
+                console.log("rejectData:", rejectData);
+                // dispatch(rejectMatches(rejectData));
+            }
+        }
+    }, [record]);
+
     const payNow = () => {
         dispatch(getAmount(record.pk));
         setPaymentDetails(true);
-    }
-
-    // useEffect(() => {
-    //     if(buyerState.paymentAmount != '') {
-            
-    //     }
-    // }, []);
+    };
 
     return (
         <>
