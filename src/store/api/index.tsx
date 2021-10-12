@@ -5,7 +5,6 @@ import { BuyerRejectMatch } from '../buyerReducer/types';
 import { LiveApmcRates, UpdatedLiveApmcRatesQuery } from '../genericTypes';
 
 import { MatchRequirementModel, TransactionAction, TransactionStatus } from '../../buyer-seller-commons/types';
-import { StringLiteralLike } from 'typescript';
 
 const BASE_URL = process.env.REACT_APP_BASE_URL;
 const STAGE = process.env.REACT_APP_ENV;
@@ -47,6 +46,7 @@ const GET_REDIRECTION_TOKEN = 'getredirectiontoken';
 const GET_PAYMENT_DETAILS = 'getpaymentdetails';
 const USER_ALREADY_EXISTS = 'userAlreadyExists';
 const GET_EVENT_TEMPLATE = 'VB/Get_Buyer_Seller_Status';
+// const GET_EVENT_TEMPLATE = `${TRANSACTION_API}/getBuyerSellerStatus`;
 const GET_AMOUNT_API = 'getamounttodisplay';
 const GET_REJECT_COUNT = 'getrejectcount';
 
