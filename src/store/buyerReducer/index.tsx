@@ -37,6 +37,7 @@ const INITIAL_STATE: BuyerStateModel = {
     isMatchesFetching: false,
     paymentDetails: [],
     paymentRedirectionDetails: {},
+    statusDetails: [],
     currentStatusDetails: [],
     eventTemplate: [],
     paymentAmount: '',

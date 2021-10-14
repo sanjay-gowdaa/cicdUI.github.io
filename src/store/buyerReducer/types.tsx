@@ -60,6 +60,11 @@ export interface PaymentRedirectionDetails {
     paymentNo: string;
 };
 
+export interface StatusDetails {
+    event_description: string;
+    event_timestamp: string;
+};
+
 export interface CurrentStatusDetails {
     pk: string;
     sk: string;
@@ -96,6 +101,7 @@ export interface BuyerStateModel {
     isMatchesFetching: boolean;
     paymentDetails: Array<PaymentDetails>;
     paymentRedirectionDetails: any;
+    statusDetails: Array<StatusDetails>;
     currentStatusDetails: Array<CurrentStatusDetails>;
     eventTemplate: Array<EventTemplate>;
     paymentAmount: any;
