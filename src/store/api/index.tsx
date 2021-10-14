@@ -461,8 +461,8 @@ export const getCurrentStatusDetails = (userData: any) => {
 };
 
 export const getEventTemplate = () => {
-    const eventTemplateApi = `${BASE_URL}/${STAGE}/${GET_EVENT_TEMPLATE}?user=Buyer`;
-    // const eventTemplateApi = `http://localhost:4000/${STAGE}/transaction/getBuyerSellerStatus?user=Buyer&transport=Yes`;
+    const eventTemplateApi = `${BASE_URL}/${STAGE}/transaction/getBuyerSellerStatus?user=Buyer&transport=No`;
+    // const eventTemplateApi = `http://localhost:4000/${STAGE}/transaction/getBuyerSellerStatus?user=Buyer&transport=No`;
     return fetch(eventTemplateApi, {
         method: 'GET',
     }).then((response: any) => response.json())

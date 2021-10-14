@@ -60,11 +60,6 @@ export interface PaymentRedirectionDetails {
     paymentNo: string;
 };
 
-export interface StatusDetails {
-    event_description: string;
-    event_timestamp: string;
-};
-
 export interface CurrentStatusDetails {
     pk: string;
     sk: string;
@@ -76,13 +71,14 @@ export interface EventTemplate {
     event_list: any
 };
 
-export interface PaymentAmount{
+export interface PaymentAmount {
     amount: string;
 }
 
 export interface RejectCount {
     reject_count: string
-}
+};
+
 export interface BuyerStateModel {
     masterProduceList: Array<MasterListApiFormat>;
     produceList: Array<ProduceModel>;
@@ -100,12 +96,17 @@ export interface BuyerStateModel {
     isMatchesFetching: boolean;
     paymentDetails: Array<PaymentDetails>;
     paymentRedirectionDetails: any;
-    statusDetails: Array<StatusDetails>;
     currentStatusDetails: Array<CurrentStatusDetails>;
     eventTemplate: Array<EventTemplate>;
     paymentAmount: any;
     rejectCount: any;
-    otpError: { showError: Boolean, errorMg: String, verified: Boolean, produce: String }
+    otpError: { showError: Boolean, errorMg: String, verified: Boolean, produce: String };
+    status: Array<Status>;
+};
+
+export interface Status {
+    details: [],
+    key: String
 };
 
 export interface BuyerRejectMatch {

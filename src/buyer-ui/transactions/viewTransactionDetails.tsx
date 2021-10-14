@@ -13,8 +13,9 @@ const { Text } = Typography;
 const TransactionDetailsModel = (pk: any) => {
     const dispatch = useDispatch();
     const buyerState = useSelector((state: RootState) => state.buyer);
-    const { statusDetails, eventTemplate } = buyerState;
-    const [count, setCount] = useState(statusDetails.length);
+    const { status, eventTemplate } = buyerState;
+    const [count, setCount] = useState(status.length - 1);
+    const [currentStatus, setCurrentStatus] = useState([]);
     var id = pk.data;
     id = id.substring(12);
 
@@ -28,8 +29,13 @@ const TransactionDetailsModel = (pk: any) => {
     }, []);
 
     useEffect(() => {
-        setCount(statusDetails.length);
-    }, [statusDetails.length]);
+        for (let i = 0; i < status.length; i++) {
+            if (status[i].key === id) {
+                setCurrentStatus(status[i].details);
+                setCount(status[i].details.length);
+            }
+        }
+    }, [status]);
 
     const showDetails = (details: any, isDownload: boolean) => {
         let showDetails = [];
@@ -55,8 +61,7 @@ const TransactionDetailsModel = (pk: any) => {
     return (
         <>
             <Timeline mode="left" style={{ float: 'left' }} className="transaction-timeline" pending>
-                {statusDetails.map((completedStatus: any) => {
-
+                {currentStatus.map((completedStatus: any) => {
                     return (
                         <Timeline.Item
                             label={moment(completedStatus.event_timestamp).format("DD-MM-YYYY HH:MM")}
