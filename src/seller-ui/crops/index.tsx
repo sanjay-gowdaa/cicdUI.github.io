@@ -33,12 +33,12 @@ const CropsSection = (props: any) => {
     const [isActiveFlag, setIsActiveFlag] = useState("Active");
     const dispatch = useDispatch();
     const isApproved = (loginState.kyc_flag === "approved");
-    const is_Active  = (loginState?.is_active === "Add Produce Blocked");
+    const is_Active = (loginState?.is_active === "Add Produce Blocked");
 
     useEffect(() => {
         dispatch(getAllCropsList());
-        if (loginState?.is_active != null){
-            setIsActiveFlag (loginState?.is_active);
+        if (loginState?.is_active != null) {
+            setIsActiveFlag(loginState?.is_active);
         }
     }, [loginState]);
 
@@ -47,15 +47,13 @@ const CropsSection = (props: any) => {
             flag: "Active",
             title: "Active",
             backgroundColor: "#f2f2f2",
-            color: "#12805C",
-            icon: true
+            color: "#12805C"
         },
         {
             flag: "Active/F",
             title: "Active/F",
             backgroundColor: "yellow",
-            color: "#12805C",
-            
+            color: "#12805C"
         },
         {
             flag: "Matches Blocked",
@@ -68,8 +66,7 @@ const CropsSection = (props: any) => {
             title: "Add Produce Blocked",
             backgroundColor: "red",
             color: "black"
-        },
-        
+        }
     ];
 
     const prepareForEditCrop = (cropData: CropApiModel) => {
@@ -113,14 +110,12 @@ const CropsSection = (props: any) => {
 
     return (
         <div className="crops-container" id="seller-ui-crops">
-            {
-                    userStatus.map((list) => {
-                        return (isActiveFlag === list.flag) ?
-                            <Tag color={list.backgroundColor} style={{ color: list.color, fontSize: "large", padding: "0.5em" }} >
-                            {list.title} </Tag> :
-                            <Tag style={{ display: 'none' }}></Tag>
-                    })
-                }
+            {userStatus.map((list) => {
+                return (isActiveFlag === list.flag) ?
+                    <Tag color={list.backgroundColor} style={{ color: list.color, fontSize: "large", padding: "0.5em" }} >
+                        {list.title} </Tag> :
+                    <Tag style={{ display: 'none' }}></Tag>
+            })}
             <Title level={2}>My Produce</Title>
             <PrimaryBtn
                 className="add-crop-btn vikas-btn-radius"

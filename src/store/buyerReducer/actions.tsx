@@ -24,7 +24,6 @@ import {
     getPaymentAmount,
     verifyOtp,
     getRejectCount
-
 } from "../api";
 import { UserStateModel } from "../loginReducer/types";
 import { BuyerStateModel } from "../buyerReducer/types";
@@ -33,7 +32,7 @@ import { RootState } from "../rootReducer";
 import { getTimeStamp } from "../../app-components/utils";
 import { TransactionStatus } from "../../buyer-seller-commons/types";
 import { ResponseStatus } from "../genericTypes";
-import { getUserCompleteDetails, getUserDetails } from "../loginReducer/actions";
+import { getUserCompleteDetails } from "../loginReducer/actions";
 
 export const UPDATE_MASTER_LIST = 'UPDATE_MASTER_LIST';
 export const GET_MASTER_LIST = 'GET_MASTER_LIST';
@@ -48,17 +47,22 @@ export const UPDATE_TRANSACTION_LIST = 'UPDATE_TRANSACTION_LIST';
 export const SET_MATCHES_LOADER = 'SET_MATCHES_LOADER';
 export const UPDATE_PAYMENT_REDIRECTION_DETAILS = 'UPDATE_PAYMENT_REDIRECTION_DETAILS';
 export const UPDATE_PAYMENT_DETAILS = 'UPDATE_PAYMENT_DETAILS';
-export const UPDATE_STATUS_DETAILS = 'UPDATE_STATUS_DETAILS';
 export const UPDATE_CURRENT_STATUS_DETAILS = 'UPDATE_CURRENT_STATUS_DETAILS';
 export const UPDATE_EVENT_TEMPLATE = 'UPDATE_EVENT_TEMPLATE';
-
 export const UPDATE_PAYMENT_AMOUNT = 'UPDATE_PAYMENT_AMOUNT';
-
 export const OTP_ERROR_ON_CONNECT = 'OTP_ERROR_ON_CONNECT';
 export const OTP_ERROR_MSG_ON_CONNECT = 'OTP_ERROR_MSG_ON_CONNECT';
 export const OTP_VERIFIED_ON_CONNECT = 'OTP_VERIFIED_ON_CONNECT';
 export const PRODUCE_NAME_ON_CONNECT = 'PRODUCE_NAME_ON_CONNECT';
 export const UPDATE_REJECT_COUNT = 'UPDATE_REJECT_COUNT';
+export const SET_STATUS_DETAILS = 'SET_STATUS_DETAILS';
+
+export const setStatusDetails = (status: any, key: any) => {
+    return {
+        type: SET_STATUS_DETAILS,
+        payload: { details: status, key: key }
+    };
+};
 
 export const setProduceNameOnConnect = (produce: string) => {
     return {
@@ -114,13 +118,6 @@ export const updatePaymentDetails = (paymentDetails: Array<any>) => {
     return {
         type: UPDATE_PAYMENT_DETAILS,
         payload: paymentDetails,
-    };
-};
-
-export const updateStatusDetails = (statusDetails: Array<any>) => {
-    return {
-        type: UPDATE_STATUS_DETAILS,
-        payload: statusDetails,
     };
 };
 
@@ -339,9 +336,7 @@ export const rejectMatches = (rejectData: BuyerRejectMatch) => {
 export const rejectMatchesCount = (rejectData: any) => {
     return async (dispatch: any, getState: any) => {
         const count = await getRejectCount(rejectData);
-        console.log("count", count)
-        dispatch(updateRejectCount(count))
-        
+        dispatch(updateRejectCount(count));
     }
 };
 
@@ -408,7 +403,7 @@ export const getPaymentDetails = () => {
 export const getStatus = (userData: any) => {
     return async (dispatch: any, getState: any) => {
         const statusResponse = await getStatusDetails(userData);
-        dispatch(updateStatusDetails(statusResponse));
+        dispatch(setStatusDetails(statusResponse, userData.transactionId));
     }
 };
 
@@ -431,17 +426,14 @@ export const eventTemplate = () => {
     }
 };
 
-
 export const getAmount = (userData: string) => {
     return async (dispatch: any, getState: any) => {
         var id = userData;
         id = id.substring(12);
         const amount = await getPaymentAmount(id);
-        console.log("amount", amount);
         dispatch(updatePaymentAmount(amount));
     }
 };
-
 
 export const confirmOTP = (number: string, otp: string) => {
     return async (dispatch: any, getState: any) => {

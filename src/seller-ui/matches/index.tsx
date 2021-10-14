@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { Button, Table, Typography,Modal } from 'antd';
+import { Button, Table, Typography, Modal } from 'antd';
 import { useSelector, useDispatch } from 'react-redux';
 import { WarningOutlined } from '@ant-design/icons';
+
 import ViewCropDetails from './viewCropDetails';
 import { componentCallBacksModel, matchesColumns } from './matchesTable.model';
 
@@ -26,35 +27,29 @@ const MatchedSection = () => {
         const { pk = '', seller_id, seller_crop_id } = matchRecord;
         const user_id = seller_id.substring(5);
         const crop_id = seller_crop_id.substring(12);
-        
-        const rejectCountData = {user_id, crop_id, user:'seller'}
+        const rejectCountData = { user_id, crop_id, user: 'seller' };
 
-        dispatch( rejectMatchesCount(rejectCountData))
-        const { rejectCount } = sellerState; 
-        console.log("rejectCount", rejectCount);
-        console.log(rejectCount === 3)
-        if(rejectCount === 3){
-            
+        dispatch(rejectMatchesCount(rejectCountData))
+        const { rejectCount } = sellerState;
+        if (rejectCount === 3) {
             Modal.confirm({
                 title: '',
-                icon: <WarningOutlined/>,
-                content: 'You are rejecting the match for the 3rd time, If you wish to continue, your matches will be blocked, and you will not be getting any new matches and you are not able to add any produces for next 7 days, your account will be blocked',
+                icon: <WarningOutlined />,
+                content: 'You are rejecting the match for the 3rd time, If you wish to continue, your matches will be blocked, and you will not be getting any new matches you are not able to add any requirements for next 7 days, your account will be blocked',
                 okText: 'Reject',
-                onOk() {dispatch(
+                onOk() {
+                    dispatch(
                         transactionAction(
                             parseIDfromHash(pk),
                             TransactionAction.reject,
                             matchRecord
                         )
-                );},
+                    );
+                },
                 cancelText: 'Cancel',
-                onCancel() { },
-                
-            
+                onCancel() { }
             })
-            //RejectAlert(rejectCount, curMatchRecord)
-        }
-        else{
+        } else {
             dispatch(
                 transactionAction(
                     parseIDfromHash(pk),
@@ -63,8 +58,6 @@ const MatchedSection = () => {
                 )
             );
         }
-        
-        
     };
 
     const componentCallBacks: componentCallBacksModel = {

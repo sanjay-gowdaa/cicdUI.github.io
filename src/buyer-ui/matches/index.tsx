@@ -1,15 +1,16 @@
 import React, { useEffect, useState } from 'react';
-import { Button, Table, Typography, Modal} from 'antd';
+import { Button, Table, Typography, Modal } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import { WarningOutlined } from '@ant-design/icons';
+
 import ViewCropDetails from './viewCropDetails';
 import { componentCallBacksModel, matchesColumns } from './matchesTable.model';
+
 import { RootState } from '../../store/rootReducer';
 import { getProduceList, rejectMatches, rejectMatchesCount } from '../../store/buyerReducer/actions';
 import { initialEmptyCropDetail } from '../../buyer-seller-commons/constants';
 import { MatchRequirementModel } from '../../buyer-seller-commons/types';
 import Refresh from '../../static/assets/refresh.png';
-
 
 const { Text, Title } = Typography;
 
@@ -38,37 +39,33 @@ const MatchedSection = () => {
 
     const rejectTheMatch = (curMatchRecord: MatchRequirementModel) => {
         const { buyer_id, buyer_crop_id, seller_id,
-            seller_crop_id, matched_quantity } = curMatchRecord; 
+            seller_crop_id, matched_quantity } = curMatchRecord;
         const user_id = buyer_id.substring(5);
         const crop_id = buyer_crop_id.substring(11);
-        
-        const rejectCountData = {user_id, crop_id, user:'buyer'}
+        const rejectCountData = { user_id, crop_id, user: 'buyer' };
+        const { rejectCount } = buyerState;
 
-        dispatch( rejectMatchesCount(rejectCountData))
-        const { rejectCount } = buyerState; 
-        //console.log("rejectCount", rejectCount);
-        //console.log(rejectCount === 3)
-        if(rejectCount === 2|| rejectCount === 4){
-            
+        dispatch(rejectMatchesCount(rejectCountData))
+
+        if (rejectCount === 3 || rejectCount === 5) {
             Modal.confirm({
                 title: '',
-                icon: <WarningOutlined/>,
-                content: rejectCount === 2 ? 'You are rejecting the match for the 3rd time, If you wish to continue, your matches will be blocked, and you will not be getting any new matches.'
-                 : 'You are rejecting the match for the 5th time, If you wish to continue, you are not able to add any requirements for next 7 days, your account will be blocked',
+                icon: <WarningOutlined />,
+                content: rejectCount === 3 ? 'You are rejecting the match for the 3rd time, If you wish to continue, your matches will be blocked, and you will not be getting any new matches.'
+                    : 'You are rejecting the match for the 5th time, If you wish to continue, you are not able to add any requirements for next 7 days, your account will be blocked',
                 okText: 'Reject',
-                onOk() {dispatch(rejectMatches({
+                onOk() {
+                    dispatch(
+                        rejectMatches({
                             buyer_id, buyer_crop_id, seller_id,
                             seller_crop_id, matched_quantity
-                            })
-                        )},
+                        })
+                    );
+                },
                 cancelText: 'Cancel',
-                onCancel() { },
-                
-            
+                onCancel() { }
             })
-            //RejectAlert(rejectCount, curMatchRecord)
-        }
-        else{
+        } else {
             dispatch(
                 rejectMatches({
                     buyer_id, buyer_crop_id, seller_id,
@@ -76,7 +73,6 @@ const MatchedSection = () => {
                 })
             );
         }
-        
     };
 
     const componentCallBacks: componentCallBacksModel = {
