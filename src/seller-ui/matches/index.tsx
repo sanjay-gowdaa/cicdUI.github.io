@@ -21,11 +21,13 @@ const MatchedSection = () => {
         useState(initialEmptyCropDetail as MatchRequirementModel);
     const [reloadClicked, setReloadClicked] = useState(0);
     const dispatch = useDispatch();
+    const loginState = useSelector((state: RootState) => state.loginUser);
     const sellerState = useSelector((state: RootState) => state.seller);
 
     const rejectMatch = (matchRecord: MatchRequirementModel) => {
-        const { pk = '', seller_id, seller_crop_id } = matchRecord;
-        const user_id = seller_id.substring(5);
+        const { pk = '',seller_crop_id } = matchRecord;
+        console.log("seller_id", loginState.username)
+        const user_id = loginState.username;
         const crop_id = seller_crop_id.substring(12);
         const rejectCountData = { user_id, crop_id, user: 'seller' };
 
