@@ -95,7 +95,7 @@ const PayButton = (props: any) => {
                     buyer_event: 'auto_reject'
                 }
                 console.log("rejectData:", rejectData);
-                // dispatch(rejectMatches(rejectData));
+                dispatch(rejectMatches(rejectData));
             }
         }
     }, [record]);
