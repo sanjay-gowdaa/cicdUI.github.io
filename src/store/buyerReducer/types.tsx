@@ -1,8 +1,10 @@
 import {
     CropCategoryModel,
+    EventTemplate,
     MatchRequirementModel,
     ReviewRating,
-    TransactioModel
+    Status,
+    TransactionModel
 } from "../../buyer-seller-commons/types";
 
 export interface ProduceModel {
@@ -72,17 +74,9 @@ export interface CurrentStatusDetails {
     event_timestamp: string;
 };
 
-export interface EventTemplate {
-    event_list: any
-};
-
 export interface PaymentAmount {
     amount: string;
 }
-
-export interface RejectCount {
-    reject_count: string
-};
 
 export interface BuyerStateModel {
     masterProduceList: Array<MasterListApiFormat>;
@@ -92,9 +86,9 @@ export interface BuyerStateModel {
     varietyList: Array<CropCategoryModel>;
     matchesList: Array<MatchRequirementModel>;
     transactionList: {
-        Pending: Array<TransactioModel>,
-        active: Array<TransactioModel>,
-        complete: Array<TransactioModel>
+        Pending: Array<TransactionModel>,
+        active: Array<TransactionModel>,
+        complete: Array<TransactionModel>
     };
     reviewsList: Array<ReviewRating>;
     timeStamp: any;
@@ -108,11 +102,6 @@ export interface BuyerStateModel {
     rejectCount: any;
     otpError: { showError: Boolean, errorMg: String, verified: Boolean, produce: String };
     status: Array<Status>;
-};
-
-export interface Status {
-    details: [],
-    key: String
 };
 
 export interface BuyerRejectMatch {

@@ -9,6 +9,7 @@ import PendingTransactions from './pending';
 import { RootState } from '../../store/rootReducer';
 import { TransactionStatus } from '../../buyer-seller-commons/types';
 import {
+    fetchEventTemplate,
     getSellerTransactionList,
     getTransactionListOnReload
 } from '../../store/sellerReducer/actions';
@@ -34,6 +35,7 @@ const TransactionSection = () => {
 
     useEffect(() => {
         dispatch(getSellerTransactionList(TransactionStatus.on_going));
+        dispatch(fetchEventTemplate());
     }, []);
 
     useEffect(() => {

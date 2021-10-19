@@ -7,12 +7,13 @@ import {
     UPDATE_SELLER_MATCHES,
     UPDATE_SELLER_TRANSACTION_LIST,
     UPDATE_VARIETY,
-    UPDATE_STATUS_DETAILS,
     UPDATE_CURRENT_STATUS_DETAILS,
     OTP_ERROR_MSG_ON_ACCEPT,
     OTP_VERIFIED_ON_ACCEPT,
     PRODUCE_NAME_ON_ACCEPT,
-    UPDATE_REJECT_COUNT
+    UPDATE_REJECT_COUNT,
+    UPDATE_EVENT_TEMPLATE,
+    SET_STATUS_DETAILS
 } from './actions';
 import {
     mockReviewsList,
@@ -29,10 +30,11 @@ const INITIAL_STATE: SellerStateModel = {
     categories: [],
     apmcCropPrice: '',
     timeStamp: {},
-    statusDetails: [],
     currentStatusDetails: [],
+    eventTemplate: [],
     rejectCount: '',
-    otpError: { showError: false, errorMg: '', verified: false, produce: '' }
+    otpError: { showError: false, errorMg: '', verified: false, produce: '' },
+    status: [{ details: [], key: "" }]
 };
 
 const reducer = (state = INITIAL_STATE, action: any) => {
@@ -66,9 +68,6 @@ const reducer = (state = INITIAL_STATE, action: any) => {
             const updatedTransactionList = { ...transactionList, [transactionType]: transactionListData };
             return { ...state, transactionList: updatedTransactionList }
 
-        case UPDATE_STATUS_DETAILS:
-            return { ...state, statusDetails: action.payload }
-
         case UPDATE_CURRENT_STATUS_DETAILS:
             return { ...state, currentStatusDetails: [...state.currentStatusDetails, action.payload] }
 
@@ -86,9 +85,15 @@ const reducer = (state = INITIAL_STATE, action: any) => {
             const { otpError: errorProduceObj } = state;
             const updateProduceName = { ...errorProduceObj, produce: action.payload }
             return { ...state, otpError: updateProduceName };
-        
+
         case UPDATE_REJECT_COUNT:
-            return {...state, rejectCount: action.payload }
+            return { ...state, rejectCount: action.payload };
+
+        case UPDATE_EVENT_TEMPLATE:
+            return { ...state, eventTemplate: action.payload }
+
+        case SET_STATUS_DETAILS:
+            return { ...state, status: [...state.status, action.payload] }
 
         default:
             return state;

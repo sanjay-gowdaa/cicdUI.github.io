@@ -24,32 +24,33 @@ export interface MatchRequirementModel {
     seller_price_per_quintal?: number;
     pk?: string;
     sk?: string;
-}
+};
 
 export enum FullfillmentFlags {
     single_fulfillment = 'single_fulfillment',
     single_partial_fulfillment = 'single_partial_fulfillment',
     multiple_fulfillment = 'multiple_fulfillment',
     multiple_partial_fulfillment = 'multiple_partial_fulfillment',
-}
+};
 
 export enum TransactionStatus {
     pending = 'Pending',
     on_going = 'active',
     completed = 'complete',
-}
+};
 
 export enum TransactionAction {
     reject = 'reject',
     accept = 'accept'
-}
+};
 
-export interface TransactioModel extends MatchRequirementModel {
+export interface TransactionModel extends MatchRequirementModel {
     transactionId: string;
     transactionStatus: TransactionStatus;
     transactionTotalAmount: number;
     transactionStatusText: string;
-}
+    key: string;
+};
 
 export interface ReviewRating {
     rating: number;
@@ -58,7 +59,7 @@ export interface ReviewRating {
     buyerLocation: string;
     date: string;
     reviewtext: string;
-}
+};
 
 export interface CropCategoryModel {
     config_id: string;
@@ -66,4 +67,17 @@ export interface CropCategoryModel {
     variety: string;
     grade: string;
     name: string;
-}
+};
+
+export interface EventTemplate {
+    event_list: any
+};
+
+export interface RejectCount {
+    reject_count: string
+};
+
+export interface Status {
+    details: [],
+    key: String
+};
