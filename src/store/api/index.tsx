@@ -45,8 +45,7 @@ const ADD_SELLER_AT_DESTINY = 'sellerReg';
 const GET_REDIRECTION_TOKEN = 'getredirectiontoken';
 const GET_PAYMENT_DETAILS = 'getpaymentdetails';
 const USER_ALREADY_EXISTS = 'userAlreadyExists';
-const GET_EVENT_TEMPLATE = 'VB/Get_Buyer_Seller_Status';
-// const GET_EVENT_TEMPLATE = `${TRANSACTION_API}/getBuyerSellerStatus`;
+const GET_EVENT_TEMPLATE = `${TRANSACTION_API}/getBuyerSellerStatus`;
 const GET_AMOUNT_API = 'getamounttodisplay';
 const GET_REJECT_COUNT = 'getrejectcount';
 
@@ -460,8 +459,8 @@ export const getCurrentStatusDetails = (userData: any) => {
     }).then((response: any) => response.json())
 };
 
-export const getEventTemplate = () => {
-    const eventTemplateApi = `${BASE_URL}/${STAGE}/transaction/getBuyerSellerStatus?user=Buyer&transport=No`;
+export const getEventTemplate = (userType: string, transport: string) => {
+    const eventTemplateApi = `${BASE_URL}/${STAGE}/${GET_EVENT_TEMPLATE}?user=${userType}&transport=${transport}`;
     // const eventTemplateApi = `http://localhost:4000/${STAGE}/transaction/getBuyerSellerStatus?user=Buyer&transport=No`;
     return fetch(eventTemplateApi, {
         method: 'GET',

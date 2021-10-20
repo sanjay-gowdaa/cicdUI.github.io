@@ -31,7 +31,7 @@ import { RootState } from "../rootReducer";
 
 import { getTimeStamp } from "../../app-components/utils";
 import { TransactionStatus } from "../../buyer-seller-commons/types";
-import { ResponseStatus } from "../genericTypes";
+import { ResponseStatus, UserTypes } from "../genericTypes";
 import { getUserCompleteDetails } from "../loginReducer/actions";
 
 export const UPDATE_MASTER_LIST = 'UPDATE_MASTER_LIST';
@@ -364,7 +364,13 @@ export const getTransactionList = (transactionStatus: TransactionStatus) => {
         const { loginUser }: { loginUser: UserStateModel } = getState() as RootState;
         const { username } = loginUser;
         const transactionListResponse = await fetchTransactionList(username, transactionStatus);
-        dispatch(updateTransactionList(transactionStatus, transactionListResponse));
+        let transactionFinalResponse: any = [];
+        for (let i = 0; i < transactionListResponse.length; i++) {
+            let list = transactionListResponse[i];
+            list.key = transactionListResponse[i].pk;
+            transactionFinalResponse.push(list);
+        }
+        dispatch(updateTransactionList(transactionStatus, transactionFinalResponse));
         dispatch(getProduceList());
     }
 };
@@ -417,9 +423,11 @@ export const currentStatusDetails = (userData: any) => {
     }
 };
 
-export const eventTemplate = () => {
+export const fetchEventTemplate = () => {
     return async (dispatch: any, getState: any) => {
-        const template = await getEventTemplate();
+        const userType = UserTypes.BUYER;
+        const transportation = "No";
+        const template = await getEventTemplate(userType, transportation);
         if (!isEmpty(template)) {
             dispatch(updateEventList(template));
         }

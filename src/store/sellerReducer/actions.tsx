@@ -18,9 +18,10 @@ import {
     getStatusDetails,
     getCurrentStatusDetails,
     verifyOtp,
-    getRejectCount
+    getRejectCount,
+    getEventTemplate
 } from "../api";
-import { ApmcApiResponseBase, ResponseStatus, UpdatedLiveApmcRatesQuery } from "../genericTypes";
+import { ApmcApiResponseBase, ResponseStatus, UpdatedLiveApmcRatesQuery, UserTypes } from "../genericTypes";
 import { UserStateModel } from "../loginReducer/types";
 import { RootState } from "../rootReducer";
 
@@ -37,13 +38,21 @@ export const UPDATE_APMC_DATA_TO_CROPS = 'UPDATE_APMC_DATA_TO_CROPS';
 export const UPDATE_TIME_STAMP = 'UPDATE_TIME_STAMP';
 export const UPDATE_SELLER_MATCHES = 'UPDATE_SELLER_MATCHES';
 export const UPDATE_SELLER_TRANSACTION_LIST = 'UPDATE_SELLER_TRANSACTION_LIST';
-export const UPDATE_STATUS_DETAILS = 'UPDATE_STATUS_DETAILS';
 export const UPDATE_CURRENT_STATUS_DETAILS = 'UPDATE_CURRENT_STATUS_DETAILS';
 export const OTP_ERROR_ON_ACCEPT = 'OTP_ERROR_ON_ACCEPT';
 export const OTP_ERROR_MSG_ON_ACCEPT = 'OTP_ERROR_MSG_ON_ACCEPT';
 export const OTP_VERIFIED_ON_ACCEPT = 'OTP_VERIFIED_ON_ACCEPT';
 export const PRODUCE_NAME_ON_ACCEPT = 'PRODUCE_NAME_ON_ACCEPT';
 export const UPDATE_REJECT_COUNT = 'UPDATE_REJECT_COUNT';
+export const UPDATE_EVENT_TEMPLATE = 'UPDATE_EVENT_TEMPLATE';
+export const SET_STATUS_DETAILS = 'SET_STATUS_DETAILS';
+
+export const setStatusDetails = (status: any, key: any) => {
+    return {
+        type: SET_STATUS_DETAILS,
+        payload: { details: status, key: key }
+    };
+};
 
 export const updateRejectCount = (rejectCount: any) => {
     return {
@@ -77,13 +86,6 @@ export const setVerifiedOnAccept = (isVerified: Boolean) => {
     return {
         type: OTP_VERIFIED_ON_ACCEPT,
         payload: isVerified
-    };
-};
-
-export const updateStatusDetails = (statusDetails: Array<any>) => {
-    return {
-        type: UPDATE_STATUS_DETAILS,
-        payload: statusDetails,
     };
 };
 
@@ -148,6 +150,13 @@ export const updateSellerMatches = (matchesList: Array<MatchRequirementModel>) =
         type: UPDATE_SELLER_MATCHES,
         payload: matchesList
     }
+};
+
+export const updateEventList = (eventTemplate: Array<any>) => {
+    return {
+        type: UPDATE_EVENT_TEMPLATE,
+        payload: eventTemplate,
+    };
 };
 
 export const updateApmcListData = (
@@ -356,7 +365,7 @@ export const saveTimeStamp = (dispatch: any) => {
 export const getStatus = (userData: any) => {
     return async (dispatch: any, getState: any) => {
         const regSellerResponse = await getStatusDetails(userData);
-        dispatch(updateStatusDetails(regSellerResponse));
+        dispatch(setStatusDetails(regSellerResponse, userData.transactionId));
     }
 };
 
@@ -410,8 +419,17 @@ export const resetOTPFields = () => {
 export const rejectMatchesCount = (rejectData: any) => {
     return async (dispatch: any, getState: any) => {
         const count = await getRejectCount(rejectData);
-        console.log("count", count)
-        dispatch(updateRejectCount(count))
-        
+        dispatch(updateRejectCount(count));
+    }
+};
+
+export const fetchEventTemplate = () => {
+    return async (dispatch: any, getState: any) => {
+        const userType = UserTypes.SELLER;
+        const transportation = "No";
+        const template = await getEventTemplate(userType, transportation);
+        if (!isEmpty(template)) {
+            dispatch(updateEventList(template));
+        }
     }
 };

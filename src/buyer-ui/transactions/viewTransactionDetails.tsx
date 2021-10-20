@@ -7,16 +7,18 @@ import moment from 'moment';
 
 import { RootState } from '../../store/rootReducer';
 import { getStatus } from '../../store/buyerReducer/actions';
+import { TransactionStatus } from '../../buyer-seller-commons/types';
 
 const { Text } = Typography;
 
-const TransactionDetailsModel = (pk: any) => {
+const TransactionDetailsModel = (props: any) => {
+    const { pk, tab } = props;
     const dispatch = useDispatch();
     const buyerState = useSelector((state: RootState) => state.buyer);
     const { status, eventTemplate } = buyerState;
     const [count, setCount] = useState(status.length - 1);
     const [currentStatus, setCurrentStatus] = useState([]);
-    var id = pk.data;
+    var id = pk;
     id = id.substring(12);
 
     const data = {
@@ -58,9 +60,35 @@ const TransactionDetailsModel = (pk: any) => {
         })
     };
 
+    const showRemainingTimeline = () => {
+        return (
+            <Timeline>
+                <Timeline.Item
+                    label="-"
+                    color={"#F5A31A"}
+                    className="is-pending"
+                >
+                    {eventTemplate[count]}
+                </Timeline.Item>
+                <Timeline.Item
+                    label="-"
+                    color={"#F5A31A"}
+                    className="is-pending"
+                >
+                    {eventTemplate[count + 1]}
+                </Timeline.Item>
+            </Timeline>
+        );
+    };
+
     return (
         <>
-            <Timeline mode="left" style={{ float: 'left' }} className="transaction-timeline" pending>
+            <Timeline
+                mode="left"
+                style={{ float: 'left' }}
+                className="transaction-timeline"
+                pending={tab === TransactionStatus.on_going && count !== eventTemplate.length}
+            >
                 {currentStatus.map((completedStatus: any) => {
                     return (
                         <Timeline.Item
@@ -93,20 +121,7 @@ const TransactionDetailsModel = (pk: any) => {
                         </Timeline.Item>
                     )
                 })}
-                <Timeline.Item
-                    label="-"
-                    color={"#F5A31A"}
-                    className="is-pending"
-                >
-                    {eventTemplate[count]}
-                </Timeline.Item>
-                <Timeline.Item
-                    label="-"
-                    color={"#F5A31A"}
-                    className="is-pending"
-                >
-                    {eventTemplate[count + 1]}
-                </Timeline.Item>
+                {tab === TransactionStatus.on_going ? showRemainingTimeline() : null}
             </Timeline>
         </>
     );
