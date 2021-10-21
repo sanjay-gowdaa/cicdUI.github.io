@@ -1,5 +1,6 @@
 import React from 'react';
 import { Col, Row, Typography } from 'antd';
+
 import { MatchRequirementModel } from '../../buyer-seller-commons/types';
 import { parseIDfromHash, maskData } from '../../app-components/utils';
 
@@ -7,12 +8,12 @@ const { Title } = Typography;
 
 interface componentProps {
     cropDetails: MatchRequirementModel;
-}
+};
 
 const TradeSummary = (props: componentProps) => {
     const { cropDetails } = props;
     const { buyer_id, produce, matched_quantity, buyer_location, seller_price_per_quintal, seller_quantity, seller_price } = cropDetails;
-    const totalPrice =  (seller_price/seller_quantity) * matched_quantity;
+    const totalPrice = (seller_price / seller_quantity) * matched_quantity;
 
     return (
         <>

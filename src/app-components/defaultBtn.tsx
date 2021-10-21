@@ -1,5 +1,6 @@
 import React from 'react';
 import { Button } from 'antd';
+
 import './customComponent.scss';
 
 const DefaultBtn = (props: any) => {
@@ -7,7 +8,8 @@ const DefaultBtn = (props: any) => {
     const customClassName = `${className} custom-default-button`;
 
     return (
-        <Button {...props} { ...{className: customClassName}}> {content} </Button>
+        <Button {...props} {...{ className: customClassName }}> {content} </Button>
     );
 };
+
 export default DefaultBtn;

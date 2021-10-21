@@ -83,7 +83,7 @@ const AddProduceModal = (props: any) => {
                 <Title level={5}>Create/ Update Your Produce Master List</Title>
                 <Paragraph>Add all the produce that you deal with into a master list for quick and easy selection when there a requirement to buy.</Paragraph>
                 <DefaultBtn
-                    className="add-produce-btn vikas-btn-radius"
+                    className="add-produce-btn vikas-btn-radius my-master-list-button"
                     onClick={() => {
                         if (isApproved) {
                             setModalVisible(true);

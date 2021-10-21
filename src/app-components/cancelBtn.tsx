@@ -1,5 +1,6 @@
 import React from 'react';
 import { Button } from 'antd';
+
 import './customComponent.scss';
 
 const CancelBtn = (props: any) => {
@@ -7,14 +8,16 @@ const CancelBtn = (props: any) => {
     const customClassName = `${className} custom-cancel-button`;
 
     return (
-        <Button 
+        <Button
             {...props}
-            {...{className: customClassName}} 
-            type="text" 
+            {...{ className: customClassName }}
+            type="text"
             htmlType="button"
+            className="cancel-button"
         >
             Cancel
         </Button>
     );
 };
+
 export default CancelBtn;

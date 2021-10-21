@@ -4,6 +4,7 @@ import { isEmpty } from 'lodash';
 
 import { ProduceModel } from '../../store/buyerReducer/types';
 import { showCropImage } from '../../buyer-seller-commons/constants';
+import confirmationPopup from '../../buyer-seller-commons/confirmationPopup';
 
 const { Text, Title } = Typography;
 
@@ -158,7 +159,7 @@ export const produceColumns = ({ deleteProduce, prepareForEditProduce }: produce
                         type="link"
                         danger
                         disabled={!record.isEditable}
-                        onClick={() => deleteProduce(record.sk)}
+                        onClick={() => confirmationPopup('delete', deleteProduce, record.sk)}
                     >
                         Delete
                     </Button>

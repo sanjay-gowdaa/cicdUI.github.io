@@ -68,7 +68,7 @@ const AcceptMatch = (props: { cropDetails: MatchRequirementModel }) => {
     return (
         <>
             <PrimaryBtn
-                className="vikas-btn-radius"
+                className="vikas-btn-radius accept-button"
                 onClick={() => setViewAcceptAgreement(true)}
                 content="Accept"
             />
@@ -122,7 +122,7 @@ const AcceptMatch = (props: { cropDetails: MatchRequirementModel }) => {
                                     </> :
                                     (!otpResent ?
                                         <PrimaryBtn
-                                            className="add-margin-bottom"
+                                            className="add-margin-bottom resent-otp"
                                             onClick={retryOtpSend}
                                             content="Resend OTP"
                                         />
@@ -142,6 +142,7 @@ const AcceptMatch = (props: { cropDetails: MatchRequirementModel }) => {
                             <Col>
                                 <Space>
                                     <PrimaryBtn
+                                        className="verify-otp-and-agree"
                                         disabled={otp.length !== 4}
                                         onClick={onAccept}
                                         content="Verify OTP & Agree"

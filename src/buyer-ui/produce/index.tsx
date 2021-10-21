@@ -25,8 +25,7 @@ const ProduceSection = (props: any) => {
     const [modalVisible, setModalVisible] = useState(false);
     const { masterProduceList } = buyerState;
     const isApproved = (loginState.kyc_flag === "approved");
-    const is_Active  = (loginState?.is_active === "Add Requirement Blocked");
-    
+    const is_Active = (loginState?.is_active === "Add Requirement Blocked");
 
     useEffect(() => {
         dispatch(getProduceList());
@@ -63,6 +62,7 @@ const ProduceSection = (props: any) => {
             <Title level={2}>My Requirements</Title>
             <PrimaryBtn
                 className="add-crop-btn vikas-btn-radius"
+                id="my-requirements-button"
                 disabled={is_Active}
                 onClick={() => {
                     if (isApproved || is_Active) {

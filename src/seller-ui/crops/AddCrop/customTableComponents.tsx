@@ -1,10 +1,14 @@
 import React, { useContext } from 'react';
 import { Input, Button, Form, Select } from 'antd';
-import { CropApiModel } from '../../../store/sellerReducer/types';
 import { FormInstance } from 'antd/lib/form';
+
+import { CropApiModel } from '../../../store/sellerReducer/types';
+import confirmationPopup from '../../../buyer-seller-commons/confirmationPopup';
+
 const { Option } = Select;
 
 const EditableContext = React.createContext<FormInstance<any> | null>(null);
+
 interface EditableCellProps {
     title: React.ReactNode;
     editable: boolean;
@@ -14,21 +18,21 @@ interface EditableCellProps {
     isEdit: boolean;
     setIsEdit: any;
     handleSave: (record: CropApiModel) => void;
-}
-  
+};
+
 interface EditableRowProps {
     index: number;
-}
+};
 
-const ActionEditComponent = ({dataIndex, record, editForm, setIsEdit, handleSave, ...restProps}: any) => {
-    editForm.setFieldsValue({'intent_to_sell': record['intent_to_sell'], 'price_per_qnt': record['price_per_qnt']})
+const ActionEditComponent = ({ dataIndex, record, editForm, setIsEdit, handleSave, ...restProps }: any) => {
+    editForm.setFieldsValue({ 'intent_to_sell': record['intent_to_sell'], 'price_per_qnt': record['price_per_qnt'] })
 
     const save = async () => {
         try {
             const values = await editForm.validateFields();
             const isPriceUpdated = editForm.getFieldValue('price_per_qnt') !== record['price_per_qnt']
             setIsEdit(false)
-            handleSave({...record, ...values}, isPriceUpdated)
+            handleSave({ ...record, ...values }, isPriceUpdated)
         } catch (errInfo) {
             console.log('Save failed:', errInfo);
         }
@@ -39,23 +43,25 @@ const ActionEditComponent = ({dataIndex, record, editForm, setIsEdit, handleSave
             <Button
                 type="link"
                 block
-                onClick={save}
+                className="save-button"
+                onClick={() => confirmationPopup('save', save, null)}
             >
                 Save
             </Button>
             <Button
-                type="link" 
+                type="link"
                 danger
                 block
+                className="cancel-button"
                 onClick={() => setIsEdit(false)}
             >
                 Cancel
             </Button>
         </td>
-    )
-}
+    );
+};
 
-const IntentToSellEditComponent = ({dataIndex, record, ...restProps}: any) => {
+const IntentToSellEditComponent = ({ dataIndex, record, ...restProps }: any) => {
     return (
         <td {...restProps}>
             <Form.Item
@@ -72,10 +78,10 @@ const IntentToSellEditComponent = ({dataIndex, record, ...restProps}: any) => {
                 </Select>
             </Form.Item>
         </td>
-    )
-}
+    );
+};
 
-const PriceEditComponent = ({dataIndex, record, ...restProps}: any) => {
+const PriceEditComponent = ({ dataIndex, record, ...restProps }: any) => {
     return (
         <td {...restProps}>
             <Form.Item
@@ -92,11 +98,12 @@ const PriceEditComponent = ({dataIndex, record, ...restProps}: any) => {
                 <Input className="custom-input" placeholder="In rupees" />
             </Form.Item>
         </td>
-    )
-}
+    );
+};
 
 const EditableRow: React.FC<EditableRowProps> = ({ index, ...props }) => {
     const [form] = Form.useForm();
+
     return (
         <Form form={form} component={false}>
             <EditableContext.Provider value={form}>
@@ -105,7 +112,6 @@ const EditableRow: React.FC<EditableRowProps> = ({ index, ...props }) => {
         </Form>
     );
 };
-
 
 const EditableCell: React.FC<EditableCellProps> = ({
     title,
@@ -124,13 +130,13 @@ const EditableCell: React.FC<EditableCellProps> = ({
         dataIndex,
         handleSave,
         setIsEdit
-    }
+    };
 
-    if(editable) {
-        switch(dataIndex) {
+    if (editable) {
+        switch (dataIndex) {
             case 'action':
                 return isEdit ? <ActionEditComponent editForm={editForm} {...genericProps} {...restProps} /> : <td {...restProps}>{children}</td>;
-            
+
             case 'intent_to_sell':
                 return isEdit ? <IntentToSellEditComponent {...genericProps} {...restProps} /> : <td {...restProps}>{children}</td>;
 
@@ -144,5 +150,5 @@ const EditableCell: React.FC<EditableCellProps> = ({
         return <td {...restProps}>{children}</td>;
     }
 };
-  
-export {EditableCell, EditableRow}
+
+export { EditableCell, EditableRow };
