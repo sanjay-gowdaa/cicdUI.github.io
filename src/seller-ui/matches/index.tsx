@@ -25,8 +25,7 @@ const MatchedSection = () => {
     const sellerState = useSelector((state: RootState) => state.seller);
 
     const rejectMatch = (matchRecord: MatchRequirementModel) => {
-        const { pk = '',seller_crop_id } = matchRecord;
-        console.log("seller_id", loginState.username)
+        const { pk = '', seller_crop_id } = matchRecord;
         const user_id = loginState.username;
         const crop_id = seller_crop_id.substring(12);
         const rejectCountData = { user_id, crop_id, user: 'seller' };
@@ -83,6 +82,7 @@ const MatchedSection = () => {
                 type="link"
                 disabled={reloadClicked === 5}
                 style={{ float: 'right' }}
+                className="refresh-button"
                 onClick={() => {
                     setReloadClicked(reloadClicked + 1);
                     dispatch(getAllSellerMatches());

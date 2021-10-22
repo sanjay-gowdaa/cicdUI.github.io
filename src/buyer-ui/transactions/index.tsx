@@ -51,6 +51,7 @@ const TransactionSection = () => {
             <Title level={2}>My Transactions</Title>
             <Button
                 type="link"
+                className="refresh-button"
                 disabled={reloadClicked === 5}
                 style={{ float: 'right' }}
                 onClick={() => {

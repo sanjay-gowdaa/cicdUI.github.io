@@ -116,7 +116,6 @@ const AddCropModal = (addCropProps: PropsType) => {
             district: loginUser.district,
             zip: loginUser.zip
         }
-        // console.log('updatedValueWithApmcRates', updatedValueWithApmcRates);
         // For testing uncomment below and comment above
         // const updatedValueWithApmcRates = {...values, district: 'Gadag'};
         createSellerFormData(updatedValueWithApmcRates).then((sellerFromData) => {
@@ -430,7 +429,7 @@ const AddCropModal = (addCropProps: PropsType) => {
                                 onClick={resetAllState}
                             />
                             <Button
-                                className="crop-modal-action-btn vikas-btn-radius"
+                                className="crop-modal-action-btn vikas-btn-radius add-produce-done"
                                 type="primary"
                                 htmlType="submit"
                             >

@@ -8,6 +8,7 @@ import ViewCropImages from './viewCropImages';
 import { CropApiModel } from '../../store/sellerReducer/types';
 import { parseIDfromHash } from '../../app-components/utils';
 import { showCropImage } from '../../buyer-seller-commons/constants';
+import confirmationPopup from '../../buyer-seller-commons/confirmationPopup';
 
 const { Text, Title } = Typography;
 
@@ -243,7 +244,7 @@ export const cropColumns = ({
                             type="link"
                             danger
                             block
-                            onClick={() => deleteCrop(record.sk)}
+                            onClick={() => confirmationPopup('delete', deleteCrop, record.sk)}
                         >
                             Delete
                         </Button>
