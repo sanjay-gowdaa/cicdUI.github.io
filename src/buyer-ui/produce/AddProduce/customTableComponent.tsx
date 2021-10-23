@@ -1,13 +1,10 @@
 import React, { useContext } from 'react';
-import { Input, Button, Form, Select } from 'antd';
+import { Input, Button, Form, DatePicker } from 'antd';
 import { FormInstance } from 'antd/lib/form';
+import moment from 'moment';
 
-import { validateSellerPrice } from '../cropUtils';
-
-import { CropApiModel } from '../../../store/sellerReducer/types';
+import { ProduceModel } from '../../../store/buyerReducer/types';
 import confirmationPopup from '../../../buyer-seller-commons/confirmationPopup';
-
-const { Option } = Select;
 
 const EditableContext = React.createContext<FormInstance<any> | null>(null);
 
@@ -15,11 +12,11 @@ interface EditableCellProps {
     title: React.ReactNode;
     editable: boolean;
     children: React.ReactNode;
-    dataIndex: keyof CropApiModel | 'action';
-    record: CropApiModel;
+    dataIndex: keyof ProduceModel | 'action';
+    record: ProduceModel;
     isEdit: boolean;
     setIsEdit: any;
-    handleSave: (record: CropApiModel) => void;
+    handleSave: (record: ProduceModel) => void;
 };
 
 interface EditableRowProps {
@@ -28,17 +25,15 @@ interface EditableRowProps {
 
 const ActionEditComponent = ({ dataIndex, record, editForm, setIsEdit, handleSave, ...restProps }: any) => {
     editForm.setFieldsValue({
-        'intent_to_sell': record['intent_to_sell'],
-        'price_per_qnt': record['price_per_qnt'],
+        'delivery_by': moment(record['delivery_by']),
         'quantity': record['quantity']
     })
 
     const save = async () => {
         try {
             const values = await editForm.validateFields();
-            const isPriceUpdated = editForm.getFieldValue('price_per_qnt') !== record['price_per_qnt']
             setIsEdit(false)
-            handleSave({ ...record, ...values }, isPriceUpdated)
+            handleSave({ ...record, ...values })
         } catch (errInfo) {
             console.log('Save failed:', errInfo);
         }
@@ -49,7 +44,6 @@ const ActionEditComponent = ({ dataIndex, record, editForm, setIsEdit, handleSav
             <Button
                 type="link"
                 block
-                className="save-button"
                 onClick={() => confirmationPopup('save', save, null)}
             >
                 Save
@@ -58,7 +52,6 @@ const ActionEditComponent = ({ dataIndex, record, editForm, setIsEdit, handleSav
                 type="link"
                 danger
                 block
-                className="cancel-button"
                 onClick={() => setIsEdit(false)}
             >
                 Cancel
@@ -67,39 +60,29 @@ const ActionEditComponent = ({ dataIndex, record, editForm, setIsEdit, handleSav
     );
 };
 
-const IntentToSellEditComponent = ({ dataIndex, record, ...restProps }: any) => {
-    return (
-        <td {...restProps}>
-            <Form.Item
-                shouldUpdate
-                style={{ margin: 0 }}
-                name={dataIndex}
-            >
-                <Select
-                    className="custom-select"
-                    placeholder="Select"
-                >
-                    <Option value='Yes'>Yes</Option>
-                    <Option value='No'>No</Option>
-                </Select>
-            </Form.Item>
-        </td>
-    );
-};
+const RequestDeliveryByComponent = ({ dataIndex, record, ...restProps }: any) => {
+    const defaultDateStart = new Date();
+    const defaultDateEnd = new Date();
+    defaultDateStart.setDate(defaultDateStart.getDate() + 4);
+    defaultDateEnd.setDate(defaultDateEnd.getDate() + 20);
 
-const PriceEditComponent = ({ dataIndex, record, ...restProps }: any) => {
+    const disabledDate: any = (currentDate: any) => {
+        return currentDate < moment(defaultDateStart, 'YYYY-MM-DD') || currentDate > moment(defaultDateEnd, 'YYYY-MM-DD');
+    };
+
     return (
         <td {...restProps}>
             <Form.Item
                 shouldUpdate
                 style={{ margin: 0 }}
                 name={dataIndex}
-                rules={[{
-                    required: true,
-                    validator: (rule, value) => validateSellerPrice(rule, value, record.apmc_rate_data.apmc_price)
-                }]}
+                rules={[{ type: 'object', required: true, message: 'Please select date!' }]}
             >
-                <Input className="custom-input" placeholder="In rupees" />
+                <DatePicker
+                    className="custom-input"
+                    disabledDate={disabledDate}
+                    format="YYYY-MM-DD"
+                />
             </Form.Item>
         </td>
     );
@@ -112,6 +95,7 @@ const QuantityEditComponent = ({ dataIndex, record, ...restProps }: any) => {
                 shouldUpdate
                 style={{ margin: 0 }}
                 name={dataIndex}
+                initialValue={record.quantity}
                 rules={[{
                     required: true,
                     message: `Quantity is required.`,
@@ -125,7 +109,6 @@ const QuantityEditComponent = ({ dataIndex, record, ...restProps }: any) => {
 
 const EditableRow: React.FC<EditableRowProps> = ({ index, ...props }) => {
     const [form] = Form.useForm();
-
     return (
         <Form form={form} component={false}>
             <EditableContext.Provider value={form}>
@@ -159,11 +142,8 @@ const EditableCell: React.FC<EditableCellProps> = ({
             case 'action':
                 return isEdit ? <ActionEditComponent editForm={editForm} {...genericProps} {...restProps} /> : <td {...restProps}>{children}</td>;
 
-            case 'intent_to_sell':
-                return isEdit ? <IntentToSellEditComponent {...genericProps} {...restProps} /> : <td {...restProps}>{children}</td>;
-
-            case 'price_per_qnt':
-                return isEdit ? <PriceEditComponent {...genericProps} {...restProps} /> : <td {...restProps}>{children}</td>;
+            case 'delivery_by':
+                return isEdit ? <RequestDeliveryByComponent {...genericProps} {...restProps} /> : <td {...restProps}>{children}</td>;
 
             case 'quantity':
                 return isEdit ? <QuantityEditComponent {...genericProps} {...restProps} /> : <td {...restProps}>{children}</td>;

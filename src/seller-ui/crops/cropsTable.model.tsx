@@ -118,6 +118,13 @@ export const cropColumns = ({
             title: 'Quantity Remaining',
             dataIndex: 'quantity',
             key: 'quantity',
+            onCell: (record: CropApiModel) => ({
+                record,
+                editable: currentCropId === getCropId(record.sk || ''),
+                dataIndex: 'quantity',
+                isEdit,
+                handleSave: (record: CropApiModel) => updateCropDetails(record),
+            }),
             render: (quantity: string, record: CropApiModel) => {
                 const { currently_fulfilled_qty = 0 } = record;
                 const quantityNum = parseInt(quantity, 10);
@@ -128,13 +135,13 @@ export const cropColumns = ({
                         <p>{currentReqQty} qtl</p>
                         <Progress
                             strokeColor='#12805C'
-                            percent={percentageQty}
+                            percent={100 - percentageQty}
                             status="active"
                             format={() => `${quantity} qtl`}
                         />
                     </>
-                )
-            },
+                );
+            }
         },
         {
             title: 'Price per qtl',

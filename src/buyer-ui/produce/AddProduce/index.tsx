@@ -14,7 +14,7 @@ import {
 import { useDispatch } from 'react-redux';
 import moment from 'moment';
 
-import { addNewProduce, editProduce } from '../../../store/buyerReducer/actions';
+import { addNewProduce } from '../../../store/buyerReducer/actions';
 import CancelBtn from '../../../app-components/cancelBtn';
 import { MasterListApiFormat, ProduceModel } from '../../../store/buyerReducer/types';
 
@@ -44,19 +44,18 @@ const getMasterProduceListOpts = ({ masterProduceList }: { masterProduceList: Ar
 
     return (
         <>
-            {
-                masterProduceList.map((masterProduceItem: MasterListApiFormat) => {
-                    const { produce_name = '', crop_name = '', category_name = '', grade_name = '' } = masterProduceItem;
+            {masterProduceList.map((masterProduceItem: MasterListApiFormat) => {
+                const { produce_name = '', crop_name = '', category_name = '', grade_name = '' } = masterProduceItem;
 
-                    return (
-                        <Option
-                            key={`${produce_name}-${crop_name}-${category_name}-${grade_name}`}
-                            value={`${produce_name}-${crop_name}-${category_name}-${grade_name}`}
-                        >
-                            {`${produce_name}-${crop_name}-${category_name}-${grade_name}`}
-                        </Option>
-                    );
-                })
+                return (
+                    <Option
+                        key={`${produce_name}-${crop_name}-${category_name}-${grade_name}`}
+                        value={`${produce_name}-${crop_name}-${category_name}-${grade_name}`}
+                    >
+                        {`${produce_name}-${crop_name}-${category_name}-${grade_name}`}
+                    </Option>
+                );
+            })
             }
         </>
     );
@@ -110,10 +109,7 @@ const AddCropModal = ({
             isEditable: true,
             quantity: quantity
         };
-        const { sk, pk } = currentProduceRecord;
-        (isEdit
-            ? dispatch(editProduce({ ...addProducePayload, is_delete: "no", sk, pk }))
-            : dispatch(addNewProduce(addProducePayload)));
+        dispatch(addNewProduce(addProducePayload));
         form.resetFields();
         setModalVisible(false);
     };
@@ -270,7 +266,7 @@ const AddCropModal = ({
                             type="primary"
                             htmlType="submit"
                         >
-                            {isEdit ? 'Edit' : 'Add'} Requirements
+                            Add Requirements
                         </Button>
                     </Col>
                 </Row>
