@@ -28,7 +28,6 @@ const CropsSection = (props: any) => {
     const loginState = useSelector((state: RootState) => state.loginUser);
     const [isEdit, setIsEdit] = useState(false);
     const [currentCropId, setCurrentCropId] = useState('');
-    const [currentProduceRecord, setCurrentProduceRecord] = useState({} as CropApiModel);
     const [modalVisible, setModalVisible] = useState(false);
     const [isActiveFlag, setIsActiveFlag] = useState("Active");
     const dispatch = useDispatch();
@@ -70,11 +69,13 @@ const CropsSection = (props: any) => {
     ];
 
     const prepareForEditCrop = (cropData: CropApiModel) => {
+        console.log("prepare for edit crop clicked");
         const { sk } = cropData;
         const actualCropID = getCropId(sk || '');
-        setCurrentCropId(actualCropID)
+        console.log("actualCropID", actualCropID);
+        setCurrentCropId(actualCropID);
         setIsEdit(true);
-        setCurrentProduceRecord(cropData);
+        // setCurrentProduceRecord(cropData);
     };
 
     const deleteCrop = (cropID: string) => {

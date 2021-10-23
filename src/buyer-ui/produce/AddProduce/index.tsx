@@ -14,7 +14,7 @@ import {
 import { useDispatch } from 'react-redux';
 import moment from 'moment';
 
-import { addNewProduce, editProduce } from '../../../store/buyerReducer/actions';
+import { addNewProduce } from '../../../store/buyerReducer/actions';
 import CancelBtn from '../../../app-components/cancelBtn';
 import { MasterListApiFormat, ProduceModel } from '../../../store/buyerReducer/types';
 
@@ -40,35 +40,34 @@ type AddCropModalProps = {
     modalVisible: boolean;
 };
 
-const getMasterProduceListOpts = ({masterProduceList}: {masterProduceList: Array<MasterListApiFormat>}) => {
+const getMasterProduceListOpts = ({ masterProduceList }: { masterProduceList: Array<MasterListApiFormat> }) => {
 
     return (
         <>
-            {
-                masterProduceList.map((masterProduceItem: MasterListApiFormat) => {
-                    const {produce_name = '', crop_name = '', category_name = '', grade_name = ''} = masterProduceItem;
+            {masterProduceList.map((masterProduceItem: MasterListApiFormat) => {
+                const { produce_name = '', crop_name = '', category_name = '', grade_name = '' } = masterProduceItem;
 
-                    return (
-                        <Option
-                            key={`${produce_name}-${crop_name}-${category_name}-${grade_name}`}
-                            value={`${produce_name}-${crop_name}-${category_name}-${grade_name}`}
-                        >
-                            {`${produce_name}-${crop_name}-${category_name}-${grade_name}`}
-                        </Option>
-                    );
-                })
+                return (
+                    <Option
+                        key={`${produce_name}-${crop_name}-${category_name}-${grade_name}`}
+                        value={`${produce_name}-${crop_name}-${category_name}-${grade_name}`}
+                    >
+                        {`${produce_name}-${crop_name}-${category_name}-${grade_name}`}
+                    </Option>
+                );
+            })
             }
         </>
     );
 };
 
 const AddCropModal = ({
-        masterProduceList,
-        isEdit,
-        currentProduceRecord,
-        setModalVisible,
-        modalVisible
-    }: AddCropModalProps) => {
+    masterProduceList,
+    isEdit,
+    currentProduceRecord,
+    setModalVisible,
+    modalVisible
+}: AddCropModalProps) => {
 
     const [form] = Form.useForm();
     const dispatch = useDispatch();
@@ -77,13 +76,13 @@ const AddCropModal = ({
     defaultDateStart.setDate(defaultDateStart.getDate() + 4);
     defaultDateEnd.setDate(defaultDateEnd.getDate() + 20);
     const [formInitialize, setFormInitValues] =
-        useState({produce_name: '', quantity: '', delivery_by: '', additional_info: ''});
+        useState({ produce_name: '', quantity: '', delivery_by: '', additional_info: '' });
 
     useEffect(() => {
-        if(modalVisible) {
-            const formInitValues: any = isEdit ? 
-            processOnEditInitValues(currentProduceRecord) :
-            {produce_name: '', quantity: '', delivery_by: '', additional_info: ''};
+        if (modalVisible) {
+            const formInitValues: any = isEdit ?
+                processOnEditInitValues(currentProduceRecord) :
+                { produce_name: '', quantity: '', delivery_by: '', additional_info: '' };
 
             setFormInitValues(formInitValues);
             form.setFieldsValue(formInitValues)
@@ -91,7 +90,7 @@ const AddCropModal = ({
     }, [modalVisible]);
 
     const onFinish = (fieldsValue: any) => {
-        const {produce_name, delivery_by, quantity} = fieldsValue;
+        const { produce_name, delivery_by, quantity } = fieldsValue;
         const [masterProduce, category, sub_type, grade] = produce_name.split('-');
         const deliveryByIsoformat = new Date(delivery_by).toISOString();
         const additional_info = {
@@ -111,11 +110,7 @@ const AddCropModal = ({
             isEditable: true,
             quantity: quantity
         };
-        const {sk, pk} = currentProduceRecord;
-        console.log('addProducePayload', addProducePayload);
-        (isEdit 
-            ? dispatch(editProduce({...addProducePayload, is_delete: "no", sk, pk})) 
-            : dispatch(addNewProduce(addProducePayload)));
+        dispatch(addNewProduce(addProducePayload));
         form.resetFields();
         setModalVisible(false);
     };
@@ -130,10 +125,10 @@ const AddCropModal = ({
     };
 
     const processOnEditInitValues = (currentProduceRecord: ProduceModel) => {
-        const {crop_name, category, sub_type, grade} = currentProduceRecord;
+        const { crop_name, category, sub_type, grade } = currentProduceRecord;
         const produce_name = `${crop_name}-${category}-${sub_type}-${grade}`;
         const deliveryByProcessed = moment(currentProduceRecord.delivery_by);
-        return {...currentProduceRecord, delivery_by: deliveryByProcessed, produce_name};
+        return { ...currentProduceRecord, delivery_by: deliveryByProcessed, produce_name };
     };
 
     const disabledDate: any = (currentDate: any) => {
@@ -167,7 +162,7 @@ const AddCropModal = ({
                             rules={[{ required: true, message: 'Please select the Produce!' }]}
                         >
                             <Select className="custom-select" placeholder="Select">
-                                {getMasterProduceListOpts({masterProduceList})}
+                                {getMasterProduceListOpts({ masterProduceList })}
                             </Select>
                         </Form.Item>
                         <Form.Item
@@ -198,9 +193,9 @@ const AddCropModal = ({
                             />
                         </Form.Item>
                     </Col>
-                    <Divider className="height-full" type="vertical" style={{height: "25rem", color: "black" }} />
+                    <Divider className="height-full" type="vertical" style={{ height: "25rem", color: "black" }} />
                     <Col span={12}>
-                        <Form.Item label={<Text style={{fontWeight: 700}} >Buyer Specifications</Text>}>
+                        <Form.Item label={<Text style={{ fontWeight: 700 }} >Buyer Specifications</Text>}>
                             <Form.Item
                                 labelCol={{ span: 10 }}
                                 wrapperCol={{ span: 12 }}
@@ -272,7 +267,7 @@ const AddCropModal = ({
                             type="primary"
                             htmlType="submit"
                         >
-                            { isEdit ? 'Edit' : 'Add' } Requirements
+                            Add Requirements
                         </Button>
                     </Col>
                 </Row>
