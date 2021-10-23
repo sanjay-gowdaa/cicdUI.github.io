@@ -5,6 +5,7 @@ import { isEmpty } from 'lodash';
 import { ProduceModel } from '../../store/buyerReducer/types';
 import { showCropImage } from '../../buyer-seller-commons/constants';
 import { parseIDfromHash } from '../../app-components/utils';
+import confirmationPopup from '../../buyer-seller-commons/confirmationPopup';
 
 const { Text, Title } = Typography;
 

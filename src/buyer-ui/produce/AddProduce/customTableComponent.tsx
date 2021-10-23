@@ -4,6 +4,7 @@ import { FormInstance } from 'antd/lib/form';
 import moment from 'moment';
 
 import { ProduceModel } from '../../../store/buyerReducer/types';
+import confirmationPopup from '../../../buyer-seller-commons/confirmationPopup';
 
 const EditableContext = React.createContext<FormInstance<any> | null>(null);
 
@@ -43,7 +44,7 @@ const ActionEditComponent = ({ dataIndex, record, editForm, setIsEdit, handleSav
             <Button
                 type="link"
                 block
-                onClick={save}
+                onClick={() => confirmationPopup('save', save, null)}
             >
                 Save
             </Button>
