@@ -5,6 +5,7 @@ import { FormInstance } from 'antd/lib/form';
 import { validateSellerPrice } from '../cropUtils';
 
 import { CropApiModel } from '../../../store/sellerReducer/types';
+import confirmationPopup from '../../../buyer-seller-commons/confirmationPopup';
 
 const { Option } = Select;
 
@@ -48,7 +49,8 @@ const ActionEditComponent = ({ dataIndex, record, editForm, setIsEdit, handleSav
             <Button
                 type="link"
                 block
-                onClick={save}
+                className="save-button"
+                onClick={() => confirmationPopup('save', save, null)}
             >
                 Save
             </Button>
@@ -56,6 +58,7 @@ const ActionEditComponent = ({ dataIndex, record, editForm, setIsEdit, handleSav
                 type="link"
                 danger
                 block
+                className="cancel-button"
                 onClick={() => setIsEdit(false)}
             >
                 Cancel
@@ -122,6 +125,7 @@ const QuantityEditComponent = ({ dataIndex, record, ...restProps }: any) => {
 
 const EditableRow: React.FC<EditableRowProps> = ({ index, ...props }) => {
     const [form] = Form.useForm();
+
     return (
         <Form form={form} component={false}>
             <EditableContext.Provider value={form}>

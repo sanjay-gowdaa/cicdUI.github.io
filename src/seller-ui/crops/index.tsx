@@ -120,6 +120,7 @@ const CropsSection = (props: any) => {
             <Title level={2}>My Produce</Title>
             <PrimaryBtn
                 className="add-crop-btn vikas-btn-radius"
+                id="add-produce-button"
                 disabled={is_Active}
                 onClick={() => {
                     if (isApproved || is_Active) {

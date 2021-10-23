@@ -207,7 +207,7 @@ export const produceColumns = ({
                             type="link"
                             danger
                             disabled={!record.isEditable}
-                            onClick={() => deleteProduce(record.sk)}
+                            onClick={() => confirmationPopup('delete', deleteProduce, record.sk)}
                         >
                             Delete
                         </Button>

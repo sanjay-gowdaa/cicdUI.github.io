@@ -89,6 +89,7 @@ export const matchesColumns = (componentCallBacks: componentCallBacksModel) => [
                 <div className="display-flex-row">
                     <Button
                         type="link"
+                        className="view-details-button"
                         onClick={() => {
                             componentCallBacks?.populateCropDetails(record);
                             componentCallBacks?.showCropDetailsModal(true);
@@ -100,6 +101,7 @@ export const matchesColumns = (componentCallBacks: componentCallBacksModel) => [
                     <Button
                         type="link"
                         danger
+                        className="reject-button"
                         onClick={() => {
                             Modal.confirm({
                                 title: '',

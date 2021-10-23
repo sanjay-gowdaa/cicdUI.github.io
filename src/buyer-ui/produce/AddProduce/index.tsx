@@ -68,7 +68,6 @@ const AddCropModal = ({
     setModalVisible,
     modalVisible
 }: AddCropModalProps) => {
-
     const [form] = Form.useForm();
     const dispatch = useDispatch();
     const defaultDateStart = new Date();
@@ -263,7 +262,7 @@ const AddCropModal = ({
                             onClick={onReset}
                         />
                         <Button
-                            className="crop-modal-action-btn vikas-btn-radius"
+                            className="crop-modal-action-btn vikas-btn-radius add-edit-button"
                             type="primary"
                             htmlType="submit"
                         >
