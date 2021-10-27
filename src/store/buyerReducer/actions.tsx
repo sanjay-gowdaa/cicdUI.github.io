@@ -22,8 +22,8 @@ import {
     getCurrentStatusDetails,
     getEventTemplate,
     getPaymentAmount,
-    verifyOtp
-
+    verifyOtp,
+    getRejectCount
 } from "../api";
 import { UserStateModel } from "../loginReducer/types";
 import { BuyerStateModel } from "../buyerReducer/types";
@@ -31,7 +31,8 @@ import { RootState } from "../rootReducer";
 
 import { getTimeStamp } from "../../app-components/utils";
 import { TransactionStatus } from "../../buyer-seller-commons/types";
-import { ResponseStatus } from "../genericTypes";
+import { ResponseStatus, UserTypes } from "../genericTypes";
+import { getUserCompleteDetails } from "../loginReducer/actions";
 
 export const UPDATE_MASTER_LIST = 'UPDATE_MASTER_LIST';
 export const GET_MASTER_LIST = 'GET_MASTER_LIST';
@@ -46,16 +47,22 @@ export const UPDATE_TRANSACTION_LIST = 'UPDATE_TRANSACTION_LIST';
 export const SET_MATCHES_LOADER = 'SET_MATCHES_LOADER';
 export const UPDATE_PAYMENT_REDIRECTION_DETAILS = 'UPDATE_PAYMENT_REDIRECTION_DETAILS';
 export const UPDATE_PAYMENT_DETAILS = 'UPDATE_PAYMENT_DETAILS';
-export const UPDATE_STATUS_DETAILS = 'UPDATE_STATUS_DETAILS';
 export const UPDATE_CURRENT_STATUS_DETAILS = 'UPDATE_CURRENT_STATUS_DETAILS';
 export const UPDATE_EVENT_TEMPLATE = 'UPDATE_EVENT_TEMPLATE';
-
 export const UPDATE_PAYMENT_AMOUNT = 'UPDATE_PAYMENT_AMOUNT';
-
 export const OTP_ERROR_ON_CONNECT = 'OTP_ERROR_ON_CONNECT';
 export const OTP_ERROR_MSG_ON_CONNECT = 'OTP_ERROR_MSG_ON_CONNECT';
 export const OTP_VERIFIED_ON_CONNECT = 'OTP_VERIFIED_ON_CONNECT';
 export const PRODUCE_NAME_ON_CONNECT = 'PRODUCE_NAME_ON_CONNECT';
+export const UPDATE_REJECT_COUNT = 'UPDATE_REJECT_COUNT';
+export const SET_STATUS_DETAILS = 'SET_STATUS_DETAILS';
+
+export const setStatusDetails = (status: any, key: any) => {
+    return {
+        type: SET_STATUS_DETAILS,
+        payload: { details: status, key: key }
+    };
+};
 
 export const setProduceNameOnConnect = (produce: string) => {
     return {
@@ -111,13 +118,6 @@ export const updatePaymentDetails = (paymentDetails: Array<any>) => {
     return {
         type: UPDATE_PAYMENT_DETAILS,
         payload: paymentDetails,
-    };
-};
-
-export const updateStatusDetails = (statusDetails: Array<any>) => {
-    return {
-        type: UPDATE_STATUS_DETAILS,
-        payload: statusDetails,
     };
 };
 
@@ -181,6 +181,13 @@ export const setMatchesLoadingFlag = (loadingFlag: boolean) => {
     return {
         type: SET_MATCHES_LOADER,
         payload: loadingFlag
+    };
+};
+
+export const updateRejectCount = (rejectCount: any) => {
+    return {
+        type: UPDATE_REJECT_COUNT,
+        payload: rejectCount,
     };
 };
 
@@ -322,6 +329,14 @@ export const rejectMatches = (rejectData: BuyerRejectMatch) => {
         /* Re-calculate matches for all crop */
         /* Logic can be changed to specific crop if required */
         dispatch(getProduceList());
+        dispatch(getUserCompleteDetails());
+    }
+};
+
+export const rejectMatchesCount = (rejectData: any) => {
+    return async (dispatch: any, getState: any) => {
+        const count = await getRejectCount(rejectData);
+        dispatch(updateRejectCount(count));
     }
 };
 
@@ -349,7 +364,13 @@ export const getTransactionList = (transactionStatus: TransactionStatus) => {
         const { loginUser }: { loginUser: UserStateModel } = getState() as RootState;
         const { username } = loginUser;
         const transactionListResponse = await fetchTransactionList(username, transactionStatus);
-        dispatch(updateTransactionList(transactionStatus, transactionListResponse));
+        let transactionFinalResponse: any = [];
+        for (let i = 0; i < transactionListResponse.length; i++) {
+            let list = transactionListResponse[i];
+            list.key = transactionListResponse[i].pk;
+            transactionFinalResponse.push(list);
+        }
+        dispatch(updateTransactionList(transactionStatus, transactionFinalResponse));
         dispatch(getProduceList());
     }
 };
@@ -388,7 +409,7 @@ export const getPaymentDetails = () => {
 export const getStatus = (userData: any) => {
     return async (dispatch: any, getState: any) => {
         const statusResponse = await getStatusDetails(userData);
-        dispatch(updateStatusDetails(statusResponse));
+        dispatch(setStatusDetails(statusResponse, userData.transactionId));
     }
 };
 
@@ -402,15 +423,16 @@ export const currentStatusDetails = (userData: any) => {
     }
 };
 
-export const eventTemplate = () => {
+export const fetchEventTemplate = () => {
     return async (dispatch: any, getState: any) => {
-        const template = await getEventTemplate();
+        const userType = UserTypes.BUYER;
+        const transportation = "No";
+        const template = await getEventTemplate(userType, transportation);
         if (!isEmpty(template)) {
             dispatch(updateEventList(template));
         }
     }
 };
-
 
 export const getAmount = (userData: string) => {
     return async (dispatch: any, getState: any) => {
@@ -420,7 +442,6 @@ export const getAmount = (userData: string) => {
         dispatch(updatePaymentAmount(amount));
     }
 };
-
 
 export const confirmOTP = (number: string, otp: string) => {
     return async (dispatch: any, getState: any) => {

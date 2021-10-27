@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Modal, Space, Table, Typography } from 'antd';
+import { Modal, Space, Table, Typography, Tag } from 'antd';
 import { useSelector, useDispatch } from 'react-redux';
 import { WarningFilled } from '@ant-design/icons';
 import { Link } from 'react-router-dom';
@@ -28,21 +28,54 @@ const CropsSection = (props: any) => {
     const loginState = useSelector((state: RootState) => state.loginUser);
     const [isEdit, setIsEdit] = useState(false);
     const [currentCropId, setCurrentCropId] = useState('');
-    const [currentProduceRecord, setCurrentProduceRecord] = useState({} as CropApiModel);
     const [modalVisible, setModalVisible] = useState(false);
+    const [isActiveFlag, setIsActiveFlag] = useState("Active");
     const dispatch = useDispatch();
     const isApproved = (loginState.kyc_flag === "approved");
+    const is_Active = (loginState?.is_active === "Add Produce Blocked");
 
     useEffect(() => {
         dispatch(getAllCropsList());
-    }, []);
+        if (loginState?.is_active != null) {
+            setIsActiveFlag(loginState?.is_active);
+        }
+    }, [loginState]);
+
+    const userStatus = [
+        {
+            flag: "Active",
+            title: "Active",
+            backgroundColor: "#f2f2f2",
+            color: "#12805C"
+        },
+        {
+            flag: "Active/F",
+            title: "Active/F",
+            backgroundColor: "yellow",
+            color: "#12805C"
+        },
+        {
+            flag: "Matches Blocked",
+            title: "Matches Blocked",
+            backgroundColor: "yellow",
+            color: "black"
+        },
+        {
+            flag: "Add Produce Blocked",
+            title: "Add Produce Blocked",
+            backgroundColor: "red",
+            color: "black"
+        }
+    ];
 
     const prepareForEditCrop = (cropData: CropApiModel) => {
+        console.log("prepare for edit crop clicked");
         const { sk } = cropData;
         const actualCropID = getCropId(sk || '');
-        setCurrentCropId(actualCropID)
+        console.log("actualCropID", actualCropID);
+        setCurrentCropId(actualCropID);
         setIsEdit(true);
-        setCurrentProduceRecord(cropData);
+        // setCurrentProduceRecord(cropData);
     };
 
     const deleteCrop = (cropID: string) => {
@@ -78,11 +111,19 @@ const CropsSection = (props: any) => {
 
     return (
         <div className="crops-container" id="seller-ui-crops">
+            {userStatus.map((list) => {
+                return (isActiveFlag === list.flag) ?
+                    <Tag color={list.backgroundColor} style={{ color: list.color, fontSize: "large", padding: "0.5em" }} >
+                        {list.title} </Tag> :
+                    <Tag style={{ display: 'none' }}></Tag>
+            })}
             <Title level={2}>My Produce</Title>
             <PrimaryBtn
                 className="add-crop-btn vikas-btn-radius"
+                id="add-produce-button"
+                disabled={is_Active}
                 onClick={() => {
-                    if (isApproved) {
+                    if (isApproved || is_Active) {
                         setIsEdit(false);
                         setModalVisible(true);
                     } else {

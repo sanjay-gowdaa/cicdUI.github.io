@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { Button, Table, Typography } from 'antd';
+import { Button, Table, Typography, Modal } from 'antd';
 import { useSelector, useDispatch } from 'react-redux';
+import { WarningOutlined } from '@ant-design/icons';
 
 import ViewCropDetails from './viewCropDetails';
 import { componentCallBacksModel, matchesColumns } from './matchesTable.model';
 
 import { RootState } from '../../store/rootReducer';
 import { initialEmptyCropDetail } from '../../buyer-seller-commons/constants';
-import { getAllSellerMatches, transactionAction } from '../../store/sellerReducer/actions';
+import { getAllSellerMatches, transactionAction, rejectMatchesCount } from '../../store/sellerReducer/actions';
 import { parseIDfromHash } from '../../app-components/utils';
 import { MatchRequirementModel, TransactionAction } from '../../buyer-seller-commons/types';
 import Refresh from '../../static/assets/refresh.png';
@@ -20,17 +21,44 @@ const MatchedSection = () => {
         useState(initialEmptyCropDetail as MatchRequirementModel);
     const [reloadClicked, setReloadClicked] = useState(0);
     const dispatch = useDispatch();
+    const loginState = useSelector((state: RootState) => state.loginUser);
     const sellerState = useSelector((state: RootState) => state.seller);
 
     const rejectMatch = (matchRecord: MatchRequirementModel) => {
-        const { pk = '' } = matchRecord;
-        dispatch(
-            transactionAction(
-                parseIDfromHash(pk),
-                TransactionAction.reject,
-                matchRecord
-            )
-        );
+        const { pk = '', seller_crop_id } = matchRecord;
+        const user_id = loginState.username;
+        const crop_id = seller_crop_id.substring(12);
+        const rejectCountData = { user_id, crop_id, user: 'seller' };
+
+        dispatch(rejectMatchesCount(rejectCountData))
+        const { rejectCount } = sellerState;
+        if (rejectCount === 3) {
+            Modal.confirm({
+                title: '',
+                icon: <WarningOutlined />,
+                content: 'You are rejecting the match for the 3rd time, If you wish to continue, your matches will be blocked, and you will not be getting any new matches you are not able to add any requirements for next 7 days, your account will be blocked',
+                okText: 'Reject',
+                onOk() {
+                    dispatch(
+                        transactionAction(
+                            parseIDfromHash(pk),
+                            TransactionAction.reject,
+                            matchRecord
+                        )
+                    );
+                },
+                cancelText: 'Cancel',
+                onCancel() { }
+            })
+        } else {
+            dispatch(
+                transactionAction(
+                    parseIDfromHash(pk),
+                    TransactionAction.reject,
+                    matchRecord
+                )
+            );
+        }
     };
 
     const componentCallBacks: componentCallBacksModel = {
@@ -54,6 +82,7 @@ const MatchedSection = () => {
                 type="link"
                 disabled={reloadClicked === 5}
                 style={{ float: 'right' }}
+                className="refresh-button"
                 onClick={() => {
                     setReloadClicked(reloadClicked + 1);
                     dispatch(getAllSellerMatches());

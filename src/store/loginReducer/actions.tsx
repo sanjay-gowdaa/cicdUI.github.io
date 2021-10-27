@@ -31,7 +31,6 @@ export const UPDATE_CONFIGURATIONS = 'UPDATE_CONFIGURATIONS';
 export const SET_KYC_ERROR = 'SET_KYC_ERROR';
 export const SET_IS_REDIRECTED = 'SET_IS_REDIRECTED';
 
-
 export const updateIsRedirected = (isRedirected: boolean) => {
     return {
         type: SET_IS_REDIRECTED,
@@ -99,7 +98,7 @@ export const getUserFiles = (fileName: string, setImageSrc: Function, setPDF: Fu
 
 export const saveKyc = (userFormData: any) => {
     return async (dispatch: any, getState: any) => {
-        const saveUserDetailsResponse = await kycUserDetails({ user_req: userFormData });
+        const saveUserDetailsResponse = await kycUserDetails(userFormData);
         const { updateResult } = saveUserDetailsResponse;
         const { status = '', message } = updateResult;
         dispatch(setKycUpdateMsg(message));

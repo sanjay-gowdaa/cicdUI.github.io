@@ -45,8 +45,9 @@ const ADD_SELLER_AT_DESTINY = 'sellerReg';
 const GET_REDIRECTION_TOKEN = 'getredirectiontoken';
 const GET_PAYMENT_DETAILS = 'getpaymentdetails';
 const USER_ALREADY_EXISTS = 'userAlreadyExists';
-const GET_EVENT_TEMPLATE = 'VB/Get_Buyer_Seller_Status';
+const GET_EVENT_TEMPLATE = `${TRANSACTION_API}/getBuyerSellerStatus`;
 const GET_AMOUNT_API = 'getamounttodisplay';
+const GET_REJECT_COUNT = 'getrejectcount';
 
 const parseToken = (userToken: string) => {
     const sholudDecrypt = process.env.REACT_APP_ENV === 'prod';
@@ -345,6 +346,8 @@ export const getBuyerMatchesList = (buyerId: string, cropIds: Array<string>) => 
 
 export const rejectMatch = (rejectData: BuyerRejectMatch) => {
     const matchesRejectApi = `${BASE_URL}/${STAGE}/${MATCHES_REJECT_API}`;
+    //const matchesRejectApi = `http://localhost:4000/dev/${MATCHES_REJECT_API}`;
+
     return fetch(matchesRejectApi, {
         headers: getAuthHeader(),
         method: 'POST',
@@ -442,6 +445,7 @@ export const getPaymentList = (transactionData: any) => {
 
 export const getStatusDetails = (userData: any) => {
     const statusDetailsApi = `${BASE_URL}/${STAGE}/${TRANSACTION_API}/${userData.transactionId}/events/?user=${userData.user}&transport=false&event=all`;
+    // const statusDetailsApi = `http://localhost:4000/${STAGE}/${TRANSACTION_API}/${userData.transactionId}/events/?user=${userData.user}&transport=false&event=all`;
     return fetch(statusDetailsApi, {
         method: 'GET',
     }).then((response: any) => response.json())
@@ -449,13 +453,15 @@ export const getStatusDetails = (userData: any) => {
 
 export const getCurrentStatusDetails = (userData: any) => {
     const currentStatusDetailsApi = `${BASE_URL}/${STAGE}/${TRANSACTION_API}/${userData.transactionId}/events/?user=${userData.user}&transport=false&event=current`;
+    // const currentStatusDetailsApi = `http://localhost:4000/${STAGE}/${TRANSACTION_API}/${userData.transactionId}/events/?user=${userData.user}&transport=false&event=current`;
     return fetch(currentStatusDetailsApi, {
         method: 'GET',
     }).then((response: any) => response.json())
 };
 
-export const getEventTemplate = () => {
-    const eventTemplateApi = `${BASE_URL}/${STAGE}/${GET_EVENT_TEMPLATE}?user=Buyer`;
+export const getEventTemplate = (userType: string, transport: string) => {
+    const eventTemplateApi = `${BASE_URL}/${STAGE}/${GET_EVENT_TEMPLATE}?user=${userType}&transport=${transport}`;
+    // const eventTemplateApi = `http://localhost:4000/${STAGE}/transaction/getBuyerSellerStatus?user=Buyer&transport=No`;
     return fetch(eventTemplateApi, {
         method: 'GET',
     }).then((response: any) => response.json())
@@ -463,6 +469,14 @@ export const getEventTemplate = () => {
 
 export const getPaymentAmount = (userData: string) => {
     const getamountApi = `${BASE_URL}/${STAGE}/${TRANSACTION_API}/${GET_AMOUNT_API}?transactionId=${userData}&user=Buyer`;
+    return fetch(getamountApi, {
+        method: 'GET',
+    }).then((response: any) => response.json())
+};
+
+export const getRejectCount = (userData: any) => {
+    const getamountApi = `${BASE_URL}/${STAGE}/${TRANSACTION_API}/${GET_REJECT_COUNT}?user_id=${userData.user_id}&crop_id=${userData.crop_id}&user=${userData.user}`;
+    // const getamountApi = `http://localhost:4000/dev/transaction/${GET_REJECT_COUNT}?user_id=${userData.user_id}&crop_id=${userData.crop_id}&user=${userData.user}`;
     return fetch(getamountApi, {
         method: 'GET',
     }).then((response: any) => response.json())

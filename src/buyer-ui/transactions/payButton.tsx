@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { useSelector, useDispatch} from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { v4 as uuidv4 } from 'uuid';
 import { Col, Input, Row, Space, Modal, Typography } from 'antd';
 import { isEmpty } from 'lodash';
+import moment from 'moment';
+
 import PrimaryBtn from '../../app-components/primaryBtn';
 import { RootState } from '../../store/rootReducer';
-import { getAmount } from '../../store/buyerReducer/actions';
+import { getAmount, rejectMatches } from '../../store/buyerReducer/actions';
 
 const { Text, Title } = Typography;
 
@@ -20,7 +22,7 @@ const PayButton = (props: any) => {
     const loginState = useSelector((state: RootState) => state.loginUser);
     const buyerState = useSelector((state: RootState) => state.buyer);
     const status = buyerState.currentStatusDetails;
-    
+
     const [userStatus, setUserStatus] = useState('');
     const [viewPaymentDetails, setPaymentDetails] = useState(false);
     const uuid = uuidv4();
@@ -32,7 +34,6 @@ const PayButton = (props: any) => {
     // const statussub = userStatus.split(" ");
     // const lastele = statussub[statussub.length - 1];
     // const amount = lastele.substring(1, lastele.length - 1);
-
 
     const user = loginState.is_buyer && "buyer";
     const getDisplay = (status: string) => {
@@ -55,15 +56,54 @@ const PayButton = (props: any) => {
         }
     }, [status]);
 
+    useEffect(() => {
+        if (!isEmpty(record)) {
+            const newDate = new Date();
+            const updatedDate = record.updated_timestamp;
+
+            const diffInDays = parseInt(moment(newDate).format("YYYYMMDD")) - parseInt(moment(updatedDate).format("YYYYMMDD"));
+
+            if (diffInDays === 1) {
+                Modal.info({
+                    title: "Kindly pay the seller within 24hrs!",
+                    content: (
+                        <p>
+                            Kindly do the payment for <b>{record.produce}</b> within 24hrs or the transaction will be terminated!
+                        </p>
+                    )
+                });
+            }
+
+            if (diffInDays >= 2) {
+                Modal.info({
+                    title: "No action were taken in the last 48 hrs",
+                    content: (
+                        <p>
+                            The <b>{record.produce}</b> transaction is auto rejected since there were no actions taken in 48hrs!
+                        </p>
+                    )
+                });
+                // Change the transaction status to complete
+                const { buyer_crop_id, seller_id, seller_crop_id, matched_quantity, pk } = record;
+                const rejectData = {
+                    buyer_id: loginState.pk,
+                    buyer_crop_id,
+                    seller_id,
+                    seller_crop_id,
+                    matched_quantity,
+                    transaction_id: pk,
+                    buyer_event: 'auto_reject'
+                }
+                console.log("rejectData:", rejectData);
+                dispatch(rejectMatches(rejectData));
+            }
+        }
+    }, [record]);
+
     const payNow = () => {
         dispatch(getAmount(record.pk));
-    }
-
-    useEffect(() => {
-        if(buyerState.paymentAmount !== '') {
-            setPaymentDetails(true);
-        }
-    }, [buyerState.paymentAmount]);
+        setPaymentDetails(true);
+    };
 
     return (
         <>
@@ -97,13 +137,13 @@ const PayButton = (props: any) => {
                     <Col span={12}>
                         <form className="payment" method="POST" action="http://13.233.91.84:8082/paymentrequest">
                             <Space direction="vertical">
-                                <Input className="custom-input" type="text" value={id} name="orderId" />
-                                <Input type="text" value={buyerState.paymentAmount} name="orderAmount" />
+                                <Input className="payment-custom-input" type="text" value={id} name="orderId" />
+                                <Input className="payment-custom-input" type="text" value={buyerState.paymentAmount} name="orderAmount" />
+                                <Input className="payment-custom-input" type="text" value="Test note" name="orderNote" />
+                                <Input className="payment-custom-input" type="text" value={loginState.name} name="customerName" />
+                                <Input className="payment-custom-input" type="email" value={loginState.email} name="customerEmail" />
+                                <Input className="payment-custom-input" type="tel" value={loginState.phone_no} name="customerPhone" />
                                 <Input type="hidden" value="INR" name="orderCurrency" />
-                                <Input type="text" value="Test note" name="orderNote" />
-                                <Input type="text" value={loginState.name} name="customerName" />
-                                <Input type="email" value={loginState.email} name="customerEmail" />
-                                <Input type="tel" value={loginState.phone_no} name="customerPhone" />
                                 <Input type="hidden" value={user} name="user" />
                                 <Input type="hidden" value={loginState.pk} name="userId" />
                                 <Input type="hidden" value={record.pk} name="transactionId" />

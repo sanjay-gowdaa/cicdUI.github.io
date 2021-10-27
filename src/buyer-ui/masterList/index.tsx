@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Modal, Space, Typography } from 'antd';
+import { Modal, Space, Typography, Tag } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import { WarningFilled } from '@ant-design/icons';
 import { Link } from 'react-router-dom';
@@ -16,13 +16,45 @@ const { Paragraph, Text, Title } = Typography;
 const AddProduceModal = (props: any) => {
     const { history } = props;
     const [modalVisible, setModalVisible] = useState(false);
+    const [isActiveFlag, setIsActiveFlag] = useState("Active");
     const dispatch = useDispatch();
     const loginState = useSelector((state: RootState) => state.loginUser);
     const isApproved = (loginState.kyc_flag === "approved");
 
     useEffect(() => {
         dispatch(getMasterProduceList());
-    }, []);
+
+        if (loginState?.is_active != null) {
+            setIsActiveFlag(loginState?.is_active);
+        }
+    }, [loginState]);
+
+    const userStatus = [
+        {
+            flag: "Active",
+            title: "Active",
+            backgroundColor: "#f2f2f2",
+            color: "#12805C"
+        },
+        {
+            flag: "Active/F",
+            title: "Active/F",
+            backgroundColor: "yellow",
+            color: "#12805C"
+        },
+        {
+            flag: "Matches Blocked",
+            title: "Matches Blocked",
+            backgroundColor: "#ffc700",
+            color: "black"
+        },
+        {
+            flag: "Add Requirement Blocked",
+            title: "Add Requirement Blocked",
+            backgroundColor: "red",
+            color: "black"
+        }
+    ];
 
     const showKycRequiredModal = () => {
         Modal.info({
@@ -42,10 +74,16 @@ const AddProduceModal = (props: any) => {
     return (
         <>
             <div id="buyer-ui-crops">
+                {userStatus.map((list) => {
+                    return (isActiveFlag === list.flag) ?
+                        <Tag color={list.backgroundColor} style={{ color: list.color, fontSize: "large", padding: "0.5em" }} >
+                            {list.title} </Tag> :
+                        <Tag style={{ display: 'none' }}></Tag>
+                })}
                 <Title level={5}>Create/ Update Your Produce Master List</Title>
                 <Paragraph>Add all the produce that you deal with into a master list for quick and easy selection when there a requirement to buy.</Paragraph>
                 <DefaultBtn
-                    className="add-produce-btn vikas-btn-radius"
+                    className="add-produce-btn vikas-btn-radius my-master-list-button"
                     onClick={() => {
                         if (isApproved) {
                             setModalVisible(true);

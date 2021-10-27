@@ -3,7 +3,7 @@ import { Button, Image, Typography, Tooltip } from 'antd';
 import { isEmpty } from 'lodash';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { TransactioModel } from '../../buyer-seller-commons/types';
+import { TransactionModel } from '../../buyer-seller-commons/types';
 import { parseIDfromHash, maskData } from '../../app-components/utils';
 import { RootState } from '../../store/rootReducer';
 import { currentStatusDetails } from '../../store/sellerReducer/actions';
@@ -92,7 +92,7 @@ export const transactionColumns = [
         title: 'Price per qtl',
         dataIndex: 'seller_price',
         key: 'seller_price',
-        render: (seller_price: number, record: TransactioModel) => {
+        render: (seller_price: number, record: TransactionModel) => {
             const { matched_quantity } = record;
             return (
                 <p>{seller_price / matched_quantity}</p>

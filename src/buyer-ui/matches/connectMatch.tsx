@@ -158,7 +158,7 @@ const ConnectMatch = ({ cropDetails }: { cropDetails: MatchRequirementModel }) =
     return (
         <>
             <PrimaryBtn
-                className="vikas-btn-radius"
+                className="vikas-btn-radius connect-button"
                 onClick={() => setConnectAgreement(true)}
                 content="Connect"
             />
@@ -228,6 +228,7 @@ const ConnectMatch = ({ cropDetails }: { cropDetails: MatchRequirementModel }) =
                             <Col>
                                 <Space>
                                     <PrimaryBtn
+                                        className="verify-otp-and-agree"
                                         disabled={otp.length !== 4}
                                         onClick={onAcceptConnect}
                                         content="Verify OTP & Agree"

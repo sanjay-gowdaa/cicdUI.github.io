@@ -8,7 +8,7 @@ import PendingTransactions from './pending';
 
 import { TransactionStatus } from '../../buyer-seller-commons/types';
 import {
-    eventTemplate,
+    fetchEventTemplate,
     getTransactionList,
     getTransactionListOnReload
 } from '../../store/buyerReducer/actions';
@@ -35,7 +35,7 @@ const TransactionSection = () => {
 
     useEffect(() => {
         dispatch(getTransactionList(TransactionStatus.on_going));
-        dispatch(eventTemplate());
+        dispatch(fetchEventTemplate());
     }, []);
 
     useEffect(() => {
@@ -51,6 +51,7 @@ const TransactionSection = () => {
             <Title level={2}>My Transactions</Title>
             <Button
                 type="link"
+                className="refresh-button"
                 disabled={reloadClicked === 5}
                 style={{ float: 'right' }}
                 onClick={() => {

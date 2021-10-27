@@ -1,17 +1,20 @@
 import React from 'react';
 import { Typography, Select } from 'antd';
+
 import { MatchRequirementModel } from '../../buyer-seller-commons/types';
 import { maskData, parseIDfromHash } from '../../app-components/utils';
+
 const { Title } = Typography;
 const { Option } = Select;
 
 type RejectConfrimationProps = {
     matchRecord: MatchRequirementModel
-}
+};
 
 const RejectConfrimation = (props: RejectConfrimationProps) => {
-    const {matchRecord} = props;
-    const {produce, buyer_id} = matchRecord;
+    const { matchRecord } = props;
+    const { produce, buyer_id } = matchRecord;
+
     return (
         <>
             <Title level={5}>Buyer {maskData(parseIDfromHash(buyer_id))} : {produce}</Title>
@@ -20,7 +23,7 @@ const RejectConfrimation = (props: RejectConfrimationProps) => {
                 <Option value="reasons">Reasons</Option>
             </Select>
         </>
-    )
-}
+    );
+};
 
 export default RejectConfrimation;

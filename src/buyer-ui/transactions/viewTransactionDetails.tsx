@@ -1,20 +1,24 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Typography, Row, Col, Timeline, Button } from 'antd';
-import { CheckCircleFilled, FileTextOutlined } from '@ant-design/icons';
+import { CheckCircleFilled } from '@ant-design/icons';
 import { isEmpty } from 'lodash';
+import moment from 'moment';
 
 import { RootState } from '../../store/rootReducer';
 import { getStatus } from '../../store/buyerReducer/actions';
+import { TransactionStatus } from '../../buyer-seller-commons/types';
 
 const { Text } = Typography;
 
-const TransactionDetailsModel = (pk: any) => {
-    var completedEvents = [""];
+const TransactionDetailsModel = (props: any) => {
+    const { pk, tab } = props;
     const dispatch = useDispatch();
     const buyerState = useSelector((state: RootState) => state.buyer);
-    const { statusDetails, eventTemplate } = buyerState;
-    var id = pk.data;
+    const { status, eventTemplate } = buyerState;
+    const [count, setCount] = useState(status.length - 1);
+    const [currentStatus, setCurrentStatus] = useState([]);
+    var id = pk;
     id = id.substring(12);
 
     const data = {
@@ -23,58 +27,104 @@ const TransactionDetailsModel = (pk: any) => {
     };
 
     useEffect(() => {
-        dispatch(getStatus(data))
+        dispatch(getStatus(data));
     }, []);
 
-    for (let i = 0; i < statusDetails.length; i++) {
-        completedEvents.push(statusDetails[i].event_description);
-    }
-
-    eventTemplate.splice(0, completedEvents.length, ...completedEvents);
-    const getEvent = (event: string) => {
-        for (let i = 0; i < completedEvents.length; i++) {
-            if (completedEvents[i] === event) {
-                return true;
+    useEffect(() => {
+        for (let i = 0; i < status.length; i++) {
+            if (status[i].key === id) {
+                setCurrentStatus(status[i].details);
+                setCount(status[i].details.length);
             }
         }
-        return false;
+    }, [status]);
+
+    const showDetails = (details: any, isDownload: boolean) => {
+        let showDetails = [];
+
+        for (const key in details) {
+            showDetails.push(details[key]);
+        }
+        return showDetails.map((list: any) => {
+            return (isDownload ?
+                <>
+                    {!isEmpty(list.pdf_link) ?
+                        <Button type="link">Download</Button> : null
+                    }
+                </> :
+                <>
+                    <Text>{list.event_name} ({moment(list.event_time).format("DD-MM-YYYY HH:MM")})</Text>
+                    <br />
+                </>
+            )
+        })
+    };
+
+    const showRemainingTimeline = () => {
+        return (
+            <Timeline>
+                <Timeline.Item
+                    label="-"
+                    color={"#F5A31A"}
+                    className="is-pending"
+                >
+                    {eventTemplate[count]}
+                </Timeline.Item>
+                <Timeline.Item
+                    label="-"
+                    color={"#F5A31A"}
+                    className="is-pending"
+                >
+                    {eventTemplate[count + 1]}
+                </Timeline.Item>
+            </Timeline>
+        );
     };
 
     return (
         <>
-            <Timeline mode="left" style={{ float: 'left' }} className="transaction-timeline">
-                {eventTemplate.map((event: any) => {
-                    const isComplete = getEvent(event);
-
-                    return (!isEmpty(event) &&
+            <Timeline
+                mode="left"
+                style={{ float: 'left' }}
+                className="transaction-timeline"
+                pending={tab === TransactionStatus.on_going && count !== eventTemplate.length}
+            >
+                {currentStatus.map((completedStatus: any) => {
+                    return (
                         <Timeline.Item
-                            label={isComplete ?
-                                <Text style={{ textAlign: "center" }}>08/08/20</Text> :
-                                <Text style={{ textAlign: "center" }}>-</Text>
-                            }
-                            dot={isComplete && <CheckCircleFilled style={{ color: "#12805C" }} />}
+                            label={moment(completedStatus.event_timestamp).format("DD-MM-YYYY HH:MM")}
+                            dot={<CheckCircleFilled style={{ color: "#12805C" }} />}
                             color={"#F5A31A"}
-                            className={isComplete ? "is-complete" : "is-pending"}
+                            className="is-complete"
                         >
                             <Row>
-                                <Col span={8}>
-                                    <Text>{event}</Text>
+                                <Col span={6}>
+                                    <Row>
+                                        <Text>{completedStatus.event_description}</Text>
+                                    </Row>
+                                    <Row>
+                                        <Text>{!isEmpty(completedStatus.event_details) &&
+                                            showDetails(completedStatus.event_details, false)
+                                        }</Text>
+                                    </Row>
+                                </Col>
+                                <Col span={2}>
+                                    <Text style={{ color: "#12805C" }}>Complete</Text>
                                 </Col>
                                 <Col span={8}>
-                                    <Text style={{ color: "#12805C" }}>{isComplete ? "Complete" : null}</Text>
-                                </Col>
-                                <Col span={8}>
-                                    <Button type="link">
-                                        {isComplete ? <Text>Recipt<FileTextOutlined /></Text> : null}
-                                    </Button>
+                                    {!isEmpty(completedStatus.pdf_link) &&
+                                        <Button type="link">Download</Button>
+                                    }
+                                    {showDetails(completedStatus.event_details, true)}
                                 </Col>
                             </Row>
                         </Timeline.Item>
                     )
                 })}
+                {tab === TransactionStatus.on_going ? showRemainingTimeline() : null}
             </Timeline>
         </>
     );
-}
+};
 
 export default TransactionDetailsModel;

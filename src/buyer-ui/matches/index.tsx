@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { Button, Table, Typography } from 'antd';
+import { Button, Table, Typography, Modal } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
+import { WarningOutlined } from '@ant-design/icons';
 
 import ViewCropDetails from './viewCropDetails';
 import { componentCallBacksModel, matchesColumns } from './matchesTable.model';
 
 import { RootState } from '../../store/rootReducer';
-import { getProduceList, rejectMatches } from '../../store/buyerReducer/actions';
+import { getProduceList, rejectMatches, rejectMatchesCount } from '../../store/buyerReducer/actions';
 import { initialEmptyCropDetail } from '../../buyer-seller-commons/constants';
 import { MatchRequirementModel } from '../../buyer-seller-commons/types';
 import Refresh from '../../static/assets/refresh.png';
@@ -39,12 +40,39 @@ const MatchedSection = () => {
     const rejectTheMatch = (curMatchRecord: MatchRequirementModel) => {
         const { buyer_id, buyer_crop_id, seller_id,
             seller_crop_id, matched_quantity } = curMatchRecord;
-        dispatch(
-            rejectMatches({
-                buyer_id, buyer_crop_id, seller_id,
-                seller_crop_id, matched_quantity
+        const user_id = buyer_id.substring(5);
+        const crop_id = buyer_crop_id.substring(11);
+        const rejectCountData = { user_id, crop_id, user: 'buyer' };
+        const { rejectCount } = buyerState;
+
+        dispatch(rejectMatchesCount(rejectCountData))
+
+        if (rejectCount === 3 || rejectCount === 5) {
+            Modal.confirm({
+                title: '',
+                icon: <WarningOutlined />,
+                content: rejectCount === 3 ? 'You are rejecting the match for the 3rd time, If you wish to continue, your matches will be blocked, and you will not be getting any new matches.'
+                    : 'You are rejecting the match for the 5th time, If you wish to continue, you are not able to add any requirements for next 7 days, your account will be blocked',
+                okText: 'Reject',
+                onOk() {
+                    dispatch(
+                        rejectMatches({
+                            buyer_id, buyer_crop_id, seller_id,
+                            seller_crop_id, matched_quantity
+                        })
+                    );
+                },
+                cancelText: 'Cancel',
+                onCancel() { }
             })
-        );
+        } else {
+            dispatch(
+                rejectMatches({
+                    buyer_id, buyer_crop_id, seller_id,
+                    seller_crop_id, matched_quantity
+                })
+            );
+        }
     };
 
     const componentCallBacks: componentCallBacksModel = {
@@ -71,6 +99,7 @@ const MatchedSection = () => {
             <Title level={2}>My Matches</Title>
             <Button
                 type="link"
+                className="refresh-button"
                 disabled={reloadClicked === 5}
                 style={{ float: 'right' }}
                 onClick={() => {
