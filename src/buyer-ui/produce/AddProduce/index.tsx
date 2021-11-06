@@ -11,12 +11,13 @@ import {
     Divider,
     Typography
 } from 'antd';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import moment from 'moment';
 
 import { addNewProduce } from '../../../store/buyerReducer/actions';
 import CancelBtn from '../../../app-components/cancelBtn';
 import { MasterListApiFormat, ProduceModel } from '../../../store/buyerReducer/types';
+import { RootState } from '../../../store/rootReducer';
 
 const { Text } = Typography;
 const { TextArea } = Input;
@@ -77,6 +78,9 @@ const AddCropModal = ({
     const [formInitialize, setFormInitValues] =
         useState({ produce_name: '', quantity: '', delivery_by: '', additional_info: '' });
 
+    const buyerState = useSelector((state: RootState) => state.buyer);
+    const { produceList } = buyerState;
+
     useEffect(() => {
         if (modalVisible) {
             const formInitValues: any = isEdit ?
@@ -109,9 +113,25 @@ const AddCropModal = ({
             isEditable: true,
             quantity: quantity
         };
-        dispatch(addNewProduce(addProducePayload));
-        form.resetFields();
-        setModalVisible(false);
+        const produceName = `${addProducePayload.crop_name}-${addProducePayload.category}-${addProducePayload.sub_type}-${addProducePayload.grade}`;
+
+        let counter = 0;
+        for (let i = 0; i < produceList.length; i++) {
+            const produceListName = `${produceList[i].crop_name}-${produceList[i].category}-${produceList[i].sub_type}-${produceList[i].grade}`;
+            if (produceListName === produceName) {
+                counter++;
+            }
+        }
+        if (counter < 2) {
+            dispatch(addNewProduce(addProducePayload));
+            form.resetFields();
+            setModalVisible(false);
+        } else {
+            Modal.error({
+                title: "You can't add a requirement more than two times!",
+                content: "Please wait till the requirement is fulfilled to add the same requirement!"
+            })
+        }
     };
 
     const onFinishFailed = (errorInfo: any) => {
