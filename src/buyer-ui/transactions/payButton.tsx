@@ -135,7 +135,7 @@ const PayButton = (props: any) => {
                         </Space>
                     </Col>
                     <Col span={12}>
-                        <form className="payment" method="POST" action="http://13.233.91.84:8082/paymentrequest">
+                        <form className="payment" method="POST" action="https://enzdzh0pw2.execute-api.ap-south-1.amazonaws.com/dev/paymentrequest">
                             <Space direction="vertical">
                                 <Input className="payment-custom-input" type="text" value={id} name="orderId" />
                                 <Input className="payment-custom-input" type="text" value={buyerState.paymentAmount} name="orderAmount" />
