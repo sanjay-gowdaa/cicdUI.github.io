@@ -60,6 +60,7 @@ const AddCropModal = (addCropProps: PropsType) => {
     const [form] = Form.useForm();
     const dispatch = useDispatch();
     const sellerStore: SellerStateModel = useSelector((state: RootState) => state.seller);
+    const { cropsList } = sellerStore;
     const loginUser: UserStateModel = useSelector((state: RootState) => state.loginUser);
 
     const [selectedMasterCrop, setSelectedMasterCrop] = useState('');
@@ -115,14 +116,29 @@ const AddCropModal = (addCropProps: PropsType) => {
             additionalInfo,
             district: loginUser.district,
             zip: loginUser.zip
+        };
+        const produceName = `${updatedValueWithApmcRates.categoryName}-${updatedValueWithApmcRates.cropName}-${updatedValueWithApmcRates.subCategory}-${updatedValueWithApmcRates.grade}`;
+
+        let counter = 0;
+        for (let i = 0; i < cropsList.length; i++) {
+            const produceListName = `${cropsList[i].category_name}-${cropsList[i].crop_name}-${cropsList[i].sub_category}-${cropsList[i].grade}`;
+            if (produceListName === produceName) {
+                counter++;
+            }
         }
-        // console.log('updatedValueWithApmcRates', updatedValueWithApmcRates);
-        // For testing uncomment below and comment above
-        // const updatedValueWithApmcRates = {...values, district: 'Gadag'};
-        createSellerFormData(updatedValueWithApmcRates).then((sellerFromData) => {
-            dispatch(addNewCropData(sellerFromData));
-            resetAllState()
-        });
+        if (counter < 2) {
+            // For testing uncomment below and comment above
+            // const updatedValueWithApmcRates = {...values, district: 'Gadag'};
+            createSellerFormData(updatedValueWithApmcRates).then((sellerFromData) => {
+                dispatch(addNewCropData(sellerFromData));
+                resetAllState()
+            });
+        } else {
+            Modal.error({
+                title: "You can't add a produce more than two times!",
+                content: "Please wait till the produce is fulfilled to add the same produce!"
+            })
+        }
     };
 
     const onFinishFailed = (errorInfo: any) => {
@@ -430,7 +446,7 @@ const AddCropModal = (addCropProps: PropsType) => {
                                 onClick={resetAllState}
                             />
                             <Button
-                                className="crop-modal-action-btn vikas-btn-radius"
+                                className="crop-modal-action-btn vikas-btn-radius add-produce-done"
                                 type="primary"
                                 htmlType="submit"
                             >

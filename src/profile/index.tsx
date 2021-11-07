@@ -34,7 +34,7 @@ import { UserTypes } from '../store/genericTypes';
 import { RootState } from '../store/rootReducer';
 import CancelBtn from '../app-components/cancelBtn';
 import PrimaryBtn from '../app-components/primaryBtn';
-import { getUserFiles, saveKyc, addBeneficiary, registerBuyerAtDestiny, registerSellerAtDestiny } from '../store/loginReducer/actions';
+import { getUserFiles, saveKyc, addBeneficiary, registerBuyerAtDestiny, registerSellerAtDestiny, setKycUpdateMsg } from '../store/loginReducer/actions';
 
 const { Title, Text } = Typography;
 
@@ -63,6 +63,7 @@ const Profile = (props: any) => {
         && isEmpty(bank_info?.ifsc_code) && isEmpty(bank_info?.upi_id);
 
     useEffect(() => {
+        dispatch(setKycUpdateMsg(""));
         // Do this if the profile is not verified else set kyc flag to completed
         const bankSubmitted = !isEmpty(loginState?.bank_info?.account_holder_name) && !isEmpty(loginState?.bank_info?.account_no)
             && !isEmpty(loginState?.bank_info?.ifsc_code) && !isEmpty(loginState?.bank_doc);

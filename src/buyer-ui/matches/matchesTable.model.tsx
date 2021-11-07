@@ -6,6 +6,7 @@ import ConnectMatch from './connectMatch';
 import { FullfillmentFlags, MatchRequirementModel } from '../../buyer-seller-commons/types';
 import { parseIDfromHash, maskData } from '../../app-components/utils';
 import { showCropImage } from '../../buyer-seller-commons/constants';
+import confirmationPopup from '../../buyer-seller-commons/confirmationPopup';
 
 const { Title, Text } = Typography;
 
@@ -84,6 +85,7 @@ export const matchesColumns = (componentCallBacks: componentCallBacksModel) => [
             return (
                 <div className="display-flex-row">
                     <Button
+                        className="view-details-button"
                         type="link"
                         onClick={() => {
                             populateCropDetails(record);
@@ -94,9 +96,10 @@ export const matchesColumns = (componentCallBacks: componentCallBacksModel) => [
                     </Button>
                     <ConnectMatch cropDetails={record} />
                     <Button
+                        className="reject-button"
                         type="link"
                         danger
-                        onClick={() => rejectMatch(record)}
+                        onClick={() => confirmationPopup('reject', rejectMatch, record)}
                     >
                         Reject
                     </Button>

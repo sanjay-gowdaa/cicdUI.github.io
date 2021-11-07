@@ -99,6 +99,7 @@ const MatchedSection = () => {
             <Title level={2}>My Matches</Title>
             <Button
                 type="link"
+                className="refresh-button"
                 disabled={reloadClicked === 5}
                 style={{ float: 'right' }}
                 onClick={() => {
