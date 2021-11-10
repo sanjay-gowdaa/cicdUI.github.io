@@ -7,8 +7,8 @@ import TradeSummary from './tradeSummary';
 import PrimaryBtn from '../../app-components/primaryBtn';
 import InputOtp from '../../app-components/inputOtp';
 import {
-    // byPassOTP,
-    confirmOTP,
+    byPassOTP,
+    // confirmOTP,
     resetOTPFields,
     saveTimeStamp,
     setBuyerCropIdOnConnect,
@@ -65,8 +65,8 @@ const AcceptMatch = (props: { cropDetails: MatchRequirementModel }) => {
 
     const onAccept = () => {
         dispatch(saveTimeStamp);
-        dispatch(confirmOTP(userState.username, otp));
-        // dispatch(byPassOTP(otp));
+        // dispatch(confirmOTP(userState.username, otp));
+        dispatch(byPassOTP(otp));
         dispatch(setSellerCropIdOnConnect(cropDetails.seller_crop_id));
         dispatch(setSellerIdOnConnect(cropDetails.seller_id));
         dispatch(setBuyerIdOnConnect(cropDetails.buyer_id));
