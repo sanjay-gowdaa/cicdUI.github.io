@@ -1,8 +1,6 @@
 {
     "language": "en",
-    
     "title": "VikasBandhu",
-    
     "landing_page": {
         "actions": {
             "login": "Login",
@@ -27,7 +25,6 @@
             }
         }
     },
-    
     "home_page": {
         "landing_page_card_title": "Be a part of Vikasbandhu family!",
         "flash_text": "Beware of any Fraudulent Websites. <bold>Vikasbandhu does not charge any Registration fee</bold>. Visit only https://vikasbandhu.in",
@@ -37,7 +34,6 @@
         "text_4": "for win-win relationships",
         "mobile_home_text": "A friendly digital E-market place for agricultural produce"
     },
-    
     "aim_page": {
         "title": "VikasBandhu helps you in",
         "aim_card_1": "Enable Informed decisions using Technology via Price Discovery",
@@ -49,7 +45,6 @@
         "video_link": "Please view this video to understand",
         "link_name": "VikasBandhu aim and solution"
     },
-
     "ecosystem_page": {
         "title": "At VikasBandhu, we build an ecosystem that would",
         "text_1": "Connect buyers and sellers in a simple to use platform.",
@@ -58,11 +53,10 @@
         "text_4": "Facilitate a Door-to-door solution of logistics.",
         "text_5": "Boost rural economy by providing local employment."
     },
-
     "commodities_page": {
         "title": "Commodities we facilitate",
         "paragraph": "VikasBandhu focus is currently limited to the non perishable agricultural produce from Farmers and Farmer Self help groups. The coverage initially is targetted in Karnataka covering the  major crops native to this region. The scope of produce is intended/limited to be below categories at this point.",
-        "commodities_name":{
+        "commodities_name": {
             "1": "Staple Crops",
             "2": "Pulses",
             "3": "Cash Crops",
@@ -70,7 +64,6 @@
             "5": "Oil Seeds"
         }
     },
-
     "users_page": {
         "title": "VikasBandhu for",
         "user_card1": {
@@ -84,7 +77,6 @@
             "text": "VikasBandhu attempts to identify the right quantity source, taking care of the logistics, minimizing on overheads with customized packing where requested."
         }
     },
-
     "about_us": {
         "title": "About us",
         "paragraph": "We are a young enterprise working with knowledge and passion for partnering Government's vision of Freedom, Protection, and Higher Income to farmer communities. We have worked tirelessly with farmers and everyone in the value chain to understand the needs.We are committed to ensure a meaningful facilitation to the buyers and sellers.",
@@ -99,22 +91,19 @@
         "title1": "Partnering Government's Vision",
         "paragraph1": "We take pride in partnering Government's vision of doubling farmer's income by reducing middlemen. This is our contribution to nation building and making it truly 'Atmanirbhar Bharat'."
     },
-
     "our_team": {
         "title": "Our Team",
         "founders": {
-            "title": "Management",
+            "title": "Founders",
             "name": {
                 "1": "G SADANANDA MURTHY",
                 "2": "G S NAGAPPA",
-                "3": "SUMA SADANANDA",
-                "4": "Satish Chandra C S"
+                "3": "SUMA SADANANDA"
             },
             "designation": {
                 "1": "Director, <bold>Eng. and Technology</bold>",
                 "2": "Director, <bold>Marketing and Sales</bold>",
-                "3": "Director, <bold>Administration</bold>",
-                "4": "Agriculture Technology and Finance"
+                "3": "Director, <bold>Administration</bold>"
             },
             "subDesignation": {
                 "1": "(Ex. Broadcom, NetApp, Motorola)",
@@ -123,31 +112,31 @@
             "description": {
                 "1": "Sadananda Murthy is a management & delivery Leader with more than two decades of Experience in building software products, running Programs and operations at <bold>Fortune 500</bold> companies. He is focusing his efforts to develop and drive digital transformation to enable local community and groups at large.",
                 "2": "G S Nagappa’s has over four decades of leadership experience. He retired as COO at Diageo India. Today, as a veteran and philanthropist, he continues to passionately work towards building new businesses by understanding new opportunities in Indian market. He has a deep commitment to community and aims to achieve shared success.",
-                "3": "Suma Sadananda is deeply committed to Social endeavours that  lead her to take up teaching profession in the initial years. After focusing on family , she has started her second innings to pursue her interests. She is keen to promote product lines that solve local problems.",
-                "4": "Over three decades of experience as a valuator, finance researcher, mentor in Agri Tech. He is guiding us a mentor providing the needed support on Agriculture Strategy, roadmap and finance."
-            }    
+                "3": "Suma Sadananda is deeply committed to Social endeavours that  lead her to take up teaching profession in the initial years. After focusing on family , she has started her second innings to pursue her interests. She is keen to promote product lines that solve local problems."
+            }
         },
         "advisors": {
-            "title": "Advisors",
+            "title": "Management Team",
             "name": {
-                "1": "Sachin Narang",
-                "2": "C V Kulkarni"
+                "1": "Satish Chandra C S",
+                "2": "Ganesh M S",
+                "3": "Ganghadar Shastri"
             },
             "designation": {
-                "1": "Marketing Professional(MBA)",
-                "2": "Sales Proffessional"
+                "1": "Agriculture Technology and Finance",
+                "2": "FMCG, Backend",
+                "3": "Director, Operations"
             },
             "description": {
-                "1": "Over two decades of marketing leadership experience at leading FMCG and lifestyle companies. He is guiding us on the go-to-market strategies.",
-                "2": "Sales professional with over three decades of experience in FMCG and beverages. He is helping define and structure sales and operations."
+                "1": "Over three decades of experience as a valuator, finance researcher, mentor in Agri Tech. He is guiding us a mentor providing the needed support on Agriculture Strategy, roadmap and finance.",
+                "2": "Over three decades of experience at backend operations in FMCG and lifestyle. He is helping us as an Advisor on sourcing and backend ops.",
+                "3": "Sales Professions with over two decades of experience in FMCG and beverages. He is leading the Operations activities and strategy."
             }
         }
     },
-
     "legal_page": {
         "title": "Legal"
     },
-
     "contact_us_page": {
         "title": "Contact Us",
         "address1": "617, Shivam, Royal Park Residency,",

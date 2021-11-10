@@ -17,7 +17,13 @@ const WelcomeModal = () => {
 
     const explore = () => {
         if (isLogin) {
-            dispatch(saveKyc({ isLogin: false }));
+            const data = {
+                user_req: {
+                    isLogin: false
+                },
+                files: []
+            }
+            dispatch(saveKyc(data));
         }
         setWelcomeModal(!welcomeModal);
     };

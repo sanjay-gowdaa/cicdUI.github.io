@@ -11,10 +11,9 @@ import { getAmount, rejectMatches } from '../../store/buyerReducer/actions';
 
 const { Text, Title } = Typography;
 
-// const TOKEN_GRANT = process.env.REACT_APP_TOKEN_GRANT as string;
-// const BASE_URL = process.env.REACT_APP_BASE_URL;
-// const STAGE = process.env.REACT_APP_ENV;
-// const PAYMENT_REQUEST = 'paymentrequest';
+const BASE_URL = process.env.REACT_APP_BASE_URL;
+const STAGE = process.env.REACT_APP_ENV;
+const PAYMENT_REQUEST = 'paymentrequest';
 
 const PayButton = (props: any) => {
     const { record } = props;
@@ -30,10 +29,6 @@ const PayButton = (props: any) => {
 
     const seq = (Math.floor(Math.random() * 10000) + 10000).toString().substring(1);
     const id = "order_" + seq;
-
-    // const statussub = userStatus.split(" ");
-    // const lastele = statussub[statussub.length - 1];
-    // const amount = lastele.substring(1, lastele.length - 1);
 
     const user = loginState.is_buyer && "buyer";
     const getDisplay = (status: string) => {
@@ -135,7 +130,7 @@ const PayButton = (props: any) => {
                         </Space>
                     </Col>
                     <Col span={12}>
-                        <form className="payment" method="POST" action="https://rxc185hspl.execute-api.ap-south-1.amazonaws.com/test/paymentrequest">
+                        <form className="payment" method="POST" action={`${BASE_URL}/${STAGE}/${PAYMENT_REQUEST}`}>
                             <Space direction="vertical">
                                 <Input className="payment-custom-input" type="text" value={id} name="orderId" />
                                 <Input className="payment-custom-input" type="text" value={buyerState.paymentAmount} name="orderAmount" />
