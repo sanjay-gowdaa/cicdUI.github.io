@@ -94,7 +94,7 @@
     "our_team": {
         "title": "Our Team",
         "founders": {
-            "title": "Management",
+            "title": "Founders",
             "name": {
                 "1": "G SADANANDA MURTHY",
                 "2": "G S NAGAPPA",
@@ -116,7 +116,7 @@
             }
         },
         "advisors": {
-            "title": "Advisors",
+            "title": "Management Team",
             "name": {
                 "1": "Satish Chandra C S",
                 "2": "Ganesh M S",
