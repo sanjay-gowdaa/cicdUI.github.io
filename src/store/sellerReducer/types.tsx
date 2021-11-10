@@ -2,6 +2,7 @@ import {
     CropCategoryModel,
     EventTemplate,
     MatchRequirementModel,
+    OtpErrorInMatch,
     ReviewRating,
     Status,
     TransactionModel
@@ -65,6 +66,6 @@ export interface SellerStateModel {
     currentStatusDetails: Array<CurrentStatusDetails>;
     eventTemplate: Array<EventTemplate>;
     rejectCount: any;
-    otpError: { showError: Boolean, errorMg: String, verified: Boolean, produce: String }
+    otpError: OtpErrorInMatch;
     status: Array<Status>;
 };

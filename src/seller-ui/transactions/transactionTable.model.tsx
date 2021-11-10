@@ -12,8 +12,8 @@ import { showCropImage } from '../../buyer-seller-commons/constants';
 const { Text } = Typography;
 
 const GetCurrentStatusDetails = (pk: any) => {
-    const buyerState = useSelector((state: RootState) => state.buyer);
-    const status = buyerState.currentStatusDetails;
+    const sellerState = useSelector((state: RootState) => state.seller);
+    const status = sellerState.currentStatusDetails;
     const [userStatus, setUserStatus] = useState('');
     const dispatch = useDispatch();
     var id = pk.data;

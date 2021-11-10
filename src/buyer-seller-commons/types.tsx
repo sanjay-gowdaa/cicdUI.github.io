@@ -81,3 +81,13 @@ export interface Status {
     details: [],
     key: String
 };
+
+export interface OtpErrorInMatch {
+    showError: Boolean,
+    errorMg: String,
+    verified: Boolean,
+    sellerId: String,
+    buyerId: String,
+    sellerCropId: String,
+    buyerCropId: String
+};

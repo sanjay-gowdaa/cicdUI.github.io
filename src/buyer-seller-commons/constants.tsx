@@ -36,3 +36,12 @@ export const showCropImage = (category: string) => {
         case "Oil Seeds": return CropImages.oilSeeds;
     }
 };
+
+export const checkIfUnique = (cropDetails: any, otpError: any) => {
+    const sellerIdCheck = cropDetails.seller_id === otpError.sellerId;
+    const sellerCropIdCheck = cropDetails.seller_crop_id === otpError.sellerCropId;
+    const buyerIdCheck = cropDetails.buyer_id === otpError.buyerId;
+    const buyerCropIdCheck = cropDetails.buyer_crop_id === otpError.buyerCropId;
+
+    return sellerIdCheck && sellerCropIdCheck && buyerIdCheck && buyerCropIdCheck;
+};
