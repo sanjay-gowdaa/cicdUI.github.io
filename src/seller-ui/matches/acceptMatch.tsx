@@ -7,11 +7,14 @@ import TradeSummary from './tradeSummary';
 import PrimaryBtn from '../../app-components/primaryBtn';
 import InputOtp from '../../app-components/inputOtp';
 import {
-    byPassOTP,
-    // confirmOTP,
+    // byPassOTP,
+    confirmOTP,
     resetOTPFields,
     saveTimeStamp,
-    setProduceNameOnAccept,
+    setBuyerCropIdOnConnect,
+    setBuyerIdOnConnect,
+    setSellerCropIdOnConnect,
+    setSellerIdOnConnect,
     transactionAction
 } from '../../store/sellerReducer/actions';
 import { RootState } from '../../store/rootReducer';
@@ -19,6 +22,7 @@ import { resendOTP, sendOTP } from '../../store/registrationReducer/actions';
 import { MatchRequirementModel, TransactionAction } from '../../buyer-seller-commons/types';
 import { maskData, parseIDfromHash } from '../../app-components/utils';
 import { SellerStateModel } from '../../store/sellerReducer/types';
+import { checkIfUnique } from '../../buyer-seller-commons/constants';
 
 const { Text, Title } = Typography;
 const { Countdown } = Statistic;
@@ -45,7 +49,8 @@ const AcceptMatch = (props: { cropDetails: MatchRequirementModel }) => {
     };
 
     useEffect(() => {
-        if (otpError.verified && otpError.produce === cropDetails.buyer_crop_id) {
+        const isUnique = checkIfUnique(cropDetails, otpError);
+        if (otpError.verified && isUnique) {
             dispatch(
                 transactionAction(
                     parseIDfromHash(pk),
@@ -60,9 +65,12 @@ const AcceptMatch = (props: { cropDetails: MatchRequirementModel }) => {
 
     const onAccept = () => {
         dispatch(saveTimeStamp);
-        // dispatch(confirmOTP(userState.username, otp));
-        dispatch(byPassOTP(otp));
-        dispatch(setProduceNameOnAccept(cropDetails.buyer_crop_id));
+        dispatch(confirmOTP(userState.username, otp));
+        // dispatch(byPassOTP(otp));
+        dispatch(setSellerCropIdOnConnect(cropDetails.seller_crop_id));
+        dispatch(setSellerIdOnConnect(cropDetails.seller_id));
+        dispatch(setBuyerIdOnConnect(cropDetails.buyer_id));
+        dispatch(setBuyerCropIdOnConnect(cropDetails.buyer_crop_id));
     };
 
     return (

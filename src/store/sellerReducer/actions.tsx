@@ -42,7 +42,10 @@ export const UPDATE_CURRENT_STATUS_DETAILS = 'UPDATE_CURRENT_STATUS_DETAILS';
 export const OTP_ERROR_ON_ACCEPT = 'OTP_ERROR_ON_ACCEPT';
 export const OTP_ERROR_MSG_ON_ACCEPT = 'OTP_ERROR_MSG_ON_ACCEPT';
 export const OTP_VERIFIED_ON_ACCEPT = 'OTP_VERIFIED_ON_ACCEPT';
-export const PRODUCE_NAME_ON_ACCEPT = 'PRODUCE_NAME_ON_ACCEPT';
+export const OTP_SELLER_ID = 'OTP_SELLER_ID';
+export const OTP_BUYER_ID = 'OTP_BUYER_ID';
+export const OTP_SELLER_CROP_ID = 'OTP_SELLER_CROP_ID';
+export const OTP_BUYER_CROP_ID = 'OTP_BUYER_CROP_ID';
 export const UPDATE_REJECT_COUNT = 'UPDATE_REJECT_COUNT';
 export const UPDATE_EVENT_TEMPLATE = 'UPDATE_EVENT_TEMPLATE';
 export const SET_STATUS_DETAILS = 'SET_STATUS_DETAILS';
@@ -61,10 +64,31 @@ export const updateRejectCount = (rejectCount: any) => {
     };
 };
 
-export const setProduceNameOnAccept = (produce: string) => {
+export const setSellerIdOnConnect = (sellerId: String) => {
     return {
-        type: PRODUCE_NAME_ON_ACCEPT,
-        payload: produce
+        type: OTP_SELLER_ID,
+        payload: sellerId
+    };
+};
+
+export const setSellerCropIdOnConnect = (sellerCropId: String) => {
+    return {
+        type: OTP_SELLER_CROP_ID,
+        payload: sellerCropId
+    };
+};
+
+export const setBuyerIdOnConnect = (buyerId: String) => {
+    return {
+        type: OTP_BUYER_ID,
+        payload: buyerId
+    };
+};
+
+export const setBuyerCropIdOnConnect = (buyerCropId: String) => {
+    return {
+        type: OTP_BUYER_CROP_ID,
+        payload: buyerCropId
     };
 };
 
@@ -412,7 +436,10 @@ export const resetOTPFields = () => {
         dispatch(setOtpErrorOnAccept(false));
         dispatch(setOtpErrorMsgOnAccept(''));
         dispatch(setVerifiedOnAccept(false));
-        dispatch(setProduceNameOnAccept(''));
+        dispatch(setSellerIdOnConnect(''));
+        dispatch(setBuyerIdOnConnect(''));
+        dispatch(setSellerCropIdOnConnect(''));
+        dispatch(setBuyerCropIdOnConnect(''));
     };
 };
 

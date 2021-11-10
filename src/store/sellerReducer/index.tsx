@@ -10,10 +10,13 @@ import {
     UPDATE_CURRENT_STATUS_DETAILS,
     OTP_ERROR_MSG_ON_ACCEPT,
     OTP_VERIFIED_ON_ACCEPT,
-    PRODUCE_NAME_ON_ACCEPT,
     UPDATE_REJECT_COUNT,
     UPDATE_EVENT_TEMPLATE,
-    SET_STATUS_DETAILS
+    SET_STATUS_DETAILS,
+    OTP_SELLER_ID,
+    OTP_SELLER_CROP_ID,
+    OTP_BUYER_ID,
+    OTP_BUYER_CROP_ID
 } from './actions';
 import {
     mockReviewsList,
@@ -33,7 +36,7 @@ const INITIAL_STATE: SellerStateModel = {
     currentStatusDetails: [],
     eventTemplate: [],
     rejectCount: '',
-    otpError: { showError: false, errorMg: '', verified: false, produce: '' },
+    otpError: { showError: false, errorMg: '', verified: false, sellerId: '', buyerId: '', sellerCropId: '', buyerCropId: '' },
     status: [{ details: [], key: "" }]
 };
 
@@ -81,10 +84,26 @@ const reducer = (state = INITIAL_STATE, action: any) => {
             const updatedSuccessFlag = { ...errorDupObj, verified: action.payload }
             return { ...state, otpError: updatedSuccessFlag };
 
-        case PRODUCE_NAME_ON_ACCEPT:
-            const { otpError: errorProduceObj } = state;
-            const updateProduceName = { ...errorProduceObj, produce: action.payload }
-            return { ...state, otpError: updateProduceName };
+        case OTP_SELLER_ID:
+            const { otpError: sellerIdObj } = state;
+            const updatedSellerId = { ...sellerIdObj, sellerId: action.payload }
+            return { ...state, otpError: updatedSellerId };
+
+        case OTP_SELLER_CROP_ID:
+            const { otpError: sellerCropIdObj } = state;
+            const updatedSellerCropId = { ...sellerCropIdObj, sellerCropId: action.payload }
+            return { ...state, otpError: updatedSellerCropId };
+
+        case OTP_BUYER_ID:
+            const { otpError: buyerIdObj } = state;
+            const updatedBuyerId = { ...buyerIdObj, buyerId: action.payload }
+            return { ...state, otpError: updatedBuyerId };
+
+        case OTP_BUYER_CROP_ID:
+            const { otpError: buyerCropIdObj } = state;
+            const updatedBuyerCropId = { ...buyerCropIdObj, buyerCropId: action.payload }
+            return { ...state, otpError: updatedBuyerCropId };
+
 
         case UPDATE_REJECT_COUNT:
             return { ...state, rejectCount: action.payload };
