@@ -18,9 +18,6 @@ import {
     OTP_BUYER_ID,
     OTP_BUYER_CROP_ID
 } from './actions';
-import {
-    mockReviewsList,
-} from './mockData.temp';
 import { SellerStateModel } from './types';
 
 const INITIAL_STATE: SellerStateModel = {
@@ -29,7 +26,7 @@ const INITIAL_STATE: SellerStateModel = {
     variety: [],
     matchesList: [],
     transactionList: { Pending: [], active: [], complete: [] },
-    reviewsList: mockReviewsList,
+    reviewsList: [],
     categories: [],
     apmcCropPrice: '',
     timeStamp: {},

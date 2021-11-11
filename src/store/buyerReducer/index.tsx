@@ -24,7 +24,6 @@ import {
     OTP_BUYER_ID,
     OTP_BUYER_CROP_ID
 } from './actions';
-import { mockReviewsList } from './mockData.temp';
 import { BuyerStateModel } from './types';
 
 const INITIAL_STATE: BuyerStateModel = {
@@ -35,7 +34,7 @@ const INITIAL_STATE: BuyerStateModel = {
     masterCropNames: [],
     matchesList: [],
     transactionList: { Pending: [], active: [], complete: [] },
-    reviewsList: mockReviewsList,
+    reviewsList: [],
     timeStamp: {},
     isMatchesFetching: false,
     paymentDetails: [],
