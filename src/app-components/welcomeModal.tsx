@@ -23,7 +23,7 @@ const WelcomeModal = () => {
                 },
                 files: []
             }
-            dispatch(saveKyc(data));
+            dispatch(saveKyc(data, false));
         }
         setWelcomeModal(!welcomeModal);
     };

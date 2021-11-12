@@ -96,12 +96,14 @@ export const getUserFiles = (fileName: string, setImageSrc: Function, setPDF: Fu
     }
 };
 
-export const saveKyc = (userFormData: any) => {
+export const saveKyc = (userFormData: any, setMessage: boolean) => {
     return async (dispatch: any, getState: any) => {
         const saveUserDetailsResponse = await kycUserDetails(userFormData);
         const { updateResult } = saveUserDetailsResponse;
         const { status = '', message } = updateResult;
-        dispatch(setKycUpdateMsg(message));
+        if (setMessage) {
+            dispatch(setKycUpdateMsg(message));
+        }
         // Store the error message so that it can be displayed, if error is encountered
         console.log("status", status);
         console.log("message", message);
@@ -112,11 +114,6 @@ export const getUserDetails = (accessToken: any) => {
     return async (dispatch: any, getState: any) => {
         const userDetailsData = await fetchUserDetails(accessToken);
         const { result } = userDetailsData || { result: {} }
-        // const {status, data} = response || {status: '', data: ''}
-        // if (handleResponse(status)) {
-        //     dispatch(updateUserDetails(data))
-        // } else {
-        // }
         dispatch(updateUserDetails(result))
         dispatch(setLoginSuccess())
     }

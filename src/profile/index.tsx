@@ -19,9 +19,9 @@ import { cloneDeep, isEmpty } from 'lodash';
 import './profile.scss';
 import {
     fieldLayout,
+    initialFormValues,
     kycFlagDetails,
     requiredDocumentList,
-    initialFormValues
 } from './constants';
 import BankDocuments from './bankDocuments';
 import BuyerWorkingHours from './buyerWorkingHours';
@@ -30,11 +30,18 @@ import { emailValidator, generateFormData, normFile, validateUpload } from './ut
 import ConfirmationMessage from './confirmationMessage';
 
 import Header from '../header';
+
 import { UserTypes } from '../store/genericTypes';
 import { RootState } from '../store/rootReducer';
 import CancelBtn from '../app-components/cancelBtn';
 import PrimaryBtn from '../app-components/primaryBtn';
-import { getUserFiles, saveKyc, addBeneficiary, registerBuyerAtDestiny, registerSellerAtDestiny } from '../store/loginReducer/actions';
+import {
+    addBeneficiary,
+    getUserFiles,
+    registerBuyerAtDestiny,
+    registerSellerAtDestiny,
+    saveKyc
+} from '../store/loginReducer/actions';
 
 const { Title, Text } = Typography;
 
@@ -167,7 +174,7 @@ const Profile = (props: any) => {
         const isSubmitted = setKycToComplete(formSubmitValue);
         const registerDataPromise = generateFormData(cloneDeep({ ...kycFormValues, isSubmitted }));
         registerDataPromise.then((data) =>
-            dispatch(saveKyc(data))
+            dispatch(saveKyc(data, true))
         );
 
         const beneficiaryDetails = {
@@ -201,7 +208,6 @@ const Profile = (props: any) => {
             "AadharNo": loginState.UIDAI || kycFormValues.uidai || '',
             "IntroducedOnDate": loginState.created_at
         }]
-        //console.log("beneDetails:", beneDetails)
 
         if (!loginState?.isSubmitted && isSubmitted && userType === UserTypes.BUYER) {
             registerBuyerAtDestiny(userDetails);
@@ -279,8 +285,7 @@ const Profile = (props: any) => {
                     finalValues = { ...finalValues, [property]: formSubmitValues[property] };
                 }
             }
-            finalValues["kyc_flag"] = "isSubmitted"
-            console.log("finalValues:", finalValues)
+            finalValues["kyc_flag"] = "isSubmitted";
             setKycFormValues(finalValues);
             if (!isEmpty(finalValues)) {
                 setSaveFlag(true);
@@ -427,8 +432,7 @@ const Profile = (props: any) => {
                                                 contentEditable
                                             />
                                         </Form.Item>
-                                        {
-                                            changeEmail &&
+                                        {changeEmail &&
                                             <Button
                                                 type="link"
                                                 danger
@@ -493,17 +497,17 @@ const Profile = (props: any) => {
                         />
                     </Form>
                 </Col>
-                {
-                    kycFlag === "incomplete" &&
+                {kycFlag === "incomplete" &&
                     <Col>
                         <div className="kyc-required-doc-list">
                             <Title level={4}>Add following details to complete KYC</Title>
                             <ul>
                                 {requiredDocumentList.map((list) => {
-                                    return (<>{
-                                        list.userType === userType && list.subType === subType &&
-                                        <li>{list.title}</li>
-                                    }</>)
+                                    return (
+                                        <>{
+                                            list.userType === userType && list.subType === subType &&
+                                            <li>{list.title}</li>
+                                        }</>)
                                 })}
                             </ul>
                         </div>
