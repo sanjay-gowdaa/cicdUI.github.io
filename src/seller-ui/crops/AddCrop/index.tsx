@@ -341,6 +341,7 @@ const AddCropModal = (addCropProps: PropsType) => {
                                 rules={[{ required: true }]}
                             >
                                 <Radio.Group
+                                    disabled={true}
                                     className="custom-radio"
                                     name="transportRequired"
                                     onChange={() => console.log("changeTransportRequired")}
