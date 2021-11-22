@@ -18,7 +18,7 @@ const CompletedTransactions = ({
             columns={transactionColumns}
             dataSource={transactionList}
             expandable={{
-                expandedRowRender: record => <TransactionDetailsModal pk={record.pk} tab={TransactionStatus.on_going} />,
+                expandedRowRender: record => <TransactionDetailsModal pk={record.pk} tab={TransactionStatus.completed} />,
                 rowExpandable: record => true,
                 expandIconColumnIndex: 8,
                 expandIcon: ({ expanded, onExpand, record }) =>
