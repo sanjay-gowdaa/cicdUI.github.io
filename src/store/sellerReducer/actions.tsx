@@ -361,7 +361,13 @@ export const getSellerTransactionList = (transactionStatus: TransactionStatus) =
         const { loginUser }: { loginUser: UserStateModel } = getState() as RootState;
         const { username } = loginUser;
         const transactionListResponse = await fetchTransactionList(username, transactionStatus);
-        dispatch(updateTransactionList(transactionStatus, transactionListResponse));
+        let transactionFinalResponse: any = [];
+        for (let i = 0; i < transactionListResponse.length; i++) {
+            let list = transactionListResponse[i];
+            list.key = transactionListResponse[i].pk;
+            transactionFinalResponse.push(list);
+        }
+        dispatch(updateTransactionList(transactionStatus, transactionFinalResponse));
     }
 };
 

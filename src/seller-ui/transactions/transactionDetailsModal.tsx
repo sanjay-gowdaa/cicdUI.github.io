@@ -14,7 +14,6 @@ const { Text } = Typography;
 const TransactionDetailsModal = (props: any) => {
     const { pk, tab } = props;
     const dispatch = useDispatch();
-    // Should be changed to seller
     const sellerState = useSelector((state: RootState) => state.seller);
     const { status, eventTemplate } = sellerState;
     const [count, setCount] = useState(status.length - 1);
@@ -84,7 +83,12 @@ const TransactionDetailsModal = (props: any) => {
 
     return (
         <>
-            <Timeline mode="left" style={{ float: 'left' }} className="transaction-timeline" pending={tab === TransactionStatus.on_going && count !== eventTemplate.length}>
+            <Timeline
+                mode="left"
+                style={{ float: 'left' }}
+                className="transaction-timeline"
+                pending={tab === TransactionStatus.on_going && count !== eventTemplate.length}
+            >
                 {currentStatus.map((completedStatus: any) => {
                     return (
                         <Timeline.Item
@@ -117,7 +121,16 @@ const TransactionDetailsModal = (props: any) => {
                         </Timeline.Item>
                     )
                 })}
-                {tab === TransactionStatus.on_going ? showRemainingTimeline() : null}
+                {tab === TransactionStatus.on_going ?
+                    showRemainingTimeline() :
+                    <Timeline.Item
+                        dot={<CheckCircleFilled style={{ color: "#12805C" }} />}
+                        color={"#F5A31A"}
+                        className="is-complete"
+                    >
+                        Transaction Completed
+                    </Timeline.Item>
+                }
             </Timeline>
         </>
     );

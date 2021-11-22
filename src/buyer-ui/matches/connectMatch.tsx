@@ -145,9 +145,18 @@ const ConnectMatch = ({ cropDetails }: { cropDetails: MatchRequirementModel }) =
                     }
                 })
             dispatch(resetOTPFields());
+            resetAllFields();
             setConnectAgreement(!viewConnectAgreement);
         }
     }, [otpError.verified]);
+
+    const resetAllFields = () => {
+        setOtp("");
+        setAgreed(false);
+        setOtpResent(false);
+        setOtpTimer(0);
+        showResend(false);
+    };
 
     const retryOtpSend = () => {
         setOtpResent(true);
@@ -181,6 +190,7 @@ const ConnectMatch = ({ cropDetails }: { cropDetails: MatchRequirementModel }) =
                 <TradeSumary cropDetails={cropDetails} />
                 <Checkbox
                     className="custom-checkbox"
+                    checked={isAgreed}
                     onChange={(event: any) => {
                         if (event.target.checked) {
                             dispatch(sendOTP(`91${userState.username}`));

@@ -3,6 +3,8 @@ import { Input, Button, Form, DatePicker } from 'antd';
 import { FormInstance } from 'antd/lib/form';
 import moment from 'moment';
 
+import { validateQuantity } from '../utils';
+
 import { ProduceModel } from '../../../store/buyerReducer/types';
 import confirmationPopup from '../../../buyer-seller-commons/confirmationPopup';
 
@@ -98,7 +100,7 @@ const QuantityEditComponent = ({ dataIndex, record, ...restProps }: any) => {
                 initialValue={record.quantity}
                 rules={[{
                     required: true,
-                    message: `Quantity is required.`,
+                    validator: (rules: any, value: any) => validateQuantity(rules, value)
                 }]}
             >
                 <Input className="custom-input" placeholder="In quintal" />
