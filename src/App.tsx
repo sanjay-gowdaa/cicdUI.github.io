@@ -1,8 +1,9 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Card, Col, Image, Row, Space, Typography } from 'antd';
 import 'antd/dist/antd.css';
 import { useTranslation } from 'react-i18next';
+import Amplify, { Auth } from 'aws-amplify';
 
 import Header from './header';
 import Footer from './footer';
@@ -15,10 +16,19 @@ import Banner from './static/assets/banner.png';
 import KannadaBanner from './static/assets/banner_Kannada.png';
 import Join from './static/assets/friends.svg';
 import './App.scss';
-
 import { englishStyling, isEnglish, kannadaStyling } from './static/translations/constants';
 
 const { Title } = Typography;
+
+Amplify.configure({
+    Auth: {
+        region: 'ap-south-1',
+        userPoolId: 'ap-south-1_dTChphLt4',
+        userPoolWebClientId: '7sckhhjs2aq1noqd1fvjdeo69j',
+    }
+});
+
+const currentConfig = Auth.configure();
 
 const App = (props: any) => {
     const { history } = props;
@@ -27,7 +37,7 @@ const App = (props: any) => {
     const [openMobileRegModel, setMobileRegModal] = useState(false);
     const { t } = useTranslation('common');
     const customStyles = isEnglish(t("language")) ? englishStyling : kannadaStyling;
-    const banner = isEnglish(t("language")) ? Banner : KannadaBanner ;
+    const banner = isEnglish(t("language")) ? Banner : KannadaBanner;
 
     useEffect(() => {
         dispatch(getConfigurations());
@@ -35,9 +45,9 @@ const App = (props: any) => {
     }, []);
 
     const onRegisterClick = () => {
-        if(window.screen.width < 767) {
+        if (window.screen.width < 767) {
             setMobileRegModal(!openMobileRegModel);
-        }else {
+        } else {
             setSignUpPopupVisible(!signUpPopupVisible);
         }
     };
@@ -47,7 +57,7 @@ const App = (props: any) => {
             <Header
                 history={history}
                 showActions={true}
-                popUpTrigger={{setSignUpPopupVisible, signUpPopupVisible}}
+                popUpTrigger={{ setSignUpPopupVisible, signUpPopupVisible }}
             />
             <div className="main-content">
                 <Home />
@@ -64,15 +74,15 @@ const App = (props: any) => {
                         <div className="fixed-card-join">
                             <Card className="join-us">
                                 <Space direction="vertical">
-                                <Title className={`col-green ${customStyles.fixedTitle}`} level={3}>
-                                    {t('home_page.landing_page_card_title')}
-                                </Title>
-                                <Image className="join-image" src={Join} preview={false} />
-                                <PrimaryBtn
-                                    onClick={onRegisterClick}
-                                    className="vikas-btn-radius join-us-reg"
-                                    content={t('landing_page.actions.register')}
-                                />
+                                    <Title className={`col-green ${customStyles.fixedTitle}`} level={3}>
+                                        {t('home_page.landing_page_card_title')}
+                                    </Title>
+                                    <Image className="join-image" src={Join} preview={false} />
+                                    <PrimaryBtn
+                                        onClick={onRegisterClick}
+                                        className="vikas-btn-radius join-us-reg"
+                                        content={t('landing_page.actions.register')}
+                                    />
                                 </Space>
                             </Card>
                         </div>

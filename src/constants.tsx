@@ -7,7 +7,8 @@ export const routesMap = {
     buyer_ui: '/buyer',
     terms: '/terms&conditions',
     purchase_agreement: '/agreement',
-    profile: '/profile'
+    profile: '/profile',
+    loginUser: '/login-user'
 };
 
 export const headerBreadcrumb = {
