@@ -6,6 +6,12 @@ export interface UserDetailsModel {
     configs?: [];
     kycErrorMsg?: string;
     isRedirected?: boolean;
+    errorInLogin: { hasError: boolean, msg: string, redirect: boolean };
+    passwordChangeSuccess?: boolean;
+    passwordChangeError?: string;
+    confirmationCodeError?: string;
+    isNewUser?: boolean;
+    user?: any;
 };
 
 export interface UserStateModel extends UserDetailsModel {
