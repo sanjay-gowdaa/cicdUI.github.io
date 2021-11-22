@@ -14,9 +14,9 @@ import {
     saveTimeStamp,
     checkSellerConnectedStatus,
     getMatchesForBuyerCrops,
-    confirmOTP,
+    // confirmOTP,
     resetOTPFields,
-    // byPassOTP,
+    byPassOTP,
     setSellerCropIdOnConnect,
     setSellerIdOnConnect,
     setBuyerIdOnConnect,
@@ -165,8 +165,8 @@ const ConnectMatch = ({ cropDetails }: { cropDetails: MatchRequirementModel }) =
 
     const onAcceptConnect = () => {
         dispatch(saveTimeStamp);
-        dispatch(confirmOTP(userState.username, otp));
-        // dispatch(byPassOTP(otp));
+        // dispatch(confirmOTP(userState.username, otp));
+        dispatch(byPassOTP(otp));
         dispatch(setSellerCropIdOnConnect(cropDetails.seller_crop_id));
         dispatch(setSellerIdOnConnect(cropDetails.seller_id));
         dispatch(setBuyerIdOnConnect(cropDetails.buyer_id));
