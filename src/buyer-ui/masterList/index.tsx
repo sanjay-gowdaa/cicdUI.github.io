@@ -74,12 +74,16 @@ const AddProduceModal = (props: any) => {
     return (
         <>
             <div id="buyer-ui-crops">
-                {userStatus.map((list) => {
-                    return (isActiveFlag === list.flag) ?
-                        <Tag color={list.backgroundColor} style={{ color: list.color, fontSize: "large", padding: "0.5em" }} >
-                            {list.title} </Tag> :
-                        <Tag style={{ display: 'none' }}></Tag>
-                })}
+                {isApproved &&
+                    <>
+                        {userStatus.map((list) => {
+                            return (isActiveFlag === list.flag) ?
+                                <Tag color={list.backgroundColor} style={{ color: list.color, fontSize: "large", padding: "0.5em" }} >
+                                    {list.title} </Tag> :
+                                <Tag style={{ display: 'none' }}></Tag>
+                        })}
+                    </>
+                }
                 <Title level={5}>Create/ Update Your Produce Master List</Title>
                 <Paragraph>Add all the produce that you deal with into a master list for quick and easy selection when there a requirement to buy.</Paragraph>
                 <DefaultBtn
