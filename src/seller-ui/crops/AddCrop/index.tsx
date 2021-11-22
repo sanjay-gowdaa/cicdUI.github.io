@@ -21,6 +21,7 @@ import {
     renderCategoryOptions,
     renderGradeOptionsForSubCategory,
     renderSubCategoryOptions,
+    validateQuantity,
     validateSellerPrice
 } from '../cropUtils';
 
@@ -272,7 +273,7 @@ const AddCropModal = (addCropProps: PropsType) => {
                                     name="quantity"
                                     rules={[{
                                         required: true,
-                                        message: 'Please input the Quantity!'
+                                        validator: (rules: any, value: any) => validateQuantity(rules, value)
                                     }]}
                                 >
                                     <Input

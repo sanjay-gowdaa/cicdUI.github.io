@@ -1,6 +1,6 @@
 import React from 'react';
 import { Select } from 'antd';
-import { uniqBy } from 'lodash';
+import { isEmpty, uniqBy } from 'lodash';
 import { RuleObject } from 'antd/lib/form';
 
 import { camelToSnakeCase } from '../../store/utils';
@@ -60,7 +60,9 @@ export const validateSellerPrice = (rule: RuleObject, value: string, apmc: any) 
     const minimum: any = Math.round(apmc * 0.6);
     const maximum: any = Math.round(apmc * 1.1);
 
-    if (typeof (apmc) === "string") {
+    if (isEmpty(value)) {
+        return Promise.reject('Please enter price per quintal!');
+    } else if (typeof (apmc) === "string") {
         return Promise.resolve();
     } else {
         if (value < minimum) {
@@ -70,5 +72,16 @@ export const validateSellerPrice = (rule: RuleObject, value: string, apmc: any) 
         } else {
             return Promise.resolve();
         }
+    }
+};
+
+export const validateQuantity = (rule: RuleObject, value: string) => {
+    const regExp = /^[0-9]*$/;
+    if (isEmpty(value)) {
+        return Promise.reject('Please input the Quantity!');
+    } else if (!regExp.test(value)) {
+        return Promise.reject('Please enter a valid quantity!');
+    } else {
+        return Promise.resolve();
     }
 };
