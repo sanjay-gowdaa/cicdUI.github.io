@@ -94,7 +94,7 @@ export const ShowPasswordMessage = (props: any) => {
                         <CheckOutlined style={{ color: "#4cbf42" }} /> :
                         <CloseOutlined style={{ color: "#df3312" }} />
                     }&nbsp;
-                    <Text style={isValidated.lower ? { color: '#4cbf42' } : { color: '#df3312' }}>
+                    <Text style={isValidated.upper ? { color: '#4cbf42' } : { color: '#df3312' }}>
                         Password must contain an upper case letter
                     </Text>
                 </Text>
@@ -103,7 +103,7 @@ export const ShowPasswordMessage = (props: any) => {
                         <CheckOutlined style={{ color: "#4cbf42" }} /> :
                         <CloseOutlined style={{ color: "#df3312" }} />
                     }&nbsp;
-                    <Text style={isValidated.lower ? { color: '#4cbf42' } : { color: '#df3312' }}>
+                    <Text style={isValidated.number ? { color: '#4cbf42' } : { color: '#df3312' }}>
                         Password must contain a number
                     </Text>
                 </Text>
@@ -112,7 +112,7 @@ export const ShowPasswordMessage = (props: any) => {
                         <CheckOutlined style={{ color: "#4cbf42" }} /> :
                         <CloseOutlined style={{ color: "#df3312" }} />
                     }&nbsp;
-                    <Text style={isValidated.lower ? { color: '#4cbf42' } : { color: '#df3312' }}>
+                    <Text style={isValidated.length ? { color: '#4cbf42' } : { color: '#df3312' }}>
                         Password must contain at least 8 characters
                     </Text>
                 </Text>
