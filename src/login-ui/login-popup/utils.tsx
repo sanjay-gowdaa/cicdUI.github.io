@@ -1,6 +1,6 @@
 import React from 'react';
 import { Space, Typography } from 'antd';
-import { RuleObject } from "rc-field-form/lib/interface";
+import { RuleObject } from 'rc-field-form/lib/interface';
 import { CheckOutlined, CloseOutlined } from '@ant-design/icons';
 
 import './login.scss';
@@ -69,7 +69,7 @@ export const confirmReEnteredPassword = (rule: RuleObject, value: any, password:
     if (value === password) {
         return Promise.resolve();
     } else {
-        return Promise.reject("Password did not match!");
+        return Promise.reject('Password did not match!');
     }
 };
 
@@ -78,12 +78,12 @@ export const ShowPasswordMessage = (props: any) => {
 
     return (
         <React.Fragment>
-            <Title level={5} className="password-rules-text">Password must contain the following:</Title>
-            <Space direction="vertical">
+            <Title level={5} className='password-rules-text'>Password must contain the following:</Title>
+            <Space direction='vertical'>
                 <Text>
                     {isValidated.lower ?
-                        <CheckOutlined style={{ color: "#4cbf42" }} /> :
-                        <CloseOutlined style={{ color: "#df3312" }} />
+                        <CheckOutlined style={{ color: '#4cbf42' }} /> :
+                        <CloseOutlined style={{ color: '#df3312' }} />
                     }&nbsp;
                     <Text style={isValidated.lower ? { color: '#4cbf42' } : { color: '#df3312' }}>
                         Password must contain a lower case letter
@@ -91,8 +91,8 @@ export const ShowPasswordMessage = (props: any) => {
                 </Text>
                 <Text>
                     {isValidated.upper ?
-                        <CheckOutlined style={{ color: "#4cbf42" }} /> :
-                        <CloseOutlined style={{ color: "#df3312" }} />
+                        <CheckOutlined style={{ color: '#4cbf42' }} /> :
+                        <CloseOutlined style={{ color: '#df3312' }} />
                     }&nbsp;
                     <Text style={isValidated.upper ? { color: '#4cbf42' } : { color: '#df3312' }}>
                         Password must contain an upper case letter
@@ -100,8 +100,8 @@ export const ShowPasswordMessage = (props: any) => {
                 </Text>
                 <Text>
                     {isValidated.number ?
-                        <CheckOutlined style={{ color: "#4cbf42" }} /> :
-                        <CloseOutlined style={{ color: "#df3312" }} />
+                        <CheckOutlined style={{ color: '#4cbf42' }} /> :
+                        <CloseOutlined style={{ color: '#df3312' }} />
                     }&nbsp;
                     <Text style={isValidated.number ? { color: '#4cbf42' } : { color: '#df3312' }}>
                         Password must contain a number
@@ -109,8 +109,8 @@ export const ShowPasswordMessage = (props: any) => {
                 </Text>
                 <Text>
                     {isValidated.length ?
-                        <CheckOutlined style={{ color: "#4cbf42" }} /> :
-                        <CloseOutlined style={{ color: "#df3312" }} />
+                        <CheckOutlined style={{ color: '#4cbf42' }} /> :
+                        <CloseOutlined style={{ color: '#df3312' }} />
                     }&nbsp;
                     <Text style={isValidated.length ? { color: '#4cbf42' } : { color: '#df3312' }}>
                         Password must contain at least 8 characters

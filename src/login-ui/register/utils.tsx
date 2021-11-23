@@ -1,5 +1,4 @@
-import { RuleObject } from "antd/lib/form";
-import { isEmpty } from "lodash";
+import { RuleObject } from 'antd/lib/form';
 
 import {
     EMAIL_INVALID_MSG,
@@ -10,35 +9,35 @@ import {
     PHONE_NUMBER_ALREADY_EXISTS,
     PHONE_NUMBER_INVALID,
     PHONE_NUMBER_REQUIRED_MSG
-} from "../constants";
-import { checkIfUserAlreadyExists } from "../../store/api";
+} from '../constants';
+import { checkIfUserAlreadyExists } from '../../store/api';
 
 export const validatePhoneNumber = (rule: RuleObject, value: any) => {
     const regExp = /^[0-9]*$/;
 
-    if(!value) {
+    if (!value) {
         return Promise.reject(PHONE_NUMBER_REQUIRED_MSG);
-    } else if(!regExp.test(value)) {
+    } else if (!regExp.test(value)) {
         return Promise.reject(PHONE_NUMBER_INVALID);
     } else if (value.length !== 10) {
         return Promise.reject(PHONE_NUMBER_10_DIGIT_MSG);
     } else {
         return checkIfUserAlreadyExists(value)
-        .then((response: any) => {
-            const { newUser } = response;
-            if(newUser) {
-                return Promise.resolve();
-            } else {
-                return Promise.reject(PHONE_NUMBER_ALREADY_EXISTS);
-            }
-        })
+            .then((response: any) => {
+                const { newUser } = response;
+                if (newUser) {
+                    return Promise.resolve();
+                } else {
+                    return Promise.reject(PHONE_NUMBER_ALREADY_EXISTS);
+                }
+            })
     }
 };
 
 export const validateUserName = (rule: RuleObject, value: any) => {
     const regExp = /^[a-zA-Z ]{1,50}$/;
 
-    if(!value) {
+    if (!value) {
         return Promise.reject(`${NAME_REQUIRED_MSG} your name!`);
     } else if (!regExp.test(value)) {
         return Promise.reject(`Name ${NAME_INVALID}`);
@@ -50,9 +49,9 @@ export const validateUserName = (rule: RuleObject, value: any) => {
 export const emailRequired = (rule: RuleObject, value: any) => {
     const regExp = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
 
-    if(!value) {
+    if (!value) {
         return Promise.reject(EMAIL_REQUIRED_MSG);
-    } else if(!regExp.test(value)) {
+    } else if (!regExp.test(value)) {
         return Promise.reject(EMAIL_INVALID_MSG);
     } else {
         return Promise.resolve();

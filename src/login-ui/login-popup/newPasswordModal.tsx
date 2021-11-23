@@ -23,7 +23,7 @@ const NewPasswordModal = (props: any) => {
     };
 
     const onFinishFailed = (values: any) => {
-        console.log("failed", values);
+        console.log('Failed', values);
     };
 
     return (
@@ -31,7 +31,7 @@ const NewPasswordModal = (props: any) => {
             title={null}
             visible={showModal}
             footer={null}
-            width={"30%"}
+            width={'30%'}
             maskClosable={false}
             className='custom-new-password-modal'
             centered
@@ -43,19 +43,19 @@ const NewPasswordModal = (props: any) => {
             <Form
                 labelCol={{ span: 24 }}
                 wrapperCol={{ span: 24 }}
-                name="set-new-password-form"
-                className="set-new-password-form"
+                name='set-new-password-form'
+                className='set-new-password-form'
                 initialValues={{}}
                 onFinish={onFinish}
                 onFinishFailed={onFinishFailed}
             >
                 <Form.Item
-                    name="password"
+                    name='password'
                     label={<Title level={5}>New Password</Title>}
                     rules={[{ required: true, message: 'Please enter a new password!' }]}
                 >
                     <Input.Password
-                        className="custom-input"
+                        className='custom-input'
                         onChange={(event) => {
                             setMessage(true);
                             validatePassword(event.target.value, isValidated, setPassword, setValidated);
@@ -63,17 +63,17 @@ const NewPasswordModal = (props: any) => {
                     />
                 </Form.Item>
                 <Form.Item
-                    name="confirmPassword"
+                    name='confirmPassword'
                     label={<Title level={5}>Enter New Password Again</Title>}
                     rules={[{
                         required: true,
                         validator: (rules, value) => confirmReEnteredPassword(rules, value, password)
                     }]}
                 >
-                    <Input.Password className="custom-input" />
+                    <Input.Password className='custom-input' />
                 </Form.Item>
                 {showMessage && <ShowPasswordMessage isValidated={isValidated} />}
-                <PrimaryBtn style={{ width: "100%" }} htmlType="submit" content="Confirm" />
+                <PrimaryBtn style={{ width: '100%' }} htmlType='submit' content='Confirm' />
             </Form>
         </Modal>
 

@@ -17,21 +17,22 @@ import PrimaryBtn from '../../app-components/primaryBtn';
 import InputOtp from '../../app-components/inputOtp';
 
 import './register.scss';
+import { maskData } from '../../app-components/utils';
 
 const { Text, Title } = Typography;
 const { Countdown } = Statistic
 
-const ConfirmOTPModal = ({showOTPModal, setShowOTPModal, currentType, history}: {showOTPModal: boolean, setShowOTPModal: Function, currentType: string, history: any}) => {
+const ConfirmOTPModal = ({ showOTPModal, setShowOTPModal, currentType, history }: { showOTPModal: boolean, setShowOTPModal: Function, currentType: string, history: any }) => {
     const dispatch = useDispatch();
     const registrationState = useSelector((state: RootState) => state.registration);
 
     const { otpError, formData } = registrationState;
-    const phoneNumber = "" + formData?.number;
-    const lastFour = phoneNumber.substr(phoneNumber.length - 4);
+    const phoneNumber = '' + formData?.number;
+    const maskedNumber = maskData(phoneNumber);
     const [otpTimer, setOtpTimer] = useState(0);
     const [resend, showResend] = useState(false);
     const [otpResent, setOtpResent] = useState(false);
-    const [otp, setOtp] = useState("");
+    const [otp, setOtp] = useState('');
 
     useEffect(() => {
         if (otpError.verified) {
@@ -41,8 +42,8 @@ const ConfirmOTPModal = ({showOTPModal, setShowOTPModal, currentType, history}: 
     }, [otpError.verified]);
 
     useEffect(() => {
-        if(showOTPModal) {
-            setOtpTimer(Date.now() + 1000*60);
+        if (showOTPModal) {
+            setOtpTimer(Date.now() + 1000 * 60);
         }
     }, [showOTPModal]);
 
@@ -53,8 +54,8 @@ const ConfirmOTPModal = ({showOTPModal, setShowOTPModal, currentType, history}: 
 
     return (
         <Modal
-            wrapClassName="otp-modal"
-            className="custom-otp-modal"
+            wrapClassName='otp-modal'
+            className='custom-otp-modal'
             title={<Title level={5}>OTP Verification</Title>}
             centered
             closable={true}
@@ -63,10 +64,10 @@ const ConfirmOTPModal = ({showOTPModal, setShowOTPModal, currentType, history}: 
             footer={null}
             onCancel={() => setShowOTPModal(!showOTPModal)}
         >
-            <Row justify="center">
+            <Row justify='center'>
                 <Col>
                     <Text>
-                        Please enter 4 digit OTP number sent to your phone number +91-******{lastFour}
+                        Please enter 4 digit OTP number sent to your phone number +91-{maskedNumber}
                     </Text>
                 </Col>
                 <Col>
@@ -77,44 +78,44 @@ const ConfirmOTPModal = ({showOTPModal, setShowOTPModal, currentType, history}: 
                 <Space>
                     <Text>Didn't receive OTP?</Text>
                     {
-                        !resend ? ( 
+                        !resend ? (
                             <>
-                                <Text className="custom-color-change"> Resend Code in </Text>
+                                <Text className='custom-color-change'> Resend Code in </Text>
                                 <Countdown
-                                className="custom-color-change"
-                                value={otpTimer} format="mm:ss"
-                                onFinish={() => showResend(true)}
-                            />
+                                    className='custom-color-change'
+                                    value={otpTimer} format='mm:ss'
+                                    onFinish={() => showResend(true)}
+                                />
                             </>
-                        ) : (!otpResent ? <PrimaryBtn className="add-margin-bottom" onClick={retryOtpSend} content="Resend OTP" /> : null)
+                        ) : (!otpResent ? <PrimaryBtn className='add-margin-bottom' onClick={retryOtpSend} content='Resend OTP' /> : null)
                     }
                 </Space>
-                <Divider className="confirm-otp-divider" />
+                <Divider className='confirm-otp-divider' />
                 <Alert
-                    className="confirm-otp-modal-warning"
-                    type="warning"
-                    message="By entering the OTP you accept the terms and conditions 
-                        and are ready to verify your profile"
+                    className='confirm-otp-modal-warning'
+                    type='warning'
+                    message='By entering the OTP you accept the terms and conditions 
+                        and are ready to verify your profile'
                 />
             </Row>
             {
                 otpError.showError && (
-                    <Row className="margin-t-1em">
-                        <Col span="24">
-                            <Alert message={otpError.errorMg} type="error" showIcon />
+                    <Row className='margin-t-1em'>
+                        <Col span='24'>
+                            <Alert message={otpError.errorMg} type='error' showIcon />
                         </Col>
-                    </Row> )
+                    </Row>)
             }
-            <Row justify="center" className="margin-t-1em">
+            <Row justify='center' className='margin-t-1em'>
                 <Col>
                     <Space>
                         <PrimaryBtn
                             disabled={otp.length !== 4}
                             onClick={() => {
-                                dispatch(confirmOTP(formData?.number,otp));
+                                dispatch(confirmOTP(formData?.number, otp));
                                 dispatch(saveTimeStamp);
                             }}
-                            content="Submit OTP"
+                            content='Submit OTP'
                         />
                     </Space>
                 </Col>
