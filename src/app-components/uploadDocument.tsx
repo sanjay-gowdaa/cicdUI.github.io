@@ -8,15 +8,15 @@ import DefaultBtn from './defaultBtn';
 
 const { Text } = Typography;
 
-const UploadDocument = (props: any) => {
+export const normFile = (e: any) => {
+    console.log('Upload event:', e);
+    if (Array.isArray(e)) {
+        return e;
+    }
+    return e && e.fileList;
+};
 
-    const normFile = (e: any) => {
-        console.log('Upload event:', e);
-        if (Array.isArray(e)) {
-            return e;
-        }
-        return e && e.fileList;
-    };
+const UploadDocument = (props: any) => {
 
     const validateUpload = (rule: RuleObject, value: any) => {
         if (!isEmpty(value)) {
