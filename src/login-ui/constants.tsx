@@ -1,4 +1,4 @@
-import { RuleObject } from "rc-field-form/lib/interface";
+import { RuleObject } from 'rc-field-form/lib/interface';
 
 export const PIN_REQUIRED_MSG = 'Please provide your pin code!';
 export const PIN_6_DIGIT_MSG = 'Enter pincode of 6 characters!';
@@ -38,8 +38,6 @@ export const GSTIN_REQUIRED_MSG = 'Please enter GSTIN number';
 export const GSTIN_MIN_DIGITS_MSG = 'GSTIN must be of 15 characters!';
 export const GSTIN_INVALID_MSG = 'Invalid GSTIN!';
 
-export const MAX_FILE_SIZE = 'Max Size of file should be 1MB!';
-
 export const registerBasicFormMainLayout = {
     labelCol: { span: 24 },
     wrapperCol: { span: 24 },
@@ -71,57 +69,57 @@ export const workingHours = [
 
 export const documentLabelMapping = [
     {
-        key: "GSTIN",
-        label: "GSTIN",
-        labelClassName: "required-form-field",
-        name: "gstin",
+        key: 'GSTIN',
+        label: 'GSTIN',
+        labelClassName: 'required-form-field',
+        name: 'gstin',
         upload: false
     },
     {
-        key: "PAN",
-        label: "PAN card Number",
-        name: "pan",
-        formClassName: "form-item-60",
+        key: 'PAN',
+        label: 'PAN card Number',
+        name: 'pan',
+        formClassName: 'form-item-60',
         upload: true,
-        uploadFormName: "pan_card"
+        uploadFormName: 'pan_card'
     },
     {
-        key: "AADHAR",
-        label: "Aadhaar card Number",
-        labelClassName: "required-form-field",
-        name: "uidai",
-        formClassName: "form-item-60",
+        key: 'AADHAR',
+        label: 'Aadhaar card Number',
+        labelClassName: 'required-form-field',
+        name: 'uidai',
+        formClassName: 'form-item-60',
         upload: true,
-        uploadFormName: "aadhar_card"
+        uploadFormName: 'aadhar_card'
     },
     {
-        key: "Kisan card",
-        label: "Kisan card",
-        name: "kisancard",
-        formClassName: "form-item-60",
+        key: 'Kisan card',
+        label: 'Kisan card',
+        name: 'kisancard',
+        formClassName: 'form-item-60',
         upload: true,
-        uploadFormName: "kisancard_card"
+        uploadFormName: 'kisancard_card'
     },
     {
-        key: "FPO",
-        label: "Society/ FPO Number",
-        name: "fpo",
+        key: 'FPO',
+        label: 'Society/ FPO Number',
+        name: 'fpo',
         upload: false,
     },
     {
-        key: "RTC",
-        label: "RTC Number",
-        name: "rtc",
-        formClassName: "form-item-60",
+        key: 'RTC',
+        label: 'RTC Number',
+        name: 'rtc',
+        formClassName: 'form-item-60',
         upload: true,
-        uploadFormName: "rtc_card"
+        uploadFormName: 'rtc_card'
     }
 ];
 
 export const customConsentValidator = (rule: RuleObject, value: boolean) => {
-    if(!value) {
-        return(Promise.reject('Please accept the terms and conditions!'));
+    if (!value) {
+        return (Promise.reject('Please accept the terms and conditions!'));
     } else {
-        return(Promise.resolve());
+        return (Promise.resolve());
     }
 };

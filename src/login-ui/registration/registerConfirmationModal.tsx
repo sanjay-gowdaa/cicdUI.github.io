@@ -5,17 +5,18 @@ import CancelBtn from '../../app-components/cancelBtn';
 import PrimaryBtn from '../../app-components/primaryBtn';
 
 type propsModel = {
-    registerResponse: {errorMg: string, verified: boolean}
+    registerResponse: { errorMg: string, verified: boolean }
     onConfirmRegister: any,
     toggleShowConfirmation: any,
     showConfirmation: boolean,
     isProcessing: boolean
-}
+};
 
 const RegisterConfirmation = (props: propsModel) => {
-    const {onConfirmRegister, toggleShowConfirmation, showConfirmation, registerResponse, isProcessing} = props;
+    const { onConfirmRegister, toggleShowConfirmation, showConfirmation, registerResponse, isProcessing } = props;
+
     return (
-        <>
+        <React.Fragment>
             <Modal
                 visible={showConfirmation}
                 centered
@@ -25,8 +26,8 @@ const RegisterConfirmation = (props: propsModel) => {
                 maskClosable={false}
             >
                 <p>Submit your details for verification?</p>
-                {
-                    registerResponse.errorMg && <Alert message={registerResponse.errorMg} type="error" />
+                {registerResponse.errorMg &&
+                    <Alert message={registerResponse.errorMg} type='error' style={{ marginBottom: '2%' }} />
                 }
                 <Row justify='end'>
                     <Col>
@@ -38,13 +39,13 @@ const RegisterConfirmation = (props: propsModel) => {
                             disabled={isProcessing}
                             className='margin-l-r-1em'
                             onClick={() => onConfirmRegister()}
-                            content="Yes"
+                            content='Yes'
                         />
                     </Col>
                 </Row>
             </Modal>
-        </>
-    )
-}
+        </React.Fragment>
+    );
+};
 
 export default RegisterConfirmation;
