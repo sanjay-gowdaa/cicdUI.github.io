@@ -22,38 +22,36 @@ const ConfirmationMessage = (props: any) => {
             closable={false}
             maskClosable={false}
         >
-            {
-                isSave ?
-                    <Text>Save and submit your details for verification?</Text>:
-                    <Text>The data will not be saved. Are you sure you want to cancel?</Text>
+            {isSave ?
+                <Text>Save and submit your details for verification?</Text> :
+                <Text>The data will not be saved. Are you sure you want to cancel?</Text>
             }
-            {
-                response.kycErrorMsg && !disableSave && <Alert message={response.kycErrorMsg} type="error" />
+            {response.kycErrorMsg && !disableSave &&
+                <Alert message={response.kycErrorMsg} type='error' />
             }
             <Row justify='end'>
-                {
-                    !isEmpty(response.kycErrorMsg) ?
-                        <Col>
-                            <PrimaryBtn
-                                className="margin-l-r-1em margin-t-1em"
-                                onClick={() => {
-                                    window.history.back();
-                                    dispatch(setKycUpdateMsg(""));
-                                }}
-                                content="OK"
-                            />
-                        </Col> :
-                        <Col>
-                            <CancelBtn
-                                className='margin-l-r-1em margin-t-1em'
-                                onClick={() => setConfirmation(!showConfirmation)}
-                            />
-                            <PrimaryBtn
-                                className='margin-l-r-1em margin-t-1em'
-                                onClick={() => isSave ? onConfirm() : window.history.back()}
-                                content="Yes"
-                            />
-                        </Col>
+                {!isEmpty(response.kycErrorMsg) ?
+                    <Col>
+                        <PrimaryBtn
+                            className='margin-l-r-1em margin-t-1em'
+                            onClick={() => {
+                                window.history.back();
+                                dispatch(setKycUpdateMsg(''));
+                            }}
+                            content='OK'
+                        />
+                    </Col> :
+                    <Col>
+                        <CancelBtn
+                            className='margin-l-r-1em margin-t-1em'
+                            onClick={() => setConfirmation(!showConfirmation)}
+                        />
+                        <PrimaryBtn
+                            className='margin-l-r-1em margin-t-1em'
+                            onClick={() => isSave ? onConfirm() : window.history.back()}
+                            content='Yes'
+                        />
+                    </Col>
                 }
             </Row>
         </Modal>

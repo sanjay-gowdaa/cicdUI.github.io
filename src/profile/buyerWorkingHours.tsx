@@ -1,4 +1,4 @@
-import React, { useState } from'react';
+import React, { useState } from 'react';
 import { Button, Form, Select, Typography } from 'antd';
 import { startCase } from 'lodash';
 
@@ -25,56 +25,55 @@ const BuyerWorkingHours = (props: any) => {
     return (
         <Form.Item
             {...fieldLayout}
-            className="kyc-form-label"
-            label="Working Hours"
+            className='kyc-form-label'
+            label='Working Hours'
         >
-            {
-                change ?
-                    <>
-                        <Form.Item
-                            label="Monday to Friday"
-                            name="weekday"
+            {change ?
+                <React.Fragment>
+                    <Form.Item
+                        label='Monday to Friday'
+                        name='weekday'
+                    >
+                        <Select
+                            className='custom-select'
+                            defaultValue={workingHours?.weekday}
+                            onChange={() => setDisableSave(false)}
                         >
-                            <Select
-                                className="custom-select"
-                                defaultValue={workingHours?.weekday}
-                                onChange={() => setDisableSave(false)}
-                            >
-                                { getWorkingHoursOptions() }
-                            </Select>
-                        </Form.Item>
-                        <Form.Item
-                            label="Saturday"
-                            name="saturday"
+                            {getWorkingHoursOptions()}
+                        </Select>
+                    </Form.Item>
+                    <Form.Item
+                        label='Saturday'
+                        name='saturday'
+                    >
+                        <Select
+                            className='custom-select'
+                            defaultValue={workingHours?.saturday}
+                            onChange={() => setDisableSave(false)}
                         >
-                            <Select
-                                className="custom-select"
-                                defaultValue={workingHours?.saturday}
-                                onChange={() => setDisableSave(false)}
-                            >
-                                { getWorkingHoursOptions() }
-                            </Select>
-                        </Form.Item>
-                        <Form.Item
-                            label="Sunday"
-                            name="sunday"
+                            {getWorkingHoursOptions()}
+                        </Select>
+                    </Form.Item>
+                    <Form.Item
+                        label='Sunday'
+                        name='sunday'
+                    >
+                        <Select
+                            className='custom-select'
+                            defaultValue={workingHours?.sunday}
+                            onChange={() => setDisableSave(false)}
                         >
-                            <Select
-                                className="custom-select"
-                                defaultValue={workingHours?.sunday}
-                                onChange={() => setDisableSave(false)}
-                            >
-                                { getWorkingHoursOptions() }
-                            </Select>
-                        </Form.Item>
-                        <Button type="link" danger onClick={() => setChange(!change)}>Cancel</Button>
-                    </> :
-                    <>
-                        <Text>Monday to Friday: {startCase(workingHours?.weekday.replaceAll("_", " "))}</Text>
-                        <br/><Text>Saturday: {startCase(workingHours?.saturday.replaceAll("_", " "))}</Text>
-                        <br/><Text>Sunday: {startCase(workingHours?.sunday.replaceAll("_", " "))}</Text>
-                        <br/><Button type="link" onClick={() => setChange(!change)}>Change</Button>
-                    </>
+                            {getWorkingHoursOptions()}
+                        </Select>
+                    </Form.Item>
+                    <Button type='link' danger onClick={() => setChange(!change)}>Cancel</Button>
+                </React.Fragment> :
+                <React.Fragment>
+                    <Text>Monday to Friday: {startCase(workingHours?.weekday.replaceAll('_', ' '))}</Text>
+                    <br /><Text>Saturday: {startCase(workingHours?.saturday.replaceAll('_', ' '))}</Text>
+                    <br /><Text>Sunday: {startCase(workingHours?.sunday.replaceAll('_', ' '))}</Text>
+                    <br /><Button type='link' onClick={() => setChange(!change)}>Change</Button>
+                </React.Fragment>
             }
         </Form.Item>
     );
