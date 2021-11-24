@@ -184,22 +184,13 @@ export const produceColumns = ({
                 handleSave: (record: ProduceModel) => updateCropDetails(record),
             }),
             render: (text: string, record: ProduceModel) => {
-                let disableEdit = false;
-                const setDisableEdit = (value: boolean) => {
-                    disableEdit = value;
-                };
-
                 return (
                     <>
                         <Button
                             type="link"
-                            disabled={!record.isEditable && disableEdit}
+                            disabled={!record.isEditable}
                             onClick={() => {
-                                setDisableEdit(true);
                                 prepareForEditProduce(record);
-                                setTimeout(() => {
-                                    setDisableEdit(false);
-                                }, 50000);
                             }}
                         >
                             Edit

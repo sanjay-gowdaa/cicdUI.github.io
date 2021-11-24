@@ -121,7 +121,16 @@ const TransactionDetailsModel = (props: any) => {
                         </Timeline.Item>
                     )
                 })}
-                {tab === TransactionStatus.on_going ? showRemainingTimeline() : null}
+                {tab === TransactionStatus.on_going ?
+                    showRemainingTimeline() :
+                    <Timeline.Item
+                        dot={<CheckCircleFilled style={{ color: "#12805C" }} />}
+                        color={"#F5A31A"}
+                        className="is-complete"
+                    >
+                        Transaction Completed
+                    </Timeline.Item>
+                }
             </Timeline>
         </>
     );

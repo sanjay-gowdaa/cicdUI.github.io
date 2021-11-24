@@ -59,9 +59,18 @@ const AcceptMatch = (props: { cropDetails: MatchRequirementModel }) => {
                 )
             );
             dispatch(resetOTPFields());
+            resetAllFields();
             setViewAcceptAgreement(!viewAcceptAgreement);
         }
     }, [otpError.verified]);
+
+    const resetAllFields = () => {
+        setOtp("");
+        setAgreed(false);
+        setOtpResent(false);
+        setOtpTimer(0);
+        showResend(false);
+    };
 
     const onAccept = () => {
         dispatch(saveTimeStamp);
@@ -90,6 +99,7 @@ const AcceptMatch = (props: { cropDetails: MatchRequirementModel }) => {
                 <TradeSummary cropDetails={cropDetails} />
                 <Checkbox
                     className="custom-checkbox"
+                    checked={isAgreed}
                     onChange={(event: any) => {
                         if (event.target.checked) {
                             dispatch(sendOTP(`91${userState.username}`))

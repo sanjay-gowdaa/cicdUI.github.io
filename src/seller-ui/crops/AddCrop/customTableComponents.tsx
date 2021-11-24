@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { Input, Button, Form, Select } from 'antd';
 import { FormInstance } from 'antd/lib/form';
 
-import { validateSellerPrice } from '../cropUtils';
+import { validateQuantity, validateSellerPrice } from '../cropUtils';
 
 import { CropApiModel } from '../../../store/sellerReducer/types';
 import confirmationPopup from '../../../buyer-seller-commons/confirmationPopup';
@@ -114,7 +114,7 @@ const QuantityEditComponent = ({ dataIndex, record, ...restProps }: any) => {
                 name={dataIndex}
                 rules={[{
                     required: true,
-                    message: `Quantity is required.`,
+                    validator: (rules: any, value: any) => validateQuantity(rules, value)
                 }]}
             >
                 <Input className="custom-input" placeholder="In quintal" />

@@ -14,6 +14,8 @@ import {
 import { useDispatch, useSelector } from 'react-redux';
 import moment from 'moment';
 
+import { validateQuantity } from '../utils';
+
 import { addNewProduce } from '../../../store/buyerReducer/actions';
 import CancelBtn from '../../../app-components/cancelBtn';
 import { MasterListApiFormat, ProduceModel } from '../../../store/buyerReducer/types';
@@ -188,7 +190,10 @@ const AddCropModal = ({
                             {...fieldwithInfoLayout}
                             label="Quantity"
                             name="quantity"
-                            rules={[{ required: true, message: 'Please input the Qunatity!' }]}
+                            rules={[{
+                                required: true,
+                                validator: (rules: any, value: any) => validateQuantity(rules, value)
+                            }]}
                         >
                             <Form.Item name="quantity">
                                 <Input

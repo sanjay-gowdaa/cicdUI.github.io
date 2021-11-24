@@ -111,12 +111,16 @@ const CropsSection = (props: any) => {
 
     return (
         <div className="crops-container" id="seller-ui-crops">
-            {userStatus.map((list) => {
-                return (isActiveFlag === list.flag) ?
-                    <Tag color={list.backgroundColor} style={{ color: list.color, fontSize: "large", padding: "0.5em" }} >
-                        {list.title} </Tag> :
-                    <Tag style={{ display: 'none' }}></Tag>
-            })}
+            {isApproved &&
+                <>
+                    {userStatus.map((list) => {
+                        return (isActiveFlag === list.flag) ?
+                            <Tag color={list.backgroundColor} style={{ color: list.color, fontSize: "large", padding: "0.5em" }} >
+                                {list.title} </Tag> :
+                            <Tag style={{ display: 'none' }}></Tag>
+                    })}
+                </>
+            }
             <Title level={2}>My Produce</Title>
             <PrimaryBtn
                 className="add-crop-btn vikas-btn-radius"
