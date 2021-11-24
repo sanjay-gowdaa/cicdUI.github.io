@@ -1,6 +1,7 @@
 import CryptoJS from 'crypto-js';
+import { Auth } from 'aws-amplify';
 
-import { UserDetailsModel } from './types';
+import { UserDetailsModel, UserStateModel } from './types';
 
 import {
     fetchUserCompleteDetails,
@@ -18,6 +19,7 @@ import {
 import { handleResponse } from '../utils';
 
 import { converBase64toBlob } from '../../app-components/utils';
+import { RootState } from '../rootReducer';
 
 const TOKEN_GRANT = process.env.REACT_APP_TOKEN_GRANT as string;
 
@@ -30,6 +32,62 @@ export const SET_LOGIN_SUCCESS = 'SET_LOGIN_SUCCESS';
 export const UPDATE_CONFIGURATIONS = 'UPDATE_CONFIGURATIONS';
 export const SET_KYC_ERROR = 'SET_KYC_ERROR';
 export const SET_IS_REDIRECTED = 'SET_IS_REDIRECTED';
+export const SET_ERROR_IN_LOGIN = 'SET_ERROR_IN_LOGIN';
+export const SET_SUCCESS_IN_LOGIN = 'SET_SUCCESS_IN_LOGIN';
+export const SET_PASSWORD_CHANGE_SUCCESS = 'SET_PASSWORD_CHANGE_SUCCESS';
+export const SET_CONFIRMATION_CODE_ERROR = 'SET_CONFIRMATION_CODE_ERROR';
+export const SET_PASSWORD_CHANGE_ERROR = 'SET_PASSWORD_CHANGE_ERROR';
+export const SET_NEW_PASSWORD = 'SET_NEW_PASSWORD';
+export const SET_USER = 'SET_USER';
+
+export const setUser = (user: any) => {
+    return {
+        type: SET_USER,
+        payload: user
+    };
+};
+
+export const setNewPassword = (setPassword: boolean) => {
+    return {
+        type: SET_NEW_PASSWORD,
+        payload: setPassword
+    };
+};
+
+export const setConfirmationCodeError = (error: string) => {
+    return {
+        type: SET_CONFIRMATION_CODE_ERROR,
+        payload: error
+    };
+};
+
+export const setPasswordChangeError = (error: string) => {
+    return {
+        type: SET_PASSWORD_CHANGE_ERROR,
+        payload: error
+    };
+};
+
+export const setErrorInLogin = (error: string) => {
+    return {
+        type: SET_ERROR_IN_LOGIN,
+        payload: error
+    };
+};
+
+export const setSuccessInLogin = () => {
+    return {
+        type: SET_SUCCESS_IN_LOGIN,
+        payload: true
+    };
+};
+
+export const setPasswordChangeStatus = () => {
+    return {
+        type: SET_PASSWORD_CHANGE_SUCCESS,
+        payload: true
+    };
+};
 
 export const updateIsRedirected = (isRedirected: boolean) => {
     return {
@@ -179,4 +237,57 @@ export const registerSellerAtDestiny = async (userData: any) => {
     const regSellerResponse = await postSellerDetails(userData);
     const { response } = regSellerResponse;
     console.log("response", response);
+};
+
+export const signIn = (userName: string, password: string) => {
+    return async (dispatch: any, getState: any) => {
+        Auth.signIn(userName, password)
+            .then(user => {
+                if (user.challengeName === 'NEW_PASSWORD_REQUIRED') {
+                    dispatch(setNewPassword(true));
+                    dispatch(setUser(user));
+                } else {
+                    const { signInUserSession } = user;
+                    const { accessToken } = signInUserSession;
+                    dispatch(setSuccessInLogin());
+                    (window as any).userToken = accessToken.jwtToken;
+                }
+            }).catch(error => {
+                dispatch(setErrorInLogin(error.message))
+            });
+    };
+};
+
+export const setUserPassword = (password: string) => {
+    return async (dispatch: any, getState: any) => {
+        const { loginUser }: { loginUser: UserStateModel } = getState() as RootState;
+        Auth.completeNewPassword(loginUser.user, password)
+            .then(user => {
+                dispatch(setSuccessInLogin());
+                (window as any).userToken = user.signInUserSession.accessToken.jwtToken;
+            })
+            .catch(e => console.log("error", e));
+    };
+};
+
+export const sendConfirmationCode = (userName: string) => {
+    return async (dispatch: any, getState: any) => {
+        Auth.forgotPassword(userName)
+            .then(() => {
+                dispatch(setConfirmationCodeError(''));
+            })
+            .catch(error => {
+                dispatch(setConfirmationCodeError(error.message));
+            })
+    };
+};
+
+export const submitForgotPassword = (userName: string, code: string, password: string) => {
+    return async (dispatch: any, getState: any) => {
+        Auth.forgotPasswordSubmit(userName, code, password)
+            .then(dispatch(setPasswordChangeStatus()))
+            .catch(error => {
+                dispatch(setPasswordChangeError(error.message));
+            })
+    };
 };
