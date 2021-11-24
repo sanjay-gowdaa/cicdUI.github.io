@@ -9,11 +9,14 @@ import { MatchRequirementModel, TransactionAction, TransactionStatus } from '../
 const BASE_URL = process.env.REACT_APP_BASE_URL;
 const STAGE = process.env.REACT_APP_ENV;
 const TOKEN_GRANT = process.env.REACT_APP_TOKEN_GRANT as string;
+const LOGIN_BASE_URL = process.env.REACT_APP_LOGIN_URL_BASE_URL;
+const LOGOUT_BASE_URL = process.env.REACT_APP_LOGOUT_BASE_URL;
+const COGNITO_ID = process.env.REACT_APP_COGNITO_CLIENT_ID;
 
 export const REDIRECT_URL = `https://${window.location.host}/login-user`;
 export const LOGOUT_REDIRECT = `https://${window.location.host}/`;
-export const LOGIN_URL = `${process.env.REACT_APP_LOGIN_URL_BASE_URL}/login?client_id=${process.env.REACT_APP_COGNITO_CLIENT_ID}&response_type=code&redirect_uri=${REDIRECT_URL}`;
-export const LOGOUT_URL = `${process.env.REACT_APP_LOGOUT_BASE_URL}/logout?client_id=${process.env.REACT_APP_COGNITO_CLIENT_ID}&logout_uri=${LOGOUT_REDIRECT}`;
+export const LOGIN_URL = `${LOGIN_BASE_URL}/login?client_id=${COGNITO_ID}&response_type=code&redirect_uri=${REDIRECT_URL}`;
+export const LOGOUT_URL = `${LOGOUT_BASE_URL}/logout?client_id=${COGNITO_ID}&logout_uri=${LOGOUT_REDIRECT}`;
 
 const OTP_SEND_API = 'otp/send';
 const OTP_RESEND_API = 'otp/retry'
@@ -48,6 +51,10 @@ const USER_ALREADY_EXISTS = 'userAlreadyExists';
 const GET_EVENT_TEMPLATE = `${TRANSACTION_API}/getBuyerSellerStatus`;
 const GET_AMOUNT_API = 'getamounttodisplay';
 const GET_REJECT_COUNT = 'getrejectcount';
+const COGNITO_PROVIDER = 'CognitoIdentityServiceProvider';
+
+export const LAST_AUTH_USER = localStorage.getItem(`${COGNITO_PROVIDER}.${COGNITO_ID}.LastAuthUser`);
+export const ACCESS_TOKEN = localStorage.getItem(`${COGNITO_PROVIDER}.${COGNITO_ID}.${LAST_AUTH_USER}.accessToken`);
 
 const parseToken = (userToken: string) => {
     const sholudDecrypt = process.env.REACT_APP_ENV === 'prod';
@@ -58,8 +65,8 @@ const parseToken = (userToken: string) => {
 
 const getAuthHeader = () => {
     const userToken = (window as any).userToken ? (window as any).userToken : '';
-    if (userToken || localStorage.getItem("token")) {
-        const token = isEmpty(userToken) ? localStorage.getItem("token") : userToken;
+    if (userToken || ACCESS_TOKEN) {
+        const token = isEmpty(userToken) ? ACCESS_TOKEN : userToken;
         const userAccessToken = parseToken(token);
         return ({ 'Authorization': `Bearer ${userAccessToken}` });
     } else {
@@ -94,22 +101,24 @@ export const verifyOtp = (number: string, otp: string) => {
     return fetch(sendOtpApi, {
         method: 'post',
         body: bodyParam
-    }).then((response: any) => response.json());
+    }).then((response: any) => response.json())
+        .catch((error: any) => console.log('error', error));
 };
 /* OTP Interface End */
 
 /* User Manager API*/
 export const getUserManager = (phoneNumber: string) => {
     const userManagerApi = `${BASE_URL}/${STAGE}/${USER_MANAGER_API}/${phoneNumber}`;
-    return fetch(userManagerApi)
-        .then((response: any) => response.json());
+    return fetch(userManagerApi).then((response: any) => response.json())
+        .catch((error: any) => console.log('error', error));
 };
 /* USer Manager API End */
 
 export const checkIfUserAlreadyExists = (phoneNumber: string) => {
     const userAlreadyExistsApi = `${BASE_URL}/${STAGE}/${USER_MANAGER_API}/${USER_ALREADY_EXISTS}/?userName=${phoneNumber}`;
     return fetch(userAlreadyExistsApi)
-        .then((response: any) => response.json());
+        .then((response: any) => response.json())
+        .catch((error: any) => console.log('error', error));
 };
 
 /* Location interface */
@@ -122,18 +131,20 @@ export const getLocationByPin = (pincode: string) => {
 /* Configurations */
 export const getAllConfigs = () => {
     const configurationApi = `${BASE_URL}/${STAGE}/${CONFIG_API}?config=user_type`;
-    return fetch(configurationApi).then((response: any) => response.json());
+    return fetch(configurationApi).then((response: any) => response.json())
+        .catch((error: any) => console.log('error', error));
 };
 /* Configurations End */
 
 /* Registration And Login Interface */
-export const registerUser = (userType: string, userFormData: any) => {
+export const registerUser = (userFormData: any) => {
     const registrationApi = `${BASE_URL}/${STAGE}/${REGISTER_API}`;
     return fetch(registrationApi,
         {
             method: 'POST',
             body: JSON.stringify(userFormData)
-        }).then((response: any) => response.json());
+        }).then((response: any) => response.json())
+        .catch((error: any) => console.log('error', error));
 };
 
 export const getAccessToken = (userCode: string) => {
@@ -145,21 +156,24 @@ export const getAccessToken = (userCode: string) => {
     return fetch(accessTokenApi, {
         method: 'POST',
         body: accessTokenParam
-    }).then((response: any) => response.json());
+    }).then((response: any) => response.json())
+        .catch((error: any) => console.log('error', error));
 };
 
-export const fetchUserDetails = (userAccessToken: string) => {
+export const fetchUserDetails = () => {
     const userProfileApi = `${BASE_URL}/${STAGE}/${USER_PROFILE_API}`;
     return fetch(userProfileApi, {
         headers: getAuthHeader()
-    }).then((response: any) => response.json());
+    }).then((response: any) => response.json())
+        .catch((error: any) => console.log('error', error));
 };
 
-export const fetchRedirectedUserDetails = (userAccessToken: string) => {
+export const fetchRedirectedUserDetails = () => {
     const userProfileApi = `${BASE_URL}/${STAGE}/${USER_PROFILE_API}`;
     return fetch(userProfileApi, {
-        headers: { 'Authorization': `Bearer ${userAccessToken}` }
-    }).then((response: any) => response.json());
+        headers: getAuthHeader()
+    }).then((response: any) => response.json())
+        .catch((error: any) => console.log('error', error));
 };
 
 export const kycUserDetails = (userFormData: any) => {
@@ -168,20 +182,23 @@ export const kycUserDetails = (userFormData: any) => {
         method: 'POST',
         headers: getAuthHeader(),
         body: JSON.stringify(userFormData)
-    }).then((response: any) => response.json());
+    }).then((response: any) => response.json())
+        .catch((error: any) => console.log('error', error));
 };
 
 export const fetchUserCompleteDetails = () => {
     const userDetailsAPI = `${BASE_URL}/${STAGE}/${USER_COMPLETE_DETAILS}`;
     return fetch(userDetailsAPI, {
         headers: getAuthHeader()
-    }).then((response: any) => response.json());
+    }).then((response: any) => response.json())
+        .catch((error: any) => console.log('error', error));
 };
 
 export const fetchUserFiles = (fileName: string) => {
     const getUserFileAPI = `${BASE_URL}/${STAGE}/${USER_FILE_API}/?filename=${fileName}`;
     return fetch(getUserFileAPI)
-        .then((response: any) => response.json());
+        .then((response: any) => response.json())
+        .catch((error: any) => console.log('error', error));
 };
 
 /* Registration And Login Interface End*/
@@ -193,36 +210,37 @@ export const getSubCategoryList = (categoryId: string) => {
     const subcategoryListApi = `${BASE_URL}/${STAGE}/${CROP_SUB_TYPES_DETAILS_API}?crop=${categoryId}`;
     return fetch(subcategoryListApi, {
         headers: getAuthHeader()
-    }).then((response: any) => response.json());
+    }).then((response: any) => response.json())
+        .catch((error: any) => console.log('error', error));
 };
 
-export const createCrop = (cropData: any, sellerId: string) => {
-    const userId = isEmpty(sellerId) ? localStorage.getItem("userName") : sellerId;
-    const addCropApi = `${BASE_URL}/${STAGE}/seller/${userId}/crop`;
+export const createCrop = (cropData: any) => {
+    const addCropApi = `${BASE_URL}/${STAGE}/seller/${LAST_AUTH_USER}/crop`;
     return fetch(addCropApi, {
         method: 'POST',
         body: JSON.stringify(cropData),
         headers: getAuthHeader()
-    }).then((response: any) => response.json());
+    }).then((response: any) => response.json())
+        .catch((error: any) => console.log('error', error));
 };
 
-export const patchCrop = (cropData: any, sellerId: string) => {
-    const userId = isEmpty(sellerId) ? localStorage.getItem("userName") : sellerId;
-    const addProduceApi = `${BASE_URL}/${STAGE}/seller/${userId}/crop`;
+export const patchCrop = (cropData: any) => {
+    const addProduceApi = `${BASE_URL}/${STAGE}/seller/${LAST_AUTH_USER}/crop`;
     const bodyParamData = JSON.stringify(cropData);
     return fetch(addProduceApi, {
         method: 'PATCH',
         body: bodyParamData,
         headers: getAuthHeader()
-    }).then((response: any) => response.json());
+    }).then((response: any) => response.json())
+        .catch((error: any) => console.log('error', error));
 };
 
-export const getAllCrops = (sellerId: string) => {
-    const userId = isEmpty(sellerId) ? localStorage.getItem("userName") : sellerId;
-    const fetcCropsApi = `${BASE_URL}/${STAGE}/seller/${userId}/crop`;
+export const getAllCrops = () => {
+    const fetcCropsApi = `${BASE_URL}/${STAGE}/seller/${LAST_AUTH_USER}/crop`;
     return fetch(fetcCropsApi, {
         headers: getAuthHeader()
-    }).then((response: any) => response.json());
+    }).then((response: any) => response.json())
+        .catch((error: any) => console.log('error', error));
 };
 
 export const getLiveApmcRateUpdated = (cropDetails: Array<UpdatedLiveApmcRatesQuery>) => {
@@ -231,69 +249,70 @@ export const getLiveApmcRateUpdated = (cropDetails: Array<UpdatedLiveApmcRatesQu
         method: 'POST',
         // headers: getAuthHeader(),
         body: JSON.stringify(cropDetails)
-    }).then((response: any) => response.json());
+    }).then((response: any) => response.json())
+        .catch((error: any) => console.log('error', error));
 };
 
 export const getLiveApmcRate = (cropDetails: Array<LiveApmcRates>) => {
-    const apmcLiveRateBody = { crops: cropDetails };
     const getApmcPriceApi = `${BASE_URL}/${STAGE}/${APMC_LIVE_RATES}`;
     return fetch(getApmcPriceApi, {
         method: 'POST',
         headers: getAuthHeader(),
         body: JSON.stringify({ crops: cropDetails })
-    }).then((response: any) => response.json());
+    }).then((response: any) => response.json())
+        .catch((error: any) => console.log('error', error));
 };
 
-export const intentToSell = (userID: string, produceId: string) => {
-    const userId = isEmpty(userID) ? localStorage.getItem("userName") : userID;
-    const intentToSellForSeller = `${BASE_URL}/${STAGE}/seller/${userId}/crop/${produceId}/${INTENT_TO_SELL}`
+export const intentToSell = (produceId: string) => {
+    const intentToSellForSeller = `${BASE_URL}/${STAGE}/seller/${LAST_AUTH_USER}/crop/${produceId}/${INTENT_TO_SELL}`;
     return fetch(intentToSellForSeller, {
         method: 'POST',
         headers: getAuthHeader()
-    }).then((response: any) => response.json());
+    }).then((response: any) => response.json())
+        .catch((error: any) => console.log('error', error));
 };
 
 /* Seller Apis End */
 
 /* Buyer Apis */
-export const addProduce = (produceData: any, buyerId: string) => {
-    const userId = isEmpty(buyerId) ? localStorage.getItem("userName") : buyerId;
-    const addProduceApi = `${BASE_URL}/${STAGE}/buyer/${userId}/crop`;
+export const addProduce = (produceData: any) => {
+    const addProduceApi = `${BASE_URL}/${STAGE}/buyer/${LAST_AUTH_USER}/crop`;
     const bodyParamData = JSON.stringify(produceData);
     return fetch(addProduceApi, {
         method: 'POST',
         body: bodyParamData,
         headers: getAuthHeader()
-    }).then((response: any) => response.json());
+    }).then((response: any) => response.json())
+        .catch((error: any) => console.log('error', error));
 };
 
-export const patchProduce = (produceData: any, buyerId: string) => {
-    const userId = isEmpty(buyerId) ? localStorage.getItem("userName") : buyerId;
-    const addProduceApi = `${BASE_URL}/${STAGE}/buyer/${userId}/crop`;
+export const patchProduce = (produceData: any) => {
+    const addProduceApi = `${BASE_URL}/${STAGE}/buyer/${LAST_AUTH_USER}/crop`;
     const bodyParamData = JSON.stringify(produceData);
     return fetch(addProduceApi, {
         method: 'PATCH',
         body: bodyParamData,
         headers: getAuthHeader()
-    }).then((response: any) => response.json());
+    }).then((response: any) => response.json())
+        .catch((error: any) => console.log('error', error));
 };
 
-export const deleteProduce = (userID: string, produceId: string, is_buyer?: boolean) => {
+export const deleteProduce = (produceId: string, is_buyer?: boolean) => {
     const userType = is_buyer ? 'buyer' : 'seller';
-    const userId = isEmpty(userID) ? localStorage.getItem("userName") : userID;
-    const produceApi = `${BASE_URL}/${STAGE}/${userType}/${userId}/crop/${produceId}`;
+    const produceApi = `${BASE_URL}/${STAGE}/${userType}/${LAST_AUTH_USER}/crop/${produceId}`;
     return fetch(produceApi, {
         method: 'DELETE',
         headers: getAuthHeader()
-    }).then((response: any) => response);
+    }).then((response: any) => response)
+        .catch((error: any) => console.log('error', error));
 };
 
-export const getAllProduce = (buyerId: string) => {
-    const userId = isEmpty(buyerId) ? localStorage.getItem("userName") : buyerId;
-    const getAllProduceApi = `${BASE_URL}/${STAGE}/buyer/${userId}/crop`;
+export const getAllProduce = () => {
+    const getAllProduceApi = `${BASE_URL}/${STAGE}/buyer/${LAST_AUTH_USER}/crop`;
     return fetch(getAllProduceApi, {
         headers: getAuthHeader()
-    }).then((response: any) => response.json());
+    }).then((response: any) => response.json())
+        .catch((error: any) => console.log('error', error));
 };
 
 // getCrops Api
@@ -301,7 +320,8 @@ export const getCropList = (filteredCrop: string) => {
     const categoryListApi = `${BASE_URL}/${STAGE}/${CROP_TYPES_API}?category=${filteredCrop}`;
     return fetch(categoryListApi, {
         headers: getAuthHeader()
-    }).then((response: any) => response.json());
+    }).then((response: any) => response.json())
+        .catch((error: any) => console.log('error', error));
 };
 
 // getCropCategories Api
@@ -309,26 +329,27 @@ export const getCropCategoryList = () => {
     const cropCategoryApi = `${BASE_URL}/${STAGE}/${CROP_CATEGORY_DETAILS_API}`;
     return fetch(cropCategoryApi, {
         headers: getAuthHeader()
-    }).then((response: any) => response.json());
+    }).then((response: any) => response.json())
+        .catch((error: any) => console.log('error', error));
 };
 
-export const updateMasterList = (updateMasterList: any, buyerId: string) => {
-    const userId = isEmpty(buyerId) ? localStorage.getItem("userName") : buyerId;
-    const masterListApi = `${BASE_URL}/${STAGE}/buyer/${userId}/master_list`;
+export const updateMasterList = (updateMasterList: any) => {
+    const masterListApi = `${BASE_URL}/${STAGE}/buyer/${LAST_AUTH_USER}/master_list`;
     const bodyParamData = JSON.stringify(updateMasterList);
     return fetch(masterListApi, {
         method: 'POST',
         body: bodyParamData,
         headers: getAuthHeader()
     }).then((response: any) => response.json())
+        .catch((error: any) => console.log('error', error));
 };
 
-export const getMasterList = (buyerId: string) => {
-    const userId = isEmpty(buyerId) ? localStorage.getItem("userName") : buyerId;
-    const masterListApi = `${BASE_URL}/${STAGE}/buyer/${userId}/master_list`;
+export const getMasterList = () => {
+    const masterListApi = `${BASE_URL}/${STAGE}/buyer/${LAST_AUTH_USER}/master_list`;
     return fetch(masterListApi, {
         headers: getAuthHeader()
     }).then((response: any) => response.json())
+        .catch((error: any) => console.log('error', error));
 };
 /* Buyer Apis End */
 
@@ -342,6 +363,7 @@ export const getBuyerMatchesList = (buyerId: string, cropIds: Array<string>) => 
         method: 'POST',
         body: JSON.stringify(matchesBody)
     }).then((response: any) => response.json())
+        .catch((error: any) => console.log('error', error));
 };
 
 export const rejectMatch = (rejectData: BuyerRejectMatch) => {
@@ -353,6 +375,7 @@ export const rejectMatch = (rejectData: BuyerRejectMatch) => {
         method: 'POST',
         body: JSON.stringify(rejectData)
     }).then((response: any) => response.json())
+        .catch((error: any) => console.log('error', error));
 };
 
 export const createTransaction = (transactionEntry: any) => {
@@ -362,18 +385,19 @@ export const createTransaction = (transactionEntry: any) => {
         method: 'POST',
         body: JSON.stringify(transactionEntry)
     }).then((response: any) => response.json())
+        .catch((error: any) => console.log('error', error));
 };
 
-export const fetchTransactionList = (userName: string, transactionStatus: TransactionStatus) => {
-    const userId = isEmpty(userName) ? localStorage.getItem("userName") : userName;
-    const listApi = `${BASE_URL}/${STAGE}/${TRANSACTION_LIST_API}/${userId}?status=${transactionStatus}`;
-    return fetch(listApi).then((response: any) => response.json());
+export const fetchTransactionList = (transactionStatus: TransactionStatus) => {
+    const listApi = `${BASE_URL}/${STAGE}/${TRANSACTION_LIST_API}/${LAST_AUTH_USER}?status=${transactionStatus}`;
+    return fetch(listApi).then((response: any) => response.json())
+        .catch((error: any) => console.log('error', error));
 };
 
-export const fetchSellerMatches = (userName: string) => {
-    const userId = isEmpty(userName) ? localStorage.getItem("userName") : userName;
-    const listApi = `${BASE_URL}/${STAGE}/${TRANSACTION_LIST_API}/${userId}?status=MatcH`;
-    return fetch(listApi).then((response: any) => response.json());
+export const fetchSellerMatches = () => {
+    const listApi = `${BASE_URL}/${STAGE}/${TRANSACTION_LIST_API}/${LAST_AUTH_USER}?status=MatcH`;
+    return fetch(listApi).then((response: any) => response.json())
+        .catch((error: any) => console.log('error', error));
 };
 
 export const postSellerTransactionAction = (
@@ -381,11 +405,12 @@ export const postSellerTransactionAction = (
     actionName: TransactionAction,
     cropDetails: MatchRequirementModel
 ) => {
-    const transactionActionApi = `${BASE_URL}/${STAGE}/${TRANSACTION_API}/${transactionID}/seller?action=${actionName}`
+    const transactionActionApi = `${BASE_URL}/${STAGE}/${TRANSACTION_API}/${transactionID}/seller?action=${actionName}`;
     return fetch(transactionActionApi, {
         method: 'POST',
         body: JSON.stringify(cropDetails)
-    }).then((response: any) => response.json());
+    }).then((response: any) => response.json())
+        .catch((error: any) => console.log('error', error));
 };
 
 export const sellerConnectStatus = ({
@@ -396,7 +421,8 @@ export const sellerConnectStatus = ({
     return fetch(sellerConnectedApi, {
         method: 'POST',
         body: JSON.stringify({ seller_id: sellerId, seller_crop_id: sellerCropId })
-    }).then((response: any) => response.json());
+    }).then((response: any) => response.json())
+        .catch((error: any) => console.log('error', error));
 };
 
 export const postAddBeneficiarydata = (userData: any) => {
@@ -404,7 +430,8 @@ export const postAddBeneficiarydata = (userData: any) => {
     return fetch(addBeneficiaryApi, {
         method: 'POST',
         body: JSON.stringify(userData)
-    }).then((response: any) => response.text);
+    }).then((response: any) => response.text)
+        .catch((error: any) => console.log('error', error));
 };
 
 export const postBuyerDetails = (userData: any) => {
@@ -412,7 +439,8 @@ export const postBuyerDetails = (userData: any) => {
     return fetch(registerBuyerApi, {
         method: 'POST',
         body: JSON.stringify(userData)
-    }).then((response: any) => response.text);
+    }).then((response: any) => response.text)
+        .catch((error: any) => console.log('error', error));
 };
 
 export const postSellerDetails = (userData: any) => {
@@ -420,7 +448,8 @@ export const postSellerDetails = (userData: any) => {
     return fetch(registerSellerApi, {
         method: 'POST',
         body: JSON.stringify(userData)
-    }).then((response: any) => response.text);
+    }).then((response: any) => response.text)
+        .catch((error: any) => console.log('error', error));
 };
 
 export const getRedirectionToken = (userKey: string) => {
@@ -431,7 +460,8 @@ export const getRedirectionToken = (userKey: string) => {
     return fetch(accessTokenApi, {
         method: 'POST',
         body: accessTokenParam
-    }).then((response: any) => response.json());
+    }).then((response: any) => response.json())
+        .catch((error: any) => console.log('error', error));
 };
 
 export const getPaymentList = (transactionData: any) => {
@@ -441,6 +471,7 @@ export const getPaymentList = (transactionData: any) => {
     return fetch(paymentDetailsApi, {
         method: 'GET',
     }).then((response: any) => response.json())
+        .catch((error: any) => console.log('error', error));
 };
 
 export const getStatusDetails = (userData: any) => {
@@ -449,6 +480,7 @@ export const getStatusDetails = (userData: any) => {
     return fetch(statusDetailsApi, {
         method: 'GET',
     }).then((response: any) => response.json())
+        .catch((error: any) => console.log('error', error));
 };
 
 export const getCurrentStatusDetails = (userData: any) => {
@@ -457,6 +489,7 @@ export const getCurrentStatusDetails = (userData: any) => {
     return fetch(currentStatusDetailsApi, {
         method: 'GET',
     }).then((response: any) => response.json())
+        .catch((error: any) => console.log('error', error));
 };
 
 export const getEventTemplate = (userType: string, transport: string) => {
@@ -465,6 +498,7 @@ export const getEventTemplate = (userType: string, transport: string) => {
     return fetch(eventTemplateApi, {
         method: 'GET',
     }).then((response: any) => response.json())
+        .catch((error: any) => console.log('error', error));
 };
 
 export const getPaymentAmount = (userData: string) => {
@@ -472,6 +506,7 @@ export const getPaymentAmount = (userData: string) => {
     return fetch(getamountApi, {
         method: 'GET',
     }).then((response: any) => response.json())
+        .catch((error: any) => console.log('error', error));
 };
 
 export const getRejectCount = (userData: any) => {
@@ -480,5 +515,6 @@ export const getRejectCount = (userData: any) => {
     return fetch(getamountApi, {
         method: 'GET',
     }).then((response: any) => response.json())
+        .catch((error: any) => console.log('error', error));
 };
 /* Matches And Transactions End */

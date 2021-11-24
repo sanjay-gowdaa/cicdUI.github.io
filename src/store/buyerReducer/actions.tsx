@@ -1,6 +1,6 @@
-import { isEmpty } from "lodash";
+import { isEmpty } from 'lodash';
 
-import { BuyerRejectMatch, MasterListApiFormat, ProduceModel } from "./types";
+import { BuyerRejectMatch, MasterListApiFormat, ProduceModel } from './types';
 
 import {
     addProduce,
@@ -24,15 +24,15 @@ import {
     getPaymentAmount,
     verifyOtp,
     getRejectCount
-} from "../api";
-import { UserStateModel } from "../loginReducer/types";
-import { BuyerStateModel } from "../buyerReducer/types";
-import { RootState } from "../rootReducer";
+} from '../api';
+import { UserStateModel } from '../loginReducer/types';
+import { BuyerStateModel } from '../buyerReducer/types';
+import { RootState } from '../rootReducer';
 
-import { getTimeStamp } from "../../app-components/utils";
-import { TransactionStatus } from "../../buyer-seller-commons/types";
-import { ResponseStatus, UserTypes } from "../genericTypes";
-import { getUserCompleteDetails } from "../loginReducer/actions";
+import { getTimeStamp } from '../../app-components/utils';
+import { TransactionStatus } from '../../buyer-seller-commons/types';
+import { ResponseStatus, UserTypes } from '../genericTypes';
+import { getUserCompleteDetails } from '../loginReducer/actions';
 
 export const UPDATE_MASTER_LIST = 'UPDATE_MASTER_LIST';
 export const GET_MASTER_LIST = 'GET_MASTER_LIST';
@@ -231,101 +231,85 @@ export const updateTransactionList = (transactionType: TransactionStatus, transa
 };
 
 export const getMasterProduceList = () => {
-    return async (dispatch: any, getState: any) => {
-        const { loginUser }: { loginUser: UserStateModel } = getState() as RootState;
-        const { username } = loginUser;
-        const masterProduceList = await getMasterList(username);
+    return async (dispatch: any) => {
+        const masterProduceList = await getMasterList();
         // testing
         // const masterProduceList = await getMasterList('7892329983');
         const masterList = masterProduceList || [];
         dispatch(updateStoreMasterList(masterList));
-    }
+    };
 };
 
 export const updateMasterListData = (masterlist: Array<MasterListApiFormat>) => {
-    return async (dispatch: any, getState: any) => {
-        const { loginUser }: { loginUser: UserStateModel } = getState() as RootState;
-        const { username } = loginUser;
-        const updateMasterListResponse = await updateMasterList(masterlist, username);
+    return async (dispatch: any) => {
+        await updateMasterList(masterlist);
         // testing
         // const updateMasterListResponse = await updateMasterList(masterlist, '7892329983');
         dispatch(getMasterProduceList());
-    }
+    };
 };
 
 export const addNewProduce = (/*produceFormData: ProduceModel*/ produceFormData: any) => {
     return async (dispatch: any, getState: any) => {
         const { loginUser }: { loginUser: UserStateModel } = getState() as RootState;
-        // for testing, use USER-ID 
-        // const username = '7892329983'
-        const { username, district, zip } = loginUser
-        const addProduceResponse = await addProduce({ ...produceFormData, district, zip }, username);
-        // console.log('addProduceResponse', addProduceResponse);
-        dispatch(getProduceList())
-    }
+        const { district, zip } = loginUser;
+        await addProduce({ ...produceFormData, district, zip });
+        dispatch(getProduceList());
+    };
 };
 
 export const editProduce = (/*produceFormData: ProduceModel*/ produceFormData: any) => {
     return async (dispatch: any, getState: any) => {
         const { loginUser }: { loginUser: UserStateModel } = getState() as RootState;
-        // for testing, use USER-ID 
-        // const username = '7892329983'
-        const { username, district, zip } = loginUser
-        const addProduceResponse = await patchProduce({ ...produceFormData, district, zip }, username);
-        console.log('addProduceResponse', addProduceResponse);
-        dispatch(getProduceList())
-    }
+        const { district, zip } = loginUser;
+        await patchProduce({ ...produceFormData, district, zip });
+        dispatch(getProduceList());
+    };
 };
 
 export const deleteSelectedProduce = (produceID: string) => {
     return async (dispatch: any, getState: any) => {
         const { loginUser }: { loginUser: UserStateModel } = getState() as RootState;
-        const { username, district, is_buyer } = loginUser;
-        const deletedResponse = await deleteProduce(username, produceID, is_buyer);
-        console.log('deletedResponse', deletedResponse);
+        const { is_buyer } = loginUser;
+        await deleteProduce(produceID, is_buyer);
         dispatch(getProduceList());
-    }
+    };
 };
 
 export const getProduceList = () => {
-    return async (dispatch: any, getState: any) => {
-        const { loginUser }: { loginUser: UserStateModel } = getState() as RootState;
-        // for tesing, use USER-ID 
-        // const {username} = {username: '7892329983'}; 
-
-        const { username } = loginUser
-        const getProduceListResponse = await getAllProduce(username);
-        const { Items } = getProduceListResponse || { Items: [] }
+    return async (dispatch: any) => {
+        const getProduceListResponse = await getAllProduce();
+        const { Items } = getProduceListResponse || { Items: [] };
         // console.log('getProduceList', Items);
         dispatch(updateProduceList(Items as Array<ProduceModel>))
         if (Items.length) {
             dispatch(getMatchesForBuyerCrops(Items as Array<ProduceModel>));
         }
-    }
+    };
 };
 
 export const fetchAllProduce = () => {
-    return async (dispatch: any, getState: any) => {
+    return async (dispatch: any) => {
         const allProduceList = await getCropCategoryList();
-        const { categories } = allProduceList || []
-        dispatch(updateMasterCropNamesList(categories))
-    }
+        const { categories } = allProduceList || [];
+        dispatch(updateMasterCropNamesList(categories));
+    };
 };
 
 export const fetchAllCrops = (category: string) => {
-    return async (dispatch: any, getState: any) => {
+    return async (dispatch: any) => {
         const allCropsList = await getCropList(category);
-        const { crops } = allCropsList || []
+        const { crops } = allCropsList || [];
         dispatch(updateCropsList(crops));
-    }
+    };
 };
 
 export const fetchAllVariety = (crop: string) => {
-    return async (dispatch: any, getState: any) => {
+    return async (dispatch: any) => {
         const allVarietyList = await getSubCategoryList(crop);
-        const { crops: { Items: variety } } = allVarietyList || { variety: [] }
+        const { crops: { Items: variety } } = allVarietyList || { variety: [] };
         dispatch(updateVarietyList(variety));
-    }
+    };
 };
 
 export const getMatchesForBuyerCrops = (cropsList: Array<ProduceModel>) => {
@@ -337,56 +321,54 @@ export const getMatchesForBuyerCrops = (cropsList: Array<ProduceModel>) => {
         const matchesBody = {
             buyer_id: `user#${username}`,
             buyer_crop_ids: allCropListIds
-        }
+        };
         dispatch(setMatchesLoadingFlag(true));
         const matchesListResponse = await getBuyerMatchesList(matchesBody.buyer_id, matchesBody.buyer_crop_ids);
         const matchesList = matchesListResponse ? matchesListResponse : [];
         dispatch(updateMatchesList(matchesList));
         dispatch(setMatchesLoadingFlag(false));
-    }
+    };
 };
 
 export const rejectMatches = (rejectData: BuyerRejectMatch) => {
-    return async (dispatch: any, getState: any) => {
-        const matchesList = await rejectMatch(rejectData);
+    return async (dispatch: any) => {
+        await rejectMatch(rejectData);
         /* Re-calculate matches for all crop */
         /* Logic can be changed to specific crop if required */
         dispatch(getProduceList());
         dispatch(getUserCompleteDetails());
-    }
+    };
 };
 
 export const rejectMatchesCount = (rejectData: any) => {
-    return async (dispatch: any, getState: any) => {
+    return async (dispatch: any) => {
         const count = await getRejectCount(rejectData);
         dispatch(updateRejectCount(count));
-    }
+    };
 };
 
 export const connectMatch = (transactionEntry: any) => {
-    return async (dispatch: any, getState: any) => {
-        const matchesList = await createTransaction(transactionEntry);
+    return async (dispatch: any) => {
+        await createTransaction(transactionEntry);
         dispatch(getProduceList());
         dispatch(getTransactionList(TransactionStatus.pending));
         return Promise.resolve('Successs');
-    }
+    };
 };
 
 export const checkSellerConnectedStatus = (sellerId: string, sellerCropId: string) => {
-    return async (dispatch: any, getState: any) => {
+    return async () => {
         const connectedStatus = await sellerConnectStatus({
             sellerId,
             sellerCropId
         });
         return Promise.resolve(connectedStatus);
-    }
+    };
 };
 
 export const getTransactionList = (transactionStatus: TransactionStatus) => {
-    return async (dispatch: any, getState: any) => {
-        const { loginUser }: { loginUser: UserStateModel } = getState() as RootState;
-        const { username } = loginUser;
-        const transactionListResponse = await fetchTransactionList(username, transactionStatus);
+    return async (dispatch: any) => {
+        const transactionListResponse = await fetchTransactionList(transactionStatus);
         let transactionFinalResponse: any = [];
         for (let i = 0; i < transactionListResponse.length; i++) {
             let list = transactionListResponse[i];
@@ -395,24 +377,24 @@ export const getTransactionList = (transactionStatus: TransactionStatus) => {
         }
         dispatch(updateTransactionList(transactionStatus, transactionFinalResponse));
         dispatch(getProduceList());
-    }
+    };
 };
 
 export const getTransactionListOnReload = (transactionStatus: TransactionStatus) => {
     return async (dispatch: any, getState: any) => {
         const { loginUser }: { loginUser: UserStateModel } = getState() as RootState;
-        const { username, is_buyer } = loginUser;
-        const transactionListResponse = await fetchTransactionList(username, transactionStatus);
+        const { is_buyer } = loginUser;
+        const transactionListResponse = await fetchTransactionList(transactionStatus);
         for (var i = 0; i < transactionListResponse.length; i++) {
             const data = {
-                "transactionId": transactionListResponse[i].pk.substring(12),
-                "user": is_buyer ? "buyer" : "seller"
+                'transactionId': transactionListResponse[i].pk.substring(12),
+                'user': is_buyer ? 'buyer' : 'seller'
             };
             dispatch(currentStatusDetails(data));
         }
         dispatch(updateTransactionList(transactionStatus, transactionListResponse));
         dispatch(getProduceList());
-    }
+    };
 };
 
 export const saveTimeStamp = (dispatch: any) => {
@@ -426,76 +408,76 @@ export const getPaymentDetails = () => {
         const paymentRedirectionDetails = buyer.paymentRedirectionDetails;
         const paymentDetails = await getPaymentList(paymentRedirectionDetails);
         dispatch(updatePaymentDetails(paymentDetails));
-    }
+    };
 };
 
 export const getStatus = (userData: any) => {
-    return async (dispatch: any, getState: any) => {
+    return async (dispatch: any) => {
         const statusResponse = await getStatusDetails(userData);
         dispatch(setStatusDetails(statusResponse, userData.transactionId));
-    }
+    };
 };
 
 export const currentStatusDetails = (userData: any) => {
-    return async (dispatch: any, getState: any) => {
+    return async (dispatch: any) => {
         const currentStatusResponse = await getCurrentStatusDetails(userData);
         if (!isEmpty(currentStatusResponse)) {
             const status = currentStatusResponse;
             dispatch(updateCurrentStatusDetails(status[0]));
         }
-    }
+    };
 };
 
 export const fetchEventTemplate = () => {
-    return async (dispatch: any, getState: any) => {
+    return async (dispatch: any) => {
         const userType = UserTypes.BUYER;
-        const transportation = "No";
+        const transportation = 'No';
         const template = await getEventTemplate(userType, transportation);
         if (!isEmpty(template)) {
             dispatch(updateEventList(template));
         }
-    }
+    };
 };
 
 export const getAmount = (userData: string) => {
-    return async (dispatch: any, getState: any) => {
+    return async (dispatch: any) => {
         var id = userData;
         id = id.substring(12);
         const amount = await getPaymentAmount(id);
         dispatch(updatePaymentAmount(amount));
-    }
+    };
 };
 
 export const confirmOTP = (number: string, otp: string) => {
-    return async (dispatch: any, getState: any) => {
+    return async (dispatch: any) => {
         const verifyOtpResponse = await verifyOtp(`91${number}`, otp);
         const { OTPResp = {} } = verifyOtpResponse || {}
         const { type = '', message } = OTPResp
         if (type === ResponseStatus.ERROR) {
-            dispatch(setOtpErrorOnConnect(true))
-            dispatch(setOtpErrorMsgOnConnect(message))
+            dispatch(setOtpErrorOnConnect(true));
+            dispatch(setOtpErrorMsgOnConnect(message));
         } else if (type === ResponseStatus.SUCCESS) {
-            dispatch(setOtpErrorOnConnect(false))
-            dispatch(setVerifiedOnConnect(true))
+            dispatch(setOtpErrorOnConnect(false));
+            dispatch(setVerifiedOnConnect(true));
         }
-    }
+    };
 };
 
 export const byPassOTP = (otp: string) => {
-    return async (dispatch: any, getState: any) => {
+    return async (dispatch: any) => {
         const verified = otp === '1234';
         if (!verified) {
             dispatch(setOtpErrorOnConnect(true));
             dispatch(setOtpErrorMsgOnConnect('OTP Mismatched!'));
         } else {
-            dispatch(setOtpErrorOnConnect(false))
-            dispatch(setVerifiedOnConnect(true))
+            dispatch(setOtpErrorOnConnect(false));
+            dispatch(setVerifiedOnConnect(true));
         }
-    }
+    };
 };
 
 export const resetOTPFields = () => {
-    return async (dispatch: any, getState: any) => {
+    return async (dispatch: any) => {
         dispatch(setOtpErrorOnConnect(false));
         dispatch(setOtpErrorMsgOnConnect(''));
         dispatch(setVerifiedOnConnect(false));

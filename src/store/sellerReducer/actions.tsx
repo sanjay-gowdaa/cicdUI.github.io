@@ -1,6 +1,6 @@
-import { isEmpty, isNull } from "lodash";
+import { isEmpty, isNull } from 'lodash';
 
-import { CropApiModel, SellerStateModel } from "./types";
+import { CropApiModel, SellerStateModel } from './types';
 
 import {
     getSubCategoryList,
@@ -20,13 +20,13 @@ import {
     verifyOtp,
     getRejectCount,
     getEventTemplate
-} from "../api";
-import { ApmcApiResponseBase, ResponseStatus, UpdatedLiveApmcRatesQuery, UserTypes } from "../genericTypes";
-import { UserStateModel } from "../loginReducer/types";
-import { RootState } from "../rootReducer";
+} from '../api';
+import { ApmcApiResponseBase, ResponseStatus, UpdatedLiveApmcRatesQuery, UserTypes } from '../genericTypes';
+import { UserStateModel } from '../loginReducer/types';
+import { RootState } from '../rootReducer';
 
-import { getTimeStamp } from "../../app-components/utils";
-import { MatchRequirementModel, TransactionAction, TransactionStatus } from "../../buyer-seller-commons/types";
+import { getTimeStamp } from '../../app-components/utils';
+import { MatchRequirementModel, TransactionAction, TransactionStatus } from '../../buyer-seller-commons/types';
 
 export const UPDATE_CATEGORIES = 'UPDATE_CATEGORIES';
 export const UPDATE_MASTER_CROPS = 'UPDATE_MASTER_CROPS';
@@ -124,56 +124,56 @@ export const updateAllCategories = (categories: Array<string>) => {
     return {
         type: UPDATE_CATEGORIES,
         payload: categories
-    }
+    };
 };
 
 export const updateMasterCrops = (produce: Array<string>) => {
     return {
         type: UPDATE_MASTER_CROPS,
         payload: produce
-    }
+    };
 };
 
 export const updateVariety = (variety: Array<any>) => {
     return {
         type: UPDATE_VARIETY,
         payload: variety
-    }
+    };
 };
 
 export const updateSellerCropsList = (cropsList: Array<any>) => {
     return {
         type: UPDATE_SELLER_CROPS_LIST,
         payload: cropsList
-    }
+    };
 };
 
 export const updateApmcCropRate = (modalPrice: string | number) => {
     return {
         type: UPDATE_APMC_RATE,
         payload: modalPrice
-    }
+    };
 };
 
 export const updateTransactionList = (transactionType: TransactionStatus, transactionListData: Array<any>) => {
     return {
         type: UPDATE_SELLER_TRANSACTION_LIST,
         payload: { transactionType, transactionListData }
-    }
+    };
 };
 
 export const updateTimeStamp = (timeStamp: any) => {
     return {
         type: UPDATE_TIME_STAMP,
         payload: timeStamp
-    }
+    };
 };
 
 export const updateSellerMatches = (matchesList: Array<MatchRequirementModel>) => {
     return {
         type: UPDATE_SELLER_MATCHES,
         payload: matchesList
-    }
+    };
 };
 
 export const updateEventList = (eventTemplate: Array<any>) => {
@@ -198,13 +198,13 @@ export const updateApmcListData = (
     }) : [];
 
     const cropListUpdated = allProduceApmcData.length ? cropsList.map((cropProduce: CropApiModel, index: number) => {
-        return { ...cropProduce, apmc_rate_data: allProduceApmcData[index] }
+        return { ...cropProduce, apmc_rate_data: allProduceApmcData[index] };
     }) : cropsList;
 
     return {
         type: UPDATE_SELLER_CROPS_LIST,
         payload: cropListUpdated
-    }
+    };
 };
 
 export const updatedFetchLiveApmcRate = ({
@@ -221,84 +221,74 @@ export const updatedFetchLiveApmcRate = ({
     return async (dispatch: any, getState: any) => {
         const { loginUser } = getState() as RootState;
         const { district } = loginUser;
-        const apmcPriceResponse: Array<ApmcApiResponseBase> = await getLiveApmcRateUpdated([{ grade, district, variety, category, item_name: itemName }])
+        const apmcPriceResponse: Array<ApmcApiResponseBase> = await getLiveApmcRateUpdated([{ grade, district, variety, category, item_name: itemName }]);
         const apmcPriceDetails = (!isEmpty(apmcPriceResponse) && !isNull(apmcPriceResponse)) ? apmcPriceResponse : [];
         if (apmcPriceDetails.length) {
-            const { latest_apmc_price } = apmcPriceDetails[0] || {}
+            const { latest_apmc_price } = apmcPriceDetails[0] || {};
             if (latest_apmc_price !== undefined) {
                 dispatch(updateApmcCropRate(latest_apmc_price));
             } else {
                 dispatch(updateApmcCropRate('No records found'));
             }
         }
-    }
+    };
 };
 
 export const fetchAllCategories = () => {
-    return async (dispatch: any, getState: any) => {
+    return async (dispatch: any) => {
         const allCategoriesList = await getCropCategoryList();
-        const { categories } = allCategoriesList || []
-        dispatch(updateAllCategories(categories))
-    }
+        const { categories } = allCategoriesList || [];
+        dispatch(updateAllCategories(categories));
+    };
 };
 
 export const fetchAllMasterCrops = (category: string) => {
-    return async (dispatch: any, getState: any) => {
+    return async (dispatch: any) => {
         const allCropList = await getCropList(category);
-        const { crops } = allCropList || []
-        dispatch(updateMasterCrops(crops))
-    }
+        const { crops } = allCropList || [];
+        dispatch(updateMasterCrops(crops));
+    };
 };
 
 export const fetchAllVariety = (cropName: string) => {
-    return async (dispatch: any, getState: any) => {
+    return async (dispatch: any) => {
         const allVarietyList = await getSubCategoryList(cropName);
-        const { crops: { Items: variety } } = allVarietyList || { variety: [] }
-        dispatch(updateVariety(variety))
-    }
+        const { crops: { Items: variety } } = allVarietyList || { variety: [] };
+        dispatch(updateVariety(variety));
+    };
 };
 
 export const addNewCropData = (cropData: FormData) => {
-    return async (dispatch: any, getState: any) => {
-        const { loginUser }: { loginUser: UserStateModel } = getState() as RootState;
-        // for tesing, use USER-ID 
-        // const {username} = {username: '9036565202'};
-        const { username } = loginUser;
-        const cropAdded = await createCrop(cropData, username)
+    return async (dispatch: any) => {
+        await createCrop(cropData);
         dispatch(getAllCropsList());
-    }
+    };
 };
 
 export const updateCropData = (cropData: any) => {
-    return async (dispatch: any, getState: any) => {
-        const { loginUser }: { loginUser: UserStateModel } = getState() as RootState;
-        // for tesing, use USER-ID 
-        // const {username} = {username: '9036565202'};
-        const { username } = loginUser;
-        const cropAdded = await patchCrop(cropData, username);
+    return async (dispatch: any) => {
+        await patchCrop(cropData);
         dispatch(getAllCropsList());
-    }
+    };
 };
 
 export const sellerIntentToSell = (cropData: any, cropID: string, isPriceUpdated?: boolean) => {
-    return async (dispatch: any, getState: any) => {
-        const { loginUser }: { loginUser: UserStateModel } = getState() as RootState;
-        const { username } = loginUser;
+    return async (dispatch: any) => {
         if (isPriceUpdated) {
-            const cropAdded = await patchCrop({ ...cropData, is_delete: "no" }, username);
+            await patchCrop({ ...cropData, is_delete: 'no' });
         }
-        const cropUpdated = await intentToSell(username, cropID);
+        await intentToSell(cropID);
         dispatch(getAllCropsList());
-    }
+    };
 };
 
 export const deleteSelectedCrop = (cropID: string) => {
     return async (dispatch: any, getState: any) => {
         const { loginUser }: { loginUser: UserStateModel } = getState() as RootState;
-        const { username, is_seller } = loginUser;
-        const deletedResponse = await deleteProduce(username, cropID, !is_seller);
+        const { is_seller } = loginUser;
+        await deleteProduce(cropID, !is_seller);
         dispatch(getAllCropsList());
-    }
+    };
 };
 
 export const fetchAllCropsApmcData = (Items: Array<CropApiModel>) => {
@@ -309,34 +299,28 @@ export const fetchAllCropsApmcData = (Items: Array<CropApiModel>) => {
             const { category_name, crop_name, sub_category, district, grade } = item;
             return { category: category_name, item_name: crop_name, variety: sub_category, grade, district }
         })
-        const allCropsPriceModel = await getLiveApmcRateUpdated(apmcFetchDataCrops)
+        const allCropsPriceModel = await getLiveApmcRateUpdated(apmcFetchDataCrops);
         const allCropsPriceModelDetails = (!isEmpty(allCropsPriceModel) && !isNull(allCropsPriceModel)) ? allCropsPriceModel : [];
-        dispatch(updateApmcListData(allCropsPriceModelDetails, cropsList))
-    }
+        dispatch(updateApmcListData(allCropsPriceModelDetails, cropsList));
+    };
 };
 
 export const getAllCropsList = () => {
-    return async (dispatch: any, getState: any) => {
-        const { loginUser }: { loginUser: UserStateModel } = getState() as RootState;
-        // for tesing, use USER-ID 
-        // const {username} = {username: '9036565202'}; 
-        const { username } = loginUser
-        const cropsList = await getAllCrops(username)
-        const { Items, Count } = cropsList || { Items: [], Count: 0 }
+    return async (dispatch: any) => {
+        const cropsList = await getAllCrops();
+        const { Items } = cropsList || { Items: [] };
         dispatch(updateSellerCropsList(Items));
         if (Items.length) {
             dispatch(fetchAllCropsApmcData(Items));
         }
-    }
+    };
 };
 
 export const getAllSellerMatches = () => {
-    return async (dispatch: any, getState: any) => {
-        const { loginUser }: { loginUser: UserStateModel } = getState() as RootState;
-        const { username } = loginUser;
-        const sellerMatches: Array<MatchRequirementModel> = await fetchSellerMatches(username);
+    return async (dispatch: any) => {
+        const sellerMatches: Array<MatchRequirementModel> = await fetchSellerMatches();
         dispatch(updateSellerMatches(sellerMatches));
-    }
+    };
 };
 
 export const transactionAction = (
@@ -344,23 +328,21 @@ export const transactionAction = (
     action: TransactionAction,
     cropDetails: MatchRequirementModel
 ) => {
-    return async (dispatch: any, getState: any) => {
-        const actionResponse = await postSellerTransactionAction(tarnsactionID, action, cropDetails);
-        dispatch(getAllCropsList())
-        dispatch(getAllSellerMatches())
+    return async (dispatch: any) => {
+        await postSellerTransactionAction(tarnsactionID, action, cropDetails);
+        dispatch(getAllCropsList());
+        dispatch(getAllSellerMatches());
         if (action === TransactionAction.accept) {
             dispatch(getSellerTransactionList(TransactionStatus.pending));
         } else if (action === TransactionAction.reject) {
             dispatch(getSellerTransactionList(TransactionStatus.completed));
         }
-    }
+    };
 };
 
 export const getSellerTransactionList = (transactionStatus: TransactionStatus) => {
-    return async (dispatch: any, getState: any) => {
-        const { loginUser }: { loginUser: UserStateModel } = getState() as RootState;
-        const { username } = loginUser;
-        const transactionListResponse = await fetchTransactionList(username, transactionStatus);
+    return async (dispatch: any) => {
+        const transactionListResponse = await fetchTransactionList(transactionStatus);
         let transactionFinalResponse: any = [];
         for (let i = 0; i < transactionListResponse.length; i++) {
             let list = transactionListResponse[i];
@@ -368,18 +350,18 @@ export const getSellerTransactionList = (transactionStatus: TransactionStatus) =
             transactionFinalResponse.push(list);
         }
         dispatch(updateTransactionList(transactionStatus, transactionFinalResponse));
-    }
+    };
 };
 
 export const getTransactionListOnReload = (transactionStatus: TransactionStatus) => {
     return async (dispatch: any, getState: any) => {
         const { loginUser }: { loginUser: UserStateModel } = getState() as RootState;
-        const { username, is_buyer } = loginUser;
-        const transactionListResponse = await fetchTransactionList(username, transactionStatus);
+        const { is_buyer } = loginUser;
+        const transactionListResponse = await fetchTransactionList(transactionStatus);
         for (var i = 0; i < transactionListResponse.length; i++) {
             const data = {
-                "transactionId": transactionListResponse[i].pk.substring(12),
-                "user": is_buyer ? "buyer" : "seller"
+                'transactionId': transactionListResponse[i].pk.substring(12),
+                'user': is_buyer ? 'buyer' : 'seller'
             };
             dispatch(currentStatusDetails(data));
         }
@@ -393,39 +375,39 @@ export const saveTimeStamp = (dispatch: any) => {
 };
 
 export const getStatus = (userData: any) => {
-    return async (dispatch: any, getState: any) => {
+    return async (dispatch: any) => {
         const regSellerResponse = await getStatusDetails(userData);
         dispatch(setStatusDetails(regSellerResponse, userData.transactionId));
-    }
+    };
 };
 
 export const currentStatusDetails = (userData: any) => {
-    return async (dispatch: any, getState: any) => {
+    return async (dispatch: any) => {
         const currentStatusResponse = await getCurrentStatusDetails(userData);
         if (!isEmpty(currentStatusResponse)) {
             const status = currentStatusResponse;
             dispatch(updateCurrentStatusDetails(status[0]));
         }
-    }
+    };
 };
 
 export const confirmOTP = (number: string, otp: string) => {
-    return async (dispatch: any, getState: any) => {
+    return async (dispatch: any) => {
         const verifyOtpResponse = await verifyOtp(`91${number}`, otp);
-        const { OTPResp = {} } = verifyOtpResponse || {}
-        const { type = '', message } = OTPResp
+        const { OTPResp = {} } = verifyOtpResponse || {};
+        const { type = '', message } = OTPResp;
         if (type === ResponseStatus.ERROR) {
-            dispatch(setOtpErrorOnAccept(true))
-            dispatch(setOtpErrorMsgOnAccept(message))
+            dispatch(setOtpErrorOnAccept(true));
+            dispatch(setOtpErrorMsgOnAccept(message));
         } else if (type === ResponseStatus.SUCCESS) {
-            dispatch(setOtpErrorOnAccept(false))
-            dispatch(setVerifiedOnAccept(true))
+            dispatch(setOtpErrorOnAccept(false));
+            dispatch(setVerifiedOnAccept(true));
         }
-    }
+    };
 };
 
 export const byPassOTP = (otp: string) => {
-    return async (dispatch: any, getState: any) => {
+    return async (dispatch: any) => {
         const verified = otp === '1234';
         if (!verified) {
             dispatch(setOtpErrorOnAccept(true));
@@ -434,7 +416,7 @@ export const byPassOTP = (otp: string) => {
             dispatch(setOtpErrorOnAccept(false));
             dispatch(setVerifiedOnAccept(true));
         }
-    }
+    };
 };
 
 export const resetOTPFields = () => {
@@ -450,19 +432,19 @@ export const resetOTPFields = () => {
 };
 
 export const rejectMatchesCount = (rejectData: any) => {
-    return async (dispatch: any, getState: any) => {
+    return async (dispatch: any) => {
         const count = await getRejectCount(rejectData);
         dispatch(updateRejectCount(count));
-    }
+    };
 };
 
 export const fetchEventTemplate = () => {
-    return async (dispatch: any, getState: any) => {
+    return async (dispatch: any) => {
         const userType = UserTypes.SELLER;
-        const transportation = "No";
+        const transportation = 'No';
         const template = await getEventTemplate(userType, transportation);
         if (!isEmpty(template)) {
             dispatch(updateEventList(template));
         }
-    }
+    };
 };

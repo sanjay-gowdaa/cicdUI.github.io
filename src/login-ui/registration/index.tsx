@@ -70,7 +70,7 @@ const Registration = (props: any) => {
         });
         registerDataPromise.then((registerFromData) => {
             dispatch(updateForm(registerFormValues as any));
-            dispatch(submitRegister(entityType, registerFromData));
+            dispatch(submitRegister(registerFromData));
         });
     };
 
