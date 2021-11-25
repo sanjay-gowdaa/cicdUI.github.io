@@ -6,7 +6,7 @@ import {
     ReviewRating,
     Status,
     TransactionModel
-} from "../../buyer-seller-commons/types";
+} from '../../buyer-seller-commons/types';
 
 export interface ProduceModel {
     crop_name: string;

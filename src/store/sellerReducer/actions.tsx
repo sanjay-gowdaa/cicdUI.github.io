@@ -15,11 +15,9 @@ import {
     fetchSellerMatches,
     postSellerTransactionAction,
     fetchTransactionList,
-    getStatusDetails,
     getCurrentStatusDetails,
     verifyOtp,
-    getRejectCount,
-    getEventTemplate
+    getRejectCount
 } from '../api';
 import { ApmcApiResponseBase, ResponseStatus, UpdatedLiveApmcRatesQuery, UserTypes } from '../genericTypes';
 import { UserStateModel } from '../loginReducer/types';
@@ -50,7 +48,7 @@ export const UPDATE_REJECT_COUNT = 'UPDATE_REJECT_COUNT';
 export const UPDATE_EVENT_TEMPLATE = 'UPDATE_EVENT_TEMPLATE';
 export const SET_STATUS_DETAILS = 'SET_STATUS_DETAILS';
 
-export const setStatusDetails = (status: any, key: any) => {
+export const setSellerStatusDetails = (status: any, key: any) => {
     return {
         type: SET_STATUS_DETAILS,
         payload: { details: status, key: key }
@@ -155,7 +153,7 @@ export const updateApmcCropRate = (modalPrice: string | number) => {
     };
 };
 
-export const updateTransactionList = (transactionType: TransactionStatus, transactionListData: Array<any>) => {
+export const updateSellerTransactionList = (transactionType: TransactionStatus, transactionListData: Array<any>) => {
     return {
         type: UPDATE_SELLER_TRANSACTION_LIST,
         payload: { transactionType, transactionListData }
@@ -176,7 +174,7 @@ export const updateSellerMatches = (matchesList: Array<MatchRequirementModel>) =
     };
 };
 
-export const updateEventList = (eventTemplate: Array<any>) => {
+export const updateSellerEventList = (eventTemplate: Array<any>) => {
     return {
         type: UPDATE_EVENT_TEMPLATE,
         payload: eventTemplate,
@@ -349,24 +347,8 @@ export const getSellerTransactionList = (transactionStatus: TransactionStatus) =
             list.key = transactionListResponse[i].pk;
             transactionFinalResponse.push(list);
         }
-        dispatch(updateTransactionList(transactionStatus, transactionFinalResponse));
+        dispatch(updateSellerTransactionList(transactionStatus, transactionFinalResponse));
     };
-};
-
-export const getTransactionListOnReload = (transactionStatus: TransactionStatus) => {
-    return async (dispatch: any, getState: any) => {
-        const { loginUser }: { loginUser: UserStateModel } = getState() as RootState;
-        const { is_buyer } = loginUser;
-        const transactionListResponse = await fetchTransactionList(transactionStatus);
-        for (var i = 0; i < transactionListResponse.length; i++) {
-            const data = {
-                'transactionId': transactionListResponse[i].pk.substring(12),
-                'user': is_buyer ? 'buyer' : 'seller'
-            };
-            dispatch(currentStatusDetails(data));
-        }
-        dispatch(updateTransactionList(transactionStatus, transactionListResponse));
-    }
 };
 
 export const saveTimeStamp = (dispatch: any) => {
@@ -374,14 +356,7 @@ export const saveTimeStamp = (dispatch: any) => {
     dispatch(updateTimeStamp(timeStamp));
 };
 
-export const getStatus = (userData: any) => {
-    return async (dispatch: any) => {
-        const regSellerResponse = await getStatusDetails(userData);
-        dispatch(setStatusDetails(regSellerResponse, userData.transactionId));
-    };
-};
-
-export const currentStatusDetails = (userData: any) => {
+export const currentSellerStatusDetails = (userData: any) => {
     return async (dispatch: any) => {
         const currentStatusResponse = await getCurrentStatusDetails(userData);
         if (!isEmpty(currentStatusResponse)) {
@@ -435,16 +410,5 @@ export const rejectMatchesCount = (rejectData: any) => {
     return async (dispatch: any) => {
         const count = await getRejectCount(rejectData);
         dispatch(updateRejectCount(count));
-    };
-};
-
-export const fetchEventTemplate = () => {
-    return async (dispatch: any) => {
-        const userType = UserTypes.SELLER;
-        const transportation = 'No';
-        const template = await getEventTemplate(userType, transportation);
-        if (!isEmpty(template)) {
-            dispatch(updateEventList(template));
-        }
     };
 };

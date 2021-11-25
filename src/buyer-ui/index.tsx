@@ -4,8 +4,6 @@ import { useSelector } from 'react-redux';
 
 import './buyer.scss';
 import MatchedSection from './matches';
-import ReviewsSection from './reviews';
-import TransactionSection from './transactions';
 import ProduceSection from './produce';
 import AddProduceModal from './masterList';
 import PaymentResponseModel from './transactions/paymentResponsemodel';
@@ -16,6 +14,8 @@ import Footer from '../footer';
 import { RootState } from '../store/rootReducer';
 import Banner from '../static/assets/buyerBanner.jpg';
 import WelcomeModal from '../app-components/welcomeModal';
+import ReviewsSection from '../buyer-seller-commons/reviews';
+import Transaction from '../buyer-seller-commons/transactions';
 
 const { Title } = Typography;
 
@@ -39,7 +39,7 @@ const BuyerUI = (props: any) => {
                 <Divider />
                 <MatchedSection />
                 <Divider />
-                <TransactionSection />
+                <Transaction />
                 <Divider />
                 <ReviewsSection />
             </div>

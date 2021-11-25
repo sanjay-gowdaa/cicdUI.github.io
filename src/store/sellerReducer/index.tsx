@@ -34,7 +34,7 @@ const INITIAL_STATE: SellerStateModel = {
     eventTemplate: [],
     rejectCount: '',
     otpError: { showError: false, errorMg: '', verified: false, sellerId: '', buyerId: '', sellerCropId: '', buyerCropId: '' },
-    status: [{ details: [], key: "" }]
+    status: [{ details: [], key: '' }]
 };
 
 const reducer = (state = INITIAL_STATE, action: any) => {

@@ -18,9 +18,7 @@ import {
     fetchTransactionList,
     sellerConnectStatus,
     getPaymentList,
-    getStatusDetails,
     getCurrentStatusDetails,
-    getEventTemplate,
     getPaymentAmount,
     verifyOtp,
     getRejectCount
@@ -28,10 +26,10 @@ import {
 import { UserStateModel } from '../loginReducer/types';
 import { BuyerStateModel } from '../buyerReducer/types';
 import { RootState } from '../rootReducer';
+import { ResponseStatus } from '../genericTypes';
 
 import { getTimeStamp } from '../../app-components/utils';
 import { TransactionStatus } from '../../buyer-seller-commons/types';
-import { ResponseStatus, UserTypes } from '../genericTypes';
 import { getUserCompleteDetails } from '../loginReducer/actions';
 
 export const UPDATE_MASTER_LIST = 'UPDATE_MASTER_LIST';
@@ -42,7 +40,6 @@ export const UPDATE_CROPS_LIST = 'UPDATE_CROPS_LIST';
 export const UPDATE_VARIETY_LIST = 'UPDATE_VARIETY_LIST';
 export const UPDATE_TIME_STAMP = 'UPDATE_TIME_STAMP';
 export const UPDATE_MATCHES_LIST = 'UPDATE_MATCHES_LIST';
-export const UPDATE_MATCHES_LIST_FOR_BUYER_CROP = 'UPDATE_MATCHES_LIST_FOR_BUYER_CROP';
 export const UPDATE_TRANSACTION_LIST = 'UPDATE_TRANSACTION_LIST';
 export const SET_MATCHES_LOADER = 'SET_MATCHES_LOADER';
 export const UPDATE_PAYMENT_REDIRECTION_DETAILS = 'UPDATE_PAYMENT_REDIRECTION_DETAILS';
@@ -60,7 +57,7 @@ export const OTP_BUYER_CROP_ID = 'OTP_BUYER_CROP_ID';
 export const UPDATE_REJECT_COUNT = 'UPDATE_REJECT_COUNT';
 export const SET_STATUS_DETAILS = 'SET_STATUS_DETAILS';
 
-export const setStatusDetails = (status: any, key: any) => {
+export const setBuyerStatusDetails = (status: any, key: any) => {
     return {
         type: SET_STATUS_DETAILS,
         payload: { details: status, key: key }
@@ -144,7 +141,7 @@ export const updatePaymentDetails = (paymentDetails: Array<any>) => {
     };
 };
 
-export const updateEventList = (eventTemplate: Array<any>) => {
+export const updateBuyerEventList = (eventTemplate: Array<any>) => {
     return {
         type: UPDATE_EVENT_TEMPLATE,
         payload: eventTemplate,
@@ -214,16 +211,7 @@ export const updateRejectCount = (rejectCount: any) => {
     };
 };
 
-/* Not yet in use */
-export const updateMatchesListForID = (buyerCropId: string, matchesList: Array<any>) => {
-    return {
-        type: UPDATE_MATCHES_LIST_FOR_BUYER_CROP,
-        payload: { buyerCropId, newMatchesList: matchesList }
-    };
-};
-/* Not yet in use end */
-
-export const updateTransactionList = (transactionType: TransactionStatus, transactionListData: Array<any>) => {
+export const updateBuyerTransactionList = (transactionType: TransactionStatus, transactionListData: Array<any>) => {
     return {
         type: UPDATE_TRANSACTION_LIST,
         payload: { transactionType, transactionListData }
@@ -233,8 +221,6 @@ export const updateTransactionList = (transactionType: TransactionStatus, transa
 export const getMasterProduceList = () => {
     return async (dispatch: any) => {
         const masterProduceList = await getMasterList();
-        // testing
-        // const masterProduceList = await getMasterList('7892329983');
         const masterList = masterProduceList || [];
         dispatch(updateStoreMasterList(masterList));
     };
@@ -243,8 +229,6 @@ export const getMasterProduceList = () => {
 export const updateMasterListData = (masterlist: Array<MasterListApiFormat>) => {
     return async (dispatch: any) => {
         await updateMasterList(masterlist);
-        // testing
-        // const updateMasterListResponse = await updateMasterList(masterlist, '7892329983');
         dispatch(getMasterProduceList());
     };
 };
@@ -280,7 +264,6 @@ export const getProduceList = () => {
     return async (dispatch: any) => {
         const getProduceListResponse = await getAllProduce();
         const { Items } = getProduceListResponse || { Items: [] };
-        // console.log('getProduceList', Items);
         dispatch(updateProduceList(Items as Array<ProduceModel>))
         if (Items.length) {
             dispatch(getMatchesForBuyerCrops(Items as Array<ProduceModel>));
@@ -375,24 +358,7 @@ export const getTransactionList = (transactionStatus: TransactionStatus) => {
             list.key = transactionListResponse[i].pk;
             transactionFinalResponse.push(list);
         }
-        dispatch(updateTransactionList(transactionStatus, transactionFinalResponse));
-        dispatch(getProduceList());
-    };
-};
-
-export const getTransactionListOnReload = (transactionStatus: TransactionStatus) => {
-    return async (dispatch: any, getState: any) => {
-        const { loginUser }: { loginUser: UserStateModel } = getState() as RootState;
-        const { is_buyer } = loginUser;
-        const transactionListResponse = await fetchTransactionList(transactionStatus);
-        for (var i = 0; i < transactionListResponse.length; i++) {
-            const data = {
-                'transactionId': transactionListResponse[i].pk.substring(12),
-                'user': is_buyer ? 'buyer' : 'seller'
-            };
-            dispatch(currentStatusDetails(data));
-        }
-        dispatch(updateTransactionList(transactionStatus, transactionListResponse));
+        dispatch(updateBuyerTransactionList(transactionStatus, transactionFinalResponse));
         dispatch(getProduceList());
     };
 };
@@ -411,30 +377,12 @@ export const getPaymentDetails = () => {
     };
 };
 
-export const getStatus = (userData: any) => {
-    return async (dispatch: any) => {
-        const statusResponse = await getStatusDetails(userData);
-        dispatch(setStatusDetails(statusResponse, userData.transactionId));
-    };
-};
-
-export const currentStatusDetails = (userData: any) => {
+export const currentBuyerStatusDetails = (userData: any) => {
     return async (dispatch: any) => {
         const currentStatusResponse = await getCurrentStatusDetails(userData);
         if (!isEmpty(currentStatusResponse)) {
             const status = currentStatusResponse;
             dispatch(updateCurrentStatusDetails(status[0]));
-        }
-    };
-};
-
-export const fetchEventTemplate = () => {
-    return async (dispatch: any) => {
-        const userType = UserTypes.BUYER;
-        const transportation = 'No';
-        const template = await getEventTemplate(userType, transportation);
-        if (!isEmpty(template)) {
-            dispatch(updateEventList(template));
         }
     };
 };
