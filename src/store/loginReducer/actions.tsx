@@ -251,6 +251,7 @@ export const signIn = (userName: string, password: string) => {
                     const { accessToken } = signInUserSession;
                     dispatch(setSuccessInLogin());
                     (window as any).userToken = accessToken.jwtToken;
+                    (window as any).userName = user.username;
                 }
             }).catch(error => {
                 dispatch(setErrorInLogin(error.message))
