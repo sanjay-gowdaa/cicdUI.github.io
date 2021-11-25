@@ -6,8 +6,8 @@ import { LiveApmcRates, UpdatedLiveApmcRatesQuery } from '../genericTypes';
 
 import { MatchRequirementModel, TransactionAction, TransactionStatus } from '../../buyer-seller-commons/types';
 
-const BASE_URL = process.env.REACT_APP_BASE_URL;
-const STAGE = process.env.REACT_APP_ENV;
+export const BASE_URL = process.env.REACT_APP_BASE_URL;
+export const STAGE = process.env.REACT_APP_ENV;
 const TOKEN_GRANT = process.env.REACT_APP_TOKEN_GRANT as string;
 const LOGIN_BASE_URL = process.env.REACT_APP_LOGIN_URL_BASE_URL;
 const LOGOUT_BASE_URL = process.env.REACT_APP_LOGOUT_BASE_URL;
@@ -215,7 +215,8 @@ export const getSubCategoryList = (categoryId: string) => {
 };
 
 export const createCrop = (cropData: any) => {
-    const addCropApi = `${BASE_URL}/${STAGE}/seller/${LAST_AUTH_USER}/crop`;
+    const user = LAST_AUTH_USER ? LAST_AUTH_USER : (window as any).userName;
+    const addCropApi = `${BASE_URL}/${STAGE}/seller/${user}/crop`;
     return fetch(addCropApi, {
         method: 'POST',
         body: JSON.stringify(cropData),
@@ -225,7 +226,8 @@ export const createCrop = (cropData: any) => {
 };
 
 export const patchCrop = (cropData: any) => {
-    const addProduceApi = `${BASE_URL}/${STAGE}/seller/${LAST_AUTH_USER}/crop`;
+    const user = LAST_AUTH_USER ? LAST_AUTH_USER : (window as any).userName;
+    const addProduceApi = `${BASE_URL}/${STAGE}/seller/${user}/crop`;
     const bodyParamData = JSON.stringify(cropData);
     return fetch(addProduceApi, {
         method: 'PATCH',
@@ -236,7 +238,8 @@ export const patchCrop = (cropData: any) => {
 };
 
 export const getAllCrops = () => {
-    const fetcCropsApi = `${BASE_URL}/${STAGE}/seller/${LAST_AUTH_USER}/crop`;
+    const user = LAST_AUTH_USER ? LAST_AUTH_USER : (window as any).userName;
+    const fetcCropsApi = `${BASE_URL}/${STAGE}/seller/${user}/crop`;
     return fetch(fetcCropsApi, {
         headers: getAuthHeader()
     }).then((response: any) => response.json())
@@ -264,7 +267,8 @@ export const getLiveApmcRate = (cropDetails: Array<LiveApmcRates>) => {
 };
 
 export const intentToSell = (produceId: string) => {
-    const intentToSellForSeller = `${BASE_URL}/${STAGE}/seller/${LAST_AUTH_USER}/crop/${produceId}/${INTENT_TO_SELL}`;
+    const user = LAST_AUTH_USER ? LAST_AUTH_USER : (window as any).userName;
+    const intentToSellForSeller = `${BASE_URL}/${STAGE}/seller/${user}/crop/${produceId}/${INTENT_TO_SELL}`;
     return fetch(intentToSellForSeller, {
         method: 'POST',
         headers: getAuthHeader()
@@ -276,7 +280,8 @@ export const intentToSell = (produceId: string) => {
 
 /* Buyer Apis */
 export const addProduce = (produceData: any) => {
-    const addProduceApi = `${BASE_URL}/${STAGE}/buyer/${LAST_AUTH_USER}/crop`;
+    const user = LAST_AUTH_USER ? LAST_AUTH_USER : (window as any).userName;
+    const addProduceApi = `${BASE_URL}/${STAGE}/buyer/${user}/crop`;
     const bodyParamData = JSON.stringify(produceData);
     return fetch(addProduceApi, {
         method: 'POST',
@@ -287,7 +292,8 @@ export const addProduce = (produceData: any) => {
 };
 
 export const patchProduce = (produceData: any) => {
-    const addProduceApi = `${BASE_URL}/${STAGE}/buyer/${LAST_AUTH_USER}/crop`;
+    const user = LAST_AUTH_USER ? LAST_AUTH_USER : (window as any).userName;
+    const addProduceApi = `${BASE_URL}/${STAGE}/buyer/${user}/crop`;
     const bodyParamData = JSON.stringify(produceData);
     return fetch(addProduceApi, {
         method: 'PATCH',
@@ -299,7 +305,8 @@ export const patchProduce = (produceData: any) => {
 
 export const deleteProduce = (produceId: string, is_buyer?: boolean) => {
     const userType = is_buyer ? 'buyer' : 'seller';
-    const produceApi = `${BASE_URL}/${STAGE}/${userType}/${LAST_AUTH_USER}/crop/${produceId}`;
+    const user = LAST_AUTH_USER ? LAST_AUTH_USER : (window as any).userName;
+    const produceApi = `${BASE_URL}/${STAGE}/${userType}/${user}/crop/${produceId}`;
     return fetch(produceApi, {
         method: 'DELETE',
         headers: getAuthHeader()
@@ -308,7 +315,8 @@ export const deleteProduce = (produceId: string, is_buyer?: boolean) => {
 };
 
 export const getAllProduce = () => {
-    const getAllProduceApi = `${BASE_URL}/${STAGE}/buyer/${LAST_AUTH_USER}/crop`;
+    const user = LAST_AUTH_USER ? LAST_AUTH_USER : (window as any).userName;
+    const getAllProduceApi = `${BASE_URL}/${STAGE}/buyer/${user}/crop`;
     return fetch(getAllProduceApi, {
         headers: getAuthHeader()
     }).then((response: any) => response.json())
@@ -334,7 +342,8 @@ export const getCropCategoryList = () => {
 };
 
 export const updateMasterList = (updateMasterList: any) => {
-    const masterListApi = `${BASE_URL}/${STAGE}/buyer/${LAST_AUTH_USER}/master_list`;
+    const user = LAST_AUTH_USER ? LAST_AUTH_USER : (window as any).userName;
+    const masterListApi = `${BASE_URL}/${STAGE}/buyer/${user}/master_list`;
     const bodyParamData = JSON.stringify(updateMasterList);
     return fetch(masterListApi, {
         method: 'POST',
@@ -345,7 +354,8 @@ export const updateMasterList = (updateMasterList: any) => {
 };
 
 export const getMasterList = () => {
-    const masterListApi = `${BASE_URL}/${STAGE}/buyer/${LAST_AUTH_USER}/master_list`;
+    const user = LAST_AUTH_USER ? LAST_AUTH_USER : (window as any).userName;
+    const masterListApi = `${BASE_URL}/${STAGE}/buyer/${user}/master_list`;
     return fetch(masterListApi, {
         headers: getAuthHeader()
     }).then((response: any) => response.json())
@@ -389,13 +399,15 @@ export const createTransaction = (transactionEntry: any) => {
 };
 
 export const fetchTransactionList = (transactionStatus: TransactionStatus) => {
-    const listApi = `${BASE_URL}/${STAGE}/${TRANSACTION_LIST_API}/${LAST_AUTH_USER}?status=${transactionStatus}`;
+    const user = LAST_AUTH_USER ? LAST_AUTH_USER : (window as any).userName;
+    const listApi = `${BASE_URL}/${STAGE}/${TRANSACTION_LIST_API}/${user}?status=${transactionStatus}`;
     return fetch(listApi).then((response: any) => response.json())
         .catch((error: any) => console.log('error', error));
 };
 
 export const fetchSellerMatches = () => {
-    const listApi = `${BASE_URL}/${STAGE}/${TRANSACTION_LIST_API}/${LAST_AUTH_USER}?status=MatcH`;
+    const user = LAST_AUTH_USER ? LAST_AUTH_USER : (window as any).userName;
+    const listApi = `${BASE_URL}/${STAGE}/${TRANSACTION_LIST_API}/${user}?status=MatcH`;
     return fetch(listApi).then((response: any) => response.json())
         .catch((error: any) => console.log('error', error));
 };
