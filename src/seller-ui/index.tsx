@@ -3,16 +3,16 @@ import { Divider, Typography } from 'antd';
 
 import CropsSection from './crops';
 // import DashboardSection from './dashboard';
-import Header from '../header';
 import MatchedSection from './matches';
-import ReviewsSection from './reviews';
-import TransactionSection from './transactions';
 import './seller.scss';
 
+import Header from '../header';
 import Footer from '../footer';
 
 import SellerBanner from '../static/assets/sellerBanner.png';
 import WelcomeModal from '../app-components/welcomeModal';
+import ReviewsSection from '../buyer-seller-commons/reviews';
+import Transaction from '../buyer-seller-commons/transactions';
 
 const { Title } = Typography;
 
@@ -32,7 +32,7 @@ const SellerUi = (props: any) => {
                 <Divider />
                 <MatchedSection />
                 <Divider />
-                <TransactionSection />
+                <Transaction />
                 <Divider />
                 <ReviewsSection />
             </div>

@@ -1,49 +1,14 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Button, Image, Typography, Tooltip } from 'antd';
-import { isEmpty } from 'lodash';
-import { useDispatch, useSelector } from 'react-redux';
 
 import { TransactionModel } from '../../buyer-seller-commons/types';
 import { parseIDfromHash, maskData } from '../../app-components/utils';
-import { RootState } from '../../store/rootReducer';
-import { currentStatusDetails } from '../../store/sellerReducer/actions';
 import { showCropImage } from '../../buyer-seller-commons/constants';
+import GetCurrentStatusDetails from '../../buyer-seller-commons/transactions/getCurrentStatusDetails';
 
 const { Text } = Typography;
 
-const GetCurrentStatusDetails = (pk: any) => {
-    const sellerState = useSelector((state: RootState) => state.seller);
-    const status = sellerState.currentStatusDetails;
-    const [userStatus, setUserStatus] = useState('');
-    const dispatch = useDispatch();
-    var id = pk.data;
-    id = id.substring(12);
-
-    const data = {
-        "transactionId": id,
-        "user": "seller"
-    };
-
-    useEffect(() => {
-        dispatch(currentStatusDetails(data));
-    }, []);
-
-    useEffect(() => {
-        if (!isEmpty(status)) {
-            for (let i = 0; i < status.length; i++) {
-                if (status[i].pk === pk.data) {
-                    setUserStatus(status[i].event_description);
-                }
-            }
-        }
-    }, [status]);
-
-    return (
-        <p>{userStatus}</p>
-    );
-};
-
-export const transactionColumns = [
+export const transactionSellerColumns = [
     {
         title: 'Id',
         dataIndex: 'pk',
@@ -54,7 +19,7 @@ export const transactionColumns = [
         render: (transactionID: string) => {
             const transactionActId = parseIDfromHash(transactionID);
             return (
-                <Tooltip placement="topLeft" title={transactionActId}>
+                <Tooltip placement='topLeft' title={transactionActId}>
                     <Text underline>{transactionActId}</Text>
                 </Tooltip>
             );
@@ -70,7 +35,7 @@ export const transactionColumns = [
             const imageSrc = showCropImage(masterCategory);
             return (
                 <div className='display-flex-row align-center'>
-                    <Image src={imageSrc} className="table-crop-image" />
+                    <Image src={imageSrc} className='table-crop-image' />
                     <div className='margin-l-r-1em'>
                         <p>{produce}</p>
                     </div>
@@ -114,7 +79,7 @@ export const transactionColumns = [
         render: (buyerId: string) => {
             const actBuyerID = parseIDfromHash(buyerId)
             return (
-                <Tooltip placement="topLeft" title={maskData(actBuyerID)}>
+                <Tooltip placement='topLeft' title={maskData(actBuyerID)}>
                     <Text underline>{maskData(actBuyerID)}</Text>
                 </Tooltip>
             );
@@ -131,7 +96,7 @@ export const transactionColumns = [
         dataIndex: 'additional_info',
         render: () => {
             return (
-                <Button type="link">Packaging Details</Button>
+                <Button type='link'>Packaging Details</Button>
             );
         },
     },

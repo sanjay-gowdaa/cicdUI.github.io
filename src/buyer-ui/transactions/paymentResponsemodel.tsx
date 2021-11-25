@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Col, Row, Modal, Typography } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 
-import  DefaultBtn  from '../../app-components/defaultBtn';
+import DefaultBtn from '../../app-components/defaultBtn';
 import { RootState } from '../../store/rootReducer';
 import { getPaymentDetails } from '../../store/buyerReducer/actions';
 
@@ -13,7 +13,7 @@ const PaymentResponseModel = () => {
     const closeModal = () => setPaymentResponseDetails(!viewPaymenResponsetDetails);
     const dispatch = useDispatch();
     const buyerState = useSelector((state: RootState) => state.buyer);
-    const { paymentDetails } = buyerState; 
+    const { paymentDetails } = buyerState;
 
     useEffect(() => {
         dispatch(getPaymentDetails());
@@ -24,7 +24,7 @@ const PaymentResponseModel = () => {
             visible={viewPaymenResponsetDetails}
             title={<Title level={3}>Payment Response Details</Title>}
             onCancel={closeModal}
-            footer = {null}
+            footer={null}
         >
             <Row>
                 <Col sm={24} md={12}>
@@ -83,10 +83,10 @@ const PaymentResponseModel = () => {
                 </Col>
             </Row>
             <Row>
-                <DefaultBtn onClick={closeModal} content="Ok" />
+                <DefaultBtn onClick={closeModal} content='Ok' />
             </Row>
-        </Modal>   
-    ); 
+        </Modal>
+    );
 };
 
 export default PaymentResponseModel;
