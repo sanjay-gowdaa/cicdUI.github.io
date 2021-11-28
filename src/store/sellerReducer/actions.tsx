@@ -55,56 +55,56 @@ export const setSellerStatusDetails = (status: any, key: any) => {
     };
 };
 
-export const updateRejectCount = (rejectCount: any) => {
+export const updateSellerRejectCount = (rejectCount: any) => {
     return {
         type: UPDATE_REJECT_COUNT,
         payload: rejectCount,
     };
 };
 
-export const setSellerIdOnConnect = (sellerId: String) => {
+export const setSellerIdOnAccept = (sellerId: String) => {
     return {
         type: OTP_SELLER_ID,
         payload: sellerId
     };
 };
 
-export const setSellerCropIdOnConnect = (sellerCropId: String) => {
+export const setSellerCropIdOnAccept = (sellerCropId: String) => {
     return {
         type: OTP_SELLER_CROP_ID,
         payload: sellerCropId
     };
 };
 
-export const setBuyerIdOnConnect = (buyerId: String) => {
+export const setBuyerIdOnAccept = (buyerId: String) => {
     return {
         type: OTP_BUYER_ID,
         payload: buyerId
     };
 };
 
-export const setBuyerCropIdOnConnect = (buyerCropId: String) => {
+export const setBuyerCropIdOnAccept = (buyerCropId: String) => {
     return {
         type: OTP_BUYER_CROP_ID,
         payload: buyerCropId
     };
 };
 
-export const setOtpErrorOnAccept = (errorFlag: Boolean) => {
+export const setSellerOtpErrorOnAccept = (errorFlag: Boolean) => {
     return {
         type: OTP_ERROR_ON_ACCEPT,
         payload: errorFlag
     };
 };
 
-export const setOtpErrorMsgOnAccept = (errorMg: String) => {
+export const setSellerOtpErrorMsgOnAccept = (errorMg: String) => {
     return {
         type: OTP_ERROR_MSG_ON_ACCEPT,
         payload: errorMg
     };
 };
 
-export const setVerifiedOnAccept = (isVerified: Boolean) => {
+export const setSellerVerifiedOnAccept = (isVerified: Boolean) => {
     return {
         type: OTP_VERIFIED_ON_ACCEPT,
         payload: isVerified
@@ -363,52 +363,5 @@ export const currentSellerStatusDetails = (userData: any) => {
             const status = currentStatusResponse;
             dispatch(updateCurrentStatusDetails(status[0]));
         }
-    };
-};
-
-export const confirmOTP = (number: string, otp: string) => {
-    return async (dispatch: any) => {
-        const verifyOtpResponse = await verifyOtp(`91${number}`, otp);
-        const { OTPResp = {} } = verifyOtpResponse || {};
-        const { type = '', message } = OTPResp;
-        if (type === ResponseStatus.ERROR) {
-            dispatch(setOtpErrorOnAccept(true));
-            dispatch(setOtpErrorMsgOnAccept(message));
-        } else if (type === ResponseStatus.SUCCESS) {
-            dispatch(setOtpErrorOnAccept(false));
-            dispatch(setVerifiedOnAccept(true));
-        }
-    };
-};
-
-export const byPassOTP = (otp: string) => {
-    return async (dispatch: any) => {
-        const verified = otp === '1234';
-        if (!verified) {
-            dispatch(setOtpErrorOnAccept(true));
-            dispatch(setOtpErrorMsgOnAccept('OTP Mismatched!'));
-        } else {
-            dispatch(setOtpErrorOnAccept(false));
-            dispatch(setVerifiedOnAccept(true));
-        }
-    };
-};
-
-export const resetOTPFields = () => {
-    return async (dispatch: any, getState: any) => {
-        dispatch(setOtpErrorOnAccept(false));
-        dispatch(setOtpErrorMsgOnAccept(''));
-        dispatch(setVerifiedOnAccept(false));
-        dispatch(setSellerIdOnConnect(''));
-        dispatch(setBuyerIdOnConnect(''));
-        dispatch(setSellerCropIdOnConnect(''));
-        dispatch(setBuyerCropIdOnConnect(''));
-    };
-};
-
-export const rejectMatchesCount = (rejectData: any) => {
-    return async (dispatch: any) => {
-        const count = await getRejectCount(rejectData);
-        dispatch(updateRejectCount(count));
     };
 };

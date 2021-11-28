@@ -47,18 +47,18 @@ const ActionEditComponent = ({ dataIndex, record, editForm, setIsEdit, handleSav
     return (
         <td {...restProps}>
             <Button
-                type="link"
+                type='link'
                 block
-                className="save-button"
+                className='save-button'
                 onClick={() => confirmationPopup('save', save, null)}
             >
                 Save
             </Button>
             <Button
-                type="link"
+                type='link'
                 danger
                 block
-                className="cancel-button"
+                className='cancel-button'
                 onClick={() => setIsEdit(false)}
             >
                 Cancel
@@ -76,8 +76,8 @@ const IntentToSellEditComponent = ({ dataIndex, record, ...restProps }: any) => 
                 name={dataIndex}
             >
                 <Select
-                    className="custom-select"
-                    placeholder="Select"
+                    className='custom-select'
+                    placeholder='Select'
                 >
                     <Option value='Yes'>Yes</Option>
                     <Option value='No'>No</Option>
@@ -99,7 +99,7 @@ const PriceEditComponent = ({ dataIndex, record, ...restProps }: any) => {
                     validator: (rule, value) => validateSellerPrice(rule, value, record.apmc_rate_data.apmc_price)
                 }]}
             >
-                <Input className="custom-input" placeholder="In rupees" />
+                <Input className='custom-input' placeholder='In rupees' />
             </Form.Item>
         </td>
     );
@@ -117,7 +117,7 @@ const QuantityEditComponent = ({ dataIndex, record, ...restProps }: any) => {
                     validator: (rules: any, value: any) => validateQuantity(rules, value)
                 }]}
             >
-                <Input className="custom-input" placeholder="In quintal" />
+                <Input className='custom-input' placeholder='In quintal' />
             </Form.Item>
         </td>
     );

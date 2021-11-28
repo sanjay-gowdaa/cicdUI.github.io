@@ -3,7 +3,6 @@ import { Divider, Typography } from 'antd';
 import { useSelector } from 'react-redux';
 
 import './buyer.scss';
-import MatchedSection from './matches';
 import ProduceSection from './produce';
 import AddProduceModal from './masterList';
 import PaymentResponseModel from './transactions/paymentResponsemodel';
@@ -16,6 +15,7 @@ import Banner from '../static/assets/buyerBanner.jpg';
 import WelcomeModal from '../app-components/welcomeModal';
 import ReviewsSection from '../buyer-seller-commons/reviews';
 import Transaction from '../buyer-seller-commons/transactions';
+import Matches from '../buyer-seller-commons/matches';
 
 const { Title } = Typography;
 
@@ -37,7 +37,7 @@ const BuyerUI = (props: any) => {
                 <Divider />
                 <ProduceSection history={history} />
                 <Divider />
-                <MatchedSection />
+                <Matches />
                 <Divider />
                 <Transaction />
                 <Divider />
