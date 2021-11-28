@@ -62,7 +62,7 @@ export const validateSellerPrice = (rule: RuleObject, value: string, apmc: any) 
 
     if (isEmpty(value)) {
         return Promise.reject('Please enter price per quintal!');
-    } else if (typeof (apmc) === "string") {
+    } else if (typeof (apmc) === 'string') {
         return Promise.resolve();
     } else {
         if (value < minimum) {

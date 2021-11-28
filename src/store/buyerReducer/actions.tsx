@@ -64,21 +64,21 @@ export const setBuyerStatusDetails = (status: any, key: any) => {
     };
 };
 
-export const setOtpErrorOnConnect = (errorFlag: Boolean) => {
+export const setBuyerOtpErrorOnConnect = (errorFlag: Boolean) => {
     return {
         type: OTP_ERROR_ON_CONNECT,
         payload: errorFlag
     };
 };
 
-export const setOtpErrorMsgOnConnect = (errorMg: String) => {
+export const setBuyerOtpErrorMsgOnConnect = (errorMg: String) => {
     return {
         type: OTP_ERROR_MSG_ON_CONNECT,
         payload: errorMg
     };
 };
 
-export const setVerifiedOnConnect = (isVerified: Boolean) => {
+export const setBuyerVerifiedOnConnect = (isVerified: Boolean) => {
     return {
         type: OTP_VERIFIED_ON_CONNECT,
         payload: isVerified
@@ -204,7 +204,7 @@ export const setMatchesLoadingFlag = (loadingFlag: boolean) => {
     };
 };
 
-export const updateRejectCount = (rejectCount: any) => {
+export const updateBuyerRejectCount = (rejectCount: any) => {
     return {
         type: UPDATE_REJECT_COUNT,
         payload: rejectCount,
@@ -323,13 +323,6 @@ export const rejectMatches = (rejectData: BuyerRejectMatch) => {
     };
 };
 
-export const rejectMatchesCount = (rejectData: any) => {
-    return async (dispatch: any) => {
-        const count = await getRejectCount(rejectData);
-        dispatch(updateRejectCount(count));
-    };
-};
-
 export const connectMatch = (transactionEntry: any) => {
     return async (dispatch: any) => {
         await createTransaction(transactionEntry);
@@ -393,45 +386,5 @@ export const getAmount = (userData: string) => {
         id = id.substring(12);
         const amount = await getPaymentAmount(id);
         dispatch(updatePaymentAmount(amount));
-    };
-};
-
-export const confirmOTP = (number: string, otp: string) => {
-    return async (dispatch: any) => {
-        const verifyOtpResponse = await verifyOtp(`91${number}`, otp);
-        const { OTPResp = {} } = verifyOtpResponse || {}
-        const { type = '', message } = OTPResp
-        if (type === ResponseStatus.ERROR) {
-            dispatch(setOtpErrorOnConnect(true));
-            dispatch(setOtpErrorMsgOnConnect(message));
-        } else if (type === ResponseStatus.SUCCESS) {
-            dispatch(setOtpErrorOnConnect(false));
-            dispatch(setVerifiedOnConnect(true));
-        }
-    };
-};
-
-export const byPassOTP = (otp: string) => {
-    return async (dispatch: any) => {
-        const verified = otp === '1234';
-        if (!verified) {
-            dispatch(setOtpErrorOnConnect(true));
-            dispatch(setOtpErrorMsgOnConnect('OTP Mismatched!'));
-        } else {
-            dispatch(setOtpErrorOnConnect(false));
-            dispatch(setVerifiedOnConnect(true));
-        }
-    };
-};
-
-export const resetOTPFields = () => {
-    return async (dispatch: any) => {
-        dispatch(setOtpErrorOnConnect(false));
-        dispatch(setOtpErrorMsgOnConnect(''));
-        dispatch(setVerifiedOnConnect(false));
-        dispatch(setSellerIdOnConnect(''));
-        dispatch(setBuyerIdOnConnect(''));
-        dispatch(setSellerCropIdOnConnect(''));
-        dispatch(setBuyerCropIdOnConnect(''));
     };
 };

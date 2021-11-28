@@ -136,8 +136,8 @@ const AddCropModal = (addCropProps: PropsType) => {
             });
         } else {
             Modal.error({
-                title: "You can't add a produce more than two times!",
-                content: "Please wait till the produce is fulfilled to add the same produce!"
+                title: `You can't add a produce more than two times!`,
+                content: 'Please wait till the produce is fulfilled to add the same produce!'
             })
         }
     };
@@ -190,13 +190,13 @@ const AddCropModal = (addCropProps: PropsType) => {
                 maskClosable={false}
                 onCancel={resetAllState}
                 width={'90%'}
-                wrapClassName="add-crop-modal"
+                wrapClassName='add-crop-modal'
             >
                 <Form
                     form={form}
-                    className="add-crop-form"
+                    className='add-crop-form'
                     {...singleLabelFieldLayout}
-                    name="basic"
+                    name='basic'
                     initialValues={formInitialize}
                     onFinish={onFinish}
                     onFinishFailed={onFinishFailed}
@@ -204,39 +204,39 @@ const AddCropModal = (addCropProps: PropsType) => {
                     <Row gutter={16}>
                         <Col xs={24} md={10} lg={10}>
                             <Form.Item
-                                label="Select Category"
-                                name="categoryName"
+                                label='Select Category'
+                                name='categoryName'
                                 rules={[{ required: true, message: 'Please select the Crop Category!' }]}
                             >
                                 <Select
-                                    className="custom-select"
-                                    placeholder="Select"
+                                    className='custom-select'
+                                    placeholder='Select'
                                     onChange={onSelectCategory}
                                 >
                                     {renderCategoryOptions(sellerStore.categories)}
                                 </Select>
                             </Form.Item>
                             <Form.Item
-                                label="Select Produce"
-                                name="cropName"
+                                label='Select Produce'
+                                name='cropName'
                                 rules={[{ required: true, message: 'Please select the Produce!' }]}
                             >
                                 <Select
-                                    className="custom-select"
-                                    placeholder="Select"
+                                    className='custom-select'
+                                    placeholder='Select'
                                     onChange={onMasterCrops}
                                 >
                                     {renderCategoryOptions(sellerStore.masterCrops)}
                                 </Select>
                             </Form.Item>
                             <Form.Item
-                                label="Select Variety"
-                                name="subCategory"
+                                label='Select Variety'
+                                name='subCategory'
                                 rules={[{ required: true, message: 'Please select the Produce Variety!' }]}
                             >
                                 <Select
-                                    className="custom-select"
-                                    placeholder="Select"
+                                    className='custom-select'
+                                    placeholder='Select'
                                     onChange={onSelectVariety}
                                     onClear={() => null}
                                 >
@@ -245,13 +245,13 @@ const AddCropModal = (addCropProps: PropsType) => {
                             </Form.Item>
                             {/* Addition Sub Category msg */}
                             <Form.Item
-                                label="Select Grade"
-                                name="grade"
+                                label='Select Grade'
+                                name='grade'
                                 rules={[{ required: true, message: 'Please select the grade!' }]}
                             >
                                 <Select
-                                    className="custom-select"
-                                    placeholder="Select"
+                                    className='custom-select'
+                                    placeholder='Select'
                                     onChange={(value: string) => {
                                         dispatch(updatedFetchLiveApmcRate({
                                             category: form.getFieldValue('categoryName'),
@@ -266,11 +266,11 @@ const AddCropModal = (addCropProps: PropsType) => {
                             </Form.Item>
                             <Form.Item
                                 {...fieldwithInfoLayout}
-                                name="quantity"
+                                name='quantity'
                             >
                                 <Form.Item
-                                    label="Quantity"
-                                    name="quantity"
+                                    label='Quantity'
+                                    name='quantity'
                                     rules={[{
                                         required: true,
                                         validator: (rules: any, value: any) => validateQuantity(rules, value)
@@ -278,19 +278,19 @@ const AddCropModal = (addCropProps: PropsType) => {
                                 >
                                     <Input
                                         style={{ width: 200 }}
-                                        className="custom-input"
-                                        placeholder="In quintal"
-                                        suffix="Qtl"
+                                        className='custom-input'
+                                        placeholder='In quintal'
+                                        suffix='Qtl'
                                     />
                                 </Form.Item>
                             </Form.Item>
                             <Form.Item
                                 {...fieldwithInfoLayout}
-                                name="pricePerQnt"
+                                name='pricePerQnt'
                             >
                                 <Form.Item
-                                    label="Price per quintal"
-                                    name="pricePerQnt"
+                                    label='Price per quintal'
+                                    name='pricePerQnt'
                                     rules={[{
                                         required: true,
                                         validator: (rule, value) => validateSellerPrice(rule, value, sellerStore.apmcCropPrice)
@@ -298,159 +298,159 @@ const AddCropModal = (addCropProps: PropsType) => {
                                 >
                                     <Input
                                         style={{ width: 200 }}
-                                        className="custom-input"
-                                        placeholder="In rupees"
-                                        prefix="₹"
+                                        className='custom-input'
+                                        placeholder='In rupees'
+                                        prefix='₹'
                                     />
                                 </Form.Item>
-                                <span className="additional-text">
+                                <span className='additional-text'>
                                     APMC Rate {loginUser.district}:
                                     <span style={{ fontWeight: 700 }}>&nbsp;&nbsp;{sellerStore.apmcCropPrice}</span>
-                                    {typeof (sellerStore.apmcCropPrice) === "number" &&
-                                        <Button type="link">
+                                    {typeof (sellerStore.apmcCropPrice) === 'number' &&
+                                        <Button type='link'>
                                             View Details <BarChartOutlined />
                                         </Button>
                                     }
                                 </span>
                             </Form.Item>
                             <Form.Item
-                                label="Intent to Sell?"
-                                name="intentToSell"
+                                label='Intent to Sell?'
+                                name='intentToSell'
                                 rules={[{
                                     required: true,
                                     message: 'Please set your intent to sell'
                                 }]}
                             >
                                 <Radio.Group
-                                    className="custom-radio"
-                                    name="intentToSell"
+                                    className='custom-radio'
+                                    name='intentToSell'
                                     onChange={changeIntentToSell}
                                 >
-                                    <Radio value={"Yes"}>Yes</Radio>
-                                    <Radio value={"No"}>No</Radio>
+                                    <Radio value={'Yes'}>Yes</Radio>
+                                    <Radio value={'No'}>No</Radio>
                                 </Radio.Group>
                             </Form.Item>
                             {showAlert &&
-                                <Alert type="warning" message={<>You can not edit if intent to sell is set to "<b>Yes</b>"</>} />
+                                <Alert type='warning' message={<>You can not edit if intent to sell is set to '<b>Yes</b>'</>} />
                             }
                         </Col>
-                        <Divider className="height-full" type="vertical" style={{ height: "45rem", color: "black" }} />
+                        <Divider className='height-full' type='vertical' style={{ height: '45rem', color: 'black' }} />
                         <Col span={12}>
                             <Form.Item
-                                label="Transportation Required?"
-                                name="transportRequired"
+                                label='Transportation Required?'
+                                name='transportRequired'
                                 rules={[{ required: true }]}
                             >
                                 <Radio.Group
                                     disabled={true}
-                                    className="custom-radio"
-                                    name="transportRequired"
-                                    onChange={() => console.log("changeTransportRequired")}
+                                    className='custom-radio'
+                                    name='transportRequired'
+                                    onChange={() => console.log('changeTransportRequired')}
                                 >
-                                    <Radio value={"Yes"}>Yes</Radio>
-                                    <Radio value={"No"}>No</Radio>
+                                    <Radio value={'Yes'}>Yes</Radio>
+                                    <Radio value={'No'}>No</Radio>
                                 </Radio.Group>
                             </Form.Item>
-                            <Form.Item label="Add Produce Photos" name="cropImages" required={showAlert}>
+                            <Form.Item label='Add Produce Photos' name='cropImages' required={showAlert}>
                                 <Dragger
-                                    className="crop-images-upload"
+                                    className='crop-images-upload'
                                     multiple={true}
-                                    accept="image/*"
-                                    listType="picture-card"
+                                    accept='image/*'
+                                    listType='picture-card'
                                     beforeUpload={(file) => {
                                         return false
                                     }}
                                 >
-                                    <div className="display-flex-row">
+                                    <div className='display-flex-row'>
                                         <div>
-                                            <p className="ant-upload-drag-icon">
+                                            <p className='ant-upload-drag-icon'>
                                                 <InboxOutlined />
                                             </p>
                                         </div>
                                         <div>
-                                            <p className="ant-upload-text">
+                                            <p className='ant-upload-text'>
                                                 Drag and drop images here or <a>Browse</a>
                                             </p>
-                                            <p className="ant-upload-hint">
+                                            <p className='ant-upload-hint'>
                                                 Upload maximum 5 images. Each image less than 1 MB
                                             </p>
                                         </div>
                                     </div>
                                 </Dragger>
                             </Form.Item>
-                            <div className="specifications">
+                            <div className='specifications'>
                                 <Form.Item label={<Text style={{ fontWeight: 700 }} >Seller Specifications</Text>}>
                                     <Form.Item
                                         labelCol={{ span: 10 }}
                                         wrapperCol={{ span: 12 }}
-                                        labelAlign="left"
-                                        label="Moisture"
-                                        name="moisture"
+                                        labelAlign='left'
+                                        label='Moisture'
+                                        name='moisture'
                                     >
                                         <Input
-                                            className="custom-input"
-                                            placeholder="Moisture in %"
+                                            className='custom-input'
+                                            placeholder='Moisture in %'
                                         />
                                     </Form.Item>
                                     <Form.Item
                                         labelCol={{ span: 10 }}
                                         wrapperCol={{ span: 12 }}
-                                        labelAlign="left"
-                                        label="Fungus"
-                                        name="fungus"
+                                        labelAlign='left'
+                                        label='Fungus'
+                                        name='fungus'
                                     >
                                         <Input
-                                            className="custom-input"
-                                            placeholder="Fungus in %"
+                                            className='custom-input'
+                                            placeholder='Fungus in %'
                                         />
                                     </Form.Item>
                                     <Form.Item
                                         labelCol={{ span: 10 }}
                                         wrapperCol={{ span: 12 }}
-                                        labelAlign="left"
-                                        label="Packing Type"
-                                        name="packing_type"
+                                        labelAlign='left'
+                                        label='Packing Type'
+                                        name='packing_type'
                                     >
                                         <Input
-                                            className="custom-input"
-                                            placeholder="Packing type"
+                                            className='custom-input'
+                                            placeholder='Packing type'
                                         />
                                     </Form.Item>
                                     <Form.Item
                                         labelCol={{ span: 10 }}
                                         wrapperCol={{ span: 12 }}
-                                        labelAlign="left"
-                                        label="Packing Size"
-                                        name="packing_size"
+                                        labelAlign='left'
+                                        label='Packing Size'
+                                        name='packing_size'
                                     >
                                         <Input
-                                            className="custom-input"
-                                            placeholder="Packing size in kg"
+                                            className='custom-input'
+                                            placeholder='Packing size in kg'
                                         />
                                     </Form.Item>
                                     <Form.Item
                                         labelCol={{ span: 10 }}
                                         wrapperCol={{ span: 12 }}
-                                        labelAlign="left"
-                                        label="Other Information"
-                                        name="other_info"
+                                        labelAlign='left'
+                                        label='Other Information'
+                                        name='other_info'
                                     >
-                                        <TextArea className="custom-input" rows={4} />
+                                        <TextArea className='custom-input' rows={4} />
                                     </Form.Item>
                                 </Form.Item>
                             </div>
                         </Col>
                     </Row>
-                    <Row justify="center">
+                    <Row justify='center'>
                         <Col>
                             <CancelBtn
-                                className="margin-l-r-1em crop-modal-action-btn vikas-btn-radius"
+                                className='margin-l-r-1em crop-modal-action-btn vikas-btn-radius'
                                 onClick={resetAllState}
                             />
                             <Button
-                                className="crop-modal-action-btn vikas-btn-radius add-produce-done"
-                                type="primary"
-                                htmlType="submit"
+                                className='crop-modal-action-btn vikas-btn-radius add-produce-done'
+                                type='primary'
+                                htmlType='submit'
                             >
                                 Add Produce
                             </Button>
