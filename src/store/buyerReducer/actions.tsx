@@ -20,13 +20,11 @@ import {
     getPaymentList,
     getCurrentStatusDetails,
     getPaymentAmount,
-    verifyOtp,
-    getRejectCount
+    LAST_AUTH_USER
 } from '../api';
 import { UserStateModel } from '../loginReducer/types';
 import { BuyerStateModel } from '../buyerReducer/types';
 import { RootState } from '../rootReducer';
-import { ResponseStatus } from '../genericTypes';
 
 import { getTimeStamp } from '../../app-components/utils';
 import { TransactionStatus } from '../../buyer-seller-commons/types';
@@ -300,9 +298,10 @@ export const getMatchesForBuyerCrops = (cropsList: Array<ProduceModel>) => {
     return async (dispatch: any, getState: any) => {
         const { loginUser }: { loginUser: UserStateModel } = getState() as RootState;
         const { username } = loginUser;
+        const userName = isEmpty(username) ? LAST_AUTH_USER : username;
 
         const matchesBody = {
-            buyer_id: `user#${username}`,
+            buyer_id: `user#${userName}`,
             buyer_crop_ids: allCropListIds
         };
         dispatch(setMatchesLoadingFlag(true));
