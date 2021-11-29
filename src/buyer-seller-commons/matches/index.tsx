@@ -149,7 +149,7 @@ const Matches = (props: any) => {
     };
 
     return (
-        <div id='seller-ui-matches'>
+        <div id='matches'>
             <Title level={2}>My Matches</Title>
             <Button
                 type='link'

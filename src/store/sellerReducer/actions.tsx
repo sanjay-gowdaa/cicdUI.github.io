@@ -15,11 +15,9 @@ import {
     fetchSellerMatches,
     postSellerTransactionAction,
     fetchTransactionList,
-    getCurrentStatusDetails,
-    verifyOtp,
-    getRejectCount
+    getCurrentStatusDetails
 } from '../api';
-import { ApmcApiResponseBase, ResponseStatus, UpdatedLiveApmcRatesQuery, UserTypes } from '../genericTypes';
+import { ApmcApiResponseBase, UpdatedLiveApmcRatesQuery } from '../genericTypes';
 import { UserStateModel } from '../loginReducer/types';
 import { RootState } from '../rootReducer';
 
