@@ -1,8 +1,10 @@
 import React from 'react';
 import { Col, Row, Typography } from 'antd';
+import { useSelector } from 'react-redux';
 
 import { MatchRequirementModel } from '../../buyer-seller-commons/types';
 import { parseIDfromHash, maskData } from '../../app-components/utils';
+import { RootState } from '../../store/rootReducer';
 
 const { Title } = Typography;
 
@@ -10,19 +12,25 @@ interface componentProps {
     cropDetails: MatchRequirementModel;
 };
 
-const TradeSumary = (props: componentProps) => {
+const TradeSummary = (props: componentProps) => {
     const { cropDetails } = props;
-    const { seller_id, produce, buyer_price_per_quintal, matched_quantity, location, buyer_final_price } = cropDetails;
+    const loginState = useSelector((state: RootState) => state.loginUser);
+    const { is_buyer } = loginState;
+    const { buyer_id, buyer_location, seller_price_per_quintal, seller_quantity, seller_price,
+        seller_id, produce, buyer_price_per_quintal, matched_quantity, location, buyer_final_price
+    } = cropDetails;
+    const totalPrice = (seller_price / seller_quantity) * matched_quantity;
+    const userId = is_buyer ? maskData(parseIDfromHash(seller_id)) : maskData(parseIDfromHash(buyer_id));
 
     return (
         <>
             <Title level={4}>Trade summary</Title>
             <Row>
                 <Col sm={24} md={12}>
-                    Seller Id
+                    {is_buyer ? <>Seller </> : <>Buyer </>}Id
                 </Col>
                 <Col sm={24} md={12}>
-                    : {maskData(parseIDfromHash(seller_id))}
+                    : {userId}
                 </Col>
             </Row>
             <Row>
@@ -46,7 +54,7 @@ const TradeSumary = (props: componentProps) => {
                     Price per quintal
                 </Col>
                 <Col sm={24} md={12}>
-                    : {buyer_price_per_quintal}
+                    : {is_buyer ? buyer_price_per_quintal : seller_price_per_quintal}
                 </Col>
             </Row>
             <Row>
@@ -54,7 +62,8 @@ const TradeSumary = (props: componentProps) => {
                     Total price
                 </Col>
                 <Col sm={24} md={12}>
-                    : {buyer_final_price}<span className="heading-alerttext">&nbsp;(excl. all taxes)</span>
+                    : {is_buyer ? buyer_final_price : totalPrice}
+                    {is_buyer && <span className='heading-alerttext'>&nbsp;(excl. all taxes)</span>}
                 </Col>
             </Row>
             <Row>
@@ -62,7 +71,7 @@ const TradeSumary = (props: componentProps) => {
                     Location
                 </Col>
                 <Col sm={24} md={12}>
-                    : {location}
+                    : {is_buyer ? location : buyer_location}
                 </Col>
             </Row>
             <Row>
@@ -77,4 +86,4 @@ const TradeSumary = (props: componentProps) => {
     );
 };
 
-export default TradeSumary;
+export default TradeSummary;

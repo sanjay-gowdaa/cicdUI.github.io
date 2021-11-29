@@ -68,4 +68,5 @@ export interface SellerStateModel {
     rejectCount: any;
     otpError: OtpErrorInMatch;
     status: Array<Status>;
+    produceList?: any;
 };

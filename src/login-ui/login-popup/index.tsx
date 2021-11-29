@@ -39,7 +39,7 @@ const LoginPopup = (props: any) => {
     };
 
     const onFinishFailed = (value: any) => {
-        console.log("Failed", value);
+        console.log('Failed', value);
     };
 
     return (
@@ -47,27 +47,27 @@ const LoginPopup = (props: any) => {
             <Form
                 labelCol={{ span: 24 }}
                 wrapperCol={{ span: 24 }}
-                name="login-form"
-                className="user-login-form"
+                name='login-form'
+                className='user-login-form'
                 initialValues={{}}
                 onFinish={onFinish}
                 onFinishFailed={onFinishFailed}
             >
                 <Form.Item
-                    name="userName"
-                    className="margin-unset login-phone-number"
-                    label="Phone Number"
+                    name='userName'
+                    className='margin-unset login-phone-number'
+                    label='Phone Number'
                     rules={[{
                         required: true,
                         validator: (rule, value) => validatePhoneNumber(rule, value)
                     }]}
                 >
-                    <Input className="custom-input" />
+                    <Input className='custom-input' />
                 </Form.Item>
                 <Form.Item
-                    name="password"
-                    className="margin-unset login-password"
-                    label="Password"
+                    name='password'
+                    className='margin-unset login-password'
+                    label='Password'
                     rules={[{
                         required: true,
                         message: 'Please input your password!'
@@ -75,27 +75,27 @@ const LoginPopup = (props: any) => {
                 >
                     <Input.Password />
                 </Form.Item>
-                <div style={{ textAlign: "center" }}>
-                    <Button type="text" onClick={() => setForgotPassword(true)}>
-                        <Text style={{ textDecoration: "underline", color: "grey" }}>Forgot Password?</Text>
+                <div style={{ textAlign: 'center' }}>
+                    <Button type='text' onClick={() => setForgotPassword(true)}>
+                        <Text style={{ textDecoration: 'underline', color: 'grey' }}>Forgot Password?</Text>
                     </Button>
                 </div>
                 <Form.Item
-                    name="remember"
-                    className="margin-unset"
-                    valuePropName="checked"
+                    name='remember'
+                    className='margin-unset'
+                    valuePropName='checked'
                 >
                     <Checkbox disabled>Remember Me</Checkbox>
                 </Form.Item>
                 {!isEmpty(msg) &&
-                    <Alert message={msg} type="error" style={{ marginBottom: "2%" }} />
+                    <Alert message={msg} type='error' style={{ marginBottom: '2%' }} />
                 }
                 <PrimaryBtn
-                    className="login-button"
-                    style={{ width: "100%" }}
+                    className='login-button'
+                    style={{ width: '100%' }}
                     loading={confirmLoading}
-                    htmlType="submit"
-                    content="Login"
+                    htmlType='submit'
+                    content='Login'
                 />
             </Form>
             <ForgotPasswordModal showModal={showForgotPassword} setModal={setForgotPassword} />

@@ -6,7 +6,6 @@ import {
     UPDATE_MASTER_CROP_NAMES_LIST,
     UPDATE_TIME_STAMP,
     UPDATE_MATCHES_LIST,
-    UPDATE_MATCHES_LIST_FOR_BUYER_CROP,
     SET_MATCHES_LOADER,
     UPDATE_TRANSACTION_LIST,
     UPDATE_PAYMENT_DETAILS,
@@ -45,7 +44,7 @@ const INITIAL_STATE: BuyerStateModel = {
     paymentAmount: '',
     rejectCount: '',
     otpError: { showError: false, errorMg: '', verified: false, sellerId: '', buyerId: '', sellerCropId: '', buyerCropId: '' },
-    status: [{ details: [], key: "" }]
+    status: [{ details: [], key: '' }]
 };
 
 const reducer = (state = INITIAL_STATE, action: any) => {
@@ -62,13 +61,6 @@ const reducer = (state = INITIAL_STATE, action: any) => {
 
         case SET_MATCHES_LOADER:
             return { ...state, isMatchesFetching: action.payload }
-
-        /* Currently not in use */
-        case UPDATE_MATCHES_LIST_FOR_BUYER_CROP:
-            // const {matchesList} = state;
-            // const {buyerCropId, newMatchesList} = action.payload;
-            return { ...state, matchesList: action.payload }
-        /* Currently not in use */
 
         case UPDATE_CROPS_LIST:
             return { ...state, cropsList: action.payload }

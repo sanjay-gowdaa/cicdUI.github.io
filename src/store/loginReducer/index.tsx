@@ -50,7 +50,7 @@ const reducer = (state = INITIAL_STATE, action: any) => {
             return { ...state, errorInLogin: { hasError: true, msg: action.payload, redirect: false } }
 
         case SET_SUCCESS_IN_LOGIN:
-            return { ...state, errorInLogin: { hasError: false, msg: "", redirect: action.payload } }
+            return { ...state, errorInLogin: { hasError: false, msg: '', redirect: action.payload } }
 
         case SET_PASSWORD_CHANGE_SUCCESS:
             return { ...state, passwordChangeSuccess: action.payload }

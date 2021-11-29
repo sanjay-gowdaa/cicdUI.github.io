@@ -8,11 +8,10 @@ import moment from 'moment';
 import PrimaryBtn from '../../app-components/primaryBtn';
 import { RootState } from '../../store/rootReducer';
 import { getAmount, rejectMatches } from '../../store/buyerReducer/actions';
+import { ACCESS_TOKEN, BASE_URL, STAGE } from '../../store/api';
 
 const { Text, Title } = Typography;
 
-const BASE_URL = process.env.REACT_APP_BASE_URL;
-const STAGE = process.env.REACT_APP_ENV;
 const PAYMENT_REQUEST = 'paymentrequest';
 
 const PayButton = (props: any) => {
@@ -28,18 +27,18 @@ const PayButton = (props: any) => {
     const accessToken = (window as any).userToken ? (window as any).userToken : null;
 
     const seq = (Math.floor(Math.random() * 10000) + 10000).toString().substring(1);
-    const id = "order_" + seq;
+    const id = 'order_' + seq;
 
-    const user = loginState.is_buyer && "buyer";
+    const user = loginState.is_buyer && 'buyer';
     const getDisplay = (status: string) => {
         var substring = status.substring(0, 4).toLowerCase();
-        if (substring === "pay " || status === "Sorry error occured, payment unsucessfull") {
+        if (substring === 'pay ' || status === 'Sorry error occured, payment unsucessfull') {
             return true;
         }
         return false;
     };
     const displayPay = getDisplay(userStatus);
-    const isError = userStatus === "Sorry error occured, payment unsucessfull" ? true : false;
+    const isError = userStatus === 'Sorry error occured, payment unsucessfull' ? true : false;
 
     useEffect(() => {
         if (!isEmpty(status)) {
@@ -56,11 +55,11 @@ const PayButton = (props: any) => {
             const newDate = new Date();
             const updatedDate = record.updated_timestamp;
 
-            const diffInDays = parseInt(moment(newDate).format("YYYYMMDD")) - parseInt(moment(updatedDate).format("YYYYMMDD"));
+            const diffInDays = parseInt(moment(newDate).format('YYYYMMDD')) - parseInt(moment(updatedDate).format('YYYYMMDD'));
 
             if (diffInDays === 1) {
                 Modal.info({
-                    title: "Kindly pay the seller within 24hrs!",
+                    title: 'Kindly pay the seller within 24hrs!',
                     content: (
                         <p>
                             Kindly do the payment for <b>{record.produce}</b> within 24hrs or the transaction will be terminated!
@@ -71,7 +70,7 @@ const PayButton = (props: any) => {
 
             if (diffInDays >= 2) {
                 Modal.info({
-                    title: "No action were taken in the last 48 hrs",
+                    title: 'No action were taken in the last 48 hrs',
                     content: (
                         <p>
                             The <b>{record.produce}</b> transaction is auto rejected since there were no actions taken in 48hrs!
@@ -89,7 +88,6 @@ const PayButton = (props: any) => {
                     transaction_id: pk,
                     buyer_event: 'auto_reject'
                 }
-                console.log("rejectData:", rejectData);
                 dispatch(rejectMatches(rejectData));
             }
         }
@@ -101,16 +99,16 @@ const PayButton = (props: any) => {
     };
 
     return (
-        <>
+        <React.Fragment>
             <PrimaryBtn
                 className={
                     displayPay ?
                         isError ?
-                            "pay-retry" : "vikas-btn-radius" :
-                        "display-none"
+                            'pay-retry' : 'vikas-btn-radius' :
+                        'display-none'
                 }
                 onClick={() => payNow()}
-                content={isError ? "Retry and Pay" : "Pay Now"}
+                content={isError ? 'Retry and Pay' : 'Pay Now'}
             />
             <Modal
                 visible={viewPaymentDetails}
@@ -120,7 +118,7 @@ const PayButton = (props: any) => {
             >
                 <Row>
                     <Col span={12}>
-                        <Space direction="vertical">
+                        <Space direction='vertical'>
                             <Text>OrderNumber:</Text>
                             <Text>OrderAmount:</Text>
                             <Text>OrderNote:</Text>
@@ -130,31 +128,61 @@ const PayButton = (props: any) => {
                         </Space>
                     </Col>
                     <Col span={12}>
-                        <form className="payment" method="POST" action={`${BASE_URL}/${STAGE}/${PAYMENT_REQUEST}`}>
-                            <Space direction="vertical">
-                                <Input className="payment-custom-input" type="text" value={id} name="orderId" />
-                                <Input className="payment-custom-input" type="text" value={buyerState.paymentAmount} name="orderAmount" />
-                                <Input className="payment-custom-input" type="text" value="Test note" name="orderNote" />
-                                <Input className="payment-custom-input" type="text" value={loginState.name} name="customerName" />
-                                <Input className="payment-custom-input" type="email" value={loginState.email} name="customerEmail" />
-                                <Input className="payment-custom-input" type="tel" value={loginState.phone_no} name="customerPhone" />
-                                <Input type="hidden" value="INR" name="orderCurrency" />
-                                <Input type="hidden" value={user} name="user" />
-                                <Input type="hidden" value={loginState.pk} name="userId" />
-                                <Input type="hidden" value={record.pk} name="transactionId" />
-                                <Input type="hidden" value={record.produce} name="produce" />
-                                <Input type="hidden" value={record.seller_id} name="sellerId" />
-                                <Input type="hidden" value="payment Gateway" name="paymentType" />
-                                <Input type="hidden" value="1" name="payment" />
-                                <Input type="hidden" value={uuid} name="uuid" />
-                                <Input type="hidden" value={accessToken || localStorage.getItem("token")} name="token" />
-                                <button className="pay-button" type="submit" value="Pay">Pay</button>
+                        <form className='payment' method='POST' action={`${BASE_URL}/${STAGE}/${PAYMENT_REQUEST}`}>
+                            <Space direction='vertical'>
+                                <Input
+                                    className='payment-custom-input'
+                                    type='text'
+                                    value={id}
+                                    name='orderId'
+                                />
+                                <Input
+                                    className='payment-custom-input'
+                                    type='text'
+                                    value={buyerState.paymentAmount}
+                                    name='orderAmount'
+                                />
+                                <Input
+                                    className='payment-custom-input'
+                                    type='text'
+                                    value='Test note'
+                                    name='orderNote'
+                                />
+                                <Input
+                                    className='payment-custom-input'
+                                    type='text'
+                                    value={loginState.name}
+                                    name='customerName'
+                                />
+                                <Input
+                                    className='payment-custom-input'
+                                    type='email'
+                                    value={loginState.email}
+                                    name='customerEmail'
+                                />
+                                <Input
+                                    className='payment-custom-input'
+                                    type='tel'
+                                    value={loginState.phone_no}
+                                    name='customerPhone'
+                                />
+                                <Input type='hidden' value='INR' name='orderCurrency' />
+                                <Input type='hidden' value={user} name='user' />
+                                <Input type='hidden' value={loginState.pk} name='userId' />
+                                <Input type='hidden' value={record.pk} name='transactionId' />
+                                <Input type='hidden' value={record.produce} name='produce' />
+                                <Input type='hidden' value={record.seller_id} name='sellerId' />
+                                <Input type='hidden' value='payment Gateway' name='paymentType' />
+                                <Input type='hidden' value='1' name='payment' />
+                                <Input type='hidden' value={uuid} name='uuid' />
+                                <Input type='hidden' value={accessToken || ACCESS_TOKEN} name='token' />
+                                <button className='pay-button' type='submit' value='Pay'>Pay</button>
                             </Space>
                         </form>
                     </Col>
                 </Row>
             </Modal>
-        </>
+        </React.Fragment>
     );
 };
 
