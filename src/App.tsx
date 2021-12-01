@@ -20,11 +20,14 @@ import { englishStyling, isEnglish, kannadaStyling } from './static/translations
 
 const { Title } = Typography;
 
+const USER_POOL_ID = process.env.REACT_APP_USER_POOL_ID;
+const CLIENT_ID = process.env.REACT_APP_COGNITO_CLIENT_ID;
+
 Amplify.configure({
     Auth: {
         region: 'ap-south-1',
-        userPoolId: 'ap-south-1_dTChphLt4',
-        userPoolWebClientId: '7sckhhjs2aq1noqd1fvjdeo69j',
+        userPoolId: USER_POOL_ID,
+        userPoolWebClientId: CLIENT_ID
     }
 });
 
