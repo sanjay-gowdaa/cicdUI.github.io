@@ -98,9 +98,7 @@ export const matchesBuyerColumns = (componentCallBacks: componentCallBacksModel)
         key: 'seller_id',
         render: (seller_id: string) => {
             return (
-                <>
-                    <Text underline>{maskData(parseIDfromHash(seller_id))}</Text>
-                </>
+                <Text underline>{maskData(parseIDfromHash(seller_id))}</Text>
             );
         },
     },
@@ -114,10 +112,12 @@ export const matchesBuyerColumns = (componentCallBacks: componentCallBacksModel)
 
             return (
                 <div className='display-flex-row align-center'>
-                    <Image src={imageSrc} className='table-crop-image' />
+                    {!record?.isChild && <Image src={imageSrc} className='table-crop-image' />}
                     <div className='margin-l-r-1em'>
-                        <Title level={5}>{produceCateogry.trim()} - {cropType.trim()}</Title>
-                        <p>{grade.trim()}</p>
+                        <Title className='more-matches-text' level={5}>
+                            {produceCateogry.trim()} - {cropType.trim()}
+                        </Title>
+                        <Text className='more-matches-text'>{grade.trim()}</Text>
                     </div>
                 </div>
             );
@@ -128,8 +128,8 @@ export const matchesBuyerColumns = (componentCallBacks: componentCallBacksModel)
         dataIndex: 'matched_quantity',
         key: 'matched_quantity',
         render: (matched_quantity: number, record: MatchRequirementModel) => {
-            const fullFillment = record.fulfillment_flag === FullfillmentFlags.single_fulfillment;
-            const FulfilmentComp = () => (fullFillment ? <Text className='full-match'>FULL</Text> :
+            // const fullFillment = record.fulfillment_flag === FullfillmentFlags.single_fulfillment;
+            const FulfilmentComp = () => (!record.hasMultipleFullfillMent ? <Text className='full-match'>FULL</Text> :
                 <Text className='partial-match'>PARTIAL</Text>
             )
             // const quantityDisp = calculateQty(record);
@@ -170,14 +170,16 @@ export const matchesBuyerColumns = (componentCallBacks: componentCallBacksModel)
                         View Details
                     </Button>
                     <ConnectMatches cropDetails={record} />
-                    <Button
-                        className='reject-button'
-                        type='link'
-                        danger
-                        onClick={() => confirmationPopup('reject', rejectMatch, record)}
-                    >
-                        Reject
-                    </Button>
+                    {!record?.isChild &&
+                        <Button
+                            className='reject-button'
+                            type='link'
+                            danger
+                            onClick={() => confirmationPopup('reject', rejectMatch, record)}
+                        >
+                            Reject
+                        </Button>
+                    }
                 </div>
             );
         },

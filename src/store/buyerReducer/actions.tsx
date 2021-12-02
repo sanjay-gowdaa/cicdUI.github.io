@@ -307,7 +307,25 @@ export const getMatchesForBuyerCrops = (cropsList: Array<ProduceModel>) => {
         dispatch(setMatchesLoadingFlag(true));
         const matchesListResponse = await getBuyerMatchesList(matchesBody.buyer_id, matchesBody.buyer_crop_ids);
         const matchesList = matchesListResponse ? matchesListResponse : [];
-        dispatch(updateMatchesList(matchesList));
+        let listOfMatches: any = [];
+        for (let i = 0; i < matchesList.length; i++) {
+            const [currentBuyerMatchEntryPair]: Array<any> = Object.entries(matchesList[i]);
+            const buyerMatchesData: Array<any> = currentBuyerMatchEntryPair[1];
+            const matchesLength = buyerMatchesData.length;
+            if (!isEmpty(buyerMatchesData[0])) {
+                let output = { ...buyerMatchesData[0], key: buyerMatchesData[0].seller_crop_id };
+                let children: any = [];
+                for (let i = 1; i < matchesLength; i++) {
+                    const childernContent = { ...buyerMatchesData[i], isChild: true, key: buyerMatchesData[i].seller_crop_id };
+                    children = [...children, childernContent];
+                }
+                if (!isEmpty(children)) {
+                    output = { ...output, children: children };
+                }
+                listOfMatches = [...listOfMatches, output];
+            }
+        }
+        dispatch(updateMatchesList(listOfMatches));
         dispatch(setMatchesLoadingFlag(false));
     };
 };
