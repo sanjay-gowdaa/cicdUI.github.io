@@ -24,6 +24,9 @@ export interface MatchRequirementModel {
     seller_price_per_quintal?: number;
     pk?: string;
     sk?: string;
+    hasMultipleFullfillMent: boolean;
+    children?: Array<MatchRequirementModel>;
+    isChild?: boolean;
 };
 
 export enum FullfillmentFlags {
