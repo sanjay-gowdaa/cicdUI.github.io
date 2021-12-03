@@ -29,6 +29,7 @@ import { RootState } from '../rootReducer';
 import { getTimeStamp } from '../../app-components/utils';
 import { TransactionStatus } from '../../buyer-seller-commons/types';
 import { getUserCompleteDetails } from '../loginReducer/actions';
+import { getUserHistory } from '../../buyer-seller-commons/actions';
 
 export const UPDATE_MASTER_LIST = 'UPDATE_MASTER_LIST';
 export const GET_MASTER_LIST = 'GET_MASTER_LIST';
@@ -314,9 +315,11 @@ export const getMatchesForBuyerCrops = (cropsList: Array<ProduceModel>) => {
             const matchesLength = buyerMatchesData.length;
             if (!isEmpty(buyerMatchesData[0])) {
                 let output = { ...buyerMatchesData[0], key: buyerMatchesData[0].seller_crop_id };
+                dispatch(getUserHistory(output.buyer_id, output.produce, output.seller_id));
                 let children: any = [];
-                for (let i = 1; i < matchesLength; i++) {
+                for (let i = 1; i < (matchesLength - 1); i++) {
                     const childernContent = { ...buyerMatchesData[i], isChild: true, key: buyerMatchesData[i].seller_crop_id };
+                    dispatch(getUserHistory(childernContent.buyer_id, childernContent.produce, childernContent.seller_id));
                     children = [...children, childernContent];
                 }
                 if (!isEmpty(children)) {

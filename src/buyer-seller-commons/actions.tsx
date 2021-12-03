@@ -2,7 +2,14 @@ import { isEmpty } from 'lodash';
 
 import { TransactionStatus } from './types';
 
-import { fetchTransactionList, getEventTemplate, getRejectCount, getStatusDetails, verifyOtp } from '../store/api';
+import {
+    fetchTransactionList,
+    fetchUserHistory,
+    getEventTemplate,
+    getRejectCount,
+    getStatusDetails,
+    verifyOtp
+} from '../store/api';
 import {
     currentBuyerStatusDetails,
     getProduceList,
@@ -167,5 +174,12 @@ export const resetOTPFields = () => {
             dispatch(setSellerCropIdOnAccept(''));
             dispatch(setBuyerCropIdOnAccept(''));
         }
+    };
+};
+
+export const getUserHistory = (buyerId: string, produce: string, sellerId: string) => {
+    return async (dispatch: any) => {
+        const historyResponse = await fetchUserHistory({ buyerId, produce, sellerId });
+        // To be added
     };
 };

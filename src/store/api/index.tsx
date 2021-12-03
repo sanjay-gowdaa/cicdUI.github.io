@@ -52,6 +52,7 @@ const GET_EVENT_TEMPLATE = `${TRANSACTION_API}/getBuyerSellerStatus`;
 const GET_AMOUNT_API = 'getamounttodisplay';
 const GET_REJECT_COUNT = 'getrejectcount';
 const COGNITO_PROVIDER = 'CognitoIdentityServiceProvider';
+const SELLER_HISTORY = 'sellerHistory';
 
 export const LAST_AUTH_USER = localStorage.getItem(`${COGNITO_PROVIDER}.${COGNITO_ID}.LastAuthUser`);
 export const ACCESS_TOKEN = localStorage.getItem(`${COGNITO_PROVIDER}.${COGNITO_ID}.${LAST_AUTH_USER}.accessToken`);
@@ -367,7 +368,8 @@ export const getMasterList = () => {
 
 export const getBuyerMatchesList = (buyerId: string, cropIds: Array<string>) => {
     const matchesApi = `${BASE_URL}/${STAGE}/${MATCHES_API}`;
-    const matchesBody = { buyer_id: buyerId, buyer_crop_id: cropIds }
+    // const matchesApi = `http://localhost:4000/${STAGE}/${MATCHES_API}`;
+    const matchesBody = { buyer_id: buyerId, buyer_crop_id: cropIds };
     return fetch(matchesApi, {
         // headers: getAuthHeader(),
         method: 'POST',
@@ -394,6 +396,17 @@ export const createTransaction = (transactionEntry: any) => {
         // headers: getAuthHeader(),
         method: 'POST',
         body: JSON.stringify(transactionEntry)
+    }).then((response: any) => response.json())
+        .catch((error: any) => console.log('error', error));
+};
+
+export const fetchUserHistory = (userData: any) => {
+    const userHistoryApi = `${BASE_URL}/${STAGE}/${TRANSACTION_API}/${SELLER_HISTORY}`;
+    // const userHistoryApi = `http://localhost:4000/${STAGE}/${TRANSACTION_API}/${SELLER_HISTORY}`;
+    return fetch(userHistoryApi, {
+        headers: getAuthHeader(),
+        method: 'POST',
+        body: JSON.stringify(userData)
     }).then((response: any) => response.json())
         .catch((error: any) => console.log('error', error));
 };
