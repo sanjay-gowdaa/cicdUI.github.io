@@ -281,6 +281,18 @@ $col-shade-error: #e90000;
     width: 5rem !important;
 }
 
+.matches-table {
+    .ant-table-row-level-1 {
+        background-color: #fff8de;
+        line-height: 1 !important;
+        font-size: small;
+
+        .more-matches-text {
+            margin-left: 6vw;
+        }
+    }    
+}
+
 .transaction-on-going-table {
     .ant-table-row-expand-icon-cell {
         padding-left: 0;

@@ -1,13 +1,14 @@
 import React from 'react';
-import { Button, Image, Modal, Typography } from 'antd';
+import { Button, Image, Modal, Space, Typography } from 'antd';
 import { CheckCircleFilled, ExclamationCircleFilled } from '@ant-design/icons';
 
-import { FullfillmentFlags, MatchRequirementModel } from '../../buyer-seller-commons/types';
+import { MatchRequirementModel } from '../../buyer-seller-commons/types';
 import { parseIDfromHash, maskData } from '../../app-components/utils';
 import { showCropImage } from '../../buyer-seller-commons/constants';
 import confirmationPopup from '../../buyer-seller-commons/confirmationPopup';
 import { componentCallBacksModel } from '../../buyer-seller-commons/matches';
 import ConnectMatches from '../../buyer-seller-commons/matches/connectMatches';
+import ShowPreviousTransactions from '../../buyer-seller-commons/matches/showPreviousTransactions';
 
 const { Title, Text } = Typography;
 
@@ -96,11 +97,18 @@ export const matchesBuyerColumns = (componentCallBacks: componentCallBacksModel)
         title: 'Seller Id',
         dataIndex: 'seller_id',
         key: 'seller_id',
-        render: (seller_id: string) => {
+        render: (seller_id: string, record: MatchRequirementModel) => {
             return (
-                <>
+                <Space direction='vertical'>
                     <Text underline>{maskData(parseIDfromHash(seller_id))}</Text>
-                </>
+                    {record.count !== 0 &&
+                        <ShowPreviousTransactions
+                            count={record.count}
+                            history={record.history}
+                            userId={record.seller_id}
+                        />
+                    }
+                </Space>
             );
         },
     },
@@ -114,10 +122,12 @@ export const matchesBuyerColumns = (componentCallBacks: componentCallBacksModel)
 
             return (
                 <div className='display-flex-row align-center'>
-                    <Image src={imageSrc} className='table-crop-image' />
+                    {!record?.isChild && <Image src={imageSrc} className='table-crop-image' />}
                     <div className='margin-l-r-1em'>
-                        <Title level={5}>{produceCateogry.trim()} - {cropType.trim()}</Title>
-                        <p>{grade.trim()}</p>
+                        <Title className='more-matches-text' level={5}>
+                            {produceCateogry.trim()} - {cropType.trim()}
+                        </Title>
+                        <Text className='more-matches-text'>{grade.trim()}</Text>
                     </div>
                 </div>
             );
@@ -128,16 +138,14 @@ export const matchesBuyerColumns = (componentCallBacks: componentCallBacksModel)
         dataIndex: 'matched_quantity',
         key: 'matched_quantity',
         render: (matched_quantity: number, record: MatchRequirementModel) => {
-            const fullFillment = record.fulfillment_flag === FullfillmentFlags.single_fulfillment;
-            const FulfilmentComp = () => (fullFillment ? <Text className='full-match'>FULL</Text> :
+            const FulfilmentComp = () => (!record.hasMultipleFullfillMent ? <Text className='full-match'>FULL</Text> :
                 <Text className='partial-match'>PARTIAL</Text>
-            )
-            // const quantityDisp = calculateQty(record);
+            );
             return (
-                <>
+                <React.Fragment>
                     <div>{`${matched_quantity} Qtl`}</div>
                     <FulfilmentComp />
-                </>
+                </React.Fragment>
             );
         },
     },
@@ -170,14 +178,16 @@ export const matchesBuyerColumns = (componentCallBacks: componentCallBacksModel)
                         View Details
                     </Button>
                     <ConnectMatches cropDetails={record} />
-                    <Button
-                        className='reject-button'
-                        type='link'
-                        danger
-                        onClick={() => confirmationPopup('reject', rejectMatch, record)}
-                    >
-                        Reject
-                    </Button>
+                    {!record?.isChild &&
+                        <Button
+                            className='reject-button'
+                            type='link'
+                            danger
+                            onClick={() => confirmationPopup('reject', rejectMatch, record)}
+                        >
+                            Reject
+                        </Button>
+                    }
                 </div>
             );
         },

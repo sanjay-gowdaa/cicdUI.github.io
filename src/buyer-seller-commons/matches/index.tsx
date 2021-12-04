@@ -60,13 +60,6 @@ const Matches = (props: any) => {
         }
     }, [reloadClicked]);
 
-    useEffect(() => {
-        if (is_buyer) {
-            const processedData = processFullfillmentData(userState.matchesList)
-            setProcessedMatches(processedData);
-        }
-    }, [userState.matchesList]);
-
     const rejectBuyerMatch = (curMatchRecord: MatchRequirementModel) => {
         const { buyer_id, buyer_crop_id, seller_id,
             seller_crop_id, matched_quantity } = curMatchRecord;
@@ -167,13 +160,14 @@ const Matches = (props: any) => {
                 <img src={Refresh} alt='refresh' />
             </Button>
             <Table
-                className='margin-t-1em'
+                loading={userState.isMatchesFetching}
+                className='margin-t-1em matches-table'
                 columns={
                     is_buyer ?
                         matchesBuyerColumns(componentCallBacks) :
                         matchesSellerColumns(componentCallBacks)
                 }
-                dataSource={loginState.is_buyer ? processedMatches : userState.matchesList}
+                dataSource={userState.matchesList}
             />
             <ViewCropDetails
                 cropDetails={selectedCropDetails}
