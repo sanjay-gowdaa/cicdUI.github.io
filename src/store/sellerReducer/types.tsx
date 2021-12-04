@@ -69,4 +69,5 @@ export interface SellerStateModel {
     otpError: OtpErrorInMatch;
     status: Array<Status>;
     produceList?: any;
+    isMatchesFetching?: boolean;
 };

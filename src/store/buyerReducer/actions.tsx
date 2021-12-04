@@ -27,7 +27,7 @@ import { BuyerStateModel } from '../buyerReducer/types';
 import { RootState } from '../rootReducer';
 
 import { getTimeStamp } from '../../app-components/utils';
-import { TransactionStatus } from '../../buyer-seller-commons/types';
+import { MatchRequirementModel, TransactionStatus } from '../../buyer-seller-commons/types';
 import { getUserCompleteDetails } from '../loginReducer/actions';
 import { getUserHistory } from '../../buyer-seller-commons/actions';
 
@@ -189,7 +189,7 @@ export const updateTimeStamp = (timeStamp: any) => {
     };
 };
 
-export const updateMatchesList = (matchesList: Array<any>) => {
+export const updateMatchesList = (matchesList: Array<MatchRequirementModel>) => {
     return {
         type: UPDATE_MATCHES_LIST,
         payload: matchesList
@@ -315,11 +315,15 @@ export const getMatchesForBuyerCrops = (cropsList: Array<ProduceModel>) => {
             const matchesLength = buyerMatchesData.length;
             if (!isEmpty(buyerMatchesData[0])) {
                 let output = { ...buyerMatchesData[0], key: buyerMatchesData[0].seller_crop_id };
-                dispatch(getUserHistory(output.buyer_id, output.produce, output.seller_id));
+                const historyResponse = await getUserHistory(output.buyer_id, output.produce, output.seller_id);
+                const { count, history } = historyResponse;
+                output = { ...output, count, history }
                 let children: any = [];
                 for (let i = 1; i < (matchesLength - 1); i++) {
-                    const childernContent = { ...buyerMatchesData[i], isChild: true, key: buyerMatchesData[i].seller_crop_id };
-                    dispatch(getUserHistory(childernContent.buyer_id, childernContent.produce, childernContent.seller_id));
+                    let childernContent = { ...buyerMatchesData[i], isChild: true, key: buyerMatchesData[i].seller_crop_id };
+                    const historyResponse = await getUserHistory(childernContent.buyer_id, childernContent.produce, childernContent.seller_id);
+                    const { count, history } = historyResponse;
+                    childernContent = { ...childernContent, count, history };
                     children = [...children, childernContent];
                 }
                 if (!isEmpty(children)) {
