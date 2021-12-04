@@ -27,6 +27,15 @@ export interface MatchRequirementModel {
     hasMultipleFullfillMent: boolean;
     children?: Array<MatchRequirementModel>;
     isChild?: boolean;
+    count: number;
+    history: Array<History>;
+};
+
+export interface History {
+    pk: string;
+    produce: string;
+    created_at: string;
+    matched_quantity: number;
 };
 
 export enum FullfillmentFlags {

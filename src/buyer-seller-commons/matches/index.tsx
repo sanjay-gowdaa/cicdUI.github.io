@@ -160,6 +160,7 @@ const Matches = (props: any) => {
                 <img src={Refresh} alt='refresh' />
             </Button>
             <Table
+                loading={userState.isMatchesFetching}
                 className='margin-t-1em matches-table'
                 columns={
                     is_buyer ?
