@@ -23,6 +23,7 @@ import { RootState } from '../rootReducer';
 
 import { getTimeStamp } from '../../app-components/utils';
 import { MatchRequirementModel, TransactionAction, TransactionStatus } from '../../buyer-seller-commons/types';
+import { getUserHistory } from '../../buyer-seller-commons/actions';
 
 export const UPDATE_CATEGORIES = 'UPDATE_CATEGORIES';
 export const UPDATE_MASTER_CROPS = 'UPDATE_MASTER_CROPS';
@@ -45,6 +46,14 @@ export const OTP_BUYER_CROP_ID = 'OTP_BUYER_CROP_ID';
 export const UPDATE_REJECT_COUNT = 'UPDATE_REJECT_COUNT';
 export const UPDATE_EVENT_TEMPLATE = 'UPDATE_EVENT_TEMPLATE';
 export const SET_STATUS_DETAILS = 'SET_STATUS_DETAILS';
+export const SET_MATCHES_LOADER = 'SET_MATCHES_LOADER';
+
+export const setMatchesLoadingFlag = (loadingFlag: boolean) => {
+    return {
+        type: SET_MATCHES_LOADER,
+        payload: loadingFlag
+    };
+};
 
 export const setSellerStatusDetails = (status: any, key: any) => {
     return {
@@ -314,8 +323,21 @@ export const getAllCropsList = () => {
 
 export const getAllSellerMatches = () => {
     return async (dispatch: any) => {
-        const sellerMatches: Array<MatchRequirementModel> = await fetchSellerMatches();
-        dispatch(updateSellerMatches(sellerMatches));
+        const sellerMatches = await fetchSellerMatches();
+        dispatch(setMatchesLoadingFlag(true));
+        let matchList: any = [];
+        for (let i = 0; i < sellerMatches.length; i++) {
+            const historyResponse =
+                await getUserHistory(
+                    sellerMatches[i].buyer_id,
+                    sellerMatches[i].produce,
+                    sellerMatches[i].gsi
+                );
+            const { count, history } = historyResponse;
+            matchList[i] = { ...sellerMatches[i], count, history };
+        }
+        dispatch(updateSellerMatches(matchList));
+        dispatch(setMatchesLoadingFlag(false));
     };
 };
 

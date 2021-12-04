@@ -16,7 +16,8 @@ import {
     OTP_SELLER_ID,
     OTP_SELLER_CROP_ID,
     OTP_BUYER_ID,
-    OTP_BUYER_CROP_ID
+    OTP_BUYER_CROP_ID,
+    SET_MATCHES_LOADER
 } from './actions';
 import { SellerStateModel } from './types';
 
@@ -29,6 +30,7 @@ const INITIAL_STATE: SellerStateModel = {
     reviewsList: [],
     categories: [],
     apmcCropPrice: '',
+    isMatchesFetching: false,
     timeStamp: {},
     currentStatusDetails: [],
     eventTemplate: [],
@@ -101,6 +103,8 @@ const reducer = (state = INITIAL_STATE, action: any) => {
             const updatedBuyerCropId = { ...buyerCropIdObj, buyerCropId: action.payload }
             return { ...state, otpError: updatedBuyerCropId };
 
+        case SET_MATCHES_LOADER:
+            return { ...state, isMatchesFetching: action.payload }
 
         case UPDATE_REJECT_COUNT:
             return { ...state, rejectCount: action.payload };
