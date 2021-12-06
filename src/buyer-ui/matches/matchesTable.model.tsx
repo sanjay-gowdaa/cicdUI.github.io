@@ -2,7 +2,7 @@ import React from 'react';
 import { Button, Image, Modal, Space, Typography } from 'antd';
 import { CheckCircleFilled, ExclamationCircleFilled } from '@ant-design/icons';
 
-import { MatchRequirementModel } from '../../buyer-seller-commons/types';
+import { FullfillmentFlags, MatchRequirementModel } from '../../buyer-seller-commons/types';
 import { parseIDfromHash, maskData } from '../../app-components/utils';
 import { showCropImage } from '../../buyer-seller-commons/constants';
 import confirmationPopup from '../../buyer-seller-commons/confirmationPopup';
@@ -138,7 +138,8 @@ export const matchesBuyerColumns = (componentCallBacks: componentCallBacksModel)
         dataIndex: 'matched_quantity',
         key: 'matched_quantity',
         render: (matched_quantity: number, record: MatchRequirementModel) => {
-            const FulfilmentComp = () => (!record.hasMultipleFullfillMent ? <Text className='full-match'>FULL</Text> :
+            const fullFillment = record.fulfillment_flag === FullfillmentFlags.single_fulfillment;
+            const FulfilmentComp = () => (fullFillment ? <Text className='full-match'>FULL</Text> :
                 <Text className='partial-match'>PARTIAL</Text>
             );
             return (

@@ -25,32 +25,20 @@ export interface componentCallBacksModel {
     rejectMatch: any;
 };
 
-const processFullfillmentData = (allMatchesList: Array<any>) => {
-    let allFullfilments: any = [];
-    allMatchesList.map((buyerMatchEntry) => {
-        const [currentBuyerMatchEntryPair]: Array<any> = Object.entries(buyerMatchEntry);
-        const buyerMatchesData: Array<any> = currentBuyerMatchEntryPair[1];
-        const matchesLength = buyerMatchesData.length;
-        const genericData = buyerMatchesData[matchesLength - 1];
-        for (let i = 0; i < (matchesLength - 1); i++) {
-            const fulfilmentData = { ...buyerMatchesData[i], ...genericData };
-            allFullfilments.push(fulfilmentData)
-        }
-    });
-    return allFullfilments;
-};
-
 const Matches = (props: any) => {
     const { } = props;
     const [openDetailsModal, setOpenDetailsModal] = useState(false);
     const [selectedCropDetails, setSelectedCropDetails] =
         useState(initialEmptyCropDetail as MatchRequirementModel);
-    const [processedMatches, setProcessedMatches] = useState([]);
     const [reloadClicked, setReloadClicked] = useState(0);
     const dispatch = useDispatch();
     const loginState = useSelector((state: RootState) => state.loginUser);
     const { is_buyer } = loginState;
     const userState = useSelector((state: RootState) => is_buyer ? state.buyer : state.seller);
+
+    useEffect(() => {
+        !is_buyer && dispatch(getAllSellerMatches());
+    }, []);
 
     useEffect(() => {
         if (reloadClicked === 5) {

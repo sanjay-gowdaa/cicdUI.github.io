@@ -313,14 +313,24 @@ export const getMatchesForBuyerCrops = (cropsList: Array<ProduceModel>) => {
             const [currentBuyerMatchEntryPair]: Array<any> = Object.entries(matchesList[i]);
             const buyerMatchesData: Array<any> = currentBuyerMatchEntryPair[1];
             const matchesLength = buyerMatchesData.length;
+            const genericData = buyerMatchesData[matchesLength - 1];
             if (!isEmpty(buyerMatchesData[0])) {
-                let output = { ...buyerMatchesData[0], key: buyerMatchesData[0].seller_crop_id };
+                let output = {
+                    ...buyerMatchesData[0],
+                    key: buyerMatchesData[0].seller_crop_id,
+                    ...genericData
+                };
                 const historyResponse = await getUserHistory(output.buyer_id, output.produce, output.seller_id);
                 const { count, history } = historyResponse;
                 output = { ...output, count, history }
                 let children: any = [];
                 for (let i = 1; i < (matchesLength - 1); i++) {
-                    let childernContent = { ...buyerMatchesData[i], isChild: true, key: buyerMatchesData[i].seller_crop_id };
+                    let childernContent = {
+                        ...buyerMatchesData[i],
+                        isChild: true,
+                        key: buyerMatchesData[i].seller_crop_id,
+                        ...genericData
+                    };
                     const historyResponse = await getUserHistory(childernContent.buyer_id, childernContent.produce, childernContent.seller_id);
                     const { count, history } = historyResponse;
                     childernContent = { ...childernContent, count, history };
