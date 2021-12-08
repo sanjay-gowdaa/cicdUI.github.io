@@ -1,72 +1,17 @@
 import React from 'react';
-import { Button, Image, Modal, Typography, Progress, Table } from 'antd';
+import { Button, Image, Progress, Typography } from 'antd';
 import { isEmpty } from 'lodash';
 
 import { ProduceModel } from '../../store/buyerReducer/types';
 import { showCropImage } from '../../buyer-seller-commons/constants';
 import { parseIDfromHash } from '../../app-components/utils';
 import confirmationPopup from '../../buyer-seller-commons/confirmationPopup';
+import { openAdditionalInfo } from '../../buyer-seller-commons/openAdditionalInfo';
 
-const { Text, Title } = Typography;
+const { Title } = Typography;
 
 const getCropId = (cropID: string) => {
     return parseIDfromHash(cropID);
-};
-
-const openAdditionalInfo = (content: any) => {
-    const showTable = typeof (content) !== 'string';
-    const data = [
-        {
-            key: 1,
-            label: "Moisture",
-            value: content.moisture === undefined ? '' : `${content.moisture} %`
-        },
-        {
-            key: 2,
-            label: "Fungus",
-            value: content.fungus === undefined ? '' : `${content.fungus} %`
-        },
-        {
-            key: 3,
-            label: "Packing Type",
-            value: content.packing_type
-        },
-        {
-            key: 4,
-            label: "Package Size",
-            value: content.packing_size === undefined ? '' : `${content.packing_size} kg`
-        },
-        {
-            key: 5,
-            label: "Other Information",
-            value: content.other_info
-        }
-    ];
-
-    const column = [
-        {
-            title: 'Specifications',
-            dataItem: 'label',
-            key: 'label',
-            render: (list: any) => <Text>{list.label}</Text>
-        },
-        {
-            title: 'Value',
-            dataItem: 'value',
-            key: 'value',
-            render: (list: any) => <Text>{list.value}</Text>
-        }
-    ];
-
-    Modal.info({
-        title: 'Specification',
-        content: (showTable ?
-            <Table dataSource={data} columns={column} pagination={false} />
-            : <Text>{content}</Text>
-        ),
-        okText: 'Ok',
-        icon: null
-    });
 };
 
 type produceColumnCallbacks = {
@@ -183,7 +128,7 @@ export const produceColumns = ({
                 setIsEdit,
                 handleSave: (record: ProduceModel) => updateCropDetails(record),
             }),
-            render: (text: string, record: ProduceModel) => {
+            render: (record: ProduceModel) => {
                 return (
                     <>
                         <Button
