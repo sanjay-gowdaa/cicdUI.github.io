@@ -23,7 +23,7 @@ import { RootState } from '../rootReducer';
 
 import { getTimeStamp } from '../../app-components/utils';
 import { MatchRequirementModel, TransactionAction, TransactionStatus } from '../../buyer-seller-commons/types';
-import { getUserHistory } from '../../buyer-seller-commons/actions';
+import { getUserAdditionalInfo, getUserHistory } from '../../buyer-seller-commons/actions';
 
 export const UPDATE_CATEGORIES = 'UPDATE_CATEGORIES';
 export const UPDATE_MASTER_CROPS = 'UPDATE_MASTER_CROPS';
@@ -323,10 +323,15 @@ export const getAllCropsList = () => {
 
 export const getAllSellerMatches = () => {
     return async (dispatch: any) => {
-        const sellerMatches = await fetchSellerMatches();
         dispatch(setMatchesLoadingFlag(true));
+        const sellerMatches = await fetchSellerMatches();
         let matchList: any = [];
         for (let i = 0; i < sellerMatches.length; i++) {
+            const additionalInfo =
+                await getUserAdditionalInfo(
+                    sellerMatches[i].buyer_id,
+                    sellerMatches[i].buyer_crop_id
+                );
             const historyResponse =
                 await getUserHistory(
                     sellerMatches[i].buyer_id,
@@ -334,7 +339,7 @@ export const getAllSellerMatches = () => {
                     sellerMatches[i].gsi
                 );
             const { count, history } = historyResponse;
-            matchList[i] = { ...sellerMatches[i], count, history };
+            matchList[i] = { ...sellerMatches[i], count, history, ...additionalInfo };
         }
         dispatch(updateSellerMatches(matchList));
         dispatch(setMatchesLoadingFlag(false));
@@ -363,7 +368,12 @@ export const getSellerTransactionList = (transactionStatus: TransactionStatus) =
         const transactionListResponse = await fetchTransactionList(transactionStatus);
         let transactionFinalResponse: any = [];
         for (let i = 0; i < transactionListResponse.length; i++) {
-            let list = transactionListResponse[i];
+            const additionalInfo =
+                await getUserAdditionalInfo(
+                    transactionListResponse[i].buyer_id,
+                    transactionListResponse[i].buyer_crop_id
+                );
+            let list = { ...transactionListResponse[i], ...additionalInfo };
             list.key = transactionListResponse[i].pk;
             transactionFinalResponse.push(list);
         }

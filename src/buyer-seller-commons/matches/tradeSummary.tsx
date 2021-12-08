@@ -1,6 +1,9 @@
 import React from 'react';
-import { Col, Row, Typography } from 'antd';
+import { Button, Col, Row, Typography } from 'antd';
 import { useSelector } from 'react-redux';
+import { isEmpty } from 'lodash';
+
+import { openAdditionalInfo } from '../openAdditionalInfo';
 
 import { MatchRequirementModel } from '../../buyer-seller-commons/types';
 import { parseIDfromHash, maskData } from '../../app-components/utils';
@@ -16,14 +19,14 @@ const TradeSummary = (props: componentProps) => {
     const { cropDetails } = props;
     const loginState = useSelector((state: RootState) => state.loginUser);
     const { is_buyer } = loginState;
-    const { buyer_id, buyer_location, seller_price_per_quintal, seller_quantity, seller_price,
-        seller_id, produce, buyer_price_per_quintal, matched_quantity, location, buyer_final_price
+    const { buyer_id, buyer_location, seller_price_per_quintal, seller_quantity, seller_price, seller_id,
+        produce, buyer_price_per_quintal, matched_quantity, location, buyer_final_price, additional_info
     } = cropDetails;
     const totalPrice = (seller_price / seller_quantity) * matched_quantity;
     const userId = is_buyer ? maskData(parseIDfromHash(seller_id)) : maskData(parseIDfromHash(buyer_id));
 
     return (
-        <>
+        <React.Fragment>
             <Title level={4}>Trade summary</Title>
             <Row>
                 <Col sm={24} md={12}>
@@ -82,7 +85,16 @@ const TradeSummary = (props: componentProps) => {
                     : {'12/08/2020 to 15/08/2020'}
                 </Col>
             </Row>
-        </>
+            <Row>
+                <Button
+                    type="link"
+                    disabled={isEmpty(additional_info)}
+                    onClick={() => openAdditionalInfo(additional_info)}
+                >
+                    Additional Info
+                </Button>
+            </Row>
+        </React.Fragment>
     );
 };
 

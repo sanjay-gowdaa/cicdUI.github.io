@@ -1,10 +1,12 @@
 import React from 'react';
 import { Button, Image, Typography, Tooltip } from 'antd';
+import { isEmpty } from 'lodash';
 
 import { TransactionModel } from '../../buyer-seller-commons/types';
 import { parseIDfromHash, maskData } from '../../app-components/utils';
 import { showCropImage } from '../../buyer-seller-commons/constants';
 import GetCurrentStatusDetails from '../../buyer-seller-commons/transactions/getCurrentStatusDetails';
+import { openAdditionalInfo } from '../../buyer-seller-commons/openAdditionalInfo';
 
 const { Text } = Typography;
 
@@ -30,14 +32,21 @@ export const transactionSellerColumns = [
         dataIndex: 'produce',
         key: 'produce',
         width: 300,
-        render: (produce: string) => {
-            const [masterCategory = '', produceCateogry = '', cropType = '', grade = ''] = produce.split('-');
+        render: (produce: string, record: TransactionModel) => {
+            const [masterCategory = ''] = produce.split('-');
             const imageSrc = showCropImage(masterCategory);
             return (
                 <div className='display-flex-row align-center'>
                     <Image src={imageSrc} className='table-crop-image' />
                     <div className='margin-l-r-1em'>
                         <p>{produce}</p>
+                        <Button
+                            type="link"
+                            disabled={isEmpty(record.additional_info)}
+                            onClick={() => openAdditionalInfo(record.additional_info)}
+                        >
+                            Additional Info
+                        </Button>
                     </div>
                 </div>
             );
@@ -89,16 +98,6 @@ export const transactionSellerColumns = [
         title: 'Location',
         dataIndex: 'buyer_location',
         key: 'buyer_location',
-    },
-    {
-        title: 'Additional',
-        key: 'additional_info',
-        dataIndex: 'additional_info',
-        render: () => {
-            return (
-                <Button type='link'>Packaging Details</Button>
-            );
-        },
     },
     {
         title: 'Status',
