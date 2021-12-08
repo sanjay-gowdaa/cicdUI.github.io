@@ -59,28 +59,20 @@ export const createSellerFormData = (formValues: any) => {
 export const validateSellerPrice = (rule: RuleObject, value: string, apmc: any) => {
     const minimum: any = Math.round(apmc * 0.6);
     const maximum: any = Math.round(apmc * 1.1);
+    const regExp = /^[0-9]*$/;
 
     if (isEmpty(value)) {
         return Promise.reject('Please enter price per quintal!');
+    } else if (value.includes('.')) {
+        return Promise.reject('Please enter price per quintal in Rupees (₹) only!');
+    } else if (!regExp.test(value)) {
+        return Promise.reject('Please enter a valid price per quintal!');
     } else if (typeof (apmc) === 'string') {
         return Promise.resolve();
-    } else {
-        if (value < minimum) {
-            return Promise.reject(`Price per quintal cannot be less than 60% of Apmc rate i.e ${minimum}`);
-        } else if (value > maximum) {
-            return Promise.reject(`Price per quintal cannot be more than 110% of Apmc rate i.e ${maximum}`);
-        } else {
-            return Promise.resolve();
-        }
-    }
-};
-
-export const validateQuantity = (rule: RuleObject, value: string) => {
-    const regExp = /^[0-9]*$/;
-    if (isEmpty(value)) {
-        return Promise.reject('Please input the Quantity!');
-    } else if (!regExp.test(value)) {
-        return Promise.reject('Please enter a valid quantity!');
+    } else if (value < minimum) {
+        return Promise.reject(`Price per quintal cannot be less than 60% of Apmc rate i.e ${minimum}`);
+    } else if (value > maximum) {
+        return Promise.reject(`Price per quintal cannot be more than 110% of Apmc rate i.e ${maximum}`);
     } else {
         return Promise.resolve();
     }

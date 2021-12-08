@@ -3,10 +3,9 @@ import { Input, Button, Form, DatePicker } from 'antd';
 import { FormInstance } from 'antd/lib/form';
 import moment from 'moment';
 
-import { validateQuantity } from '../utils';
-
 import { ProduceModel } from '../../../store/buyerReducer/types';
 import confirmationPopup from '../../../buyer-seller-commons/confirmationPopup';
+import { validateQuantity } from '../../../buyer-seller-commons/produce/utils';
 
 const EditableContext = React.createContext<FormInstance<any> | null>(null);
 
@@ -17,7 +16,7 @@ interface EditableCellProps {
     dataIndex: keyof ProduceModel | 'action';
     record: ProduceModel;
     isEdit: boolean;
-    setIsEdit: any;
+    setIsEdit: Function;
     handleSave: (record: ProduceModel) => void;
 };
 
@@ -25,7 +24,15 @@ interface EditableRowProps {
     index: number;
 };
 
-const ActionEditComponent = ({ dataIndex, record, editForm, setIsEdit, handleSave, ...restProps }: any) => {
+const ActionEditComponent = (
+    {
+        dataIndex,
+        record,
+        editForm,
+        setIsEdit,
+        handleSave,
+        ...restProps
+    }: any) => {
     editForm.setFieldsValue({
         'delivery_by': moment(record['delivery_by']),
         'quantity': record['quantity']
@@ -68,7 +75,7 @@ const RequestDeliveryByComponent = ({ dataIndex, record, ...restProps }: any) =>
     defaultDateStart.setDate(defaultDateStart.getDate() + 4);
     defaultDateEnd.setDate(defaultDateEnd.getDate() + 20);
 
-    const disabledDate: any = (currentDate: any) => {
+    const disabledDate = (currentDate: Object) => {
         return currentDate < moment(defaultDateStart, 'YYYY-MM-DD') || currentDate > moment(defaultDateEnd, 'YYYY-MM-DD');
     };
 
@@ -100,7 +107,7 @@ const QuantityEditComponent = ({ dataIndex, record, ...restProps }: any) => {
                 initialValue={record.quantity}
                 rules={[{
                     required: true,
-                    validator: (rules: any, value: any) => validateQuantity(rules, value)
+                    validator: (rules, value) => validateQuantity(rules, value)
                 }]}
             >
                 <Input className="custom-input" placeholder="In quintal" />

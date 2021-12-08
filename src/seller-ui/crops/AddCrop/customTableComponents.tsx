@@ -2,10 +2,11 @@ import React, { useContext } from 'react';
 import { Input, Button, Form, Select } from 'antd';
 import { FormInstance } from 'antd/lib/form';
 
-import { validateQuantity, validateSellerPrice } from '../cropUtils';
+import { validateSellerPrice } from '../cropUtils';
 
 import { CropApiModel } from '../../../store/sellerReducer/types';
 import confirmationPopup from '../../../buyer-seller-commons/confirmationPopup';
+import { validateQuantity } from '../../../buyer-seller-commons/produce/utils';
 
 const { Option } = Select;
 
