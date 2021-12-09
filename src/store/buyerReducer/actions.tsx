@@ -29,7 +29,7 @@ import { RootState } from '../rootReducer';
 import { getTimeStamp } from '../../app-components/utils';
 import { MatchRequirementModel, TransactionStatus } from '../../buyer-seller-commons/types';
 import { getUserCompleteDetails } from '../loginReducer/actions';
-import { getUserHistory } from '../../buyer-seller-commons/actions';
+import { getUserAdditionalInfo, getUserHistory } from '../../buyer-seller-commons/actions';
 
 export const UPDATE_MASTER_LIST = 'UPDATE_MASTER_LIST';
 export const GET_MASTER_LIST = 'GET_MASTER_LIST';
@@ -315,21 +315,33 @@ export const getMatchesForBuyerCrops = (cropsList: Array<ProduceModel>) => {
             const matchesLength = buyerMatchesData.length;
             const genericData = buyerMatchesData[matchesLength - 1];
             if (!isEmpty(buyerMatchesData[0])) {
+                const additionalInfo =
+                    await getUserAdditionalInfo(
+                        buyerMatchesData[0].seller_id,
+                        buyerMatchesData[0].seller_crop_id
+                    );
                 let output = {
                     ...buyerMatchesData[0],
                     key: buyerMatchesData[0].seller_crop_id,
-                    ...genericData
+                    ...genericData,
+                    ...additionalInfo
                 };
                 const historyResponse = await getUserHistory(output.buyer_id, output.produce, output.seller_id);
                 const { count, history } = historyResponse;
                 output = { ...output, count, history }
                 let children: any = [];
                 for (let i = 1; i < (matchesLength - 1); i++) {
+                    const additionalInfo =
+                        await getUserAdditionalInfo(
+                            output.seller_id,
+                            output.seller_crop_id
+                        );
                     let childernContent = {
                         ...buyerMatchesData[i],
                         isChild: true,
                         key: buyerMatchesData[i].seller_crop_id,
-                        ...genericData
+                        ...genericData,
+                        ...additionalInfo
                     };
                     const historyResponse = await getUserHistory(childernContent.buyer_id, childernContent.produce, childernContent.seller_id);
                     const { count, history } = historyResponse;
@@ -381,7 +393,12 @@ export const getTransactionList = (transactionStatus: TransactionStatus) => {
         const transactionListResponse = await fetchTransactionList(transactionStatus);
         let transactionFinalResponse: any = [];
         for (let i = 0; i < transactionListResponse.length; i++) {
-            let list = transactionListResponse[i];
+            const additionalInfo =
+                await getUserAdditionalInfo(
+                    transactionListResponse[i].seller_id,
+                    transactionListResponse[i].seller_crop_id
+                );
+            let list = { ...transactionListResponse[i], ...additionalInfo };
             list.key = transactionListResponse[i].pk;
             transactionFinalResponse.push(list);
         }

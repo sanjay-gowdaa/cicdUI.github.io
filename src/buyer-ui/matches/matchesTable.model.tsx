@@ -163,7 +163,7 @@ export const matchesBuyerColumns = (componentCallBacks: componentCallBacksModel)
     {
         title: '',
         key: 'action',
-        render: (text: any, record: MatchRequirementModel) => {
+        render: (record: MatchRequirementModel) => {
             const { populateCropDetails, showCropDetailsModal, rejectMatch } = componentCallBacks;
 
             return (

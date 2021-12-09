@@ -53,6 +53,7 @@ const GET_AMOUNT_API = 'getamounttodisplay';
 const GET_REJECT_COUNT = 'getrejectcount';
 const COGNITO_PROVIDER = 'CognitoIdentityServiceProvider';
 const USER_HISTORY = 'userHistory';
+const GET_ADDITIONAL_INFO = 'getAdditionalInfo';
 
 export const LAST_AUTH_USER = localStorage.getItem(`${COGNITO_PROVIDER}.${COGNITO_ID}.LastAuthUser`);
 export const ACCESS_TOKEN = localStorage.getItem(`${COGNITO_PROVIDER}.${COGNITO_ID}.${LAST_AUTH_USER}.accessToken`);
@@ -407,6 +408,18 @@ export const fetchUserHistory = (userData: any) => {
         headers: getAuthHeader(),
         method: 'POST',
         body: JSON.stringify(userData)
+    }).then((response: any) => response.json())
+        .catch((error: any) => console.log('error', error));
+};
+
+export const fetchAdditionalInfo = (userId: string, cropId: string) => {
+    const fetchAdditionalInfoApi = `${BASE_URL}/${STAGE}/${TRANSACTION_API}/${GET_ADDITIONAL_INFO}`;
+    // const fetchAdditionalInfoApi = `http://localhost:4000/${STAGE}/${TRANSACTION_API}/${GET_ADDITIONAL_INFO}`;
+
+    return fetch(fetchAdditionalInfoApi, {
+        headers: getAuthHeader(),
+        method: 'POST',
+        body: JSON.stringify({ userId, cropId })
     }).then((response: any) => response.json())
         .catch((error: any) => console.log('error', error));
 };
