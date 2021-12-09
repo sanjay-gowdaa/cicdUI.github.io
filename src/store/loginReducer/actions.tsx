@@ -39,6 +39,14 @@ export const SET_CONFIRMATION_CODE_ERROR = 'SET_CONFIRMATION_CODE_ERROR';
 export const SET_PASSWORD_CHANGE_ERROR = 'SET_PASSWORD_CHANGE_ERROR';
 export const SET_NEW_PASSWORD = 'SET_NEW_PASSWORD';
 export const SET_USER = 'SET_USER';
+export const SET_AMPLIFY_RESPONSE = 'SET_AMPLIFY_RESPONSE';
+
+export const setAmplifyResponse = (isSet: boolean) => {
+    return {
+        type: SET_AMPLIFY_RESPONSE,
+        payload: isSet
+    };
+};
 
 export const setUser = (user: any) => {
     return {
@@ -241,6 +249,7 @@ export const registerSellerAtDestiny = async (userData: any) => {
 
 export const signIn = (userName: string, password: string) => {
     return async (dispatch: any) => {
+        dispatch(setAmplifyResponse(false));
         Auth.signIn(userName, password)
             .then(user => {
                 if (user.challengeName === 'NEW_PASSWORD_REQUIRED') {
@@ -252,6 +261,7 @@ export const signIn = (userName: string, password: string) => {
                     dispatch(setSuccessInLogin());
                     (window as any).userToken = accessToken.jwtToken;
                     (window as any).userName = user.username;
+                    dispatch(setAmplifyResponse(true));
                 }
             }).catch(error => {
                 dispatch(setErrorInLogin(error.message))
@@ -266,6 +276,7 @@ export const setUserPassword = (password: string) => {
             .then(user => {
                 dispatch(setSuccessInLogin());
                 (window as any).userToken = user.signInUserSession.accessToken.jwtToken;
+                dispatch(setAmplifyResponse(true));
             })
             .catch(e => console.log('error', e));
     };
