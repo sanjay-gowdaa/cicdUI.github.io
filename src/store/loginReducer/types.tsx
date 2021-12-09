@@ -12,6 +12,7 @@ export interface UserDetailsModel {
     confirmationCodeError?: string;
     isNewUser?: boolean;
     user?: any;
+    amplifyResponse: boolean;
 };
 
 export interface UserStateModel extends UserDetailsModel {
