@@ -4,7 +4,7 @@ import {
     UPDATE_CONFIGURATIONS, UPDATE_USER, SET_IS_REDIRECTED,
     SET_ERROR_IN_LOGIN, SET_SUCCESS_IN_LOGIN, SET_PASSWORD_CHANGE_SUCCESS,
     SET_CONFIRMATION_CODE_ERROR, SET_PASSWORD_CHANGE_ERROR, SET_NEW_PASSWORD,
-    SET_USER
+    SET_USER, SET_AMPLIFY_RESPONSE
 } from './actions';
 import { UserStateModel } from './types';
 
@@ -20,7 +20,8 @@ const INITIAL_STATE: UserStateModel = {
     passwordChangeError: '',
     confirmationCodeError: '',
     isNewUser: false,
-    user: {}
+    user: {},
+    amplifyResponse: false
 };
 
 const reducer = (state = INITIAL_STATE, action: any) => {
@@ -66,6 +67,10 @@ const reducer = (state = INITIAL_STATE, action: any) => {
 
         case SET_USER:
             return { ...state, user: action.payload };
+
+        case SET_AMPLIFY_RESPONSE:
+            return { ...state, amplifyResponse: action.payload };
+
         default:
             return state;
     }
