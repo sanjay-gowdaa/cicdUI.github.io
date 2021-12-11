@@ -17,7 +17,8 @@ import {
     OTP_SELLER_CROP_ID,
     OTP_BUYER_ID,
     OTP_BUYER_CROP_ID,
-    SET_MATCHES_LOADER
+    SET_MATCHES_LOADER,
+    SET_APMC_ACTUAL
 } from './actions';
 import { SellerStateModel } from './types';
 
@@ -30,6 +31,7 @@ const INITIAL_STATE: SellerStateModel = {
     reviewsList: [],
     categories: [],
     apmcCropPrice: '',
+    isActualApmcPrice: false,
     isMatchesFetching: false,
     timeStamp: {},
     currentStatusDetails: [],
@@ -60,6 +62,9 @@ const reducer = (state = INITIAL_STATE, action: any) => {
 
         case UPDATE_APMC_RATE:
             return { ...state, apmcCropPrice: action.payload };
+
+        case SET_APMC_ACTUAL:
+            return { ...state, isActualApmcPrice: action.payload };
 
         case UPDATE_SELLER_MATCHES:
             return { ...state, matchesList: action.payload };

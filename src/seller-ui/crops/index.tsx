@@ -98,10 +98,10 @@ const CropsSection = (props: any) => {
         Modal.info({
             className: 'kyc-required-modal',
             content:
-                <>
+                <React.Fragment>
                     <Text>Please update your KYC information to add produce</Text><br />
                     <Text>Profile &gt; KYC Information</Text>
-                </>
+                </React.Fragment>
             ,
             okText: 'Update Now',
             closable: true,
@@ -112,14 +112,15 @@ const CropsSection = (props: any) => {
     return (
         <div className='crops-container' id='seller-ui-crops'>
             {isApproved &&
-                <>
+                <React.Fragment>
                     {userStatus.map((list) => {
                         return (isActiveFlag === list.flag) ?
                             <Tag color={list.backgroundColor} style={{ color: list.color, fontSize: 'large', padding: '0.5em' }} >
-                                {list.title} </Tag> :
+                                {list.title}
+                            </Tag> :
                             <Tag style={{ display: 'none' }}></Tag>
                     })}
-                </>
+                </React.Fragment>
             }
             <Title level={2}>My Produce</Title>
             <PrimaryBtn
