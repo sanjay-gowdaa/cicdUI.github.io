@@ -30,6 +30,7 @@ import {
     fetchAllCategories,
     fetchAllMasterCrops,
     fetchAllVariety,
+    updateApmcCropRate,
     updatedFetchLiveApmcRate
 } from '../../../store/sellerReducer/actions';
 import { RootState } from '../../../store/rootReducer';
@@ -158,6 +159,7 @@ const AddCropModal = (addCropProps: PropsType) => {
         form.setFieldsValue({ cropName: null, subCategory: null, grade: null });
         setSelectedMasterCrop('');
         setSelectedVariety('');
+        dispatch(updateApmcCropRate(''));
         /* Reset other fields end */
         dispatch(fetchAllMasterCrops(category));
     };
@@ -306,7 +308,12 @@ const AddCropModal = (addCropProps: PropsType) => {
                                 </Form.Item>
                                 <span className='additional-text'>
                                     APMC Rate {loginUser.district}:
-                                    <span style={{ fontWeight: 700 }}>&nbsp;&nbsp;{sellerStore.apmcCropPrice}</span>
+                                    <span style={{ fontWeight: 700 }}>
+                                        &nbsp;&nbsp; {sellerStore.apmcCropPrice} &nbsp;
+                                        {sellerStore.apmcCropPrice !== '' && !sellerStore.isActualApmcPrice &&
+                                            < Text style={{ color: 'red' }}>#</Text>
+                                        }
+                                    </span>
                                     {typeof (sellerStore.apmcCropPrice) === 'number' &&
                                         <Button type='link'>
                                             View Details <BarChartOutlined />
@@ -442,7 +449,10 @@ const AddCropModal = (addCropProps: PropsType) => {
                             </div>
                         </Col>
                     </Row>
-                    <Row justify='center'>
+                    {sellerStore.apmcCropPrice !== '' && !sellerStore.isActualApmcPrice &&
+                        < Text style={{ color: 'red' }}># Aproximated Apmc data.</Text>
+                    }
+                    <Row justify='center' style={{ marginTop: '10px' }}>
                         <Col>
                             <CancelBtn
                                 className='margin-l-r-1em crop-modal-action-btn vikas-btn-radius'
@@ -459,7 +469,7 @@ const AddCropModal = (addCropProps: PropsType) => {
                     </Row>
                 </Form>
             </Modal>
-        </React.Fragment>
+        </React.Fragment >
     );
 };
 
