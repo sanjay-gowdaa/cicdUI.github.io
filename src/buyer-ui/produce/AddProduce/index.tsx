@@ -14,12 +14,11 @@ import {
 import { useDispatch, useSelector } from 'react-redux';
 import moment from 'moment';
 
-import { validateQuantity } from '../utils';
-
 import { addNewProduce } from '../../../store/buyerReducer/actions';
 import CancelBtn from '../../../app-components/cancelBtn';
 import { MasterListApiFormat, ProduceModel } from '../../../store/buyerReducer/types';
 import { RootState } from '../../../store/rootReducer';
+import { validateQuantity } from '../../../buyer-seller-commons/produce/utils';
 
 const { Text } = Typography;
 const { TextArea } = Input;
@@ -36,17 +35,17 @@ const fieldwithInfoLayout = {
 };
 
 type AddCropModalProps = {
-    masterProduceList: Array<any>;
+    masterProduceList: Array<MasterListApiFormat>;
     isEdit: boolean;
     currentProduceRecord: ProduceModel;
-    setModalVisible: any;
+    setModalVisible: Function;
     modalVisible: boolean;
 };
 
 const getMasterProduceListOpts = ({ masterProduceList }: { masterProduceList: Array<MasterListApiFormat> }) => {
 
     return (
-        <>
+        <React.Fragment>
             {masterProduceList.map((masterProduceItem: MasterListApiFormat) => {
                 const { produce_name = '', crop_name = '', category_name = '', grade_name = '' } = masterProduceItem;
 
@@ -60,7 +59,7 @@ const getMasterProduceListOpts = ({ masterProduceList }: { masterProduceList: Ar
                 );
             })
             }
-        </>
+        </React.Fragment>
     );
 };
 
@@ -152,7 +151,7 @@ const AddCropModal = ({
         return { ...currentProduceRecord, delivery_by: deliveryByProcessed, produce_name };
     };
 
-    const disabledDate: any = (currentDate: any) => {
+    const disabledDate = (currentDate: Object) => {
         return currentDate < moment(defaultDateStart, 'YYYY-MM-DD') || currentDate > moment(defaultDateEnd, 'YYYY-MM-DD');
     };
 
@@ -192,7 +191,7 @@ const AddCropModal = ({
                             name="quantity"
                             rules={[{
                                 required: true,
-                                validator: (rules: any, value: any) => validateQuantity(rules, value)
+                                validator: (rules, value) => validateQuantity(rules, value)
                             }]}
                         >
                             <Form.Item name="quantity">

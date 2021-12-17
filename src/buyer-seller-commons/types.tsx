@@ -29,6 +29,15 @@ export interface MatchRequirementModel {
     isChild?: boolean;
     count: number;
     history: Array<History>;
+    additional_info: Array<AdditionalInfo>;
+};
+
+export interface AdditionalInfo {
+    packing_size: string;
+    moisture: string;
+    other_info: string;
+    fungus: string;
+    packing_type: string;
 };
 
 export interface History {

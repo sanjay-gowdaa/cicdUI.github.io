@@ -1,12 +1,14 @@
 import React from 'react';
-import { Image, Typography, Tooltip } from 'antd';
+import { Button, Image, Typography, Tooltip } from 'antd';
+import { isEmpty } from 'lodash';
 
 import PayButton from './payButton';
 
 import { parseIDfromHash, maskData } from '../../app-components/utils';
-import { TransactionStatus } from '../../buyer-seller-commons/types';
+import { TransactionModel, TransactionStatus } from '../../buyer-seller-commons/types';
 import { showCropImage } from '../../buyer-seller-commons/constants';
 import GetCurrentStatusDetails from '../../buyer-seller-commons/transactions/getCurrentStatusDetails';
+import { openAdditionalInfo } from '../../buyer-seller-commons/openAdditionalInfo';
 
 const { Text } = Typography;
 
@@ -32,8 +34,8 @@ export const transactionBuyerColumns = [
         dataIndex: 'produce',
         key: 'produce',
         width: 300,
-        render: (produce: string) => {
-            const [masterCategory = '', produceCateogry = '', cropType = '', grade = ''] = produce.split('-');
+        render: (produce: string, record: TransactionModel) => {
+            const [masterCategory = ''] = produce.split('-');
             const imageSrc = showCropImage(masterCategory);
 
             return (
@@ -41,6 +43,13 @@ export const transactionBuyerColumns = [
                     <Image src={imageSrc} className='table-crop-image' />
                     <div className='margin-l-r-1em'>
                         <p>{produce}</p>
+                        <Button
+                            type="link"
+                            disabled={isEmpty(record.additional_info)}
+                            onClick={() => openAdditionalInfo(record.additional_info)}
+                        >
+                            Additional Info
+                        </Button>
                     </div>
                 </div>
             );

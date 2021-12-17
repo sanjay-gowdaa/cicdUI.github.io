@@ -37,8 +37,8 @@ export const matchesSellerColumns = (componentCallBacks: componentCallBacksModel
         title: 'Produce',
         dataIndex: 'produce',
         key: 'produce',
-        render: (produce: string, record: MatchRequirementModel) => {
-            const [masterCategory = '', produceCateogry = '', cropType = '', grade = ''] = produce.split('-');
+        render: (produce: string) => {
+            const [masterCategory = ''] = produce.split('-');
             const imageSrc = showCropImage(masterCategory);
 
             return (
@@ -60,10 +60,10 @@ export const matchesSellerColumns = (componentCallBacks: componentCallBacksModel
             const isPartial = matched_quantity < seller_quantity;
 
             return (
-                <>
+                <React.Fragment>
                     <p style={{ margin: '0' }}>{matched_quantity} qtl</p>
                     {isPartial ? <Text className='partial-match'>PARTIAL</Text> : <Text className='full-match'>FULL</Text>}
-                </>
+                </React.Fragment>
             );
         },
     },
@@ -73,21 +73,9 @@ export const matchesSellerColumns = (componentCallBacks: componentCallBacksModel
         key: 'buyer_location',
     },
     {
-        title: 'Additional',
-        key: 'additional_info',
-        dataIndex: 'additional_info',
-        render: () => {
-            return (
-                <>
-                    <Button type='link'>Package Details</Button>
-                </>
-            );
-        },
-    },
-    {
         title: '',
         key: 'action',
-        render: (text: any, record: MatchRequirementModel) => {
+        render: (record: MatchRequirementModel) => {
             return (
                 <div className='display-flex-row'>
                     <Button
@@ -117,8 +105,7 @@ export const matchesSellerColumns = (componentCallBacks: componentCallBacksModel
                             })
                         }}
                     >
-                        {' '}
-                        Reject{' '}
+                        {' '}Reject{' '}
                     </Button>
                 </div>
             );

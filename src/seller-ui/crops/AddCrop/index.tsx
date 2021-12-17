@@ -15,13 +15,13 @@ import {
 } from 'antd';
 import { BarChartOutlined, InboxOutlined } from '@ant-design/icons';
 import { useDispatch, useSelector } from 'react-redux';
+import { RuleObject } from 'antd/lib/form';
 
 import {
     createSellerFormData,
     renderCategoryOptions,
     renderGradeOptionsForSubCategory,
     renderSubCategoryOptions,
-    validateQuantity,
     validateSellerPrice
 } from '../cropUtils';
 
@@ -36,6 +36,7 @@ import { RootState } from '../../../store/rootReducer';
 import { SellerStateModel } from '../../../store/sellerReducer/types';
 import CancelBtn from '../../../app-components/cancelBtn';
 import { UserStateModel } from '../../../store/loginReducer/types';
+import { validateQuantity } from '../../../buyer-seller-commons/produce/utils';
 
 const { Text, Title } = Typography;
 const { Dragger } = Upload;
@@ -52,7 +53,7 @@ const fieldwithInfoLayout = {
 };
 
 type PropsType = {
-    setModalVisible: any;
+    setModalVisible: Function;
     modalVisible: boolean;
 };
 
@@ -182,7 +183,7 @@ const AddCropModal = (addCropProps: PropsType) => {
     };
 
     return (
-        <>
+        <React.Fragment>
             <Modal
                 title={<Title level={5}>Add Produce</Title>}
                 visible={modalVisible}
@@ -273,7 +274,7 @@ const AddCropModal = (addCropProps: PropsType) => {
                                     name='quantity'
                                     rules={[{
                                         required: true,
-                                        validator: (rules: any, value: any) => validateQuantity(rules, value)
+                                        validator: (rules: RuleObject, value: string) => validateQuantity(rules, value)
                                     }]}
                                 >
                                     <Input
@@ -293,7 +294,7 @@ const AddCropModal = (addCropProps: PropsType) => {
                                     name='pricePerQnt'
                                     rules={[{
                                         required: true,
-                                        validator: (rule, value) => validateSellerPrice(rule, value, sellerStore.apmcCropPrice)
+                                        validator: (rule: RuleObject, value: string) => validateSellerPrice(rule, value, sellerStore.apmcCropPrice)
                                     }]}
                                 >
                                     <Input
@@ -458,7 +459,7 @@ const AddCropModal = (addCropProps: PropsType) => {
                     </Row>
                 </Form>
             </Modal>
-        </>
+        </React.Fragment>
     );
 };
 
