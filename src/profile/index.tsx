@@ -26,7 +26,7 @@ import {
 import BankDocuments from './bankDocuments';
 import BuyerWorkingHours from './buyerWorkingHours';
 import DocumentsUploaded from './documentsUploaded';
-import { emailValidator, generateFormData, normFile, validateUpload } from './utils';
+import { emailValidator, generateFormData, validateUpload } from './utils';
 import ConfirmationMessage from './confirmationMessage';
 
 import Header from '../header';
@@ -42,6 +42,7 @@ import {
     registerSellerAtDestiny,
     saveKyc
 } from '../store/loginReducer/actions';
+import { normFile } from '../app-components/uploadDocument';
 
 const { Title, Text } = Typography;
 
@@ -52,7 +53,7 @@ const Profile = (props: any) => {
     const [isAddClicked, setAddClicked] = useState(false);
     const [isChangeClicked, setChangeClicked] = useState(false);
     const [showProfilePic, setProfilePic] = useState(true);
-    const [kycFlag, setKycFlag] = useState("");
+    const [kycFlag, setKycFlag] = useState('');
     const [showConfirmation, setConfirmation] = useState(false);
     const [isSave, setSaveFlag] = useState(false);
     const [disableSave, setDisableSave] = useState(true);
@@ -78,35 +79,33 @@ const Profile = (props: any) => {
         const panSubmitted = !isEmpty(loginState.PAN) && !isEmpty(loginState?.pan_card);
         const rtcSubmitted = !isEmpty(loginState.rtc) && !isEmpty(loginState?.rtc_card);
         const kisanSubmitted = !isEmpty(loginState.kisancard) && !isEmpty(loginState?.kisancard_card);
-        const isApproved = loginState.kyc_flag === "approved" ? true : false;
+        const isApproved = loginState.kyc_flag === 'approved' ? true : false;
 
         if (userType === UserTypes.BUYER) {
             if (isApproved) {
-                setKycFlag("complete");
-            }
-            else {
+                setKycFlag('complete');
+            } else {
                 if (isEmpty(loginState.category)) {
 
                     (panSubmitted && aadharSubmitted) ?
-                        setKycFlag("submitted") : setKycFlag("incomplete");
+                        setKycFlag('submitted') : setKycFlag('incomplete');
                 } else {
                     (panSubmitted && !isEmpty(loginState.gstin)) ?
-                        setKycFlag("submitted") : setKycFlag("incomplete");
+                        setKycFlag('submitted') : setKycFlag('incomplete');
                 }
             }
         } else {
             if (isApproved) {
-                setKycFlag("complete");
-            }
-            else {
+                setKycFlag('complete');
+            } else {
                 if (isEmpty(loginState.category)) {
                     ((aadharSubmitted && bankSubmitted) &&
                         ((kisanSubmitted && !rtcSubmitted) || (!kisanSubmitted && rtcSubmitted)
                             || (kisanSubmitted && rtcSubmitted))) ?
-                        setKycFlag("submitted") : setKycFlag("incomplete");
+                        setKycFlag('submitted') : setKycFlag('incomplete');
                 } else {
                     (panSubmitted && !isEmpty(loginState.gstin) && !isEmpty(loginState.fpo) && bankSubmitted) ?
-                        setKycFlag("submitted") : setKycFlag("incomplete");
+                        setKycFlag('submitted') : setKycFlag('incomplete');
                 }
             }
         }
@@ -124,18 +123,18 @@ const Profile = (props: any) => {
     };
 
     const setKycToComplete = (values: any) => {
-        delete values["profile_picture"];
-        delete values["email"];
-        delete values["upi_id"];
+        delete values['profile_picture'];
+        delete values['email'];
+        delete values['upi_id'];
         if (userType === UserTypes.BUYER) {
-            delete values["account_holder_name"];
-            delete values["bank_info"];
-            delete values["account_no"];
-            delete values["ifsc_code"];
-            delete values["bank_doc"];
-            delete values["weekday"];
-            delete values["sunday"];
-            delete values["saturday"];
+            delete values['account_holder_name'];
+            delete values['bank_info'];
+            delete values['account_no'];
+            delete values['ifsc_code'];
+            delete values['bank_doc'];
+            delete values['weekday'];
+            delete values['sunday'];
+            delete values['saturday'];
         }
 
         var count = 0;
@@ -149,7 +148,7 @@ const Profile = (props: any) => {
             }
         }
         if (count === length) {
-            setKycFlag("submitted");
+            setKycFlag('submitted');
             return true;
         } else {
             return false;
@@ -158,15 +157,15 @@ const Profile = (props: any) => {
 
     const docErrorMessage = () => {
         Modal.error({
-            title: "Document field partially filled",
-            content: "If you wish to enter the document, kindly enter both value and upload image together!"
+            title: 'Document field partially filled',
+            content: 'If you wish to enter the document, kindly enter both value and upload image together!'
         })
     };
 
     const bankErrorMessage = () => {
         Modal.error({
-            title: "Bank field partially filled",
-            content: "If you wish to enter the bank details, kindly enter all the fields together!"
+            title: 'Bank field partially filled',
+            content: 'If you wish to enter the bank details, kindly enter all the fields together!'
         })
     };
 
@@ -178,46 +177,44 @@ const Profile = (props: any) => {
         );
 
         const beneficiaryDetails = {
-            "username": loginState.username,
-            "BeneName": kycFormValues.account_name || loginState.bank_info.account_holder_name,
-            "BeneAccountNo": kycFormValues.account_number || loginState.bank_info.account_no,
-            "IfscCode": kycFormValues.ifsc_code || loginState.bank_info.ifsc_code
+            'username': loginState.username,
+            'BeneName': kycFormValues.account_name || loginState.bank_info.account_holder_name,
+            'BeneAccountNo': kycFormValues.account_number || loginState.bank_info.account_no,
+            'IfscCode': kycFormValues.ifsc_code || loginState.bank_info.ifsc_code
         };
 
         const userDetails = [{
-            "Name": loginState.name,
-            "Address": loginState.address2,
-            "PinCode": loginState.zip,
-            "MobileNo": loginState.phone_no,
-            "SuppType": userType,
-            "CustSuppType": userType,
-            "CustSuppSubType": subType,
-            "GSTFilingPeriod": "Quarterly",
-            "ScandFileName": "",
-            "FoCode": "",
-            "SecondaryContactName": "",
-            "SecondContactNo": "",
-            "PANNo": loginState.PAN || kycFormValues.pan,
-            "BankName": "",
-            "BankAcNo": loginState.bank_info.account_no || kycFormValues.account_number,
-            "BankIFSC": loginState.bank_info.ifsc_code || kycFormValues.ifsc_code,
-            "BankUPIID": loginState.bank_info.upi_id,
-            "GSTIN": loginState.gstin || kycFormValues.gstin,
-            "EmailId": loginState.email || kycFormValues.email || '',
-            "RTCNo": loginState.rtc || '',
-            "AadharNo": loginState.UIDAI || kycFormValues.uidai || '',
-            "IntroducedOnDate": loginState.created_at
+            'Name': loginState.name,
+            'Address': loginState.address2,
+            'PinCode': loginState.zip,
+            'MobileNo': loginState.phone_no,
+            'SuppType': userType,
+            'CustSuppType': userType,
+            'CustSuppSubType': subType,
+            'GSTFilingPeriod': 'Quarterly',
+            'ScandFileName': '',
+            'FoCode': '',
+            'SecondaryContactName': '',
+            'SecondContactNo': '',
+            'PANNo': loginState.PAN || kycFormValues.pan,
+            'BankName': '',
+            'BankAcNo': loginState.bank_info.account_no || kycFormValues.account_number,
+            'BankIFSC': loginState.bank_info.ifsc_code || kycFormValues.ifsc_code,
+            'BankUPIID': loginState.bank_info.upi_id,
+            'GSTIN': loginState.gstin || kycFormValues.gstin,
+            'EmailId': loginState.email || kycFormValues.email || '',
+            'RTCNo': loginState.rtc || '',
+            'AadharNo': loginState.UIDAI || kycFormValues.uidai || '',
+            'IntroducedOnDate': loginState.created_at
         }]
 
         if (!loginState?.isSubmitted && isSubmitted && userType === UserTypes.BUYER) {
             registerBuyerAtDestiny(userDetails);
 
-        }
-        else if (!loginState?.isSubmitted && isSubmitted && userType === UserTypes.SELLER) {
+        } else if (!loginState?.isSubmitted && isSubmitted && userType === UserTypes.SELLER) {
             addBeneficiary(beneficiaryDetails);
             registerSellerAtDestiny(userDetails);
         }
-
     };
 
     const checkForError = (name: any, field: any) => {
@@ -227,7 +224,7 @@ const Profile = (props: any) => {
     };
 
     const onFinish = (values: any) => {
-        console.log("Success:", values);
+        console.log('Success:', values);
         setFormSubmitValue(values);
         const a = isEmpty(values.account_name);
         const b = isEmpty(values.account_number);
@@ -285,7 +282,7 @@ const Profile = (props: any) => {
                     finalValues = { ...finalValues, [property]: formSubmitValues[property] };
                 }
             }
-            finalValues["kyc_flag"] = "isSubmitted";
+            finalValues['kyc_flag'] = 'isSubmitted';
             setKycFormValues(finalValues);
             if (!isEmpty(finalValues)) {
                 setSaveFlag(true);
@@ -295,14 +292,14 @@ const Profile = (props: any) => {
     };
 
     const onFinishFailed = (error: any) => {
-        console.log("Failed:", error);
+        console.log('Failed:', error);
     };
 
     return (
-        <div className="profile-page">
+        <div className='profile-page'>
             <Header history={history} showActions isLoggedIn />
             <Button
-                type="link"
+                type='link'
                 onClick={() => window.history.back()}
                 style={{ position: 'relative', top: '1rem', left: '0.5rem', color: '#4E4E4E' }}
             >
@@ -310,46 +307,46 @@ const Profile = (props: any) => {
             </Button>
             <PageHeader
                 backIcon={null}
-                title="My Profile"
+                title='My Profile'
                 tags={
                     kycFlagDetails.map((list) => {
                         return (kycFlag === list.flag) ?
-                            <Tag color={list.backgroundColor} style={{ color: list.color, fontSize: "large", padding: "0.5em" }} >
+                            <Tag color={list.backgroundColor} style={{ color: list.color, fontSize: 'large', padding: '0.5em' }} >
                                 {list.title} {(list.icon) ? <CheckCircleFilled /> : null}
                             </Tag> :
                             <Tag style={{ display: 'none' }}></Tag>
                     })
                 }
             />
-            <Divider className="margin-zero" />
-            <Row style={{ paddingLeft: "3em" }}>
-                <Col span={12} style={{ paddingTop: "2em" }}>
+            <Divider className='margin-zero' />
+            <Row style={{ paddingLeft: '3em' }}>
+                <Col span={12} style={{ paddingTop: '2em' }}>
                     <Form
                         labelAlign='left'
                         labelCol={{ span: 24 }}
                         wrapperCol={{ span: 18 }}
                         scrollToFirstError
                         colon={false}
-                        name="profile"
+                        name='profile'
                         initialValues={{ loginState }}
                         onFinish={onFinish}
                         onFinishFailed={onFinishFailed}
                     >
                         <Form.Item
-                            name="profile_picture"
-                            className="profile-picture"
-                            valuePropName="fileList"
+                            name='profile_picture'
+                            className='profile-picture'
+                            valuePropName='fileList'
                             getValueFromEvent={normFile}
                             rules={[{ validator: (rule, value) => validateUpload(rule, value) }]}
                         >
                             {isEmpty(loginState.profile_picture) ?
                                 <Upload
-                                    accept="image/*"
+                                    accept='image/*'
                                     beforeUpload={(file) => {
                                         return false;
                                     }}
-                                    name="picture"
-                                    listType="picture-card"
+                                    name='picture'
+                                    listType='picture-card'
                                     maxCount={1}
                                     onChange={uploadProfilePic}
                                 >
@@ -357,72 +354,72 @@ const Profile = (props: any) => {
                                 </Upload> :
                                 <>
                                     <Upload
-                                        accept="image/*"
+                                        accept='image/*'
                                         beforeUpload={(file) => {
                                             return false;
                                         }}
-                                        name="picture"
-                                        listType="picture-card"
+                                        name='picture'
+                                        listType='picture-card'
                                         maxCount={1}
                                         onChange={uploadProfilePic}
                                     >
-                                        {showProfilePic ? <img className="changed-profile-picture" src={imageSrc} alt="profile" /> : null}
+                                        {showProfilePic ? <img className='changed-profile-picture' src={imageSrc} alt='profile' /> : null}
                                     </Upload>
-                                    {showProfilePic ? <Text className="change-profile-pic-text">Click on the Profile Picture to change</Text> : null}
+                                    {showProfilePic ? <Text className='change-profile-pic-text'>Click on the Profile Picture to change</Text> : null}
                                 </>
                             }
                         </Form.Item>
-                        <div className={kycFlag === "incomplete" ? `add-details-text` : `display-none`}>
-                            <Text>Add details of fields with <CaretRightFilled style={{ color: "#FF9900" }} /> to complete KYC</Text>
+                        <div className={kycFlag === 'incomplete' ? `add-details-text` : `display-none`}>
+                            <Text>Add details of fields with <CaretRightFilled style={{ color: '#FF9900' }} /> to complete KYC</Text>
                         </div>
-                        <Col span={20} className="kyc-form-elements">
+                        <Col span={20} className='kyc-form-elements'>
                             <Form.Item
                                 {...fieldLayout}
-                                label={<span className="kyc-form-label">User Type</span>}
-                                className="margin-zero"
+                                label={<span className='kyc-form-label'>User Type</span>}
+                                className='margin-zero'
                             >
                                 : {userType}
                             </Form.Item>
                             <Form.Item
                                 {...fieldLayout}
-                                label={<span className="kyc-form-label">{userType} Type</span>}
-                                className="margin-zero"
+                                label={<span className='kyc-form-label'>{userType} Type</span>}
+                                className='margin-zero'
                             >
-                                <Text style={{ textTransform: "capitalize" }}>: {subType}</Text>
+                                <Text style={{ textTransform: 'capitalize' }}>: {subType}</Text>
                             </Form.Item>
                             {!isEmpty(category) ?
                                 <Form.Item
                                     {...fieldLayout}
-                                    label={<span className="kyc-form-label">{userType} Category</span>}
-                                    className="margin-zero"
+                                    label={<span className='kyc-form-label'>{userType} Category</span>}
+                                    className='margin-zero'
                                 >
-                                    <Text style={{ textTransform: "capitalize" }}>: {category}</Text>
+                                    <Text style={{ textTransform: 'capitalize' }}>: {category}</Text>
                                 </Form.Item> : null
                             }
                             <Form.Item
                                 {...fieldLayout}
-                                label={<span className="kyc-form-label">Name</span>}
-                                className="margin-zero"
+                                label={<span className='kyc-form-label'>Name</span>}
+                                className='margin-zero'
                             >
                                 : {loginState.name}
                             </Form.Item>
                             <Form.Item
                                 {...fieldLayout}
-                                label={<span className="kyc-form-label">Phone Number</span>}
-                                className="margin-zero"
+                                label={<span className='kyc-form-label'>Phone Number</span>}
+                                className='margin-zero'
                             >
                                 : {loginState.phone_no}
                             </Form.Item>
                             <Form.Item
                                 {...fieldLayout}
-                                label={<span className="kyc-form-label">Email</span>}
-                                className="margin-zero"
+                                label={<span className='kyc-form-label'>Email</span>}
+                                className='margin-zero'
                             >
                                 {changeEmail || isEmpty(loginState.email) ?
-                                    <>
+                                    <React.Fragment>
                                         <Form.Item
-                                            className="margin-zero float-left"
-                                            name={(isEmpty(loginState.email) || changeEmail) ? "email" : undefined}
+                                            className='margin-zero float-left'
+                                            name={(isEmpty(loginState.email) || changeEmail) ? 'email' : undefined}
                                             rules={[{ validator: (rule, value) => emailValidator(rule, value) }]}
                                         >
                                             <Input
@@ -434,16 +431,16 @@ const Profile = (props: any) => {
                                         </Form.Item>
                                         {changeEmail &&
                                             <Button
-                                                type="link"
+                                                type='link'
                                                 danger
                                                 onClick={() => { setChangeEmail(false) }}
                                             >
                                                 Cancel
                                             </Button>
                                         }
-                                    </> :
+                                    </React.Fragment> :
                                     <Text>:&nbsp;{loginState.email}
-                                        <Button type="link" className="email-change " onClick={() => setChangeEmail(true)}>Change</Button>
+                                        <Button type='link' className='email-change ' onClick={() => setChangeEmail(true)}>Change</Button>
                                     </Text>}
                             </Form.Item>
                             <DocumentsUploaded
@@ -454,24 +451,23 @@ const Profile = (props: any) => {
                             />
                             <Form.Item
                                 {...fieldLayout}
-                                label={<span className="kyc-form-label">Address</span>}
-                                className="margin-zero"
+                                label={<span className='kyc-form-label'>Address</span>}
+                                className='margin-zero'
                             >
                                 : {loginState.address1},
                                 <br />{loginState.address2},
                                 <br />{loginState.zip}
                             </Form.Item>
                             {userType === UserTypes.BUYER && <BuyerWorkingHours workingHours={working_hours} setDisableSave={setDisableSave} />}
-                            <div className="add-details-text add-bank-details">
-                                <Title level={5} style={{ width: "fit-content", float: "left" }}>Bank Details</Title>
-                                {
-                                    addBankInfo ?
-                                        <Button type="link" style={{ marginLeft: "6em" }} onClick={() => setAddClicked(!isAddClicked)}>
-                                            {isAddClicked ? <Text type='danger'>Cancel</Text> : <Text>Update</Text>}
-                                        </Button> :
-                                        <Button type="link" style={{ marginLeft: "6em" }} onClick={() => setChangeClicked(!isChangeClicked)}>
-                                            {isChangeClicked ? <Text type='danger'>Cancel</Text> : <Text>Change</Text>}
-                                        </Button>
+                            <div className='add-details-text add-bank-details'>
+                                <Title level={5} style={{ width: 'fit-content', float: 'left' }}>Bank Details</Title>
+                                {addBankInfo ?
+                                    <Button type='link' style={{ marginLeft: '6em' }} onClick={() => setAddClicked(!isAddClicked)}>
+                                        {isAddClicked ? <Text type='danger'>Cancel</Text> : <Text>Update</Text>}
+                                    </Button> :
+                                    <Button type='link' style={{ marginLeft: '6em' }} onClick={() => setChangeClicked(!isChangeClicked)}>
+                                        {isChangeClicked ? <Text type='danger'>Cancel</Text> : <Text>Change</Text>}
+                                    </Button>
                                 }
                             </div>
                             <BankDocuments
@@ -486,9 +482,9 @@ const Profile = (props: any) => {
                         </Col>
                         <PrimaryBtn
                             disabled={disableSave}
-                            htmlType="submit"
-                            style={{ margin: "2em" }}
-                            content="Save"
+                            htmlType='submit'
+                            style={{ margin: '2em' }}
+                            content='Save'
                         />
                         <CancelBtn onClick={() => {
                             setConfirmation(true);
@@ -497,17 +493,17 @@ const Profile = (props: any) => {
                         />
                     </Form>
                 </Col>
-                {kycFlag === "incomplete" &&
+                {kycFlag === 'incomplete' &&
                     <Col>
-                        <div className="kyc-required-doc-list">
+                        <div className='kyc-required-doc-list'>
                             <Title level={4}>Add following details to complete KYC</Title>
                             <ul>
                                 {requiredDocumentList.map((list) => {
                                     return (
-                                        <>{
+                                        <React.Fragment>{
                                             list.userType === userType && list.subType === subType &&
                                             <li>{list.title}</li>
-                                        }</>)
+                                        }</React.Fragment>)
                                 })}
                             </ul>
                         </div>

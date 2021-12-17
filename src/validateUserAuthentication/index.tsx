@@ -17,7 +17,7 @@ const ValidateUserAuthentication = (props: any) => {
     const token = (global as any).userToken;
 
     useEffect(() => {
-        dispatch(getUserDetails(token));
+        dispatch(getUserDetails());
     }, []);
 
     useEffect(() => {

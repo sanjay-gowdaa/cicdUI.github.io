@@ -2,40 +2,46 @@ import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Button, Tabs, Typography } from 'antd';
 
-import OnGoingTransactions from './onGoing';
-import CompletedTransactions from './completed';
 import PendingTransactions from './pending';
+import OnGoingTransactions from './onGoing';
+import CompletedTransactions from './complete';
 
-import { TransactionStatus } from '../../buyer-seller-commons/types';
-import {
-    fetchEventTemplate,
-    getTransactionList,
-    getTransactionListOnReload
-} from '../../store/buyerReducer/actions';
+import { TransactionStatus } from '../types';
+import { fetchEventTemplate, getTransactionListOnReload } from '../actions';
+
 import { RootState } from '../../store/rootReducer';
+import { getTransactionList } from '../../store/buyerReducer/actions';
+import { getSellerTransactionList } from '../../store/sellerReducer/actions';
+import { UserTypes } from '../../store/genericTypes';
 import Refresh from '../../static/assets/refresh.png';
 
 const { Text, Title } = Typography;
 const { TabPane } = Tabs;
 
-const TransactionSection = () => {
-    const buyerState = useSelector((state: RootState) => state.buyer);
+const Transaction = () => {
+    const loginState = useSelector((state: RootState) => state.loginUser);
+    const userState = useSelector((state: RootState) => loginState.is_buyer ? state.buyer : state.seller);
     const dispatch = useDispatch();
+    const userType = loginState.is_buyer ? UserTypes.BUYER : UserTypes.SELLER;
     const [reloadClicked, setReloadClicked] = useState(0);
     const [transactionKey, setTransactionKey] = useState(TransactionStatus.on_going);
-    const { transactionList } = buyerState;
+    const { transactionList } = userState;
 
     const onSwitchTab = (key: string) => {
         const transactionTypeKey = key as TransactionStatus;
         setTransactionKey(transactionTypeKey);
         if (transactionList[transactionTypeKey].length === 0) {
-            dispatch(getTransactionList(transactionTypeKey))
+            loginState.is_buyer ?
+                dispatch(getTransactionList(transactionTypeKey)) :
+                dispatch(getSellerTransactionList(transactionTypeKey));
         }
     };
 
     useEffect(() => {
-        dispatch(getTransactionList(TransactionStatus.on_going));
-        dispatch(fetchEventTemplate());
+        loginState.is_buyer ?
+            dispatch(getTransactionList(TransactionStatus.on_going)) :
+            dispatch(getSellerTransactionList(TransactionStatus.on_going));
+        dispatch(fetchEventTemplate(userType));
     }, []);
 
     useEffect(() => {
@@ -47,11 +53,11 @@ const TransactionSection = () => {
     }, [reloadClicked]);
 
     return (
-        <div id="buyer-ui-transactions">
+        <div id='buyer-ui-transactions'>
             <Title level={2}>My Transactions</Title>
             <Button
-                type="link"
-                className="refresh-button"
+                type='link'
+                className='refresh-button'
                 disabled={reloadClicked === 5}
                 style={{ float: 'right' }}
                 onClick={() => {
@@ -60,16 +66,21 @@ const TransactionSection = () => {
                 }}
             >
                 <Text style={{ color: '#4285F4' }}>Refresh &nbsp;</Text>
-                <img src={Refresh} alt="refresh" />
+                <img src={Refresh} alt='refresh' />
             </Button>
-            <Tabs defaultActiveKey={TransactionStatus.on_going} size="large" style={{ width: "100%" }} onChange={onSwitchTab}>
-                <TabPane tab="Pending" key={TransactionStatus.pending}>
+            <Tabs
+                defaultActiveKey={TransactionStatus.on_going}
+                size='large'
+                style={{ width: '100%' }}
+                onChange={onSwitchTab}
+            >
+                <TabPane tab='Pending' key={TransactionStatus.pending}>
                     <PendingTransactions transactionList={transactionList[TransactionStatus.pending]} />
                 </TabPane>
-                <TabPane tab="On Going" key={TransactionStatus.on_going}>
+                <TabPane tab='On Going' key={TransactionStatus.on_going}>
                     <OnGoingTransactions transactionList={transactionList[TransactionStatus.on_going]} />
                 </TabPane>
-                <TabPane tab="Completed" key={TransactionStatus.completed}>
+                <TabPane tab='Completed' key={TransactionStatus.completed}>
                     <CompletedTransactions transactionList={transactionList[TransactionStatus.completed]} />
                 </TabPane>
             </Tabs>
@@ -77,4 +88,4 @@ const TransactionSection = () => {
     );
 };
 
-export default TransactionSection;
+export default Transaction;

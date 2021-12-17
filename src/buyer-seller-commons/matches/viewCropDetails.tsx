@@ -8,21 +8,21 @@ import DefaultBtn from '../../app-components/defaultBtn';
 
 interface componentProps {
     openDetailsModal: boolean;
-    setOpenDetailsModal: Function;
+    setOpenDetailsModal: any;
     cropDetails: MatchRequirementModel;
 };
 
 const ViewCropDetails = (props: componentProps) => {
     const { openDetailsModal, setOpenDetailsModal, cropDetails } = props;
     const closeModal = () => setOpenDetailsModal(!openDetailsModal);
-    
+
     return (
-        <Modal visible={openDetailsModal} title="Details" onCancel={closeModal} footer={null}>
+        <Modal visible={openDetailsModal} title='Details' onCancel={closeModal} footer={null}>
             <TradeSummary cropDetails={cropDetails} />
             <Divider />
-            <Row justify="center">
+            <Row justify='center'>
                 <Col>
-                    <DefaultBtn onClick={closeModal} content="Close" />
+                    <DefaultBtn onClick={closeModal} content='Close' />
                 </Col>
             </Row>
         </Modal>

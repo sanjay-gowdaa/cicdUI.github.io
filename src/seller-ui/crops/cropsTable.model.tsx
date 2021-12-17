@@ -21,27 +21,27 @@ const openAdditionalInfo = (content: any) => {
     const data = [
         {
             key: 1,
-            label: "Moisture",
+            label: 'Moisture',
             value: content.moisture === undefined ? '' : `${content.moisture} %`
         },
         {
             key: 2,
-            label: "Fungus",
+            label: 'Fungus',
             value: content.fungus === undefined ? '' : `${content.fungus} %`
         },
         {
             key: 3,
-            label: "Packing Type",
+            label: 'Packing Type',
             value: content.packing_type
         },
         {
             key: 4,
-            label: "Package Size",
+            label: 'Package Size',
             value: content.packing_size === undefined ? '' : `${content.packing_size} kg`
         },
         {
             key: 5,
-            label: "Other Information",
+            label: 'Other Information',
             value: content.other_info
         }
     ];
@@ -99,9 +99,9 @@ export const cropColumns = ({
                 const imageSrc = showCropImage(category_name);
 
                 return (
-                    <div className="display-flex-row align-center">
-                        <Image className="table-crop-image" src={imageSrc} />
-                        <div className="margin-l-r-1em">
+                    <div className='display-flex-row align-center'>
+                        <Image className='table-crop-image' src={imageSrc} />
+                        <div className='margin-l-r-1em'>
                             <Title level={5}>{cropName}</Title>
                             <p>{record?.sub_category}</p>
                         </div>
@@ -136,7 +136,7 @@ export const cropColumns = ({
                         <Progress
                             strokeColor='#12805C'
                             percent={100 - percentageQty}
-                            status="active"
+                            status='active'
                             format={() => `${quantity} qtl`}
                         />
                     </>
@@ -213,7 +213,7 @@ export const cropColumns = ({
                 return (
                     <>
                         <Button
-                            type="link"
+                            type='link'
                             disabled={intent_to_sell.toLowerCase() === 'yes' && isEmpty(additional_info)}
                             onClick={() => openAdditionalInfo(additional_info)}
                         >
@@ -241,14 +241,14 @@ export const cropColumns = ({
                 return intent_to_sell.toLowerCase() === 'yes' ? null : (
                     <>
                         <Button
-                            type="link"
+                            type='link'
                             block
                             onClick={() => prepareForEditCrop(record)}
                         >
                             Edit
                         </Button>
                         <Button
-                            type="link"
+                            type='link'
                             danger
                             block
                             onClick={() => confirmationPopup('delete', deleteCrop, record.sk)}

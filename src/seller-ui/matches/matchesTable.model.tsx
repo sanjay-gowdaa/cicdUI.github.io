@@ -1,23 +1,17 @@
 import React from 'react';
 import { Button, Image, Typography, Modal } from 'antd';
 import { ExclamationCircleOutlined } from '@ant-design/icons';
-
-import AcceptMatch from './acceptMatch';
 import RejectConfrimation from './rejectConfirmation';
 
 import { MatchRequirementModel } from '../../buyer-seller-commons/types';
 import { parseIDfromHash, maskData } from '../../app-components/utils';
 import { showCropImage } from '../../buyer-seller-commons/constants';
+import { componentCallBacksModel } from '../../buyer-seller-commons/matches';
+import ConnectMatches from '../../buyer-seller-commons/matches/connectMatches';
 
 const { Text } = Typography;
 
-export interface componentCallBacksModel {
-    showCropDetailsModal: any;
-    populateCropDetails: any;
-    rejectMatch: any;
-};
-
-export const matchesColumns = (componentCallBacks: componentCallBacksModel) => [
+export const matchesSellerColumns = (componentCallBacks: componentCallBacksModel) => [
     {
         title: 'Buyer Id',
         dataIndex: 'buyer_id',
@@ -39,9 +33,9 @@ export const matchesColumns = (componentCallBacks: componentCallBacksModel) => [
             const imageSrc = showCropImage(masterCategory);
 
             return (
-                <div className="display-flex-row align-center">
-                    <Image className="table-crop-image" src={imageSrc} />
-                    <div className="margin-l-r-1em">
+                <div className='display-flex-row align-center'>
+                    <Image className='table-crop-image' src={imageSrc} />
+                    <div className='margin-l-r-1em'>
                         <p>{produce}</p>
                     </div>
                 </div>
@@ -58,8 +52,8 @@ export const matchesColumns = (componentCallBacks: componentCallBacksModel) => [
 
             return (
                 <>
-                    <p style={{ margin: "0" }}>{matched_quantity} qtl</p>
-                    {isPartial ? <Text className="partial-match">PARTIAL</Text> : <Text className="full-match">FULL</Text>}
+                    <p style={{ margin: '0' }}>{matched_quantity} qtl</p>
+                    {isPartial ? <Text className='partial-match'>PARTIAL</Text> : <Text className='full-match'>FULL</Text>}
                 </>
             );
         },
@@ -76,7 +70,7 @@ export const matchesColumns = (componentCallBacks: componentCallBacksModel) => [
         render: () => {
             return (
                 <>
-                    <Button type="link">Package Details</Button>
+                    <Button type='link'>Package Details</Button>
                 </>
             );
         },
@@ -86,10 +80,10 @@ export const matchesColumns = (componentCallBacks: componentCallBacksModel) => [
         key: 'action',
         render: (text: any, record: MatchRequirementModel) => {
             return (
-                <div className="display-flex-row">
+                <div className='display-flex-row'>
                     <Button
-                        type="link"
-                        className="view-details-button"
+                        type='link'
+                        className='view-details-button'
                         onClick={() => {
                             componentCallBacks?.populateCropDetails(record);
                             componentCallBacks?.showCropDetailsModal(true);
@@ -97,11 +91,11 @@ export const matchesColumns = (componentCallBacks: componentCallBacksModel) => [
                     >
                         View Details
                     </Button>
-                    <AcceptMatch cropDetails={record} />
+                    <ConnectMatches cropDetails={record} />
                     <Button
-                        type="link"
+                        type='link'
                         danger
-                        className="reject-button"
+                        className='reject-button'
                         onClick={() => {
                             Modal.confirm({
                                 title: '',

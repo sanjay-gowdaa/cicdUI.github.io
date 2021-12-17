@@ -19,8 +19,8 @@ const RejectConfrimation = (props: RejectConfrimationProps) => {
         <>
             <Title level={5}>Buyer {maskData(parseIDfromHash(buyer_id))} : {produce}</Title>
             <p>Select your reason for rejection</p>
-            <Select defaultValue="reasons">
-                <Option value="reasons">Reasons</Option>
+            <Select defaultValue='reasons'>
+                <Option value='reasons'>Reasons</Option>
             </Select>
         </>
     );

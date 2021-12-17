@@ -29,10 +29,10 @@ const CropsSection = (props: any) => {
     const [isEdit, setIsEdit] = useState(false);
     const [currentCropId, setCurrentCropId] = useState('');
     const [modalVisible, setModalVisible] = useState(false);
-    const [isActiveFlag, setIsActiveFlag] = useState("Active");
+    const [isActiveFlag, setIsActiveFlag] = useState('Active');
     const dispatch = useDispatch();
-    const isApproved = (loginState.kyc_flag === "approved");
-    const is_Active = (loginState?.is_active === "Add Produce Blocked");
+    const isApproved = (loginState.kyc_flag === 'approved');
+    const is_Active = (loginState?.is_active === 'Add Produce Blocked');
 
     useEffect(() => {
         dispatch(getAllCropsList());
@@ -43,36 +43,36 @@ const CropsSection = (props: any) => {
 
     const userStatus = [
         {
-            flag: "Active",
-            title: "Active",
-            backgroundColor: "#f2f2f2",
-            color: "#12805C"
+            flag: 'Active',
+            title: 'Active',
+            backgroundColor: '#f2f2f2',
+            color: '#12805C'
         },
         {
-            flag: "Active/F",
-            title: "Active/F",
-            backgroundColor: "yellow",
-            color: "#12805C"
+            flag: 'Active/F',
+            title: 'Active/F',
+            backgroundColor: 'yellow',
+            color: '#12805C'
         },
         {
-            flag: "Matches Blocked",
-            title: "Matches Blocked",
-            backgroundColor: "yellow",
-            color: "black"
+            flag: 'Matches Blocked',
+            title: 'Matches Blocked',
+            backgroundColor: 'yellow',
+            color: 'black'
         },
         {
-            flag: "Add Produce Blocked",
-            title: "Add Produce Blocked",
-            backgroundColor: "red",
-            color: "black"
+            flag: 'Add Produce Blocked',
+            title: 'Add Produce Blocked',
+            backgroundColor: 'red',
+            color: 'black'
         }
     ];
 
     const prepareForEditCrop = (cropData: CropApiModel) => {
-        console.log("prepare for edit crop clicked");
+        console.log('prepare for edit crop clicked');
         const { sk } = cropData;
         const actualCropID = getCropId(sk || '');
-        console.log("actualCropID", actualCropID);
+        console.log('actualCropID', actualCropID);
         setCurrentCropId(actualCropID);
         setIsEdit(true);
         // setCurrentProduceRecord(cropData);
@@ -90,13 +90,13 @@ const CropsSection = (props: any) => {
         if (intent_to_sell.toLowerCase() === 'yes') {
             dispatch(sellerIntentToSell(updatedCropData, actualCropID, isPriceUpdated))
         } else {
-            dispatch(updateCropData({ ...updatedCropData, is_delete: "no" }));
+            dispatch(updateCropData({ ...updatedCropData, is_delete: 'no' }));
         }
     };
 
     const showKycRequiredModal = () => {
         Modal.info({
-            className: "kyc-required-modal",
+            className: 'kyc-required-modal',
             content:
                 <>
                     <Text>Please update your KYC information to add produce</Text><br />
@@ -110,12 +110,12 @@ const CropsSection = (props: any) => {
     };
 
     return (
-        <div className="crops-container" id="seller-ui-crops">
+        <div className='crops-container' id='seller-ui-crops'>
             {isApproved &&
                 <>
                     {userStatus.map((list) => {
                         return (isActiveFlag === list.flag) ?
-                            <Tag color={list.backgroundColor} style={{ color: list.color, fontSize: "large", padding: "0.5em" }} >
+                            <Tag color={list.backgroundColor} style={{ color: list.color, fontSize: 'large', padding: '0.5em' }} >
                                 {list.title} </Tag> :
                             <Tag style={{ display: 'none' }}></Tag>
                     })}
@@ -123,8 +123,8 @@ const CropsSection = (props: any) => {
             }
             <Title level={2}>My Produce</Title>
             <PrimaryBtn
-                className="add-crop-btn vikas-btn-radius"
-                id="add-produce-button"
+                className='add-crop-btn vikas-btn-radius'
+                id='add-produce-button'
                 disabled={is_Active}
                 onClick={() => {
                     if (isApproved || is_Active) {
@@ -134,13 +134,13 @@ const CropsSection = (props: any) => {
                         showKycRequiredModal();
                     }
                 }}
-                content="Add Produce"
+                content='Add Produce'
             />
             {!isApproved &&
-                <Space className="kyc-pending-message" direction="horizontal" >
-                    <WarningFilled className="warning-icon" />
-                    <Title level={5} className="kyc-pending-text">KYC Pending.</Title>
-                    <Link to={routesMap.profile} className="update-text">Update Now</Link>
+                <Space className='kyc-pending-message' direction='horizontal' >
+                    <WarningFilled className='warning-icon' />
+                    <Title level={5} className='kyc-pending-text'>KYC Pending.</Title>
+                    <Link to={routesMap.profile} className='update-text'>Update Now</Link>
                 </Space>
             }
             <AddCropModal
@@ -148,7 +148,7 @@ const CropsSection = (props: any) => {
                 modalVisible={modalVisible}
             />
             <Table
-                className="margin-t-1em"
+                className='margin-t-1em'
                 components={{
                     body: {
                         row: EditableRow,

@@ -29,135 +29,135 @@ export const GSTIN_INVALID_MSG = 'Invalid GSTIN!';
 export const MAX_FILE_SIZE = 'Max Size of file should be 1MB!';
 
 export const fieldLayout = {
-    labelCol: {span: 10 },
+    labelCol: { span: 10 },
     wrapperCol: { span: 12 },
 };
 
 export const kycFlagDetails = [
     {
-        flag: "incomplete",
-        title: "KYC incomplete",
-        backgroundColor: "#ffc700",
-        color: "black"
+        flag: 'incomplete',
+        title: 'KYC incomplete',
+        backgroundColor: '#ffc700',
+        color: 'black'
     },
     {
-        flag: "submitted",
-        title: "KYC submitted",
-        backgroundColor: "#ffefb6",
-        color: "black"
+        flag: 'submitted',
+        title: 'KYC submitted',
+        backgroundColor: '#ffefb6',
+        color: 'black'
     },
     {
-        flag: "complete",
-        title: "KYC complete",
-        backgroundColor: "#f2f2f2",
-        color: "#12805C",
+        flag: 'complete',
+        title: 'KYC complete',
+        backgroundColor: '#f2f2f2',
+        color: '#12805C',
         icon: true
     }
 ];
 
 export const documentLabelMapping = [
     {
-        key: "GSTIN",
-        label: "GSTIN",
-        name: "gstin",
+        key: 'GSTIN',
+        label: 'GSTIN',
+        name: 'gstin',
         upload: false,
         required: true
     },
     {
-        key: "PAN",
-        label: "PAN card Number",
-        name: "pan",
+        key: 'PAN',
+        label: 'PAN card Number',
+        name: 'pan',
         upload: true,
-        uploadFormName: "pan_card",
+        uploadFormName: 'pan_card',
         required: false
     },
     {
-        key: "AADHAR",
-        label: "Aadhaar card Number",
-        name: "uidai",
+        key: 'AADHAR',
+        label: 'Aadhaar card Number',
+        name: 'uidai',
         upload: true,
-        uploadFormName: "aadhar_card",
+        uploadFormName: 'aadhar_card',
         required: true
     },
     {
-        key: "Kisan card",
-        label: "Kisan card",
-        name: "kisancard",
+        key: 'Kisan card',
+        label: 'Kisan card',
+        name: 'kisancard',
         upload: true,
-        uploadFormName: "kisancard_card",
+        uploadFormName: 'kisancard_card',
         required: false
     },
     {
-        key: "FPO",
-        label: "Society/ FPO Number",
-        name: "fpo",
+        key: 'FPO',
+        label: 'Society/ FPO Number',
+        name: 'fpo',
         upload: false,
         required: false
     },
     {
-        key: "RTC",
-        label: "RTC Number",
-        name: "rtc",
+        key: 'RTC',
+        label: 'RTC Number',
+        name: 'rtc',
         upload: true,
-        uploadFormName: "rtc_card",
+        uploadFormName: 'rtc_card',
         required: false
     }
 ];
 
 export const inputFieldValue = (name: string, userDetails: any) => {
     switch (name) {
-        case "gstin": return userDetails?.gstin;
-        case "pan": return userDetails?.PAN;
-        case "uidai": return userDetails?.UIDAI;
-        case "kisancard": return userDetails?.kisancard;
-        case "fpo": return userDetails?.fpo;
-        case "rtc": return userDetails?.rtc;
-        default: return "";
+        case 'gstin': return userDetails?.gstin;
+        case 'pan': return userDetails?.PAN;
+        case 'uidai': return userDetails?.UIDAI;
+        case 'kisancard': return userDetails?.kisancard;
+        case 'fpo': return userDetails?.fpo;
+        case 'rtc': return userDetails?.rtc;
+        default: return '';
     }
 };
 
 export const bankFieldValue = (name: string, bankInfo: any) => {
     switch (name) {
-        case "account_name": return bankInfo?.account_holder_name;
-        case "account_number": return bankInfo?.account_no;
-        case "ifsc_code": return bankInfo?.ifsc_code;
-        case "upi_id": return bankInfo?.upi_id;
+        case 'account_name': return bankInfo?.account_holder_name;
+        case 'account_number': return bankInfo?.account_no;
+        case 'ifsc_code': return bankInfo?.ifsc_code;
+        case 'upi_id': return bankInfo?.upi_id;
     }
 };
 
 export const uploadFiledValue = (name: any, userDetails: any) => {
     switch (name) {
-        case "pan_card": return userDetails.pan_card;
-        case "aadhar_card": return userDetails.aadhar_card;
-        case "kisancard_card": return userDetails.kisancard_card;
-        case "rtc_card": return userDetails.rtc_card;
+        case 'pan_card': return userDetails.pan_card;
+        case 'aadhar_card': return userDetails.aadhar_card;
+        case 'kisancard_card': return userDetails.kisancard_card;
+        case 'rtc_card': return userDetails.rtc_card;
     }
 };
 
 export const bankDocumentsList = [
     {
-        name: "account_name",
-        label: "Account Holder Name",
+        name: 'account_name',
+        label: 'Account Holder Name',
         upload: false
     },
     {
-        name: "account_number",
-        label: "Account Number",
+        name: 'account_number',
+        label: 'Account Number',
         upload: false
     },
     {
-        name: "ifsc_code",
-        label: "IFSC Code",
+        name: 'ifsc_code',
+        label: 'IFSC Code',
         upload: false
     },
     {
-        name: "bank_doc",
-        label: "Bank Document",
+        name: 'bank_doc',
+        label: 'Bank Document',
         upload: true
     },
     {
-        name: "upi_id",
-        label: "UPI ID",
+        name: 'upi_id',
+        label: 'UPI ID',
         upload: false
     }
 ];
@@ -183,99 +183,99 @@ export const workingHours = [
 
 export const requiredDocumentList = [
     {
-        userType: "Seller",
-        subType: "farmer",
-        title: "Kisan Card/ RTC Number"
+        userType: 'Seller',
+        subType: 'farmer',
+        title: 'Kisan Card/ RTC Number'
     },
     {
-        userType: "Seller",
-        subType: "farmer",
-        title: "Kisan Card/ RTC Photo"
+        userType: 'Seller',
+        subType: 'farmer',
+        title: 'Kisan Card/ RTC Photo'
     },
     {
-        userType: "Seller",
-        subType: "farmer",
-        title: "Aadhar Card Number"
+        userType: 'Seller',
+        subType: 'farmer',
+        title: 'Aadhar Card Number'
     },
     {
-        userType: "Seller",
-        subType: "farmer",
-        title: "Aadhar Card Photo"
+        userType: 'Seller',
+        subType: 'farmer',
+        title: 'Aadhar Card Photo'
     },
     {
-        userType: "Seller",
-        subType: "farmer",
-        title: "Bank Account Details"
+        userType: 'Seller',
+        subType: 'farmer',
+        title: 'Bank Account Details'
     },
     {
-        userType: "Seller",
-        subType: "farmer",
-        title: "Bank statement/ Passbook/ Cheque"
+        userType: 'Seller',
+        subType: 'farmer',
+        title: 'Bank statement/ Passbook/ Cheque'
     },
     {
-        userType: "Seller",
-        subType: "Institution",
-        title: "GSTIN number"
+        userType: 'Seller',
+        subType: 'Institution',
+        title: 'GSTIN number'
     },
     {
-        userType: "Seller",
-        subType: "Institution",
-        title: "PAN Card number"
+        userType: 'Seller',
+        subType: 'Institution',
+        title: 'PAN Card number'
     },
     {
-        userType: "Seller",
-        subType: "Institution",
-        title: "PAN Card photo"
+        userType: 'Seller',
+        subType: 'Institution',
+        title: 'PAN Card photo'
     },
     {
-        userType: "Seller",
-        subType: "Institution",
-        title: "Society/ FPO number"
+        userType: 'Seller',
+        subType: 'Institution',
+        title: 'Society/ FPO number'
     },
     {
-        userType: "Seller",
-        subType: "Institution",
-        title: "Bank Account Details"
+        userType: 'Seller',
+        subType: 'Institution',
+        title: 'Bank Account Details'
     },
     {
-        userType: "Seller",
-        subType: "Institution",
-        title: "Bank statement/ Passbook/ Cheque"
+        userType: 'Seller',
+        subType: 'Institution',
+        title: 'Bank statement/ Passbook/ Cheque'
     },
     {
-        userType: "Buyer",
-        subType: "Individual",
-        title: "Aadhar Card Number"
+        userType: 'Buyer',
+        subType: 'Individual',
+        title: 'Aadhar Card Number'
     },
     {
-        userType: "Buyer",
-        subType: "Individual",
-        title: "Aadhar Card Photo"
+        userType: 'Buyer',
+        subType: 'Individual',
+        title: 'Aadhar Card Photo'
     },
     {
-        userType: "Buyer",
-        subType: "Individual",
-        title: "PAN Card Number"
+        userType: 'Buyer',
+        subType: 'Individual',
+        title: 'PAN Card Number'
     },
     {
-        userType: "Buyer",
-        subType: "Individual",
-        title: "PAN Card Photo"
+        userType: 'Buyer',
+        subType: 'Individual',
+        title: 'PAN Card Photo'
     },
     {
-        userType: "Buyer",
-        subType: "Institution",
-        title: "GSTIN Number"
+        userType: 'Buyer',
+        subType: 'Institution',
+        title: 'GSTIN Number'
     },
     {
-        userType: "Buyer",
-        subType: "Institution",
-        title: "PAN Card Number"
+        userType: 'Buyer',
+        subType: 'Institution',
+        title: 'PAN Card Number'
     },
     {
-        userType: "Buyer",
-        subType: "Institution",
-        title: "PAN Card Photo"
+        userType: 'Buyer',
+        subType: 'Institution',
+        title: 'PAN Card Photo'
     }
 ];
 

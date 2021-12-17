@@ -5,25 +5,27 @@ import { CheckCircleFilled } from '@ant-design/icons';
 import { isEmpty } from 'lodash';
 import moment from 'moment';
 
+import { getStatus } from '../actions';
+
 import { RootState } from '../../store/rootReducer';
-import { getStatus } from '../../store/buyerReducer/actions';
 import { TransactionStatus } from '../../buyer-seller-commons/types';
 
 const { Text } = Typography;
 
-const TransactionDetailsModel = (props: any) => {
+const TransactionDetailsModal = (props: any) => {
     const { pk, tab } = props;
     const dispatch = useDispatch();
-    const buyerState = useSelector((state: RootState) => state.buyer);
-    const { status, eventTemplate } = buyerState;
+    const loginState = useSelector((state: RootState) => state.loginUser);
+    const userState = useSelector((state: RootState) => loginState.is_buyer ? state.buyer : state.seller);
+    const { status, eventTemplate } = userState;
     const [count, setCount] = useState(status.length - 1);
     const [currentStatus, setCurrentStatus] = useState([]);
     var id = pk;
     id = id.substring(12);
 
     const data = {
-        "transactionId": id,
-        "user": "buyer"
+        'transactionId': id,
+        'user': loginState.is_buyer ? 'buyer' : 'seller'
     };
 
     useEffect(() => {
@@ -49,11 +51,11 @@ const TransactionDetailsModel = (props: any) => {
             return (isDownload ?
                 <>
                     {!isEmpty(list.pdf_link) ?
-                        <Button type="link">Download</Button> : null
+                        <Button type='link'>Download</Button> : null
                     }
                 </> :
                 <>
-                    <Text>{list.event_name} ({moment(list.event_time).format("DD-MM-YYYY HH:MM")})</Text>
+                    <Text>{list.event_name} ({moment(list.event_time).format('DD-MM-YYYY HH:MM')})</Text>
                     <br />
                 </>
             )
@@ -64,16 +66,16 @@ const TransactionDetailsModel = (props: any) => {
         return (
             <Timeline>
                 <Timeline.Item
-                    label="-"
-                    color={"#F5A31A"}
-                    className="is-pending"
+                    label='-'
+                    color={'#F5A31A'}
+                    className='is-pending'
                 >
                     {eventTemplate[count]}
                 </Timeline.Item>
                 <Timeline.Item
-                    label="-"
-                    color={"#F5A31A"}
-                    className="is-pending"
+                    label='-'
+                    color={'#F5A31A'}
+                    className='is-pending'
                 >
                     {eventTemplate[count + 1]}
                 </Timeline.Item>
@@ -84,18 +86,18 @@ const TransactionDetailsModel = (props: any) => {
     return (
         <>
             <Timeline
-                mode="left"
+                mode='left'
                 style={{ float: 'left' }}
-                className="transaction-timeline"
+                className='transaction-timeline'
                 pending={tab === TransactionStatus.on_going && count !== eventTemplate.length}
             >
                 {currentStatus.map((completedStatus: any) => {
                     return (
                         <Timeline.Item
-                            label={moment(completedStatus.event_timestamp).format("DD-MM-YYYY HH:MM")}
-                            dot={<CheckCircleFilled style={{ color: "#12805C" }} />}
-                            color={"#F5A31A"}
-                            className="is-complete"
+                            label={moment(completedStatus.event_timestamp).format('DD-MM-YYYY HH:MM')}
+                            dot={<CheckCircleFilled style={{ color: '#12805C' }} />}
+                            color={'#F5A31A'}
+                            className='is-complete'
                         >
                             <Row>
                                 <Col span={6}>
@@ -109,11 +111,11 @@ const TransactionDetailsModel = (props: any) => {
                                     </Row>
                                 </Col>
                                 <Col span={2}>
-                                    <Text style={{ color: "#12805C" }}>Complete</Text>
+                                    <Text style={{ color: '#12805C' }}>Complete</Text>
                                 </Col>
                                 <Col span={8}>
                                     {!isEmpty(completedStatus.pdf_link) &&
-                                        <Button type="link">Download</Button>
+                                        <Button type='link'>Download</Button>
                                     }
                                     {showDetails(completedStatus.event_details, true)}
                                 </Col>
@@ -124,9 +126,9 @@ const TransactionDetailsModel = (props: any) => {
                 {tab === TransactionStatus.on_going ?
                     showRemainingTimeline() :
                     <Timeline.Item
-                        dot={<CheckCircleFilled style={{ color: "#12805C" }} />}
-                        color={"#F5A31A"}
-                        className="is-complete"
+                        dot={<CheckCircleFilled style={{ color: '#12805C' }} />}
+                        color={'#F5A31A'}
+                        className='is-complete'
                     >
                         Transaction Completed
                     </Timeline.Item>
@@ -136,4 +138,4 @@ const TransactionDetailsModel = (props: any) => {
     );
 };
 
-export default TransactionDetailsModel;
+export default TransactionDetailsModal;

@@ -1,12 +1,8 @@
 import React from 'react';
 import { Divider, Typography } from 'antd';
 import { useSelector } from 'react-redux';
-import { isEmpty } from 'lodash';
 
 import './buyer.scss';
-import MatchedSection from './matches';
-import ReviewsSection from './reviews';
-import TransactionSection from './transactions';
 import ProduceSection from './produce';
 import AddProduceModal from './masterList';
 import PaymentResponseModel from './transactions/paymentResponsemodel';
@@ -17,21 +13,23 @@ import Footer from '../footer';
 import { RootState } from '../store/rootReducer';
 import Banner from '../static/assets/buyerBanner.jpg';
 import WelcomeModal from '../app-components/welcomeModal';
+import ReviewsSection from '../buyer-seller-commons/reviews';
+import Transaction from '../buyer-seller-commons/transactions';
+import Matches from '../buyer-seller-commons/matches';
 
 const { Title } = Typography;
 
 const BuyerUI = (props: any) => {
     const { history } = props;
     const loginState = useSelector((state: RootState) => state.loginUser);
-    const { isRedirected, username } = loginState;
-    !isEmpty(username) && localStorage.setItem("userName", username);
+    const { isRedirected } = loginState;
 
     return (
-        <div className="buyer-ui-app" id="buyer-ui-app">
+        <div className='buyer-ui-app' id='buyer-ui-app'>
             <Header history={history} showActions isLoggedIn />
-            <div className="buyer-ui-dashboard">
+            <div className='buyer-ui-dashboard'>
                 <Title level={2}>My Dashboard</Title>
-                <img className="buyer-banner" src={Banner} alt="buyer-banner" />
+                <img className='buyer-banner' src={Banner} alt='buyer-banner' />
                 <Divider />
                 {isRedirected && <PaymentResponseModel />}
                 <WelcomeModal />
@@ -39,9 +37,9 @@ const BuyerUI = (props: any) => {
                 <Divider />
                 <ProduceSection history={history} />
                 <Divider />
-                <MatchedSection />
+                <Matches />
                 <Divider />
-                <TransactionSection />
+                <Transaction />
                 <Divider />
                 <ReviewsSection />
             </div>

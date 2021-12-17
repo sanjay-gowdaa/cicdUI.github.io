@@ -1,51 +1,16 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Image, Typography, Tooltip } from 'antd';
-import { useDispatch, useSelector } from 'react-redux';
-import { isEmpty } from 'lodash';
 
 import PayButton from './payButton';
 
 import { parseIDfromHash, maskData } from '../../app-components/utils';
 import { TransactionStatus } from '../../buyer-seller-commons/types';
-import { RootState } from '../../store/rootReducer';
-import { currentStatusDetails } from '../../store/buyerReducer/actions';
 import { showCropImage } from '../../buyer-seller-commons/constants';
+import GetCurrentStatusDetails from '../../buyer-seller-commons/transactions/getCurrentStatusDetails';
 
 const { Text } = Typography;
 
-const GetCurrentStatusDetails = (pk: any) => {
-    const buyerState = useSelector((state: RootState) => state.buyer);
-    const status = buyerState.currentStatusDetails;
-    const [userStatus, setUserStatus] = useState('');
-    const dispatch = useDispatch();
-    var id = pk.data;
-    id = id.substring(12);
-
-    const data = {
-        "transactionId": id,
-        "user": "buyer"
-    };
-
-    useEffect(() => {
-        dispatch(currentStatusDetails(data));
-    }, []);
-
-    useEffect(() => {
-        if (!isEmpty(status)) {
-            for (let i = 0; i < status.length; i++) {
-                if (status[i].pk === pk.data) {
-                    setUserStatus(status[i].event_description);
-                }
-            }
-        }
-    }, [status]);
-
-    return (
-        <p>{userStatus}</p>
-    );
-};
-
-export const transactionColumns = [
+export const transactionBuyerColumns = [
     {
         title: 'Id',
         dataIndex: 'pk',
@@ -56,7 +21,7 @@ export const transactionColumns = [
         render: (pk: string) => {
             const actualID = parseIDfromHash(pk);
             return (
-                <Tooltip placement="topLeft" title={actualID}>
+                <Tooltip placement='topLeft' title={actualID}>
                     <Text underline>{actualID}</Text>
                 </Tooltip>
             );
@@ -73,7 +38,7 @@ export const transactionColumns = [
 
             return (
                 <div className='display-flex-row align-center'>
-                    <Image src={imageSrc} className="table-crop-image" />
+                    <Image src={imageSrc} className='table-crop-image' />
                     <div className='margin-l-r-1em'>
                         <p>{produce}</p>
                     </div>
@@ -111,7 +76,7 @@ export const transactionColumns = [
         render: (seller_id: string) => {
             const actualID = parseIDfromHash(seller_id)
             return (
-                <Tooltip placement="topLeft" title={maskData(actualID)}>
+                <Tooltip placement='topLeft' title={maskData(actualID)}>
                     <Text underline>{maskData(actualID)}</Text>
                 </Tooltip>
             );

@@ -54,9 +54,8 @@ export interface TransactionModel extends MatchRequirementModel {
 
 export interface ReviewRating {
     rating: number;
-    sellerId?: string;
-    buyerId?: string;
-    buyerLocation: string;
+    userId: string;
+    location: string;
     date: string;
     reviewtext: string;
 };
