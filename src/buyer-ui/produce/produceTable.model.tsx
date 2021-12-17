@@ -85,22 +85,22 @@ export const produceColumns = ({
                 );
             }
         },
-        {
-            title: 'Request Delivery By',
-            dataIndex: 'delivery_by',
-            key: 'delivery_by',
-            onCell: (record: ProduceModel) => ({
-                record,
-                editable: currentCropId === getCropId(record.sk || ''),
-                dataIndex: 'delivery_by',
-                isEdit,
-                handleSave: (record: ProduceModel) => updateCropDetails(record),
-            }),
-            render: (delivery_by: string) => {
-                const dateObj = new Date(delivery_by);
-                return dateObj.toLocaleDateString();
-            }
-        },
+        // {
+        //     title: 'Request Delivery By',
+        //     dataIndex: 'delivery_by',
+        //     key: 'delivery_by',
+        //     onCell: (record: ProduceModel) => ({
+        //         record,
+        //         editable: currentCropId === getCropId(record.sk || ''),
+        //         dataIndex: 'delivery_by',
+        //         isEdit,
+        //         handleSave: (record: ProduceModel) => updateCropDetails(record),
+        //     }),
+        //     render: (delivery_by: string) => {
+        //         const dateObj = new Date(delivery_by);
+        //         return dateObj.toLocaleDateString();
+        //     }
+        // },
         {
             title: 'Additional',
             key: 'additional_info',

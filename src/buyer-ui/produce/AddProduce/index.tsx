@@ -94,9 +94,13 @@ const AddCropModal = ({
     }, [modalVisible]);
 
     const onFinish = (fieldsValue: any) => {
-        const { produce_name, delivery_by, quantity } = fieldsValue;
+        const {
+            produce_name,
+            // delivery_by, 
+            quantity
+        } = fieldsValue;
         const [masterProduce, category, sub_type, grade] = produce_name.split('-');
-        const deliveryByIsoformat = new Date(delivery_by).toISOString();
+        // const deliveryByIsoformat = new Date(delivery_by).toISOString();
         const additional_info = {
             moisture: fieldsValue.moisture,
             other_info: fieldsValue.other_info,
@@ -109,7 +113,7 @@ const AddCropModal = ({
             category: category.trim(),
             sub_type: sub_type.trim(),
             grade: grade.trim(),
-            delivery_by: deliveryByIsoformat,
+            // delivery_by: deliveryByIsoformat,
             additional_info,
             isEditable: true,
             quantity: quantity
@@ -206,9 +210,10 @@ const AddCropModal = ({
                         <Form.Item
                             label="Request Delivery By"
                             name="delivery_by"
-                            rules={[{ type: 'object', required: true, message: 'Please select time!' }]}
+                        // rules={[{ type: 'object', required: true, message: 'Please select time!' }]}
                         >
                             <DatePicker
+                                disabled={true}
                                 className="custom-input"
                                 format="YYYY-MM-DD"
                                 defaultValue={moment(defaultDateStart, 'YYYY-MM-DD')}
