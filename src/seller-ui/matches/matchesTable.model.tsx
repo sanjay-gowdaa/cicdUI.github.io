@@ -1,6 +1,7 @@
 import React from 'react';
-import { Button, Image, Typography, Modal } from 'antd';
+import { Button, Image, Typography, Modal, Space } from 'antd';
 import { ExclamationCircleOutlined } from '@ant-design/icons';
+
 import RejectConfrimation from './rejectConfirmation';
 
 import { MatchRequirementModel } from '../../buyer-seller-commons/types';
@@ -8,6 +9,7 @@ import { parseIDfromHash, maskData } from '../../app-components/utils';
 import { showCropImage } from '../../buyer-seller-commons/constants';
 import { componentCallBacksModel } from '../../buyer-seller-commons/matches';
 import ConnectMatches from '../../buyer-seller-commons/matches/connectMatches';
+import ShowPreviousTransactions from '../../buyer-seller-commons/matches/showPreviousTransactions';
 
 const { Text } = Typography;
 
@@ -16,11 +18,18 @@ export const matchesSellerColumns = (componentCallBacks: componentCallBacksModel
         title: 'Buyer Id',
         dataIndex: 'buyer_id',
         key: 'buyer_id',
-        render: (buyer_id: string) => {
+        render: (buyer_id: string, record: MatchRequirementModel) => {
             return (
-                <>
+                <Space direction='vertical'>
                     <Text underline>{maskData(parseIDfromHash(buyer_id))}</Text>
-                </>
+                    {record.count !== 0 &&
+                        <ShowPreviousTransactions
+                            count={record.count}
+                            history={record.history}
+                            userId={record.buyer_id}
+                        />
+                    }
+                </Space>
             );
         },
     },
