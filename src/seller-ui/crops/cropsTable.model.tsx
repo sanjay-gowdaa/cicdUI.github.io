@@ -9,67 +9,12 @@ import { CropApiModel } from '../../store/sellerReducer/types';
 import { parseIDfromHash } from '../../app-components/utils';
 import { showCropImage } from '../../buyer-seller-commons/constants';
 import confirmationPopup from '../../buyer-seller-commons/confirmationPopup';
+import { openAdditionalInfo } from '../../buyer-seller-commons/openAdditionalInfo';
 
 const { Text, Title } = Typography;
 
 const getCropId = (cropID: string) => {
     return parseIDfromHash(cropID);
-};
-
-const openAdditionalInfo = (content: any) => {
-    const showTable = typeof (content) !== 'string';
-    const data = [
-        {
-            key: 1,
-            label: 'Moisture',
-            value: content.moisture === undefined ? '' : `${content.moisture} %`
-        },
-        {
-            key: 2,
-            label: 'Fungus',
-            value: content.fungus === undefined ? '' : `${content.fungus} %`
-        },
-        {
-            key: 3,
-            label: 'Packing Type',
-            value: content.packing_type
-        },
-        {
-            key: 4,
-            label: 'Package Size',
-            value: content.packing_size === undefined ? '' : `${content.packing_size} kg`
-        },
-        {
-            key: 5,
-            label: 'Other Information',
-            value: content.other_info
-        }
-    ];
-
-    const column = [
-        {
-            title: 'Specifications',
-            dataItem: 'label',
-            key: 'label',
-            render: (list: any) => <Text>{list.label}</Text>
-        },
-        {
-            title: 'Value',
-            dataItem: 'value',
-            key: 'value',
-            render: (list: any) => <Text>{list.value}</Text>
-        }
-    ];
-
-    Modal.info({
-        title: 'Specification',
-        content: (showTable ?
-            <Table dataSource={data} columns={column} pagination={false} />
-            : <Text>{content}</Text>
-        ),
-        okText: 'Ok',
-        icon: null
-    });
 };
 
 type cropColumnsCallback = {
@@ -160,9 +105,9 @@ export const cropColumns = ({
             title: 'Live APMC Rates per qtl',
             dataIndex: 'apmc_rate_data',
             key: 'apmc_rate_data',
-            render: (apmc_rate_data: { apmc_price: string, increase: string }, record: CropApiModel) => {
+            render: (apmc_rate_data: { apmc_price: string, increase: string, is_actual: boolean }, record: CropApiModel) => {
                 const { intent_to_sell: intentToSell } = record;
-                const { apmc_price, increase } = apmc_rate_data || { apmc_price: null, increase: null };
+                const { apmc_price, increase, is_actual } = apmc_rate_data || { apmc_price: null, increase: null, is_actual: false };
                 if (intentToSell.toLowerCase() === 'yes') {
                     return (<>-</>)
                 } else {
@@ -173,17 +118,21 @@ export const cropColumns = ({
                         return (<>Data not available</>)
                     } else {
                         return (
-                            <>
-                                <p>{apmc_price}</p>
-                                {
-                                    !isNaN(parseInt(increase)) ? (<Statistic
+                            <React.Fragment>
+                                <Text>
+                                    {apmc_price}{!is_actual &&
+                                        <Text style={{ color: 'red' }}>&nbsp;*</Text>
+                                    }
+                                </Text>
+                                {!isNaN(parseInt(increase)) ?
+                                    <Statistic
                                         value={parseInt(increase)}
                                         valueStyle={{ color, fontSize: '12px' }}
                                         prefix={isIncrease ? <CaretUpOutlined /> : <CaretDownOutlined />}
-                                    />) : null
+                                    /> : null
                                 }
 
-                            </>
+                            </React.Fragment>
                         );
                     }
                 }
@@ -211,7 +160,7 @@ export const cropColumns = ({
                 const { intent_to_sell } = record;
 
                 return (
-                    <>
+                    <React.Fragment>
                         <Button
                             type='link'
                             disabled={intent_to_sell.toLowerCase() === 'yes' && isEmpty(additional_info)}
@@ -220,7 +169,7 @@ export const cropColumns = ({
                             Additional Info
                         </Button>
                         <ViewCropImages list={record} />
-                    </>
+                    </React.Fragment>
                 );
             },
         },
@@ -239,7 +188,7 @@ export const cropColumns = ({
             render: (text: string, record: CropApiModel) => {
                 const { intent_to_sell } = record;
                 return intent_to_sell.toLowerCase() === 'yes' ? null : (
-                    <>
+                    <React.Fragment>
                         <Button
                             type='link'
                             block
@@ -255,7 +204,7 @@ export const cropColumns = ({
                         >
                             Delete
                         </Button>
-                    </>
+                    </React.Fragment>
                 );
             },
         },

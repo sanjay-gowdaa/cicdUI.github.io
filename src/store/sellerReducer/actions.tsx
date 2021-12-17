@@ -47,6 +47,7 @@ export const UPDATE_REJECT_COUNT = 'UPDATE_REJECT_COUNT';
 export const UPDATE_EVENT_TEMPLATE = 'UPDATE_EVENT_TEMPLATE';
 export const SET_STATUS_DETAILS = 'SET_STATUS_DETAILS';
 export const SET_MATCHES_LOADER = 'SET_MATCHES_LOADER';
+export const SET_APMC_ACTUAL = 'SET_APMC_ACTUAL';
 
 export const setMatchesLoadingFlag = (loadingFlag: boolean) => {
     return {
@@ -160,6 +161,13 @@ export const updateApmcCropRate = (modalPrice: string | number) => {
     };
 };
 
+export const setApmcisActual = (isActual: boolean) => {
+    return {
+        type: SET_APMC_ACTUAL,
+        payload: isActual
+    }
+};
+
 export const updateSellerTransactionList = (transactionType: TransactionStatus, transactionListData: Array<any>) => {
     return {
         type: UPDATE_SELLER_TRANSACTION_LIST,
@@ -194,9 +202,9 @@ export const updateApmcListData = (
 ) => {
     const allProduceApmcData = Array.isArray(allCropsApmcData) ? allCropsApmcData.map((apmcData: ApmcApiResponseBase) => {
         if (!isEmpty(apmcData)) {
-            const { latest_apmc_price, previousLatestApmcPrice } = apmcData;
+            const { latest_apmc_price, previousLatestApmcPrice, is_actual } = apmcData;
             const difference = latest_apmc_price - previousLatestApmcPrice;
-            return { apmc_price: latest_apmc_price, increase: difference };
+            return { apmc_price: latest_apmc_price, increase: difference, is_actual };
         } else {
             return { apmc_price: '', increase: null };
         }
@@ -226,12 +234,13 @@ export const updatedFetchLiveApmcRate = ({
     return async (dispatch: any, getState: any) => {
         const { loginUser } = getState() as RootState;
         const { district } = loginUser;
-        const apmcPriceResponse: Array<ApmcApiResponseBase> = await getLiveApmcRateUpdated([{ grade, district, variety, category, item_name: itemName }]);
+        const apmcPriceResponse: Array<ApmcApiResponseBase> = await getLiveApmcRateUpdated([{ grade, district, variety, category, produce: itemName }]);
         const apmcPriceDetails = (!isEmpty(apmcPriceResponse) && !isNull(apmcPriceResponse)) ? apmcPriceResponse : [];
         if (apmcPriceDetails.length) {
-            const { latest_apmc_price } = apmcPriceDetails[0] || {};
+            const { latest_apmc_price, is_actual } = apmcPriceDetails[0] || {};
             if (latest_apmc_price !== undefined) {
                 dispatch(updateApmcCropRate(latest_apmc_price));
+                dispatch(setApmcisActual(is_actual));
             } else {
                 dispatch(updateApmcCropRate('No records found'));
             }
@@ -302,7 +311,7 @@ export const fetchAllCropsApmcData = (Items: Array<CropApiModel>) => {
         const { cropsList }: SellerStateModel = seller;
         const apmcFetchDataCrops: Array<UpdatedLiveApmcRatesQuery> = Items.map((item: CropApiModel) => {
             const { category_name, crop_name, sub_category, district, grade } = item;
-            return { category: category_name, item_name: crop_name, variety: sub_category, grade, district }
+            return { category: category_name, produce: crop_name, variety: sub_category, grade, district }
         })
         const allCropsPriceModel = await getLiveApmcRateUpdated(apmcFetchDataCrops);
         const allCropsPriceModelDetails = (!isEmpty(allCropsPriceModel) && !isNull(allCropsPriceModel)) ? allCropsPriceModel : [];

@@ -19,7 +19,7 @@ export interface CropApiModel {
     intent_to_sell: string;
     additional_info: string;
     district: string;
-    apmc_rate_data?: { apmc_price: string, increase: string };
+    apmc_rate_data?: { apmc_price: string, increase: string, is_actual: boolean };
     sk?: string;
     pk?: string;
     currently_fulfilled_qty?: number;
@@ -62,6 +62,7 @@ export interface SellerStateModel {
     };
     reviewsList: Array<ReviewRating>;
     apmcCropPrice: any;
+    isActualApmcPrice: boolean;
     timeStamp: any;
     currentStatusDetails: Array<CurrentStatusDetails>;
     eventTemplate: Array<EventTemplate>;
