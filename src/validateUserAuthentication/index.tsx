@@ -12,23 +12,22 @@ const { buyer_ui, seller_ui } = routesMap;
 const ValidateUserAuthentication = (props: any) => {
     const { history } = props;
     const loginState: UserStateModel = useSelector((state: RootState) => state.loginUser);
-    const { signInState, is_seller, is_buyer } = loginState;
+    const { signInState, is_seller, is_buyer, amplifyResponse } = loginState;
     const dispatch = useDispatch();
-    const token = (global as any).userToken;
 
     useEffect(() => {
         dispatch(getUserDetails());
     }, []);
 
     useEffect(() => {
-        if (signInState.isVerified) {
+        if (signInState.isVerified && amplifyResponse) {
             if (is_seller) {
                 history.push(seller_ui);
             } else if (is_buyer) {
                 history.push(buyer_ui);
             }
         }
-    }, [signInState.isVerified]);
+    }, [signInState.isVerified, amplifyResponse]);
 
     return (
         <Spin spinning={!signInState.hasError}>
