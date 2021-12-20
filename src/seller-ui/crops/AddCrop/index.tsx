@@ -30,6 +30,8 @@ import {
     fetchAllCategories,
     fetchAllMasterCrops,
     fetchAllVariety,
+    setApmcisActual,
+    setApmcNearestDistrict,
     updateApmcCropRate,
     updatedFetchLiveApmcRate
 } from '../../../store/sellerReducer/actions';
@@ -134,7 +136,8 @@ const AddCropModal = (addCropProps: PropsType) => {
             // const updatedValueWithApmcRates = {...values, district: 'Gadag'};
             createSellerFormData(updatedValueWithApmcRates).then((sellerFromData) => {
                 dispatch(addNewCropData(sellerFromData));
-                resetAllState()
+                resetAllState();
+                resetApmcState();
             });
         } else {
             Modal.error({
@@ -151,23 +154,32 @@ const AddCropModal = (addCropProps: PropsType) => {
     const resetAllState = () => {
         form.resetFields();
         setModalVisible(false);
+        resetApmcState();
         setAlert(false);
-    }
+    };
 
     const onSelectCategory = (category: string) => {
         /* Reset other fields */
         form.setFieldsValue({ cropName: null, subCategory: null, grade: null });
         setSelectedMasterCrop('');
         setSelectedVariety('');
+        resetApmcState();
         dispatch(updateApmcCropRate(''));
         /* Reset other fields end */
         dispatch(fetchAllMasterCrops(category));
+    };
+
+    const resetApmcState = () => {
+        dispatch(updateApmcCropRate(''));
+        dispatch(setApmcisActual(false));
+        dispatch(setApmcNearestDistrict(''));
     };
 
     const onMasterCrops = (produce: string) => {
         /* Reset other fields */
         form.setFieldsValue({ subCategory: null, grade: null });
         setSelectedVariety('');
+        resetApmcState();
         /* Reset other fields end */
         setSelectedMasterCrop(produce);
         dispatch(fetchAllVariety(produce));
@@ -310,7 +322,7 @@ const AddCropModal = (addCropProps: PropsType) => {
                                     APMC Rate {loginUser.district}:
                                     <span style={{ fontWeight: 700 }}>
                                         &nbsp;&nbsp; {sellerStore.apmcCropPrice} &nbsp;
-                                        {sellerStore.apmcCropPrice !== '' && !sellerStore.isActualApmcPrice &&
+                                        {sellerStore.apmcNearestDistrict !== '' && sellerStore.apmcCropPrice !== 'No records found' &&
                                             < Text style={{ color: 'red' }}>#</Text>
                                         }
                                     </span>
@@ -449,8 +461,8 @@ const AddCropModal = (addCropProps: PropsType) => {
                             </div>
                         </Col>
                     </Row>
-                    {sellerStore.apmcCropPrice !== '' && !sellerStore.isActualApmcPrice &&
-                        < Text style={{ color: 'red' }}># Aproximated Apmc data.</Text>
+                    {sellerStore.apmcNearestDistrict !== '' && sellerStore.apmcCropPrice !== 'No records found' &&
+                        < Text style={{ color: 'red' }}># Aproximated Apmc data from {sellerStore.apmcNearestDistrict}</Text>
                     }
                     <Row justify='center' style={{ marginTop: '10px' }}>
                         <Col>

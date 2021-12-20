@@ -1,4 +1,4 @@
-import { isEmpty, isNull } from 'lodash';
+import { isEmpty, isNull, isUndefined } from 'lodash';
 
 import { CropApiModel, SellerStateModel } from './types';
 
@@ -48,6 +48,7 @@ export const UPDATE_EVENT_TEMPLATE = 'UPDATE_EVENT_TEMPLATE';
 export const SET_STATUS_DETAILS = 'SET_STATUS_DETAILS';
 export const SET_MATCHES_LOADER = 'SET_MATCHES_LOADER';
 export const SET_APMC_ACTUAL = 'SET_APMC_ACTUAL';
+export const SET_APMC_NEAREST_DISTRICT = 'SET_APMC_NEAREST_DISTRICT';
 
 export const setMatchesLoadingFlag = (loadingFlag: boolean) => {
     return {
@@ -168,6 +169,13 @@ export const setApmcisActual = (isActual: boolean) => {
     }
 };
 
+export const setApmcNearestDistrict = (district: string) => {
+    return {
+        type: SET_APMC_NEAREST_DISTRICT,
+        payload: isUndefined(district) ? '' : district
+    };
+};
+
 export const updateSellerTransactionList = (transactionType: TransactionStatus, transactionListData: Array<any>) => {
     return {
         type: UPDATE_SELLER_TRANSACTION_LIST,
@@ -237,10 +245,11 @@ export const updatedFetchLiveApmcRate = ({
         const apmcPriceResponse: Array<ApmcApiResponseBase> = await getLiveApmcRateUpdated([{ grade, district, variety, category, produce: itemName }]);
         const apmcPriceDetails = (!isEmpty(apmcPriceResponse) && !isNull(apmcPriceResponse)) ? apmcPriceResponse : [];
         if (apmcPriceDetails.length) {
-            const { latest_apmc_price, is_actual } = apmcPriceDetails[0] || {};
-            if (latest_apmc_price !== undefined) {
+            const { latest_apmc_price, is_actual, nearest_district } = apmcPriceDetails[0] || {};
+            if (latest_apmc_price !== 0) {
                 dispatch(updateApmcCropRate(latest_apmc_price));
                 dispatch(setApmcisActual(is_actual));
+                dispatch(setApmcNearestDistrict(nearest_district));
             } else {
                 dispatch(updateApmcCropRate('No records found'));
             }

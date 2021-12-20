@@ -18,7 +18,8 @@ import {
     OTP_BUYER_ID,
     OTP_BUYER_CROP_ID,
     SET_MATCHES_LOADER,
-    SET_APMC_ACTUAL
+    SET_APMC_ACTUAL,
+    SET_APMC_NEAREST_DISTRICT
 } from './actions';
 import { SellerStateModel } from './types';
 
@@ -32,6 +33,7 @@ const INITIAL_STATE: SellerStateModel = {
     categories: [],
     apmcCropPrice: '',
     isActualApmcPrice: false,
+    apmcNearestDistrict: '',
     isMatchesFetching: false,
     timeStamp: {},
     currentStatusDetails: [],
@@ -65,6 +67,9 @@ const reducer = (state = INITIAL_STATE, action: any) => {
 
         case SET_APMC_ACTUAL:
             return { ...state, isActualApmcPrice: action.payload };
+
+        case SET_APMC_NEAREST_DISTRICT:
+            return { ...state, apmcNearestDistrict: action.payload };
 
         case UPDATE_SELLER_MATCHES:
             return { ...state, matchesList: action.payload };
