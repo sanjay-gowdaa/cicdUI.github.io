@@ -61,8 +61,9 @@ export interface SellerStateModel {
         complete: Array<TransactionModel>
     };
     reviewsList: Array<ReviewRating>;
-    apmcCropPrice: any;
+    apmcCropPrice: string | number;
     isActualApmcPrice: boolean;
+    apmcNearestDistrict: string;
     timeStamp: any;
     currentStatusDetails: Array<CurrentStatusDetails>;
     eventTemplate: Array<EventTemplate>;

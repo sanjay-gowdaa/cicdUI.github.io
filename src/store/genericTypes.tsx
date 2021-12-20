@@ -32,4 +32,5 @@ export type ApmcApiResponseBase = {
     is_actual: boolean;
     latest_apmc_price: number;
     previousLatestApmcPrice: number;
+    nearest_district: string;
 };
