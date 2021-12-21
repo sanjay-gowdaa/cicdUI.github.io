@@ -184,32 +184,32 @@ export const workingHours = [
 export const requiredDocumentList = [
     {
         userType: 'Seller',
-        subType: 'farmer',
+        subType: 'Farmer',
         title: 'Kisan Card/ RTC Number'
     },
     {
         userType: 'Seller',
-        subType: 'farmer',
+        subType: 'Farmer',
         title: 'Kisan Card/ RTC Photo'
     },
     {
         userType: 'Seller',
-        subType: 'farmer',
+        subType: 'Farmer',
         title: 'Aadhar Card Number'
     },
     {
         userType: 'Seller',
-        subType: 'farmer',
+        subType: 'Farmer',
         title: 'Aadhar Card Photo'
     },
     {
         userType: 'Seller',
-        subType: 'farmer',
+        subType: 'Farmer',
         title: 'Bank Account Details'
     },
     {
         userType: 'Seller',
-        subType: 'farmer',
+        subType: 'Farmer',
         title: 'Bank statement/ Passbook/ Cheque'
     },
     {
