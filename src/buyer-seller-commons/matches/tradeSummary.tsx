@@ -85,15 +85,6 @@ const TradeSummary = (props: componentProps) => {
                     : {'12/08/2020 to 15/08/2020'}
                 </Col>
             </Row>
-            <Row>
-                <Button
-                    type="link"
-                    disabled={isEmpty(additional_info)}
-                    onClick={() => openAdditionalInfo(additional_info)}
-                >
-                    Additional Info
-                </Button>
-            </Row>
         </React.Fragment>
     );
 };

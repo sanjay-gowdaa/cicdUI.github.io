@@ -1,6 +1,7 @@
 import React from 'react';
 import { Button, Image, Modal, Space, Typography } from 'antd';
 import { CheckCircleFilled, ExclamationCircleFilled } from '@ant-design/icons';
+import { isEmpty } from 'lodash';
 
 import { FullfillmentFlags, MatchRequirementModel } from '../../buyer-seller-commons/types';
 import { parseIDfromHash, maskData } from '../../app-components/utils';
@@ -9,6 +10,8 @@ import confirmationPopup from '../../buyer-seller-commons/confirmationPopup';
 import { componentCallBacksModel } from '../../buyer-seller-commons/matches';
 import ConnectMatches from '../../buyer-seller-commons/matches/connectMatches';
 import ShowPreviousTransactions from '../../buyer-seller-commons/matches/showPreviousTransactions';
+import { openAdditionalInfo } from '../../buyer-seller-commons/openAdditionalInfo';
+import ViewCropImages from '../../buyer-seller-commons/viewCropImages';
 
 const { Title, Text } = Typography;
 
@@ -121,15 +124,29 @@ export const matchesBuyerColumns = (componentCallBacks: componentCallBacksModel)
             const imageSrc = showCropImage(masterCategory);
 
             return (
-                <div className='display-flex-row align-center'>
-                    {!record?.isChild && <Image src={imageSrc} className='table-crop-image' />}
-                    <div className='margin-l-r-1em'>
-                        <Title className='more-matches-text' level={5}>
-                            {produceCateogry.trim()} - {cropType.trim()}
-                        </Title>
-                        <Text className='more-matches-text'>{grade.trim()}</Text>
+                <React.Fragment>
+                    <div className='display-flex-row align-center'>
+                        {!record?.isChild && <Image src={imageSrc} className='table-crop-image' />}
+                        <div className='margin-l-r-1em'>
+                            <Title className='more-matches-text' level={5}>
+                                {produceCateogry.trim()} - {cropType.trim()}
+                            </Title>
+                            <Text className='more-matches-text'>{grade.trim()}</Text>
+                        </div>
                     </div>
-                </div>
+                    {!isEmpty(record.additional_info) &&
+                        <Button
+                            type='link'
+                            disabled={isEmpty(record.additional_info)}
+                            onClick={() => openAdditionalInfo(record.additional_info)}
+                        >
+                            Additional Info
+                        </Button>
+                    }
+                    {!isEmpty(record.cropImageList) &&
+                        <ViewCropImages list={record.cropImageList} disablePhotos={false} />
+                    }
+                </React.Fragment>
             );
         },
     },

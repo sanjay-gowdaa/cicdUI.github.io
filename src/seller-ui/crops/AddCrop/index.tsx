@@ -376,6 +376,7 @@ const AddCropModal = (addCropProps: PropsType) => {
                                     className='crop-images-upload'
                                     multiple={true}
                                     accept='image/*'
+                                    maxCount={5}
                                     listType='picture-card'
                                     beforeUpload={(file) => {
                                         return false
