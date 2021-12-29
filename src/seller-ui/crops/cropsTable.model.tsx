@@ -1,15 +1,14 @@
 import React from 'react';
-import { Button, Image, Modal, Progress, Statistic, Table, Typography } from 'antd';
+import { Button, Image, Progress, Statistic, Typography } from 'antd';
 import { CaretUpOutlined, CaretDownOutlined } from '@ant-design/icons';
-import { isEmpty } from 'lodash';
-
-import ViewCropImages from './viewCropImages';
+import { isEmpty, isUndefined } from 'lodash';
 
 import { CropApiModel } from '../../store/sellerReducer/types';
 import { parseIDfromHash } from '../../app-components/utils';
 import { showCropImage } from '../../buyer-seller-commons/constants';
 import confirmationPopup from '../../buyer-seller-commons/confirmationPopup';
 import { openAdditionalInfo } from '../../buyer-seller-commons/openAdditionalInfo';
+import ViewCropImages from '../../buyer-seller-commons/viewCropImages';
 
 const { Text, Title } = Typography;
 
@@ -76,7 +75,7 @@ export const cropColumns = ({
                 const percentageQty = (currently_fulfilled_qty / quantityNum) * 100;
                 const currentReqQty = quantityNum - currently_fulfilled_qty;
                 return (
-                    <>
+                    <React.Fragment>
                         <p>{currentReqQty} qtl</p>
                         <Progress
                             strokeColor='#12805C'
@@ -84,7 +83,7 @@ export const cropColumns = ({
                             status='active'
                             format={() => `${quantity} qtl`}
                         />
-                    </>
+                    </React.Fragment>
                 );
             }
         },
@@ -158,6 +157,13 @@ export const cropColumns = ({
             width: '10%',
             render: (additional_info: any, record: CropApiModel) => {
                 const { intent_to_sell } = record;
+                const cropImageList = {
+                    crop_image_1: isUndefined(record?.crop_image_1) ? undefined : record?.crop_image_1,
+                    crop_image_2: isUndefined(record?.crop_image_2) ? undefined : record?.crop_image_2,
+                    crop_image_3: isUndefined(record?.crop_image_3) ? undefined : record?.crop_image_3,
+                    crop_image_4: isUndefined(record?.crop_image_4) ? undefined : record?.crop_image_4,
+                    crop_image_5: isUndefined(record?.crop_image_5) ? undefined : record?.crop_image_5
+                };
 
                 return (
                     <React.Fragment>
@@ -168,7 +174,7 @@ export const cropColumns = ({
                         >
                             Additional Info
                         </Button>
-                        <ViewCropImages list={record} />
+                        <ViewCropImages list={cropImageList} disablePhotos={intent_to_sell.toLowerCase() !== 'yes'} />
                     </React.Fragment>
                 );
             },

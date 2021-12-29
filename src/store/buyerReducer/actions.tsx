@@ -20,7 +20,10 @@ import {
     getPaymentList,
     getCurrentStatusDetails,
     getPaymentAmount,
-    LAST_AUTH_USER
+    LAST_AUTH_USER,
+    getSellerCropImages,
+    fetchAdditionalInfo,
+    fetchUserHistory
 } from '../api';
 import { UserStateModel } from '../loginReducer/types';
 import { BuyerStateModel } from '../buyerReducer/types';
@@ -29,7 +32,6 @@ import { RootState } from '../rootReducer';
 import { getTimeStamp } from '../../app-components/utils';
 import { MatchRequirementModel, TransactionStatus } from '../../buyer-seller-commons/types';
 import { getUserCompleteDetails } from '../loginReducer/actions';
-import { getUserAdditionalInfo, getUserHistory } from '../../buyer-seller-commons/actions';
 
 export const UPDATE_MASTER_LIST = 'UPDATE_MASTER_LIST';
 export const GET_MASTER_LIST = 'GET_MASTER_LIST';
@@ -316,23 +318,25 @@ export const getMatchesForBuyerCrops = (cropsList: Array<ProduceModel>) => {
             const genericData = buyerMatchesData[matchesLength - 1];
             if (!isEmpty(buyerMatchesData[0])) {
                 const additionalInfo =
-                    await getUserAdditionalInfo(
+                    await fetchAdditionalInfo(
                         buyerMatchesData[0].seller_id,
                         buyerMatchesData[0].seller_crop_id
                     );
+
                 let output = {
                     ...buyerMatchesData[0],
                     key: buyerMatchesData[0].seller_crop_id,
                     ...genericData,
                     ...additionalInfo
                 };
-                const historyResponse = await getUserHistory(output.buyer_id, output.produce, output.seller_id);
+                const historyResponse = await fetchUserHistory({ buyerId: output.buyer_id, produce: output.produce, sellerId: output.seller_id });
                 const { count, history } = historyResponse;
-                output = { ...output, count, history }
+                const cropImageList = await getSellerCropImages(output.seller_id, output.seller_crop_id);
+                output = { ...output, count, history, cropImageList }
                 let children: any = [];
                 for (let i = 1; i < (matchesLength - 1); i++) {
                     const additionalInfo =
-                        await getUserAdditionalInfo(
+                        await fetchAdditionalInfo(
                             output.seller_id,
                             output.seller_crop_id
                         );
@@ -343,9 +347,10 @@ export const getMatchesForBuyerCrops = (cropsList: Array<ProduceModel>) => {
                         ...genericData,
                         ...additionalInfo
                     };
-                    const historyResponse = await getUserHistory(childernContent.buyer_id, childernContent.produce, childernContent.seller_id);
+                    const historyResponse = await fetchUserHistory({ buyerId: childernContent.buyer_id, produce: childernContent.produce, sellerId: childernContent.seller_id });
                     const { count, history } = historyResponse;
-                    childernContent = { ...childernContent, count, history };
+                    const cropImageList = await getSellerCropImages(childernContent.seller_id, childernContent.seller_crop_id);
+                    childernContent = { ...childernContent, count, history, cropImageList };
                     children = [...children, childernContent];
                 }
                 if (!isEmpty(children)) {
@@ -394,11 +399,12 @@ export const getTransactionList = (transactionStatus: TransactionStatus) => {
         let transactionFinalResponse: any = [];
         for (let i = 0; i < transactionListResponse.length; i++) {
             const additionalInfo =
-                await getUserAdditionalInfo(
+                await fetchAdditionalInfo(
                     transactionListResponse[i].seller_id,
                     transactionListResponse[i].seller_crop_id
                 );
-            let list = { ...transactionListResponse[i], ...additionalInfo };
+            const cropImageList = await getSellerCropImages(transactionListResponse[i].seller_id, transactionListResponse[i].seller_crop_id);
+            let list = { ...transactionListResponse[i], ...additionalInfo, cropImageList };
             list.key = transactionListResponse[i].pk;
             transactionFinalResponse.push(list);
         }

@@ -6,7 +6,7 @@ import {
     ReviewRating,
     Status,
     TransactionModel
-} from "../../buyer-seller-commons/types";
+} from '../../buyer-seller-commons/types';
 
 export interface CropApiModel {
     category_name: string;
@@ -23,6 +23,11 @@ export interface CropApiModel {
     sk?: string;
     pk?: string;
     currently_fulfilled_qty?: number;
+    crop_image_1?: string;
+    crop_image_2?: string;
+    crop_image_3?: string;
+    crop_image_4?: string;
+    crop_image_5?: string;
 };
 
 export interface CropModel {

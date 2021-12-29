@@ -177,13 +177,3 @@ export const resetOTPFields = () => {
         }
     };
 };
-
-export const getUserHistory = async (buyerId: string, produce: string, sellerId: string) => {
-    const historyResponse = await fetchUserHistory({ buyerId, produce, sellerId });
-    return historyResponse;
-};
-
-export const getUserAdditionalInfo = async (userId: string, cropId: string) => {
-    const additionalInfo = await fetchAdditionalInfo(userId, cropId);
-    return additionalInfo;
-};
