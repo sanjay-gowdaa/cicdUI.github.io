@@ -129,7 +129,7 @@ const Team = () => {
                                 src={Shastri}
                                 className="box-shadow"
                                 style={{ width: "10rem", borderRadius: "15rem", margin: "1.5rem" }}
-                                alt="Shastri"
+                                alt="Guruprasad KV"
                             />
                         </Space>
                     </Card>
