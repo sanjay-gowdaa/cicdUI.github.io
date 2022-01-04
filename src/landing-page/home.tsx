@@ -1,11 +1,13 @@
 import React from 'react';
 import { Alert, Button, Carousel, Image, Typography } from 'antd';
-import { Trans, useTranslation } from 'react-i18next'
+import { Trans, useTranslation } from 'react-i18next';
+import Marquee from "react-fast-marquee";
 
 import Logo from '../static/assets/vbLogo.png';
 import KannadaLogo from '../static/assets/kannadaLogo.png'
 import VBOne from '../static/assets/Vikasbandhu_One.jpg';
-import VBTwo from '../static/assets/Vikasbandhu_Two.jpg';
+//import VBTwo from '../static/assets/Vikasbandhu_Two.jPG';
+import VBTwo from '../static/assets/Vb_launch.jpg'
 import VBThree from '../static/assets/Vikasbandhu_Three.jpg';
 import VBFour from '../static/assets/Vikasbandhu_Four.jpg';
 import VBFive from '../static/assets/Vikasbandhu_Five.jpg';
@@ -28,10 +30,24 @@ const Home = () => {
                 <Alert
                     className="animate-alert"
                     message={
-                        <Trans
-                            i18nKey="home_page.flash_text"
-                            components={{ italic: <i />, bold: <strong /> }}
-                        />
+                        <Marquee
+                            pauseOnHover={true}
+                            speed={25}
+                            gradient={false}
+                        >
+                            <Trans>
+                            <b>&nbsp; &nbsp;&nbsp; &nbsp;</b>
+                            <Trans
+                                i18nKey="home_page.flash_text"
+                                components={{ italic: <i />, bold: <strong />}}
+                            />
+                            <b>&nbsp; &nbsp;{t('home_page.update_1')}&nbsp; &nbsp;</b>
+                            <Trans
+                                i18nKey="home_page.update_2"
+                                components={{ italic: <i />, bold: <strong /> }}
+                            />
+                            </Trans>
+                        </Marquee>
                     }
                     banner
                 />

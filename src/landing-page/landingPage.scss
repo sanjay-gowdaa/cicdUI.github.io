@@ -28,20 +28,8 @@ $col-shade-green: #12805c;
         margin-bottom: 1rem;
 
         .animate-alert {
-            animation: warning-banner 30s infinite 20s;
+            animation: warning-banner 30s ;//infinite 20s;
             width: fit-content;
-        }
-
-        @keyframes warning-banner {
-            0% {
-                left: 0%;
-            }
-            50% {
-                left: 40%;
-            }
-            100% {
-                left: 0%;
-            }
         }
 
         .home-content {
