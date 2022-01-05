@@ -7,7 +7,7 @@ import Suma from '../static/assets/suma.png';
 import Sadananda from '../static/assets/sadananda.png';
 import SatishChandra from '../static/assets/SatishChandra.jpg';
 import Ganesh from '../static/assets/Ganesh.png';
-import Shastri from '../static/assets/Shastri.jpeg';
+import Guruprasad from '../static/assets/Guruprasad.jpg';
 
 const { Paragraph, Text, Title } = Typography;
 
@@ -126,7 +126,7 @@ const Team = () => {
                                 <Paragraph style={{ textAlign: "justify" }}>{t('our_team.advisors.description.3')}</Paragraph>
                             </Space>
                             <img
-                                src={Shastri}
+                                src={Guruprasad}
                                 className="box-shadow"
                                 style={{ width: "10rem", borderRadius: "15rem", margin: "1.5rem" }}
                                 alt="Guruprasad KV"

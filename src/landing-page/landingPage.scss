@@ -30,6 +30,7 @@ $col-shade-green: #12805c;
         .animate-alert {
             animation: warning-banner 30s ;//infinite 20s;
             width: fit-content;
+            z-index: 0 !important;
         }
 
         .home-content {
