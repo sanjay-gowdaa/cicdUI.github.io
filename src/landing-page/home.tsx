@@ -46,6 +46,11 @@ const Home = () => {
                                 i18nKey="home_page.update_2"
                                 components={{ italic: <i />, bold: <strong /> }}
                             />
+                            <b>&nbsp; &nbsp;&nbsp;</b>
+                            <Trans
+                                i18nKey="home_page.update_3"
+                                components={{ italic: <i />, bold: <strong /> }}
+                            />
                             </Trans>
                         </Marquee>
                     }
