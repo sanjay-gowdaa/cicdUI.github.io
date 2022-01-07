@@ -11,44 +11,44 @@ const { Paragraph, Title } = Typography;
 
 const User = () => {
     const { t } = useTranslation('common');
-    const customStyles = isEnglish(t("language")) ? englishStyling : kannadaStyling;
+    const customStyles = isEnglish(t('language')) ? englishStyling : kannadaStyling;
 
     return (
-        <div id="users">
+        <div id='users'>
             <Title className={`col-green ${customStyles.userTitle}`} level={2}>
                 {t('users_page.title')}
             </Title>
             <Row>
-                <Col span={10} className="user-column">
+                <Col span={10} className='user-column'>
                     <Card className={customStyles.userCard}>
-                        <Title className="col-green user-card-title" level={2}>
+                        <Title className='col-green user-card-title' level={2}>
                             {t('users_page.user_card1.title')}
                         </Title>
                         <Paragraph className={`subtitle ${customStyles.cardSubtitle}`}>
                             {t('users_page.user_card1.subtitle')}
                         </Paragraph>
-                        <Image className="user-image"  src={SellerIcon} preview={false} />
+                        <Image className='user-image' src={SellerIcon} preview={false} />
                         <Paragraph className={`user-paragraph ${customStyles.cardText}`}>
                             {t('users_page.user_card1.text')}
                         </Paragraph>
                     </Card>
                 </Col>
-                <Col span={10} className="user-column buyer-column">
+                <Col span={10} className='user-column buyer-column'>
                     <Card className={customStyles.userCard}>
-                        <Title className="col-green user-card-title" level={2}>
+                        <Title className='col-green user-card-title' level={2}>
                             {t('users_page.user_card2.title')}
                         </Title>
                         <Paragraph className={`subtitle ${customStyles.cardSubtitle}`}>
                             {t('users_page.user_card2.subtitle')}
                         </Paragraph>
-                        <Image className="user-image" src={BuyerIcon} preview={false} />
+                        <Image className='user-image' src={BuyerIcon} preview={false} />
                         <Paragraph className={`user-paragraph ${customStyles.cardText}`}>
-                            {t('users_page.user_card2.text')}       
+                            {t('users_page.user_card2.text')}
                         </Paragraph>
                     </Card>
                 </Col>
             </Row>
-            <img className="transport-image" src={Transport} alt="transport" />
+            <img className='transport-image' src={Transport} alt='transport' />
         </div>
     );
 };
