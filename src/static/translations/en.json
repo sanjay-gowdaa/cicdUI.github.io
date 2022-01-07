@@ -27,7 +27,10 @@
     },
     "home_page": {
         "landing_page_card_title": "Be a part of Vikasbandhu family!",
-        "flash_text": "Beware of any Fraudulent Websites. <bold>Vikasbandhu does not charge any Registration fee</bold>. Visit only https://vikasbandhu.in",
+        "flash_text": "Beware of any Fraudulent Websites. <bold>Vikasbandhu does not charge any Registration fee</bold>.  Visit only https://vikasbandhu.in.",
+        "update_1": "VikasBandhu is live!",
+        "update_2": "<bold>Minimal Viable Product </bold> (MVP) release available for users in Karnataka. Please get in touch if interested.",
+        "update_3": "<bold>Vikasbandhu  trademark has been approved.</bold>",
         "text_1": "Friendly E-Market Place for",
         "text_2": "Buyers and Sellers to connect",
         "text_3": "engage and transact seamlessly",
@@ -120,12 +123,12 @@
             "name": {
                 "1": "Satish Chandra C S",
                 "2": "Ganesh M S",
-                "3": "Ganghadar Shastri"
+                "3": "Guruprasad KV"
             },
             "designation": {
                 "1": "Agriculture Technology and Finance",
                 "2": "FMCG, Backend",
-                "3": "Director, Operations"
+                "3": "Regional Manager-Operations , Karnataka"
             },
             "description": {
                 "1": "Over three decades of experience as a valuator, finance researcher, mentor in Agri Tech. He is guiding us a mentor providing the needed support on Agriculture Strategy, roadmap and finance.",

@@ -14,57 +14,57 @@ const { Paragraph, Text, Title } = Typography;
 
 const Commodities = () => {
     const { t } = useTranslation('common');
-    const customStyles = isEnglish(t("language")) ? englishStyling : kannadaStyling;
+    const customStyles = isEnglish(t('language')) ? englishStyling : kannadaStyling;
 
     return (
-        <div id="commodities">
+        <div id='commodities'>
             <Title className={`col-green ${customStyles.commoditiesTitle}`} level={2}>
                 {t('commodities_page.title')}
             </Title>
             <Paragraph className={customStyles.commoditiesParagraph}>
                 {t('commodities_page.paragraph')}
             </Paragraph>
-            <div className="commodities-list">
+            <div className='commodities-list'>
                 <Image
-                    className="commodities-image"
+                    className='commodities-image'
                     src={StapleCrop}
                     preview={false}
-                /><br/>
-                <Text className="commodities-name">{t('commodities_page.commodities_name.1')}</Text>
+                /><br />
+                <Text className='commodities-name'>{t('commodities_page.commodities_name.1')}</Text>
             </div>
-            <div className="commodities-list">
+            <div className='commodities-list'>
                 <Image
-                    className="commodities-image"
+                    className='commodities-image'
                     src={Pulses}
                     preview={false}
-                /><br/>
-                <Text className="commodities-name">{t('commodities_page.commodities_name.2')}</Text>
+                /><br />
+                <Text className='commodities-name'>{t('commodities_page.commodities_name.2')}</Text>
             </div>
-            <div className="commodities-list">
+            <div className='commodities-list'>
                 <Image
-                    className="commodities-image"
+                    className='commodities-image'
                     src={CashCrop}
                     preview={false}
-                /><br/>
-                <Text className="commodities-name">{t('commodities_page.commodities_name.3')}</Text>
+                /><br />
+                <Text className='commodities-name'>{t('commodities_page.commodities_name.3')}</Text>
             </div>
-            <div className="commodities-list">
+            <div className='commodities-list'>
                 <Image
-                    className="commodities-image"
+                    className='commodities-image'
                     src={Cardomom}
                     preview={false}
-                /><br/>
-                <Text className="commodities-name">{t('commodities_page.commodities_name.4')}</Text>
+                /><br />
+                <Text className='commodities-name'>{t('commodities_page.commodities_name.4')}</Text>
             </div>
-            <div className="commodities-list">
+            <div className='commodities-list'>
                 <Image
-                    className="commodities-image"
+                    className='commodities-image'
                     src={OilSeed}
                     preview={false}
-                /><br/>
-                <Text className="commodities-name">{t('commodities_page.commodities_name.5')}</Text>
+                /><br />
+                <Text className='commodities-name'>{t('commodities_page.commodities_name.5')}</Text>
             </div>
-            <Image className="wheat-image" src={Wheat} preview={false} />
+            <Image className='wheat-image' src={Wheat} preview={false} />
         </div>
     );
 };
