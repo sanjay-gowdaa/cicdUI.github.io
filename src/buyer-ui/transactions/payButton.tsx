@@ -144,7 +144,7 @@ const PayButton = (props: any) => {
                                 />
                                 <Input
                                     className='payment-custom-input'
-                                    type='text'
+                                    type='hidden'
                                     value='Test note'
                                     name='orderNote'
                                 />
