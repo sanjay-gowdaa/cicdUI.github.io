@@ -1,15 +1,16 @@
 import React from 'react';
-import { Alert, Button, Carousel, Image, Typography } from 'antd';
+import { Alert, Button, Carousel, Image, Typography, Tooltip } from 'antd';
 import { Trans, useTranslation } from 'react-i18next';
 import Marquee from 'react-fast-marquee';
 
 import Logo from '../static/assets/vbLogo.png';
 import KannadaLogo from '../static/assets/kannadaLogo.png'
-import VBOne from '../static/assets/Vikasbandhu_One.jpg';
-import VBTwo from '../static/assets/Vb_launch.jpg'
-import VBThree from '../static/assets/Vikasbandhu_Three.jpg';
+import VBOne from '../static/assets/VB-ONE.jpg';
+import VBTwo from '../static/assets/VB-TWO.jpg'
+import VBThree from '../static/assets/VB-THREE.jpg';
 import VBFour from '../static/assets/Vikasbandhu_Four.jpg';
-import VBFive from '../static/assets/Vikasbandhu_Five.jpg';
+import VBFive from '../static/assets/VB-FIVE.jpg';
+import VBSIX from '../static/assets/VB-SIX.png';
 import { englishStyling, isEnglish, kannadaStyling } from '../static/translations/constants';
 
 const { Text, Title } = Typography;
@@ -57,10 +58,19 @@ const Home = () => {
                 />
                 <Carousel className='home-carousel' autoplay autoplaySpeed={5000}>
                     <Image height={'87vh'} width={'100%'} src={VBOne} preview={false} />
-                    <Image height={'87vh'} width={'100%'} src={VBTwo} preview={false} />
-                    <Image height={'87vh'} width={'100%'} src={VBThree} preview={false} />
+                    <Tooltip placement="right" title={"We are happy to inform you that we have signed MOU with  SVCE(Sri Venkateshwara college of engineering) Tirupathi."}>
+                        <Image height={'87vh'} width={'100%'} src={VBTwo} preview={false} />
+                    </Tooltip>
+                    <Tooltip placement="right" title={"A 2 day orientation session with our upcountry field staff in Karnataka conducted on 27th, 28th Dec 21. . This covered the MVP release functionality , help them understand their roles and responsibilities for the VikasBandhu operations way forward."}>
+                        <Image height={'87vh'} width={'100%'} src={VBThree} preview={false} />
+                    </Tooltip>
                     <Image height={'87vh'} width={'100%'} src={VBFour} preview={false} />
-                    <Image height={'87vh'} width={'100%'} src={VBFive} preview={false} />
+                    <Tooltip placement="right" title={"We recently hosted a stall in techbharat exhibition 2022"}>
+                        <Image height={'87vh'} width={'100%'} src={VBFive} preview={false} />
+                    </Tooltip>
+                    <Tooltip placement="right" title={"We are all set to host our virtual stall in the Innovation week 2022 by startup India ."}>
+                        <Image height={'87vh'} width={'100%'} src={VBSIX} preview={false} />
+                    </Tooltip>
                 </Carousel>
                 <div className='mobile-home-content'>
                     <Title className='col-white home-title' level={1}>
