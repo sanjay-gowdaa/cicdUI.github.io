@@ -6,7 +6,7 @@ import { ArrowLeftOutlined, ArrowRightOutlined } from '@ant-design/icons';
 
 import { landingCards } from './const';
 
-const { Text, Title } = Typography;
+const { Title } = Typography;
 
 const Home = () => {
     const { t } = useTranslation('common');
@@ -26,10 +26,6 @@ const Home = () => {
         } else {
             setKeyValue(keyValue + 1);
         }
-    };
-
-    const goToAim = (url: any) => {
-        window.location = url;
     };
 
     return (
@@ -65,20 +61,41 @@ const Home = () => {
                     banner
                 />
                 <div className='mobile-home-content'>
-                    <Title className='col-white home-title' level={1}>
-                        {t('title')}
-                    </Title>
-                    <Text className='col-white home-text'>{t('home_page.mobile_home_text')}</Text>
-                    <br />
-                    <Button className='explore-vb-btn' onClick={() => goToAim('#aim')}>
-                        <Title className='col-white margin-none' level={5}>
-                            {t('landing_page.actions.explore')}
-                        </Title>
-                    </Button>
+                    {landingCards.map((list: any) => {
+                        return (list.key === keyValue ?
+                            <React.Fragment>
+                                <Image src={list.image} preview={false} />
+                                <Title level={2} className='landing-card-title'>
+                                    {list.title}
+                                </Title>
+                                <Title level={5} className='landing-page-text'>
+                                    {list.text}
+                                </Title>
+                                <Button
+                                    type='text'
+                                    className='float-left'
+                                    onClick={() => decreaseCounter()}
+                                >
+                                    <Title level={5}>
+                                        <ArrowLeftOutlined />&ensp;Back
+                                    </Title>
+                                </Button>
+                                <Button
+                                    type='text'
+                                    className='float-right'
+                                    onClick={() => increaseCounter()}
+                                >
+                                    <Title level={5}>
+                                        Next&ensp;<ArrowRightOutlined />
+                                    </Title>
+                                </Button>
+                            </React.Fragment>
+                            : null
+                        )
+                    })}
                 </div>
                 <Row className='landing-row'>
                     {landingCards.map((list: any) => {
-
                         return (
                             list.key === keyValue ?
                                 <React.Fragment>

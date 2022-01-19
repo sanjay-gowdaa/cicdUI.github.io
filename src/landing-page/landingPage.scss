@@ -729,8 +729,7 @@ $col-shade-green: #12805c;
     }
 
     #home {
-        height: 60vh;
-        margin-bottom: 3rem;
+        height: fit-content;
 
         .home-content-wrapper {
             .animate-alert,
@@ -744,18 +743,12 @@ $col-shade-green: #12805c;
             }
 
             .mobile-home-content {
-                height: 55vh;
+                height: fit-content;
                 width: 100vw;
-                padding-top: 2rem;
                 text-align: center;
-                background-image: url('../static/assets/VB-ONE.jpg');
-                background-position: center center;
-                background-size: 100vw 55vh;
-                background-repeat: no-repeat;
 
                 .home-text {
                     font-size: 1.25rem;
-                    margin-bottom: 15vh;
                 }
 
                 .explore-vb-btn {
