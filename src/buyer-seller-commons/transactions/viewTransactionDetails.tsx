@@ -17,9 +17,10 @@ const TransactionDetailsModal = (props: any) => {
     const dispatch = useDispatch();
     const loginState = useSelector((state: RootState) => state.loginUser);
     const userState = useSelector((state: RootState) => loginState.is_buyer ? state.buyer : state.seller);
-    const { status, eventTemplate } = userState;
+    const { status, eventTemplate, currentStatusDetails } = userState;
     const [count, setCount] = useState(status.length - 1);
     const [currentStatus, setCurrentStatus] = useState([]);
+    const [latestStatus, setLatestStatus] = useState('');
     var id = pk;
     id = id.substring(12);
 
@@ -30,6 +31,11 @@ const TransactionDetailsModal = (props: any) => {
 
     useEffect(() => {
         dispatch(getStatus(data));
+        for (let i = 0; i < currentStatusDetails.length; i++) {
+            if (currentStatusDetails[i].pk === pk) {
+                setLatestStatus(currentStatusDetails[i].event_description);
+            }
+        }
     }, []);
 
     useEffect(() => {
@@ -49,15 +55,15 @@ const TransactionDetailsModal = (props: any) => {
         }
         return showDetails.map((list: any) => {
             return (isDownload ?
-                <>
+                <React.Fragment>
                     {!isEmpty(list.pdf_link) ?
                         <Button type='link'>Download</Button> : null
                     }
-                </> :
-                <>
+                </React.Fragment> :
+                <React.Fragment>
                     <Text>{list.event_name} ({moment(list.event_time).format('DD-MM-YYYY HH:MM')})</Text>
                     <br />
-                </>
+                </React.Fragment>
             )
         })
     };
@@ -84,7 +90,7 @@ const TransactionDetailsModal = (props: any) => {
     };
 
     return (
-        <>
+        <React.Fragment>
             <Timeline
                 mode='left'
                 style={{ float: 'left' }}
@@ -94,10 +100,10 @@ const TransactionDetailsModal = (props: any) => {
                 {currentStatus.map((completedStatus: any) => {
                     return (
                         <Timeline.Item
-                            label={moment(completedStatus.event_timestamp).format('DD-MM-YYYY HH:MM')}
-                            dot={<CheckCircleFilled style={{ color: '#12805C' }} />}
+                            label={completedStatus.event_description === latestStatus ? '-' : moment(completedStatus.event_timestamp).format('DD-MM-YYYY HH:MM')}
+                            dot={completedStatus.event_description === latestStatus ? null : <CheckCircleFilled style={{ color: '#12805C' }} />}
                             color={'#F5A31A'}
-                            className='is-complete'
+                            className={completedStatus.event_description === latestStatus ? 'is-pending' : 'is-complete'}
                         >
                             <Row>
                                 <Col span={6}>
@@ -110,7 +116,7 @@ const TransactionDetailsModal = (props: any) => {
                                         }</Text>
                                     </Row>
                                 </Col>
-                                <Col span={2}>
+                                <Col span={2} className={completedStatus.event_description === latestStatus ? 'display-none' : ''}>
                                     <Text style={{ color: '#12805C' }}>Complete</Text>
                                 </Col>
                                 <Col span={8}>
@@ -123,7 +129,7 @@ const TransactionDetailsModal = (props: any) => {
                         </Timeline.Item>
                     )
                 })}
-                {tab === TransactionStatus.on_going ?
+                {/* {tab === TransactionStatus.on_going ?
                     showRemainingTimeline() :
                     <Timeline.Item
                         dot={<CheckCircleFilled style={{ color: '#12805C' }} />}
@@ -132,9 +138,9 @@ const TransactionDetailsModal = (props: any) => {
                     >
                         Transaction Completed
                     </Timeline.Item>
-                }
+                } */}
             </Timeline>
-        </>
+        </React.Fragment>
     );
 };
 
