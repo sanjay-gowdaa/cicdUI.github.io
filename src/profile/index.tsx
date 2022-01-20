@@ -15,6 +15,7 @@ import {
 import { useDispatch, useSelector } from 'react-redux';
 import { CaretRightFilled, CheckCircleFilled, LeftOutlined } from '@ant-design/icons';
 import { cloneDeep, isEmpty } from 'lodash';
+import { History } from 'history';
 
 import './profile.scss';
 import {
@@ -35,18 +36,12 @@ import { UserTypes } from '../store/genericTypes';
 import { RootState } from '../store/rootReducer';
 import CancelBtn from '../app-components/cancelBtn';
 import PrimaryBtn from '../app-components/primaryBtn';
-import {
-    addBeneficiary,
-    getUserFiles,
-    registerBuyerAtDestiny,
-    registerSellerAtDestiny,
-    saveKyc
-} from '../store/loginReducer/actions';
+import { getUserFiles, saveKyc } from '../store/loginReducer/actions';
 import { normFile } from '../app-components/uploadDocument';
 
 const { Title, Text } = Typography;
 
-const Profile = (props: any) => {
+const Profile = (props: { history: History }) => {
     const { history } = props;
     const dispatch = useDispatch();
     const [changeEmail, setChangeEmail] = useState(false);
@@ -175,46 +170,6 @@ const Profile = (props: any) => {
         registerDataPromise.then((data) =>
             dispatch(saveKyc(data, true))
         );
-
-        const beneficiaryDetails = {
-            'username': loginState.username,
-            'BeneName': kycFormValues.account_name || loginState.bank_info.account_holder_name,
-            'BeneAccountNo': kycFormValues.account_number || loginState.bank_info.account_no,
-            'IfscCode': kycFormValues.ifsc_code || loginState.bank_info.ifsc_code
-        };
-
-        const userDetails = [{
-            'Name': loginState.name,
-            'Address': loginState.address2,
-            'PinCode': loginState.zip,
-            'MobileNo': loginState.phone_no,
-            'SuppType': userType,
-            'CustSuppType': userType,
-            'CustSuppSubType': subType,
-            'GSTFilingPeriod': 'Quarterly',
-            'ScandFileName': '',
-            'FoCode': '',
-            'SecondaryContactName': '',
-            'SecondContactNo': '',
-            'PANNo': loginState.PAN || kycFormValues.pan,
-            'BankName': '',
-            'BankAcNo': loginState.bank_info.account_no || kycFormValues.account_number,
-            'BankIFSC': loginState.bank_info.ifsc_code || kycFormValues.ifsc_code,
-            'BankUPIID': loginState.bank_info.upi_id,
-            'GSTIN': loginState.gstin || kycFormValues.gstin,
-            'EmailId': loginState.email || kycFormValues.email || '',
-            'RTCNo': loginState.rtc || '',
-            'AadharNo': loginState.UIDAI || kycFormValues.uidai || '',
-            'IntroducedOnDate': loginState.created_at
-        }]
-
-        if (!loginState?.isSubmitted && isSubmitted && userType === UserTypes.BUYER) {
-            registerBuyerAtDestiny(userDetails);
-
-        } else if (!loginState?.isSubmitted && isSubmitted && userType === UserTypes.SELLER) {
-            addBeneficiary(beneficiaryDetails);
-            registerSellerAtDestiny(userDetails);
-        }
     };
 
     const checkForError = (name: any, field: any) => {
@@ -441,7 +396,8 @@ const Profile = (props: any) => {
                                     </React.Fragment> :
                                     <Text>:&nbsp;{loginState.email}
                                         <Button type='link' className='email-change ' onClick={() => setChangeEmail(true)}>Change</Button>
-                                    </Text>}
+                                    </Text>
+                                }
                             </Form.Item>
                             <DocumentsUploaded
                                 config={configs}
@@ -516,7 +472,7 @@ const Profile = (props: any) => {
                 response={loginState}
                 isSave={isSave}
                 disableSave={disableSave}
-                onConfirm={isSave ? onSave : null}
+                onConfirm={isSave ? onSave : () => { }}
             />
         </div>
     );

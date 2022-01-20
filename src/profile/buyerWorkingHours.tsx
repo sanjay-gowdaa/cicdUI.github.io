@@ -18,7 +18,7 @@ const getWorkingHoursOptions = () => {
     );
 };
 
-const BuyerWorkingHours = (props: any) => {
+const BuyerWorkingHours = (props: { workingHours: any, setDisableSave: Function }) => {
     const { workingHours, setDisableSave } = props;
     const [change, setChange] = useState(false);
 

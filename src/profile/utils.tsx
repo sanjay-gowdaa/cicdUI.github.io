@@ -26,7 +26,7 @@ import {
 
 import { generateFileData } from '../app-components/utils';
 
-export const ViewDocument = (props: any) => {
+export const ViewDocument = (props: { isPDF: boolean; setShowDocument: Function; url: any }) => {
     const { isPDF, setShowDocument, url } = props;
     const [showModal, setModal] = useState(true);
 

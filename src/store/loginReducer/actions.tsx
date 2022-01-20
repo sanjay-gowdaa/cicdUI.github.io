@@ -10,11 +10,7 @@ import {
     getAccessToken,
     getAllConfigs,
     kycUserDetails,
-    postAddBeneficiarydata,
-    postBuyerDetails,
-    postSellerDetails,
-    getRedirectionToken,
-    fetchRedirectedUserDetails
+    getRedirectionToken
 } from '../api';
 import { handleResponse } from '../utils';
 
@@ -41,6 +37,10 @@ export const SET_NEW_PASSWORD = 'SET_NEW_PASSWORD';
 export const SET_USER = 'SET_USER';
 export const SET_AMPLIFY_RESPONSE = 'SET_AMPLIFY_RESPONSE';
 
+/** Store if there is a response from amplify or not
+ * 
+ * @param { boolean } isSet - True if there is a response from amplify
+ */
 export const setAmplifyResponse = (isSet: boolean) => {
     return {
         type: SET_AMPLIFY_RESPONSE,
@@ -48,6 +48,10 @@ export const setAmplifyResponse = (isSet: boolean) => {
     };
 };
 
+/** Store user information
+ * 
+ * @param { any } user - User Information on login
+ */
 export const setUser = (user: any) => {
     return {
         type: SET_USER,
@@ -55,6 +59,10 @@ export const setUser = (user: any) => {
     };
 };
 
+/** Set true if the new password is required to be set
+ * 
+ * @param { boolean } setPassword - True if the user is login in for the first time
+ */
 export const setNewPassword = (setPassword: boolean) => {
     return {
         type: SET_NEW_PASSWORD,
@@ -62,6 +70,10 @@ export const setNewPassword = (setPassword: boolean) => {
     };
 };
 
+/** Store error in confirmation code message
+ * 
+ * @param { string } error - Error message
+ */
 export const setConfirmationCodeError = (error: string) => {
     return {
         type: SET_CONFIRMATION_CODE_ERROR,
@@ -69,6 +81,10 @@ export const setConfirmationCodeError = (error: string) => {
     };
 };
 
+/** Store error in password change message
+ * 
+ * @param { string } error - Error message
+ */
 export const setPasswordChangeError = (error: string) => {
     return {
         type: SET_PASSWORD_CHANGE_ERROR,
@@ -76,6 +92,10 @@ export const setPasswordChangeError = (error: string) => {
     };
 };
 
+/** Store error in login message
+ * 
+ * @param { string } error - Error message
+ */
 export const setErrorInLogin = (error: string) => {
     return {
         type: SET_ERROR_IN_LOGIN,
@@ -83,6 +103,7 @@ export const setErrorInLogin = (error: string) => {
     };
 };
 
+// Store login success as true
 export const setSuccessInLogin = () => {
     return {
         type: SET_SUCCESS_IN_LOGIN,
@@ -90,6 +111,7 @@ export const setSuccessInLogin = () => {
     };
 };
 
+// Store password change success as true
 export const setPasswordChangeStatus = () => {
     return {
         type: SET_PASSWORD_CHANGE_SUCCESS,
@@ -97,6 +119,10 @@ export const setPasswordChangeStatus = () => {
     };
 };
 
+/** Store if the user is redirected or not
+ * 
+ * @param { boolean } isRedirected - True if redirected
+ */
 export const updateIsRedirected = (isRedirected: boolean) => {
     return {
         type: SET_IS_REDIRECTED,
@@ -104,6 +130,10 @@ export const updateIsRedirected = (isRedirected: boolean) => {
     };
 };
 
+/** Store user details
+ * 
+ * @param { Partial<UserDetailsModel>} userDetails - User Details
+ */
 export const updateUserDetails = (userDetails: Partial<UserDetailsModel>) => {
     return {
         type: UPDATE_USER,
@@ -111,6 +141,10 @@ export const updateUserDetails = (userDetails: Partial<UserDetailsModel>) => {
     };
 };
 
+/** Store error in login message
+ * 
+ * @param { string } errorMsg - Error message
+ */
 export const setLoginError = (errorMsg: string) => {
     return {
         type: SET_LOGIN_ERROR,
@@ -118,6 +152,7 @@ export const setLoginError = (errorMsg: string) => {
     };
 };
 
+// Store login success state as true
 export const setLoginSuccess = () => {
     return {
         type: SET_LOGIN_SUCCESS,
@@ -125,6 +160,10 @@ export const setLoginSuccess = () => {
     };
 };
 
+/** Store error in KYC message
+ * 
+ * @param { string } errorMsg - Error message
+ */
 export const setKycUpdateMsg = (errorMsg: string) => {
     return {
         type: SET_KYC_ERROR,
@@ -132,6 +171,7 @@ export const setKycUpdateMsg = (errorMsg: string) => {
     };
 };
 
+// Get user complete details and store it in the login reducer
 export const getUserCompleteDetails = () => {
     return async (dispatch: any) => {
         const userCompleteDetails = await fetchUserCompleteDetails();
@@ -140,6 +180,7 @@ export const getUserCompleteDetails = () => {
     };
 };
 
+// Get configurations and store it in the login reducer
 export const getConfigurations = () => {
     return async (dispatch: any) => {
         const allConfigs = await getAllConfigs();
@@ -150,6 +191,12 @@ export const getConfigurations = () => {
     };
 };
 
+/** Fetch the user files using fileName
+ * 
+ * @param { string } fileName - File name which is eing fetched
+ * @param { Function } setImageSrc - Store the image source using the function
+ * @param { Function } setPDF - Store true if the the file is a pdf 
+ */
 export const getUserFiles = (fileName: string, setImageSrc: Function, setPDF: Function) => {
     return async () => {
         const fileData = await fetchUserFiles(fileName);
@@ -162,20 +209,23 @@ export const getUserFiles = (fileName: string, setImageSrc: Function, setPDF: Fu
     };
 };
 
+/** Save KYC data and send it to dynamo db
+ * 
+ * @param { any } userFormData - Kyc form data to be sent to db
+ * @param { boolean } setMessage - Show response message if set to true
+ */
 export const saveKyc = (userFormData: any, setMessage: boolean) => {
     return async (dispatch: any) => {
         const saveUserDetailsResponse = await kycUserDetails(userFormData);
         const { updateResult } = saveUserDetailsResponse;
-        const { status = '', message } = updateResult;
+        const { message } = updateResult;
         if (setMessage) {
             dispatch(setKycUpdateMsg(message));
         }
-        // Store the error message so that it can be displayed, if error is encountered
-        console.log('status', status);
-        console.log('message', message);
     };
 };
 
+// Fetch user details and store in login reducer
 export const getUserDetails = () => {
     return async (dispatch: any) => {
         const userDetailsData = await fetchUserDetails();
@@ -185,15 +235,10 @@ export const getUserDetails = () => {
     };
 };
 
-export const getRedirectedUserDetails = () => {
-    return async (dispatch: any) => {
-        const userDetailsData = await fetchRedirectedUserDetails();
-        const { result } = userDetailsData || { result: {} };
-        dispatch(updateUserDetails(result));
-        dispatch(setLoginSuccess());
-    };
-};
-
+/**
+ * 
+ * @param { string } userCode -
+ */
 export const getAccessTokenAndFetchUserDetails = (userCode: string) => {
     return async (dispatch: any) => {
         const accessTokenDetails = await getAccessToken(userCode);
@@ -208,12 +253,13 @@ export const getAccessTokenAndFetchUserDetails = (userCode: string) => {
             const { statusText, err: { error = '' } } = result || { statusText: '', err: {} };
             dispatch(setLoginError(`${statusText}: ${error}`));
         }
-        // testing purp
-        // const accessToken = 'eyJraWQiOiJqRVZBdDZNRDhtYXZJRmJXMk83N3BBd3Q5ZDkyczBNVXdKU2JjRk4wNkJBPSIsImFsZyI6IlJTMjU2In0.eyJzdWIiOiIwMTY3ODZmMC01YzA4LTQ5MmMtYTg0Yi02Mzk0OTE4NjdlNDEiLCJldmVudF9pZCI6ImRiM2NiOWYwLTA3YzEtNGJiNC1hYWIwLTlkM2ZlMDE5YmQyMyIsInRva2VuX3VzZSI6ImFjY2VzcyIsInNjb3BlIjoiYXdzLmNvZ25pdG8uc2lnbmluLnVzZXIuYWRtaW4gcGhvbmUgb3BlbmlkIGVtYWlsIiwiYXV0aF90aW1lIjoxNjA3ODYyNzkwLCJpc3MiOiJodHRwczpcL1wvY29nbml0by1pZHAuYXAtc291dGgtMS5hbWF6b25hd3MuY29tXC9hcC1zb3V0aC0xX2RUQ2hwaEx0NCIsImV4cCI6MTYwNzk0OTE5MCwiaWF0IjoxNjA3ODYyNzkwLCJ2ZXJzaW9uIjoyLCJqdGkiOiI3MWMxYmQzNy0xOTU4LTQwNDktYjY2Ni05NmM4M2NmMmYwZjUiLCJjbGllbnRfaWQiOiI3c2NraGhqczJhcTFub3FkMWZ2amRlbzY5aiIsInVzZXJuYW1lIjoiOTAzNjU2NTIwMiJ9.g2VqL1GGxyfzCi7FJXOqVi4hCSHm7hyqRuLp9R49Rr3BiBft202NTGGyT9Vc-xMBgvyRi0OpigY3dNk8AP3vHEgGUVl5JsXUGQ9yq4rLFlvQY-VdK8OR5P6Cg6oAc_ZN0ISK03biK81EOFS7AnoBj9ZXhCiQvp54THULATLwgHDWhpPYF_UkfszF14VGaUQr_ooVw1LPbxFygZyksKoc1xOs8g9PTW_KBfainXgP999qe5t_0o0nJwLKXkY3c3gfYIKiUTRvJR9YU5A11MQZljmN5Y2YArG1MfSA16yeXCMairAlRhpmgVGdAmG7FVn0TkeYYJd0CW4rTKJoRkLiBg'
-        // dispatch(getUserDetails(accessToken))
     };
 };
 
+/** 
+ * 
+ * @param { string } userKey - 
+ */
 export const getRedirectionTokenAndFetchUserDetails = (userKey: string) => {
     return async (dispatch: any) => {
         const accessTokenDetails = await getRedirectionToken(userKey);
@@ -221,7 +267,7 @@ export const getRedirectionTokenAndFetchUserDetails = (userKey: string) => {
         if (accessToken) {
             const sholudEncrypt = process.env.REACT_APP_ENV === 'prod';
             (window as any).userToken = sholudEncrypt ? CryptoJS.AES.encrypt(JSON.stringify(accessToken), TOKEN_GRANT).toString() : accessToken;
-            dispatch(getRedirectedUserDetails());
+            dispatch(getUserDetails());
         }
         else {
             dispatch(setLoginError('invalid token'));
@@ -229,24 +275,11 @@ export const getRedirectionTokenAndFetchUserDetails = (userKey: string) => {
     };
 };
 
-export const addBeneficiary = async (userData: any) => {
-    const beneficiaryResponse = await postAddBeneficiarydata(userData);
-    const { response } = beneficiaryResponse;
-    console.log('response', response);
-};
-
-export const registerBuyerAtDestiny = async (userData: any) => {
-    const regBuyerResponse = await postBuyerDetails(userData);
-    const { response } = regBuyerResponse;
-    console.log('response', response);
-};
-
-export const registerSellerAtDestiny = async (userData: any) => {
-    const regSellerResponse = await postSellerDetails(userData);
-    const { response } = regSellerResponse;
-    console.log('response', response);
-};
-
+/** Takes phone number and password and returns user token which can be used to login
+ * 
+ * @param { string } userName - User ten digit phone number
+ * @param { string } password - User password
+ */
 export const signIn = (userName: string, password: string) => {
     return async (dispatch: any) => {
         dispatch(setAmplifyResponse(false));
@@ -269,6 +302,10 @@ export const signIn = (userName: string, password: string) => {
     };
 };
 
+/** Used to set the user password on click of forgot password
+  * 
+  * @param { string } password - User Password
+  */
 export const setUserPassword = (password: string) => {
     return async (dispatch: any, getState: any) => {
         const { loginUser }: { loginUser: UserStateModel } = getState() as RootState;
@@ -282,6 +319,10 @@ export const setUserPassword = (password: string) => {
     };
 };
 
+/** Sends six digit confirmation code to the phone number, which can be used to reset password
+  * 
+  * @param { string } userName - User ten digit phone number
+  */
 export const sendConfirmationCode = (userName: string) => {
     return async (dispatch: any) => {
         Auth.forgotPassword(userName)
@@ -294,6 +335,12 @@ export const sendConfirmationCode = (userName: string) => {
     };
 };
 
+/** Sets the new password by taking phone number, code and new password
+ * 
+ * @param { string } userName - User ten digit phone number
+ * @param { string } code - Six digit code recieved by the user
+ * @param { string } password - Password to set
+ */
 export const submitForgotPassword = (userName: string, code: string, password: string) => {
     return async (dispatch: any) => {
         Auth.forgotPasswordSubmit(userName, code, password)

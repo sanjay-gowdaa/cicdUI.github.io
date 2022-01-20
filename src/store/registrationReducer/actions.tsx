@@ -4,8 +4,6 @@ import { sendOtp, getAllConfigs, verifyOtp, registerUser, resendOtp } from '../a
 import { ResponseStatus } from '../genericTypes';
 import { RootState } from '../rootReducer';
 
-import { getTimeStamp } from '../../app-components/utils';
-
 export const UPDATE_FORM = 'UPDATE_FORM';
 export const UPDATE_BASIC_REGISTER_FORM = 'UPDATE_BASIC_REGISTER_FORM';
 export const UPDATE_ENTITY_TYPE = 'UPDATE_ENTITY_TYPE';
@@ -18,6 +16,10 @@ export const SET_REGISTER_VERIFIED_FLAG = 'SET_REGISTER_VERIFIED_FLAG';
 export const SET_TIME_STAMP = 'SET_TIME_STAMP';
 export const SET_LOADING_FLAG = 'SET_LOADING_FLAG';
 
+/** Store register form
+ * 
+ * @param { RegitrationFullFormModel } formData - Register form data
+ */
 export const updateForm = (formData: RegitrationFullFormModel) => {
     return {
         type: UPDATE_FORM,
@@ -25,6 +27,10 @@ export const updateForm = (formData: RegitrationFullFormModel) => {
     };
 };
 
+/** Store user type
+ * 
+ * @param { string } entityType - User type, either buyer or seller
+ */
 export const updateEntityType = (entityType: string) => {
     return {
         type: UPDATE_ENTITY_TYPE,
@@ -32,6 +38,10 @@ export const updateEntityType = (entityType: string) => {
     };
 };
 
+/** Store basic registration data
+ * 
+ * @param { RegitrationFullFormModel } formData - Register form data
+ */
 export const updateBasicRegistrationData = (formData: RegsitrationFormModel) => {
     return {
         type: UPDATE_BASIC_REGISTER_FORM,
@@ -39,6 +49,10 @@ export const updateBasicRegistrationData = (formData: RegsitrationFormModel) => 
     };
 };
 
+/** Store true if otp error message is present
+ * 
+ * @param { boolean } errorFlag - True if otp error message is present
+ */
 export const setOtpErrorFlag = (errorFlag: boolean) => {
     return {
         type: SET_OTP_ERROR_FLAG,
@@ -46,6 +60,10 @@ export const setOtpErrorFlag = (errorFlag: boolean) => {
     };
 };
 
+/** Store error in otp message
+ * 
+ * @param { string } errorMsg - Error message
+ */
 export const setOtpErrorMsg = (errorMsg: string) => {
     return {
         type: SET_OTP_ERROR_MSG,
@@ -53,6 +71,10 @@ export const setOtpErrorMsg = (errorMsg: string) => {
     };
 };
 
+/** Store true if the otp is verified
+ * 
+ * @param { boolean } verifiedFlag - True if otp is verified
+ */
 export const setOtpVerifiedFlag = (verifiedFlag: boolean) => {
     return {
         type: SET_OTP_VERIFIED_FLAG,
@@ -60,6 +82,10 @@ export const setOtpVerifiedFlag = (verifiedFlag: boolean) => {
     };
 };
 
+/** Store error in registration message
+ * 
+ * @param { string } errorMsg - Error message
+ */
 export const setRegisterMsg = (errorMsg: string) => {
     return {
         type: SET_REGISTER_ERROR_MSG,
@@ -67,6 +93,10 @@ export const setRegisterMsg = (errorMsg: string) => {
     };
 };
 
+/** Store true if the registration was verified
+ * 
+ * @param { boolean } verifiedFlag - True if registration is verified
+ */
 export const setResgiterVerifiedFlag = (verifiedFlag: boolean) => {
     return {
         type: SET_REGISTER_VERIFIED_FLAG,
@@ -74,6 +104,10 @@ export const setResgiterVerifiedFlag = (verifiedFlag: boolean) => {
     };
 };
 
+/** Store processing flag
+ * 
+ * @param { boolean } isProcessing - True if the processing
+ */
 export const setProcessingFlag = (isProcessing: boolean) => {
     return {
         type: SET_LOADING_FLAG,
@@ -81,13 +115,7 @@ export const setProcessingFlag = (isProcessing: boolean) => {
     };
 };
 
-export const setTimeStamp = (timeStamp: any) => {
-    return {
-        type: SET_TIME_STAMP,
-        payload: timeStamp
-    };
-};
-
+// Store configuration information
 export const getConfigurations = () => {
     return async (dispatch: any) => {
         const allConfigs = await getAllConfigs();
@@ -98,12 +126,17 @@ export const getConfigurations = () => {
     };
 };
 
+/** Send otp to the phone number
+ * 
+ * @param { string } otpNumber - Ten digit phone number
+ */
 export const sendOTP = (otpNumber: string) => {
     return async () => {
         sendOtp(otpNumber);
     };
 };
 
+// Resend otp
 export const resendOTP = () => {
     return async (getState: any) => {
         const { registration } = getState() as RootState;
@@ -113,6 +146,7 @@ export const resendOTP = () => {
     };
 };
 
+// Reset all otp states
 export const resetOtpState = () => {
     return (dispatch: any) => {
         dispatch(setOtpErrorMsg(''));
@@ -121,6 +155,11 @@ export const resetOtpState = () => {
     };
 };
 
+/** Check if the OTP is correct for the phone number
+ * 
+ * @param { string } number - Ten digit phone number
+ * @param { string } otp - Four digit otp
+ */
 export const confirmOTP = (number: string, otp: string) => {
     return async (dispatch: any) => {
         dispatch(setProcessingFlag(true));
@@ -138,6 +177,10 @@ export const confirmOTP = (number: string, otp: string) => {
     };
 };
 
+/** Send user data to dynamo db on registration
+ * 
+ * @param { any } userFormData - User data for registration
+ */
 export const submitRegister = (userFormData: any) => {
     return async (dispatch: any) => {
         dispatch(setProcessingFlag(true));
@@ -152,9 +195,4 @@ export const submitRegister = (userFormData: any) => {
         }
         dispatch(setProcessingFlag(false));
     };
-};
-
-export const saveTimeStamp = (dispatch: any) => {
-    const timeStamp = getTimeStamp();
-    dispatch(setTimeStamp(timeStamp));
 };

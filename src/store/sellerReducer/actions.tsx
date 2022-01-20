@@ -23,7 +23,6 @@ import { ApmcApiResponseBase, UpdatedLiveApmcRatesQuery } from '../genericTypes'
 import { UserStateModel } from '../loginReducer/types';
 import { RootState } from '../rootReducer';
 
-import { getTimeStamp } from '../../app-components/utils';
 import { MatchRequirementModel, TransactionAction, TransactionStatus } from '../../buyer-seller-commons/types';
 
 export const UPDATE_CATEGORIES = 'UPDATE_CATEGORIES';
@@ -51,6 +50,10 @@ export const SET_MATCHES_LOADER = 'SET_MATCHES_LOADER';
 export const SET_APMC_ACTUAL = 'SET_APMC_ACTUAL';
 export const SET_APMC_NEAREST_DISTRICT = 'SET_APMC_NEAREST_DISTRICT';
 
+/** Store seller match loading flag
+ * 
+ * @param { boolean } loadingFlag - True if match is loacding
+ */
 export const setMatchesLoadingFlag = (loadingFlag: boolean) => {
     return {
         type: SET_MATCHES_LOADER,
@@ -58,6 +61,11 @@ export const setMatchesLoadingFlag = (loadingFlag: boolean) => {
     };
 };
 
+/** Store seller status details
+ * 
+ * @param { any } status - Status details
+ * @param { any } key - Key
+ */
 export const setSellerStatusDetails = (status: any, key: any) => {
     return {
         type: SET_STATUS_DETAILS,
@@ -65,6 +73,10 @@ export const setSellerStatusDetails = (status: any, key: any) => {
     };
 };
 
+/** Store seller reject count
+ * 
+ * @param { any } rejectCount - Seller reject count
+ */
 export const updateSellerRejectCount = (rejectCount: any) => {
     return {
         type: UPDATE_REJECT_COUNT,
@@ -72,55 +84,87 @@ export const updateSellerRejectCount = (rejectCount: any) => {
     };
 };
 
-export const setSellerIdOnAccept = (sellerId: String) => {
+/** Store seller id on accept
+ * 
+ * @param { string } sellerId - Seller id
+ */
+export const setSellerIdOnAccept = (sellerId: string) => {
     return {
         type: OTP_SELLER_ID,
         payload: sellerId
     };
 };
 
-export const setSellerCropIdOnAccept = (sellerCropId: String) => {
+/** Store seller crop id on accept
+ * 
+ * @param { string } sellerCropId - Seller crop id
+ */
+export const setSellerCropIdOnAccept = (sellerCropId: string) => {
     return {
         type: OTP_SELLER_CROP_ID,
         payload: sellerCropId
     };
 };
 
-export const setBuyerIdOnAccept = (buyerId: String) => {
+/** Store buyer id on accept
+ * 
+ * @param { string } buyerId - Buyer Id
+ */
+export const setBuyerIdOnAccept = (buyerId: string) => {
     return {
         type: OTP_BUYER_ID,
         payload: buyerId
     };
 };
 
-export const setBuyerCropIdOnAccept = (buyerCropId: String) => {
+/** Store buyer crop id on accept
+ * 
+ * @param { string } buyerCropId - Buyer crop id
+ */
+export const setBuyerCropIdOnAccept = (buyerCropId: string) => {
     return {
         type: OTP_BUYER_CROP_ID,
         payload: buyerCropId
     };
 };
 
-export const setSellerOtpErrorOnAccept = (errorFlag: Boolean) => {
+/** Store otp error flag on seller accept
+ * 
+ * @param { boolean } errorFlag - True if otp error is present on accept
+ */
+export const setSellerOtpErrorOnAccept = (errorFlag: boolean) => {
     return {
         type: OTP_ERROR_ON_ACCEPT,
         payload: errorFlag
     };
 };
 
-export const setSellerOtpErrorMsgOnAccept = (errorMg: String) => {
+/** Store otp error message on seller accept
+ * 
+ * @param { string } errorMg - Error message
+ */
+export const setSellerOtpErrorMsgOnAccept = (errorMg: string) => {
     return {
         type: OTP_ERROR_MSG_ON_ACCEPT,
         payload: errorMg
     };
 };
 
-export const setSellerVerifiedOnAccept = (isVerified: Boolean) => {
+/** Store true if seller otp is verified on accept
+ * 
+ * @param { boolean } isVerified - True if seller otp is verified on accept
+ */
+export const setSellerVerifiedOnAccept = (isVerified: boolean) => {
     return {
         type: OTP_VERIFIED_ON_ACCEPT,
         payload: isVerified
     };
 };
 
+/** Store current status details
+ * 
+ * @param { string } status - Status
+ */
 export const updateCurrentStatusDetails = (status: string) => {
     return {
         type: UPDATE_CURRENT_STATUS_DETAILS,
@@ -128,6 +172,10 @@ export const updateCurrentStatusDetails = (status: string) => {
     };
 };
 
+/** Store all categories
+ * 
+ * @param { Array<string> } categories - Category
+ */
 export const updateAllCategories = (categories: Array<string>) => {
     return {
         type: UPDATE_CATEGORIES,
@@ -135,6 +183,10 @@ export const updateAllCategories = (categories: Array<string>) => {
     };
 };
 
+/** Store master crops
+ * 
+ * @param { Array<string> } produce - Master crops
+ */
 export const updateMasterCrops = (produce: Array<string>) => {
     return {
         type: UPDATE_MASTER_CROPS,
@@ -142,6 +194,10 @@ export const updateMasterCrops = (produce: Array<string>) => {
     };
 };
 
+/** Store variety
+ * 
+ * @param { Array<any> } variety - Variety
+ */
 export const updateVariety = (variety: Array<any>) => {
     return {
         type: UPDATE_VARIETY,
@@ -149,6 +205,10 @@ export const updateVariety = (variety: Array<any>) => {
     };
 };
 
+/** Store seller crops list
+ * 
+ * @param { Array<any> } cropsList - Crop list
+ */
 export const updateSellerCropsList = (cropsList: Array<any>) => {
     return {
         type: UPDATE_SELLER_CROPS_LIST,
@@ -156,6 +216,10 @@ export const updateSellerCropsList = (cropsList: Array<any>) => {
     };
 };
 
+/** Store apmc crop rate
+ * 
+ * @param { string | number } modalPrice - Modal Price
+ */
 export const updateApmcCropRate = (modalPrice: string | number) => {
     return {
         type: UPDATE_APMC_RATE,
@@ -163,6 +227,10 @@ export const updateApmcCropRate = (modalPrice: string | number) => {
     };
 };
 
+/** Store true if the apmc data is of the actual district
+ * 
+ * @param { boolean } isActual - True if the apmc data is of the actual district
+ */
 export const setApmcisActual = (isActual: boolean) => {
     return {
         type: SET_APMC_ACTUAL,
@@ -170,6 +238,10 @@ export const setApmcisActual = (isActual: boolean) => {
     }
 };
 
+/** Apmc Nearest District
+ * 
+ * @param { string } district - District
+ */
 export const setApmcNearestDistrict = (district: string) => {
     return {
         type: SET_APMC_NEAREST_DISTRICT,
@@ -177,6 +249,11 @@ export const setApmcNearestDistrict = (district: string) => {
     };
 };
 
+/** Store seller transaction list
+ * 
+ * @param { TransactionStatus } transactionType - Transaction status type
+ * @param { Array<any> } transactionListData - Transaction list data
+ */
 export const updateSellerTransactionList = (transactionType: TransactionStatus, transactionListData: Array<any>) => {
     return {
         type: UPDATE_SELLER_TRANSACTION_LIST,
@@ -184,13 +261,10 @@ export const updateSellerTransactionList = (transactionType: TransactionStatus, 
     };
 };
 
-export const updateTimeStamp = (timeStamp: any) => {
-    return {
-        type: UPDATE_TIME_STAMP,
-        payload: timeStamp
-    };
-};
-
+/** Store seller matches
+ * 
+ * @param { Array<MatchRequirementModel> } matchesList - Matcheslist
+ */
 export const updateSellerMatches = (matchesList: Array<MatchRequirementModel>) => {
     return {
         type: UPDATE_SELLER_MATCHES,
@@ -198,6 +272,10 @@ export const updateSellerMatches = (matchesList: Array<MatchRequirementModel>) =
     };
 };
 
+/** Store all seller event template list
+ * 
+ * @param { Array<any> } eventTemplate - Event template
+ */
 export const updateSellerEventList = (eventTemplate: Array<any>) => {
     return {
         type: UPDATE_EVENT_TEMPLATE,
@@ -205,6 +283,11 @@ export const updateSellerEventList = (eventTemplate: Array<any>) => {
     };
 };
 
+/** Update apmc list details
+ * 
+ * @param { Array<ApmcApiResponseBase> } allCropsApmcData - All produce apmc details
+ * @param { Array<CropApiModel> } cropsList - Produce list
+ */
 export const updateApmcListData = (
     allCropsApmcData: Array<ApmcApiResponseBase>,
     cropsList: Array<CropApiModel>
@@ -229,6 +312,13 @@ export const updateApmcListData = (
     };
 };
 
+/** Fetch all live apmc data for the produce
+ * 
+ * @param { string } grade - Grade
+ * @param { string } itemName - Produce
+ * @param { string } variety - Variety
+ * @param { string } category - Category
+ */
 export const updatedFetchLiveApmcRate = ({
     grade,
     itemName,
@@ -258,6 +348,7 @@ export const updatedFetchLiveApmcRate = ({
     };
 };
 
+// Fetch all categories
 export const fetchAllCategories = () => {
     return async (dispatch: any) => {
         const allCategoriesList = await getCropCategoryList();
@@ -266,6 +357,10 @@ export const fetchAllCategories = () => {
     };
 };
 
+/** Fetch all produce for the selected category
+ * 
+ * @param { string } category - Category name
+ */
 export const fetchAllMasterCrops = (category: string) => {
     return async (dispatch: any) => {
         const allCropList = await getCropList(category);
@@ -274,6 +369,10 @@ export const fetchAllMasterCrops = (category: string) => {
     };
 };
 
+/** Fetch all variety for the selected produce
+ * 
+ * @param { string } cropName - Produce name
+ */
 export const fetchAllVariety = (cropName: string) => {
     return async (dispatch: any) => {
         const allVarietyList = await getSubCategoryList(cropName);
@@ -282,6 +381,10 @@ export const fetchAllVariety = (cropName: string) => {
     };
 };
 
+/** Add new crop data
+ * 
+ * @param { FormData } cropData - Crop data
+ */
 export const addNewCropData = (cropData: FormData) => {
     return async (dispatch: any) => {
         await createCrop(cropData);
@@ -289,6 +392,10 @@ export const addNewCropData = (cropData: FormData) => {
     };
 };
 
+/** Store crop data
+ * 
+ * @param { any } cropData - Crop Data
+ */
 export const updateCropData = (cropData: any) => {
     return async (dispatch: any) => {
         await patchCrop(cropData);
@@ -296,6 +403,12 @@ export const updateCropData = (cropData: any) => {
     };
 };
 
+/** Seller intent to sell update
+ * 
+ * @param { any } cropData - Crop details
+ * @param { string } cropID - Crop Id
+ * @param { boolean } isPriceUpdated - True if price is updated
+ */
 export const sellerIntentToSell = (cropData: any, cropID: string, isPriceUpdated?: boolean) => {
     return async (dispatch: any) => {
         if (isPriceUpdated) {
@@ -306,6 +419,10 @@ export const sellerIntentToSell = (cropData: any, cropID: string, isPriceUpdated
     };
 };
 
+/** Delete selected crop
+ * 
+ * @param { string } cropID - Crop Id
+ */
 export const deleteSelectedCrop = (cropID: string) => {
     return async (dispatch: any, getState: any) => {
         const { loginUser }: { loginUser: UserStateModel } = getState() as RootState;
@@ -315,6 +432,10 @@ export const deleteSelectedCrop = (cropID: string) => {
     };
 };
 
+/** Fetch all produce apmc data
+ * 
+ * @param { Array<CropApiModel> } Items - Crop details
+ */
 export const fetchAllCropsApmcData = (Items: Array<CropApiModel>) => {
     return async (dispatch: any, getState: any) => {
         const { seller } = getState() as RootState;
@@ -329,6 +450,7 @@ export const fetchAllCropsApmcData = (Items: Array<CropApiModel>) => {
     };
 };
 
+// Get all crops list
 export const getAllCropsList = () => {
     return async (dispatch: any) => {
         const cropsList = await getAllCrops();
@@ -340,6 +462,7 @@ export const getAllCropsList = () => {
     };
 };
 
+// Get all seller matches
 export const getAllSellerMatches = () => {
     return async (dispatch: any) => {
         dispatch(setMatchesLoadingFlag(true));
@@ -365,6 +488,12 @@ export const getAllSellerMatches = () => {
     };
 };
 
+/** Fetch Transaction
+ * 
+ * @param { string } tarnsactionID - Transaction Id
+ * @param { TransactionAction } action - Transaction action either accept or reject
+ * @param { MatchRequirementModel } cropDetails - Crop details
+ */
 export const transactionAction = (
     tarnsactionID: string,
     action: TransactionAction,
@@ -382,6 +511,10 @@ export const transactionAction = (
     };
 };
 
+/** Get selle transaction list based on the transaction status
+ * 
+ * @param { TransactionStatus } transactionStatus - Transaction status
+ */
 export const getSellerTransactionList = (transactionStatus: TransactionStatus) => {
     return async (dispatch: any) => {
         const transactionListResponse = await fetchTransactionList(transactionStatus);
@@ -400,11 +533,10 @@ export const getSellerTransactionList = (transactionStatus: TransactionStatus) =
     };
 };
 
-export const saveTimeStamp = (dispatch: any) => {
-    const timeStamp = getTimeStamp();
-    dispatch(updateTimeStamp(timeStamp));
-};
-
+/** Get current seller status details
+ * 
+ * @param { any } userData - User data
+ */
 export const currentSellerStatusDetails = (userData: any) => {
     return async (dispatch: any) => {
         const currentStatusResponse = await getCurrentStatusDetails(userData);

@@ -6,8 +6,8 @@ import PrimaryBtn from '../../app-components/primaryBtn';
 
 type propsModel = {
     registerResponse: { errorMg: string, verified: boolean }
-    onConfirmRegister: any,
-    toggleShowConfirmation: any,
+    onConfirmRegister: Function,
+    toggleShowConfirmation: Function,
     showConfirmation: boolean,
     isProcessing: boolean
 };

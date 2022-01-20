@@ -73,7 +73,7 @@ export const produceColumns = ({
                 const percentageQty = (currently_fulfilled_qty / quantityNum) * 100;
                 const currentReqQty = quantityNum - currently_fulfilled_qty;
                 return (
-                    <>
+                    <React.Fragment>
                         <p>{currentReqQty} qtl</p>
                         <Progress
                             strokeColor='#12805C'
@@ -81,7 +81,7 @@ export const produceColumns = ({
                             status="active"
                             format={() => `${quantity} qtl`}
                         />
-                    </>
+                    </React.Fragment>
                 );
             }
         },
@@ -130,7 +130,7 @@ export const produceColumns = ({
             }),
             render: (record: ProduceModel) => {
                 return (
-                    <>
+                    <React.Fragment>
                         <Button
                             type="link"
                             disabled={!record.isEditable}
@@ -148,7 +148,7 @@ export const produceColumns = ({
                         >
                             Delete
                         </Button>
-                    </>
+                    </React.Fragment>
                 );
             },
         },

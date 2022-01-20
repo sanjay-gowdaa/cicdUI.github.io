@@ -6,10 +6,11 @@ import { confirmReEnteredPassword, ShowPasswordMessage, validatePassword } from 
 
 import PrimaryBtn from '../../app-components/primaryBtn';
 import { setNewPassword, setUserPassword } from '../../store/loginReducer/actions';
+import { ModalType } from '../../store/genericTypes';
 
 const { Text, Title } = Typography;
 
-const NewPasswordModal = (props: any) => {
+const NewPasswordModal = (props: ModalType) => {
     const { showModal, setModal } = props;
     const [isValidated, setValidated] = useState({ lower: false, upper: false, number: false, length: false });
     const [showMessage, setMessage] = useState(false);
