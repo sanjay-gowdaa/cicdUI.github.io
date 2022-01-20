@@ -10,8 +10,9 @@ import {
     Typography
 } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
+import { History } from 'history';
 
-import { confirmOTP, resendOTP, saveTimeStamp } from '../../store/registrationReducer/actions';
+import { confirmOTP, resendOTP } from '../../store/registrationReducer/actions';
 import { RootState } from '../../store/rootReducer';
 import PrimaryBtn from '../../app-components/primaryBtn';
 import InputOtp from '../../app-components/inputOtp';
@@ -20,9 +21,16 @@ import './register.scss';
 import { maskData } from '../../app-components/utils';
 
 const { Text, Title } = Typography;
-const { Countdown } = Statistic
+const { Countdown } = Statistic;
 
-const ConfirmOTPModal = ({ showOTPModal, setShowOTPModal, currentType, history }: { showOTPModal: boolean, setShowOTPModal: Function, currentType: string, history: any }) => {
+interface ConfirmOTPProps {
+    showOTPModal: boolean;
+    setShowOTPModal: Function;
+    currentType: string;
+    history: History;
+};
+
+const ConfirmOTPModal = ({ showOTPModal, setShowOTPModal, currentType, history }: ConfirmOTPProps) => {
     const dispatch = useDispatch();
     const registrationState = useSelector((state: RootState) => state.registration);
 
@@ -77,17 +85,17 @@ const ConfirmOTPModal = ({ showOTPModal, setShowOTPModal, currentType, history }
             <Row>
                 <Space>
                     <Text>Didn't receive OTP?</Text>
-                    {
-                        !resend ? (
-                            <>
-                                <Text className='custom-color-change'> Resend Code in </Text>
-                                <Countdown
-                                    className='custom-color-change'
-                                    value={otpTimer} format='mm:ss'
-                                    onFinish={() => showResend(true)}
-                                />
-                            </>
-                        ) : (!otpResent ? <PrimaryBtn className='add-margin-bottom' onClick={retryOtpSend} content='Resend OTP' /> : null)
+                    {!resend ?
+                        <React.Fragment>
+                            <Text className='custom-color-change'> Resend Code in </Text>
+                            <Countdown
+                                className='custom-color-change'
+                                value={otpTimer} format='mm:ss'
+                                onFinish={() => showResend(true)}
+                            />
+                        </React.Fragment> :
+                        !otpResent ?
+                            <PrimaryBtn className='add-margin-bottom' onClick={retryOtpSend} content='Resend OTP' /> : null
                     }
                 </Space>
                 <Divider className='confirm-otp-divider' />
@@ -98,23 +106,19 @@ const ConfirmOTPModal = ({ showOTPModal, setShowOTPModal, currentType, history }
                         and are ready to verify your profile'
                 />
             </Row>
-            {
-                otpError.showError && (
-                    <Row className='margin-t-1em'>
-                        <Col span='24'>
-                            <Alert message={otpError.errorMg} type='error' showIcon />
-                        </Col>
-                    </Row>)
+            {otpError.showError &&
+                <Row className='margin-t-1em'>
+                    <Col span='24'>
+                        <Alert message={otpError.errorMg} type='error' showIcon />
+                    </Col>
+                </Row>
             }
             <Row justify='center' className='margin-t-1em'>
                 <Col>
                     <Space>
                         <PrimaryBtn
                             disabled={otp.length !== 4}
-                            onClick={() => {
-                                dispatch(confirmOTP(formData?.number, otp));
-                                dispatch(saveTimeStamp);
-                            }}
+                            onClick={() => dispatch(confirmOTP(formData?.number, otp))}
                             content='Submit OTP'
                         />
                     </Space>

@@ -25,10 +25,10 @@ const SellerDocuments = (props: { documents_list: Array<any>, subType: string, u
     allDocumentsList = Array.from(new Set(allDocumentsList));
 
     return (
-        <>
+        <React.Fragment>
             {allDocumentsList.map((documentName) => {
                 return (
-                    <>
+                    <React.Fragment>
                         {documentLabelMapping.map((document) => {
                             const { formClassName, key, label, labelClassName, name, upload, uploadFormName } = document;
                             return (
@@ -54,10 +54,10 @@ const SellerDocuments = (props: { documents_list: Array<any>, subType: string, u
                                     </Form.Item> : null
                             );
                         })}
-                    </>
+                    </React.Fragment>
                 );
             })}
-        </>
+        </React.Fragment>
     );
 };
 
@@ -72,10 +72,10 @@ const BuyerDocuments = (props: { documents_list: Array<any>, subType: string, us
     allDocumentsList = Array.from(new Set(allDocumentsList));
 
     return (
-        <>
+        <React.Fragment>
             {allDocumentsList.map((documentName) => {
                 return (
-                    <>
+                    <React.Fragment>
                         {documentLabelMapping.map((document) => {
                             const { formClassName, key, label, labelClassName, name, upload, uploadFormName } = document;
                             return (
@@ -102,10 +102,10 @@ const BuyerDocuments = (props: { documents_list: Array<any>, subType: string, us
                                     : null
                             );
                         })}
-                    </>
+                    </React.Fragment>
                 );
             })}
-        </>
+        </React.Fragment>
     );
 };
 

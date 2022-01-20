@@ -1,15 +1,15 @@
 import React, { useState } from 'react';
 import { Input } from 'antd';
 
-const InputOtp = (props: any) => {
+const InputOtp = (props: { setInput: Function }) => {
     const { setInput } = props;
 
     const [inputOtp, setInputOtp] = useState({ digit1: '', digit2: '', digit3: '', digit4: '' });
     var prevSpace = 0;
 
     const setFocusToNext = (event: any) => {
-        const firstDigit = event.target.className.includes("1");
-        const lastDigit = event.target.className.includes("4");
+        const firstDigit = event.target.className.includes('1');
+        const lastDigit = event.target.className.includes('4');
 
         (event.keyCode === 8 && !firstDigit && prevSpace++);
 
@@ -24,54 +24,54 @@ const InputOtp = (props: any) => {
     };
 
     const inputStyle = {
-        width: "2.5em",
-        height: "2.5em",
-        margin: "0.5em",
+        width: '2.5em',
+        height: '2.5em',
+        margin: '0.5em',
     };
 
     return (
-        <>
+        <React.Fragment>
             <Input
-                className="custom-input digit1"
+                className='custom-input digit1'
                 disabled={false}
                 maxLength={1}
                 onChange={(event: any) => setInputOtp({ ...inputOtp, digit1: event.target.value })}
                 onKeyUp={setFocusToNext}
-                type="text"
+                type='text'
                 value={inputOtp.digit1}
                 style={inputStyle}
             />
             <Input
-                className="custom-input digit2"
+                className='custom-input digit2'
                 disabled={(inputOtp.digit1 === '')}
                 maxLength={1}
                 onChange={(event: any) => setInputOtp({ ...inputOtp, digit2: event.target.value })}
                 onKeyUp={setFocusToNext}
-                type="text"
+                type='text'
                 value={inputOtp.digit2}
                 style={inputStyle}
             />
             <Input
-                className="custom-input digit3"
+                className='custom-input digit3'
                 disabled={(inputOtp.digit2 === '')}
                 maxLength={1}
                 onChange={(event: any) => setInputOtp({ ...inputOtp, digit3: event.target.value })}
                 onKeyUp={setFocusToNext}
-                type="text"
+                type='text'
                 value={inputOtp.digit3}
                 style={inputStyle}
             />
             <Input
-                className="custom-input digit4"
+                className='custom-input digit4'
                 disabled={(inputOtp.digit3 === '')}
                 maxLength={1}
                 onChange={(event: any) => setInputOtp({ ...inputOtp, digit4: event.target.value })}
                 onKeyUp={setFocusToNext}
-                type="text"
+                type='text'
                 value={inputOtp.digit4}
                 style={inputStyle}
             />
-        </>
+        </React.Fragment>
     );
 };
 

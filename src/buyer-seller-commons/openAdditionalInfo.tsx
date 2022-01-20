@@ -3,6 +3,10 @@ import { Modal, Table, Typography } from 'antd';
 
 const { Text } = Typography;
 
+/** Show Additional Information
+ * 
+ * @param { any } content - Content
+ */
 export const openAdditionalInfo = (content: any) => {
     const showTable = typeof (content) !== 'string';
     const data = [

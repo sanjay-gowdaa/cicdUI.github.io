@@ -131,7 +131,7 @@ const App = (props: any) => {
                     <Footer />
                 </React.Fragment>
             }
-            <MobileRegisterModal visible={openMobileRegModel} setVisible={setMobileRegModal} />
+            <MobileRegisterModal showModal={openMobileRegModel} setModal={setMobileRegModal} />
         </div>
     );
 };

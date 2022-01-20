@@ -5,19 +5,20 @@ import PrimaryBtn from './primaryBtn';
 import './customComponent.scss';
 
 import Logo from '../static/assets/vbLogo.png';
+import { ModalType } from '../store/genericTypes';
 
 const { Text, Title } = Typography;
 
-const MobileRegisterModal = (props: any) => {
-    const { visible, setVisible } = props;
+const MobileRegisterModal = (props: ModalType) => {
+    const { showModal, setModal } = props;
 
     return (
         <Modal
             title={null}
-            visible={visible}
+            visible={showModal}
             footer={null}
             className='mobile-register-modal'
-            onCancel={() => setVisible(!visible)}
+            onCancel={() => setModal(!showModal)}
             width={'70vw'}
             bodyStyle={{ justifyContent: 'center' }}
         >

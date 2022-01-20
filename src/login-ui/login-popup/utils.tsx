@@ -73,7 +73,7 @@ export const confirmReEnteredPassword = (rule: RuleObject, value: any, password:
     }
 };
 
-export const ShowPasswordMessage = (props: any) => {
+export const ShowPasswordMessage = (props: { isValidated: any }) => {
     const { isValidated } = props;
 
     return (

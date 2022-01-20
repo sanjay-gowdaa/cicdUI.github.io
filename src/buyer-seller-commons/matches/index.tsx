@@ -25,8 +25,7 @@ export interface componentCallBacksModel {
     rejectMatch: any;
 };
 
-const Matches = (props: any) => {
-    const { } = props;
+const Matches = () => {
     const [openDetailsModal, setOpenDetailsModal] = useState(false);
     const [selectedCropDetails, setSelectedCropDetails] =
         useState(initialEmptyCropDetail as MatchRequirementModel);

@@ -3,9 +3,7 @@ import { isEmpty } from 'lodash';
 import { TransactionStatus } from './types';
 
 import {
-    fetchAdditionalInfo,
     fetchTransactionList,
-    fetchUserHistory,
     getEventTemplate,
     getRejectCount,
     getStatusDetails,
@@ -44,6 +42,10 @@ import {
     updateSellerTransactionList
 } from '../store/sellerReducer/actions';
 
+/** Fetch status event template
+ * 
+ * @param { UserTypes } userType - User type either buyer or seller
+ */
 export const fetchEventTemplate = (userType: any) => {
     return async (dispatch: any) => {
         const transportation = 'No';
@@ -56,6 +58,10 @@ export const fetchEventTemplate = (userType: any) => {
     };
 };
 
+/** Fetch transaction list on reload
+ * 
+ * @param { TransactionStatus } transactionStatus - Transaction status type
+ */
 export const getTransactionListOnReload = (transactionStatus: TransactionStatus) => {
     return async (dispatch: any, getState: any) => {
         const { loginUser }: { loginUser: UserStateModel } = getState() as RootState;
@@ -79,6 +85,10 @@ export const getTransactionListOnReload = (transactionStatus: TransactionStatus)
     };
 };
 
+/** Fetch user status
+ * 
+ * @param { any } userData - User data
+ */
 export const getStatus = (userData: any) => {
     return async (dispatch: any, getState: any) => {
         const { loginUser }: { loginUser: UserStateModel } = getState() as RootState;
@@ -90,6 +100,10 @@ export const getStatus = (userData: any) => {
     };
 };
 
+/** Reject Matches counter
+ * 
+ * @param { any } rejectData - Reject Data
+ */
 export const rejectMatchesCount = (rejectData: any) => {
     return async (dispatch: any, getState: any) => {
         const { loginUser }: { loginUser: UserStateModel } = getState() as RootState;
@@ -101,6 +115,11 @@ export const rejectMatchesCount = (rejectData: any) => {
     };
 };
 
+/** Confirm if the otp recieved by the phone number is valid
+ * 
+ * @param { string } number - Ten digit phone number
+ * @param { string } otp - OTP recieved by the phone number
+ */
 export const confirmOTP = (number: string, otp: string) => {
     return async (dispatch: any, getState: any) => {
         const { loginUser }: { loginUser: UserStateModel } = getState() as RootState;
@@ -128,6 +147,10 @@ export const confirmOTP = (number: string, otp: string) => {
     };
 };
 
+/** Bypass Otp for testing purpose not being used in demo environment
+ * 
+ * @param { string } otp - Should be '1234'
+ */
 export const byPassOTP = (otp: string) => {
     return async (dispatch: any, getState: any) => {
         const { loginUser }: { loginUser: UserStateModel } = getState() as RootState;
@@ -153,6 +176,7 @@ export const byPassOTP = (otp: string) => {
     };
 };
 
+// Reset all Otp fields
 export const resetOTPFields = () => {
     return async (dispatch: any, getState: any) => {
         const { loginUser }: { loginUser: UserStateModel } = getState() as RootState;
