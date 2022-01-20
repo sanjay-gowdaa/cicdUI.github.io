@@ -70,19 +70,18 @@ export const transactionSellerColumns = [
     },
     {
         title: 'Price per qtl',
-        dataIndex: 'seller_price',
-        key: 'seller_price',
-        render: (seller_price: number, record: TransactionModel) => {
-            const { matched_quantity } = record;
+        dataIndex: 'seller_price_per_quintal',
+        key: 'seller_price_per_quintal',
+        render: (seller_price_per_quintal: number) => {
             return (
-                <p>{seller_price / matched_quantity}</p>
+                <p>{seller_price_per_quintal}</p>
             );
         }
     },
     {
         title: 'Total',
-        dataIndex: 'buyer_final_price',
-        key: 'buyer_final_price',
+        dataIndex: 'seller_final_price',
+        key: 'seller_final_price',
     },
     {
         title: 'Buyer',
