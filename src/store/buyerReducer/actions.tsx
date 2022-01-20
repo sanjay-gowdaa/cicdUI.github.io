@@ -29,7 +29,6 @@ import { UserStateModel } from '../loginReducer/types';
 import { BuyerStateModel } from '../buyerReducer/types';
 import { RootState } from '../rootReducer';
 
-import { getTimeStamp } from '../../app-components/utils';
 import { MatchRequirementModel, TransactionStatus } from '../../buyer-seller-commons/types';
 import { getUserCompleteDetails } from '../loginReducer/actions';
 
@@ -58,6 +57,11 @@ export const OTP_BUYER_CROP_ID = 'OTP_BUYER_CROP_ID';
 export const UPDATE_REJECT_COUNT = 'UPDATE_REJECT_COUNT';
 export const SET_STATUS_DETAILS = 'SET_STATUS_DETAILS';
 
+/** Store buyer status details
+ * 
+ * @param { any } status - Buyer status details
+ * @param  { any } key - Key
+ */
 export const setBuyerStatusDetails = (status: any, key: any) => {
     return {
         type: SET_STATUS_DETAILS,
@@ -65,6 +69,10 @@ export const setBuyerStatusDetails = (status: any, key: any) => {
     };
 };
 
+/** Store true if there is an error on otp connection in buyer
+ * 
+ * @param { boolean } errorFlag - True if there is an error in otp on connect
+ */
 export const setBuyerOtpErrorOnConnect = (errorFlag: Boolean) => {
     return {
         type: OTP_ERROR_ON_CONNECT,
@@ -72,48 +80,76 @@ export const setBuyerOtpErrorOnConnect = (errorFlag: Boolean) => {
     };
 };
 
-export const setBuyerOtpErrorMsgOnConnect = (errorMg: String) => {
+/** Store otp error message on buyer connect
+ * 
+ * @param { string } errorMg - Error message
+ */
+export const setBuyerOtpErrorMsgOnConnect = (errorMg: string) => {
     return {
         type: OTP_ERROR_MSG_ON_CONNECT,
         payload: errorMg
     };
 };
 
-export const setBuyerVerifiedOnConnect = (isVerified: Boolean) => {
+/** Store otp verification status of buyer connect
+ * 
+ * @param { boolean } isVerified - True if otp is verified
+ */
+export const setBuyerVerifiedOnConnect = (isVerified: boolean) => {
     return {
         type: OTP_VERIFIED_ON_CONNECT,
         payload: isVerified
     };
 };
 
-export const setSellerIdOnConnect = (sellerId: String) => {
+/** Store seller id on connect
+ * 
+ * @param { string } sellerId - Seller id
+ */
+export const setSellerIdOnConnect = (sellerId: string) => {
     return {
         type: OTP_SELLER_ID,
         payload: sellerId
     };
 };
 
-export const setSellerCropIdOnConnect = (sellerCropId: String) => {
+/** Store seller crop id on connect
+ * 
+ * @param { string } sellerCropId - Seller crop Id
+ */
+export const setSellerCropIdOnConnect = (sellerCropId: string) => {
     return {
         type: OTP_SELLER_CROP_ID,
         payload: sellerCropId
     };
 };
 
-export const setBuyerIdOnConnect = (buyerId: String) => {
+/** Store buyer id on connect
+ * 
+ * @param { string } buyerId - Buyer Id
+ */
+export const setBuyerIdOnConnect = (buyerId: string) => {
     return {
         type: OTP_BUYER_ID,
         payload: buyerId
     };
 };
 
-export const setBuyerCropIdOnConnect = (buyerCropId: String) => {
+/** Store buyer crop id on connect
+ * 
+ * @param { string } buyerCropId - Buyer crop Id
+ */
+export const setBuyerCropIdOnConnect = (buyerCropId: string) => {
     return {
         type: OTP_BUYER_CROP_ID,
         payload: buyerCropId
     };
 };
 
+/** Store masterlist
+ * 
+ * @param { Array<any> } masterlist - Masterlist
+ */
 export const updateStoreMasterList = (masterlist: Array<any>) => {
     return {
         type: UPDATE_MASTER_LIST,
@@ -121,6 +157,10 @@ export const updateStoreMasterList = (masterlist: Array<any>) => {
     };
 };
 
+/** Store payment redirection details
+ * 
+ * @param { any } paymentRedirectionDetails - Payment redirection details
+ */
 export const updatePaymentRedirectionDetails = (paymentRedirectionDetails: any) => {
     return {
         type: UPDATE_PAYMENT_REDIRECTION_DETAILS,
@@ -128,6 +168,10 @@ export const updatePaymentRedirectionDetails = (paymentRedirectionDetails: any) 
     };
 };
 
+/** Store payment amount
+ * 
+ * @param { any } paymentAmount - Payment Amount
+ */
 export const updatePaymentAmount = (paymentAmount: any) => {
     return {
         type: UPDATE_PAYMENT_AMOUNT,
@@ -135,6 +179,10 @@ export const updatePaymentAmount = (paymentAmount: any) => {
     };
 };
 
+/** Store payment details
+ * 
+ * @param { Array<any> } paymentDetails - Payment details
+ */
 export const updatePaymentDetails = (paymentDetails: Array<any>) => {
     return {
         type: UPDATE_PAYMENT_DETAILS,
@@ -142,6 +190,10 @@ export const updatePaymentDetails = (paymentDetails: Array<any>) => {
     };
 };
 
+/** Store all buyer event list
+ * 
+ * @param { Array<any> } eventTemplate - Event Template
+ */
 export const updateBuyerEventList = (eventTemplate: Array<any>) => {
     return {
         type: UPDATE_EVENT_TEMPLATE,
@@ -149,6 +201,10 @@ export const updateBuyerEventList = (eventTemplate: Array<any>) => {
     };
 };
 
+/** Store buyer current status details
+ * 
+ * @param { string } status - Current status details
+ */
 export const updateCurrentStatusDetails = (status: string) => {
     return {
         type: UPDATE_CURRENT_STATUS_DETAILS,
@@ -156,6 +212,10 @@ export const updateCurrentStatusDetails = (status: string) => {
     };
 };
 
+/** Store produce list
+ * 
+ * @param produceList - Produce list
+ */
 export const updateProduceList = (produceList: Array<ProduceModel>) => {
     return {
         type: UPDATE_PRODUCE_LIST,
@@ -163,6 +223,10 @@ export const updateProduceList = (produceList: Array<ProduceModel>) => {
     };
 };
 
+/** Store master produce name list
+ * 
+ * @param { Array<string> } masterCropNames - master produce names
+ */
 export const updateMasterCropNamesList = (masterCropNames: Array<string>) => {
     return {
         type: UPDATE_MASTER_CROP_NAMES_LIST,
@@ -170,6 +234,10 @@ export const updateMasterCropNamesList = (masterCropNames: Array<string>) => {
     };
 };
 
+/** Store crop list
+ * 
+ * @param { Array<string> } cropsList - crop list
+ */
 export const updateCropsList = (cropsList: Array<string>) => {
     return {
         type: UPDATE_CROPS_LIST,
@@ -177,6 +245,10 @@ export const updateCropsList = (cropsList: Array<string>) => {
     };
 };
 
+/** Store variety list
+ * 
+ * @param { Array<string> } varietyList - Variety list
+ */
 export const updateVarietyList = (varietyList: Array<string>) => {
     return {
         type: UPDATE_VARIETY_LIST,
@@ -184,13 +256,10 @@ export const updateVarietyList = (varietyList: Array<string>) => {
     };
 };
 
-export const updateTimeStamp = (timeStamp: any) => {
-    return {
-        type: UPDATE_TIME_STAMP,
-        payload: timeStamp
-    };
-};
-
+/** Store masterlist
+ * 
+ * @param { Array<MatchRequirementModel> } matchesList - Masterlist
+ */
 export const updateMatchesList = (matchesList: Array<MatchRequirementModel>) => {
     return {
         type: UPDATE_MATCHES_LIST,
@@ -198,6 +267,10 @@ export const updateMatchesList = (matchesList: Array<MatchRequirementModel>) => 
     };
 };
 
+/** Store match loading flag
+ * 
+ * @param { boolean } loadingFlag - True if loading
+ */
 export const setMatchesLoadingFlag = (loadingFlag: boolean) => {
     return {
         type: SET_MATCHES_LOADER,
@@ -205,6 +278,10 @@ export const setMatchesLoadingFlag = (loadingFlag: boolean) => {
     };
 };
 
+/** Update buyer reject count
+ * 
+ * @param { any } rejectCount - The numnber of times buyer has rejected the match
+ */
 export const updateBuyerRejectCount = (rejectCount: any) => {
     return {
         type: UPDATE_REJECT_COUNT,
@@ -212,6 +289,11 @@ export const updateBuyerRejectCount = (rejectCount: any) => {
     };
 };
 
+/** Update buyer transaction list
+ * 
+ * @param { TransactionStatus } transactionType - Transaction status type
+ * @param { Array<any> } transactionListData - Transaction list data
+ */
 export const updateBuyerTransactionList = (transactionType: TransactionStatus, transactionListData: Array<any>) => {
     return {
         type: UPDATE_TRANSACTION_LIST,
@@ -219,6 +301,9 @@ export const updateBuyerTransactionList = (transactionType: TransactionStatus, t
     };
 };
 
+/** Fetch masterlist data
+ * 
+ */
 export const getMasterProduceList = () => {
     return async (dispatch: any) => {
         const masterProduceList = await getMasterList();
@@ -227,6 +312,10 @@ export const getMasterProduceList = () => {
     };
 };
 
+/** Update masterlist data
+ * 
+ * @param { Array<MasterListApiFormat> } masterlist - Masterlist
+ */
 export const updateMasterListData = (masterlist: Array<MasterListApiFormat>) => {
     return async (dispatch: any) => {
         await updateMasterList(masterlist);
@@ -234,6 +323,10 @@ export const updateMasterListData = (masterlist: Array<MasterListApiFormat>) => 
     };
 };
 
+/** Add new produce
+ * 
+ * @param { any } produceFormData - Produce data
+ */
 export const addNewProduce = (/*produceFormData: ProduceModel*/ produceFormData: any) => {
     return async (dispatch: any, getState: any) => {
         const { loginUser }: { loginUser: UserStateModel } = getState() as RootState;
@@ -243,6 +336,10 @@ export const addNewProduce = (/*produceFormData: ProduceModel*/ produceFormData:
     };
 };
 
+/** Edit produce data
+ * 
+ * @param { any } produceFormData - Produce data
+ */
 export const editProduce = (/*produceFormData: ProduceModel*/ produceFormData: any) => {
     return async (dispatch: any, getState: any) => {
         const { loginUser }: { loginUser: UserStateModel } = getState() as RootState;
@@ -252,6 +349,10 @@ export const editProduce = (/*produceFormData: ProduceModel*/ produceFormData: a
     };
 };
 
+/** Delete selected produce by using crop id
+ * 
+ * @param { string } produceID - Crop Id
+ */
 export const deleteSelectedProduce = (produceID: string) => {
     return async (dispatch: any, getState: any) => {
         const { loginUser }: { loginUser: UserStateModel } = getState() as RootState;
@@ -261,6 +362,9 @@ export const deleteSelectedProduce = (produceID: string) => {
     };
 };
 
+/** Fetch all produce list
+ * 
+ */
 export const getProduceList = () => {
     return async (dispatch: any) => {
         const getProduceListResponse = await getAllProduce();
@@ -272,6 +376,9 @@ export const getProduceList = () => {
     };
 };
 
+/** Fetch all crop categories
+ * 
+ */
 export const fetchAllProduce = () => {
     return async (dispatch: any) => {
         const allProduceList = await getCropCategoryList();
@@ -280,6 +387,10 @@ export const fetchAllProduce = () => {
     };
 };
 
+/** Fetch all produce of the category
+ * 
+ * @param { string } category - Category
+ */
 export const fetchAllCrops = (category: string) => {
     return async (dispatch: any) => {
         const allCropsList = await getCropList(category);
@@ -288,6 +399,10 @@ export const fetchAllCrops = (category: string) => {
     };
 };
 
+/** Fetch all variety of the produce
+ * 
+ * @param { string } crop - Produce
+ */
 export const fetchAllVariety = (crop: string) => {
     return async (dispatch: any) => {
         const allVarietyList = await getSubCategoryList(crop);
@@ -296,6 +411,10 @@ export const fetchAllVariety = (crop: string) => {
     };
 };
 
+/** Get matches for buyer crops
+ * 
+ * @param { Array<ProduceModel>} cropsList - Crop list
+ */
 export const getMatchesForBuyerCrops = (cropsList: Array<ProduceModel>) => {
     const allCropListIds: Array<string> = cropsList.map((curCrop: ProduceModel) => curCrop.sk || '');
     return async (dispatch: any, getState: any) => {
@@ -364,6 +483,10 @@ export const getMatchesForBuyerCrops = (cropsList: Array<ProduceModel>) => {
     };
 };
 
+/** Reject the match
+ * 
+ * @param { BuyerRejectMatch } rejectData - Buyer data
+ */
 export const rejectMatches = (rejectData: BuyerRejectMatch) => {
     return async (dispatch: any) => {
         await rejectMatch(rejectData);
@@ -374,6 +497,10 @@ export const rejectMatches = (rejectData: BuyerRejectMatch) => {
     };
 };
 
+/** Connect the match with the seller
+ * 
+ * @param { any } transactionEntry - Transaction entry
+ */
 export const connectMatch = (transactionEntry: any) => {
     return async (dispatch: any) => {
         await createTransaction(transactionEntry);
@@ -383,6 +510,11 @@ export const connectMatch = (transactionEntry: any) => {
     };
 };
 
+/** Check the connection status of the seller
+ * 
+ * @param { string } sellerId - Seller id
+ * @param { string } sellerCropId - Seller crop id
+ */
 export const checkSellerConnectedStatus = (sellerId: string, sellerCropId: string) => {
     return async () => {
         const connectedStatus = await sellerConnectStatus({
@@ -393,6 +525,10 @@ export const checkSellerConnectedStatus = (sellerId: string, sellerCropId: strin
     };
 };
 
+/** Fetch Transaction list according to the transactionStatus
+ * 
+ * @param { TransactionStatus } transactionStatus - Transaction status
+ */
 export const getTransactionList = (transactionStatus: TransactionStatus) => {
     return async (dispatch: any) => {
         const transactionListResponse = await fetchTransactionList(transactionStatus);
@@ -413,11 +549,9 @@ export const getTransactionList = (transactionStatus: TransactionStatus) => {
     };
 };
 
-export const saveTimeStamp = (dispatch: any) => {
-    const timeStamp = getTimeStamp();
-    dispatch(updateTimeStamp(timeStamp));
-};
-
+/** Fetch payment details
+ * 
+ */
 export const getPaymentDetails = () => {
     return async (dispatch: any, getState: any) => {
         const { buyer }: { buyer: BuyerStateModel } = getState() as RootState;
@@ -427,6 +561,10 @@ export const getPaymentDetails = () => {
     };
 };
 
+/** Fetch buyer status details
+ * 
+ * @param { any } userData -
+ */
 export const currentBuyerStatusDetails = (userData: any) => {
     return async (dispatch: any) => {
         const currentStatusResponse = await getCurrentStatusDetails(userData);
@@ -437,6 +575,10 @@ export const currentBuyerStatusDetails = (userData: any) => {
     };
 };
 
+/** Fetch Amount for payment
+ * 
+ * @param { string } userData - User Data
+ */
 export const getAmount = (userData: string) => {
     return async (dispatch: any) => {
         var id = userData;

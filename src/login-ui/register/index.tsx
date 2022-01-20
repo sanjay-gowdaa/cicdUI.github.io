@@ -12,6 +12,7 @@ import {
 } from 'antd';
 import { uniqBy } from 'lodash';
 import { useDispatch, useSelector } from 'react-redux';
+import { History } from 'history';
 
 import ConfirmOTPModal from './confirmOTPModal';
 import { emailRequired, validatePhoneNumber, validateUserName } from './utils';
@@ -63,7 +64,7 @@ const getUserCategoryOption = (config: [any], currentType: string, type: string)
     );
 };
 
-const Register = ({ history, setSignUpPopupVisible }: { history: any, setSignUpPopupVisible: Function }) => {
+const Register = ({ history, setSignUpPopupVisible }: { history: History, setSignUpPopupVisible: Function }) => {
     const [currentType, setCurrentType] = useState('Buyer');
     const [subType, setSubType] = useState('');
     const [showOTPModal, setShowOTPModal] = useState(false);

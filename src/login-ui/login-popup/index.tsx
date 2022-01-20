@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Alert, Button, Checkbox, Form, Input, Typography } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import { isEmpty } from 'lodash';
+import { History } from 'history';
 
 import ForgotPasswordModal from './forgotPasswordModal';
 import NewPasswordModal from './newPasswordModal';
@@ -15,7 +16,7 @@ import { routesMap } from '../../constants';
 
 const { Text } = Typography;
 
-const LoginPopup = (props: any) => {
+const LoginPopup = (props: { history: History }) => {
     const { history } = props;
     const loginState: UserStateModel = useSelector((state: RootState) => state.loginUser);
     const { msg, redirect } = loginState.errorInLogin;

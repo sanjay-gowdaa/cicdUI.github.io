@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Modal, Table, Typography } from 'antd';
 import { useSelector, useDispatch } from 'react-redux';
+import { History } from 'history';
 
 import { produceColumns } from './produceTable.model';
 import AddProduce from './AddProduce';
@@ -20,7 +21,7 @@ const getCropId = (cropID: string) => {
     return parseIDfromHash(cropID);
 };
 
-const ProduceSection = (props: any) => {
+const ProduceSection = (props: { history: History }) => {
     const { history } = props;
     const buyerState = useSelector((state: RootState) => state.buyer);
     const loginState = useSelector((state: RootState) => state.loginUser);
@@ -30,8 +31,8 @@ const ProduceSection = (props: any) => {
     const [currentProduceRecord, setCurrentProduceRecord] = useState({} as ProduceModel);
     const [modalVisible, setModalVisible] = useState(false);
     const { masterProduceList } = buyerState;
-    const isApproved = (loginState.kyc_flag === "approved");
-    const is_Active = (loginState?.is_active === "Add Requirement Blocked");
+    const isApproved = (loginState.kyc_flag === 'approved');
+    const is_Active = (loginState?.is_active === 'Add Requirement Blocked');
 
     useEffect(() => {
         dispatch(getProduceList());
@@ -52,19 +53,19 @@ const ProduceSection = (props: any) => {
     const updateCropDetails = (updatedCropData: ProduceModel) => {
         const { sk, pk } = updatedCropData;
         const actualCropID = getCropId(sk || '');
-        console.log("actualCropId", actualCropID);
-        console.log("updatedCropDetails", updatedCropData);
-        dispatch(editProduce({ ...updatedCropData, is_delete: "no", sk, pk }));
+        console.log('actualCropId', actualCropID);
+        console.log('updatedCropDetails', updatedCropData);
+        dispatch(editProduce({ ...updatedCropData, is_delete: 'no', sk, pk }));
     };
 
     const showKycRequiredModal = () => {
         Modal.info({
-            className: "kyc-required-modal",
+            className: 'kyc-required-modal',
             content:
-                <>
+                <React.Fragment>
                     <Text>Please update your KYC information to add requirements</Text><br />
                     <Text>Profile &gt; KYC Information</Text>
-                </>
+                </React.Fragment>
             ,
             okText: 'Update Now',
             closable: true,
@@ -73,11 +74,11 @@ const ProduceSection = (props: any) => {
     };
 
     return (
-        <div className="crops-container">
+        <div className='crops-container'>
             <Title level={2}>My Requirements</Title>
             <PrimaryBtn
-                className="add-crop-btn vikas-btn-radius"
-                id="my-requirements-button"
+                className='add-crop-btn vikas-btn-radius'
+                id='my-requirements-button'
                 disabled={is_Active}
                 onClick={() => {
                     if (isApproved || is_Active) {
@@ -87,7 +88,7 @@ const ProduceSection = (props: any) => {
                         showKycRequiredModal();
                     }
                 }}
-                content="Add Requirements"
+                content='Add Requirements'
             />
             <AddProduce
                 currentProduceRecord={currentProduceRecord}
@@ -97,7 +98,7 @@ const ProduceSection = (props: any) => {
                 modalVisible={modalVisible}
             />
             <Table
-                className="margin-t-1em"
+                className='margin-t-1em'
                 components={{
                     body: {
                         row: EditableRow,

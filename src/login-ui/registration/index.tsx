@@ -9,6 +9,7 @@ import {
 } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import { cloneDeep, isEmpty } from 'lodash';
+import { History } from 'history';
 
 import './registration.scss';
 import RegisterConfirmation from './registerConfirmationModal';
@@ -41,7 +42,7 @@ const singleLabelFieldLayout = {
 
 const { TextArea } = Input;
 
-const Registration = (props: any) => {
+const Registration = (props: { history: History }) => {
     const { history } = props;
     const [addressForPin, setAddressForPin] = useState({ taluk: '', district: '', state: '' });
     const [registerFormValues, setRegisterFormValues] = useState({});
