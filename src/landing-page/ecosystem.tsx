@@ -15,43 +15,43 @@ const { Text, Title } = Typography;
 
 const Ecosystem = () => {
     const { t } = useTranslation('common');
-    const customStyles = isEnglish(t("language")) ? englishStyling : kannadaStyling;
+    const customStyles = isEnglish(t('language')) ? englishStyling : kannadaStyling;
 
     return (
-        <div id="ecosystem">
-            <Image className="tractor-image" src={Tractor} preview={false} />
+        <div id='ecosystem'>
+            <Image className='tractor-image' src={Tractor} preview={false} />
             <div className={customStyles.ecosystemContent}>
                 <Title className={`col-green ${customStyles.ecosystemTitle}`} level={2}>
                     {t('ecosystem_page.title')}
                 </Title>
                 <Space
-                    direction="vertical"
+                    direction='vertical'
                     className={customStyles.bulletinText}
-                    style={{height: "20rem"}}
-                    size="small"
+                    style={{ height: '20rem' }}
+                    size='small'
                 >
                     <Text>
-                        <Image style={{paddingRight: '1rem'}} src={Network} preview={false} />
-                        {t('ecosystem_page.text_1')}<br/>
+                        <Image style={{ paddingRight: '1rem' }} src={Network} preview={false} />
+                        {t('ecosystem_page.text_1')}<br />
                     </Text>
                     <Text>
-                        <Image style={{paddingRight: '1rem'}} src={Rupee} preview={false} />
-                        {t('ecosystem_page.text_2')}<br/>
+                        <Image style={{ paddingRight: '1rem' }} src={Rupee} preview={false} />
+                        {t('ecosystem_page.text_2')}<br />
                     </Text>
                     <Text>
-                        <Image style={{paddingRight: '1.5rem'}} src={Sync} preview={false} />
-                        {t('ecosystem_page.text_3')}<br/>
+                        <Image style={{ paddingRight: '1.5rem' }} src={Sync} preview={false} />
+                        {t('ecosystem_page.text_3')}<br />
                     </Text>
                     <Text>
-                        <Image style={{paddingRight: '1rem'}} src={Lorry} preview={false} />
-                        {t('ecosystem_page.text_4')}<br/>
+                        <Image style={{ paddingRight: '1rem' }} src={Lorry} preview={false} />
+                        {t('ecosystem_page.text_4')}<br />
                     </Text>
                     <Text>
-                        <Image style={{paddingRight: '1rem'}} src={SocialCare} preview={false} />
+                        <Image style={{ paddingRight: '1rem' }} src={SocialCare} preview={false} />
                         {t('ecosystem_page.text_5')}
                     </Text>
                 </Space>
-                <img className="nature-image" src={Nature} alt="nature" />
+                <img className='nature-image' src={Nature} alt='nature' />
             </div>
         </div>
     );

@@ -13,7 +13,7 @@ import './landingPage.scss';
 
 const LandingPage = () => {
     return (
-        <>
+        <React.Fragment>
             <Aim />
             <Ecosystem />
             <Commodities />
@@ -22,7 +22,7 @@ const LandingPage = () => {
             <Team />
             <Legal />
             <ContactUs />
-        </>
+        </React.Fragment>
     );
 };
 

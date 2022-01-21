@@ -17,6 +17,7 @@ import {
 import { BellFilled, ContactsFilled, LogoutOutlined } from '@ant-design/icons';
 import MenuItem from 'antd/lib/menu/MenuItem';
 import { isEmpty } from 'lodash';
+import { History } from 'history';
 
 import '../header/header.scss';
 import { LOGOUT_URL } from '../store/api';
@@ -28,7 +29,7 @@ import { getConfigurations, getUserCompleteDetails, getUserFiles } from '../stor
 const { Text, Title } = Typography;
 const { profile, terms } = routesMap;
 
-const UserHeader = (props: any) => {
+const UserHeader = (props: { history: History }) => {
     const { history } = props;
     const loginState = useSelector((state: RootState) => state.loginUser);
     const dispatch = useDispatch();

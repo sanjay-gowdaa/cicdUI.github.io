@@ -34,3 +34,14 @@ export type ApmcApiResponseBase = {
     previousLatestApmcPrice: number;
     nearest_district: string;
 };
+
+export type UserHistoryQuery = {
+    buyerId: string;
+    produce: string;
+    sellerId: string;
+};
+
+export type ModalType = {
+    showModal: boolean;
+    setModal: Function;
+};

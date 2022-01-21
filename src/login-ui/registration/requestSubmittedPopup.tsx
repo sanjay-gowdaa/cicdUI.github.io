@@ -1,11 +1,12 @@
 import React from 'react';
 import { Col, Row, Modal } from 'antd';
+import { History } from 'history';
 
 import PrimaryBtn from '../../app-components/primaryBtn';
 
 type propsModel = {
-    showSubmitMsgPopup: boolean,
-    history: any
+    showSubmitMsgPopup: boolean;
+    history: History;
 };
 
 const RequestSubmittedPopup = (props: propsModel) => {

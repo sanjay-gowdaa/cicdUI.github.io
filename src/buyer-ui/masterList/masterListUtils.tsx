@@ -6,10 +6,19 @@ export const selectedItemClass: any = {
     'grade': 'selected-grade-item'
 };
 
+/** Render class name
+ * 
+ * @param { boolean } isSelected - True if selected
+ * @param { string } entityType - Entity Type
+ */
 export const renderClassName = (isSelected: boolean, entityType: string) => {
     return isSelected ? selectedItemClass[entityType] : '';
 };
 
+/** Convert masterlist to grade structure
+ * 
+ * @param { Array<any> } masterList - Masterlist Array
+ */
 export const convertMasterListToGradeStructure = (masterList: Array<any>) => {
     let gradeDataStructure: any = {};
     masterList.forEach((masterCropDetails) => {
@@ -19,6 +28,12 @@ export const convertMasterListToGradeStructure = (masterList: Array<any>) => {
     return gradeDataStructure;
 };
 
+/** Update master crop data structure
+ * 
+ * @param { string } gradeSelection - Grade section
+ * @param { boolean } isSelected - True if selected
+ * @param { any } param2 
+ */
 export const updateMasterCropDatastructure = (
     gradeSelection: string,
     isSelected: boolean,

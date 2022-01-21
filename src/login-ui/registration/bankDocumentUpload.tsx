@@ -12,7 +12,7 @@ import UploadDocument from '../../app-components/uploadDocument';
 
 const { TextArea } = Input;
 
-const BankDocumentsUpload = (props: any) => {
+const BankDocumentsUpload = (props: { form: any }) => {
     const { form } = props;
 
     return (

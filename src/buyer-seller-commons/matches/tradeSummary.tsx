@@ -1,9 +1,7 @@
 import React from 'react';
-import { Button, Col, Row, Typography } from 'antd';
+import { Col, Row, Statistic, Typography } from 'antd';
 import { useSelector } from 'react-redux';
-import { isEmpty } from 'lodash';
-
-import { openAdditionalInfo } from '../openAdditionalInfo';
+import { CaretUpOutlined, CaretDownOutlined } from '@ant-design/icons';
 
 import { MatchRequirementModel } from '../../buyer-seller-commons/types';
 import { parseIDfromHash, maskData } from '../../app-components/utils';
@@ -19,11 +17,14 @@ const TradeSummary = (props: componentProps) => {
     const { cropDetails } = props;
     const loginState = useSelector((state: RootState) => state.loginUser);
     const { is_buyer } = loginState;
-    const { buyer_id, buyer_location, seller_price_per_quintal, seller_quantity, seller_price, seller_id,
-        produce, buyer_price_per_quintal, matched_quantity, location, buyer_final_price, additional_info
+    const { buyer_id, buyer_location, seller_price_per_quintal, seller_price, seller_id,
+        produce, buyer_price_per_quintal, matched_quantity, location, buyer_final_price, seller_final_price
     } = cropDetails;
-    const totalPrice = (seller_price / seller_quantity) * matched_quantity;
+
     const userId = is_buyer ? maskData(parseIDfromHash(seller_id)) : maskData(parseIDfromHash(buyer_id));
+    const diffAmt = seller_final_price - seller_price;
+    const isIncrease = diffAmt > 0;
+    const color = isIncrease ? '#12805C' : '#E90000';
 
     return (
         <React.Fragment>
@@ -65,8 +66,17 @@ const TradeSummary = (props: componentProps) => {
                     Total price
                 </Col>
                 <Col sm={24} md={12}>
-                    : {is_buyer ? buyer_final_price : totalPrice}
-                    {is_buyer && <span className='heading-alerttext'>&nbsp;(excl. all taxes)</span>}
+                    : {is_buyer ? buyer_final_price : seller_final_price}
+                    {is_buyer ?
+                        <span className='heading-alerttext'>&nbsp;(excl. all taxes)</span> :
+                        <span>
+                            <Statistic
+                                value={diffAmt}
+                                valueStyle={{ color, fontSize: '12px' }}
+                                prefix={diffAmt ? <CaretUpOutlined /> : <CaretDownOutlined />}
+                            />
+                        </span>
+                    }
                 </Col>
             </Row>
             <Row>
@@ -77,14 +87,14 @@ const TradeSummary = (props: componentProps) => {
                     : {is_buyer ? location : buyer_location}
                 </Col>
             </Row>
-            <Row>
+            {/* <Row>
                 <Col sm={24} md={12}>
                     Tentative pickup
                 </Col>
                 <Col sm={24} md={12}>
                     : {'12/08/2020 to 15/08/2020'}
                 </Col>
-            </Row>
+            </Row> */}
         </React.Fragment>
     );
 };

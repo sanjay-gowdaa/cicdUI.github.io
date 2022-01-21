@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Typography, Row, Col, Timeline, Button } from 'antd';
 import { CheckCircleFilled } from '@ant-design/icons';
-import { isEmpty } from 'lodash';
+import { isEmpty, isUndefined } from 'lodash';
 import moment from 'moment';
 
 import { getStatus } from '../actions';
@@ -17,9 +17,10 @@ const TransactionDetailsModal = (props: any) => {
     const dispatch = useDispatch();
     const loginState = useSelector((state: RootState) => state.loginUser);
     const userState = useSelector((state: RootState) => loginState.is_buyer ? state.buyer : state.seller);
-    const { status, eventTemplate } = userState;
+    const { status, eventTemplate, currentStatusDetails } = userState;
     const [count, setCount] = useState(status.length - 1);
     const [currentStatus, setCurrentStatus] = useState([]);
+    const [latestStatus, setLatestStatus] = useState('');
     var id = pk;
     id = id.substring(12);
 
@@ -30,6 +31,11 @@ const TransactionDetailsModal = (props: any) => {
 
     useEffect(() => {
         dispatch(getStatus(data));
+        for (let i = 0; i < currentStatusDetails.length; i++) {
+            if (currentStatusDetails[i].pk === pk) {
+                setLatestStatus(currentStatusDetails[i].event_description);
+            }
+        }
     }, []);
 
     useEffect(() => {
@@ -49,42 +55,28 @@ const TransactionDetailsModal = (props: any) => {
         }
         return showDetails.map((list: any) => {
             return (isDownload ?
-                <>
-                    {!isEmpty(list.pdf_link) ?
-                        <Button type='link'>Download</Button> : null
+                <React.Fragment>
+                    {!isUndefined(list.pdf_link) ?
+                        <Button
+                            type='link'
+                            href={`https://${list.pdf_link}`}
+                            target='_blank'
+                            download={''}
+                        >
+                            Download
+                        </Button> : null
                     }
-                </> :
-                <>
+                </React.Fragment> :
+                <React.Fragment>
                     <Text>{list.event_name} ({moment(list.event_time).format('DD-MM-YYYY HH:MM')})</Text>
                     <br />
-                </>
+                </React.Fragment>
             )
         })
     };
 
-    const showRemainingTimeline = () => {
-        return (
-            <Timeline>
-                <Timeline.Item
-                    label='-'
-                    color={'#F5A31A'}
-                    className='is-pending'
-                >
-                    {eventTemplate[count]}
-                </Timeline.Item>
-                <Timeline.Item
-                    label='-'
-                    color={'#F5A31A'}
-                    className='is-pending'
-                >
-                    {eventTemplate[count + 1]}
-                </Timeline.Item>
-            </Timeline>
-        );
-    };
-
     return (
-        <>
+        <React.Fragment>
             <Timeline
                 mode='left'
                 style={{ float: 'left' }}
@@ -92,12 +84,13 @@ const TransactionDetailsModal = (props: any) => {
                 pending={tab === TransactionStatus.on_going && count !== eventTemplate.length}
             >
                 {currentStatus.map((completedStatus: any) => {
+                    const isPending = completedStatus.event_description === latestStatus && tab !== TransactionStatus.completed;
                     return (
                         <Timeline.Item
-                            label={moment(completedStatus.event_timestamp).format('DD-MM-YYYY HH:MM')}
-                            dot={<CheckCircleFilled style={{ color: '#12805C' }} />}
+                            label={isPending ? '-' : moment(completedStatus.event_timestamp).format('DD-MM-YYYY HH:MM')}
+                            dot={isPending ? null : <CheckCircleFilled style={{ color: '#12805C' }} />}
                             color={'#F5A31A'}
-                            className='is-complete'
+                            className={isPending ? 'is-pending' : 'is-complete'}
                         >
                             <Row>
                                 <Col span={6}>
@@ -110,31 +103,18 @@ const TransactionDetailsModal = (props: any) => {
                                         }</Text>
                                     </Row>
                                 </Col>
-                                <Col span={2}>
+                                <Col span={2} className={isPending ? 'display-none' : ''}>
                                     <Text style={{ color: '#12805C' }}>Complete</Text>
                                 </Col>
                                 <Col span={8}>
-                                    {!isEmpty(completedStatus.pdf_link) &&
-                                        <Button type='link'>Download</Button>
-                                    }
                                     {showDetails(completedStatus.event_details, true)}
                                 </Col>
                             </Row>
                         </Timeline.Item>
                     )
                 })}
-                {tab === TransactionStatus.on_going ?
-                    showRemainingTimeline() :
-                    <Timeline.Item
-                        dot={<CheckCircleFilled style={{ color: '#12805C' }} />}
-                        color={'#F5A31A'}
-                        className='is-complete'
-                    >
-                        Transaction Completed
-                    </Timeline.Item>
-                }
             </Timeline>
-        </>
+        </React.Fragment>
     );
 };
 

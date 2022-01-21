@@ -17,7 +17,17 @@ import UploadDocument from '../app-components/uploadDocument';
 
 const { Text } = Typography;
 
-const BankDocuments = (props: any) => {
+type BankDocumentsProps = {
+    bank_doc: any;
+    bankInfo: any,
+    isAddClicked: boolean;
+    isChangedClicked: boolean;
+    kycFlag: string;
+    setDisableSave: Function;
+    userType: UserTypes;
+};
+
+const BankDocuments = (props: BankDocumentsProps) => {
     const { bank_doc, bankInfo, isAddClicked, isChangedClicked, kycFlag, setDisableSave, userType } = props;
     const dispatch = useDispatch();
     const [showDocument, setShowDocument] = useState(false);

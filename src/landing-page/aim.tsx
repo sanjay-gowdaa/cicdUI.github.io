@@ -12,103 +12,103 @@ import { englishStyling, isEnglish, kannadaStyling } from '../static/translation
 
 const { Link, Text, Title } = Typography;
 
-const Aim = () => { 
+const Aim = () => {
     const [viewVideo, setVideo] = useState(false);
     const { t } = useTranslation('common');
-    const customStyles = isEnglish(t("language")) ? englishStyling : kannadaStyling;
+    const customStyles = isEnglish(t('language')) ? englishStyling : kannadaStyling;
 
     return (
-        <div id="aim">
+        <div id='aim'>
             <Modal
                 visible={viewVideo}
                 onCancel={() => setVideo(!viewVideo)}
-                width={"95%"}
-                className="about-us-video-modal"
+                width={'95%'}
+                className='about-us-video-modal'
                 maskClosable={true}
                 footer={null}
             >
                 <iframe
-                    title="about-us-video"
-                    width="95%"
-                    height="100%"
-                    src="https://www.youtube.com/embed/p4CZAGgJ-wM?playlist=p4CZAGgJ-wM&loop=1&autoplay=1&mute=1"
+                    title='about-us-video'
+                    width='95%'
+                    height='100%'
+                    src='https://www.youtube.com/embed/p4CZAGgJ-wM?playlist=p4CZAGgJ-wM&loop=1&autoplay=1&mute=1'
                     allowFullScreen
                 />
             </Modal>
             <Title className={`col-green ${customStyles.aimTitle}`}>{t('aim_page.title')}</Title>
-            <img className="handshake-image" src={Handshake} alt="handshake" />
-            <div className="aim-card-view">
-                <Row className="aim-card-row">
-                    <Col span={8} className="card-col">
+            <img className='handshake-image' src={Handshake} alt='handshake' />
+            <div className='aim-card-view'>
+                <Row className='aim-card-row'>
+                    <Col span={8} className='card-col'>
                         <Card className={customStyles.aimCard}>
-                            <div className="hex1"></div>
-                            <div className="hex2">
-                                <Image className="icon-inside-hex" src={Connect} preview={false} />
+                            <div className='hex1'></div>
+                            <div className='hex2'>
+                                <Image className='icon-inside-hex' src={Connect} preview={false} />
                             </div>
-                            <div className="hex3"></div>
-                            <div className="text">
-                            <Text className="col-white card-text">{t('aim_page.aim_card_1')}</Text>
+                            <div className='hex3'></div>
+                            <div className='text'>
+                                <Text className='col-white card-text'>{t('aim_page.aim_card_1')}</Text>
                             </div>
                         </Card>
                     </Col>
-                    <Col span={8} className="card-col">
+                    <Col span={8} className='card-col'>
                         <Card className={customStyles.aimCard}>
-                            <div className="hex1"></div>
-                            <div className="hex2">
-                                <Image className="icon-inside-hex" src={Direct} preview={false} />
+                            <div className='hex1'></div>
+                            <div className='hex2'>
+                                <Image className='icon-inside-hex' src={Direct} preview={false} />
                             </div>
-                            <div className="hex3"></div> 
-                            <Text className="col-white card-text">{t('aim_page.aim_card_2')}</Text>
+                            <div className='hex3'></div>
+                            <Text className='col-white card-text'>{t('aim_page.aim_card_2')}</Text>
                         </Card>
                     </Col>
-                    <Col span={8} className="card-col">
+                    <Col span={8} className='card-col'>
                         <Card className={customStyles.aimCard}>
-                            <div className="hex1"></div>
-                            <div className="hex2">
-                                <Image className="icon-inside-hex" src={LiveInfo} preview={false} />
+                            <div className='hex1'></div>
+                            <div className='hex2'>
+                                <Image className='icon-inside-hex' src={LiveInfo} preview={false} />
                             </div>
-                            <div className="hex3"></div> 
-                            <Text className="col-white card-text">{t('aim_page.aim_card_3')}</Text>
+                            <div className='hex3'></div>
+                            <Text className='col-white card-text'>{t('aim_page.aim_card_3')}</Text>
                         </Card>
                     </Col>
                 </Row>
-                <Row className="aim-card-row mobile-display-none">
-                    <Col span={8} className="card-col">
+                <Row className='aim-card-row mobile-display-none'>
+                    <Col span={8} className='card-col'>
                         <Card className={`aim-card-two ${customStyles.aimCard}`}>
-                            <div className="hex1"></div>
-                            <div className="hex2">
-                                <Image className="icon-inside-hex" src={BestPrize} preview={false} />
+                            <div className='hex1'></div>
+                            <div className='hex2'>
+                                <Image className='icon-inside-hex' src={BestPrize} preview={false} />
                             </div>
-                            <div className="hex3"></div>
-                            <Text className="col-white card-text">{t('aim_page.aim_card_4')}</Text>
+                            <div className='hex3'></div>
+                            <Text className='col-white card-text'>{t('aim_page.aim_card_4')}</Text>
                         </Card>
                     </Col>
-                    <Col span={8} className="card-col">
+                    <Col span={8} className='card-col'>
                         <Card className={customStyles.aimCard}>
-                            <div className="hex1"></div>
-                            <div className="hex2">
-                                <Image className="icon-inside-hex" src={Connect} preview={false} />
+                            <div className='hex1'></div>
+                            <div className='hex2'>
+                                <Image className='icon-inside-hex' src={Connect} preview={false} />
                             </div>
-                            <div className="hex3"></div>
-                            <div className="text">
-                            <Text className="col-white card-text">{t('aim_page.aim_card_5')}</Text>
+                            <div className='hex3'></div>
+                            <div className='text'>
+                                <Text className='col-white card-text'>{t('aim_page.aim_card_5')}</Text>
                             </div>
                         </Card>
                     </Col>
-                    <Col span={8} className="card-col">
+                    <Col span={8} className='card-col'>
                         <Card className={`aim-card-two ${customStyles.aimCard}`}>
-                            <div className="hex1"></div>
-                            <div className="hex2">
-                                <Image className="icon-inside-hex" src={Mission} preview={false} />
+                            <div className='hex1'></div>
+                            <div className='hex2'>
+                                <Image className='icon-inside-hex' src={Mission} preview={false} />
                             </div>
-                            <div className="hex3"></div>
-                            <Text className="col-white card-text">{t('aim_page.aim_card_6')}</Text>
+                            <div className='hex3'></div>
+                            <Text className='col-white card-text'>{t('aim_page.aim_card_6')}</Text>
                         </Card>
                     </Col>
                 </Row>
             </div>
             <Text className={customStyles.aimVideoLink}>{t('aim_page.video_link')} &nbsp;
-                <Link onClick={() => setVideo(true)} style={{textDecoration: "underline"}}>
+                <Link onClick={() => setVideo(true)} style={{ textDecoration: 'underline' }}>
                     {t('aim_page.link_name')}
                 </Link>
                 .

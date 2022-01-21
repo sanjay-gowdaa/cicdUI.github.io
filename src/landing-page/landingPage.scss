@@ -18,6 +18,8 @@ $col-shade-green: #12805c;
     background-repeat: no-repeat;
     background-origin: padding-box;
     scroll-margin: 6rem;
+    background-color: #F1F6F5;
+    height: 100vh;
     z-index: 1;
     opacity: 1;
 
@@ -27,21 +29,32 @@ $col-shade-green: #12805c;
         height: 105vh;
         margin-bottom: 1rem;
 
-        .animate-alert {
-            animation: warning-banner 30s infinite 20s;
-            width: fit-content;
+        .landing-cards {
+            height: '70h' !important;
+            background-color: '#F1F6F5' !important;
+            align-content: 'center' !important;
         }
 
-        @keyframes warning-banner {
-            0% {
-                left: 0%;
-            }
-            50% {
-                left: 40%;
-            }
-            100% {
-                left: 0%;
-            }
+        .landing-card-title {
+            text-align: center;
+            font-size: xx-large;
+        }
+        
+        .landing-page-text {
+            font-size: medium;
+            margin-inline: 4vw;
+        }
+
+        .landing-image {
+            width: '65vw';
+            height: '79vh';
+            border-radius: '2vh';
+        }
+
+        .animate-alert {
+            animation: warning-banner 30s ; // infinite 20s;
+            width: fit-content;
+            z-index: 0 !important;
         }
 
         .home-content {
@@ -716,8 +729,7 @@ $col-shade-green: #12805c;
     }
 
     #home {
-        height: 60vh;
-        margin-bottom: 3rem;
+        height: fit-content;
 
         .home-content-wrapper {
             .animate-alert,
@@ -726,19 +738,17 @@ $col-shade-green: #12805c;
                 display: none;
             }
 
+            .landing-row {
+                display: none;
+            }
+
             .mobile-home-content {
-                height: 55vh;
+                height: fit-content;
                 width: 100vw;
-                padding-top: 2rem;
                 text-align: center;
-                background-image: url('../static/assets/Vikasbandhu_One.jpg');
-                background-position: center center;
-                background-size: 100vw 55vh;
-                background-repeat: no-repeat;
 
                 .home-text {
                     font-size: 1.25rem;
-                    margin-bottom: 15vh;
                 }
 
                 .explore-vb-btn {

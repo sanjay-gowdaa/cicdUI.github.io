@@ -1,4 +1,4 @@
-import { FullfillmentFlags } from "./types";
+import { FullfillmentFlags } from './types';
 
 export const initialEmptyCropDetail = {
     fulfillment_flag: FullfillmentFlags.single_fulfillment,
@@ -27,16 +27,26 @@ const CropImages = {
     oilSeeds: require('../static/assets/oilSeed.png')
 };
 
+/** Show crop images based on category name
+ * 
+ * @param { string } category - Category name
+ */
 export const showCropImage = (category: string) => {
     switch (category) {
-        case "Staple Crops": return CropImages.stapleCrops;
-        case "Pulses": return CropImages.pulses;
-        case "Cash Crops": return CropImages.cashCrops;
-        case "Spices": return CropImages.spices;
-        case "Oil Seeds": return CropImages.oilSeeds;
+        case 'Staple Crops': return CropImages.stapleCrops;
+        case 'Pulses': return CropImages.pulses;
+        case 'Cash Crops': return CropImages.cashCrops;
+        case 'Spices': return CropImages.spices;
+        case 'Oil Seeds': return CropImages.oilSeeds;
     }
 };
 
+/** Check if the crop details entered is unique or not
+ * 
+ * @param { any } cropDetails - Crop details
+ * @param { any } otpError - Otp error
+ * @returns boolean 
+ */
 export const checkIfUnique = (cropDetails: any, otpError: any) => {
     const sellerIdCheck = cropDetails.seller_id === otpError.sellerId;
     const sellerCropIdCheck = cropDetails.seller_crop_id === otpError.sellerCropId;

@@ -5,7 +5,7 @@ import { workingHours } from '../constants';
 
 const { Option } = Select;
 
-const WorkingHours = (props: any) => {
+const WorkingHours = (props: { form: any }) => {
     const { form } = props;
     const [workHoursDisbaled, toggleWorkHoursDisbaled] =
         useState({ weekday: false, saturday: false, sunday: false } as any);

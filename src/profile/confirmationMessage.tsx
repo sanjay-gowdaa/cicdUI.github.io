@@ -9,7 +9,16 @@ import PrimaryBtn from '../app-components/primaryBtn';
 
 const { Text } = Typography;
 
-const ConfirmationMessage = (props: any) => {
+type confirmationMessageProps = {
+    disableSave: boolean;
+    isSave: boolean;
+    onConfirm: Function;
+    response: any;
+    setConfirmation: Function;
+    showConfirmation: boolean;
+};
+
+const ConfirmationMessage = (props: confirmationMessageProps) => {
     const { disableSave, isSave, onConfirm, response, setConfirmation, showConfirmation } = props;
     const dispatch = useDispatch();
 

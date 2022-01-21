@@ -14,7 +14,7 @@ const { Text, Title } = Typography;
 
 const PAYMENT_REQUEST = 'paymentrequest';
 
-const PayButton = (props: any) => {
+const PayButton = (props: { record: any }) => {
     const { record } = props;
     const dispatch = useDispatch();
     const loginState = useSelector((state: RootState) => state.loginUser);
@@ -144,7 +144,7 @@ const PayButton = (props: any) => {
                                 />
                                 <Input
                                     className='payment-custom-input'
-                                    type='text'
+                                    type='hidden'
                                     value='Test note'
                                     name='orderNote'
                                 />

@@ -18,7 +18,14 @@ import UploadDocument from '../app-components/uploadDocument';
 
 const { Text } = Typography;
 
-const DocumentsUploaded = (props: any) => {
+type DocumentsUploadedProps = {
+    config: any;
+    kycFlag: string;
+    setDisableSave: Function;
+    userDetails: any;
+};
+
+const DocumentsUploaded = (props: DocumentsUploadedProps) => {
     const { config, kycFlag, setDisableSave, userDetails } = props;
     const userType = userDetails.is_buyer ? UserTypes.BUYER : UserTypes.SELLER;
     const subType = userType === UserTypes.BUYER ? userDetails.buyer_type : userDetails.seller_type;
