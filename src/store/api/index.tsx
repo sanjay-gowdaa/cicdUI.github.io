@@ -53,6 +53,7 @@ const GET_REJECT_COUNT = 'getrejectcount';
 const COGNITO_PROVIDER = 'CognitoIdentityServiceProvider';
 const USER_HISTORY = 'userHistory';
 const GET_ADDITIONAL_INFO = 'getAdditionalInfo';
+const GET_SELLER_CROP_IMAGE = 'seller/getCropImages';
 
 export const LAST_AUTH_USER = localStorage.getItem(`${COGNITO_PROVIDER}.${COGNITO_ID}.LastAuthUser`);
 export const ACCESS_TOKEN = localStorage.getItem(`${COGNITO_PROVIDER}.${COGNITO_ID}.${LAST_AUTH_USER}.accessToken`);
@@ -418,6 +419,18 @@ export const fetchAdditionalInfo = (userId: string, cropId: string) => {
         headers: getAuthHeader(),
         method: 'POST',
         body: JSON.stringify({ userId, cropId })
+    }).then((response: any) => response.json())
+        .catch((error: any) => console.log('error', error));
+};
+
+export const getSellerCropImages = (userId: string, cropId: string) => {
+    const fetchSellerCropImagesApi = `${BASE_URL}/${STAGE}/${GET_SELLER_CROP_IMAGE}`;
+    // const fetchSellerCropImagesApi = `http://localhost:4000/${STAGE}/${GET_SELLER_CROP_IMAGE}`;
+
+    return fetch(fetchSellerCropImagesApi, {
+        headers: getAuthHeader(),
+        method: 'POST',
+        body: JSON.stringify({ seller_id: userId, seller_crop_id: cropId })
     }).then((response: any) => response.json())
         .catch((error: any) => console.log('error', error));
 };

@@ -30,6 +30,15 @@ export interface MatchRequirementModel {
     count: number;
     history: Array<History>;
     additional_info: Array<AdditionalInfo>;
+    cropImageList: CropListType;
+};
+
+export interface CropListType {
+    crop_image_1: string | undefined;
+    crop_image_2: string | undefined;
+    crop_image_3: string | undefined;
+    crop_image_4: string | undefined;
+    crop_image_5: string | undefined;
 };
 
 export interface AdditionalInfo {

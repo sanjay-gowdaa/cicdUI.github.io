@@ -15,7 +15,9 @@ import {
     fetchSellerMatches,
     postSellerTransactionAction,
     fetchTransactionList,
-    getCurrentStatusDetails
+    getCurrentStatusDetails,
+    fetchAdditionalInfo,
+    fetchUserHistory
 } from '../api';
 import { ApmcApiResponseBase, UpdatedLiveApmcRatesQuery } from '../genericTypes';
 import { UserStateModel } from '../loginReducer/types';
@@ -23,7 +25,6 @@ import { RootState } from '../rootReducer';
 
 import { getTimeStamp } from '../../app-components/utils';
 import { MatchRequirementModel, TransactionAction, TransactionStatus } from '../../buyer-seller-commons/types';
-import { getUserAdditionalInfo, getUserHistory } from '../../buyer-seller-commons/actions';
 
 export const UPDATE_CATEGORIES = 'UPDATE_CATEGORIES';
 export const UPDATE_MASTER_CROPS = 'UPDATE_MASTER_CROPS';
@@ -346,16 +347,16 @@ export const getAllSellerMatches = () => {
         let matchList: any = [];
         for (let i = 0; i < sellerMatches.length; i++) {
             const additionalInfo =
-                await getUserAdditionalInfo(
+                await fetchAdditionalInfo(
                     sellerMatches[i].buyer_id,
                     sellerMatches[i].buyer_crop_id
                 );
             const historyResponse =
-                await getUserHistory(
-                    sellerMatches[i].buyer_id,
-                    sellerMatches[i].produce,
-                    sellerMatches[i].gsi
-                );
+                await fetchUserHistory({
+                    buyerId: sellerMatches[i].buyer_id,
+                    produce: sellerMatches[i].produce,
+                    sellerId: sellerMatches[i].gsi
+                });
             const { count, history } = historyResponse;
             matchList[i] = { ...sellerMatches[i], count, history, ...additionalInfo };
         }
@@ -387,7 +388,7 @@ export const getSellerTransactionList = (transactionStatus: TransactionStatus) =
         let transactionFinalResponse: any = [];
         for (let i = 0; i < transactionListResponse.length; i++) {
             const additionalInfo =
-                await getUserAdditionalInfo(
+                await fetchAdditionalInfo(
                     transactionListResponse[i].buyer_id,
                     transactionListResponse[i].buyer_crop_id
                 );

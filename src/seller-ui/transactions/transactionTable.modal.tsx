@@ -7,6 +7,7 @@ import { parseIDfromHash, maskData } from '../../app-components/utils';
 import { showCropImage } from '../../buyer-seller-commons/constants';
 import GetCurrentStatusDetails from '../../buyer-seller-commons/transactions/getCurrentStatusDetails';
 import { openAdditionalInfo } from '../../buyer-seller-commons/openAdditionalInfo';
+import ViewCropImages from '../../buyer-seller-commons/viewCropImages';
 
 const { Text } = Typography;
 
@@ -40,13 +41,18 @@ export const transactionSellerColumns = [
                     <Image src={imageSrc} className='table-crop-image' />
                     <div className='margin-l-r-1em'>
                         <p>{produce}</p>
-                        <Button
-                            type="link"
-                            disabled={isEmpty(record.additional_info)}
-                            onClick={() => openAdditionalInfo(record.additional_info)}
-                        >
-                            Additional Info
-                        </Button>
+                        {!isEmpty(record.additional_info) &&
+                            <Button
+                                type="link"
+                                disabled={isEmpty(record.additional_info)}
+                                onClick={() => openAdditionalInfo(record.additional_info)}
+                            >
+                                Additional Info
+                            </Button>
+                        }
+                        {!isEmpty(record.cropImageList) &&
+                            <ViewCropImages list={record.cropImageList} disablePhotos={false} />
+                        }
                     </div>
                 </div>
             );

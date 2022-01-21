@@ -164,7 +164,6 @@ const AddCropModal = (addCropProps: PropsType) => {
         setSelectedMasterCrop('');
         setSelectedVariety('');
         resetApmcState();
-        dispatch(updateApmcCropRate(''));
         /* Reset other fields end */
         dispatch(fetchAllMasterCrops(category));
     };
@@ -188,6 +187,7 @@ const AddCropModal = (addCropProps: PropsType) => {
     const onSelectVariety = (variety: string) => {
         /* Reset other fields */
         form.setFieldsValue({ grade: null });
+        resetApmcState();
         /* Reset other fields end */
         setSelectedVariety(variety);
     };
@@ -376,6 +376,7 @@ const AddCropModal = (addCropProps: PropsType) => {
                                     className='crop-images-upload'
                                     multiple={true}
                                     accept='image/*'
+                                    maxCount={5}
                                     listType='picture-card'
                                     beforeUpload={(file) => {
                                         return false

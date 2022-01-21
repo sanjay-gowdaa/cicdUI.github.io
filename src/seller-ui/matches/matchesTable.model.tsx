@@ -1,6 +1,7 @@
 import React from 'react';
 import { Button, Image, Typography, Modal, Space } from 'antd';
 import { ExclamationCircleOutlined } from '@ant-design/icons';
+import { isEmpty } from 'lodash';
 
 import RejectConfrimation from './rejectConfirmation';
 
@@ -10,6 +11,7 @@ import { showCropImage } from '../../buyer-seller-commons/constants';
 import { componentCallBacksModel } from '../../buyer-seller-commons/matches';
 import ConnectMatches from '../../buyer-seller-commons/matches/connectMatches';
 import ShowPreviousTransactions from '../../buyer-seller-commons/matches/showPreviousTransactions';
+import { openAdditionalInfo } from '../../buyer-seller-commons/openAdditionalInfo';
 
 const { Text } = Typography;
 
@@ -37,17 +39,28 @@ export const matchesSellerColumns = (componentCallBacks: componentCallBacksModel
         title: 'Produce',
         dataIndex: 'produce',
         key: 'produce',
-        render: (produce: string) => {
+        render: (produce: string, record: MatchRequirementModel) => {
             const [masterCategory = ''] = produce.split('-');
             const imageSrc = showCropImage(masterCategory);
 
             return (
-                <div className='display-flex-row align-center'>
-                    <Image className='table-crop-image' src={imageSrc} />
-                    <div className='margin-l-r-1em'>
-                        <p>{produce}</p>
+                <React.Fragment>
+                    <div className='display-flex-row align-center'>
+                        <Image className='table-crop-image' src={imageSrc} />
+                        <div className='margin-l-r-1em'>
+                            <p>{produce}</p>
+                        </div>
                     </div>
-                </div>
+                    {!isEmpty(record.additional_info) &&
+                        <Button
+                            type='link'
+                            disabled={isEmpty(record.additional_info)}
+                            onClick={() => openAdditionalInfo(record.additional_info)}
+                        >
+                            Additional Info
+                        </Button>
+                    }
+                </React.Fragment>
             );
         },
     },
