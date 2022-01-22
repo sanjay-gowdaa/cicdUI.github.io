@@ -133,21 +133,38 @@ body {
 }
 
 .new-landing-page {
-    background-image: url('../src/static/assets/landingImage.png');
-    height: 98vh;
+    background-image: url('../src/static/assets/landingPageImage.png');
+    height: 100vh;
     width: 100vw;
+    position: fixed;
     background-position: center;
     background-repeat: no-repeat;
     background-attachment: fixed;
+
+    .new-landing-page-logo {
+        z-index: 1;
+        margin-top: 1vh;
+        height: 12vh;
+        width: 12vh;
+        align-content: center;
+        position: relative;
+        left: 48vw;
+    }
 
     .landing-title {
         color: #ffffff;
         width: 'fit-content';
         position: relative;
-        bottom: 18vh;
-        left: 25vw;
         font-weight: 300;
-        font-size: 3.5rem;
+        font-size: 3rem;
+        text-align: center;
+    }
+
+    .new-landing-page-button {
+        width: fit-content;
+        float: right;
+        position: relative;
+        bottom: 20vh;
     }
 
     .landing-footer {
@@ -165,11 +182,13 @@ body {
             width: 50vw;
             text-align: center;
             margin: 0 auto;
+            margin-top: 1vh;
         }
 
         .footer-button-text {
             color: #ffffff;
             font-weight: 300;
+            margin: 1vh;
         }
     }
 }
