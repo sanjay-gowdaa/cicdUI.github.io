@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { Button, Card, Col, Image, Row, Space, Typography } from 'antd';
+import { Button, Card, Col, Image, Modal, Row, Space, Typography } from 'antd';
 import 'antd/dist/antd.css';
 import { useTranslation } from 'react-i18next';
 import Amplify from 'aws-amplify';
 import { ArrowRightOutlined } from '@ant-design/icons';
+import { History } from 'history';
 
 import Header from './header';
 import Footer from './footer';
@@ -20,6 +21,8 @@ import './App.scss';
 import { englishStyling, isEnglish, kannadaStyling } from './static/translations/constants';
 import VB_Logo from './static/assets/vbLogo.png';
 import DefaultBtn from './app-components/defaultBtn';
+import LoginPopup from './login-ui/login-popup';
+import Register from './login-ui/register';
 
 const { Title } = Typography;
 
@@ -34,7 +37,7 @@ Amplify.configure({
     }
 });
 
-const App = (props: any) => {
+const App = (props: { history: History }) => {
     const { history } = props;
     const dispatch = useDispatch();
     const [signUpPopupVisible, setSignUpPopupVisible] = useState(false);
@@ -92,6 +95,31 @@ const App = (props: any) => {
                             onClick={() => setSignUpPopupVisible(!signUpPopupVisible)}
                             content='Register'
                         />
+                        <Modal
+                            title={null}
+                            visible={signUpPopupVisible}
+                            footer={null}
+                            maskClosable={false}
+                            className='custom-register-modal'
+                            onCancel={() => setSignUpPopupVisible(!signUpPopupVisible)}
+                            centered
+                            wrapClassName='register-popup-container'
+                        >
+                            <Register history={history} setSignUpPopupVisible={setSignUpPopupVisible} />
+                        </Modal>
+                        <Modal
+                            title={null}
+                            visible={showLogin}
+                            footer={null}
+                            width={'30%'}
+                            maskClosable={false}
+                            className='custom-login-modal'
+                            onCancel={() => setLogin(!showLogin)}
+                            centered
+                            wrapClassName='login-popup-container'
+                        >
+                            <LoginPopup history={history} />
+                        </Modal>
                     </div>
                     <div className='landing-footer'>
                         <Title level={1} className='footer-text'>
