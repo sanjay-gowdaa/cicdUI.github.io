@@ -19,6 +19,7 @@ import Join from './static/assets/friends.svg';
 import './App.scss';
 import { englishStyling, isEnglish, kannadaStyling } from './static/translations/constants';
 import VB_Logo from './static/assets/vbLogo.png';
+import DefaultBtn from './app-components/defaultBtn';
 
 const { Title } = Typography;
 
@@ -42,6 +43,7 @@ const App = (props: any) => {
     const customStyles = isEnglish(t('language')) ? englishStyling : kannadaStyling;
     const banner = isEnglish(t('language')) ? Banner : KannadaBanner;
     const [showLandingPage, setLandingPage] = useState(false);
+    const [showLogin, setLogin] = useState(false);
 
     useEffect(() => {
         dispatch(getConfigurations());
@@ -70,11 +72,27 @@ const App = (props: any) => {
                     <Image
                         src={VB_Logo}
                         preview={false}
-                        style={{ zIndex: 1, backgroundColor: 'pink', float: 'right' }}
+                        className='new-landing-page-logo'
                     />
                     <Title level={1} className='landing-title'>
                         Welcome to <strong>VikasBandhu</strong>
                     </Title>
+                    <div className='new-landing-page-button'>
+                        <DefaultBtn
+                            className='vikas-btn-radius wid150 custom-login-button'
+                            content='Login'
+                            onClick={() => setLogin(true)}
+                            size='large'
+                        />
+                        <PrimaryBtn
+                            id='header-register-button'
+                            className='margin-l-r-1em vikas-btn-radius wid150 custom-register-button'
+                            type='primary'
+                            size='large'
+                            onClick={() => setSignUpPopupVisible(!signUpPopupVisible)}
+                            content='Register'
+                        />
+                    </div>
                     <div className='landing-footer'>
                         <Title level={1} className='footer-text'>
                             A friendly digital E-market place for agricultural produce
