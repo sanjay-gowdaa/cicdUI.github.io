@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Alert, Image, Typography, Row, Col, Card, Button } from 'antd';
 import { Trans, useTranslation } from 'react-i18next';
 import Marquee from 'react-fast-marquee';
-import { ArrowLeftOutlined, ArrowRightOutlined } from '@ant-design/icons';
+import { ArrowLeftOutlined, ArrowRightOutlined, ArrowDownOutlined } from '@ant-design/icons';
 
 import { landingCards } from './const';
 
@@ -100,9 +100,18 @@ const Home = () => {
                             list.key === keyValue ?
                                 <React.Fragment>
                                     <Col span={8} className='landing-col-8'>
-                                        <Card className='landing-card'
-                                            style={{ height: '70h', backgroundColor: '#F1F6F5', alignContent: 'center', marginBlock: '2vh' }}
+                                        <Card
+                                            className='landing-card'
+                                            style={{
+                                                height: '70h',
+                                                backgroundColor: '#F1F6F5',
+                                                alignContent: 'center',
+                                                marginBlock: '2vh'
+                                            }}
                                         >
+                                            <Title level={2} className='landing-card-title'>
+                                                Recent Updates
+                                            </Title>
                                             <Title level={2} className='landing-card-title'>
                                                 {list.title}
                                             </Title>
@@ -134,8 +143,28 @@ const Home = () => {
                                             className='landing-image'
                                             src={list.image}
                                             preview={false}
-                                            style={{ width: '65vw', height: '79vh', borderRadius: '2vh' }}
+                                            style={{
+                                                width: '65vw',
+                                                height: '79vh',
+                                                borderRadius: '2vh'
+                                            }}
                                         />
+                                        <Button type='text' href='#aim'>
+                                            <Title
+                                                level={2}
+                                                style={{
+                                                    color: 'white',
+                                                    width: 'fit-content',
+                                                    alignContent: 'center',
+                                                    textAlign: 'center',
+                                                    position: 'relative',
+                                                    bottom: '10vh',
+                                                    left: '5vw'
+                                                }}
+                                            >
+                                                Scroll <ArrowDownOutlined />
+                                            </Title>
+                                        </Button>
                                     </Col>
                                 </React.Fragment> : null
                         )
