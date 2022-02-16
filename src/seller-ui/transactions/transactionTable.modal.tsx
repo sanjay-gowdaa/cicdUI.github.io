@@ -3,7 +3,7 @@ import { Button, Image, Typography, Tooltip } from 'antd';
 import { isEmpty } from 'lodash';
 
 import { TransactionModel } from '../../buyer-seller-commons/types';
-import { parseIDfromHash, maskData } from '../../app-components/utils';
+import { parseIDfromHash } from '../../app-components/utils';
 import { showCropImage } from '../../buyer-seller-commons/constants';
 import GetCurrentStatusDetails from '../../buyer-seller-commons/transactions/getCurrentStatusDetails';
 import { openAdditionalInfo } from '../../buyer-seller-commons/openAdditionalInfo';
@@ -85,17 +85,14 @@ export const transactionSellerColumns = [
     },
     {
         title: 'Buyer',
-        dataIndex: 'buyer_id',
-        key: 'buyer_id',
+        dataIndex: 'destinyId',
+        key: 'destinyId',
         ellipsis: {
             showTitle: false,
         },
-        render: (buyerId: string) => {
-            const actBuyerID = parseIDfromHash(buyerId)
+        render: (destinyId: string) => {
             return (
-                <Tooltip placement='topLeft' title={maskData(actBuyerID)}>
-                    <Text underline>{maskData(actBuyerID)}</Text>
-                </Tooltip>
+                <Text underline>{destinyId}</Text>
             );
         },
     },

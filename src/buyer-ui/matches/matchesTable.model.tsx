@@ -4,7 +4,6 @@ import { CheckCircleFilled, ExclamationCircleFilled } from '@ant-design/icons';
 import { isEmpty } from 'lodash';
 
 import { FullfillmentFlags, MatchRequirementModel } from '../../buyer-seller-commons/types';
-import { parseIDfromHash, maskData } from '../../app-components/utils';
 import { showCropImage } from '../../buyer-seller-commons/constants';
 import confirmationPopup from '../../buyer-seller-commons/confirmationPopup';
 import { componentCallBacksModel } from '../../buyer-seller-commons/matches';
@@ -98,17 +97,17 @@ export const displayConcurrentMatchError = () => {
 export const matchesBuyerColumns = (componentCallBacks: componentCallBacksModel) => [
     {
         title: 'Seller Id',
-        dataIndex: 'seller_id',
-        key: 'seller_id',
-        render: (seller_id: string, record: MatchRequirementModel) => {
+        dataIndex: 'destinyId',
+        key: 'destinyId',
+        render: (destinyId: string, record: MatchRequirementModel) => {
             return (
                 <Space direction='vertical'>
-                    <Text underline>{maskData(parseIDfromHash(seller_id))}</Text>
+                    <Text underline>{destinyId}</Text>
                     {record.count !== 0 &&
                         <ShowPreviousTransactions
                             count={record.count}
                             history={record.history}
-                            userId={record.seller_id}
+                            userId={destinyId}
                         />
                     }
                 </Space>

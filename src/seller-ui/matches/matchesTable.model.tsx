@@ -18,17 +18,17 @@ const { Text } = Typography;
 export const matchesSellerColumns = (componentCallBacks: componentCallBacksModel) => [
     {
         title: 'Buyer Id',
-        dataIndex: 'buyer_id',
-        key: 'buyer_id',
-        render: (buyer_id: string, record: MatchRequirementModel) => {
+        dataIndex: 'destinyId',
+        key: 'destinyId',
+        render: (destinyId: string, record: MatchRequirementModel) => {
             return (
                 <Space direction='vertical'>
-                    <Text underline>{maskData(parseIDfromHash(buyer_id))}</Text>
+                    <Text underline>{maskData(parseIDfromHash(destinyId))}</Text>
                     {record.count !== 0 &&
                         <ShowPreviousTransactions
                             count={record.count}
                             history={record.history}
-                            userId={record.buyer_id}
+                            userId={destinyId}
                         />
                     }
                 </Space>

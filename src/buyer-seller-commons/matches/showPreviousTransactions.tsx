@@ -74,10 +74,10 @@ const ShowPreviousTransactions = (props: { count: number, history: Array<History
                     <Text>Previous Transactions</Text>
                     {is_buyer ?
                         <Text style={{ float: 'right' }}>
-                            Seller Id : {maskData(parseIDfromHash(userId))}
+                            Seller Id : {userId}
                         </Text> :
                         <Text style={{ float: 'right' }}>
-                            Buyer Id : {maskData(parseIDfromHash(userId))}
+                            Buyer Id : {userId}
                         </Text>
                     }
                 </div>
