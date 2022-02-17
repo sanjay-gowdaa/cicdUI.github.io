@@ -81,8 +81,10 @@ const Profile = (props: { history: History }) => {
                 setKycFlag('complete');
             } else {
                 if (isEmpty(loginState.category)) {
-
                     (panSubmitted && aadharSubmitted) ?
+                        setKycFlag('submitted') : setKycFlag('incomplete');
+                } else if (loginState.category === 'FPOs') {
+                    (panSubmitted && !isEmpty(loginState.gstin) && !isEmpty(loginState.fpo)) ?
                         setKycFlag('submitted') : setKycFlag('incomplete');
                 } else {
                     (panSubmitted && !isEmpty(loginState.gstin)) ?
@@ -98,8 +100,11 @@ const Profile = (props: { history: History }) => {
                         ((kisanSubmitted && !rtcSubmitted) || (!kisanSubmitted && rtcSubmitted)
                             || (kisanSubmitted && rtcSubmitted))) ?
                         setKycFlag('submitted') : setKycFlag('incomplete');
-                } else {
+                } else if (loginState.category === 'FPOs') {
                     (panSubmitted && !isEmpty(loginState.gstin) && !isEmpty(loginState.fpo) && bankSubmitted) ?
+                        setKycFlag('submitted') : setKycFlag('incomplete');
+                } else {
+                    (panSubmitted && !isEmpty(loginState.gstin) && bankSubmitted) ?
                         setKycFlag('submitted') : setKycFlag('incomplete');
                 }
             }
@@ -130,6 +135,10 @@ const Profile = (props: { history: History }) => {
             delete values['weekday'];
             delete values['sunday'];
             delete values['saturday'];
+            loginState.category !== 'FPOs' && delete values['fpo'];
+        } else {
+            delete values['bank_doc'];
+            loginState.category !== 'FPOs' && delete values['fpo'];
         }
 
         var count = 0;
@@ -166,7 +175,13 @@ const Profile = (props: { history: History }) => {
 
     const onSave = () => {
         const isSubmitted = setKycToComplete(formSubmitValue);
-        const registerDataPromise = generateFormData(cloneDeep({ ...kycFormValues, isSubmitted }));
+        const kyc_flag = isSubmitted ? 'submitted' : loginState.kyc_flag;
+        const registerDataPromise =
+            generateFormData(cloneDeep({
+                ...kycFormValues,
+                isSubmitted,
+                kyc_flag
+            }));
         registerDataPromise.then((data) =>
             dispatch(saveKyc(data, true))
         );

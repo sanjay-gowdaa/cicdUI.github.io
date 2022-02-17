@@ -137,11 +137,17 @@ const CropsSection = (props: any) => {
                 }}
                 content='Add Produce'
             />
-            {!isApproved &&
+            {!loginState.isSubmitted &&
                 <Space className='kyc-pending-message' direction='horizontal' >
                     <WarningFilled className='warning-icon' />
                     <Title level={5} className='kyc-pending-text'>KYC Pending.</Title>
                     <Link to={routesMap.profile} className='update-text'>Update Now</Link>
+                </Space>
+            }
+            {loginState.isSubmitted && !isApproved &&
+                <Space className='kyc-pending-message' direction='horizontal' >
+                    <WarningFilled className='warning-icon' />
+                    <Title level={5} className='kyc-pending-text'>KYC waiting for approval.</Title>
                 </Space>
             }
             <AddCropModal

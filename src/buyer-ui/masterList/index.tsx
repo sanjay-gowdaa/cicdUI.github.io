@@ -105,6 +105,12 @@ const AddProduceModal = (props: { history: History }) => {
                         <Link to={routesMap.profile} className='update-text'>Update Now</Link>
                     </Space>
                 }
+                {loginState.isSubmitted && !isApproved &&
+                    <Space className='kyc-pending-message' direction='horizontal' >
+                        <WarningFilled className='warning-icon' />
+                        <Title level={5} className='kyc-pending-text'>KYC waiting for approval.</Title>
+                    </Space>
+                }
             </div>
             <Modal
                 title={<Title level={3}>Produce Master List</Title>}

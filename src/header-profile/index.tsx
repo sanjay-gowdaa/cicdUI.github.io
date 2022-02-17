@@ -19,11 +19,12 @@ import MenuItem from 'antd/lib/menu/MenuItem';
 import { isEmpty } from 'lodash';
 import { History } from 'history';
 
+import { contactUs, headerBreadcrumb, routesMap } from '../constants';
+
 import '../header/header.scss';
 import { LOGOUT_URL } from '../store/api';
 import { RootState } from '../store/rootReducer';
 import DefaultBtn from '../app-components/defaultBtn';
-import { contactUs, headerBreadcrumb, routesMap } from '../constants';
 import { getConfigurations, getUserCompleteDetails, getUserFiles } from '../store/loginReducer/actions';
 
 const { Text, Title } = Typography;
@@ -33,8 +34,8 @@ const UserHeader = (props: { history: History }) => {
     const { history } = props;
     const loginState = useSelector((state: RootState) => state.loginUser);
     const dispatch = useDispatch();
-    // const fieldOfficer = "Mahesh Kumar";
-    // const fieldOfficerNumber = "9876543210";
+    // const fieldOfficer = 'Mahesh Kumar';
+    // const fieldOfficerNumber = '9876543210';
     // const [notificationNumber, setNotificationNumber] = useState(2);
     const [userType, setUserType] = useState('');
     const [showProfile, setProfile] = useState(false);
@@ -43,7 +44,7 @@ const UserHeader = (props: { history: History }) => {
     const [breadCrumbs, setBreadCrumbs] = useState({ produce: '', matches: '', transaction: '', feedback: '', crops: '' });
 
     useEffect(() => {
-        loginState.is_buyer ? setUserType("/buyer#buyer") : setUserType("/seller#seller");
+        loginState.is_buyer ? setUserType('/buyer#buyer') : setUserType('/seller#seller');
         headerCrumbNames();
     }, [userType]);
 
@@ -90,7 +91,7 @@ const UserHeader = (props: { history: History }) => {
             message: 'Welcome',
             description: 'Thanks for registering with us.',
             duration: 0,
-            style: { position: "relative", top: "5em" }
+            style: { position: 'relative', top: '5em' }
         })
         // notification['info']({
         //     message: 'Field Officer Assigned',
@@ -109,17 +110,17 @@ const UserHeader = (props: { history: History }) => {
     const showContactInfo = () => {
         return (
             <Menu>
-                <MenuItem key="fieldOfficerInfo" >
+                <MenuItem key='fieldOfficerInfo' >
                     <Card>
                         <Title level={4}>Field Officer Info:</Title>
-                        <Space direction="vertical">
+                        <Space direction='vertical'>
                             {/* <Text>Name: {fieldOfficer}</Text>
                             <Text>Phone No: {fieldOfficerNumber}</Text> */}
                             <Text>Field Officer will be assigned shortly.</Text>
                         </Space>
                     </Card>
                 </MenuItem>
-                <MenuItem key="contactUs">
+                <MenuItem key='contactUs'>
                     <Card>
                         <Title level={4}>Contact Us:</Title>
                         <Text>{contactUs.emailId}</Text>
@@ -130,8 +131,8 @@ const UserHeader = (props: { history: History }) => {
     };
 
     return (
-        <div className="display-flex-row align-center">
-            <Breadcrumb separator=" " className="custom-breadcrumb">
+        <div className='display-flex-row align-center'>
+            <Breadcrumb separator=' ' className='custom-breadcrumb'>
                 <Breadcrumb.Item href={breadCrumbs.crops} >Produce</Breadcrumb.Item>
                 <Breadcrumb.Item href={breadCrumbs.matches} >Matches</Breadcrumb.Item>
                 <Breadcrumb.Item href={breadCrumbs.transaction} >Transaction</Breadcrumb.Item>
@@ -140,51 +141,53 @@ const UserHeader = (props: { history: History }) => {
             </Breadcrumb>
             <Badge
                 // count={notificationNumber}
-                className="custom-badge"
+                className='custom-badge'
             >
-                <Tooltip title="Notifications">
+                <Tooltip title='Notifications'>
                     <DefaultBtn
-                        shape="circle"
-                        size="large"
-                        icon={<BellFilled style={{ fontSize: "large", paddingLeft: "0.3em" }} />}
+                        shape='circle'
+                        size='large'
+                        icon={<BellFilled style={{ fontSize: 'large', paddingLeft: '0.3em' }} />}
                         onClick={openNotification}
                     />
                 </Tooltip>
             </Badge>
             <Dropdown.Button
                 overlay={showContactInfo}
-                icon={<ContactsFilled style={{ fontSize: "large" }} />}
-                size="large"
-                className="custom-dropdown-button"
+                icon={<ContactsFilled style={{ fontSize: 'large' }} />}
+                size='large'
+                className='custom-dropdown-button'
             />
-            {/* <p className='margin-unset'>Seller Id: {loginState.userId}</p> */}
             <Popconfirm
-                title="Are you sure you want to logout?"
-                okText="Yes"
+                title='Are you sure you want to logout?'
+                okText='Yes'
                 onConfirm={() => {
                     window.location.href = LOGOUT_URL;
                     localStorage.clear();
                 }}
-                cancelText="No"
+                cancelText='No'
             >
-                <Tooltip title="Logout">
+                <Tooltip title='Logout'>
                     <DefaultBtn
-                        icon={<LogoutOutlined style={{ fontSize: "large", paddingLeft: "0.3em" }} />}
-                        size="large"
-                        shape="circle"
-                        style={{ marginLeft: "0.5em" }}
+                        icon={<LogoutOutlined style={{ fontSize: 'large', paddingLeft: '0.3em' }} />}
+                        size='large'
+                        shape='circle'
+                        style={{ marginLeft: '0.5em' }}
                     />
                 </Tooltip>
             </Popconfirm>
-            <Title level={4} className='margin-unset' style={{ padding: "0.5em" }}>{loginState.name}</Title>
-            <Tooltip title="Profile">
-                <Button shape="circle" size="large" onClick={() => setProfile(true)}
+            <div>
+                <Title level={4} className='margin-unset' style={{ padding: '0.5em' }}>{loginState.name}</Title>
+                <p className='margin-unset'>{loginState.is_buyer ? 'Buyer' : 'Seller'} Id: {loginState.destinyId}</p>
+            </div>
+            <Tooltip title='Profile'>
+                <Button shape='circle' size='large' onClick={() => setProfile(true)}
                     icon={
                         isEmpty(imageSrc) ?
-                            <Avatar size="large" className="profile-avatar">
+                            <Avatar size='large' className='profile-avatar'>
                                 {loginState.name.charAt(0)}
                             </Avatar> :
-                            <Avatar size="large" className="profile-avatar" src={imageSrc} />
+                            <Avatar size='large' className='profile-avatar' src={imageSrc} />
                     }>
                 </Button>
             </Tooltip>
