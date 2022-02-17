@@ -31,6 +31,9 @@ export interface MatchRequirementModel {
     history: Array<History>;
     additional_info: Array<AdditionalInfo>;
     cropImageList: CropListType;
+    destinyId: string;
+    gst_amount: string;
+    buyer_total_price: string;
 };
 
 export interface CropListType {

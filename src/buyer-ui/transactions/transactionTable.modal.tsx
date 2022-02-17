@@ -4,7 +4,7 @@ import { isEmpty } from 'lodash';
 
 import PayButton from './payButton';
 
-import { parseIDfromHash, maskData } from '../../app-components/utils';
+import { parseIDfromHash } from '../../app-components/utils';
 import { TransactionModel, TransactionStatus } from '../../buyer-seller-commons/types';
 import { showCropImage } from '../../buyer-seller-commons/constants';
 import GetCurrentStatusDetails from '../../buyer-seller-commons/transactions/getCurrentStatusDetails';
@@ -83,17 +83,14 @@ export const transactionBuyerColumns = [
     },
     {
         title: 'Seller',
-        dataIndex: 'seller_id',
-        key: 'seller_id',
+        dataIndex: 'destinyId',
+        key: 'destinyId',
         ellipsis: {
             showTitle: false,
         },
-        render: (seller_id: string) => {
-            const actualID = parseIDfromHash(seller_id)
+        render: (destinyId: string) => {
             return (
-                <Tooltip placement='topLeft' title={maskData(actualID)}>
-                    <Text underline>{maskData(actualID)}</Text>
-                </Tooltip>
+                <Text underline>{destinyId}</Text>
             );
         },
     },

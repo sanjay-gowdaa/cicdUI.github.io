@@ -17,13 +17,15 @@ import {
     fetchTransactionList,
     getCurrentStatusDetails,
     fetchAdditionalInfo,
-    fetchUserHistory
+    fetchUserHistory,
+    fetchDestinyId
 } from '../api';
 import { ApmcApiResponseBase, UpdatedLiveApmcRatesQuery } from '../genericTypes';
 import { UserStateModel } from '../loginReducer/types';
 import { RootState } from '../rootReducer';
 
 import { MatchRequirementModel, TransactionAction, TransactionStatus } from '../../buyer-seller-commons/types';
+import { parseIDfromHash } from '../../app-components/utils';
 
 export const UPDATE_CATEGORIES = 'UPDATE_CATEGORIES';
 export const UPDATE_MASTER_CROPS = 'UPDATE_MASTER_CROPS';
@@ -480,8 +482,9 @@ export const getAllSellerMatches = () => {
                     produce: sellerMatches[i].produce,
                     sellerId: sellerMatches[i].gsi
                 });
+            const destinyResponse = await fetchDestinyId(parseIDfromHash(sellerMatches[i].buyer_id));
             const { count, history } = historyResponse;
-            matchList[i] = { ...sellerMatches[i], count, history, ...additionalInfo };
+            matchList[i] = { ...sellerMatches[i], count, history, ...additionalInfo, ...destinyResponse };
         }
         dispatch(updateSellerMatches(matchList));
         dispatch(setMatchesLoadingFlag(false));
@@ -525,7 +528,8 @@ export const getSellerTransactionList = (transactionStatus: TransactionStatus) =
                     transactionListResponse[i].buyer_id,
                     transactionListResponse[i].buyer_crop_id
                 );
-            let list = { ...transactionListResponse[i], ...additionalInfo };
+            const destinyResponse = await fetchDestinyId(parseIDfromHash(transactionListResponse[i].buyer_id));
+            let list = { ...transactionListResponse[i], ...additionalInfo, ...destinyResponse };
             list.key = transactionListResponse[i].pk;
             transactionFinalResponse.push(list);
         }

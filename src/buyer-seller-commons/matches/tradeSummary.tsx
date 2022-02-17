@@ -4,7 +4,6 @@ import { useSelector } from 'react-redux';
 import { CaretUpOutlined, CaretDownOutlined } from '@ant-design/icons';
 
 import { MatchRequirementModel } from '../../buyer-seller-commons/types';
-import { parseIDfromHash, maskData } from '../../app-components/utils';
 import { RootState } from '../../store/rootReducer';
 
 const { Title } = Typography;
@@ -17,11 +16,10 @@ const TradeSummary = (props: componentProps) => {
     const { cropDetails } = props;
     const loginState = useSelector((state: RootState) => state.loginUser);
     const { is_buyer } = loginState;
-    const { buyer_id, buyer_location, seller_price_per_quintal, seller_price, seller_id,
-        produce, buyer_price_per_quintal, matched_quantity, location, buyer_final_price, seller_final_price
+    const { buyer_location, seller_price_per_quintal, seller_price, destinyId, produce, gst_amount,
+        buyer_price_per_quintal, matched_quantity, location, buyer_final_price, seller_final_price, buyer_total_price
     } = cropDetails;
 
-    const userId = is_buyer ? maskData(parseIDfromHash(seller_id)) : maskData(parseIDfromHash(buyer_id));
     const diffAmt = seller_final_price - seller_price;
     const isIncrease = diffAmt > 0;
     const color = isIncrease ? '#12805C' : '#E90000';
@@ -34,7 +32,7 @@ const TradeSummary = (props: componentProps) => {
                     {is_buyer ? <>Seller </> : <>Buyer </>}Id
                 </Col>
                 <Col sm={24} md={12}>
-                    : {userId}
+                    : {destinyId}
                 </Col>
             </Row>
             <Row>
@@ -68,7 +66,7 @@ const TradeSummary = (props: componentProps) => {
                 <Col sm={24} md={12}>
                     : {is_buyer ? buyer_final_price : seller_final_price}
                     {is_buyer ?
-                        <span className='heading-alerttext'>&nbsp;(excl. all taxes)</span> :
+                        <React.Fragment></React.Fragment> :
                         <span>
                             <Statistic
                                 value={diffAmt}
@@ -79,6 +77,26 @@ const TradeSummary = (props: componentProps) => {
                     }
                 </Col>
             </Row>
+            {is_buyer ?
+                <React.Fragment>
+                    <Row>
+                        <Col sm={24} md={12}>
+                            GST
+                        </Col>
+                        <Col>
+                            : {gst_amount}
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col sm={24} md={12}>
+                            <strong>Final Price (including all tax)</strong>
+                        </Col>
+                        <Col>
+                            : <strong>{buyer_total_price}</strong>
+                        </Col>
+                    </Row>
+                </React.Fragment> : <React.Fragment></React.Fragment>
+            }
             <Row>
                 <Col sm={24} md={12}>
                     Location
