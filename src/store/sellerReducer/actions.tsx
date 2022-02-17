@@ -514,7 +514,7 @@ export const transactionAction = (
     };
 };
 
-/** Get selle transaction list based on the transaction status
+/** Get seller transaction list based on the transaction status
  * 
  * @param { TransactionStatus } transactionStatus - Transaction status
  */
@@ -525,10 +525,10 @@ export const getSellerTransactionList = (transactionStatus: TransactionStatus) =
         for (let i = 0; i < transactionListResponse.length; i++) {
             const additionalInfo =
                 await fetchAdditionalInfo(
-                    transactionListResponse[i].buyer_id,
+                    transactionListResponse[i].gsi,
                     transactionListResponse[i].buyer_crop_id
                 );
-            const destinyResponse = await fetchDestinyId(parseIDfromHash(transactionListResponse[i].buyer_id));
+            const destinyResponse = await fetchDestinyId(parseIDfromHash(transactionListResponse[i].gsi));
             let list = { ...transactionListResponse[i], ...additionalInfo, ...destinyResponse };
             list.key = transactionListResponse[i].pk;
             transactionFinalResponse.push(list);

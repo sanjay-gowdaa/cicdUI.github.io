@@ -544,7 +544,7 @@ export const getTransactionList = (transactionStatus: TransactionStatus) => {
                     transactionListResponse[i].seller_crop_id
                 );
             const cropImageList = await getSellerCropImages(transactionListResponse[i].seller_id, transactionListResponse[i].seller_crop_id);
-            const destinyResponse = await fetchDestinyId(parseIDfromHash(transactionListResponse[i].buyer_id));
+            const destinyResponse = await fetchDestinyId(parseIDfromHash(transactionListResponse[i].seller_id));
             let list = { ...transactionListResponse[i], ...additionalInfo, cropImageList, ...destinyResponse };
             list.key = transactionListResponse[i].pk;
             transactionFinalResponse.push(list);
