@@ -20,7 +20,7 @@ export const getTransactionDataStructure = (cropDetails: MatchRequirementModel) 
         fulfillment_flag, produce, matched_quantity, seller_crop_id, seller_id, seller_quantity,
         seller_final_price, seller_price, location, seller_facilitation_cost, seller_transportation_cost,
         seller_price_per_quintal, buyer_id, buyer_crop_id, buyer_location, buyer_facilitation_cost,
-        buyer_transportation_cost, buyer_final_price, buyer_actual_quantity, buyer_price_per_quintal
+        buyer_transportation_cost, buyer_final_price, buyer_actual_quantity, buyer_price_per_quintal,gst_amount,buyer_total_price
     } = cropDetails;
 
     const transactionEntry = {
@@ -37,7 +37,9 @@ export const getTransactionDataStructure = (cropDetails: MatchRequirementModel) 
             buyer_transportation_cost,
             buyer_facilitation_cost,
             buyer_crop_id,
-            buyer_price_per_quintal
+            buyer_price_per_quintal,
+            gst_amount,
+            buyer_total_price
         }],
         seller: [{
             seller_id,
