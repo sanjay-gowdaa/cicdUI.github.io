@@ -13,96 +13,274 @@ $col-shade-green: #12805c;
 }
 
 #home {
-    background-position: center center;
-    background-size: 100rem auto;
-    background-repeat: no-repeat;
-    background-origin: padding-box;
-    scroll-margin: 6rem;
-    background-color: #F1F6F5;
-    height: 100vh;
+    width:100%;
+    background-color:#FFFFFF;
     z-index: 1;
-    opacity: 1;
-
-    .home-content-wrapper {
+    position: relative;
+    // top:100px;
+    height: 700px;
+    display: flex;
+    flex-direction: column;
+    .homeRow{
+        display: flex;
+        justify-content: space-evenly;
+        align-items: center;
+        flex-direction: row;
         position: relative;
-        top: 6rem;
-        height: 105vh;
-        margin-bottom: 1rem;
-
-        .landing-cards {
-            height: '70h' !important;
-            background-color: '#F1F6F5' !important;
-            align-content: 'center' !important;
+        width:1200px;
+        height: 600px;
+        top:50px;
+        z-index: 0;
+        flex-wrap: wrap;
+        .courselCircle{
+            position: relative;
+            top:0px;
+            left:100px;
+            z-index: 0;
         }
-
-        .landing-card-title {
-            text-align: center;
-            font-size: xx-large;
-        }
-        
-        .landing-page-text {
-            font-size: medium;
-            margin-inline: 4vw;
-        }
-
-        .landing-image {
-            width: '65vw';
-            height: '79vh';
-            border-radius: '2vh';
-        }
-
-        .animate-alert {
-            animation: warning-banner 30s ; // infinite 20s;
-            width: fit-content;
-            z-index: 0 !important;
-        }
-
-        .home-content {
-            position: absolute;
-            left: 5rem;
-            top: 6rem;
-            width: fit-content;
-            height: fit-content;
-            padding: 2rem;
-            -webkit-backdrop-filter: blur(1.25rem);
-            backdrop-filter: blur(1.25rem);
-            border-radius: 0.5rem;
-            background-color: rgba($color: #000000, $alpha: 0.2);
-        }
-
-        // Kannada Styling
-        .home-content-kn {
-            position: absolute;
-            left: 5rem;
-            top: 6rem;
-            width: fit-content;
-            height: fit-content;
-            padding: 2rem;
-            -webkit-backdrop-filter: blur(1.25rem);
-            backdrop-filter: blur(1.25rem);
-            border-radius: 0.5rem;
-            background-color: rgba($color: #000000, $alpha: 0.2);
-        }
-
-        .logo {
-            border-radius: 0.5rem;
-        }
-
-        .home-paragraph {
-            margin-top: 2rem;
-
-            .margin-none {
-                margin: 0;
+        .intBox{
+            position: relative;
+            color:white;
+            width:400px;
+            height: 30rem;
+            top:30px;
+            z-index: 0;
+            display: flex;
+            justify-content: start;
+            flex-direction: column;
+            .fHead{
+                position: relative;
+                width:fit-content;
+                height: fit-content;
+                color:black;
+                z-index: 0;
+                h1{
+                    width: 348px;
+                    height: 58px;
+                font-family: Roboto;
+                font-style: normal;
+                font-weight: 600;
+                font-size: 48px;
+                    word-spacing: 2px;
+                }
             }
-        }
+            .finfo{
+                width:400px;
+                height:100px;
+                margin-top: 5px;
+                p{
+                color:black;
+                width: 350px;
+                height: 96px;
+            font-family: Roboto;
+            font-style: normal;
+            font-weight: 100;
+            font-size: 25px;
+                }
+            }
+            .wimage{
+                background-image: url("../static/assets/wheatCustomised.svg");
+                background-repeat: repeat;
+                width:445px;
+                height:20px;
+                color:#f5a31a;
+            }
+                .registerComponent{
+                    display: flex;
+                    flex-direction: row;
+                    top:420px;
+                    justify-content: space-evenly;
+                    background-color:#F5A31A;;
+                    align-items: center;
+                    width:445px;
+                    height: 73px;
+                    padding:10px;
+                    border-radius: 5px;
+                    border: none;
+                    
+                    p{
+                    font-size: 15px;
+                        margin-top: 10px;
+                    }
+                    Button{
+                        width:120px;
+                        height: 44px;
+                        border-radius: 5px;
+                        background-color: #FFFFFF;
+                    font-size: 16px;
+                        color:#f5a31a;
+                        border: none;
+                    }
+                }
 
-        .explore-vb-btn {
-            background-color: #f5a31a !important;
-            border-color: #f5a31a !important;
-            border-radius: 0.2rem;
-            margin: 1rem 0;
+                .googlePlay{
+                    position: relative;
+                    left:-10px;
+                    width: 200px;
+                    height: 44.3px;
+                    margin-top: 20px;
+                    margin-left: 0px;
+                    // background-color: #12805c;
+                    Button,img{
+                    width: 150px;
+                    height: 44.3px;
+                    margin-left: 0px;
+                    border: none;
+                    }
+                }
+                
+               
+            
         }
     }
+        .courselUnit{
+        width:30rem;
+        height:30rem;
+        border-radius: 50%;
+        background-color:gray;
+        margin:10px;
+        }
+    .contentStyle{
+        background-color:#f5a31a;
+        width:30rem;
+        height:30rem;
+        border-radius: 50%;
+        text-align: center;
+    }
+
+    .headFooter{
+        position: relative;
+        left: 100px;
+        top:-100px;
+        display:flex;
+        flex-direction: column;
+        width:500px;
+        height: fit-content;
+       .firstL{
+           display: flex;
+           width:165px;
+           height: 25px;
+           justify-content: space-between;
+       }
+       .secondL{
+           width: 500px;
+           height: 69px;
+           background: #F6FAF8;
+           border-radius: 10px;
+           display: flex;
+           justify-content: space-evenly;
+           align-items: center;
+           flex-direction: row;
+           text-decoration: underline;
+           p{
+               border-left: 1px solid black;
+           }
+          
+       }
+    }
+    
+   
+    .divider{
+        position: relative;
+        top:50px;
+        display: flex;
+        align-items: center;
+        hr.solid{
+            width:550px;
+            height: 0px;
+            border-top: 1px solid #C4C4C4;
+        }
+        .wimage{
+            position: relative;
+            background-image: url("../static/assets/wheatCustomised.svg");
+            background-repeat: repeat;
+            width:210px;
+            height:20px;
+            color:#f5a31a;
+        }
+    }
+   
+
+    
+    
+
+
+
+
+    //     .landing-cards {
+    //         height: '70h' !important;
+    //         background-color: '#F1F6F5' !important;
+    //         align-content: 'center' !important;
+    //     }
+
+    //     .landing-card-title {
+    //         text-align: center;
+    //        font-size: xx-large;
+    //     }
+        
+    //     .landing-page-text {
+    //        font-size: medium;
+    //         margin-inline: 4vw;
+    //     }
+
+    //     .landing-image {
+    //         width: '65vw';
+    //         height: '79vh';
+    //         border-radius: '2vh';
+    //     }
+
+    //     .animate-alert {
+    //         animation: warning-banner 30s ; // infinite 20s;
+    //         width: fit-content;
+    //         z-index: 0 !important;
+    //     }
+
+    //     .home-content {
+    //         position: absolute;
+    //         left: 5rem;
+    //         top: 6rem;
+    //         width: fit-content;
+    //         height: fit-content;
+    //         padding: 2rem;
+    //         -webkit-backdrop-filter: blur(1.25rem);
+    //         backdrop-filter: blur(1.25rem);
+    //         border-radius: 0.5rem;
+    //         background-color: rgba($color: #000000, $alpha: 0.2);
+    //     }
+
+    //     // Kannada Styling
+    //     .home-content-kn {
+    //         position: absolute;
+    //         left: 5rem;
+    //         top: 6rem;
+    //         width: fit-content;
+    //         height: fit-content;
+    //         padding: 2rem;
+    //         -webkit-backdrop-filter: blur(1.25rem);
+    //         backdrop-filter: blur(1.25rem);
+    //         border-radius: 0.5rem;
+    //         background-color: rgba($color: #000000, $alpha: 0.2);
+    //     }
+
+    //     .logo {
+    //         border-radius: 0.5rem;
+    //     }
+
+    //     .home-paragraph {
+    //         margin-top: 2rem;
+
+    //         .margin-none {
+    //             margin: 0;
+    //         }
+    //     }
+
+    //     .explore-vb-btn {
+    //         background-color: #f5a31a !important;
+    //         border-color: #f5a31a !important;
+    //         border-radius: 0.2rem;
+    //         margin: 1rem 0;
+    //     }
+     
 }
 
 .fixed-landing-page-banner {
@@ -131,14 +309,14 @@ $col-shade-green: #12805c;
         margin-right: 0.5rem;
 
         .fixed-title {
-            font-size: 1.5rem;
+        font-size: 1.5rem;
             width: 10rem;
             margin: 0;
         }
 
         // Kannada Styling
         .fixed-title-kn {
-            font-size: large;
+        font-size: large;
             width: 10rem;
             margin: 0;
         }
@@ -146,251 +324,796 @@ $col-shade-green: #12805c;
         .join-us-reg {
             width: 10rem;
             height: 3rem;
-            font-size: 1.2rem;
+        font-size: 1.2rem;
         }
     }
 }
 
 #aim {
-    scroll-margin: 6rem;
-
-    .aim-title {
-        padding: 1rem;
-        padding-bottom: 0rem;
-        font-size: 3rem;
-    }
-
-    // Kannada Styling
-    .aim-title-kn {
-        padding: 1rem;
-        font-size: 2rem;
-        padding-bottom: 0rem;
-    }
-
-    .handshake-image {
-        float: right;
-        position: relative;
-        bottom: 5rem;
-    }
-
-    .aim-card-row {
-        margin: auto;
-        width: 100%;
-        position: relative;
-        bottom: 10rem;
-
-        .card-col {
-            padding-left: 3rem;
+width: 100%;
+position: relative;
+height: 115rem;
+display: flex;
+align-items: center;
+flex-direction: column;
+z-index: 1;
+// background-color: #12805c;
+.aim-wrapper{
+    position: relative;
+    top:150px;
+    display: flex;
+    // background-color: #12805c;
+    flex-direction: column;
+justify-content: space-evenly;
+align-items: center;
+.lastContent{
+    position: relative;
+    width:1000px;
+    height:400px;
+    z-index: 0;
+    overflow-y: hidden;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    // background-color: #12805c;
+    div {
+        div{
+        font-family: Roboto;
+        font-style: normal;
+        font-weight: bold;
+        font-size: 36px;
         }
-
-        .card-col-two {
-            padding-left: 8rem;
+        p{
+        width:400px;
+        height: 105px;
+        margin-top: 50px;
+        font-family: Roboto;
+        font-style: normal;
+        font-weight: normal;
+        font-size: 14px;
+    }
+    }
+    .videoContent{
+        border-radius: 20px;
         }
-
-        .aim-card {
-            background-color: $col-shade-green;
-            width: 12.5rem;
-            border-radius: 0.5rem;
-            height: 15rem;
-            border-radius: 0.2rem;
-            display: inline-flex;
-            margin: 1rem auto;
+}
+}
+.aimHead p{
+width:19.375rem;
+height: 2.625rem;
+font-family: Roboto;
+font-style: normal;
+font-weight: bold;
+font-size: 36px;
+line-height: 42px;
+text-align: center;
+}
+.aimSecondHead p{
+    width: 39.813rem;
+    height: 2.25rem;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 200;
+    font-size: 24px;
+    line-height: 150%;
+    text-align: center;
+}
+.seller-buyer-tag{
+    position: relative;
+    left:15px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width:1100px;
+    p span{
+    font-size: 30px;
+    }
+}
+.seller-buyer-advantage{
+    position: relative;
+    width: 1100px;
+    justify-content: space-between;
+    left:15px;
+    display: flex;
+    flex-direction: row;
+     .seller-buyer-points{
+        display: flex;
+        justify-content: flex-start;
+        justify-items: center;
+        flex-direction: row;
+        width:370px;
+        height: 60px;
+        margin: 5px;
+        padding: 10px;
+        div{
+            width:40px;
+            height: 40px;
+            background-color:  #F7682B;
+            border-radius: 50%;
             text-align: center;
+            text-justify: center;
             font-size: large;
-            line-height: 1;
+            color:#FFFFFF;
         }
-
-        // Kannada Styling
-        .aim-card-kn {
-            background-color: $col-shade-green;
-            width: 12.5rem;
-            border-radius: 0.5rem;
-            height: 14rem;
-            border-radius: 0.2rem;
-            display: inline-flex;
-            margin: 1rem auto;
-            text-align: center;
-            font-size: small;
-            line-height: 1;
+        p{
+            width:300px;
+            height: 51px;
+            background-color: #F6FAF8;
+            margin-left: 5px;
+            line-height: normal;
+            font-family: Roboto;
+            font-style: normal;
+            font-size: 14px;
         }
-
-        .hex1 {
-            width: 0;
-            margin: 0 auto;
-            border-radius: 0.3rem;
-            margin-top: 1rem;
-            border-bottom: 1.5rem solid #32886c;
-            border-left: 2.5rem solid transparent;
-            border-right: 2.5rem solid transparent;
-        }
-
-        .hex2 {
-            margin: 0 auto;
-            width: 4.78rem;
-            height: 2.5rem;
-            background-color: #32886c;
-
-            .icon-inside-hex {
-                height: 3rem;
+    }
+    
+}
+.manyMore{
+   margin-top: 10px;
+font-family: Roboto;
+font-size: 18px;
+}
+hr.solid{
+    width: 224px;
+}
+.seventhBox{
+width:583px;
+height: 72px;font-family: Roboto;font-style: normal;font-weight: 600;font-size: 24px;
+line-height: 150%;
+text-align: center;
+}
+.eigthBox{
+    width:1000px;
+    height: 400px;
+    .insideBox{
+        width:1000px;
+        height: 170px;
+        margin-top: 50px;
+        display: flex;
+        justify-content: center;
+        flex-direction: row;
+        .firstBoxes{
+            width: 180px;
+            height: 170px;
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+            margin:10px;
+            padding:10px;
+            div{
+                width: 100px;
+                height: 100px;
+                margin-top: 5px;
+                border-radius: 50%;
+                background-color:rgba(18, 128, 92, 0.04);
+                text-align: center;
+                display: flex;
+                align-items: center;
+                flex-direction: column;
+                img{
+                    width:60px;
+                    height: 60px;
+                    border-radius: 50%;       
+                }
+                p{
+                    width:150px;
+                    height: 21px;
+                font-family: Roboto;
+                font-style: normal;
+                font-weight: bold;
+                font-size: 18px;
+                }
+            }
+            p{
+                text-align: center;
+            font-family: Roboto;
+            font-style: normal;
+            font-weight: normal;
+            font-size: 14px;
             }
         }
-
-        .hex3 {
-            margin: 0 auto;
-            border-radius: 0.3rem;
-            margin-bottom: 1rem;
-            width: 0;
-            border-top: 1.5rem solid #32886c;
-            border-left: 2.5rem solid transparent;
-            border-right: 2.5rem solid transparent;
-        }
     }
-
-    // Kannada Styling
-    .aim-video-link-kn {
-        font-size: 1rem;
-        margin: 0 5rem;
+}
+.ninethBox{
+    position: relative;
+font-family: Roboto;
+font-style: normal;
+font-weight: 300;
+font-size: 24px;
+    top:100px;
+}
+.tenthBox{
+    position: relative;
+    top:100px;
+    display: flex;
+    justify-content: space-around;
+    flex-direction: row;
+    width:800px;
+    height:140px;
+    // background-color: #f5a31a;
+    div{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        width: 130px;
+        height: 130px;
+        border-radius: 50%;
+        background-color: rgba(245, 163, 26, 0.05);
+        margin: 10px;
+        text-align: center;
+        .firstheading{
+            width:240px;
+            height: 21px;
+        font-family: Roboto;
+        font-style: normal;
+        font-weight: bold;
+        font-size: 18px;
+            }
+            p{
+                width:240px;
+                height: 21px;
+            font-family: Roboto;
+            font-style: normal;
+            font-weight: normal;
+            font-size: 14px;
+            }
+    }
+}
+.divider{
+    position: relative;
+    top:120px;
+    display: flex;
+    align-items: center;
+    hr.solid{
+        width:520px;
+        height: 0px;
+        border-top: 1px solid #C4C4C4;
+        overflow: hidden;
+    }
+    .wimage{
         position: relative;
-        bottom: 10rem;
+        background-image: url("../static/assets/wheatCustomised.svg");
+        background-repeat: repeat;
+        width:210px;
+        height:20px;
+        color:#f5a31a;
     }
+}
+//     scroll-margin: 6rem;
 
-    .aim-video-link {
-        font-size: 1.2rem;
-        margin: 0 6rem;
-        position: relative;
-        bottom: 10rem;
-    }
+//     .aim-title {
+//         padding: 1rem;
+//         padding-bottom: 0rem;
+//        font-size: 3rem;
+//     }
+
+//     // Kannada Styling
+//     .aim-title-kn {
+//         padding: 1rem;
+//        font-size: 2rem;
+//         padding-bottom: 0rem;
+//     }
+
+//     .handshake-image {
+//         float: right;
+//         position: relative;
+//         bottom: 5rem;
+//     }
+
+//     .aim-card-row {
+//         margin: auto;
+//         width: 100%;
+//         position: relative;
+//         bottom: 10rem;
+
+//         .card-col {
+//             padding-left: 3rem;
+//         }
+
+//         .card-col-two {
+//             padding-left: 8rem;
+//         }
+
+//         .aim-card {
+//             background-color: $col-shade-green;
+//             width: 12.5rem;
+//             border-radius: 0.5rem;
+//             height: 15rem;
+//             border-radius: 0.2rem;
+//             display: inline-flex;
+//             margin: 1rem auto;
+//             text-align: center;
+//            font-size: large;
+//             line-height: 1;
+//         }
+
+//         // Kannada Styling
+//         .aim-card-kn {
+//             background-color: $col-shade-green;
+//             width: 12.5rem;
+//             border-radius: 0.5rem;
+//             height: 14rem;
+//             border-radius: 0.2rem;
+//             display: inline-flex;
+//             margin: 1rem auto;
+//             text-align: center;
+//            font-size: small;
+//             line-height: 1;
+//         }
+
+//         .hex1 {
+//             width: 0;
+//             margin: 0 auto;
+//             border-radius: 0.3rem;
+//             margin-top: 1rem;
+//             border-bottom: 1.5rem solid #32886c;
+//             border-left: 2.5rem solid transparent;
+//             border-right: 2.5rem solid transparent;
+//         }
+
+//         .hex2 {
+//             margin: 0 auto;
+//             width: 4.78rem;
+//             height: 2.5rem;
+//             background-color: #32886c;
+
+//             .icon-inside-hex {
+//                 height: 3rem;
+//             }
+//         }
+
+//         .hex3 {
+//             margin: 0 auto;
+//             border-radius: 0.3rem;
+//             margin-bottom: 1rem;
+//             width: 0;
+//             border-top: 1.5rem solid #32886c;
+//             border-left: 2.5rem solid transparent;
+//             border-right: 2.5rem solid transparent;
+//         }
+//     }
+
+//     // Kannada Styling
+//     .aim-video-link-kn {
+//        font-size: 1rem;
+//         margin: 0 5rem;
+//         position: relative;
+//         bottom: 10rem;
+//     }
+
+//     .aim-video-link {
+//        font-size: 1.2rem;
+//         margin: 0 6rem;
+//         position: relative;
+//         bottom: 10rem;
+//     }
+// }
 }
 
 #ecosystem {
-    scroll-margin: 6rem;
+position: relative;
+top:0px;
+// background-color: #12805c;
+width: 100%;
+height: 1300px;
+z-index: 1;
+.ecosystem-wrapper{
     position: relative;
-    bottom: 10rem;
-
-    .tractor-image {
-        padding-top: 0.5rem;
-        margin-left: 3rem;
+    top:100px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    img{
+        margin-top: 50px;
     }
-
-    .bulletin-image {
-        float: left;
-        padding: 1rem 1rem;
-        background-color: #e2e8d5;
-        border-radius: 3rem;
-        margin-bottom: 1.5rem;
-
-        img {
-            font-size: 1.2rem;
-        }
-    }
-
-    .nature-image {
-        float: right;
+    .divider{
         position: relative;
-        top: 9rem;
-        right: 2rem;
-    }
-
-    // Kannada Styling
-    .ecosystem-content-kn {
-        color: #12805c !important;
-        background-color: #e0efea;
-        width: 50rem;
-        border-radius: 0.3rem;
-        height: fit-content;
-        margin: 0 auto;
-        margin-bottom: 1rem;
-        padding-left: 2rem;
-
-        .ecosystem-title-kn {
-            padding-top: 1rem;
-            padding-right: 1rem;
-            margin-top: 0;
-            font-size: 2rem;
+        top:220px;
+        display: flex;
+        align-items: center;
+        hr.solid{
+            width:520px;
+            height: 0px;
+            border-top: 1px solid #C4C4C4;
+            overflow: hidden;
         }
-
-        .bulletin-text-kn {
-            padding-top: 1rem;
-            padding-left: 1rem;
-            font-size: 1rem;
-            line-height: 1.7rem;
-        }
-    }
-
-    .ecosystem-content {
-        color: #12805c !important;
-        background-color: #e0efea;
-        width: 90%;
-        border-radius: 0.3rem;
-        height: fit-content;
-        margin: 0 auto;
-        margin-bottom: 1rem;
-        padding-left: 2rem;
-
-        .ecosystem-title {
-            padding-top: 1rem;
-            padding-right: 1rem;
-            margin-top: 0;
-            font-size: 2rem;
-        }
-
-        .bulletin-text {
-            padding-top: 1rem;
-            padding-left: 1rem;
-            font-size: 1.5rem;
-            line-height: 1.7rem;
+        .wimage{
+            position: relative;
+            background-image: url("../static/assets/wheatCustomised.svg");
+            background-repeat: repeat;
+            width:210px;
+            height:20px;
+            color:#f5a31a;
         }
     }
 }
-
-#commodities {
+.firstHead{
+    width: 401px;
+height: 42px;font-family: Roboto;font-style: normal;font-weight: bold;font-size: 36px;
+}
+.android-phone-section{
     position: relative;
-    bottom: 10rem;
-    scroll-margin: 6rem;
-    padding-left: 2.5rem;
-
-    // Kannada Styling
-    .commodities-title-kn {
-        font-size: 2rem;
-    }
-
-    .commodities-title {
-        font-size: 2.5rem;
-    }
-
-    // Kannada Styling
-    .commodities-paragraph-kn {
-        width: 100%;
-        font-size: 1rem;
-        line-height: 2rem;
-    }
-
-    .commodities-paragraph {
-        width: 100%;
-        font-size: 1rem;
-        line-height: 2rem;
-    }
-
-    .commodities-list {
-        float: left;
-        width: 10rem;
-        margin-top: 1.5rem;
-    }
-
-    .commodities-name {
-        font-size: large;
-    }
-
-    .commodities-image {
-        width: 9rem;
-        height: 10rem;
-    }
-
-    .wheat-image {
-        margin-top: 1rem;
-        width: 90%;
+    left:25px;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    width: 1000px;
+    height: 600px;
+    // background-color: #f5a31a;
+    .Android-sec{
+        width:200px;
+        height: 600px;
+        margin:20px;
+        margin-top: 0px;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        .Phone-sec{
+            width: 200px;
+            height:380px;
+            border-radius:30px;
+            border: 3px solid #b8c6db;
+            background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#474a4b), color-stop(50%,#3c413f), color-stop(60%,#0a0e0a), color-stop(100%,#0a0809));
+            display: flex;
+            flex-direction: column;
+            justify-content: space-evenly;
+            align-items: center;
+            box-shadow: 10px 10px 8px #888888;
+            .fsec{
+                width:100px;
+                height: 20px;
+                position: relative;
+                left:10px;
+                // background-color: #12805c;
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                .notificationLight{
+                    width:15px;
+                    height: 10px;
+                    background-color: #182c3b;
+                    border-radius: 30%;
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: center;
+                    align-items: center;
+                    div{
+                        width: 5px;
+                        height: 5px;
+                        border-radius: 50%;
+                        animation-name: notification;
+                        animation-duration: 2s;
+                        animation-iteration-count: infinite;
+                    }
+                    @keyframes notification {
+                        0%{background-color: #f5a31a;}
+                        25%{background-color: red;}
+                        50%{background-color: #0a0e0a;}
+                        100%{background-color: #339273;}
+                    }
+                }
+                .speaker{
+                    width:50px;
+                    height: 5px;
+                    background-color: #182c3b;
+                    border-radius: 10%;
+                    margin-left: 5px;
+                }
+                .camera{
+                    width: 12px;
+                    height: 12px;
+                    border-radius: 50%;
+                    background-color: #182c3b;
+                    margin-left: 5px;
+                }
+            }
+            .midsec{
+               .screen1,.screen2,.screen3,.screen4{
+                    width:165px;
+                    height: 290px;
+                    border-radius: 2%;
+                }
+                .screen1,.screen2,.screen3,.screen4{
+                    animation-duration: 10s;
+                    animation-iteration-count: infinite;
+                    &:hover{
+                        animation-play-state: paused;
+                        cursor: pointer;
+                    }
+                }
+                .screen1{
+                    animation-name:screen1;
+                }
+                .screen2{
+                    animation-name: screen2;
+                }
+                .screen3{
+                    animation-name: screen3;
+                }
+                .screen4{
+                    animation-name: screen4;
+                }
+                @keyframes screen1 {
+                    0%   {background-color: rgb(219, 211, 211);}
+                    100%  {background:url('../static/assets/iPhone SE - 35 3.png')};
+                   }
+                   @keyframes screen2 {
+                    0%   {background-color: rgb(219, 211, 211);}
+                    100%  {background:url('../static/assets/iPhone SE - 21 1.png')};
+                   }
+                   @keyframes screen3 {
+                    0%   {background-color: rgb(219, 211, 211);}
+                    100%  {background:url('../static/assets/iPhone SE - 21 2.png')};
+                   }
+                   @keyframes screen4 {
+                    0%   {background-color: rgb(219, 211, 211);}
+                    100%  {background:url('../static/assets/iPhone SE - 21 3.png')};
+                   }
+            }
+            .lastsec{
+                width: 200px;
+                height: 20px;
+                // background-color: #12805c;
+                display: flex;
+                justify-content: space-around;
+                align-items: center;
+                .rectangle{
+                width:10px;
+                height: 10px;
+                border:2px solid grey;
+                border-radius: 2px;
+                }
+                .circle{
+                    width: 10px;
+                    height: 10px;
+                    border-radius: 50%;
+                    border: 2px solid grey;
+                }
+                .triangle{
+                    width: 0; 
+                    height: 0; 
+                    border-top: 5px solid transparent;
+                    border-bottom: 5px solid transparent; 
+                    border-right:5px solid grey; 
+                }
+            }
+        }
+//         .numCircle{
+//             width:40px;
+//             height: 40px;
+//             border-radius: 50%;
+//             background-color:  rgba(245, 163, 26, 0.32);
+//             text-align: center;
+//             color:white;
+//            font-weight: 900;
+//font-size: 18px;
+//         }
+//         .phoneSection-1,.phoneSection-2,.phoneSection-3,.phoneSection-4,.phoneSection-5{
+//             width:250px;
+//             height: 410px;
+//         }
+//         .phoneSection-1{
+//             background: url('../static/assets/Rectangle 224.png');
+//             background-repeat: no-repeat;
+//         }
+//         .phoneSection-2{
+//             background: url('../static/assets/Rectangle 225.png');
+//             background-repeat: no-repeat;
+//         }
+//         .phoneSection-3{
+//             background: url('../static/assets/Rectangle 226.png');
+//             background-repeat: no-repeat;
+//         }
+//         .phoneSection-4{
+//             background: url('../static/assets/Rectangle 227.png');
+//             background-repeat: no-repeat;
+//         }
+//         .phoneSection-5{
+//             background: url('../static/assets/Rectangle 228.png');
+//             background-repeat: no-repeat;
+//         }
+//         .phone-text{
+//             display: flex;
+//             flex-direction: row;
+//             justify-content: space-between;
+//             height: 80px;
+//             width: 200px;
+//             padding: 5px;
+//             div{
+//                 width: 5px;
+//                 height: 42px;
+//                 background:url('../static/assets/Rectangle 231.png')
+//             }
+//         }
     }
 }
+img{
+    position: relative;
+    top:100px;
+}
+.keyFeatures{
+    position: relative;
+    top:140px;
+font-family: Roboto;
+font-style: normal;
+font-weight: 600;
+font-size: 24px;
+}
+.lastContent-ecosystem{
+    position: relative;
+    top:180px;
+    width:1200px;
+    height: 150px;
+    // background-color: #f5a31a;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+    .lastContentBadges{
+        width:100px;
+        height: 100px;
+        border-radius: 50%;
+        background-color:  rgba(245, 163, 26, 0.05);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+       div{
+           position: relative;
+           top:-180px;
+            width:40px;
+            height: 40px;
+            margin:2px;
+        }
+        .insideText{
+            width:202.6px;
+            height: 21px;
+        font-family: Roboto;
+        font-style: normal;
+        font-weight: bold;
+        font-size: 18px;
+            margin:0px;
+        }
+        .outerText{
+            width: 202.6px;
+            height: 40px;
+        font-family: Roboto;
+        font-style: normal;
+        font-weight: normal;
+        font-size: 14px;
+        }
+    }
+}
+    // scroll-margin: 6rem;
+    // position: relative;
+    // bottom: 10rem;
+
+    // .tractor-image {
+    //     padding-top: 0.5rem;
+    //     margin-left: 3rem;
+    // }
+
+    // .bulletin-image {
+    //     float: left;
+    //     padding: 1rem 1rem;
+    //     background-color: #e2e8d5;
+    //     border-radius: 3rem;
+    //     margin-bottom: 1.5rem;
+
+    //     img {
+    //        font-size: 1.2rem;
+    //     }
+    // }
+
+    // .nature-image {
+    //     float: right;
+    //     position: relative;
+    //     top: 9rem;
+    //     right: 2rem;
+    // }
+
+    // // Kannada Styling
+    // .ecosystem-content-kn {
+    //     color: #12805c !important;
+    //     background-color: #e0efea;
+    //     width: 50rem;
+    //     border-radius: 0.3rem;
+    //     height: fit-content;
+    //     margin: 0 auto;
+    //     margin-bottom: 1rem;
+    //     padding-left: 2rem;
+
+    //     .ecosystem-title-kn {
+    //         padding-top: 1rem;
+    //         padding-right: 1rem;
+    //         margin-top: 0;
+    //        font-size: 2rem;
+    //     }
+
+    //     .bulletin-text-kn {
+    //         padding-top: 1rem;
+    //         padding-left: 1rem;
+    //        font-size: 1rem;
+    //         line-height: 1.7rem;
+    //     }
+    // }
+
+    // .ecosystem-content {
+    //     color: #12805c !important;
+    //     background-color: #e0efea;
+    //     width: 90%;
+    //     border-radius: 0.3rem;
+    //     height: fit-content;
+    //     margin: 0 auto;
+    //     margin-bottom: 1rem;
+    //     padding-left: 2rem;
+
+    //     .ecosystem-title {
+    //         padding-top: 1rem;
+    //         padding-right: 1rem;
+    //         margin-top: 0;
+    //        font-size: 2rem;
+    //     }
+
+    //     .bulletin-text {
+    //         padding-top: 1rem;
+    //         padding-left: 1rem;
+    //        font-size: 1.5rem;
+    //         line-height: 1.7rem;
+    //     }
+    // }
+}
+
+// #commodities {
+//     position: relative;
+//     bottom: 10rem;
+//     scroll-margin: 6rem;
+//     padding-left: 2.5rem;
+
+//     // Kannada Styling
+//     .commodities-title-kn {
+//        font-size: 2rem;
+//     }
+
+//     .commodities-title {
+//        font-size: 2.5rem;
+//     }
+
+//     // Kannada Styling
+//     .commodities-paragraph-kn {
+//         width: 100%;
+//        font-size: 1rem;
+//         line-height: 2rem;
+//     }
+
+//     .commodities-paragraph {
+//         width: 100%;
+//        font-size: 1rem;
+//         line-height: 2rem;
+//     }
+
+//     .commodities-list {
+//         float: left;
+//         width: 10rem;
+//         margin-top: 1.5rem;
+//     }
+
+//     .commodities-name {
+//        font-size: large;
+//     }
+
+//     .commodities-image {
+//         width: 9rem;
+//         height: 10rem;
+//     }
+
+//     .wheat-image {
+//         margin-top: 1rem;
+//         width: 90%;
+//     }
+
 
 #users {
     scroll-margin: 6rem;
@@ -400,12 +1123,12 @@ $col-shade-green: #12805c;
     // Kannada Styling
     .user-title-kn {
         text-align: center;
-        font-size: 2rem;
+    font-size: 2rem;
     }
 
     .user-title {
         text-align: center;
-        font-size: 2.5rem;
+    font-size: 2.5rem;
     }
 
     .user-column {
@@ -415,7 +1138,7 @@ $col-shade-green: #12805c;
         .user-card-kn {
             background-color: #e0efea;
             width: fit-content;
-            font-size: 1rem;
+        font-size: 1rem;
             height: 26rem;
             text-align: center;
         }
@@ -423,7 +1146,7 @@ $col-shade-green: #12805c;
         .user-card {
             background-color: #e0efea;
             width: fit-content;
-            font-size: 1rem;
+        font-size: 1rem;
             height: 26rem;
             text-align: center;
         }
@@ -431,16 +1154,16 @@ $col-shade-green: #12805c;
 
     // Kannada Styling
     .card-subtitle-kn {
-        font-size: 1rem;
+    font-size: 1rem;
     }
 
     // Kannada Styling
     .card-text-kn {
-        font-size: 0.9rem;
+    font-size: 0.9rem;
     }
 
     .card-text {
-        font-size: 1rem;
+    font-size: 1rem;
     }
 
     .user-image {
@@ -472,12 +1195,12 @@ $col-shade-green: #12805c;
     // Kannada Styling
     .about-us-title-kn {
         padding-top: 1rem;
-        font-size: 2rem;
+    font-size: 2rem;
     }
 
     .about-us-title {
         padding-top: 1rem;
-        font-size: 2.5rem;
+    font-size: 2.5rem;
     }
 
     .outline-image {
@@ -489,12 +1212,12 @@ $col-shade-green: #12805c;
 
     // Kannada Styling
     .outline-paragraph-kn {
-        font-size: 1rem;
+    font-size: 1rem;
         width: 90%;
     }
 
     .outline-paragraph {
-        font-size: 1.2rem;
+    font-size: 1.2rem;
         width: 90%;
     }
 
@@ -507,13 +1230,13 @@ $col-shade-green: #12805c;
         // Kannada Styling
         .card-paragraph-kn {
             width: 15rem;
-            font-size: 1rem;
+        font-size: 1rem;
             margin: 0 auto;
         }
 
         .card-paragraph {
             width: 18rem;
-            font-size: large;
+        font-size: large;
             margin: 0 auto;
         }
     }
@@ -524,12 +1247,12 @@ $col-shade-green: #12805c;
         // Kannada Styling
         .vision-paragraph-kn {
             width: fit-content;
-            font-size: 1rem;
+        font-size: 1rem;
         }
 
         .vision-paragraph {
             width: fit-content;
-            font-size: large;
+        font-size: large;
         }
     }
 }
@@ -592,7 +1315,7 @@ $col-shade-green: #12805c;
             width: fit-content;
             display: inline-flex;
             padding: 0.3rem 1rem;
-            font-size: 1rem;
+        font-size: 1rem;
             border: 0.2rem solid #f5a31a;
             border-radius: 0.2rem;
         }
@@ -644,17 +1367,23 @@ $col-shade-green: #12805c;
 }
 
 #contactUs {
-    margin: 2.5rem;
     position: relative;
-    bottom: 10rem;
-    height: 18rem;
+    bottom: 5rem;
+    top:100px;
+    left:-75px;
+    height: 25rem;
     scroll-margin: 6rem;
+    margin:2.5rem;
+    margin-left: 1rem;
+    // margin-top: 100px;
+    width:1100px;
+    // background-color: #12805c;
 
     .contact-us-info {
-        font-size: 1.2rem;
+    font-size: 1.2rem;
 
         .anticon {
-            font-size: x-large;
+        font-size: x-large;
             color: #f5a31a;
             padding: 1rem 1rem;
         }
@@ -670,9 +1399,46 @@ $col-shade-green: #12805c;
         background-color: #fbfbfb;
         padding: 1rem;
         margin-bottom: 2rem;
+        margin-top: -90px;
 
         .feedback-form {
             padding: 1.5rem;
+        }
+    }
+}
+
+#updates{
+    position: relative;
+    top:200px;
+    left:-75px;
+    width: 1000px;
+    // height:800px;
+    padding:20px;
+    z-index: 1;
+    // background-color: #12805c;
+    margin-bottom: 10rem;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.16);
+    h2{
+        color:#12805c;
+        margin-bottom: 30px;
+    font-size: 40px;
+    }
+    .card{
+        width:900px;
+        height: 400px;
+        padding: 20px;
+        // background-color: #12805c;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-evenly;
+        align-items: center;
+        img{
+            width:400px;
+            height: 300px;
+        }
+        p{
+            text-align: center;
+        font-size: 1rem;
         }
     }
 }
@@ -705,7 +1471,7 @@ $col-shade-green: #12805c;
             text-align: left;
 
             .fixed-title {
-                font-size: 1rem;
+            font-size: 1rem;
                 position: relative;
                 left: 5rem;
             }
@@ -720,7 +1486,7 @@ $col-shade-green: #12805c;
             .join-us-reg {
                 width: 25vw;
                 height: 5vh;
-                font-size: 1rem;
+            font-size: 1rem;
                 position: relative;
                 bottom: 7rem;
                 left: 16rem;
@@ -739,7 +1505,8 @@ $col-shade-green: #12805c;
             }
 
             .landing-row {
-                display: none;
+                display:none ;
+                margin:1rem;
             }
 
             .mobile-home-content {
@@ -748,7 +1515,7 @@ $col-shade-green: #12805c;
                 text-align: center;
 
                 .home-text {
-                    font-size: 1.25rem;
+                font-size: 1.25rem;
                 }
 
                 .explore-vb-btn {
@@ -764,7 +1531,7 @@ $col-shade-green: #12805c;
 
         .aim-title {
             margin-left: 1rem;
-            font-size: 1.25rem;
+        font-size: 1.25rem;
             padding-top: 2rem;
         }
 
@@ -833,7 +1600,7 @@ $col-shade-green: #12805c;
                             width: 60vw;
                             bottom: 3rem;
                             left: 6rem;
-                            font-size: 1rem;
+                        font-size: 1rem;
                         }
                     }
                 }
@@ -862,7 +1629,7 @@ $col-shade-green: #12805c;
             padding-left: 1rem;
 
             .ecosystem-title {
-                font-size: 1.25rem;
+            font-size: 1.25rem;
                 padding-top: 2rem;
                 padding-right: 0;
             }
@@ -878,7 +1645,7 @@ $col-shade-green: #12805c;
                 .bulletin-text {
                     padding-top: 1rem;
                     padding-left: 1rem;
-                    font-size: 1rem;
+                font-size: 1rem;
                     width: 85%;
                     float: right;
                     line-height: 1.5rem;
@@ -899,13 +1666,13 @@ $col-shade-green: #12805c;
 
         .commodities-title {
             padding-left: 1rem;
-            font-size: 1.25rem;
+        font-size: 1.25rem;
         }
 
         .commodities-paragraph {
             width: 95vw;
             padding-left: 1rem;
-            font-size: 1rem;
+        font-size: 1rem;
             line-height: 1.5rem;
             margin-right: 0;
         }
@@ -918,7 +1685,7 @@ $col-shade-green: #12805c;
         }
 
         .commodities-name {
-            font-size: 1.2rem;
+        font-size: 1.2rem;
         }
 
         .commodities-image {
@@ -939,7 +1706,7 @@ $col-shade-green: #12805c;
         background-color: #ffffff;
 
         .user-title {
-            font-size: 1.25rem;
+        font-size: 1.25rem;
             margin-left: 1rem;
             padding-top: 0;
         }
@@ -950,17 +1717,17 @@ $col-shade-green: #12805c;
 
             .user-card {
                 width: 90vw;
-                font-size: 1rem;
+            font-size: 1rem;
                 height: fit-content;
                 border-radius: 0.3rem;
                 padding: 0;
 
                 .user-card-title {
-                    font-size: 1.25rem;
+                font-size: 1.25rem;
                 }
 
                 .subtitle {
-                    font-size: 1rem;
+                font-size: 1rem;
                     padding-left: 7rem;
                     text-align: left;
                 }
@@ -978,7 +1745,7 @@ $col-shade-green: #12805c;
 
                 .user-paragraph {
                     text-align: left;
-                    font-size: 1rem;
+                font-size: 1rem;
                     margin: 0;
                 }
             }
@@ -1009,7 +1776,7 @@ $col-shade-green: #12805c;
         padding: 0rem !important;
 
         .about-us-title {
-            font-size: 1.25rem;
+        font-size: 1.25rem;
             padding: 2rem;
         }
 
@@ -1023,7 +1790,7 @@ $col-shade-green: #12805c;
 
         .outline-paragraph {
             padding-left: 2rem;
-            font-size: 1rem;
+        font-size: 1rem;
             width: 90vw;
         }
 
@@ -1045,7 +1812,7 @@ $col-shade-green: #12805c;
                 float: right;
                 position: relative;
                 right: 9.5rem;
-                font-size: 1.25rem;
+            font-size: 1.25rem;
             }
 
             .card-paragraph {
@@ -1054,7 +1821,7 @@ $col-shade-green: #12805c;
                 position: relative;
                 left: 1rem;
                 bottom: 3.5rem;
-                font-size: 1rem;
+            font-size: 1rem;
             }
         }
 
@@ -1077,7 +1844,7 @@ $col-shade-green: #12805c;
 
         .vision-div-title,
         .vision-paragraph {
-            font-size: 1rem !important;
+        font-size: 1rem !important;
         }
     }
 
@@ -1091,13 +1858,13 @@ $col-shade-green: #12805c;
         text-align: left;
 
         .team-title {
-            font-size: 1.25rem;
+        font-size: 1.25rem;
             padding-left: 2rem;
             margin: 0 0;
         }
 
         .team-sub-title {
-            font-size: 1.25rem;
+        font-size: 1.25rem;
             text-align: left;
             padding: 1.5rem;
             color: #182c3b !important;
@@ -1117,7 +1884,7 @@ $col-shade-green: #12805c;
             padding: 2rem;
             padding-bottom: 0rem;
             margin: 0;
-            font-size: 1.2rem;
+        font-size: 1.2rem;
         }
 
         .accept-image {
@@ -1137,7 +1904,7 @@ $col-shade-green: #12805c;
             .ant-tabs-tab-active {
                 width: 55%;
                 padding-left: 0.2rem;
-                font-size: 1rem;
+            font-size: 1rem;
                 border: 0.1rem solid #f5a31a;
             }
 
@@ -1151,13 +1918,13 @@ $col-shade-green: #12805c;
                     li {
                         padding: 0rem;
                         padding-top: 1rem;
-                        font-size: 1rem;
+                    font-size: 1rem;
                     }
                 }
 
                 .read-more-button {
                     padding-bottom: 2rem;
-                    font-size: 1.2rem;
+                font-size: 1.2rem;
                     position: relative;
                     right: 2.2rem;
                 }
@@ -1174,7 +1941,7 @@ $col-shade-green: #12805c;
         bottom: -5vh;
 
         .contact-us-title {
-            font-size: 1.2rem;
+        font-size: 1.2rem;
             padding: 2rem;
             margin: 0;
             padding-bottom: 0rem;
@@ -1182,7 +1949,7 @@ $col-shade-green: #12805c;
 
         .contact-us-info {
             width: max-content;
-            font-size: 1rem;
+        font-size: 1rem;
             position: relative;
             left: 2rem;
             top: 2vh;
@@ -1216,7 +1983,7 @@ $col-shade-green: #12805c;
             background-color: #ffffff;
 
             .write-feedback-title {
-                font-size: 1.2rem;
+            font-size: 1.2rem;
             }
 
             .feedback-form {

@@ -14,7 +14,7 @@ import MobileRegisterModal from './app-components/mobileRegisterModal';
 import LandingPage from './landing-page/index';
 import Home from './landing-page/home';
 import PrimaryBtn from './app-components/primaryBtn';
-import Banner from './static/assets/banner.png';
+// import Banner from './static/assets/banner.png';
 import KannadaBanner from './static/assets/banner_Kannada.png';
 import Join from './static/assets/friends.svg';
 import './App.scss';
@@ -44,7 +44,7 @@ const App = (props: { history: History }) => {
     const [openMobileRegModel, setMobileRegModal] = useState(false);
     const { t } = useTranslation('common');
     const customStyles = isEnglish(t('language')) ? englishStyling : kannadaStyling;
-    const banner = isEnglish(t('language')) ? Banner : KannadaBanner;
+    // const banner = isEnglish(t('language')) ? Banner : KannadaBanner;
     const [showLandingPage, setLandingPage] = useState(false);
     const [showLogin, setLogin] = useState(false);
 
@@ -145,18 +145,18 @@ const App = (props: { history: History }) => {
             {showLandingPage &&
                 <React.Fragment>
                     <div className='main-content'>
-                        <Home />
+                        <Home history={history} popUpTrigger setSignUpPopupVisible={setSignUpPopupVisible}/>
                         <Row>
                             <Col span={4} className='mobile-display-none'>
                                 <div className='fixed-landing-page-banner'>
-                                    <Image src={banner} preview={false} />
+                                    {/* <Image src={banner} preview={false} /> */}
                                 </div>
                             </Col>
                             <Col span={16}>
                                 <LandingPage />
                             </Col>
                             <Col span={4}>
-                                <div className='fixed-card-join'>
+                                {/* <div className='fixed-card-join'>
                                     <Card className='join-us'>
                                         <Space direction='vertical'>
                                             <Title className={`col-green ${customStyles.fixedTitle}`} level={3}>
@@ -170,7 +170,7 @@ const App = (props: { history: History }) => {
                                             />
                                         </Space>
                                     </Card>
-                                </div>
+                                </div> */}
                             </Col>
                         </Row>
                     </div>

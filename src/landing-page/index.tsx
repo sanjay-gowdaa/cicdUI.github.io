@@ -8,20 +8,22 @@ import User from './user';
 import Legal from './legal';
 import ContactUs from './contactUs';
 import Team from './team';
+import Updates from './updates';
 
-import './landingPage.scss';
+
 
 const LandingPage = () => {
     return (
         <React.Fragment>
             <Aim />
             <Ecosystem />
-            <Commodities />
+            {/* <Commodities />
             <User />
             <AboutUs />
             <Team />
-            <Legal />
+            <Legal /> */}
             <ContactUs />
+            <Updates/>
         </React.Fragment>
     );
 };

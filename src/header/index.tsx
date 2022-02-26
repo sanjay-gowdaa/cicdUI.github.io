@@ -15,6 +15,7 @@ import DefaultBtn from '../app-components/defaultBtn';
 import { isEnglish } from '../static/translations/constants';
 import LoginPopup from '../login-ui/login-popup';
 
+
 const UserBasicActions = ({ history, popUpTrigger }: { history: History, popUpTrigger: any }) => {
     const { signUpPopupVisible, setSignUpPopupVisible } = popUpTrigger;
     const { t } = useTranslation('common');
@@ -23,7 +24,7 @@ const UserBasicActions = ({ history, popUpTrigger }: { history: History, popUpTr
     return (
         <div className='display-flex-row align-center action-buttons'>
             <DefaultBtn
-                className='vikas-btn-radius wid150 custom-login-button'
+                className='vikas-btn-radius custom-login-button'
                 content={t('landing_page.actions.login')}
                 onClick={() => setLogin(true)}
                 size='large'
@@ -77,7 +78,7 @@ const Header = (headerProps: any) => {
     return (
         <div className='landing-page-header-bar'>
             <Image className='logo' src={logo} preview={false} />
-            <Breadcrumb className='header-breadcrumb' separator=' '>
+            <Breadcrumb className='header-breadcrumb' separator='|'>
                 <Breadcrumb.Item href='#home'>{t('landing_page.header.breadcrumb.home')}</Breadcrumb.Item>
                 <Breadcrumb.Item href='#aim'>{t('landing_page.header.breadcrumb.aim')}</Breadcrumb.Item>
                 <Breadcrumb.Item href='#ecosystem'>{t('landing_page.header.breadcrumb.ecosystem')}</Breadcrumb.Item>
@@ -87,6 +88,7 @@ const Header = (headerProps: any) => {
                 <Breadcrumb.Item href='#team'>{t('landing_page.header.breadcrumb.team')}</Breadcrumb.Item>
                 <Breadcrumb.Item href='#legal'>{t('landing_page.header.breadcrumb.legal')}</Breadcrumb.Item>
                 <Breadcrumb.Item href='#contactUs'>{t('landing_page.header.breadcrumb.contact_us')}</Breadcrumb.Item>
+                <Breadcrumb.Item href ='#updates'>Updates</Breadcrumb.Item>
             </Breadcrumb>
             <MobileDrawer />
             {showActions ? <HeaderActions isLoggedIn={isLoggedIn} history={history} popUpTrigger={popUpTrigger} /> : null}
