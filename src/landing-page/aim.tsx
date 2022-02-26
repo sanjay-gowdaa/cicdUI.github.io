@@ -163,7 +163,7 @@ const Aim = () => {
                     </hr>
                 </div>
             </div>
-            //SINCE THIS IS AN EXTENDED POC I HAVE COMMENTED THE OLD CODE!!!
+            {/* SINCE THIS IS AN EXTENDED POC I HAVE COMMENTED THE OLD CODE!!! */}
             {/* <Modal
                 visible={viewVideo}
                 onCancel={() => setVideo(!viewVideo)}
