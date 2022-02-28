@@ -514,7 +514,7 @@ export const transactionAction = (
     };
 };
 
-/** Get selle transaction list based on the transaction status
+/** Get seller transaction list based on the transaction status
  * 
  * @param { TransactionStatus } transactionStatus - Transaction status
  */
