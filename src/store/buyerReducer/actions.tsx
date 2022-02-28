@@ -451,7 +451,7 @@ export const getMatchesForBuyerCrops = (cropsList: Array<ProduceModel>) => {
                     ...additionalInfo
                 };
                 const historyResponse = await fetchUserHistory({ buyerId: output.buyer_id, produce: output.produce, sellerId: output.seller_id });
-                const destinyResponse = await fetchDestinyId(parseIDfromHash(output.buyer_id));
+                const destinyResponse = await fetchDestinyId(parseIDfromHash(output.seller_id));
                 const { count, history } = historyResponse;
                 const cropImageList = await getSellerCropImages(output.seller_id, output.seller_crop_id);
                 output = { ...output, count, history, cropImageList, ...destinyResponse };
@@ -470,7 +470,7 @@ export const getMatchesForBuyerCrops = (cropsList: Array<ProduceModel>) => {
                         ...additionalInfo
                     };
                     const historyResponse = await fetchUserHistory({ buyerId: childernContent.buyer_id, produce: childernContent.produce, sellerId: childernContent.seller_id });
-                    const destinyResponse = await fetchDestinyId(parseIDfromHash(childernContent.buyer_id));
+                    const destinyResponse = await fetchDestinyId(parseIDfromHash(childernContent.seller_id));
                     const { count, history } = historyResponse;
                     const cropImageList = await getSellerCropImages(childernContent.seller_id, childernContent.seller_crop_id);
                     childernContent = { ...childernContent, count, history, cropImageList, ...destinyResponse };
