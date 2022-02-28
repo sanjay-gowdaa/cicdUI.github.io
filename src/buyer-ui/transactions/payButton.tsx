@@ -121,7 +121,6 @@ const PayButton = (props: { record: any }) => {
                         <Space direction='vertical'>
                             <Text>OrderNumber:</Text>
                             <Text>OrderAmount:</Text>
-                            <Text>OrderNote:</Text>
                             <Text>Name:</Text>
                             <Text>EmailId:</Text>
                             <Text>PhoneNumber:</Text>
