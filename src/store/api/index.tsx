@@ -50,6 +50,7 @@ const COGNITO_PROVIDER = 'CognitoIdentityServiceProvider';
 const USER_HISTORY = 'userHistory';
 const GET_ADDITIONAL_INFO = 'getAdditionalInfo';
 const GET_SELLER_CROP_IMAGE = 'seller/getCropImages';
+const GET_DESTINY_ID = `${TRANSACTION_API}/getDestinyCode`;
 
 export const LAST_AUTH_USER = localStorage.getItem(`${COGNITO_PROVIDER}.${COGNITO_ID}.LastAuthUser`);
 export const ACCESS_TOKEN = localStorage.getItem(`${COGNITO_PROVIDER}.${COGNITO_ID}.${LAST_AUTH_USER}.accessToken`);
@@ -663,11 +664,20 @@ export const getEventTemplate = (userType: string, transport: string) => {
  */
 export const getRejectCount = (userData: any) => {
     const { user_id, crop_id, user } = userData;
-    const getamountApi = `${BASE_URL}/${STAGE}/${TRANSACTION_API}/${GET_REJECT_COUNT}?user_id=${user_id}&crop_id=${crop_id}&user=${user}`;
-    // const getamountApi = `http://localhost:4000/${STAGE}/${TRANSACTION_API}/${GET_REJECT_COUNT}?user_id=${user_id}&crop_id=${crop_id}&user=${user}`;
-    return fetch(getamountApi, {
+    const getAmountApi = `${BASE_URL}/${STAGE}/${TRANSACTION_API}/${GET_REJECT_COUNT}?user_id=${user_id}&crop_id=${crop_id}&user=${user}`;
+    // const getAmountApi = `http://localhost:4000/${STAGE}/${TRANSACTION_API}/${GET_REJECT_COUNT}?user_id=${user_id}&crop_id=${crop_id}&user=${user}`;
+    return fetch(getAmountApi, {
         method: 'GET',
     }).then((response: any) => response.json())
+        .catch((error: any) => console.log('error', error));
+};
+
+export const fetchDestinyId = (userName: string) => {
+    const destinyIdApi = `${BASE_URL}/${STAGE}/${GET_DESTINY_ID}?username=${userName}`;
+    // const destinyIdApi = `http://localhost:4000/${STAGE}/${GET_DESTINY_ID}?username=${userName}`;
+
+    return fetch(destinyIdApi, { method: 'GET' })
+        .then((response: any) => response.json())
         .catch((error: any) => console.log('error', error));
 };
 

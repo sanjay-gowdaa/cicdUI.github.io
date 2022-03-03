@@ -23,7 +23,8 @@ import {
     LAST_AUTH_USER,
     getSellerCropImages,
     fetchAdditionalInfo,
-    fetchUserHistory
+    fetchUserHistory,
+    fetchDestinyId
 } from '../api';
 import { UserStateModel } from '../loginReducer/types';
 import { BuyerStateModel } from '../buyerReducer/types';
@@ -31,6 +32,7 @@ import { RootState } from '../rootReducer';
 
 import { MatchRequirementModel, TransactionStatus } from '../../buyer-seller-commons/types';
 import { getUserCompleteDetails } from '../loginReducer/actions';
+import { parseIDfromHash } from '../../app-components/utils';
 
 export const UPDATE_MASTER_LIST = 'UPDATE_MASTER_LIST';
 export const GET_MASTER_LIST = 'GET_MASTER_LIST';
@@ -449,9 +451,10 @@ export const getMatchesForBuyerCrops = (cropsList: Array<ProduceModel>) => {
                     ...additionalInfo
                 };
                 const historyResponse = await fetchUserHistory({ buyerId: output.buyer_id, produce: output.produce, sellerId: output.seller_id });
+                const destinyResponse = await fetchDestinyId(parseIDfromHash(output.seller_id));
                 const { count, history } = historyResponse;
                 const cropImageList = await getSellerCropImages(output.seller_id, output.seller_crop_id);
-                output = { ...output, count, history, cropImageList }
+                output = { ...output, count, history, cropImageList, ...destinyResponse };
                 let children: any = [];
                 for (let i = 1; i < (matchesLength - 1); i++) {
                     const additionalInfo =
@@ -467,9 +470,10 @@ export const getMatchesForBuyerCrops = (cropsList: Array<ProduceModel>) => {
                         ...additionalInfo
                     };
                     const historyResponse = await fetchUserHistory({ buyerId: childernContent.buyer_id, produce: childernContent.produce, sellerId: childernContent.seller_id });
+                    const destinyResponse = await fetchDestinyId(parseIDfromHash(childernContent.seller_id));
                     const { count, history } = historyResponse;
                     const cropImageList = await getSellerCropImages(childernContent.seller_id, childernContent.seller_crop_id);
-                    childernContent = { ...childernContent, count, history, cropImageList };
+                    childernContent = { ...childernContent, count, history, cropImageList, ...destinyResponse };
                     children = [...children, childernContent];
                 }
                 if (!isEmpty(children)) {
@@ -540,7 +544,8 @@ export const getTransactionList = (transactionStatus: TransactionStatus) => {
                     transactionListResponse[i].seller_crop_id
                 );
             const cropImageList = await getSellerCropImages(transactionListResponse[i].seller_id, transactionListResponse[i].seller_crop_id);
-            let list = { ...transactionListResponse[i], ...additionalInfo, cropImageList };
+            const destinyResponse = await fetchDestinyId(parseIDfromHash(transactionListResponse[i].seller_id));
+            let list = { ...transactionListResponse[i], ...additionalInfo, cropImageList, ...destinyResponse };
             list.key = transactionListResponse[i].pk;
             transactionFinalResponse.push(list);
         }
