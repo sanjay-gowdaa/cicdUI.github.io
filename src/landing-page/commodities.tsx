@@ -1,70 +1,48 @@
 import React from 'react';
-import { Image, Typography } from 'antd';
+import { Typography } from 'antd';
 import { useTranslation } from 'react-i18next';
 
-import StapleCrop from '../static/assets/stapleCrop.png';
-import Pulses from '../static/assets/pulses.png';
-import CashCrop from '../static/assets/cashCrop.png';
-import OilSeed from '../static/assets/oilSeed.png';
-import Wheat from '../static/assets/wheat-1.svg';
-import Cardomom from '../static/assets/cardomom.jpg';
-import { englishStyling, isEnglish, kannadaStyling } from '../static/translations/constants';
+import StapleCrops from '../static/assets/Rectangle 97.png'; 
+import Pulses from '../static/assets/Rectangle 98.png'; 
+import CashCrops from '../static/assets/Rectangle 99.png'; 
+import Spices from '../static/assets/Rectangle 100.png'; 
+import OilSeeds from '../static/assets/Rectangle 101.png'; 
+import { LandingDivider } from '../app-components/landingDivider';
 
-const { Paragraph, Text, Title } = Typography;
+const { Paragraph, Title } = Typography;
 
 const Commodities = () => {
     const { t } = useTranslation('common');
-    const customStyles = isEnglish(t('language')) ? englishStyling : kannadaStyling;
 
     return (
         <div id='commodities'>
-            <Title className={`col-green ${customStyles.commoditiesTitle}`} level={2}>
-                {t('commodities_page.title')}
+            <Title level={2} className='commoditiesTitle'>
+            {t('commodities_page.title')}
             </Title>
-            <Paragraph className={customStyles.commoditiesParagraph}>
-                {t('commodities_page.paragraph')}
-            </Paragraph>
-            <div className='commodities-list'>
-                <Image
-                    className='commodities-image'
-                    src={StapleCrop}
-                    preview={false}
-                /><br />
-                <Text className='commodities-name'>{t('commodities_page.commodities_name.1')}</Text>
+            <Paragraph className='commoditiesParagraph'>{t('commodities_page.paragraph')}</Paragraph>
+            <div className='CropImages_sec'>
+                <div>
+                    <img src={StapleCrops} alt='StapleCrops'/>
+                    <p>{t('commodities_page.commodities_name.1')}</p>
+                </div>
+                <div>
+                    <img src={Pulses}   alt='Pulses'/>
+                    <p>{t('commodities_page.commodities_name.2')}</p>
+                </div>
+                <div>
+                    <img src={CashCrops} alt='CashCrops'/>
+                    <p>{t('commodities_page.commodities_name.3')}</p>
+                </div>
+                <div>
+                    <img src={Spices} alt='Spices'/>
+                    <p>{t('commodities_page.commodities_name.4')}</p>
+                </div>
+                <div>
+                    <img src={OilSeeds} alt='OilSeeds'/>
+                    <p>{t('commodities_page.commodities_name.5')}</p>
+                </div>
             </div>
-            <div className='commodities-list'>
-                <Image
-                    className='commodities-image'
-                    src={Pulses}
-                    preview={false}
-                /><br />
-                <Text className='commodities-name'>{t('commodities_page.commodities_name.2')}</Text>
-            </div>
-            <div className='commodities-list'>
-                <Image
-                    className='commodities-image'
-                    src={CashCrop}
-                    preview={false}
-                /><br />
-                <Text className='commodities-name'>{t('commodities_page.commodities_name.3')}</Text>
-            </div>
-            <div className='commodities-list'>
-                <Image
-                    className='commodities-image'
-                    src={Cardomom}
-                    preview={false}
-                /><br />
-                <Text className='commodities-name'>{t('commodities_page.commodities_name.4')}</Text>
-            </div>
-            <div className='commodities-list'>
-                <Image
-                    className='commodities-image'
-                    src={OilSeed}
-                    preview={false}
-                /><br />
-                <Text className='commodities-name'>{t('commodities_page.commodities_name.5')}</Text>
-            </div>
-            <Image className='wheat-image' src={Wheat} preview={false} />
+            <LandingDivider/>
         </div>
     );
 };

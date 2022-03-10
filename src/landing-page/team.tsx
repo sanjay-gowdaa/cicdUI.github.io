@@ -1,140 +1,84 @@
 import React from 'react';
-import { Card, Space, Typography } from 'antd';
-import { Trans, useTranslation } from 'react-i18next';
+import { Typography,Row,Col } from 'antd';
+import { useTranslation } from 'react-i18next';
 
-import Nagappa from '../static/assets/nagappa.png';
-import Suma from '../static/assets/suma.png';
-import Sadananda from '../static/assets/sadananda.png';
-import SatishChandra from '../static/assets/SatishChandra.jpg';
+import Nagappa from '../static/assets/Ellipse 1.png';
+import Suma from '../static/assets/Ellipse 2.png';
+import Sadananda from '../static/assets/Ellipse 3.png';
+import SatishChandra from '../static/assets/Ellipse 6.png';
 import Ganesh from '../static/assets/Ganesh.png';
-import Guruprasad from '../static/assets/Guruprasad.jpg';
+import Guruprasad from '../static/assets/Ellipse 4.png';
+import { LandingDivider } from '../app-components/landingDivider';
 
-const { Paragraph, Text, Title } = Typography;
+const { Paragraph,Title } = Typography;
 
 const Team = () => {
     const { t } = useTranslation('common');
 
     return (
         <div id='team'>
-            <Title className='col-green team-title' level={2}>{t('our_team.title')}</Title>
-            <Space direction='vertical' className='management-team'>
-                <Title className='col-green margin-none team-sub-title' level={3}>
-                    {t('our_team.founders.title')}
-                </Title>
-                <Card>
-                    <Space direction='horizontal'>
-                        <img src={Sadananda} alt='Sadananda' />
-                        <Space direction='vertical' size={0}>
-                            <Title level={4} className='margin-zero'>{t('our_team.founders.name.1')}</Title>
-                            <Title level={5} className='margin-zero col-orange'>
-                                <Trans
-                                    i18nKey='our_team.founders.designation.1'
-                                    components={{ italic: <i />, bold: <strong /> }}
-                                />
-                            </Title>
-                            <Text className='col-orange'>{t('our_team.founders.subDesignation.1')}</Text>
-                            <Paragraph style={{ textAlign: 'justify' }}>
-                                <Trans
-                                    i18nKey='our_team.founders.description.1'
-                                    components={{ italic: <i />, bold: <strong /> }}
-                                />
-                            </Paragraph>
-                        </Space>
-                    </Space>
-                </Card>
-                <Card>
-                    <Space direction='horizontal'>
-                        <Space direction='vertical' style={{ textAlign: 'right' }} size={0}>
-                            <Title level={4} className='margin-zero'>{t('our_team.founders.name.2')}</Title>
-                            <Title level={5} className='margin-zero col-orange'>
-                                <Trans
-                                    i18nKey='our_team.founders.designation.2'
-                                    components={{ italic: <i />, bold: <strong /> }}
-                                />
-                            </Title>
-                            <Text className='col-orange'>{t('our_team.founders.subDesignation.2')}</Text>
-                            <Paragraph style={{ textAlign: 'justify' }}>{t('our_team.founders.description.2')}</Paragraph>
-                        </Space>
-                        <img src={Nagappa} alt='Nagappa' />
-                    </Space>
-                </Card>
-                <Card>
-                    <Space direction='horizontal'>
-                        <img
-                            className='box-shadow'
-                            src={Suma}
-                            style={{ borderRadius: '15rem', width: '10rem', margin: '2rem' }}
-                            alt='Suma'
-                        />
-                        <Space direction='vertical' size={0}>
-                            <Title level={4} className='margin-zero'>{t('our_team.founders.name.3')}</Title>
-                            <Title level={5} className='col-orange'>
-                                <Trans
-                                    i18nKey='our_team.founders.designation.3'
-                                    components={{ italic: <i />, bold: <strong /> }}
-                                />
-                            </Title>
-                            <Paragraph style={{ textAlign: 'justify' }}>{t('our_team.founders.description.3')}</Paragraph>
-                        </Space>
-                    </Space>
-                </Card>
-            </Space>
-            <div className='advisors-team'>
-                <Title className='col-green margin-none team-sub-title' level={3}>{t('our_team.advisors.title')}</Title>
-                <Space direction='vertical'>
-                    <Card>
-                        <Space direction='horizontal' style={{ textAlign: 'right' }}>
-                            <Space direction='vertical'>
-                                <Title level={4} className='margin-zero'>{t('our_team.advisors.name.1')}</Title>
-                                <Title level={5} className='margin-zero col-orange'>
-                                    {t('our_team.advisors.designation.1')}
-                                </Title>
-                                <Paragraph style={{ textAlign: 'justify' }}>{t('our_team.advisors.description.1')}</Paragraph>
-                            </Space>
-                            <img
-                                src={SatishChandra}
-                                className='box-shadow'
-                                style={{ width: '10rem', borderRadius: '15rem', margin: '1.5rem' }}
-                                alt='SatishChandra'
-                            />
-                        </Space>
-                    </Card>
-                    <Card>
-                        <Space direction='horizontal'>
-                            <img
-                                src={Ganesh}
-                                className='box-shadow'
-                                style={{ width: '10rem', borderRadius: '15rem', margin: '1.5rem' }}
-                                alt='Ganesh'
-                            />
-                            <Space direction='vertical'>
-                                <Title level={4} className='margin-zero'>{t('our_team.advisors.name.2')}</Title>
-                                <Title level={5} className='margin-zero col-orange'>
-                                    {t('our_team.advisors.designation.2')}
-                                </Title>
-                                <Paragraph style={{ textAlign: 'justify' }}>{t('our_team.advisors.description.2')}</Paragraph>
-                            </Space>
-                        </Space>
-                    </Card>
-                    <Card>
-                        <Space direction='horizontal' style={{ textAlign: 'right' }}>
-                            <Space direction='vertical'>
-                                <Title level={4} className='margin-zero'>{t('our_team.advisors.name.3')}</Title>
-                                <Title level={5} className='margin-zero col-orange'>
-                                    {t('our_team.advisors.designation.3')}
-                                </Title>
-                                <Paragraph style={{ textAlign: 'justify' }}>{t('our_team.advisors.description.3')}</Paragraph>
-                            </Space>
-                            <img
-                                src={Guruprasad}
-                                className='box-shadow'
-                                style={{ width: '10rem', borderRadius: '15rem', margin: '1.5rem' }}
-                                alt='Guruprasad KV'
-                            />
-                        </Space>
-                    </Card>
-                </Space>
+            <Title className='teamTitle'>
+               {t('our_team.title')}
+           </Title>
+        <div className='teamWrapper'>
+           <div className='Founders_sec'>
+               <Title level={4} className='FoundersTitle'>{t('our_team.founders.title')}</Title>
+                <Row className='FoundersRow'>
+                    <Col span={6}><img src={Sadananda} alt='Sadananda'/></Col>
+                    <Col span={18} className='FounderPara'>
+                    <Title level={5}>{t('our_team.founders.name.1')}</Title>
+                    <p>{t('our_team.founders.designation.1')}</p>
+                    <p>{t('our_team.founders.subDesignation.1')}</p>
+                    <Paragraph className='para'>{t('our_team.founders.description.1')}</Paragraph>
+                    </Col>
+                </Row>
+                <Row className='FoundersRow'>
+                    <Col span={6}><img src={Nagappa} alt='Nagappa'/></Col>
+                    <Col span={18} className='FounderPara'>
+                    <Title level={5}>{t('our_team.founders.name.2')}</Title>
+                    <p>{t('our_team.founders.designation.2')}</p>
+                    <p>{t('our_team.founders.subDesignation.2')}</p>
+                    <Paragraph className='para'>{t('our_team.founders.description.2')}</Paragraph>
+                    </Col>
+                </Row>
+                <Row className='FoundersRow'>
+                    <Col span={6}><img src={Suma} alt='Suma'/></Col>
+                    <Col span={18} className='FounderPara'>
+                    <Title level={5}>{t('our_team.founders.name.3')}</Title>
+                    <p>{t('our_team.founders.designation.3')}</p>
+                    <Paragraph className='para'>{t('our_team.founders.description.3')}</Paragraph>
+                    </Col>
+                </Row>
+           </div>
+           <div className='Management_sec'>
+           <Title level={4} className='FoundersTitle'>{t('our_team.advisors.title')}</Title>
+                <Row className='ManagementRow'>
+                    <Col span={6}><img src={SatishChandra} alt='SatishChandra'/></Col>
+                    <Col span={18} className='FounderPara'>
+                    <Title level={5}>{t('our_team.advisors.name.1')}</Title>
+                    <p>{t('our_team.advisors.designation.1')}</p>
+                    <Paragraph className='para'>{t('our_team.advisors.description.1')}</Paragraph>
+                    </Col>
+                </Row>
+                <Row className='ManagementRow'>
+                    <Col span={6}><img src={Ganesh} alt='Ganesh'/></Col>
+                    <Col span={18} className='FounderPara'>
+                    <Title level={5}>{t('our_team.advisors.name.2')}</Title>
+                    <p>{t('our_team.advisors.designation.2')}</p>
+                    <Paragraph className='para'>{t('our_team.advisors.description.2')}</Paragraph>
+                    </Col>
+                </Row>
+                <Row className='ManagementRow'>
+                    <Col span={6}><img src={Guruprasad} alt='Guruprasad'/></Col>
+                    <Col span={18} className='FounderPara'>
+                    <Title level={5}>{t('our_team.advisors.name.3')}</Title>
+                    <p>{t('our_team.advisors.designation.3')}</p>
+                    <Paragraph className='para'>{t('our_team.advisors.description.3')}</Paragraph>
+                    </Col>
+                </Row>
+           </div>
             </div>
+            <LandingDivider className='pageDivider'/>
         </div>
     );
 };

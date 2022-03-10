@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { Button, Card, Col, Image, Modal, Row, Space, Typography } from 'antd';
+import { Button, Image, Modal, Typography } from 'antd';
 import 'antd/dist/antd.css';
-import { useTranslation } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 import Amplify from 'aws-amplify';
 import { ArrowRightOutlined } from '@ant-design/icons';
 import { History } from 'history';
@@ -14,11 +14,8 @@ import MobileRegisterModal from './app-components/mobileRegisterModal';
 import LandingPage from './landing-page/index';
 import Home from './landing-page/home';
 import PrimaryBtn from './app-components/primaryBtn';
-// import Banner from './static/assets/banner.png';
-import KannadaBanner from './static/assets/banner_Kannada.png';
-import Join from './static/assets/friends.svg';
+
 import './App.scss';
-import { englishStyling, isEnglish, kannadaStyling } from './static/translations/constants';
 import VB_Logo from './static/assets/vbLogo.png';
 import DefaultBtn from './app-components/defaultBtn';
 import LoginPopup from './login-ui/login-popup';
@@ -43,8 +40,6 @@ const App = (props: { history: History }) => {
     const [signUpPopupVisible, setSignUpPopupVisible] = useState(false);
     const [openMobileRegModel, setMobileRegModal] = useState(false);
     const { t } = useTranslation('common');
-    const customStyles = isEnglish(t('language')) ? englishStyling : kannadaStyling;
-    // const banner = isEnglish(t('language')) ? Banner : KannadaBanner;
     const [showLandingPage, setLandingPage] = useState(false);
     const [showLogin, setLogin] = useState(false);
 
@@ -52,14 +47,6 @@ const App = (props: { history: History }) => {
         dispatch(getConfigurations());
         document.title = `${t('title')}`;
     }, []);
-
-    const onRegisterClick = () => {
-        if (window.screen.width < 767) {
-            setMobileRegModal(!openMobileRegModel);
-        } else {
-            setSignUpPopupVisible(!signUpPopupVisible);
-        }
-    };
 
     return (
         <div className='app-container'>
@@ -78,7 +65,10 @@ const App = (props: { history: History }) => {
                         className='new-landing-page-logo'
                     />
                     <Title level={1} className='landing-title'>
-                        Welcome to <strong>VikasBandhu</strong>
+                        <Trans
+                            i18nKey='landing_page.welcomeText'
+                            components={{ italic: <i />, bold: <strong /> }}
+                        />
                     </Title>
                     <div className='new-landing-page-button'>
                         <DefaultBtn
@@ -123,7 +113,7 @@ const App = (props: { history: History }) => {
                     </div>
                     <div className='landing-footer'>
                         <Title level={1} className='footer-text'>
-                            A friendly digital E-market place for agricultural produce
+                            {t('landing_page.footerText')}
                         </Title>
                         <Button
                             type='primary'
@@ -136,7 +126,7 @@ const App = (props: { history: History }) => {
                             onClick={() => setLandingPage(true)}
                         >
                             <Title level={3} className='footer-button-text'>
-                                Explore Vikasbandhu <ArrowRightOutlined />
+                                {t('landing_page.actions.explore')} <ArrowRightOutlined />
                             </Title>
                         </Button>
                     </div>
@@ -145,41 +135,5 @@ const App = (props: { history: History }) => {
             {showLandingPage &&
                 <React.Fragment>
                     <div className='main-content'>
-                        <Home history={history} popUpTrigger setSignUpPopupVisible={setSignUpPopupVisible}/>
-                        <Row>
-                            <Col span={4} className='mobile-display-none'>
-                                <div className='fixed-landing-page-banner'>
-                                    {/* <Image src={banner} preview={false} /> */}
-                                </div>
-                            </Col>
-                            <Col span={16}>
-                                <LandingPage />
-                            </Col>
-                            <Col span={4}>
-                                {/* <div className='fixed-card-join'>
-                                    <Card className='join-us'>
-                                        <Space direction='vertical'>
-                                            <Title className={`col-green ${customStyles.fixedTitle}`} level={3}>
-                                                {t('home_page.landing_page_card_title')}
-                                            </Title>
-                                            <Image className='join-image' src={Join} preview={false} />
-                                            <PrimaryBtn
-                                                onClick={onRegisterClick}
-                                                className='vikas-btn-radius join-us-reg'
-                                                content={t('landing_page.actions.register')}
-                                            />
-                                        </Space>
-                                    </Card>
-                                </div> */}
-                            </Col>
-                        </Row>
-                    </div>
-                    <Footer />
-                </React.Fragment>
-            }
-            <MobileRegisterModal showModal={openMobileRegModel} setModal={setMobileRegModal} />
-        </div>
-    );
-};
-
-export default App;
+                        <Home history={history} popUpTrigger setSignUpPopupVisible={setSignUpPopupVisible} /><LandingPage /></div><Footer /></React.Fragment>}<MobileRegisterModal showModal={openMobileRegModel} setModal={setMobileRegModal} /></div>);
+}; export default App;

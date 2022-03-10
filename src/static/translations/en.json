@@ -2,6 +2,9 @@
     "language": "en",
     "title": "VikasBandhu",
     "landing_page": {
+        "welcomeText":"Welcome to <bold>VikasBandhu</bold>",
+        "footerText":"A friendly digital E-market place for agricultural produce",
+        "footerBtnText":"Explore Vikasbandhu",
         "actions": {
             "login": "Login",
             "register": "Register",
@@ -21,40 +24,66 @@
                 "about_us": "About Us",
                 "team": "Team",
                 "legal": "Legal",
-                "contact_us": "Contact Us"
+                "contact_us": "Contact Us",
+                "updates":"Updates"
             }
         }
     },
     "home_page": {
-        "landing_page_card_title": "Be a part of Vikasbandhu family!",
-        "flash_text": "Beware of any Fraudulent Websites. <bold>Vikasbandhu does not charge any Registration fee</bold>.  Visit only https://vikasbandhu.in.",
-        "update_1": "VikasBandhu is live!",
-        "update_2": "<bold>Minimal Viable Product </bold> (MVP) release available for users in Karnataka. Please get in touch if interested.",
-        "update_3": "<bold>Vikasbandhu  trademark has been approved.</bold>",
-        "text_1": "Friendly E-Market Place for",
-        "text_2": "Buyers and Sellers to connect",
-        "text_3": "engage and transact seamlessly",
-        "text_4": "for win-win relationships",
-        "mobile_home_text": "A friendly digital E-market place for agricultural produce"
+        "text1":"A friendly digital E-market place for agricultural produce",
+        "text2":"Be part of VikasBandhu family!",
+        "text3":"Recent Updates",
+        "text4":"view all",
+        "text5":"MVP Launched!",
+        "text6":"Food and Agri Tech exhibition",
+        "text7":"Academia Collaboration"
     },
     "aim_page": {
-        "title": "VikasBandhu helps you in",
-        "aim_card_1": "Enable Informed decisions using Technology via Price Discovery",
-        "aim_card_2": "Big data driven ranking system ensuring a smart match",
-        "aim_card_3": "FAAS - value and linkages for  Farm to Door Solution",
-        "aim_card_4": "Deployment of Local Resource Persons to support technology to last mile",
-        "aim_card_5": "100% digital transactions with full clarity",
-        "aim_card_6": "Partnering Government's vision",
-        "video_link": "Please view this video to understand",
-        "link_name": "VikasBandhu aim and solution"
+        "text1":"What is VikasBandhu?",
+        "text2":"VikasBandhu is a technology enabled agriculture free e-market place for a willing buyer and seller to make informed decisions.  It is aimed to help the buyers and sellers (Farmer self-help groups) to connect, engage and transact for win-win relationships",
+        "text3":"Why VikasBandhu?",
+        "text4":"At present, sellers and buyers face many issues while trading",
+        "text5":"Sellers",
+        "text6":"(Farmer community, FPOs & Societies, Mills, Storage units/ Agents)",
+        "text7":"Buyers",
+        "text8":"(Whole, Food Industries, Processors, Institutions)",
+        "text9":"Majority of farmers are tenant farmers, i.e they farm on land owned by others and pay rent to the owner.",
+        "text10":"They don’t have reliable source to guide them to make right decision while selling the produce.",
+        "text11":"Sellers don’t get a fair price for their produce.",
+        "text12":"Limited capabilites to process their produce.",
+        "text13":"Less to no information on current market.",
+        "text14":"And other issues such as very limited reach, time constraints to sell, limited financial resource",
+        "text15":"Many middle men in the supply chain.",
+        "text16":"Lack of quality options to find right seller.",
+        "text17":"Unstructured agri ecosystem",
+        "text18":"and many more...",
+        "text19":"To address the above issues, at VikasBandhu, we are building an ecosystem to ensure",
+        "text20":"in addition, we",
+        "text21":"Provide Expert Help",
+        "text22":"Help from local agro experts to help during trade",
+        "text23":"Provide Local Employment",
+        "text24":"Boost rural economy by providing local employment.",
+        "text25":"Work with Government",
+        "text26":"Partnering with Government's vision"
     },
     "ecosystem_page": {
-        "title": "At VikasBandhu, we build an ecosystem that would",
-        "text_1": "Connect buyers and sellers in a simple to use platform.",
-        "text_2": "Provide dynamic information on pricing.",
-        "text_3": "Meet demand and supply.",
-        "text_4": "Facilitate a Door-to-door solution of logistics.",
-        "text_5": "Boost rural economy by providing local employment."
+        "firstHead":"How VikasBandhu work?",
+        "text1":"Key featues of VikasBandhu platform",
+        "text2":"Simple KYC process",
+        "text3":"Easy and guided KYC process to verify account",
+        "text4":"Dashboard",
+        "text5":"View all your produce, matches and transaction on user friendly dashboard",
+        "text6":"Produce",
+        "text7":"We support wide verity of produce category",
+        "text8":"Pricing Guide",
+        "text9":"Get information of latest market price for your produce",
+        "text10":"Support",
+        "text11":"Reachout to your local expert for any help",
+        "text12":"Seller and Buyers register with VikasBandhu by providing basic information and documents",
+        "text13":"After verification, the can add produce to sell or requirement to buy",
+        "text14":"Get best match from our best VikasBandhu matching system powered by AI",
+        "text15":"Start your trade and track full transaction with full transparency",
+        "text16":"Send and recieve payment with 100% online transaction once trade is complete"
     },
     "commodities_page": {
         "title": "Commodities we facilitate",
@@ -104,16 +133,16 @@
                 "3": "SUMA SADANANDA"
             },
             "designation": {
-                "1": "Director, <bold>Eng. and Technology</bold>",
-                "2": "Director, <bold>Marketing and Sales</bold>",
-                "3": "Director, <bold>Administration</bold>"
+                "1": "Director,Eng. and Technology",
+                "2": "Director,Marketing and Sales",
+                "3": "Director,Administration"
             },
             "subDesignation": {
                 "1": "(Ex. Broadcom, NetApp, Motorola)",
                 "2": "(Ex. COO Diageo India)"
             },
             "description": {
-                "1": "Sadananda Murthy is a management & delivery Leader with more than two decades of Experience in building software products, running Programs and operations at <bold>Fortune 500</bold> companies. He is focusing his efforts to develop and drive digital transformation to enable local community and groups at large.",
+                "1": "Sadananda Murthy is a management & delivery Leader with more than two decades of Experience in building software products, running Programs and operations at <strong>Fortune 500</strong> companies. He is focusing his efforts to develop and drive digital transformation to enable local community and groups at large.",
                 "2": "G S Nagappa’s has over four decades of leadership experience. He retired as COO at Diageo India. Today, as a veteran and philanthropist, he continues to passionately work towards building new businesses by understanding new opportunities in Indian market. He has a deep commitment to community and aims to achieve shared success.",
                 "3": "Suma Sadananda is deeply committed to Social endeavours that  lead her to take up teaching profession in the initial years. After focusing on family , she has started her second innings to pursue her interests. She is keen to promote product lines that solve local problems."
             }
@@ -121,9 +150,9 @@
         "advisors": {
             "title": "Management Team",
             "name": {
-                "1": "Satish Chandra C S",
-                "2": "Ganesh M S",
-                "3": "Guruprasad KV"
+                "1": "SATISH CHANDRA C S",
+                "2": "GANESH M S",
+                "3": "GURUPRASAD KV"
             },
             "designation": {
                 "1": "Agriculture Technology and Finance",
@@ -151,5 +180,14 @@
             "phone": "Phone",
             "message": "Message"
         }
+    },
+    "updates_page":{
+        "title":"Updates",
+        "title1":"Minimal Viable Product (27th December 2021)",
+        "title2":"Techbharat 2022(5th January 2022)",
+        "title3":"Memorandum of Understanding(MOU) (21st December 2021)",
+        "text1":"VikasBandhu is live! We are glad to announce the availability of the Minimum Viable Product (MVP). The Pilot is available as a browser (https://vikasbandhu.in) and Android Application. This Pilot will be available towards field exposure, usage and feedback with Closed User Groups in select markets in Karnataka. This will help the buyers and sellers (Farmer self-help groups) to connect, engage and transact for win-win relationships",
+        "text2":"We were selected to showcase our solution 'VikasBandhu' in the first Pre-Event “Food and Agri Tech exhibition” in Belagavi, Karnataka by Techbharat. The forum is using this opportunity to show case a vast array of exciting start-ups showcasing innovation and enable networking in the Agri tech space This is a three-fold event which continues in Bangalore in March and culminates in Mysore in May’21",
+        "text3":"The industry and academia collaboration is paramount and the need of the hour. We are glad to have signed a MOU with Sri Vidyanikethan Engineering College (SVEC) in the areas of the AI, Voice recognition, Big Data and Cloud first apps. This collaboration will be a win-win. The faculty and its students get the required exposure to the latest industry trends to apply their domain knowledge to solve cutting-edge real-life problems in AgriTech. SamparkBindhu will also attain critical mass needed to accelerate and fast pace its technology driven product lines"
     }
 }

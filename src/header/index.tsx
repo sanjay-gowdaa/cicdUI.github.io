@@ -88,7 +88,7 @@ const Header = (headerProps: any) => {
                 <Breadcrumb.Item href='#team'>{t('landing_page.header.breadcrumb.team')}</Breadcrumb.Item>
                 <Breadcrumb.Item href='#legal'>{t('landing_page.header.breadcrumb.legal')}</Breadcrumb.Item>
                 <Breadcrumb.Item href='#contactUs'>{t('landing_page.header.breadcrumb.contact_us')}</Breadcrumb.Item>
-                <Breadcrumb.Item href ='#updates'>Updates</Breadcrumb.Item>
+                <Breadcrumb.Item href ='#updates'>{t('landing_page.header.breadcrumb.updates')}</Breadcrumb.Item>
             </Breadcrumb>
             <MobileDrawer />
             {showActions ? <HeaderActions isLoggedIn={isLoggedIn} history={history} popUpTrigger={popUpTrigger} /> : null}
