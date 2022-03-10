@@ -3,8 +3,8 @@ import { Button, Image, Tabs, Typography } from 'antd';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
-import Accept from '../static/assets/Accept.svg';
 import { routesMap } from '../constants';
+import { LandingDivider } from '../app-components/landingDivider';
 
 const { Paragraph, Title } = Typography;
 const { TabPane } = Tabs;
@@ -15,11 +15,12 @@ const Legal = () => {
 
     return (
         <div id='legal'>
-            <Title className='col-white legal-title' level={2}>
+            <div className='legalWrapper'>
+            <Title className='legal-title' level={2}>
                 {t('legal_page.title')}
             </Title>
-            <Image className='accept-image' src={Accept} preview={false} />
-            <Tabs className='legal-tab' defaultActiveKey='1' type='card'>
+            
+            <Tabs  className='legal-tab' defaultActiveKey='1' type='card'>
                 <TabPane
                     className='tnc-tab'
                     tab={t('landing_page.actions.terms_and_conditions')}
@@ -98,6 +99,8 @@ const Legal = () => {
                     </Button>
                 </TabPane>
             </Tabs>
+            </div>
+            <LandingDivider className='pageDivider'/>
         </div>
     );
 };
