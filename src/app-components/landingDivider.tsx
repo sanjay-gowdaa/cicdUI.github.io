@@ -1,7 +1,7 @@
 import React from 'react';
 import { Divider } from 'antd';
 
-import './customComponent.css';
+import './customComponent.scss';
 
 export const LandingDivider = (props: any) => {
   const { className } = props;
