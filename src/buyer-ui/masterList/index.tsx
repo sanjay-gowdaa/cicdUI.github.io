@@ -98,7 +98,7 @@ const AddProduceModal = (props: { history: History }) => {
                     }}
                     content='My Master List'
                 />
-                {!isApproved &&
+                {!loginState.isSubmitted &&
                     <Space className='kyc-pending-message' direction='horizontal' >
                         <WarningFilled className='warning-icon' />
                         <Title level={5} className='kyc-pending-text'>KYC Pending.</Title>

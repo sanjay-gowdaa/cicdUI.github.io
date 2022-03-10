@@ -59,7 +59,7 @@ const TransactionDetailsModal = (props: any) => {
                     {!isUndefined(list.pdf_link) ?
                         <Button
                             type='link'
-                            href={`https://${list.pdf_link}`}
+                            href={`${list.pdf_link}`}
                             target='_blank'
                             download={''}
                         >
@@ -98,9 +98,11 @@ const TransactionDetailsModal = (props: any) => {
                                         <Text>{completedStatus.event_description}</Text>
                                     </Row>
                                     <Row>
-                                        <Text>{!isEmpty(completedStatus.event_details) &&
-                                            showDetails(completedStatus.event_details, false)
-                                        }</Text>
+                                        <Text>
+                                            {!isEmpty(completedStatus.event_details) &&
+                                                showDetails(completedStatus.event_details, false)
+                                            }
+                                        </Text>
                                     </Row>
                                 </Col>
                                 <Col span={2} className={isPending ? 'display-none' : ''}>
