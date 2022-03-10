@@ -124,6 +124,7 @@ const ConnectMatches = ({ cropDetails }: { cropDetails: MatchRequirementModel })
                 title={<Title level={3}>Agreement To {is_buyer ? <>Buy</> : <>Sell</>}</Title>}
                 onCancel={() => setViewAgreement(!viewAgreement)}
                 footer={null}
+                
             >
                 <TradeSummary cropDetails={cropDetails} />
                 <Checkbox

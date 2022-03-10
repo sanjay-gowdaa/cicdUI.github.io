@@ -3,7 +3,7 @@ export interface MatchRequirementModel {
     produce: string;
     seller_id: string;
     quantity: number;
-    location: string;
+    seller_location: string;
     buyer_id: string;
     buyer_crop_id: string;
     seller_quantity: number;
@@ -17,11 +17,10 @@ export interface MatchRequirementModel {
     seller_crop_id: string;
     buyer_final_price?: number;
     buyer_transportation_cost?: number;
-    buyer_facilitation_cost?: number;
-    seller_facilitation_cost?: number;
+    buyer_facilitation_cost: number;
+    seller_facilitation_cost: number;
     seller_transportation_cost?: number;
     buyer_price_per_quintal?: number;
-    seller_price_per_quintal?: number;
     pk?: string;
     sk?: string;
     hasMultipleFullfillMent: boolean;
@@ -32,8 +31,14 @@ export interface MatchRequirementModel {
     additional_info: Array<AdditionalInfo>;
     cropImageList: CropListType;
     destinyId: string;
-    gst_amount: string;
-    buyer_total_price: string;
+    gst_amount: number;
+    buyer_total_price: number;
+    seller_total_price: number;
+    seller_facilitation_gst: number;
+    buyer_facilitation_gst: number;
+    seller_final_price_per_quintal: number;
+    seller_initial_produce_cost: number;
+    seller_quoted_price_per_quintal: number;
 };
 
 export interface CropListType {

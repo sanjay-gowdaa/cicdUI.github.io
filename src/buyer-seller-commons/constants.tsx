@@ -5,7 +5,7 @@ export const initialEmptyCropDetail = {
     produce: '',
     seller_id: '',
     quantity: 0,
-    location: '',
+    seller_location: '',
     buyer_id: '',
     buyer_crop_id: '',
     seller_quantity: 0,
