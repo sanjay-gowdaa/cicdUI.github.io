@@ -525,10 +525,10 @@ export const getSellerTransactionList = (transactionStatus: TransactionStatus) =
         for (let i = 0; i < transactionListResponse.length; i++) {
             const additionalInfo =
                 await fetchAdditionalInfo(
-                    transactionListResponse[i].gsi,
+                    transactionListResponse[i].buyer_id,
                     transactionListResponse[i].buyer_crop_id
                 );
-            const destinyResponse = await fetchDestinyId(parseIDfromHash(transactionListResponse[i].gsi));
+            const destinyResponse = await fetchDestinyId(parseIDfromHash(transactionListResponse[i].buyer_id));
             let list = { ...transactionListResponse[i], ...additionalInfo, ...destinyResponse };
             list.key = transactionListResponse[i].pk;
             transactionFinalResponse.push(list);

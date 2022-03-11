@@ -102,11 +102,11 @@ export const customPincodeValidator = (rule: RuleObject, value: any, setAddressF
                 if (!locationDetails) {
                     return Promise.reject(PIN_NOT_FOUND);
                 } else {
-                    const getLocationObj = locationDetails[0];
-                    const { PostOffice = [] } = getLocationObj || {};
-                    const { District = '', State = '', Block = '' } = PostOffice[0] || {};
+                    const getLocationObj = locationDetails;
+                    //const { PostOffice = [] } = getLocationObj || {};
+                    const { District = '', State = '', Taluk = '' } = getLocationObj;
                     // const address = `${Block}, ${District}, ${State}`;
-                    const address = { taluk: Block, district: District, state: State };
+                    const address = { taluk: Taluk, district: District, state: State };
                     setAddressForPin(address);
                     return Promise.resolve();
                 }

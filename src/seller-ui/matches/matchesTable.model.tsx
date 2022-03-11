@@ -6,7 +6,6 @@ import { isEmpty } from 'lodash';
 import RejectConfrimation from './rejectConfirmation';
 
 import { MatchRequirementModel } from '../../buyer-seller-commons/types';
-import { parseIDfromHash, maskData } from '../../app-components/utils';
 import { showCropImage } from '../../buyer-seller-commons/constants';
 import { componentCallBacksModel } from '../../buyer-seller-commons/matches';
 import ConnectMatches from '../../buyer-seller-commons/matches/connectMatches';
@@ -23,7 +22,7 @@ export const matchesSellerColumns = (componentCallBacks: componentCallBacksModel
         render: (destinyId: string, record: MatchRequirementModel) => {
             return (
                 <Space direction='vertical'>
-                    <Text underline>{maskData(parseIDfromHash(destinyId))}</Text>
+                    <Text underline>{destinyId}</Text>
                     {record.count !== 0 &&
                         <ShowPreviousTransactions
                             count={record.count}
