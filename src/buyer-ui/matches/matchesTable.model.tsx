@@ -16,10 +16,10 @@ const { Title, Text } = Typography;
 
 export const getTransactionDataStructure = (cropDetails: MatchRequirementModel) => {
     const {
-        fulfillment_flag, produce, matched_quantity, seller_crop_id, seller_id, seller_quantity,
-        seller_final_price, seller_price, location, seller_facilitation_cost, seller_transportation_cost,
-        seller_price_per_quintal, buyer_id, buyer_crop_id, buyer_location, buyer_facilitation_cost,
-        buyer_transportation_cost, buyer_final_price, buyer_actual_quantity, buyer_price_per_quintal,gst_amount,buyer_total_price
+        fulfillment_flag, produce, matched_quantity, seller_crop_id, seller_id, seller_quantity,buyer_remaining_quant,seller_remaining_quant,
+        seller_final_price, seller_price, seller_location, seller_facilitation_cost, seller_transportation_cost,seller_facilitation_gst,
+        seller_final_price_per_quintal, buyer_id, buyer_crop_id, buyer_location, buyer_facilitation_cost,seller_total_price,seller_initial_produce_cost,seller_quoted_price_per_quintal,
+        buyer_transportation_cost, buyer_final_price, buyer_actual_quantity, buyer_price_per_quintal,gst_amount,buyer_total_price,buyer_facilitation_gst
     } = cropDetails;
 
     const transactionEntry = {
@@ -38,18 +38,27 @@ export const getTransactionDataStructure = (cropDetails: MatchRequirementModel) 
             buyer_crop_id,
             buyer_price_per_quintal,
             gst_amount,
-            buyer_total_price
+            buyer_total_price,
+            buyer_remaining_quant,
+            buyer_facilitation_gst
         }],
         seller: [{
             seller_id,
-            seller_location: location,
+            seller_location: seller_location,
             seller_quantity,
             seller_price,
             seller_transportation_cost,
             seller_facilitation_cost,
             seller_final_price,
             seller_crop_id,
-            seller_price_per_quintal
+            seller_total_price,
+            seller_facilitation_gst,
+            seller_final_price_per_quintal,
+            seller_remaining_quant,
+            seller_initial_produce_cost,
+            seller_quoted_price_per_quintal,
+            gst_amount
+
         }]
     };
 
@@ -170,8 +179,8 @@ export const matchesBuyerColumns = (componentCallBacks: componentCallBacksModel)
     },
     {
         title: 'Total price',
-        dataIndex: 'buyer_final_price',
-        key: 'buyer_final_price'
+        dataIndex: 'buyer_total_price',
+        key: 'buyer_total_price'
     },
     {
         title: 'Location',

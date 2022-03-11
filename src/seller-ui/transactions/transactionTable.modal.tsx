@@ -70,11 +70,11 @@ export const transactionSellerColumns = [
     },
     {
         title: 'Price per qtl',
-        dataIndex: 'seller_price_per_quintal',
-        key: 'seller_price_per_quintal',
-        render: (seller_price_per_quintal: number) => {
+        dataIndex: 'seller_final_price_per_quintal',
+        key: 'seller_final_price_per_quintal',
+        render: (seller_final_price_per_quintal: number) => {
             return (
-                <p>{seller_price_per_quintal}</p>
+                <p>{seller_final_price_per_quintal}</p>
             );
         }
     },

@@ -116,6 +116,11 @@ body {
     width: fit-content;
 }
 
+.required-form-field-after::after {
+    content: "* ";
+    color: red;
+}
+
 .margin-zero {
     margin: 0 !important;
 }
