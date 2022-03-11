@@ -58,9 +58,7 @@ const AddProduceModal = (props: { history: History }) => {
     ];
 
     const showKycRequiredModal = () => {
-        Modal.info(
-            
-            {
+        Modal.info({
             className: 'kyc-required-modal',
             content:
                 <React.Fragment>
