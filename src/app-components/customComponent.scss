@@ -112,3 +112,15 @@ $col-shade-green: #12805c;
         font-weight: 500;
     }
 }
+
+.custom-divider{
+    width:100vw !important;
+    .wimage{
+        position: relative;
+        background-image: url("../static/assets/wheatCustomised.svg");
+        background-repeat: repeat;
+        width:20.125rem;
+        height:1.25rem;
+        color:#f5a31a;
+    }
+}

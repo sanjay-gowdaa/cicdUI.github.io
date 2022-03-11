@@ -1,176 +1,75 @@
-import React, { useState } from 'react';
-import { Alert, Image, Typography, Row, Col, Card, Button } from 'antd';
-import { Trans, useTranslation } from 'react-i18next';
-import Marquee from 'react-fast-marquee';
-import { ArrowLeftOutlined, ArrowRightOutlined, ArrowDownOutlined } from '@ant-design/icons';
-
-import { landingCards } from './const';
+import React from 'react';
+import { Typography, Button, Carousel, Modal, Breadcrumb, Row, Col } from 'antd';
+import { History } from 'history';
+import { useTranslation } from 'react-i18next';
+import googlePlay from '../static/assets/googleimage.png';
+import firstImage from '../static/assets/landingImage.png';
+import secondImage from '../static/assets/Vikasbandhu_Five.jpg';
+import thirdImage from '../static/assets/Vikasbandhu_One.jpg';
+import fourthImage from '../static/assets/Vikasbandhu_Two.jpg';
+import fifthImage from '../static/assets/Image_Govt1.jpg';
+import Register from '../login-ui/register';
+import { LandingDivider } from '../app-components/landingDivider';
 
 const { Title } = Typography;
 
-const Home = () => {
+const Home = ({ history, popUpTrigger, setSignUpPopupVisible }: { history: History, popUpTrigger: any, setSignUpPopupVisible: Function }) => {
+    const { signUpPopupVisible } = popUpTrigger;
     const { t } = useTranslation('common');
-    const [keyValue, setKeyValue] = useState(1);
-
-    const decreaseCounter = () => {
-        if (keyValue === 1) {
-            setKeyValue(5);
-        } else {
-            setKeyValue(keyValue - 1);
-        }
-    };
-
-    const increaseCounter = () => {
-        if (keyValue === 5) {
-            setKeyValue(1);
-        } else {
-            setKeyValue(keyValue + 1);
-        }
-    };
 
     return (
         <div id='home'>
-            <div className='home-content-wrapper'>
-                <Alert
-                    className='animate-alert'
-                    message={
-                        <Marquee
-                            pauseOnHover={true}
-                            speed={25}
-                            gradient={false}
+            <Row>
+                <Col span={8} xs={24} md={12}>
+                    <Title level={2}>Sell.&nbsp;Buy.&nbsp;AgriProduce.</Title>
+                    <Title level={5}>{t('home_page.text1')}</Title>
+                    <div className='wimage'></div>
+                    <div className='registerComponent'>
+                        <p>{t('home_page.text2')}</p>
+                        <Button onClick={() => setSignUpPopupVisible(!signUpPopupVisible)}>Register</Button>
+                        <Modal
+                            title={null}
+                            visible={signUpPopupVisible}
+                            footer={null}
+                            maskClosable={false}
+                            className='custom-register-modal'
+                            onCancel={() => setSignUpPopupVisible(!signUpPopupVisible)}
+                            centered
+                            wrapClassName='register-popup-container'
                         >
-                            <Trans>
-                                <b>&nbsp; &nbsp;&nbsp; &nbsp;</b>
-                                <Trans
-                                    i18nKey='home_page.flash_text'
-                                    components={{ italic: <i />, bold: <strong /> }}
-                                />
-                                <b>&nbsp; &nbsp;{t('home_page.update_1')}&nbsp; &nbsp;</b>
-                                <Trans
-                                    i18nKey='home_page.update_2'
-                                    components={{ italic: <i />, bold: <strong /> }}
-                                />
-                                <b>&nbsp; &nbsp;&nbsp;</b>
-                                <Trans
-                                    i18nKey='home_page.update_3'
-                                    components={{ italic: <i />, bold: <strong /> }}
-                                />
-                            </Trans>
-                        </Marquee>
-                    }
-                    banner
-                />
-                <div className='mobile-home-content'>
-                    {landingCards.map((list: any) => {
-                        return (list.key === keyValue ?
-                            <React.Fragment>
-                                <Image src={list.image} preview={false} />
-                                <Title level={2} className='landing-card-title'>
-                                    {list.title}
-                                </Title>
-                                <Title level={5} className='landing-page-text'>
-                                    {list.text}
-                                </Title>
-                                <Button
-                                    type='text'
-                                    className='float-left'
-                                    onClick={() => decreaseCounter()}
-                                >
-                                    <Title level={5}>
-                                        <ArrowLeftOutlined />&ensp;Back
-                                    </Title>
-                                </Button>
-                                <Button
-                                    type='text'
-                                    className='float-right'
-                                    onClick={() => increaseCounter()}
-                                >
-                                    <Title level={5}>
-                                        Next&ensp;<ArrowRightOutlined />
-                                    </Title>
-                                </Button>
-                            </React.Fragment>
-                            : null
-                        )
-                    })}
-                </div>
-                <Row className='landing-row'>
-                    {landingCards.map((list: any) => {
-                        return (
-                            list.key === keyValue ?
-                                <React.Fragment>
-                                    <Col span={8} className='landing-col-8'>
-                                        <Card
-                                            className='landing-card'
-                                            style={{
-                                                height: '70h',
-                                                backgroundColor: '#F1F6F5',
-                                                alignContent: 'center',
-                                                marginBlock: '2vh'
-                                            }}
-                                        >
-                                            <Title level={2} className='landing-card-title'>
-                                                Recent Updates
-                                            </Title>
-                                            <Title level={2} className='landing-card-title'>
-                                                {list.title}
-                                            </Title>
-                                            <Title level={5} className='landing-page-text'>
-                                                {list.text}
-                                            </Title>
-                                            <Button
-                                                type='text'
-                                                className='float-left'
-                                                onClick={() => decreaseCounter()}
-                                            >
-                                                <Title level={5}>
-                                                    <ArrowLeftOutlined />&ensp;Back
-                                                </Title>
-                                            </Button>
-                                            <Button
-                                                type='text'
-                                                className='float-right'
-                                                onClick={() => increaseCounter()}
-                                            >
-                                                <Title level={5}>
-                                                    Next&ensp;<ArrowRightOutlined />
-                                                </Title>
-                                            </Button>
-                                        </Card>
-                                    </Col>
-                                    <Col span={16}>
-                                        <Image
-                                            className='landing-image'
-                                            src={list.image}
-                                            preview={false}
-                                            style={{
-                                                width: '65vw',
-                                                height: '79vh',
-                                                borderRadius: '2vh'
-                                            }}
-                                        />
-                                        <Button type='text' href='#aim'>
-                                            <Title
-                                                level={2}
-                                                style={{
-                                                    color: 'white',
-                                                    width: 'fit-content',
-                                                    alignContent: 'center',
-                                                    textAlign: 'center',
-                                                    position: 'relative',
-                                                    bottom: '10vh',
-                                                    left: '5vw'
-                                                }}
-                                            >
-                                                Scroll <ArrowDownOutlined />
-                                            </Title>
-                                        </Button>
-                                    </Col>
-                                </React.Fragment> : null
-                        )
-                    })}
-                </Row>
-            </div>
+                            <Register history={history} setSignUpPopupVisible={setSignUpPopupVisible} />
+                        </Modal>
+                    </div>
+                    <div className='googlePlay'>
+                        <Button><img src={googlePlay} /></Button>
+                    </div>
+                    <div className='headFooter'>
+                        <div className='firstL'>
+                            <p>{t('home_page.text3')}</p>
+                            <a href='#updates'>{t('home_page.text4')}</a>
+                        </div>
+                        <div className='secondL'>
+                            <Breadcrumb separator='|'>
+                                <Breadcrumb.Item href='#mvp'>{t('home_page.text5')}</Breadcrumb.Item>
+                                <Breadcrumb.Item href='#foodExb'>{t('home_page.text6')}</Breadcrumb.Item>
+                                <Breadcrumb.Item href='#academia'>{t('home_page.text7')}</Breadcrumb.Item>
+                            </Breadcrumb>
+                        </div>
+                    </div>
+                </Col>
+                <Col span={16} xs={0} md={12}>
+                    <div className='courselCircle'>
+                        <Carousel autoplay speed={2500} dots={false} effect='fade' className='courselUnit'>
+                            <img src={firstImage} className='contentStyle' alt='firstImage' />
+                            <img src={secondImage} className='contentStyle' alt='secondImage' />
+                            <img src={thirdImage} className='contentStyle' alt='thirdImage'/>
+                            <img src={fourthImage} className='contentStyle' alt='fourthImage'/>
+                            <img src={fifthImage} className='contentStyle' alt='fifthImage'/>
+                        </Carousel>
+                    </div>
+                </Col>
+            </Row>
+            <LandingDivider className='pageDivider'/>
         </div>
     );
 };

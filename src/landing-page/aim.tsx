@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
-import { Card, Col, Image, Modal, Row, Typography } from 'antd';
+import {Col,Row, Typography } from 'antd';
 import { useTranslation } from 'react-i18next';
-
-import Connect from '../static/assets/connection.svg';
-import Direct from '../static/assets/transmission.svg';
-import BestPrize from '../static/assets/best.svg';
-import LiveInfo from '../static/assets/agronomy.svg';
-import Mission from '../static/assets/mission.svg';
-import Handshake from '../static/assets/handshake.svg';
+import PriceDiscovery from '../static/assets/Rectangle 234.png';
+import BestMatch from '../static/assets/Rectangle 235.png';
+import DirectTrade from '../static/assets/Rectangle 236.png';
+import BestPrice from '../static/assets/Rectangle 237.png';
+import FarmToDoor from '../static/assets/Rectangle 238.png';
+import FarmerAsService from '../static/assets/Rectangle 239.png';
 import { englishStyling, isEnglish, kannadaStyling } from '../static/translations/constants';
+import { LandingDivider } from '../app-components/landingDivider';
 
 const { Link, Text, Title } = Typography;
 
@@ -18,102 +18,106 @@ const Aim = () => {
     const customStyles = isEnglish(t('language')) ? englishStyling : kannadaStyling;
 
     return (
+        <>
         <div id='aim'>
-            <Modal
-                visible={viewVideo}
-                onCancel={() => setVideo(!viewVideo)}
-                width={'95%'}
-                className='about-us-video-modal'
-                maskClosable={true}
-                footer={null}
-            >
-                <iframe
-                    title='about-us-video'
-                    width='95%'
-                    height='100%'
-                    src='https://www.youtube.com/embed/p4CZAGgJ-wM?playlist=p4CZAGgJ-wM&loop=1&autoplay=1&mute=1'
-                    allowFullScreen
-                />
-            </Modal>
-            <Title className={`col-green ${customStyles.aimTitle}`}>{t('aim_page.title')}</Title>
-            <img className='handshake-image' src={Handshake} alt='handshake' />
-            <div className='aim-card-view'>
-                <Row className='aim-card-row'>
-                    <Col span={8} className='card-col'>
-                        <Card className={customStyles.aimCard}>
-                            <div className='hex1'></div>
-                            <div className='hex2'>
-                                <Image className='icon-inside-hex' src={Connect} preview={false} />
-                            </div>
-                            <div className='hex3'></div>
-                            <div className='text'>
-                                <Text className='col-white card-text'>{t('aim_page.aim_card_1')}</Text>
-                            </div>
-                        </Card>
+                <Row justify='center' className='aimFirstRow'>
+                    <Col xs={24} md={12} className='aim-Whatis'>
+                        <Title level={2}>{t('aim_page.text1')}</Title>
+                        <p>{t('aim_page.text2')}</p>
                     </Col>
-                    <Col span={8} className='card-col'>
-                        <Card className={customStyles.aimCard}>
-                            <div className='hex1'></div>
-                            <div className='hex2'>
-                                <Image className='icon-inside-hex' src={Direct} preview={false} />
-                            </div>
-                            <div className='hex3'></div>
-                            <Text className='col-white card-text'>{t('aim_page.aim_card_2')}</Text>
-                        </Card>
-                    </Col>
-                    <Col span={8} className='card-col'>
-                        <Card className={customStyles.aimCard}>
-                            <div className='hex1'></div>
-                            <div className='hex2'>
-                                <Image className='icon-inside-hex' src={LiveInfo} preview={false} />
-                            </div>
-                            <div className='hex3'></div>
-                            <Text className='col-white card-text'>{t('aim_page.aim_card_3')}</Text>
-                        </Card>
+                    <Col xs={24} md={12} className='videoContent'>
+                        <iframe
+                            className='videoContent'
+                            width="400"
+                            height="300"
+                            style={{ marginLeft:'50px'}} 
+                            src="https://www.youtube.com/embed/p4CZAGgJ-wM"
+                        />
                     </Col>
                 </Row>
-                <Row className='aim-card-row mobile-display-none'>
-                    <Col span={8} className='card-col'>
-                        <Card className={`aim-card-two ${customStyles.aimCard}`}>
-                            <div className='hex1'></div>
-                            <div className='hex2'>
-                                <Image className='icon-inside-hex' src={BestPrize} preview={false} />
-                            </div>
-                            <div className='hex3'></div>
-                            <Text className='col-white card-text'>{t('aim_page.aim_card_4')}</Text>
-                        </Card>
+                <Title level={2}>{t('aim_page.text3')}</Title>
+                <Text>{t('aim_page.text4')}</Text>
+                <Row className='seller-buyer-advantage'>
+                    <Col span={6} xs={24} md={8}>
+                    <p className='headText'><span>{t('aim_page.text5')}</span> {t('aim_page.text6')}</p>
+                        <div className='seller-buyer-points'>
+                            <div>01</div>
+                            <p className={`${customStyles.aimSellerBuyerPoints}`}>{t('aim_page.text9')}</p>
+                        </div>
+                        <div className='seller-buyer-points'>
+                            <div>02</div>
+                            <p className={`${customStyles.aimSellerBuyerPoints}`}>{t('aim_page.text10')}</p>
+                        </div>
+                        <div className='seller-buyer-points'>
+                            <div>03</div>
+                            <p className={`${customStyles.aimSellerBuyerPoints}`}>{t('aim_page.text11')}</p>
+                        </div>
+
                     </Col>
-                    <Col span={8} className='card-col'>
-                        <Card className={customStyles.aimCard}>
-                            <div className='hex1'></div>
-                            <div className='hex2'>
-                                <Image className='icon-inside-hex' src={Connect} preview={false} />
-                            </div>
-                            <div className='hex3'></div>
-                            <div className='text'>
-                                <Text className='col-white card-text'>{t('aim_page.aim_card_5')}</Text>
-                            </div>
-                        </Card>
+                    <Col className='midSec-seller' span={6} xs={24} md={8}>
+                        <div className='seller-buyer-points'>
+                            <div>04</div>
+                            <p className={`${customStyles.aimSellerBuyerPoints}`}>{t('aim_page.text12')}</p>
+                        </div>
+                        <div className='seller-buyer-points'>
+                            <div>05</div>
+                            <p className={`${customStyles.aimSellerBuyerPoints}`}>{t('aim_page.text13')}</p>
+                        </div>
+                        <div className='seller-buyer-points'>
+                            <div>06</div>
+                            <p className={`${customStyles.aimSellerBuyerPoints}`}>{t('aim_page.text14')}</p>
+                        </div>
+
                     </Col>
-                    <Col span={8} className='card-col'>
-                        <Card className={`aim-card-two ${customStyles.aimCard}`}>
-                            <div className='hex1'></div>
-                            <div className='hex2'>
-                                <Image className='icon-inside-hex' src={Mission} preview={false} />
-                            </div>
-                            <div className='hex3'></div>
-                            <Text className='col-white card-text'>{t('aim_page.aim_card_6')}</Text>
-                        </Card>
+                    <Col span={8} xs={24} md={8}>
+                    <p className='headText'><span>{t('aim_page.text7')}</span> {t('aim_page.text8')}</p>
+                        <div className='seller-buyer-points'>
+                            <div>01</div>
+                            <p className={`${customStyles.aimSellerBuyerPoints}`}>{t('aim_page.text15')}</p>
+                        </div>
+                        <div className='seller-buyer-points'>
+                            <div>02</div>
+                            <p className={`${customStyles.aimSellerBuyerPoints}`}>{t('aim_page.text16')}</p>
+                        </div>
+                        <div className='seller-buyer-points'>
+                            <div>03</div>
+                            <p className={`${customStyles.aimSellerBuyerPoints}`}>{t('aim_page.text17')}</p>
+                        </div>
+
                     </Col>
                 </Row>
-            </div>
-            <Text className={customStyles.aimVideoLink}>{t('aim_page.video_link')} &nbsp;
-                <Link onClick={() => setVideo(true)} style={{ textDecoration: 'underline' }}>
-                    {t('aim_page.link_name')}
-                </Link>
-                .
-            </Text>
-        </div>
+
+                <p className='manyMore'>{t('aim_page.text18')}</p>
+                <hr className='solid'></hr>
+                <p className='seventhBox'>{t('aim_page.text19')}</p>
+                <Row className='advantageBadges'>
+                    <Col span={6} xs={12} md={6}><img src={PriceDiscovery} alt='PriceDiscovery'/></Col>
+                    <Col span={6} xs={12} md={6}><img src={BestMatch} alt='BestMatch'/></Col>
+                    <Col span={6} xs={12} md={6}><img src={DirectTrade} alt='DirectTrade'/></Col>
+                    <Col span={6} xs={12} md={6}><img src={BestPrice} alt='BestPrice'/></Col>
+                </Row>
+                <Row justify='space-between' className='advantageBadges-1'>
+                    <Col span={12} xs={10} md={12}><img src={FarmToDoor} alt='FarmToDoor'/></Col>
+                    <Col span={12} xs={10} md={12}><img src={FarmerAsService} alt='FarmerAsService'/></Col>
+                </Row>
+                <p className='ninethBox'>{t('aim_page.text20')}</p>
+                <Row className='tenthBox'>
+                    <Col span={8} xs={12} md={8}>
+                        <p className='firstheading'>{t('aim_page.text21')}</p>
+                        <p>{t('aim_page.text22')}</p>
+                    </Col>
+                    <Col span={8} xs={12} md={8}>
+                        <p className='firstheading'>{t('aim_page.text23')}</p>
+                        <p>{t('aim_page.text24')}</p>
+                    </Col>
+                    <Col span={8} xs={12} md={8}>
+                        <p className='firstheading'>{t('aim_page.text25')}</p>
+                        <p>{t('aim_page.text26')}</p>
+                    </Col>
+                </Row>
+                <LandingDivider className='pageDivider'/>
+    </div>
+    </>
     );
 };
 
