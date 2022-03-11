@@ -62,11 +62,13 @@ const AddProduceModal = (props: { history: History }) => {
             className: 'kyc-required-modal',
             content:
                 <React.Fragment>
-                    <Text>Please update your KYC information to update master list/ add interested</Text><br />
+                    {!loginState.isSubmitted ? <Text>Please update your KYC information to update master list/ add requirements</Text>:<Text>Please wait for the admin to approve your KYC to update master list/ add requirements</Text> }
+                    <br />
                     <Text>Profile &gt; KYC Information</Text>
                 </React.Fragment>
             ,
             okText: 'Update Now',
+            okButtonProps:!loginState.isSubmitted ?{ disabled: false }:{ disabled:true},
             closable: true,
             onOk: () => history.push(routesMap.profile),
         });
