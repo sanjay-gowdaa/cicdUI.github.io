@@ -99,11 +99,12 @@ const CropsSection = (props: any) => {
             className: 'kyc-required-modal',
             content:
                 <React.Fragment>
-                    <Text>Please update your KYC information to add produce</Text><br />
+                    {!loginState.isSubmitted ? <Text>Please update your KYC information to update master list/ add requirements</Text>:<Text>Please wait for the admin to approve your KYC to add produce</Text> }<br />
                     <Text>Profile &gt; KYC Information</Text>
                 </React.Fragment>
             ,
             okText: 'Update Now',
+            okButtonProps:!loginState.isSubmitted ?{ disabled: false }:{ disabled:true},
             closable: true,
             onOk: () => history.push(routesMap.profile),
         });
