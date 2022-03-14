@@ -41,7 +41,7 @@ const Home = ({ history, popUpTrigger, setSignUpPopupVisible }: { history: Histo
                         </Modal>
                     </div>
                     <div className='googlePlay'>
-                        <Button><img src={googlePlay} /></Button>
+                        <Button size='small' type ='link' href='https://play.google.com/store/apps/details?id=com.vikasBandhu' target='_blank'><img src={googlePlay}/></Button>
                     </div>
                     <div className='headFooter'>
                         <div className='firstL'>

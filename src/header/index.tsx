@@ -83,8 +83,8 @@ const Header = (headerProps: any) => {
                 <Breadcrumb.Item href='#aim'>{t('landing_page.header.breadcrumb.aim')}</Breadcrumb.Item>
                 <Breadcrumb.Item href='#ecosystem'>{t('landing_page.header.breadcrumb.ecosystem')}</Breadcrumb.Item>
                 <Breadcrumb.Item href='#commodities'>{t('landing_page.header.breadcrumb.commodities')}</Breadcrumb.Item>
-                <Breadcrumb.Item href='#users'>{t('landing_page.header.breadcrumb.users')}</Breadcrumb.Item>
-                <Breadcrumb.Item href='#aboutUs'>{t('landing_page.header.breadcrumb.about_us')}</Breadcrumb.Item>
+                {/* <Breadcrumb.Item href='#users'>{t('landing_page.header.breadcrumb.users')}</Breadcrumb.Item> */}
+                {/* <Breadcrumb.Item href='#aboutUs'>{t('landing_page.header.breadcrumb.about_us')}</Breadcrumb.Item> */}
                 <Breadcrumb.Item href='#team'>{t('landing_page.header.breadcrumb.team')}</Breadcrumb.Item>
                 <Breadcrumb.Item href='#legal'>{t('landing_page.header.breadcrumb.legal')}</Breadcrumb.Item>
                 <Breadcrumb.Item href='#contactUs'>{t('landing_page.header.breadcrumb.contact_us')}</Breadcrumb.Item>

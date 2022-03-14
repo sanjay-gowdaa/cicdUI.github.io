@@ -1,6 +1,6 @@
 import React from 'react';
-import { Typography,Row,Col } from 'antd';
-import { useTranslation } from 'react-i18next';
+import { Typography,Row,Col} from 'antd';
+import { Trans, useTranslation } from 'react-i18next';
 
 import Nagappa from '../static/assets/Ellipse 1.png';
 import Suma from '../static/assets/Ellipse 2.png';
@@ -29,7 +29,11 @@ const Team = () => {
                     <Title level={5}>{t('our_team.founders.name.1')}</Title>
                     <p>{t('our_team.founders.designation.1')}</p>
                     <p>{t('our_team.founders.subDesignation.1')}</p>
-                    <Paragraph className='para'>{t('our_team.founders.description.1')}</Paragraph>
+                    <Paragraph className='para'>
+                        <Trans
+                                    i18nKey='our_team.founders.description.1'
+                                    components={{ italic: <i />, bold: <strong /> }}
+                                /></Paragraph>
                     </Col>
                 </Row>
                 <Row className='FoundersRow'>
