@@ -20,7 +20,7 @@ const Footer = () => {
             <div className="applied-for">
                 <p>
                     {' '}
-                    <span>&#169;</span> Vikasbandhu (TM) 2020{' '}
+                    <span>&#169;</span> Vikasbandhu <sup>(TM)</sup> 2021{' '}
                 </p>
             </div>
             <div>

@@ -5,7 +5,7 @@ import './customComponent.scss';
 
 const DefaultBtn = (props: any) => {
     const { content, className } = props;
-    const customClassName = `${className}`;
+    const customClassName = `${className} custom-default-button`;
 
     return (
         <Button {...props} {...{ className: customClassName }}> {content} </Button>
