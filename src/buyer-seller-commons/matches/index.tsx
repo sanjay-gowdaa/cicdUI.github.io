@@ -35,7 +35,7 @@ const Matches = () => {
     const { is_buyer } = loginState;
     const userState = useSelector((state: RootState) => is_buyer ? state.buyer : state.seller);
     const idName = is_buyer ? 'buyer-ui-matches' : 'seller-ui-matches';
-    console.log(idName);
+    
 
     useEffect(() => {
         !is_buyer && dispatch(getAllSellerMatches());
