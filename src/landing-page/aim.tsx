@@ -20,9 +20,10 @@ const Aim = () => {
     return (
         <>
         <div id='aim'>
+            <div className='aim-wrapper'>
                 <Row justify='center' className='aimFirstRow'>
                     <Col xs={24} md={12} className='aim-Whatis'>
-                        <Title level={2}>{t('aim_page.text1')}</Title>
+                        <Title className='aim-header' level={2}>{t('aim_page.text1')}</Title>
                         <p>{t('aim_page.text2')}</p>
                     </Col>
                     <Col xs={24} md={12} className='videoContent'>
@@ -30,6 +31,7 @@ const Aim = () => {
                             className='videoContent'
                             width="400"
                             height="300"
+                            border-radius="10%"
                             style={{ marginLeft:'50px'}} 
                             src="https://www.youtube.com/embed/p4CZAGgJ-wM"
                         />
@@ -90,15 +92,25 @@ const Aim = () => {
                 <p className='manyMore'>{t('aim_page.text18')}</p>
                 <hr className='solid'></hr>
                 <p className='seventhBox'>{t('aim_page.text19')}</p>
+
+                {/* /** This should be visible only in desktop/ tab */ }
                 <Row className='advantageBadges'>
-                    <Col span={6} xs={12} md={6}><img src={PriceDiscovery} alt='PriceDiscovery'/></Col>
-                    <Col span={6} xs={12} md={6}><img src={BestMatch} alt='BestMatch'/></Col>
-                    <Col span={6} xs={12} md={6}><img src={DirectTrade} alt='DirectTrade'/></Col>
-                    <Col span={6} xs={12} md={6}><img src={BestPrice} alt='BestPrice'/></Col>
+                    <Col span={6} xs={0} md={6}><img src={PriceDiscovery} alt='PriceDiscovery'/></Col>
+                    <Col span={6} xs={0} md={6}><img src={BestMatch} alt='BestMatch'/></Col>
+                    <Col span={6} xs={0} md={6}><img src={DirectTrade} alt='DirectTrade'/></Col>
+                    <Col span={6} xs={0} md={6}><img src={BestPrice} alt='BestPrice'/></Col>
                 </Row>
                 <Row justify='space-between' className='advantageBadges-1'>
-                    <Col span={12} xs={10} md={12}><img src={FarmToDoor} alt='FarmToDoor'/></Col>
-                    <Col span={12} xs={10} md={12}><img src={FarmerAsService} alt='FarmerAsService'/></Col>
+                    <Col span={12} xs={0} md={12}><img src={FarmToDoor} alt='FarmToDoor'/></Col>
+                    <Col span={12} xs={0} md={12}><img src={FarmerAsService} alt='FarmerAsService'/></Col>
+                </Row>
+                <Row className='advantageBadges'>
+                    <Col span={6} xs={12} md={0}><img src={PriceDiscovery} alt='PriceDiscovery'/></Col>
+                    <Col span={6} xs={12} md={0}><img src={BestMatch} alt='BestMatch'/></Col>
+                    <Col span={6} xs={12} md={0}><img src={DirectTrade} alt='DirectTrade'/></Col>
+                    <Col span={6} xs={12} md={0}><img src={BestPrice} alt='BestPrice'/></Col>
+                    <Col span={6} xs={12} md={0}><img src={FarmToDoor} alt='FarmToDoor'/></Col>
+                    <Col span={6} xs={12} md={0}><img src={FarmerAsService} alt='FarmerAsService'/></Col>
                 </Row>
                 <p className='ninethBox'>{t('aim_page.text20')}</p>
                 <Row className='tenthBox'>
@@ -116,6 +128,7 @@ const Aim = () => {
                     </Col>
                 </Row>
                 <LandingDivider className='pageDivider'/>
+    </div>
     </div>
     </>
     );

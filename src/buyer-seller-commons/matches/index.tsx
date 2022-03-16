@@ -34,6 +34,8 @@ const Matches = () => {
     const loginState = useSelector((state: RootState) => state.loginUser);
     const { is_buyer } = loginState;
     const userState = useSelector((state: RootState) => is_buyer ? state.buyer : state.seller);
+    const idName = is_buyer ? 'buyer-ui-matches' : 'seller-ui-matches';
+    console.log(idName);
 
     useEffect(() => {
         !is_buyer && dispatch(getAllSellerMatches());
@@ -129,7 +131,7 @@ const Matches = () => {
     };
 
     return (
-        <div id='matches'>
+        <div id={idName}>
             <Title level={2}>My Matches</Title>
             <Button
                 type='link'

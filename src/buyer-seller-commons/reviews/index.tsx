@@ -12,9 +12,10 @@ const ReviewsSection = () => {
     const loginState = useSelector((state: RootState) => state.loginUser);
     const userState = useSelector((state: RootState) => loginState.is_buyer ? state.buyer : state.seller);
     const { reviewsList } = userState;
+    const idName= loginState.is_buyer ? 'buyer-ui-feedback':'seller-ui-feedback';
 
     return (
-        <div id='seller-ui-feedback'>
+        <div id={idName}>
             <Tooltip title='Coming soon!' placement='left'>
                 <Text style={{ fontWeight: 700, fontSize: '24px' }}>Reviews</Text>
             </Tooltip>
