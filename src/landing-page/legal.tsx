@@ -20,7 +20,7 @@ const Legal = () => {
                 {t('legal_page.title')}
             </Title>
             
-            <Tabs  className='legal-tab' defaultActiveKey='1' type='card'>
+            <Tabs className='legal-tab' defaultActiveKey='1' type='card'>
                 <TabPane
                     className='tnc-tab'
                     tab={t('landing_page.actions.terms_and_conditions')}
