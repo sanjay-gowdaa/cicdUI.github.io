@@ -11,6 +11,8 @@ $col-shade-error: #e90000;
     }
 
     .buyer-ui-dashboard {
+        position: relative;
+        top:-100px;
         padding: 2em;
 
         .buyer-banner {
@@ -23,6 +25,11 @@ $col-shade-error: #e90000;
         height: 52px;
         font-weight: 500;
         font-size: 18px;
+    }
+
+    .app-footer-container {
+        position: relative;
+        top:0px;
     }
 }
 

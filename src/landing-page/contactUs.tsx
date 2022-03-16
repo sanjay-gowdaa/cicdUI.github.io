@@ -43,7 +43,7 @@ const ContactUs = () => {
             </Title>
             <div className='contactWrapper'>
                 <Row>
-                    <Col span={12} className='contact-us-info'>
+                    <Col span={12} xs={24} md={12} className='contact-us-info'>
                         <Space direction='vertical'>
                             <div>
                                 <PhoneOutlined className='contact-us-icon' />
@@ -69,7 +69,7 @@ const ContactUs = () => {
                             </div>
                         </Space>
                     </Col>
-                    <Col span={10} className='write-feedback'>
+                    <Col span={10} xs={24} md={10} className='write-feedback'>
                         <div className='feedback-form'>
                             <Title className='write-feedback-title' level={4}>
                                 {t('contact_us_page.contact_form.title')}

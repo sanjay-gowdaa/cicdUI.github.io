@@ -26,6 +26,7 @@ const Transaction = () => {
     const [reloadClicked, setReloadClicked] = useState(0);
     const [transactionKey, setTransactionKey] = useState(TransactionStatus.on_going);
     const { transactionList } = userState;
+    const idName= loginState.is_buyer ? 'buyer-ui-transactions':'seller-ui-transactions';
 
     const onSwitchTab = (key: string) => {
         const transactionTypeKey = key as TransactionStatus;
@@ -53,7 +54,7 @@ const Transaction = () => {
     }, [reloadClicked]);
 
     return (
-        <div id='buyer-ui-transactions'>
+        <div id={idName}>
             <Title level={2}>My Transactions</Title>
             <Button
                 type='link'

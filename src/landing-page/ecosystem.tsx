@@ -1,5 +1,5 @@
 import React from 'react';
-import { Typography, Row, Col } from 'antd';
+import { Typography, Row, Col, Carousel } from 'antd';
 import { useTranslation } from 'react-i18next';
 
 import SmallDivider from '../static/assets/Line 24.png';
@@ -64,8 +64,9 @@ const Ecosystem = () => {
         <div id='ecosystem'>
             <div className='ecosystem-wrapper'>
                 <Text className={`firstHead ${customStyles.ecosystemTitle}`}>{t('ecosystem_page.firstHead')}</Text>
+                {/* this is only for md */}
                 <Row wrap>
-                    <Col span={6} xs={24} md={6}>
+                    <Col span={6} xs={0} md={6}>
                         <img src={Inumber1} alt='' />
                         <img className='phoneScreen' src={IScreen1} alt='' />
                         <div>
@@ -73,7 +74,7 @@ const Ecosystem = () => {
                             <p>{t('ecosystem_page.text12')}</p>
                         </div>
                     </Col>
-                    <Col span={6} xs={24} md={6}>
+                    <Col span={6} xs={0} md={6}>
                         <img src={Inumber2} alt='' />
                         <img className='phoneScreen' src={IScreen2} alt='' />
                         <div>
@@ -81,7 +82,7 @@ const Ecosystem = () => {
                             <p>{t('ecosystem_page.text13')}</p>
                         </div>
                     </Col>
-                    <Col span={6} xs={24} md={6}>
+                    <Col span={6} xs={0} md={6}>
                         <img src={Inumber3} alt='' />
                         <img className='phoneScreen' src={IScreen3} alt='' />
                         <div>
@@ -89,7 +90,7 @@ const Ecosystem = () => {
                             <p>{t('ecosystem_page.text14')}</p>
                         </div>
                     </Col>
-                    <Col span={6} xs={24} md={6}>
+                    <Col span={6} xs={0} md={6}>
                         <img src={Inumber4} alt='' />
                         <img className='phoneScreen' src={IScreen4} alt='' />
                         <div>
@@ -97,6 +98,45 @@ const Ecosystem = () => {
                             <p>{t('ecosystem_page.text15')}</p>
                         </div>
                     </Col >
+                </Row>
+                <Row className='iphone-screen-mobile'>
+                    <Col span={24} xs={24} md={0}>
+                        <Carousel  dots={true}>
+                            <div>
+                                <img src={Inumber1} alt='' />
+                                <img className='phoneScreen' src={IScreen1} alt='' />
+                                <div>
+                                    <img src={GreenVerticalLine} alt='GreenVerticalLine' />
+                                    <p>{t('ecosystem_page.text12')}</p>
+                                </div>
+                            </div>
+                            <div>
+                                <img src={Inumber2} alt='' />
+                                <img className='phoneScreen' src={IScreen2} alt='' />
+                                <div>
+                                    <img src={GreenVerticalLine} alt='GreenVerticalLine' />
+                                    <p>{t('ecosystem_page.text13')}</p>
+                                </div>
+                            </div>
+                            <div>
+                                <img src={Inumber3} alt='' />
+                                <img className='phoneScreen' src={IScreen3} alt='' />
+                                <div>
+                                    <img src={GreenVerticalLine} alt='GreenVerticalLine' />
+                                    <p>{t('ecosystem_page.text14')}</p>
+                                </div>
+                            </div>
+                            <div>
+                                <img src={Inumber4} alt='' />
+                                <img className='phoneScreen' src={IScreen4} alt='' />
+                                <div>
+                                    <img src={GreenVerticalLine} alt='GreenVerticalLine' />
+                                    <p>{t('ecosystem_page.text15')}</p>
+                                </div>
+                            </div>
+                            <div></div>
+                        </Carousel>
+                    </Col>
                 </Row>
                 <img src={SmallDivider} alt="smallDivider" />
                 <p className='keyFeatures'>{t('ecosystem_page.text1')}</p>
@@ -111,7 +151,7 @@ const Ecosystem = () => {
                         )
                     })}
                 </div>
-                <LandingDivider className='pageDivider'/>
+                <LandingDivider className='pageDivider' />
             </div>
         </div>
     );
