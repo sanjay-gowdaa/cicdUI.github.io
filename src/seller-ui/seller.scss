@@ -10,11 +10,17 @@ $col-shade-green: #12805c;
     }
 
     .seller-ui-dashboard {
+        position: relative;
+        top:-6.25rem;
         padding: 2em;
 
         .seller-banner {
             width: 100%;
         }
+    }
+    .app-footer-container {
+        position: relative;
+        top:0px;
     }
 }
 
@@ -32,7 +38,7 @@ $col-shade-green: #12805c;
     }
 
     .ant-drawer-body {
-        padding: 20px;
+        padding: 1.25rem;
         overflow-y: scroll;
         overflow-x: unset;
     }

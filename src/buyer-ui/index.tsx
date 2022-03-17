@@ -49,7 +49,7 @@ const BuyerUI = (props: { history: History }) => {
                 <Divider />
                 <ReviewsSection />
             </div>
-            <Footer />
+            <Footer/>
         </div>
     );
 };

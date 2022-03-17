@@ -20,10 +20,10 @@ const Footer = () => {
             <div className="applied-for">
                 <p>
                     {' '}
-                    <span>&#169;</span> Vikasbandhu (TM) 2020{' '}
+                    <span>&#169;</span> Vikasbandhu <sup>(TM)</sup> 2021{' '}
                 </p>
             </div>
-            <div>
+            <div className="footer-logo">
                 <p className='powered-by-text'>Powered by</p>
                 <img className="image" src={footerImg} alt="footer" />
             </div>
