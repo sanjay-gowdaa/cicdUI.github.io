@@ -127,9 +127,9 @@ const Profile = (props: { history: History }) => {
         delete values['email'];
         delete values['upi_id'];
         if (userType === UserTypes.BUYER) {
-            delete values['account_holder_name'];
+            delete values['account_name'];
             delete values['bank_info'];
-            delete values['account_no'];
+            delete values['account_number'];
             delete values['ifsc_code'];
             delete values['bank_doc'];
             delete values['weekday'];
