@@ -10,10 +10,9 @@ import FarmerAsService from '../static/assets/Rectangle 239.png';
 import { englishStyling, isEnglish, kannadaStyling } from '../static/translations/constants';
 import { LandingDivider } from '../app-components/landingDivider';
 
-const { Link, Text, Title } = Typography;
+const {Text, Title } = Typography;
 
 const Aim = () => {
-    const [viewVideo, setVideo] = useState(false);
     const { t } = useTranslation('common');
     const customStyles = isEnglish(t('language')) ? englishStyling : kannadaStyling;
 
@@ -72,17 +71,17 @@ const Aim = () => {
 
                     </Col>
                     <Col span={8} xs={24} md={8}>
-                    <p className='headText'><span>{t('aim_page.text7')}</span> {t('aim_page.text8')}</p>
+                    <p className='headText2'><span>{t('aim_page.text7')}</span> {t('aim_page.text8')}</p>
                         <div className='seller-buyer-points'>
-                            <div>01</div>
+                            <div style={{background:'#F5A31A'}}>01</div>
                             <p className={`${customStyles.aimSellerBuyerPoints}`}>{t('aim_page.text15')}</p>
                         </div>
-                        <div className='seller-buyer-points'>
-                            <div>02</div>
+                        <div  className='seller-buyer-points'>
+                            <div style={{background:'#F5A31A'}}>02</div>
                             <p className={`${customStyles.aimSellerBuyerPoints}`}>{t('aim_page.text16')}</p>
                         </div>
                         <div className='seller-buyer-points'>
-                            <div>03</div>
+                            <div style={{background:'#F5A31A'}}>03</div>
                             <p className={`${customStyles.aimSellerBuyerPoints}`}>{t('aim_page.text17')}</p>
                         </div>
 

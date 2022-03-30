@@ -1,11 +1,12 @@
 .profile-page {
-
+    .header-breadcrumb {
+        display: none;
+    }
+.profile-wrapper{
+    position: relative;
+    top:100px;
     .landing-page-header-bar {
         position: unset;
-
-        .header-breadcrumb {
-            display: none;
-        }
     }
 
     #profile {
@@ -79,6 +80,8 @@
     .kyc-required {
         background-color: #FFF0DA;
     }
+}
+    
 }
 
 .view-document-modal {

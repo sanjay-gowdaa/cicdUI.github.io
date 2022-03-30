@@ -76,7 +76,7 @@ const Header = (headerProps: any) => {
     const logo = isEnglish(t('language')) ? Logo : KannadaLogo;
 
     return (
-        <div className='landing-page-header-bar'>
+        <div className='landing-page-header-bar custom-height-alignment'>
             <Image className='logo' src={logo} preview={false} />
             <Breadcrumb className='header-breadcrumb' separator='|'>
                 <Breadcrumb.Item href='#home'>{t('landing_page.header.breadcrumb.home')}</Breadcrumb.Item>

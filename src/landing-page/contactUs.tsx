@@ -62,7 +62,7 @@ const ContactUs = () => {
                             </div>
                             <div className="mapouter">
                                 <div className="gmap_canvas">
-                                    <iframe className="gmap_iframe" width="100%" frameBorder="0" scrolling="no" src="https://maps.google.com/maps?width=387&amp;height=179&amp;hl=en&amp;q=617, Shivam, Royal Park Residency, J P Nagar 9th Phase, Bengaluru-560062&amp;t=&amp;z=12&amp;ie=UTF8&amp;iwloc=B&amp;output=embed">
+                                    <iframe className="gmap_iframe" width="100%" frameBorder="0" scrolling="no" src="https://maps.google.com/maps?width=387&amp;height=179&amp;hl=en&amp;q=617, samparkbindhu pvt.ltd bangalore&amp;t=&amp;z=12&amp;ie=UTF8&amp;iwloc=B&amp;output=embed">
                                     </iframe>
                                     <a href="https://kokagames.com/">FNF</a>
                                 </div>

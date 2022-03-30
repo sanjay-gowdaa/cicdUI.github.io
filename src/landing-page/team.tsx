@@ -27,8 +27,7 @@ const Team = () => {
                         <Col span={6}><img src={Sadananda} alt='Sadananda' /></Col>
                         <Col span={18} xs={24} md={18} className='FounderPara'>
                             <Title level={5}>{t('our_team.founders.name.1')}</Title>
-                            <p>{t('our_team.founders.designation.1')}</p>
-                            <p>{t('our_team.founders.subDesignation.1')}</p>
+                            <p>{t('our_team.founders.designation.1')}  {t('our_team.founders.subDesignation.1')}</p>
                             <Paragraph className='para'>
                                 <Trans
                                     i18nKey='our_team.founders.description.1'
@@ -40,8 +39,7 @@ const Team = () => {
                         <Col span={6}><img src={Nagappa} alt='Nagappa' /></Col>
                         <Col span={18} xs={24} md={18} className='FounderPara'>
                             <Title level={5}>{t('our_team.founders.name.2')}</Title>
-                            <p>{t('our_team.founders.designation.2')}</p>
-                            <p>{t('our_team.founders.subDesignation.2')}</p>
+                            <p>{t('our_team.founders.designation.2')} {t('our_team.founders.subDesignation.2')}</p>
                             <Paragraph className='para'>{t('our_team.founders.description.2')}</Paragraph>
                         </Col>
                     </Row>
