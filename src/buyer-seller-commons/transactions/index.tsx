@@ -28,9 +28,12 @@ const Transaction = () => {
     const { transactionList } = userState;
     const idName= loginState.is_buyer ? 'buyer-ui-transactions':'seller-ui-transactions';
 
-    const onSwitchTab = (key: string) => {
+    const onSwitchTab = (key: any) => {
         const transactionTypeKey = key as TransactionStatus;
+        // console.log(key)
         setTransactionKey(transactionTypeKey);
+        console.log(transactionTypeKey);
+        // console.log(transactionList[transactionTypeKey])
         if (transactionList[transactionTypeKey].length === 0) {
             loginState.is_buyer ?
                 dispatch(getTransactionList(transactionTypeKey)) :

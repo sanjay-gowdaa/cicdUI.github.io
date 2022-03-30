@@ -16,6 +16,7 @@ const Commodities = () => {
 
     return (
         <div id='commodities'>
+            <div className='commodities-wrapper'>
             <Title level={2} className='commoditiesTitle'>
             {t('commodities_page.title')}
             </Title>
@@ -42,7 +43,8 @@ const Commodities = () => {
                     <p>{t('commodities_page.commodities_name.5')}</p>
                 </div>
             </div>
-            <LandingDivider/>
+            <LandingDivider className='pageDivider'/>
+        </div>
         </div>
     );
 };

@@ -132,6 +132,7 @@ export const matchesBuyerColumns = (componentCallBacks: componentCallBacksModel)
         render: (produce: string, record: MatchRequirementModel) => {
             const [masterCategory = '', produceCateogry = '', cropType = '', grade = ''] = produce.split('-');
             const imageSrc = showCropImage(masterCategory);
+            
 
             return (
                 <React.Fragment>
@@ -184,8 +185,8 @@ export const matchesBuyerColumns = (componentCallBacks: componentCallBacksModel)
     },
     {
         title: 'Location',
-        dataIndex: 'location',
-        key: 'location',
+        dataIndex: 'seller_location',
+        key: 'seller_location',
     },
     {
         title: '',

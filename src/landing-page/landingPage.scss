@@ -13,126 +13,142 @@ $col-shade-green: #12805c;
 }
 
 #home {
-    width:100%;
+    width:100vw;
     background-color:white;
     z-index: 1;
     position: relative;
     padding-top: 18vh;
-    height: 48rem;
-    display: flex;
+    height: 53rem;
+    display:flex;
+    align-items: center;
     flex-direction: column;
-    align-items:center;
-    overflow: hidden;
-
-    .ant-col-8{
-        width:25rem;
-        position: relative;
-        top:3.125rem;
+    // font-family: Roboto;
     
-        h5.ant-typography{
-            font-family: Roboto;
-                font-style: normal;
-                font-weight: 100;
-                font-size: 1.563rem;
-        }
-    
-        .wimage {
-            background-image: url("../static/assets/wheatCustomised.svg");
-            background-repeat: repeat;
-            width:24.813rem;
-            height:1.25rem;
-            color:#f5a31a;
-        }
-            
-        .registerComponent {
-            display: flex;
-            flex-direction: row;
-            top:26.25rem;
-            justify-content: space-evenly;
-            background-color:#F5A31A;;
-            align-items: center;
-            width:24.813rem;
-            height: 4.563rem;
-            padding:0.625rem;
-            border-radius: 0.313rem;
-            border: none;            
-                
-            p {
-                font-size: 0.938rem;
-                margin-top: 0.625rem;
-            }
-                
-            Button {
-                width:7.5rem;
-                height: 2.75rem;
-                border-radius: 0.313rem;
-                background-color: #FFFFFF;
-                font-size: 1rem;
-                color:#f5a31a;
-                border: none;
-            }
-        }
-            
-        .googlePlay {
-            position: relative;
-            left:-0.625rem;
-            width: 12.5rem;
-            height: 2.769rem;
-            margin-top: 1.25rem;
-        
-            Button,img {
-                width: 9.375rem;
-                height: 2.769rem;
-                margin-left: 0rem;
-                border: none;
-                }
-        }
-
-        .headFooter{
+    .home-wrapper{
+        width:1000px;
+        display: flex;
+        flex-direction: column;
+        // justify-content:center;
+        align-items:center;
+        overflow: hidden;
+        padding-right:70px;
+        height:600px;
+        .ant-col-8{
+            width:25rem;
             position: relative;
             top:3.125rem;
-            left:0rem;
-            display:flex;
-            flex-direction: column;
-            align-self:start;
-            width:31.25rem;
-            height: fit-content;
-
-            .firstL{
-                display: flex;
-                width:10.313rem;
-                height: 1.563rem;
-                justify-content: space-between;
-            }
-
-            .secondL{
-                width: 31.25rem;
-                height: 4.313rem;
-                background: #F6FAF8;
-                border-radius: 0.625rem;
-                display: flex;
-                justify-content: space-evenly;
-                align-items: center;
-                flex-direction: row;
-                text-decoration: underline;
-
-                p{
-                   border-left: 0.063rem solid black;
-               }
-           }
-        }
-    }
-   
-    .courselCircle{
-        position: relative;
-        left:6.25rem;
-        z-index: 0;
-    }
+            // h2.ant-typography{
+            //     // font-family: Roboto;
+            // }
         
+            h5.ant-typography{
+                    font-style: normal;
+                    font-weight: 300;
+                    font-size: 1.563rem;
+            }
+        
+            .wimage {
+                background-image: url("../static/assets/wheatCustomised.svg");
+                background-repeat: repeat;
+                width:24.5rem;
+                height:1.75rem;
+                color:#f5a31a;
+                margin-top: 2rem;
+            }
+                
+            .registerComponent {
+                display: flex;
+                flex-direction: row;
+                justify-content: space-evenly;
+                background-color:#F5A31A;;
+                align-items: center;
+                width:24.813rem;
+                height: 4.563rem;
+                padding:0.625rem;
+                border-radius: 0.313rem;
+                border: none;            
+                    
+                p {
+                    font-size: 0.938rem;
+                    margin-top: 0.625rem;
+                    color:white;
+                    font-weight: 700;
+                }
+                    
+                Button {
+                    width:7.5rem;
+                    height: 2.75rem;
+                    border-radius: 0.313rem;
+                    background-color: #FFFFFF;
+                    font-size: 1rem;
+                    color:#f5a31a;
+                    border: none;
+                }
+            }
+                
+            .googlePlay {
+                position: relative;
+                left:-0.625rem;
+                width: 12.5rem;
+                height: 2.769rem;
+                margin-top: 3rem;
+            
+                Button,img {
+                    width: 9.375rem;
+                    height: 2.769rem;
+                    margin-left: 0rem;
+                    border: none;
+                    }
+            }
+    
+            .headFooter{
+                position: relative;
+                top:3.125rem;
+                left:0rem;
+                display:flex;
+                flex-direction: column;
+                align-self:start;
+                width:31.25rem;
+                height: fit-content;
+    
+                .firstL{
+                    display: flex;
+                    width:10.313rem;
+                    height: 1.563rem;
+                    justify-content: space-between;
+                }
+    
+                .secondL{
+                    width: 31.25rem;
+                    height: 4.313rem;
+                    background: #F6FAF8;
+                    border-radius: 0.625rem;
+                    display: flex;
+                    justify-content: space-evenly;
+                    align-items: center;
+                    flex-direction: row;
+                    text-decoration: underline;
+    
+                    p{
+                       border-left: 0.063rem solid black;
+                   }
+               }
+            }
+        }
+       
+        .courselCircle{
+            position: relative;
+            left:6.25rem;
+            z-index: 0;
+        }
+            
+        
+    }
     .pageDivider{
         position: relative;
-        top:6.25rem;
+        top:10px;
     }
+  
 }
     
 .courselUnit{
@@ -158,14 +174,22 @@ top:4rem;
 height: 115rem;
 z-index: 1;
 scroll-margin: 7.5rem;
+// font-family: Roboto;
+display:flex;
+align-items: center;
+justify-content: center;
 // background-color: #12805c;
 .aim-wrapper{
     display: flex;
+    width:1000px;
     align-items: center;
     justify-content:center;
     flex-direction: column;
+    // background-color:orange;
     .aimFirstRow{
         display:flex;
+        width:1000px;
+        justify-content: center; 
         align-self: center;
         padding:0rem 12.5rem 0rem 12.5rem;
         margin-bottom:3.125rem;
@@ -187,16 +211,28 @@ scroll-margin: 7.5rem;
     
     .seller-buyer-advantage{
         position: relative;
-        width: 75rem;
-        justify-content: space-between;
-        left:0.938rem;
+        width: 60rem;
+        justify-content:flex-start;
+        align-items: center;
         display: flex;
         flex-direction: row;
         margin-top:3.125rem;
         margin-bottom:3.125rem;
+        .headText{
+            position: relative;
+            left:10%;
+            width:37.5rem;
+            margin-bottom: 3.125rem;
+        }
+        .headText2{
+            position: relative;
+            left:-18%;
+            width:37.5rem;
+            margin-bottom: 3.125rem;
+        }
     
         .midSec-seller{
-            margin-top: 4.063rem;
+            margin-top: 6rem;
         }
     
         p{
@@ -211,18 +247,20 @@ scroll-margin: 7.5rem;
          
     
          .seller-buyer-points{
+            position: relative;
+            left:20px;
             display: flex;
             justify-content: flex-start;
             justify-items: center;
             flex-direction: row;
-            width:23.125rem;
+            width:20rem;
             height: 3.75rem;
             margin: 0.313rem;
             padding: 0.625rem;
     
             div{
-                width:2.5rem;
-                height: 2.5rem;
+                width:2rem;
+                height: 2rem;
                 background-color:  #F7682B;
                 border-radius: 50%;
                 text-align: center;
@@ -232,14 +270,12 @@ scroll-margin: 7.5rem;
             }
     
             p{
-                width:18.75rem;
+                width:16rem;
                 height: 3.188rem;
                 border-radius:0.625rem;
-                text-align: center;
-                background-color: #F6FAF8;
-                margin-left: 0.313rem;
+                // background-color: #F6FAF8;
+                margin-left: 0rem;
                 line-height: normal;
-                font-family: Roboto;
                 font-style: normal;
                 font-size: 0.875rem;
             }
@@ -248,11 +284,9 @@ scroll-margin: 7.5rem;
                 width:18.75rem;
                 height: 3.125rem;
                 border-radius:0.625rem;
-                text-align: center;
-                background-color:rgba(245, 163, 26, 0.05);
+                // background-color:rgba(245, 163, 26, 0.05);
                 margin-left: 0.313rem;
                 line-height:1;
-                font-family: Roboto;
                 font-style: normal;
                 font-size: 0.875rem;
             }
@@ -261,7 +295,6 @@ scroll-margin: 7.5rem;
     
     .manyMore{
     margin-top: 0.625rem;
-    font-family: Roboto;
     font-size: 1.125rem;
     }
     
@@ -272,7 +305,6 @@ scroll-margin: 7.5rem;
     .seventhBox{
         width:36.438rem;
         height: 4.5rem;
-        font-family: Roboto;
         font-style: normal;
         font-weight: 600;
         font-size: 1.5rem;
@@ -282,7 +314,6 @@ scroll-margin: 7.5rem;
     
     .ninethBox{
             position: relative;
-            font-family: Roboto;
             font-style: normal;
             font-weight: 300;
             font-size: 1.5rem;
@@ -313,7 +344,6 @@ scroll-margin: 7.5rem;
             .firstheading{
                 width:15rem;
                 height: 1.313rem;
-                font-family: Roboto;
                 font-style: normal;
                 font-weight: bold;
                 font-size: 1.125rem;
@@ -322,7 +352,6 @@ scroll-margin: 7.5rem;
                 p{
                     width:15rem;
                     height: 1.313rem;
-                    font-family: Roboto;
                     font-style: normal;
                     font-weight: normal;
                     font-size: 1.063rem;
@@ -345,10 +374,13 @@ scroll-margin: 7.5rem;
     height:62.5rem;
     width: 100%;
     z-index: 1;
+    display:flex;
+    align-items: center;
+    justify-content: center;
 
 .ecosystem-wrapper{
-    position: relative;
-    top:6.25rem;
+    width:1000px;
+    margin-top: 60px;
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
@@ -356,7 +388,7 @@ scroll-margin: 7.5rem;
 
     div.ant-col.ant-col-6{
         position: relative;
-        top:-3.125rem;
+        top:-1.125rem;
 
         div{
             display:flex;
@@ -371,20 +403,21 @@ scroll-margin: 7.5rem;
                 position: relative;
                 top:6.25rem;
                 width:11.125rem;
-                left:5rem;
+                left:2rem;
                  }
                  img{
                     top: 6.25rem;
-                    left:4rem;
+                    left:1rem;
                 }}
     }
    
     
 }
 .firstHead{
-    width: 25.063rem;
+   text-align: center;
+    margin-top:60px;
+    width: 100vw;
     height: 2.625rem;
-    font-family: Roboto;
     font-style: normal;
     font-weight: bold;
     font-size: 2.25rem;
@@ -397,7 +430,6 @@ img{
 .keyFeatures{
     position: relative;
     top:11.25rem;
-    font-family: Roboto;
     font-style: normal;
     font-weight: 600;
     font-size: 1.5rem;
@@ -421,6 +453,7 @@ img{
         background-color:  rgba(245, 163, 26, 0.05);
         display: flex;
         flex-direction: column;
+        margin: 0px 50px 0px 50px;
         align-items: center;
         text-align: center;
        div{
@@ -434,7 +467,6 @@ img{
         .insideText{
             width:12.663rem;
             height: 1.313rem;
-            font-family: Roboto;
             font-style: normal;
             font-weight: bold;
             font-size: 1.125rem;
@@ -443,7 +475,6 @@ img{
         .outerText{
             width:12.663rem;
             height: 2.5rem;
-            font-family: Roboto;
             font-style: normal;
             font-weight: normal;
             font-size: 0.875rem;
@@ -466,96 +497,105 @@ img{
 
 #commodities {
     position: relative;
-    top:20rem;
-    width:100%;
+    top:25rem;
+    width:100vw;
     height:37.5rem;
     display: flex;
+    // background-color: orange;
     align-items: center;
     flex-direction: column;
-    justify-content:space-evenly;
     z-index: 1;
     bottom: 10rem;
     scroll-margin: 7rem;
     
-    .commoditiesTitle{
-        font-family: Roboto;
-        font-style: normal;
-        font-weight: bold;
-        font-size: 2.25rem;
-        line-height: 2.625rem;
-        text-align: center;
-    }
-    .commoditiesParagraph{
-        text-align: center;
-        width:50rem;
-    }
-.CropImages_sec{
-    width:62.5rem;
-    height:9.375rem;
-    display: flex;
-    flex-direction: row;
-    justify-content:space-evenly;
-    // background-color:green;
-    div{
-        text-align:center;
-        p{
-            margin-top:1.25rem;
-            font-family: Roboto;
+    .commodities-wrapper{
+        width: 1000px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content:space-evenly;
+        height:800px;
+        .commoditiesTitle{
+            margin-top:50px;
             font-style: normal;
             font-weight: bold;
-            font-size: 1.125rem;
+            font-size: 2.25rem;
+            line-height: 2.625rem;
+            text-align: center;
         }
-        img{
-            width:6.25rem;
-            height:6.25rem;
+        .commoditiesParagraph{
+            text-align: center;
+            width:50rem;
+        }
+    .CropImages_sec{
+        width:62.5rem;
+        height:9.375rem;
+        display: flex;
+        flex-direction: row;
+        justify-content:space-evenly;
+        // background-color:green;
+        div{
+            text-align:center;
+            p{
+                margin-top:1.25rem;
+                font-style: normal;
+                font-weight: bold;
+                font-size: 1.125rem;
+            }
+            img{
+                width:8rem;
+                height:8rem;
+            }
         }
     }
-}
-.pageDivider{
-    position: relative;
-    top:25rem;
-}
-    // Kannada Styling
-    .commodities-title-kn {
-       font-size: 2rem;
+    .pageDivider{
+        position: relative;
+        top:2rem;
     }
-
-    .commodities-title {
-       font-size: 2.5rem;
+        // Kannada Styling
+        .commodities-title-kn {
+           font-size: 2rem;
+        }
+    
+        .commodities-title {
+           font-size: 2.5rem;
+        }
+    
+        // Kannada Styling
+        .commodities-paragraph-kn {
+            width: 100%;
+           font-size: 1rem;
+            line-height: 2rem;
+        }
+    
+        .commodities-paragraph {
+            width: 100%;
+           font-size: 1rem;
+            line-height: 2rem;
+        }
+    
+        .commodities-list {
+            float: left;
+            width: 10rem;
+            margin-top: 1.5rem;
+        }
+    
+        .commodities-name {
+           font-size: large;
+        }
+    
+        .commodities-image {
+            width: 9rem;
+            height: 10rem;
+        }
+    
+        .wheat-image {
+            margin-top: 1rem;
+            width: 90%;
+        }
     }
-
-    // Kannada Styling
-    .commodities-paragraph-kn {
-        width: 100%;
-       font-size: 1rem;
-        line-height: 2rem;
-    }
-
-    .commodities-paragraph {
-        width: 100%;
-       font-size: 1rem;
-        line-height: 2rem;
-    }
-
-    .commodities-list {
-        float: left;
-        width: 10rem;
-        margin-top: 1.5rem;
-    }
-
-    .commodities-name {
-       font-size: large;
-    }
-
-    .commodities-image {
-        width: 9rem;
-        height: 10rem;
-    }
-
-    .wheat-image {
-        margin-top: 1rem;
-        width: 90%;
-    }
+    
+   
 }
 
 #users {
@@ -703,7 +743,7 @@ img{
 #team {
     position: relative;
     z-index: 0;
-    top:20rem;
+    top:27rem;
     width:100vw;
     height:fit-content;
     // background-color:orange;
@@ -730,7 +770,7 @@ img{
             flex-direction: column;
             justify-content: space-evenly;
             width:62.5rem;
-            height:43.75rem;
+            height:50rem;
             background: white;
             border: 0.063rem solid rgba(18, 128, 92, 0.19);
             box-sizing: border-box;
@@ -739,7 +779,7 @@ img{
                 width:6.25rem;
                 position: relative;
                 left:3.813rem;
-                top:-1.875rem;
+                top:-3rem;
                 align-self: start;
                 background-color:white;
                 text-align: center;
@@ -764,18 +804,17 @@ img{
                     line-height:100%;
                     p{
                         margin:0rem;
-                        font-family: Roboto;
                         font-style: normal;
                         font-weight: normal;
                         font-size: 0.875rem;
-                        color: #F5761A;
+                        color: #12805C;
                     }
                     .para{
                         margin-top: 0.625rem;
-                        font-family: Roboto;
                         font-style: normal;
-                        font-weight: 300;
+                        font-weight: 400;
                         font-size: 1rem;
+                        line-height: normal;
                         color: #000000;
                     }
                 }
@@ -788,7 +827,7 @@ img{
             flex-direction: column;
             justify-content: space-evenly;
             width:62.5rem;
-            height:43.75rem;
+            height:50rem;
             background: white;
             border: 0.063rem solid rgba(245, 163, 26, 0.3);
             box-sizing: border-box;
@@ -797,7 +836,7 @@ img{
                 width:12.5rem;
                 position: relative;
                 left:3.813rem;
-                top:-1.75rem;
+                top:-3rem;
                 align-self: start;
                 background-color:white;
                 text-align: center;
@@ -822,7 +861,6 @@ img{
                     line-height:100%;
                     p{
                         margin:0rem;
-                        font-family: Roboto;
                         font-style: normal;
                         font-weight: normal;
                         font-size: 0.875rem;
@@ -830,10 +868,10 @@ img{
                     }
                     .para{
                         margin-top: 0.625rem;
-                        font-family: Roboto;
                         font-style: normal;
-                        font-weight: 300;
+                        font-weight: 400;
                         font-size: 1rem;
+                        line-height:normal;
                         color: #000000;
                     }
                 }
@@ -842,7 +880,7 @@ img{
     }
     .pageDivider{
         position: relative;
-        top:3.125rem;
+        top:4.125rem;
     }
     
    
@@ -856,7 +894,7 @@ img{
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    top:35rem;
+    top:43rem;
     bottom: 10rem;
     scroll-margin: 17rem;
     // background-color: $col-shade-green;
@@ -886,6 +924,14 @@ img{
             padding: 0.3rem 1rem;
             font-size: 1rem;
             border-radius: 0.625rem 0.625rem 0rem 0rem;
+            color:white;
+        }
+
+        .ant-tabs-tab-btn{
+            width:100%;
+            // background-color:orange;
+            color:black;
+            text-align:center;
         }
 
         .ant-tabs-nav {
@@ -895,18 +941,16 @@ img{
 
         .ant-tabs-tab {
             background-color:rgba(196, 196, 196, 0.15);
-            color:white !important;
             border-bottom: 0.188rem solid orange;
         }
 
-        .ant-tabs-tab-btn,
-        .ant-tabs-tab-btn:active {
-            color: black !important;
+
+        .ant-tabs-tab-btn-active {
+            color:orange !important;
         }
 
         .ant-tabs-tab-active {
             background-color:$col-shade-green !important;
-            
         }
 
         .ant-tabs-content-holder {
@@ -943,10 +987,10 @@ img{
 
 #contactUs {
     position: relative;
-    top: 27rem;
+    top: 37rem;
     height: 40rem;
     // margin-top: 6.25em;
-    width:100%;
+    width:100vw;
     // background-color:orange;
     display: flex;
     flex-direction: column;
@@ -1029,13 +1073,13 @@ img{
 }
 .pageDivider{
     position: relative;
-    top:6.25rem;
+    top:10.25rem;
 }
 }
 
 #updates{
     position: relative;
-    top:35rem;
+    top:47rem;
     width: 100vw;
     padding:1.25rem;
     z-index: 1;

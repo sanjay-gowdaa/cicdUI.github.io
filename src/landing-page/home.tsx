@@ -19,8 +19,9 @@ const Home = ({ history, popUpTrigger, setSignUpPopupVisible }: { history: Histo
 
     return (
         <div id='home'>
+            <div className='home-wrapper'>
             <Row>
-                <Col span={8} xs={24} md={12}>
+                <Col span={8} xs={24} md={10}>
                     <Title level={2}>Sell.&nbsp;Buy.&nbsp;AgriProduce.</Title>
                     <Title level={5}>{t('home_page.text1')}</Title>
                     <div className='wimage'></div>
@@ -57,7 +58,7 @@ const Home = ({ history, popUpTrigger, setSignUpPopupVisible }: { history: Histo
                         </div>
                     </div>
                 </Col>
-                <Col span={16} xs={0} md={12}>
+                <Col span={16} xs={0} md={10}>
                     <div className='courselCircle'>
                         <Carousel autoplay speed={2500} dots={false} effect='fade' className='courselUnit'>
                             <img src={firstImage} className='contentStyle' alt='firstImage' />
@@ -69,7 +70,9 @@ const Home = ({ history, popUpTrigger, setSignUpPopupVisible }: { history: Histo
                     </div>
                 </Col>
             </Row>
-            <LandingDivider className='pageDivider'/>
+            
+        </div>
+        <LandingDivider className='pageDivider'/>
         </div>
     );
 };
