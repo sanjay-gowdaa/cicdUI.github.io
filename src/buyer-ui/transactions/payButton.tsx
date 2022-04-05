@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { v4 as uuidv4 } from 'uuid';
-import { Col, Input, Row, Space, Modal, Typography } from 'antd';
+import { Col, Input, Row, Space, Modal, Typography, Collapse, Select } from 'antd';
+import { CaretUpOutlined } from '@ant-design/icons';
 import { isEmpty } from 'lodash';
 import moment from 'moment';
 
@@ -22,6 +23,10 @@ const PayButton = (props: { record: any }) => {
     const status = buyerState.currentStatusDetails;
 
     const [userStatus, setUserStatus] = useState('');
+    const [paymentModalVisible, setPaymentModalVisible] = useState(true);
+    const [proceedToPayBtn, setProceedToPayBtn] = useState(true);
+    const [disableTradeSummary, setDisableTradeSummary] = useState(1)
+    const [payAmountDetails, setPayAmountDetails] = useState(true);
     const [viewPaymentDetails, setPaymentDetails] = useState(false);
     const uuid = uuidv4();
     const accessToken = (window as any).userToken ? (window as any).userToken : null;
@@ -98,6 +103,20 @@ const PayButton = (props: { record: any }) => {
         setPaymentDetails(true);
     };
 
+    const text = (
+        <Title className='trade-summary-header'><Text className='trade-summary-title'>Trade summary</Text></Title>
+    )
+
+    const handlePayment = () => {
+        console.log('i am clicked')
+        setPaymentModalVisible(true);
+        setProceedToPayBtn(false);
+        setPayAmountDetails(false);
+        setDisableTradeSummary(0);
+    }
+    console.log(record.seller_location)
+    const { Panel } = Collapse;
+    const { Option, OptGroup } = Select;
     return (
         <React.Fragment>
             <PrimaryBtn
@@ -110,77 +129,158 @@ const PayButton = (props: { record: any }) => {
                 onClick={() => payNow()}
                 content={isError ? 'Retry and Pay' : 'Pay Now'}
             />
-            <Modal
-                visible={viewPaymentDetails}
-                title={<Title level={3}>Payment Details</Title>}
-                onCancel={() => setPaymentDetails(!viewPaymentDetails)}
-                footer={null}
-            >
-                <Row>
-                    <Col span={12}>
-                        <Space direction='vertical'>
-                            <Text>OrderNumber:</Text>
-                            <Text>OrderAmount:</Text>
-                            <Text>Name:</Text>
-                            <Text>EmailId:</Text>
-                            <Text>PhoneNumber:</Text>
-                        </Space>
-                    </Col>
-                    <Col span={12}>
-                        <form className='payment' method='POST' action={`${BASE_URL}/${STAGE}/${PAYMENT_REQUEST}`}>
-                            <Space direction='vertical'>
-                                <Input
-                                    className='payment-custom-input'
-                                    type='text'
-                                    value={id}
-                                    name='orderId'
-                                />
-                                <Input
-                                    className='payment-custom-input'
-                                    type='text'
-                                    value={buyerState.paymentAmount}
-                                    name='orderAmount'
-                                />
-                                <Input
-                                    className='payment-custom-input'
-                                    type='hidden'
-                                    value='Test note'
-                                    name='orderNote'
-                                />
-                                <Input
-                                    className='payment-custom-input'
-                                    type='text'
-                                    value={loginState.name}
-                                    name='customerName'
-                                />
-                                <Input
-                                    className='payment-custom-input'
-                                    type='email'
-                                    value={loginState.email}
-                                    name='customerEmail'
-                                />
-                                <Input
-                                    className='payment-custom-input'
-                                    type='tel'
-                                    value={loginState.phone_no}
-                                    name='customerPhone'
-                                />
-                                <Input type='hidden' value='INR' name='orderCurrency' />
-                                <Input type='hidden' value={user} name='user' />
-                                <Input type='hidden' value={loginState.pk} name='userId' />
-                                <Input type='hidden' value={record.pk} name='transactionId' />
-                                <Input type='hidden' value={record.produce} name='produce' />
-                                <Input type='hidden' value={record.seller_id} name='sellerId' />
-                                <Input type='hidden' value='payment Gateway' name='paymentType' />
-                                <Input type='hidden' value='1' name='payment' />
-                                <Input type='hidden' value={uuid} name='uuid' />
-                                <Input type='hidden' value={accessToken || ACCESS_TOKEN} name='token' />
-                                <button className='pay-button' type='submit' value='Pay'>Pay</button>
-                            </Space>
+            {paymentModalVisible &&
+                <Modal
+                    // bodyStyle={{width:466,height:530}}
+                    className='payment-modal'
+                    visible={viewPaymentDetails}
+                    closable={false}
+                    onCancel={() => setPaymentDetails(!viewPaymentDetails)}
+                    footer={null}
+                    centered={true}
+                >
+                    <Title className='payment-title'><Text className='payment-title-text'>First Advance Payment Details</Text></Title>
+
+                    <Collapse
+                        bordered={false}
+                        defaultActiveKey={disableTradeSummary}
+                        expandIconPosition={'right'}
+                        destroyInactivePanel={true}
+                        expandIcon={({ isActive }) => <CaretUpOutlined rotate={isActive ? 0 : 180} />}
+                        className="site-collapse-custom-collapse"
+                    >
+                        <Panel header={text} key="1" className="site-collapse-custom-panel">
+                            <Row className='trade-summary-row'>
+                                <Col span={12}>
+                                    <Space direction='vertical'>
+                                        <Text>Seller Id:</Text>
+                                        <Text>Produce:</Text>
+                                        <Text>Quantity:</Text>
+                                        <Text>Price per quintal:</Text>
+                                        <Text>Location:</Text>
+                                        <Text>Tentative Delivery:</Text>
+                                    </Space>
+                                </Col>
+                                <Col span={12}>
+                                    <form className='payment' method='POST' action={`${BASE_URL}/${STAGE}/${PAYMENT_REQUEST}`}>
+                                        <Input
+                                            className='payment-custom-input'
+                                            type='text'
+                                            value={record.seller_id}
+                                            name='sellerId'
+                                        />
+                                        <Input
+                                            className='payment-custom-input'
+                                            type='text'
+                                            value={record.produce}
+                                            name='produce'
+                                        />
+                                        <Input
+                                            className='payment-custom-input'
+                                            type='hidden'
+                                            value='Test note'
+                                            name='orderNote'
+                                        />
+                                        <Input
+                                            className='payment-custom-input'
+                                            type='text'
+                                            value={loginState.name}
+                                            name='customerName'
+                                        />
+                                        <Input
+                                            className='payment-custom-input'
+                                            type='text'
+                                            value={record.seller_location}
+                                            name='customerLocation'
+                                        />
+
+                                        <Input type='hidden' value='INR' name='orderCurrency' />
+                                        <Input type='hidden' value={user} name='user' />
+                                        <Input type='hidden' value={loginState.pk} name='userId' />
+                                        <Input type='hidden' value={record.pk} name='transactionId' />
+                                        <Input type='hidden' value={record.produce} name='produce' />
+                                        <Input type='hidden' value={record.seller_id} name='sellerId' />
+                                        <Input type='hidden' value='payment Gateway' name='paymentType' />
+                                        <Input type='hidden' value='1' name='payment' />
+                                        <Input type='hidden' value={uuid} name='uuid' />
+                                        <Input type='hidden' value={accessToken || ACCESS_TOKEN} name='token' />
+                                        <Input type='hidden' value={id} name='orderId' />
+                                        <Input type='hidden' value={loginState.phone_no} name='customerPhone' />
+                                        <Input type='hidden' value={loginState.email} name='customerEmail' />
+                                        <Input type='hidden' value={loginState.name} name='customerName' />
+                                    </form>
+                                </Col>
+                            </Row>
+                        </Panel>
+                    </Collapse>
+                    <Title className='payment-summary'><Text className='paymentsummarytext'>Payment Summary</Text></Title>
+                    <Row className='payment-summary-row'>
+                        <Col span={24} className='mode-column'>
+                            <Text className='mode-of-payment'>Mode of payment</Text>
+                            <Select defaultValue="Payment Gateway" showArrow={false}>
+                                <Option value="Payment Gateway">Payment Gateway</Option>
+                                <OptGroup label="Other">
+                                    <Option value="cash">Cash</Option>
+                                    <Option value="Cheque/Draft">Cheque/Draft</Option>
+                                    <Option value="Direct Bank Transfer">Direct Bank Transfer</Option>
+                                </OptGroup>
+
+                            </Select>
+                        </Col>
+                        {payAmountDetails ? <Col span={24} className='pay-amount'>
+                            <Text className='payment-amount'>Pay Amount</Text>
+                            <Text className='amount'><strong>₹8,400</strong>(20% of ₹42,000)</Text>
+                        </Col> : null}
+                        <form method='POST' action={`${BASE_URL}/${STAGE}/${PAYMENT_REQUEST}`}>
+                            <Input
+                                className='payment-custom-input'
+                                type='hidden'
+                                value={record.seller_id}
+                                name='sellerId'
+                            />
+                            <Input
+                                className='payment-custom-input'
+                                type='hidden'
+                                value={record.produce}
+                                name='produce'
+                            />
+                            <Input
+                                className='payment-custom-input'
+                                type='hidden'
+                                value='Test note'
+                                name='orderNote'
+                            />
+                            <Input
+                                className='payment-custom-input'
+                                type='hidden'
+                                value={loginState.name}
+                                name='customerName'
+                            />
+                            <Input
+                                className='payment-custom-input'
+                                type='hidden'
+                                value={record.seller_location}
+                                name='customerLocation'
+                            />
+                            <Input type='hidden' value='INR' name='orderCurrency' />
+                            <Input type='hidden' value={user} name='user' />
+                            <Input type='hidden' value={loginState.pk} name='userId' />
+                            <Input type='hidden' value={record.pk} name='transactionId' />
+                            <Input type='hidden' value={record.produce} name='produce' />
+                            <Input type='hidden' value={record.seller_id} name='sellerId' />
+                            <Input type='hidden' value='payment Gateway' name='paymentType' />
+                            <Input type='hidden' value='1' name='payment' />
+                            <Input type='hidden' value={uuid} name='uuid' />
+                            <Input type='hidden' value={accessToken || ACCESS_TOKEN} name='token' />
+                            <Input type='hidden' value={id} name='orderId' />
+                            <Input type='hidden' value={loginState.phone_no} name='customerPhone' />
+                            <Input type='hidden' value={loginState.email} name='customerEmail' />
+                            <Input type='hidden' value={loginState.name} name='customerName' />
+                            {proceedToPayBtn ? <div className='payment-btn-block'><button className='pay-button' type='submit' value='Pay' onClick={handlePayment}>Proceed to Pay ₹8,400</button></div> :
+                                <div className='payment-btn-block-position'><button className='pay-btn-width' type='submit' value='pay'>Pay</button></div>}
                         </form>
-                    </Col>
-                </Row>
-            </Modal>
+                    </Row>
+                </Modal>}
         </React.Fragment>
     );
 };
