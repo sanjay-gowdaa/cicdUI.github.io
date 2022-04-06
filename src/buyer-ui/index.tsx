@@ -18,12 +18,14 @@ import ReviewsSection from '../buyer-seller-commons/reviews';
 import Transaction from '../buyer-seller-commons/transactions';
 import Matches from '../buyer-seller-commons/matches';
 
+
 const { Title } = Typography;
 
 const BuyerUI = (props: { history: History }) => {
     const { history } = props;
     const loginState = useSelector((state: RootState) => state.loginUser);
     const { isRedirected } = loginState;
+    console.log(loginState)
 
     return (
         <div className='buyer-ui-app' id='buyer-ui-app'>
@@ -48,6 +50,7 @@ const BuyerUI = (props: { history: History }) => {
                 <Transaction />
                 <Divider />
                 <ReviewsSection />
+                <Divider />
             </div>
             <Footer/>
         </div>

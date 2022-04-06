@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button, Image, Progress, Typography } from 'antd';
-import { isEmpty } from 'lodash';
+import {isEmpty } from 'lodash';
 
 import { ProduceModel } from '../../store/buyerReducer/types';
 import { showCropImage } from '../../buyer-seller-commons/constants';
@@ -9,6 +9,8 @@ import confirmationPopup from '../../buyer-seller-commons/confirmationPopup';
 import { openAdditionalInfo } from '../../buyer-seller-commons/openAdditionalInfo';
 
 const { Title } = Typography;
+
+
 
 const getCropId = (cropID: string) => {
     return parseIDfromHash(cropID);
@@ -21,6 +23,8 @@ type produceColumnCallbacks = {
     setIsEdit: any;
     isEdit: boolean;
     currentCropId: string;
+    editClick:number;
+    setEditClick:any;
 };
 
 export const produceColumns = ({
@@ -29,7 +33,9 @@ export const produceColumns = ({
     updateCropDetails,
     setIsEdit,
     isEdit,
-    currentCropId
+    currentCropId,
+    editClick,
+    setEditClick,
 }: produceColumnCallbacks) =>
     [
         {
@@ -133,9 +139,12 @@ export const produceColumns = ({
                     <React.Fragment>
                         <Button
                             type="link"
-                            disabled={!record.isEditable}
-                            onClick={() => {
+                            className="button"
+                            disabled={editClick===2 && currentCropId === getCropId(record.sk || '')}
+                            onClick={() => {  
                                 prepareForEditProduce(record);
+                                console.log(record)
+                                setEditClick(editClick+2);
                             }}
                         >
                             Edit
@@ -153,3 +162,5 @@ export const produceColumns = ({
             },
         },
     ];
+
+

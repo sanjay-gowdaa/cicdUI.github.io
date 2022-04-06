@@ -20,6 +20,7 @@ export interface ProduceModel {
     pk?: string;
     currently_fulfilled_qty?: number;
     isEditable?: boolean;
+    initial?: number |undefined;
 };
 
 export interface CropModel {

@@ -58,7 +58,7 @@ const DocumentsUploaded = (props: DocumentsUploadedProps) => {
                                     <Form.Item
                                         label={
                                             <span className='kyc-form-label'>
-                                                {kycFlag === 'incomplete' &&
+                                                {isEmpty(value) &&
                                                     <CaretRightFilled className='required-arrow' style={{ color: '#FF9900' }} />
                                                 }
                                                 {label}
@@ -81,7 +81,7 @@ const DocumentsUploaded = (props: DocumentsUploadedProps) => {
                                                     contentEditable
                                                     onChange={() => setDisableSave(false)}
                                                 />
-                                            </Form.Item> : <Text>: {toUpper(value)}</Text>
+                                            </Form.Item> : <Text>:{toUpper(value)}</Text>
                                         }
                                         {upload &&
                                             <React.Fragment>
@@ -89,6 +89,7 @@ const DocumentsUploaded = (props: DocumentsUploadedProps) => {
                                                     <UploadDocument
                                                         className='margin-zero'
                                                         name={isEmpty(uploadValue) ? uploadFormName : undefined}
+                                                        onChange={() => setDisableSave(false)}
                                                     /> :
                                                     <Button
                                                         type='link'
