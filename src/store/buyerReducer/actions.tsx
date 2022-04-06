@@ -24,7 +24,8 @@ import {
     getSellerCropImages,
     fetchAdditionalInfo,
     fetchUserHistory,
-    fetchDestinyId
+    fetchDestinyId,
+    submitCheckDraftDetails
 } from '../api';
 import { UserStateModel } from '../loginReducer/types';
 import { BuyerStateModel } from '../buyerReducer/types';
@@ -592,3 +593,10 @@ export const getAmount = (userData: string) => {
         dispatch(updatePaymentAmount(amount));
     };
 };
+
+export const cashAndCheckPayment=(values:any)=>{
+    return async () => {
+        const result = await submitCheckDraftDetails(values)
+        console.log(result)
+    }
+}
