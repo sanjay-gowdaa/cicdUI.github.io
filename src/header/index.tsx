@@ -77,6 +77,7 @@ const Header = (headerProps: any) => {
 
     return (
         <div className='landing-page-header-bar custom-height-alignment'>
+            <div className='landing-page-header-wrapper'>
             <Image className='logo' src={logo} preview={false} />
             <Breadcrumb className='header-breadcrumb' separator='|'>
                 <Breadcrumb.Item href='#home'>{t('landing_page.header.breadcrumb.home')}</Breadcrumb.Item>
@@ -92,6 +93,7 @@ const Header = (headerProps: any) => {
             </Breadcrumb>
             <MobileDrawer />
             {showActions ? <HeaderActions isLoggedIn={isLoggedIn} history={history} popUpTrigger={popUpTrigger} /> : null}
+        </div>
         </div>
     );
 };
