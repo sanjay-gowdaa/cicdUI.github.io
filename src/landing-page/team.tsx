@@ -54,14 +54,14 @@ const Team = () => {
                 </div>
                 <div className='Management_sec'>
                     <Title level={4} className='FoundersTitle'>{t('our_team.advisors.title')}</Title>
-                    <Row className='ManagementRow'>
+                    {/* <Row className='ManagementRow'>
                         <Col span={6} xs={24} md={6}><img src={SatishChandra} alt='SatishChandra' /></Col>
                         <Col span={18} xs={24} md={18} className='FounderPara'>
                             <Title level={5}>{t('our_team.advisors.name.1')}</Title>
                             <p>{t('our_team.advisors.designation.1')}</p>
                             <Paragraph className='para'>{t('our_team.advisors.description.1')}</Paragraph>
                         </Col>
-                    </Row>
+                    </Row> */}
                     <Row className='ManagementRow'>
                         <Col span={6} xs={24} md={6}><img src={Ganesh} alt='Ganesh' /></Col>
                         <Col span={18} xs={24} md={18} className='FounderPara'>
@@ -70,14 +70,14 @@ const Team = () => {
                             <Paragraph className='para'>{t('our_team.advisors.description.2')}</Paragraph>
                         </Col>
                     </Row>
-                    <Row className='ManagementRow'>
+                    {/* <Row className='ManagementRow'>
                         <Col span={6} xs={24} md={6}><img src={Guruprasad} alt='Guruprasad' /></Col>
                         <Col span={18} xs={24} md={18} className='FounderPara'>
                             <Title level={5}>{t('our_team.advisors.name.3')}</Title>
                             <p>{t('our_team.advisors.designation.3')}</p>
                             <Paragraph className='para'>{t('our_team.advisors.description.3')}</Paragraph>
                         </Col>
-                    </Row>
+                    </Row> */}
                 </div>
             </div>
             <LandingDivider className='pageDivider' />

@@ -37,7 +37,7 @@ const Aim = () => {
                     </Col>
                 </Row>
                 <Title level={2}>{t('aim_page.text3')}</Title>
-                <Text>{t('aim_page.text4')}</Text>
+                <Text className='at-present-text'>{t('aim_page.text4')}</Text>
                 <Row className='seller-buyer-advantage'>
                     <Col span={6} xs={24} md={8}>
                     <p className='headText'><span>{t('aim_page.text5')}</span> {t('aim_page.text6')}</p>

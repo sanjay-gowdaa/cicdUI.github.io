@@ -24,8 +24,8 @@ const TradeSummary = (props: componentProps) => {
 
     
     const produce_total_cost = seller_price + gst_amount
-    const seller_faci_with_gst = seller_facilitation_cost + seller_facilitation_gst
-    const buyer_faci_with_gst = (buyer_facilitation_cost + buyer_facilitation_gst)
+    const seller_faci_with_gst = Math.round(seller_facilitation_cost + seller_facilitation_gst)
+    const buyer_faci_with_gst = Math.round(buyer_facilitation_cost + buyer_facilitation_gst)
     const diffAmt = Math.round(produce_total_cost - seller_initial_produce_cost);
     const isIncrease = diffAmt > 0;
     const color = isIncrease ? '#12805C' : '#E90000';
@@ -114,7 +114,7 @@ const TradeSummary = (props: componentProps) => {
                             <Statistic
                                 value={diffAmt}
                                 valueStyle={{ color, fontSize: '12px' }}
-                                prefix={diffAmt ? <CaretUpOutlined /> : <CaretDownOutlined />}
+                                prefix={isIncrease ? <CaretUpOutlined /> : <CaretDownOutlined />}
                             />
                         </React.Fragment>
                     }
