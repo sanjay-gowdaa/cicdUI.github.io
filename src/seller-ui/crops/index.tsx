@@ -45,8 +45,8 @@ const CropsSection = (props: any) => {
         {
             flag: 'Active',
             title: 'Active',
-            backgroundColor: '#12805c',
-            color: 'white'
+            backgroundColor: '#f2f2f2',
+            color: '#12805C'
         },
         {
             flag: 'Active/F',

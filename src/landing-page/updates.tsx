@@ -19,9 +19,16 @@ const Updates = () => {
                 <Title level={2}>{t('updates_page.title')}</Title>
                 <Collapse accordion
                     bordered={false}
+                    defaultActiveKey={['3']}
                     expandIcon={({ isActive }) => <CaretRightOutlined rotate={isActive ? 90 : 0} />}
                     className="site-collapse-custom-collapse"
                 >
+                     <Panel id='academia' header={t('updates_page.title3')} key='3' className="site-collapse-custom-panel">
+                        <div className='card'>
+                            <img src={academia} alt='academia'></img>
+                            <p>{t('updates_page.text3')}</p>
+                        </div>
+                    </Panel>
                     <Panel id='mvp' header={t('updates_page.title1')} key='1' className="site-collapse-custom-panel">
                         <div className='card'>
                             <img src={mvp} alt='mvp'></img>
@@ -32,12 +39,6 @@ const Updates = () => {
                         <div className='card'>
                             <img src={foodExb} alt='foodExb'></img>
                             <p>{t('updates_page.text2')}</p>
-                        </div>
-                    </Panel>
-                    <Panel id='academia' header={t('updates_page.title3')} key='3' className="site-collapse-custom-panel">
-                        <div className='card'>
-                            <img src={academia} alt='academia'></img>
-                            <p>{t('updates_page.text3')}</p>
                         </div>
                     </Panel>
                 </Collapse>

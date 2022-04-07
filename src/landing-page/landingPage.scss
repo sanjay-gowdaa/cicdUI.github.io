@@ -173,7 +173,7 @@ position: relative;
 top:4rem;
 height: 115rem;
 z-index: 1;
-scroll-margin: 7.5rem;
+scroll-margin: 12rem;
 // font-family: Roboto;
 display:flex;
 align-items: center;
@@ -186,17 +186,25 @@ justify-content: center;
     justify-content:center;
     flex-direction: column;
     // background-color:orange;
+    .at-present-text{
+        font-style: normal;
+        font-weight: 300;
+        font-size: 24px;
+    }
     .aimFirstRow{
+        position: relative;
+        left:40px;
         display:flex;
         width:1000px;
         justify-content: center; 
         align-self: center;
-        padding:0rem 12.5rem 0rem 12.5rem;
+        // padding:0rem 12.5rem 0rem 12.5rem;
         margin-bottom:3.125rem;
     
         .aim-Whatis{
             position: relative;
             top:3.125rem;
+            // background-color: #12805c;
             p{
                 font-size: 1.125rem;
             }
@@ -361,7 +369,7 @@ justify-content: center;
     
     .pageDivider{
         position: relative;
-        top:6.25rem;
+        top:8rem;
     }
 }
 
@@ -370,7 +378,7 @@ justify-content: center;
 
 #ecosystem {
     position: relative;
-    top:8rem;
+    top:10rem;
     height:62.5rem;
     width: 100%;
     z-index: 1;
@@ -506,7 +514,7 @@ img{
     flex-direction: column;
     z-index: 1;
     bottom: 10rem;
-    scroll-margin: 7rem;
+    scroll-margin: 3rem;
     
     .commodities-wrapper{
         width: 1000px;
@@ -526,6 +534,8 @@ img{
         .commoditiesParagraph{
             text-align: center;
             width:50rem;
+            font-weight: 300;
+            font-size: 20px;
         }
     .CropImages_sec{
         width:62.5rem;
@@ -776,8 +786,11 @@ img{
             box-sizing: border-box;
             border-radius: 0.625rem;
             .FoundersTitle{
-                width:6.25rem;
+                width:8rem;
                 position: relative;
+                font-style: normal;
+                font-weight: 700;
+                font-size: 24px;
                 left:3.813rem;
                 top:-3rem;
                 align-self: start;
@@ -827,16 +840,19 @@ img{
             flex-direction: column;
             justify-content: space-evenly;
             width:62.5rem;
-            height:50rem;
+            height:300px;
             background: white;
             border: 0.063rem solid rgba(245, 163, 26, 0.3);
             box-sizing: border-box;
             border-radius: 0.625rem;
             .FoundersTitle{
-                width:12.5rem;
+                width:15rem;
                 position: relative;
+                font-style: normal;
+                font-weight: 700;
+                font-size: 24px;
                 left:3.813rem;
-                top:-3rem;
+                top:-1.5rem;
                 align-self: start;
                 background-color:white;
                 text-align: center;
@@ -844,6 +860,7 @@ img{
             .ManagementRow{
                 width:59.375rem;
                 height:12.5rem;
+                margin-bottom: 3.125rem;
                 background-color:rgba(18, 128, 92, 0.05);
                 padding:1.25rem;
                 border-radius: 0.625rem;
@@ -1087,6 +1104,7 @@ img{
     display: flex;
     align-items: center;
     justify-content:center;
+    scroll-margin: 7rem;
     
     .updateWrapper{
     width:62.5rem;
@@ -1113,8 +1131,10 @@ img{
                 height: 18.75rem;
             }
             p{
-                text-align: center;
-            font-size: 1rem;
+                position:relative;
+                left:20px;
+                text-align:left;
+                font-size: 1rem;
             }
         }
     }
