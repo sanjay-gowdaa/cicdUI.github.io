@@ -399,11 +399,17 @@ div.ant-modal.payment-modal{
             top:-50px;
             left:-15px;
             line-height: 19px;
-            div.ant-col.ant-col-12{
+            div.ant-col.ant-col-10,div.ant-col.ant-col-14{
                 font-weight: 400;
                 font-size: 16px;
                 font-style: normal;
                 color: #4E4E4E;
+                .inner-text{
+                    line-height:25px;
+                }
+            
+                
+            
                 .payment{
                     padding:0px;
                     line-height: 26px;
@@ -467,10 +473,18 @@ div.ant-modal.payment-modal{
             }
             div.ant-select-selector{
                 position: relative;
-                left:41px;
+                left:25px;
                 width:260px;
                 height:36px;
                 border-radius:3px;
+                font-style: normal;
+                font-weight: 500;
+                font-size: 16px;
+            }
+            img{
+                position:relative;
+                z-index: 4;
+                left:260px;
             }
         }
     }
@@ -530,8 +544,8 @@ div.ant-modal.payment-modal{
         width:260px;
         height:36px;
         border: 1px solid #888888;
-box-sizing: border-box;
-border-radius: 3px;
+        box-sizing: border-box;
+        border-radius: 3px;
 }
 
 }
@@ -556,13 +570,15 @@ border-radius: 3px;
 
 .doc-upload-required{
     .other-upload{
-background: #FFFFFF;
-border: 1px solid #4285F4;
-box-sizing: border-box;
-border-radius: 3px;
-color: #4285F4;
-font-weight: 400;
-font-size: 16px;
+        width:148px;
+        background: #FFFFFF;
+        border: 1px solid #4285F4;
+        box-sizing: border-box;
+        border-radius: 3px;
+        color: #4285F4;
+        font-weight: 400;
+        font-size: 13px;
+
     }
     label.ant-form-item-required{
 &::after{
@@ -571,4 +587,9 @@ font-size: 16px;
     content:url('../static/assets/Vector.png')
 }
     }
+}
+
+.pay-button-position{
+    position: relative;
+    left:-20px;
 }

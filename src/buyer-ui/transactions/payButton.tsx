@@ -6,6 +6,7 @@ import { CaretUpOutlined } from '@ant-design/icons';
 import { isEmpty } from 'lodash';
 import moment from 'moment';
 import CheckDraft from '../../buyer-ui/transactions/checkDraft';
+import vectorDown from '../../static/assets/Vector_down.png';
 
 import PrimaryBtn from '../../app-components/primaryBtn';
 import { RootState } from '../../store/rootReducer';
@@ -43,6 +44,7 @@ const PayButton = (props: { record: any }) => {
     const id = 'order_' + seq;
 
     const user = loginState.is_buyer && 'buyer';
+
     const getDisplay = (status: string) => {
         var substring = status.substring(0, 4).toLowerCase();
         if (substring === 'pay ' || status === 'Sorry error occured, payment unsucessfull') {
@@ -108,14 +110,13 @@ const PayButton = (props: { record: any }) => {
 
     const payNow = () => {
         dispatch(getAmount(record.pk));
-        console.log('i am clicked')
         setPaymentDetails(true);
     };
 
     const text = (
         <Title className='trade-summary-header'><Text className='trade-summary-title'>Trade summary</Text></Title>
     )
-
+    
     const handlePayment = () => {
         console.log('i am clicked')
         setProceedToPayBtn(false);
@@ -125,11 +126,10 @@ const PayButton = (props: { record: any }) => {
     }
 
     const ChangeTheSelectValue = (value: string) => {
-        console.log(value);
         if (value === 'Payment Gateway') {
             setPaymentDetails(true)
             setProceedToPayBtn(true);
-            setPayAmountDetails(false);
+            setPayAmountDetails(true);
             setDisplayCheckModal(false);
             setDisplayCashModal(false);
             setDirectBankTransferModal(false);
@@ -163,6 +163,11 @@ const PayButton = (props: { record: any }) => {
         }
     }
 
+    let findNumber = /\d+/;
+    let percent =userStatus.match(findNumber);
+    // console.log(percent)
+    // console.log(userStatus)
+
     const { Panel } = Collapse;
     const { Option, OptGroup } = Select;
 
@@ -172,7 +177,7 @@ const PayButton = (props: { record: any }) => {
                 className={
                     displayPay ?
                         isError ?
-                            'pay-retry' : 'vikas-btn-radius' :
+                            'pay-retry' : 'vikas-btn-radius pay-button-position' :
                         'display-none'
                 }
                 onClick={() => payNow()}
@@ -200,24 +205,24 @@ const PayButton = (props: { record: any }) => {
                 >
                     <Panel header={text} key="1" className="site-collapse-custom-panel">
                         <Row className='trade-summary-row'>
-                            <Col span={12}>
+                            <Col span={10}>
                                 <Space direction='vertical'>
-                                    <Text>Seller Id</Text>
-                                    <Text>Produce</Text>
-                                    <Text>Quantity</Text>
-                                    <Text>Price per quintal</Text>
-                                    <Text>Location</Text>
-                                    <Text>Tentative Delivery</Text>
+                                    <Text className='inner-text'>Seller Id</Text>
+                                    <Text className='inner-text'>Produce</Text>
+                                    <Text className='inner-text'>Quantity</Text>
+                                    <Text className='inner-text'>Price per quintal</Text>
+                                    <Text className='inner-text'>Location</Text>
+                                    <Text className='inner-text'>Tentative Delivery</Text>
                                 </Space>
                             </Col>
-                            <Col span={12}>
+                            <Col span={14}>
                             <Space direction='vertical'>
-                                    <Text>:{record.seller_id}</Text>
-                                    <Text>:{record.produce}</Text>
-                                    <Text>:{record.seller_quantity}</Text>
-                                    <Text>:{record.seller_final_price_per_quintal}</Text>
-                                    <Text>:{record.seller_location}</Text>
-                                    <Text>Tentative Delivery:</Text>
+                                    <Text className='inner-text'>: {record.seller_id}</Text>
+                                    <Text className='inner-text'>: {record.produce}</Text>
+                                    <Text className='inner-text'>: {record.buyer_quantity}qtl</Text>
+                                    <Text className='inner-text'>: ₹{record.buyer_price_per_quintal}</Text>
+                                    <Text className='inner-text'>: {record.seller_location}</Text>
+                                    <Text className='inner-text'>: Tentative Delivery</Text>
                                 </Space>
                             </Col>
                         </Row>
@@ -227,6 +232,7 @@ const PayButton = (props: { record: any }) => {
                 <Row className='payment-summary-row'>
                     <Col span={24} className='mode-column'>
                         <Text className='mode-of-payment'>Mode of payment</Text>
+                        <img src={vectorDown}></img>
                         <Select defaultValue="Payment Gateway" showArrow={false}
                             onChange={ChangeTheSelectValue}>
                             <Option value="Payment Gateway">Payment Gateway</Option>
@@ -235,12 +241,11 @@ const PayButton = (props: { record: any }) => {
                                 <Option value="Cheque/Draft">Cheque/Draft</Option>
                                 <Option value="Direct Bank Transfer">Direct Bank Transfer</Option>
                             </OptGroup>
-
                         </Select>
                     </Col>
                     {payAmountDetails ? <Col span={24} className='pay-amount'>
                         <Text className='payment-amount'>Pay Amount</Text>
-                        <Text className='amount'><strong>₹8,400</strong>(20% of ₹42,000)</Text>
+                        <Text className='amount'><strong>₹{buyerState.paymentAmount}</strong>({percent}% of ₹{record.buyer_total_price})</Text>
                     </Col> : null}
                     <form method='POST' action={`${BASE_URL}/${STAGE}/${PAYMENT_REQUEST}`}>
                         <Input
@@ -288,10 +293,10 @@ const PayButton = (props: { record: any }) => {
                         <Input type='hidden' value={loginState.email} name='customerEmail' />
                         <Input type='hidden' value={loginState.name} name='customerName' />
 
-                        {displayCheckModal && <CheckDraft/>}
-                        {displayCashModal && <CashPaymentModal/>}
-                        {directBankTransferModal && <DirectBankTransferModal/>}
-                        {proceedToPayBtn ?<div className='payment-btn-block'><button className='pay-button-btn' type='submit' onClick={handlePayment}>Proceed to Pay ₹8,400</button></div>:null}
+                        {displayCheckModal && <CheckDraft record={record} viewPaymentDetails={viewPaymentDetails} setPaymentDetails={setPaymentDetails}/>}
+                        {displayCashModal && <CashPaymentModal record={record} viewPaymentDetails={viewPaymentDetails} setPaymentDetails={setPaymentDetails}/>}
+                        {directBankTransferModal && <DirectBankTransferModal record={record} viewPaymentDetails={viewPaymentDetails} setPaymentDetails={setPaymentDetails}/>}
+                        {proceedToPayBtn ?<div className='payment-btn-block'><button className='pay-button-btn' type='submit' onClick={handlePayment}>Proceed to Pay ₹{buyerState.paymentAmount}</button></div>:null}
                         {payBtnDisplay ?<div className='payment-btn-block-position'><button className='pay-btn-width' type='submit' value='pay'>Pay</button></div>:null}
                     </form>
                 </Row>

@@ -78,8 +78,8 @@ export const transactionBuyerColumns = [
     },
     {
         title: 'Total',
-        dataIndex: 'buyer_final_price',
-        key: 'buyer_final_price',
+        dataIndex: 'buyer_total_price',
+        key: 'buyer_total_price',
     },
     {
         title: 'Seller',

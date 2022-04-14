@@ -4,10 +4,12 @@ import { Input, Typography, Collapse, Select, Button, Form, DatePicker } from 'a
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../../store/rootReducer';
 import UploadDocument from '../../app-components/uploadDocument';
-import { customIfscValidator } from '../../login-ui/registration/utils';
+import {customNameValidator } from '../../login-ui/registration/utils';
 import { cashAndCheckPayment } from '../../store/buyerReducer/actions';
+import { parseIDfromHash } from '../../app-components/utils';
 
-const CashPaymentModal = () => {
+const CashPaymentModal = (props: { record: any,viewPaymentDetails:any,setPaymentDetails:any}) => {
+    const { record,viewPaymentDetails,setPaymentDetails } = props;
     const loginState = useSelector((state: RootState) => state.loginUser);
     const buyerState = useSelector((state: RootState) => state.buyer);
 
@@ -15,25 +17,32 @@ const CashPaymentModal = () => {
 
     const [form] = Form.useForm();
 
+    const transactionId = parseIDfromHash(props?.record?.key);
+    const produce = props?.record?.produce;
+    const quantity = props?.record?.buyer_quantity;
+
+console.log(transactionId)
     const OnCheckDetailsSave = (values: any) => {
         console.log(values.Amount);
         const payload = {
-            "user": "buyer",
+            "userType": "buyer",
+            "transactionId": `${transactionId}`,
+            "produce": `${produce}`,
+            "quantity": `${quantity}`,
             "userId": `${loginState.pk}`,
-            "payment": "cash005",
             "paymentType": "cash",
-            "Mode of payment": "Cash",
-            "Amount": `${values.Amount}`,
-            "Collected Date": `${values.CollectedDate}`,
-            "Collected By": `${values.CollectedBy}`,
-            "Receipt": `${values.bank_doc}`,
+            "Amount": `${buyerState.paymentAmount}`,
+            "CollectedDate": `${values.CollectedDate}`,
+            "CollectedBy": `${values.CollectedBy}`,
+            "Receipt": `${values.Receipt}`,
         }
         form.resetFields();
         dispatch(cashAndCheckPayment(payload));
     }
 
-    const cancelClick=()=>{
+    const cancelClick = () => {
         form.resetFields();
+        setPaymentDetails(!viewPaymentDetails);
     }
 
     return (
@@ -50,21 +59,14 @@ const CashPaymentModal = () => {
                 <Form.Item
                     className='payment-form-text'
                     name='Amount'
-                    label='Amount'
-                    rules={[
-                        {
-                            required: true,
-                            message: '',
-                        },
-                    ]}>
-                    <Input name='Amount' type='number'
-                    />
+                    label='Amount'>
+                    <Input name='amount' type='textarea' disabled={true} defaultValue={`₹ ${buyerState.paymentAmount}`} allowClear={false} />
                 </Form.Item>
 
                 <Form.Item name='CollectedDate' label='Collected Date' className='payment-form-text'
-                 rules={[
-                    { required: true }
-                ]}>
+                    rules={[
+                        { required: true }
+                    ]}>
                     <DatePicker
                         className="custom-input"
                         format="DD-MM-YYYY"
@@ -76,17 +78,12 @@ const CashPaymentModal = () => {
                     className='payment-form-text'
                     label='Collected By'
                     name='CollectedBy'
-                    rules={[
-                        {
-                            required: true,
-                            message: '',
-                        },
-                    ]}
+                    rules={[{required: true},{ validator: (rule, value) => customNameValidator(rule, value, 'collected By is Required') }]}
                 >
-                    <Input name='CollectedBy' type='text'/>
+                    <Input name='CollectedBy'/>
                 </Form.Item>
 
-                <Form.Item name='BankDocument' label='Receipt' className='doc-upload-required'
+                <Form.Item name='Receipt' label='Receipt' className='doc-upload-required'
                     rules={[
                         { required: true }
                     ]}>
