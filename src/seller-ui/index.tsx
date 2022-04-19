@@ -35,6 +35,7 @@ const SellerUi = (props: any) => {
                 <Transaction />
                 <Divider />
                 <ReviewsSection />
+                <Divider />
             </div>
             <Footer />
         </div>

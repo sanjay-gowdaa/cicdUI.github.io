@@ -25,16 +25,18 @@ type BankDocumentsProps = {
     kycFlag: string;
     setDisableSave: Function;
     userType: UserTypes;
+    showConfirmAccountNumber:any;
+    setShowConfirmAccountNumber:any;
 };
 
 const BankDocuments = (props: BankDocumentsProps) => {
-    const { bank_doc, bankInfo, isAddClicked, isChangedClicked, kycFlag, setDisableSave, userType } = props;
+    const { bank_doc, bankInfo, isAddClicked, isChangedClicked, kycFlag, setDisableSave, userType,showConfirmAccountNumber,setShowConfirmAccountNumber} = props;
     const dispatch = useDispatch();
     const [showDocument, setShowDocument] = useState(false);
     const [changeDocument, setChangeDocument] = useState(false);
     const [imageSrc, setImageSrc] = useState();
     const [isPDF, setPDF] = useState(false);
-    const [showConfirmAccountNumber, setShowConfirmAccountNumber] = useState(false);
+   
     const [accountNumber, setAccountNumber] = useState('');
 
     return (
@@ -92,7 +94,7 @@ const BankDocuments = (props: BankDocumentsProps) => {
                                                     {kycFlag === 'incomplete' && userType === UserTypes.SELLER ?
                                                         <CaretRightFilled className='required-arrow' style={{ color: '#FF9900' }} /> : null
                                                     }
-                                                    Confirm Account Number
+                                                    Confirm Account Number :
                                                 </span>
                                             }
                                             name=''
@@ -112,7 +114,7 @@ const BankDocuments = (props: BankDocumentsProps) => {
                                     labelCol={{ span: 13 }}
                                     label={
                                         <span className='kyc-form-label' style={{ paddingBottom: '2.5em' }}>
-                                            {kycFlag === 'incomplete' && userType === UserTypes.SELLER ?
+                                            {isEmpty(value) && userType === UserTypes.SELLER ?
                                                 <CaretRightFilled className='required-arrow' style={{ color: '#FF9900' }} /> : null
                                             }
                                             {list.label}<br />
@@ -134,6 +136,7 @@ const BankDocuments = (props: BankDocumentsProps) => {
                                             >
                                                 View Document&nbsp;
                                             </Button>
+                                            
                                             <Button type='link' onClick={() => setChangeDocument(true)}>
                                                 &nbsp; Change Document
                                             </Button>
@@ -146,7 +149,8 @@ const BankDocuments = (props: BankDocumentsProps) => {
                                                 name='bank_doc'
                                             />
                                             {changeDocument &&
-                                                <Button onClick={() => setChangeDocument(!changeDocument)} type='link' danger>
+                                                <Button onClick={() => setChangeDocument(!changeDocument)
+                                            } type='link' danger>
                                                     Cancel
                                                 </Button>
                                             }

@@ -22,7 +22,8 @@ import {
     fieldLayout,
     initialFormValues,
     kycFlagDetails,
-    requiredDocumentList,
+    KycNewDocList,
+    checkEmpty,
 } from './constants';
 import BankDocuments from './bankDocuments';
 import BuyerWorkingHours from './buyerWorkingHours';
@@ -50,12 +51,14 @@ const Profile = (props: { history: History }) => {
     const [showProfilePic, setProfilePic] = useState(true);
     const [kycFlag, setKycFlag] = useState('');
     const [showConfirmation, setConfirmation] = useState(false);
+    const [showConfirmAccountNumber, setShowConfirmAccountNumber] = useState(false);
     const [isSave, setSaveFlag] = useState(false);
     const [disableSave, setDisableSave] = useState(true);
     const [imageSrc, setImageSrc] = useState();
     const [isPDF, setPDF] = useState(false);
     const [kycFormValues, setKycFormValues] = useState(initialFormValues);
     const [formSubmitValue, setFormSubmitValue] = useState({});
+    const [showWorkingHourAlert, setShowWorkingHourAlert] = useState(false)
 
     const loginState = useSelector((state: RootState) => state.loginUser);
     const { bank_info, bank_doc, configs, working_hours, category } = loginState;
@@ -127,9 +130,9 @@ const Profile = (props: { history: History }) => {
         delete values['email'];
         delete values['upi_id'];
         if (userType === UserTypes.BUYER) {
-            delete values['account_holder_name'];
+            delete values['account_name'];
             delete values['bank_info'];
-            delete values['account_no'];
+            delete values['account_number'];
             delete values['ifsc_code'];
             delete values['bank_doc'];
             delete values['weekday'];
@@ -232,9 +235,9 @@ const Profile = (props: { history: History }) => {
 
                 if (!isEmpty(weekday) || !isEmpty(saturday) || !isEmpty(sunday)) {
                     working_hours = {
-                        weekday: loginState.working_hours.weekday,
-                        sunday: loginState.working_hours.sunday,
-                        saturday: loginState.working_hours.saturday
+                        weekday: loginState.working_hours?.weekday,
+                        sunday: loginState.working_hours?.sunday,
+                        saturday: loginState.working_hours?.saturday
                     }
                     working_hours = !isEmpty(weekday) ? { ...working_hours, weekday } : working_hours;
                     working_hours = !isEmpty(saturday) ? { ...working_hours, saturday } : working_hours;
@@ -246,18 +249,26 @@ const Profile = (props: { history: History }) => {
                 delete values.saturday;
                 formSubmitValues = { ...formSubmitValues, working_hours };
             }
+            console.log("formSubmitValues", formSubmitValues);
             var finalValues: any = {};
             for (const property in formSubmitValues) {
                 if (!isEmpty(formSubmitValues[property])) {
                     finalValues = { ...finalValues, [property]: formSubmitValues[property] };
                 }
+
             }
             finalValues['kyc_flag'] = 'isSubmitted';
             setKycFormValues(finalValues);
             if (!isEmpty(finalValues)) {
+                console.log('i have entered')
                 setSaveFlag(true);
+                console.log('OK')
                 setConfirmation(true);
-            }
+               }
+               if (working_hours.weekday === 'holiday' && working_hours.sunday === 'holiday' && working_hours.saturday === 'holiday') {
+                setShowWorkingHourAlert(true)
+                setConfirmation(false)
+            } 
         }
     };
 
@@ -265,64 +276,53 @@ const Profile = (props: { history: History }) => {
         console.log('Failed:', error);
     };
 
+   
     return (
         <div className='profile-page'>
             <Header history={history} showActions isLoggedIn />
-            <Button
-                type='link'
-                onClick={() => window.history.back()}
-                style={{ position: 'relative', top: '1rem', left: '0.5rem', color: '#4E4E4E' }}
-            >
-                <LeftOutlined /> Back to dashboard
-            </Button>
-            <PageHeader
-                backIcon={null}
-                title='My Profile'
-                tags={
-                    kycFlagDetails.map((list) => {
-                        return (kycFlag === list.flag) ?
-                            <Tag color={list.backgroundColor} style={{ color: list.color, fontSize: 'large', padding: '0.5em' }} >
-                                {list.title} {(list.icon) ? <CheckCircleFilled /> : null}
-                            </Tag> :
-                            <Tag style={{ display: 'none' }}></Tag>
-                    })
-                }
-            />
-            <Divider className='margin-zero' />
-            <Row style={{ paddingLeft: '3em' }}>
-                <Col span={12} style={{ paddingTop: '2em' }}>
-                    <Form
-                        labelAlign='left'
-                        labelCol={{ span: 24 }}
-                        wrapperCol={{ span: 18 }}
-                        scrollToFirstError
-                        colon={false}
-                        name='profile'
-                        initialValues={{ loginState }}
-                        onFinish={onFinish}
-                        onFinishFailed={onFinishFailed}
-                    >
-                        <Form.Item
-                            name='profile_picture'
-                            className='profile-picture'
-                            valuePropName='fileList'
-                            getValueFromEvent={normFile}
-                            rules={[{ validator: (rule, value) => validateUpload(rule, value) }]}
+            <div className='profile-wrapper'>
+                <Button
+                    type='link'
+                    onClick={() => window.history.back()}
+                    style={{ position: 'relative', top: '1rem', left: '0.5rem', color: '#4E4E4E' }}
+                >
+                    <LeftOutlined /> Back to dashboard
+                </Button>
+                <PageHeader
+                    backIcon={null}
+                    title='My Profile'
+                    tags={
+                        kycFlagDetails.map((list) => {
+                            return (kycFlag === list.flag) ?
+                                <Tag color={list.backgroundColor} style={{ color: list.color, fontSize: 'large', padding: '0.5em' }} >
+                                    {list.title} {(list.icon) ? <CheckCircleFilled /> : null}
+                                </Tag> :
+                                <Tag style={{ display: 'none' }}></Tag>
+                        })
+                    }
+                />
+                <Divider className='margin-zero' />
+                <Row style={{ paddingLeft: '3em' }}>
+                    <Col span={12} style={{ paddingTop: '2em' }}>
+                        <Form
+                            labelAlign='left'
+                            labelCol={{ span: 24 }}
+                            wrapperCol={{ span: 18 }}
+                            scrollToFirstError
+                            colon={false}
+                            name='profile'
+                            initialValues={{ loginState }}
+                            onFinish={onFinish}
+                            onFinishFailed={onFinishFailed}
                         >
-                            {isEmpty(loginState.profile_picture) ?
-                                <Upload
-                                    accept='image/*'
-                                    beforeUpload={(file) => {
-                                        return false;
-                                    }}
-                                    name='picture'
-                                    listType='picture-card'
-                                    maxCount={1}
-                                    onChange={uploadProfilePic}
-                                >
-                                    <Text>Upload Photo</Text>
-                                </Upload> :
-                                <>
+                            <Form.Item
+                                name='profile_picture'
+                                className='profile-picture'
+                                valuePropName='fileList'
+                                getValueFromEvent={normFile}
+                                rules={[{ validator: (rule, value) => validateUpload(rule, value) }]}
+                            >
+                                {isEmpty(loginState.profile_picture) ?
                                     <Upload
                                         accept='image/*'
                                         beforeUpload={(file) => {
@@ -333,162 +333,190 @@ const Profile = (props: { history: History }) => {
                                         maxCount={1}
                                         onChange={uploadProfilePic}
                                     >
-                                        {showProfilePic ? <img className='changed-profile-picture' src={imageSrc} alt='profile' /> : null}
-                                    </Upload>
-                                    {showProfilePic ? <Text className='change-profile-pic-text'>Click on the Profile Picture to change</Text> : null}
-                                </>
-                            }
-                        </Form.Item>
-                        <div className={kycFlag === 'incomplete' ? `add-details-text` : `display-none`}>
-                            <Text>Add details of fields with <CaretRightFilled style={{ color: '#FF9900' }} /> to complete KYC</Text>
-                        </div>
-                        <Col span={20} className='kyc-form-elements'>
-                            <Form.Item
-                                {...fieldLayout}
-                                label={<span className='kyc-form-label'>User Type</span>}
-                                className='margin-zero'
-                            >
-                                : {userType}
+                                        <Text>Upload Photo</Text>
+                                    </Upload> :
+                                    <>
+                                        <Upload
+                                            accept='image/*'
+                                            beforeUpload={(file) => {
+                                                return false;
+                                            }}
+                                            name='picture'
+                                            listType='picture-card'
+                                            maxCount={1}
+                                            onChange={uploadProfilePic}
+                                        >
+                                            {showProfilePic ? <img className='changed-profile-picture' src={imageSrc} alt='profile' /> : null}
+                                        </Upload>
+                                        {showProfilePic ? <Text className='change-profile-pic-text'>Click on the Profile Picture to change</Text> : null}
+                                    </>
+                                }
                             </Form.Item>
-                            <Form.Item
-                                {...fieldLayout}
-                                label={<span className='kyc-form-label'>{userType} Type</span>}
-                                className='margin-zero'
-                            >
-                                <Text style={{ textTransform: 'capitalize' }}>: {subType}</Text>
-                            </Form.Item>
-                            {!isEmpty(category) ?
+                            <div className={kycFlag === 'incomplete' ? `add-details-text` : `display-none`}>
+                                <Text>Add details of fields with <CaretRightFilled style={{ color: '#FF9900' }} /> to complete KYC</Text>
+                            </div>
+                            <Col span={20} className='kyc-form-elements'>
                                 <Form.Item
                                     {...fieldLayout}
-                                    label={<span className='kyc-form-label'>{userType} Category</span>}
+                                    label={<span className='kyc-form-label'>User Type</span>}
                                     className='margin-zero'
                                 >
-                                    <Text style={{ textTransform: 'capitalize' }}>: {category}</Text>
-                                </Form.Item> : null
-                            }
-                            <Form.Item
-                                {...fieldLayout}
-                                label={<span className='kyc-form-label'>Name</span>}
-                                className='margin-zero'
-                            >
-                                : {loginState.name}
-                            </Form.Item>
-                            <Form.Item
-                                {...fieldLayout}
-                                label={<span className='kyc-form-label'>Phone Number</span>}
-                                className='margin-zero'
-                            >
-                                : {loginState.phone_no}
-                            </Form.Item>
-                            <Form.Item
-                                {...fieldLayout}
-                                label={<span className='kyc-form-label'>Email</span>}
-                                className='margin-zero'
-                            >
-                                {changeEmail || isEmpty(loginState.email) ?
-                                    <React.Fragment>
-                                        <Form.Item
-                                            className='margin-zero float-left'
-                                            name={(isEmpty(loginState.email) || changeEmail) ? 'email' : undefined}
-                                            rules={[{ validator: (rule, value) => emailValidator(rule, value) }]}
-                                        >
-                                            <Input
-                                                className={changeEmail ? `custom-input kyc-input-field width-85` : `custom-input kyc-input-field`}
-                                                defaultValue={loginState.email}
-                                                onChange={() => setDisableSave(false)}
-                                                contentEditable
-                                            />
-                                        </Form.Item>
-                                        {changeEmail &&
-                                            <Button
-                                                type='link'
-                                                danger
-                                                onClick={() => { setChangeEmail(false) }}
+                                    : {userType}
+                                </Form.Item>
+                                <Form.Item
+                                    {...fieldLayout}
+                                    label={<span className='kyc-form-label'>{userType} Type</span>}
+                                    className='margin-zero'
+                                >
+                                    <Text style={{ textTransform: 'capitalize' }}>: {subType}</Text>
+                                </Form.Item>
+                                {!isEmpty(category) ?
+                                    <Form.Item
+                                        {...fieldLayout}
+                                        label={<span className='kyc-form-label'>{userType} Category</span>}
+                                        className='margin-zero'
+                                    >
+                                        <Text style={{ textTransform: 'capitalize' }}>: {category}</Text>
+                                    </Form.Item> : null
+                                }
+                                <Form.Item
+                                    {...fieldLayout}
+                                    label={<span className='kyc-form-label'>Name</span>}
+                                    className='margin-zero'
+                                >
+                                    : {loginState.name}
+                                </Form.Item>
+                                <Form.Item
+                                    {...fieldLayout}
+                                    label={<span className='kyc-form-label'>Phone Number</span>}
+                                    className='margin-zero'
+                                >
+                                    : {loginState.phone_no}
+                                </Form.Item>
+                                <Form.Item
+                                    {...fieldLayout}
+                                    label={<span className='kyc-form-label'>Email</span>}
+                                    className='margin-zero'
+                                >
+                                    {changeEmail || isEmpty(loginState.email) ?
+                                        <React.Fragment>
+                                            <Form.Item
+                                                className='margin-zero float-left'
+                                                name={(isEmpty(loginState.email) || changeEmail) ? 'email' : undefined}
+                                                rules={[{ validator: (rule, value) => emailValidator(rule, value) }]}
                                             >
-                                                Cancel
-                                            </Button>
-                                        }
-                                    </React.Fragment> :
-                                    <Text>:&nbsp;{loginState.email}
-                                        <Button type='link' className='email-change ' onClick={() => setChangeEmail(true)}>Change</Button>
-                                    </Text>
-                                }
-                            </Form.Item>
-                            <DocumentsUploaded
-                                config={configs}
-                                kycFlag={kycFlag}
-                                userDetails={loginState}
-                                setDisableSave={setDisableSave}
+                                                <Input
+                                                    className={changeEmail ? `custom-input kyc-input-field width-85` : `custom-input kyc-input-field`}
+                                                    defaultValue={loginState.email}
+                                                    onChange={() => setDisableSave(false)}
+                                                    contentEditable
+                                                />
+                                            </Form.Item>
+                                            {changeEmail &&
+                                                <Button
+                                                    type='link'
+                                                    danger
+                                                    onClick={() => { setChangeEmail(false) }}
+                                                >
+                                                    Cancel
+                                                </Button>
+                                            }
+                                        </React.Fragment> :
+                                        <Text>:&nbsp;{loginState.email}
+                                            <Button type='link' className='email-change ' onClick={() => setChangeEmail(true)}>Change</Button>
+                                        </Text>
+                                    }
+                                </Form.Item>
+                                <DocumentsUploaded
+                                    config={configs}
+                                    kycFlag={kycFlag}
+                                    userDetails={loginState}
+                                    setDisableSave={setDisableSave}
+                                />
+                                <Form.Item
+                                    {...fieldLayout}
+                                    label={<span className='kyc-form-label'>Address</span>}
+                                    className='margin-zero'
+                                >
+                                    : {loginState.address1},
+                                    <br />{loginState.address2},
+                                    <br />{loginState.zip}
+                                </Form.Item>
+                                {userType === UserTypes.BUYER && <BuyerWorkingHours workingHours={working_hours} setDisableSave={setDisableSave} />}
+                                <div className='add-details-text add-bank-details'>
+                                    <Title level={5} style={{ width: 'fit-content', float: 'left' }}>Bank Details</Title>
+                                    {addBankInfo ?
+                                        <Button type='link' style={{ marginLeft: '6em' }} onClick={() => setAddClicked(!isAddClicked)}>
+                                            {isAddClicked ? <Text type='danger'>Cancel</Text> : <Text>Add</Text>}
+                                        </Button> :
+                                        <Button type='link' style={{ marginLeft: '6em' }} onClick={() => {
+                                            setChangeClicked(!isChangeClicked)
+                                            setShowConfirmAccountNumber(false)
+                                        }}>
+                                            {isChangeClicked ? <Text type='danger'>Cancel</Text> : <Text>Change</Text>}
+                                        </Button>
+                                    }
+                                </div>
+                                <BankDocuments
+                                    bankInfo={bank_info}
+                                    bank_doc={bank_doc}
+                                    userType={userType}
+                                    kycFlag={kycFlag}
+                                    isAddClicked={isAddClicked}
+                                    isChangedClicked={isChangeClicked}
+                                    setDisableSave={setDisableSave}
+                                    showConfirmAccountNumber={showConfirmAccountNumber}
+                                    setShowConfirmAccountNumber={setShowConfirmAccountNumber}
+                                />
+                            </Col>
+                            <PrimaryBtn
+                                disabled={disableSave}
+                                htmlType='submit'
+                                style={{ margin: '2em' }}
+                                content='Save'
                             />
-                            <Form.Item
-                                {...fieldLayout}
-                                label={<span className='kyc-form-label'>Address</span>}
-                                className='margin-zero'
-                            >
-                                : {loginState.address1},
-                                <br />{loginState.address2},
-                                <br />{loginState.zip}
-                            </Form.Item>
-                            {userType === UserTypes.BUYER && <BuyerWorkingHours workingHours={working_hours} setDisableSave={setDisableSave} />}
-                            <div className='add-details-text add-bank-details'>
-                                <Title level={5} style={{ width: 'fit-content', float: 'left' }}>Bank Details</Title>
-                                {addBankInfo ?
-                                    <Button type='link' style={{ marginLeft: '6em' }} onClick={() => setAddClicked(!isAddClicked)}>
-                                        {isAddClicked ? <Text type='danger'>Cancel</Text> : <Text>Update</Text>}
-                                    </Button> :
-                                    <Button type='link' style={{ marginLeft: '6em' }} onClick={() => setChangeClicked(!isChangeClicked)}>
-                                        {isChangeClicked ? <Text type='danger'>Cancel</Text> : <Text>Change</Text>}
-                                    </Button>
-                                }
-                            </div>
-                            <BankDocuments
-                                bankInfo={bank_info}
-                                bank_doc={bank_doc}
-                                userType={userType}
-                                kycFlag={kycFlag}
-                                isAddClicked={isAddClicked}
-                                isChangedClicked={isChangeClicked}
-                                setDisableSave={setDisableSave}
+                            <CancelBtn onClick={() => {
+                                setConfirmation(true);
+                                setSaveFlag(false);
+                            }}
                             />
-                        </Col>
-                        <PrimaryBtn
-                            disabled={disableSave}
-                            htmlType='submit'
-                            style={{ margin: '2em' }}
-                            content='Save'
-                        />
-                        <CancelBtn onClick={() => {
-                            setConfirmation(true);
-                            setSaveFlag(false);
-                        }}
-                        />
-                    </Form>
-                </Col>
-                {kycFlag === 'incomplete' &&
-                    <Col>
-                        <div className='kyc-required-doc-list'>
-                            <Title level={4}>Add following details to complete KYC</Title>
-                            <ul>
-                                {requiredDocumentList.map((list) => {
-                                    return (
-                                        <React.Fragment>{
-                                            list.userType === userType && list.subType === subType &&
-                                            <li>{list.title}</li>
-                                        }</React.Fragment>)
-                                })}
-                            </ul>
-                        </div>
+                        </Form>
                     </Col>
-                }
-            </Row>
-            <ConfirmationMessage
-                showConfirmation={showConfirmation}
-                setConfirmation={setConfirmation}
-                response={loginState}
-                isSave={isSave}
-                disableSave={disableSave}
-                onConfirm={isSave ? onSave : () => { }}
-            />
+                    {kycFlag === 'incomplete' &&
+                        <Col>
+                            <div className='kyc-required-doc-list'>
+                                <Title level={4}>Add following details to complete KYC</Title>
+                                <ul>
+                                    {KycNewDocList.map((list) => {
+                                        return (
+                                            <React.Fragment>
+                                                {list.userType === userType && list.subType === subType &&
+                                                    <>{checkEmpty(list.title,loginState)}</>
+                                                }
+                                            </React.Fragment>)
+                                    })}
+                                </ul>
+                            </div>
+                        </Col>
+                    }
+                </Row>
+                <ConfirmationMessage
+                    showConfirmation={showConfirmation}
+                    setConfirmation={setConfirmation}
+                    response={loginState}
+                    isSave={isSave}
+                    disableSave={disableSave}
+                    onConfirm={isSave ? onSave : () => { }}
+                />
+                <Modal
+                    visible={showWorkingHourAlert}
+                    cancelButtonProps={{ style: { display: 'none' } }}
+                    onOk={(event: any) => {
+                        setShowWorkingHourAlert(false)
+                    }}>
+                    You cannot select all Three days as a holiday
+                </Modal>
+            </div>
         </div>
     );
 };

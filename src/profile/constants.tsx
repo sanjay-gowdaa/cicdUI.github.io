@@ -1,3 +1,6 @@
+import React from "react";
+import {isEmpty } from 'lodash';
+
 export const PAN_10_DIGIT_MSG = 'Enter PAN number of 10 characters!';
 export const PAN_INVALID = 'Invalid PAN number!';
 
@@ -27,6 +30,8 @@ export const GSTIN_MIN_DIGITS_MSG = 'GSTIN must be of 15 characters!';
 export const GSTIN_INVALID_MSG = 'Invalid GSTIN!';
 
 export const MAX_FILE_SIZE = 'Max Size of file should be 1MB!';
+
+
 
 export const fieldLayout = {
     labelCol: { span: 10 },
@@ -288,3 +293,182 @@ export const initialFormValues = {
     email: '',
     gstin: ''
 };
+
+
+export const KycNewDocList = [
+    {
+        userType: 'Seller',
+        subType: 'Farmer',
+        title: 'Kisan Card Number'
+    },
+    {
+        userType: 'Seller',
+        subType: 'Farmer',
+        title: 'RTC Number'
+    },
+    {
+        userType: 'Seller',
+        subType: 'Farmer',
+        title: 'Kisan Card Photo'
+    },
+    {
+        userType: 'Seller',
+        subType: 'Farmer',
+        title: 'RTC Photo'
+    },
+    {
+        userType: 'Seller',
+        subType: 'Farmer',
+        title: 'Aadhar Card Number'
+    },
+    {
+        userType: 'Seller',
+        subType: 'Farmer',
+        title: 'Aadhar Card Photo'
+    },
+    {
+        userType: 'Seller',
+        subType: 'Farmer',
+        title: 'Bank Account Details'
+    },
+    {
+        userType: 'Seller',
+        subType: 'Farmer',
+        title: 'Bank statement/ Passbook/ Cheque'
+    },
+    {
+        userType: 'Seller',
+        subType: 'Institution',
+        title: 'GSTIN number'
+    },
+    {
+        userType: 'Seller',
+        subType: 'Institution',
+        title: 'PAN'
+    },
+    {
+        userType: 'Seller',
+        subType: 'Institution',
+        title: 'pan_card'
+    },
+    {
+        userType: 'Seller',
+        subType: 'Institution',
+        title: 'Society/ FPO number'
+    },
+    {
+        userType: 'Seller',
+        subType: 'Institution',
+        title: 'Bank Account Details'
+    },
+    {
+        userType: 'Seller',
+        subType: 'Institution',
+        title: 'Bank statement/ Passbook/ Cheque'
+    },
+    {
+        userType: 'Buyer',
+        subType: 'Individual',
+        title: 'UIDAI'
+    },
+    {
+        userType: 'Buyer',
+        subType: 'Individual',
+        title: 'aadhar_card'
+    },
+    {
+        userType: 'Buyer',
+        subType: 'Individual',
+        title: 'PAN'
+    },
+    {
+        userType: 'Buyer',
+        subType: 'Individual',
+        title: 'pan_card'
+    },
+    {
+        userType: 'Buyer',
+        subType: 'Institution',
+        title: 'GSTIN Number'
+    },
+    {
+        userType: 'Buyer',
+        subType: 'Institution',
+        title: 'PAN'
+    },
+    {
+        userType: 'Buyer',
+        subType: 'Institution',
+        title: 'pan_card'
+    }, 
+    {
+        userType: 'Buyer',
+        subType: 'Institution',
+        title: 'Bank Account Details'
+    }
+];
+
+export const checkEmpty = (label: any ,loginState:any) => {
+    console.log('label', label)
+    // console.log(loginState.UIDAI)
+    switch (label) {
+        case 'UIDAI':
+            if (isEmpty(loginState.UIDAI))
+                return <li>AADhar card number</li>;
+            else
+                return null;
+        case 'PAN':
+            if (isEmpty(loginState.PAN))
+                return <li>PAN card number</li>;
+            else
+                return null;
+        case 'aadhar_card':
+            if (isEmpty(loginState.aadhar_card))
+                return <li>AADhar card Photo</li>;
+            else
+                return null;
+        case 'pan_card':
+            if (isEmpty(loginState.pan_card))
+                return <li>Pan card Photo</li>;
+            else
+                return null;
+        case 'RTC Number':
+            if(isEmpty(loginState.rtc))
+            return <li>RTC Number</li>
+            else 
+            return null;
+        case 'RTC Photo':
+            if(isEmpty(loginState.rtc_card))
+            return <li>RTC Photo</li>
+            else 
+            return null;
+        case 'Kisan Card Number':
+            if(isEmpty(loginState.kisancard))
+            return <li>Kisan Card Number</li>
+            else 
+            return null;
+        case 'Kisan Card Photo':
+            if(isEmpty(loginState.kisan_card))
+            return <li>Kisan Card Photo</li>
+            else 
+            return null;
+        case 'Bank Account Details':
+            if(isEmpty(loginState.bank_doc))
+            return <li>Bank Account Details</li>
+            else 
+            return null;
+        case 'GSTIN Number': 
+        if(isEmpty(loginState.gstin))
+        return <li>GSTIN Number</li>
+        else 
+        return null;
+        case 'Society/ FPO number':
+            if(isEmpty(loginState.fpo))
+            return <li>FPO Number</li>
+            else 
+            return null;
+        default:
+            return null;
+    }
+
+}

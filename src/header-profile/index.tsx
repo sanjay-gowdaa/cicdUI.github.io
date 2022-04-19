@@ -28,7 +28,8 @@ import DefaultBtn from '../app-components/defaultBtn';
 import { getConfigurations, getUserCompleteDetails, getUserFiles } from '../store/loginReducer/actions';
 
 const { Text, Title } = Typography;
-const { profile, terms } = routesMap;
+const { profile,terms } = routesMap;
+
 
 const UserHeader = (props: { history: History }) => {
     const { history } = props;
@@ -39,9 +40,10 @@ const UserHeader = (props: { history: History }) => {
     // const [notificationNumber, setNotificationNumber] = useState(2);
     const [userType, setUserType] = useState('');
     const [showProfile, setProfile] = useState(false);
+    const [showTerms,setShowTerms]=useState(false);
     const [imageSrc, setImageSrc] = useState();
     const [isPDF, setPDF] = useState(false);
-    const [breadCrumbs, setBreadCrumbs] = useState({ produce: '', matches: '', transaction: '', feedback: '', crops: '' });
+    const [breadCrumbs, setBreadCrumbs] = useState({ produce: '', matches: '', transaction: '', feedback: '', crops: ''});
 
     useEffect(() => {
         loginState.is_buyer ? setUserType('/buyer#buyer') : setUserType('/seller#seller');
@@ -72,8 +74,8 @@ const UserHeader = (props: { history: History }) => {
             matches: matchesName,
             transaction: transactionName,
             feedback: feedbackName,
-            crops: cropsName
-        });
+            crops: cropsName,
+});
     };
 
     // clear=true Means Clear one notification. clear=false Means Add one notification
@@ -131,14 +133,17 @@ const UserHeader = (props: { history: History }) => {
     };
 
     return (
-        <div className='display-flex-row align-center'>
+        <div className='display-flex-row align-center profile-margin'>
             <Breadcrumb separator=' ' className='custom-breadcrumb'>
                 <Breadcrumb.Item href={breadCrumbs.crops} >Produce</Breadcrumb.Item>
                 <Breadcrumb.Item href={breadCrumbs.matches} >Matches</Breadcrumb.Item>
                 <Breadcrumb.Item href={breadCrumbs.transaction} >Transaction</Breadcrumb.Item>
                 <Breadcrumb.Item href={breadCrumbs.feedback} >Feedback</Breadcrumb.Item>
-                <Breadcrumb.Item href={terms}>Terms & Conditions</Breadcrumb.Item>
             </Breadcrumb>
+            <Button style={{color:'black'}} size='large' type='link' onClick={() => setShowTerms(true)}
+                 >TermsAndConditions
+            </Button>
+            {(showTerms && history.location.pathname !== terms) ? history.push(terms) : null}
             <Badge
                 // count={notificationNumber}
                 className='custom-badge'

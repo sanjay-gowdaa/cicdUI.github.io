@@ -122,7 +122,9 @@ const ConnectMatches = ({ cropDetails }: { cropDetails: MatchRequirementModel })
             <Modal
                 visible={viewAgreement}
                 title={<Title level={3}>Agreement To {is_buyer ? <>Buy</> : <>Sell</>}</Title>}
-                onCancel={() => setViewAgreement(!viewAgreement)}
+                onCancel={() => {setViewAgreement(!viewAgreement)
+                    setAgreed(false);}
+                }
                 footer={null}
                 
             >
