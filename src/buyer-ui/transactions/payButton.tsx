@@ -1,14 +1,21 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { v4 as uuidv4 } from 'uuid';
-import { Col, Input, Row, Space, Modal, Typography } from 'antd';
+import { Col, Input, Row, Space, Modal, Typography, Collapse, Select, Button } from 'antd';
+import { CaretUpOutlined } from '@ant-design/icons';
 import { isEmpty } from 'lodash';
 import moment from 'moment';
+import CheckDraft from '../../buyer-ui/transactions/checkDraft';
+import vectorDown from '../../static/assets/Vector_down.png';
 
 import PrimaryBtn from '../../app-components/primaryBtn';
 import { RootState } from '../../store/rootReducer';
 import { getAmount, rejectMatches } from '../../store/buyerReducer/actions';
 import { ACCESS_TOKEN, BASE_URL, STAGE } from '../../store/api';
+import CashPaymentModal from '../../buyer-ui/transactions/cashPaymentmodal';
+import DirectBankTransferModal from './directBankTransfermodal';
+
+
 
 const { Text, Title } = Typography;
 
@@ -22,7 +29,14 @@ const PayButton = (props: { record: any }) => {
     const status = buyerState.currentStatusDetails;
 
     const [userStatus, setUserStatus] = useState('');
+    const [proceedToPayBtn, setProceedToPayBtn] = useState(true);
+    const [disableTradeSummary, setDisableTradeSummary] = useState(1)
+    const [payAmountDetails, setPayAmountDetails] = useState(true);
     const [viewPaymentDetails, setPaymentDetails] = useState(false);
+    const [displayCheckModal, setDisplayCheckModal] = useState(false);
+    const [payBtnDisplay,setPayBtnDisplay] = useState(false);
+    const [displayCashModal,setDisplayCashModal] = useState(false);
+    const [directBankTransferModal,setDirectBankTransferModal]= useState(false);
     const uuid = uuidv4();
     const accessToken = (window as any).userToken ? (window as any).userToken : null;
 
@@ -30,6 +44,7 @@ const PayButton = (props: { record: any }) => {
     const id = 'order_' + seq;
 
     const user = loginState.is_buyer && 'buyer';
+
     const getDisplay = (status: string) => {
         var substring = status.substring(0, 4).toLowerCase();
         if (substring === 'pay ' || status === 'Sorry error occured, payment unsucessfull') {
@@ -98,87 +113,192 @@ const PayButton = (props: { record: any }) => {
         setPaymentDetails(true);
     };
 
+    const text = (
+        <Title className='trade-summary-header'><Text className='trade-summary-title'>Trade summary</Text></Title>
+    )
+    
+    const handlePayment = () => {
+        console.log('i am clicked')
+        setProceedToPayBtn(false);
+        setPayAmountDetails(false);
+        setPaymentDetails(true);
+        setPayBtnDisplay(true);
+    }
+
+    const ChangeTheSelectValue = (value: string) => {
+        if (value === 'Payment Gateway') {
+            setPaymentDetails(true)
+            setProceedToPayBtn(true);
+            setPayAmountDetails(true);
+            setDisplayCheckModal(false);
+            setDisplayCashModal(false);
+            setDirectBankTransferModal(false);
+        }
+        if (value === 'Cheque/Draft') {
+            setPaymentDetails(true)
+            setPayAmountDetails(false);
+            setDisplayCheckModal(true)
+            setDisplayCashModal(false)
+            setPayBtnDisplay(false);
+            setProceedToPayBtn(false);
+            setDirectBankTransferModal(false);
+        }
+        if(value=== 'cash'){
+            setPaymentDetails(true)
+            setDisplayCashModal(true)
+            setPayAmountDetails(false);
+            setDisplayCheckModal(false)
+            setPayBtnDisplay(false);
+            setProceedToPayBtn(false);
+            setDirectBankTransferModal(false);
+        }
+        if(value==='Direct Bank Transfer'){
+            setDirectBankTransferModal(true);
+            setPaymentDetails(true)
+            setDisplayCashModal(false)
+            setPayAmountDetails(false);
+            setDisplayCheckModal(false)
+            setPayBtnDisplay(false);
+            setProceedToPayBtn(false);
+        }
+    }
+
+    let findNumber = /\d+/;
+    let percent =userStatus.match(findNumber);
+    // console.log(percent)
+    // console.log(userStatus)
+
+    const { Panel } = Collapse;
+    const { Option, OptGroup } = Select;
+
     return (
         <React.Fragment>
-            <PrimaryBtn
+           <PrimaryBtn
                 className={
                     displayPay ?
                         isError ?
-                            'pay-retry' : 'vikas-btn-radius' :
+                            'pay-retry' : 'vikas-btn-radius pay-button-position' :
                         'display-none'
                 }
                 onClick={() => payNow()}
                 content={isError ? 'Retry and Pay' : 'Pay Now'}
             />
+
             <Modal
+                // bodyStyle={{width:466,height:530}}
+                className='payment-modal'
                 visible={viewPaymentDetails}
-                title={<Title level={3}>Payment Details</Title>}
+                closable={false}
                 onCancel={() => setPaymentDetails(!viewPaymentDetails)}
                 footer={null}
+                centered={true}
             >
-                <Row>
-                    <Col span={12}>
-                        <Space direction='vertical'>
-                            <Text>OrderNumber:</Text>
-                            <Text>OrderAmount:</Text>
-                            <Text>Name:</Text>
-                            <Text>EmailId:</Text>
-                            <Text>PhoneNumber:</Text>
-                        </Space>
-                    </Col>
-                    <Col span={12}>
-                        <form className='payment' method='POST' action={`${BASE_URL}/${STAGE}/${PAYMENT_REQUEST}`}>
+                <Title className='payment-title'><Text className='payment-title-text'>First Advance Payment Details</Text></Title>
+
+                <Collapse
+                    bordered={false}
+                    defaultActiveKey={disableTradeSummary}
+                    expandIconPosition={'right'}
+                    destroyInactivePanel={true}
+                    expandIcon={({ isActive }) => <CaretUpOutlined rotate={isActive ? 0 : 180} />}
+                    className="site-collapse-custom-collapse"
+                >
+                    <Panel header={text} key="1" className="site-collapse-custom-panel">
+                        <Row className='trade-summary-row'>
+                            <Col span={10}>
+                                <Space direction='vertical'>
+                                    <Text className='inner-text'>Seller Id</Text>
+                                    <Text className='inner-text'>Produce</Text>
+                                    <Text className='inner-text'>Quantity</Text>
+                                    <Text className='inner-text'>Price per quintal</Text>
+                                    <Text className='inner-text'>Location</Text>
+                                    <Text className='inner-text'>Tentative Delivery</Text>
+                                </Space>
+                            </Col>
+                            <Col span={14}>
                             <Space direction='vertical'>
-                                <Input
-                                    className='payment-custom-input'
-                                    type='text'
-                                    value={id}
-                                    name='orderId'
-                                />
-                                <Input
-                                    className='payment-custom-input'
-                                    type='text'
-                                    value={buyerState.paymentAmount}
-                                    name='orderAmount'
-                                />
-                                <Input
-                                    className='payment-custom-input'
-                                    type='hidden'
-                                    value='Test note'
-                                    name='orderNote'
-                                />
-                                <Input
-                                    className='payment-custom-input'
-                                    type='text'
-                                    value={loginState.name}
-                                    name='customerName'
-                                />
-                                <Input
-                                    className='payment-custom-input'
-                                    type='email'
-                                    value={loginState.email}
-                                    name='customerEmail'
-                                />
-                                <Input
-                                    className='payment-custom-input'
-                                    type='tel'
-                                    value={loginState.phone_no}
-                                    name='customerPhone'
-                                />
-                                <Input type='hidden' value='INR' name='orderCurrency' />
-                                <Input type='hidden' value={user} name='user' />
-                                <Input type='hidden' value={loginState.pk} name='userId' />
-                                <Input type='hidden' value={record.pk} name='transactionId' />
-                                <Input type='hidden' value={record.produce} name='produce' />
-                                <Input type='hidden' value={record.seller_id} name='sellerId' />
-                                <Input type='hidden' value='payment Gateway' name='paymentType' />
-                                <Input type='hidden' value='1' name='payment' />
-                                <Input type='hidden' value={uuid} name='uuid' />
-                                <Input type='hidden' value={accessToken || ACCESS_TOKEN} name='token' />
-                                <button className='pay-button' type='submit' value='Pay'>Pay</button>
-                            </Space>
-                        </form>
+                                    <Text className='inner-text'>: {record.seller_id}</Text>
+                                    <Text className='inner-text'>: {record.produce}</Text>
+                                    <Text className='inner-text'>: {record.buyer_quantity}qtl</Text>
+                                    <Text className='inner-text'>: ₹{record.buyer_price_per_quintal}</Text>
+                                    <Text className='inner-text'>: {record.seller_location}</Text>
+                                    <Text className='inner-text'>: Tentative Delivery</Text>
+                                </Space>
+                            </Col>
+                        </Row>
+                    </Panel>
+                </Collapse>
+                <Title className='payment-summary'><Text className='paymentsummarytext'>Payment Summary</Text></Title>
+                <Row className='payment-summary-row'>
+                    <Col span={24} className='mode-column'>
+                        <Text className='mode-of-payment'>Mode of payment</Text>
+                        <img src={vectorDown}></img>
+                        <Select defaultValue="Payment Gateway" showArrow={false}
+                            onChange={ChangeTheSelectValue}>
+                            <Option value="Payment Gateway">Payment Gateway</Option>
+                            <OptGroup label="Other">
+                                <Option value="cash">Cash</Option>
+                                <Option value="Cheque/Draft">Cheque/Draft</Option>
+                                <Option value="Direct Bank Transfer">Direct Bank Transfer</Option>
+                            </OptGroup>
+                        </Select>
                     </Col>
+                    {payAmountDetails ? <Col span={24} className='pay-amount'>
+                        <Text className='payment-amount'>Pay Amount</Text>
+                        <Text className='amount'><strong>₹{buyerState.paymentAmount}</strong>({percent}% of ₹{record.buyer_total_price})</Text>
+                    </Col> : null}
+                    <form method='POST' action={`${BASE_URL}/${STAGE}/${PAYMENT_REQUEST}`}>
+                        <Input
+                            className='payment-custom-input'
+                            type='hidden'
+                            value={record.seller_id}
+                            name='sellerId'
+                        />
+                        <Input
+                            className='payment-custom-input'
+                            type='hidden'
+                            value={record.produce}
+                            name='produce'
+                        />
+                        <Input
+                            className='payment-custom-input'
+                            type='hidden'
+                            value='Test note'
+                            name='orderNote'
+                        />
+                        <Input
+                            className='payment-custom-input'
+                            type='hidden'
+                            value={loginState.name}
+                            name='customerName'
+                        />
+                        <Input
+                            className='payment-custom-input'
+                            type='hidden'
+                            value={record.seller_location}
+                            name='customerLocation'
+                        />
+                        <Input type='hidden' value='INR' name='orderCurrency' />
+                        <Input type='hidden' value={user} name='user' />
+                        <Input type='hidden' value={loginState.pk} name='userId' />
+                        <Input type='hidden' value={record.pk} name='transactionId' />
+                        <Input type='hidden' value={record.produce} name='produce' />
+                        <Input type='hidden' value={record.seller_id} name='sellerId' />
+                        <Input type='hidden' value='payment Gateway' name='paymentType' />
+                        <Input type='hidden' value='1' name='payment' />
+                        <Input type='hidden' value={uuid} name='uuid' />
+                        <Input type='hidden' value={accessToken || ACCESS_TOKEN} name='token' />
+                        <Input type='hidden' value={id} name='orderId' />
+                        <Input type='hidden' value={loginState.phone_no} name='customerPhone' />
+                        <Input type='hidden' value={loginState.email} name='customerEmail' />
+                        <Input type='hidden' value={loginState.name} name='customerName' />
+
+                        {displayCheckModal && <CheckDraft record={record} viewPaymentDetails={viewPaymentDetails} setPaymentDetails={setPaymentDetails}/>}
+                        {displayCashModal && <CashPaymentModal record={record} viewPaymentDetails={viewPaymentDetails} setPaymentDetails={setPaymentDetails}/>}
+                        {directBankTransferModal && <DirectBankTransferModal record={record} viewPaymentDetails={viewPaymentDetails} setPaymentDetails={setPaymentDetails}/>}
+                        {proceedToPayBtn ?<div className='payment-btn-block'><button className='pay-button-btn' type='submit' onClick={handlePayment}>Proceed to Pay ₹{buyerState.paymentAmount}</button></div>:null}
+                        {payBtnDisplay ?<div className='payment-btn-block-position'><button className='pay-btn-width' type='submit' value='pay'>Pay</button></div>:null}
+                    </form>
                 </Row>
             </Modal>
         </React.Fragment>
