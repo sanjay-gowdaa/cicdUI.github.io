@@ -28,6 +28,7 @@ const GetCurrentStatusDetails = (pk: any) => {
             for (let i = 0; i < status.length; i++) {
                 if (status[i].pk === pk.data) {
                     setUserStatus(status[i].event_description);
+                    console.log(status)
                 }
             }
         }

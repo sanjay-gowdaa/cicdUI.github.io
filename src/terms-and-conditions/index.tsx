@@ -1,46 +1,55 @@
 import React, { useEffect, useState } from 'react';
 import { Alert, Collapse, Modal, Space } from 'antd';
+import { useSelector} from 'react-redux';
 
 import GeneralTerms from './generalTerms';
 import BuyerTerms from './buyerTerms';
 import SellerTerms from './sellerTerms';
 import PrivacyPolicy from './privacyPolicy';
+import { RootState } from '../store/rootReducer';
+
 
 import PrimaryBtn from '../app-components/primaryBtn';
 import DefaultBtn from '../app-components/defaultBtn';
 import Header from '../header';
 import Footer from '../footer';
 import { routesMap } from '../constants';
+import { History } from 'history';
 
 import './termsAndConditions.scss';
 
 const { Panel } = Collapse;
-const { terms } = routesMap;
+const { terms} = routesMap;
 
-export const Terms = () => {
-    return (
+
+export const Terms = (props: { history: History }) => {
+    const { history } = props;
+    const loginState = useSelector((state: RootState) => state.loginUser);
+    const { is_buyer } = loginState;
+    console.log(loginState)
+    
+ return (
         <div className="t-and-c-page">
-            <Header showActions={false} />
+            <Header showActions={false}/>
             <Collapse className="collapsable-t-and-c" defaultActiveKey={1}>
                 <Panel header="General Terms" key="1">
                     <GeneralTerms />
                 </Panel>
-                <Panel header="Buyer Terms" key="2">
+                {loginState.is_buyer?<Panel header="Buyer Terms" key="2">
                     <BuyerTerms />
-                </Panel>
-                <Panel header="Seller Terms" key="3">
+                </Panel>:<Panel header="Seller Terms" key="3">
                     <SellerTerms />
-                </Panel>
+                </Panel>}
                 <Panel header="Privacy Policy" key="4">
                     <PrivacyPolicy />
                 </Panel>
             </Collapse>
-            <Footer />
+            {/* <Footer /> */}
         </div>
     );
 };
 
-export const TAndCPopup = (props: any) => {
+   export const TAndCPopup = (props: any) => {
     const { initialDisplayType, viewTAndC } = props;
     const [visible, setVisible] = useState(viewTAndC);
     const [displayType, setDisplayType] = useState({general: true, buyer: false, seller: false});
@@ -58,6 +67,7 @@ export const TAndCPopup = (props: any) => {
     const displayTerms = (type: string) => {
         const classToFocus = initialDisplayType + "-terms-button";
         const element = document.getElementsByClassName(classToFocus)[0].classList;
+        console.log(displayType.buyer)
 
         switch(type) {
             case "general" : {
@@ -119,8 +129,8 @@ export const TAndCPopup = (props: any) => {
                     />
                 </Space>
                 {displayType.general  && <GeneralTerms />}
-                {displayType.buyer && <BuyerTerms />}
-                {displayType.seller && <SellerTerms />}
+                {displayType.buyer &&<BuyerTerms />}
+                {displayType.seller&&<SellerTerms />}
             </Space>
         </Modal>
     );

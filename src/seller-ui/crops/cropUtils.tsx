@@ -31,7 +31,7 @@ export const renderGradeOptionsForSubCategory = (selectedCropDataList: Array<Cro
     return gradeOptions;
 };
 
-export const createSellerFormData = (formValues: any) => {
+export const createSellerFormData = async (formValues: any) => {
     const sellerCropKeys = Object.keys(formValues);
     const sellerCropJsonData: any = {};
     const sellerCropImagesPromises: Array<Promise<any>> = []
@@ -51,9 +51,8 @@ export const createSellerFormData = (formValues: any) => {
         }
     });
 
-    return Promise.all(sellerCropImagesPromises).then((cropImagesValues) => {
-        return { ...sellerCropJsonData, crop_images: cropImagesValues };
-    });
+    const cropImagesValues = await Promise.all(sellerCropImagesPromises);
+    return { ...sellerCropJsonData, crop_images: cropImagesValues };
 };
 
 export const validateSellerPrice = (rule: RuleObject, value: string, apmc: any) => {
