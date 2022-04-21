@@ -30,7 +30,7 @@ const DirectBankTransferModal = (props: { record: any,viewPaymentDetails:any,set
             "quantity": `${quantity}`,
             "userId": `${loginState.pk}`,
             "paymentType": "directBankTransfer",
-            "Amount": `₹${buyerState.paymentAmount}`,
+            "Amount": `${buyerState.paymentAmount}`,
             "Date": `${values.Date}`,
             "BankDocument": `${values.BankDocument}`,
             "BankName":`${values.BankName}`,

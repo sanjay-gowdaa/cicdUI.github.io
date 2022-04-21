@@ -29,7 +29,7 @@ const CheckDraft = (props: { record: any, viewPaymentDetails: any, setPaymentDet
             "quantity": `${quantity}`,
             "userId": `${loginState.pk}`,
             "paymentType": "cheque",
-            "Amount": `₹${buyerState.paymentAmount}`,
+            "Amount": `${buyerState.paymentAmount}`,
             "Cheque/Challan Number": `${values.ChequeChallanNumber}`,
             "Date": `${values.Date}`,
             "ifsc_code": `${values.ifsc_code}`,
