@@ -386,17 +386,19 @@ div.ant-modal.payment-modal{
            }
         }
         .trade-summary-row{
+            width:500px;
             position: relative;
             top: -50px;
             left: -15px;
             line-height: 19px;
-            div.ant-col.ant-col-10,div.ant-col.ant-col-14{
+            // background-color:orange;
+            div.ant-col.ant-col-6,div.ant-col.ant-col-18{
                 font-weight: 400;
                 font-size: 16px;
                 font-style: normal;
                 color: #4E4E4E;
-                .inner-text{
-                    line-height: 25px;
+                span.ant-typography.inner-text{
+                    line-height: 20px;
                 }
 
                 .payment{

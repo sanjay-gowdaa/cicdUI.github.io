@@ -205,7 +205,7 @@ const PayButton = (props: { record: any }) => {
                 >
                     <Panel header={text} key="1" className="site-collapse-custom-panel">
                         <Row className='trade-summary-row'>
-                            <Col span={10}>
+                            <Col span={6}>
                                 <Space direction='vertical'>
                                     <Text className='inner-text'>Seller Id</Text>
                                     <Text className='inner-text'>Produce</Text>
@@ -215,7 +215,7 @@ const PayButton = (props: { record: any }) => {
                                     <Text className='inner-text'>Tentative Delivery</Text>
                                 </Space>
                             </Col>
-                            <Col span={14}>
+                            <Col span={18}>
                             <Space direction='vertical'>
                                     <Text className='inner-text'>: {record.seller_id}</Text>
                                     <Text className='inner-text'>: {record.produce}</Text>
