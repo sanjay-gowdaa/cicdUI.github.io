@@ -58,6 +58,7 @@ const UploadDocument = (props: any) => {
                     maxCount={1}
                 >
                     <DefaultBtn
+                    className="other-upload"
                         icon={<UploadOutlined />}
                         content="Upload Document"
                     />

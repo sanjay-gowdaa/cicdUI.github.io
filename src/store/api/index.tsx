@@ -51,6 +51,7 @@ const USER_HISTORY = 'userHistory';
 const GET_ADDITIONAL_INFO = 'getAdditionalInfo';
 const GET_SELLER_CROP_IMAGE = 'seller/getCropImages';
 const GET_DESTINY_ID = `${TRANSACTION_API}/getDestinyCode`;
+const CHECK_DRAFT_API= 'payment/pay';
 
 export const LAST_AUTH_USER = localStorage.getItem(`${COGNITO_PROVIDER}.${COGNITO_ID}.LastAuthUser`);
 export const ACCESS_TOKEN = localStorage.getItem(`${COGNITO_PROVIDER}.${COGNITO_ID}.${LAST_AUTH_USER}.accessToken`);
@@ -682,3 +683,14 @@ export const fetchDestinyId = (userName: string) => {
 };
 
 /* Matches And Transactions End */
+
+
+export const submitCheckDraftDetails=(values:any)=>{
+    const checkDraftApi=`${BASE_URL}/${STAGE}/${CHECK_DRAFT_API}`;
+    console.log(values);
+     try {
+        return fetch(checkDraftApi, { method: 'POST' ,body:JSON.stringify(values)});
+    } catch (error) {
+        return console.log('error', error);
+    }
+}
