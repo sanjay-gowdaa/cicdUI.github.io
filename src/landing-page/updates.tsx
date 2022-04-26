@@ -16,7 +16,7 @@ const Updates = () => {
     return (
         <div id='updates'>
             <div className='updateWrapper'>
-                <Title level={2}>{t('updates_page.title')}</Title>
+                <Title className='updates-title'>{t('updates_page.title')}</Title>
                 <Collapse accordion
                     bordered={false}
                     defaultActiveKey={['3']}
