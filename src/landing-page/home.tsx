@@ -21,8 +21,9 @@ const Home = ({ history, popUpTrigger, setSignUpPopupVisible }: { history: Histo
         <div id='home'>
             <div className='home-wrapper'>
             <Row>
-                <Col span={8} xs={24} md={10}>
-                    <Title level={2}>Sell.&nbsp;Buy.&nbsp;AgriProduce.</Title>
+                <Col span={10} xs={24} md={10}>
+                    <Title level={2} style={{width:'500px',fontStyle: 'normal',
+fontWeight: 600,fontSize: '48px'}}>Sell.&nbsp;Buy.&nbsp;AgriProduce.</Title>
                     <Title level={5}>{t('home_page.text1')}</Title>
                     <div className='wimage'></div>
                     <div className='registerComponent'>
@@ -58,7 +59,7 @@ const Home = ({ history, popUpTrigger, setSignUpPopupVisible }: { history: Histo
                         </div>
                     </div>
                 </Col>
-                <Col span={16} xs={0} md={10}>
+                <Col span={14} xs={0} md={10}>
                     <div className='courselCircle'>
                         <Carousel autoplay speed={2500} dots={false} effect='fade' className='courselUnit'>
                             <img src={firstImage} className='contentStyle' alt='firstImage' />

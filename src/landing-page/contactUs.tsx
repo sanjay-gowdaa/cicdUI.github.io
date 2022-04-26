@@ -38,7 +38,7 @@ const ContactUs = () => {
 
     return (
         <div id='contactUs'>
-            <Title className='contact-us-title' level={2}>
+            <Title className='contact-us-title'>
                 {t('contact_us_page.title')}
             </Title>
             <div className='contactWrapper'>

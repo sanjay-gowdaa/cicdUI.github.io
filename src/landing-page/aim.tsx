@@ -22,7 +22,7 @@ const Aim = () => {
             <div className='aim-wrapper'>
                 <Row justify='center' className='aimFirstRow'>
                     <Col xs={24} md={12} className='aim-Whatis'>
-                        <Title className='aim-header' level={2}>{t('aim_page.text1')}</Title>
+                        <Title className='aim-header'>{t('aim_page.text1')}</Title>
                         <p>{t('aim_page.text2')}</p>
                     </Col>
                     <Col xs={24} md={12} className='videoContent'>
@@ -36,11 +36,12 @@ const Aim = () => {
                         />
                     </Col>
                 </Row>
-                <Title level={2}>{t('aim_page.text3')}</Title>
+                <LandingDivider style={{position: 'relative',top:'-10px'}} className='pageDivider'/>
+                <Title className='why-vikasBandhu'>{t('aim_page.text3')}</Title>
                 <Text className='at-present-text'>{t('aim_page.text4')}</Text>
                 <Row className='seller-buyer-advantage'>
                     <Col span={6} xs={24} md={8}>
-                    <p className='headText'><span>{t('aim_page.text5')}</span> {t('aim_page.text6')}</p>
+                    <div className='headText'><p className='span-text'>{t('aim_page.text5')}</p><p>{t('aim_page.text6')}</p></div>
                         <div className='seller-buyer-points'>
                             <div>01</div>
                             <p className={`${customStyles.aimSellerBuyerPoints}`}>{t('aim_page.text9')}</p>
@@ -71,7 +72,7 @@ const Aim = () => {
 
                     </Col>
                     <Col span={8} xs={24} md={8}>
-                    <p className='headText2'><span>{t('aim_page.text7')}</span> {t('aim_page.text8')}</p>
+                    <div className='headText'><p className='span-text'>{t('aim_page.text7')}</p><p>{t('aim_page.text8')}</p></div>
                         <div className='seller-buyer-points'>
                             <div style={{background:'#F5A31A'}}>01</div>
                             <p className={`${customStyles.aimSellerBuyerPoints}`}>{t('aim_page.text15')}</p>

@@ -16,7 +16,7 @@ const Legal = () => {
     return (
         <div id='legal'>
             <div className='legalWrapper'>
-            <Title className='legal-title' level={2}>
+            <Title className='legal-title'>
                 {t('legal_page.title')}
             </Title>
             
