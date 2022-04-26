@@ -39,6 +39,7 @@ const DirectBankTransferModal = (props: { record: any,viewPaymentDetails:any,set
 
         form.resetFields();
         dispatch(cashAndCheckPayment(payload));
+        setPaymentDetails(!viewPaymentDetails);
     }
 
     const cancelClick = () => {

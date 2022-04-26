@@ -38,6 +38,7 @@ const CheckDraft = (props: { record: any, viewPaymentDetails: any, setPaymentDet
         }
         form.resetFields();
         dispatch(cashAndCheckPayment(payload));
+        setPaymentDetails(!viewPaymentDetails);
     }
 
     const cancelClick = () => {

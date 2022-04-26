@@ -38,6 +38,7 @@ console.log(transactionId)
         }
         form.resetFields();
         dispatch(cashAndCheckPayment(payload));
+        setPaymentDetails(!viewPaymentDetails);
     }
 
     const cancelClick = () => {

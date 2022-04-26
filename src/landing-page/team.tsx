@@ -17,10 +17,10 @@ const Team = () => {
 
     return (
         <div id='team'>
+            <div className='teamWrapper'>
             <Title className='teamTitle'>
                 {t('our_team.title')}
             </Title>
-            <div className='teamWrapper'>
                 <div className='Founders_sec'>
                     <Title level={4} className='FoundersTitle'>{t('our_team.founders.title')}</Title>
                     <Row className='FoundersRow'>

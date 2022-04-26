@@ -17,6 +17,7 @@ import DirectBankTransferModal from './directBankTransfermodal';
 
 
 
+
 const { Text, Title } = Typography;
 
 const PAYMENT_REQUEST = 'paymentrequest';
@@ -37,6 +38,7 @@ const PayButton = (props: { record: any }) => {
     const [payBtnDisplay,setPayBtnDisplay] = useState(false);
     const [displayCashModal,setDisplayCashModal] = useState(false);
     const [directBankTransferModal,setDirectBankTransferModal]= useState(false);
+    const [installmentNumber,setInstallmentNumber] = useState('')
     const uuid = uuidv4();
     const accessToken = (window as any).userToken ? (window as any).userToken : null;
 
@@ -93,7 +95,7 @@ const PayButton = (props: { record: any }) => {
                     )
                 });
                 // Change the transaction status to complete
-                const { buyer_crop_id, seller_id, seller_crop_id, matched_quantity, pk } = record;
+                const { buyer_crop_id, seller_id, seller_crop_id, matched_quantity, pk,destinyId } = record;
                 const rejectData = {
                     buyer_id: loginState.pk,
                     buyer_crop_id,
@@ -101,6 +103,7 @@ const PayButton = (props: { record: any }) => {
                     seller_crop_id,
                     matched_quantity,
                     transaction_id: pk,
+                    destinyId,
                     buyer_event: 'auto_reject'
                 }
                 dispatch(rejectMatches(rejectData));
@@ -167,6 +170,19 @@ const PayButton = (props: { record: any }) => {
     let percent =userStatus.match(findNumber);
     // console.log(percent)
     // console.log(userStatus)
+    console.log(record.installment)
+
+  useEffect(() => {
+    if(record.installment == '1'){
+        return setInstallmentNumber('First Advance Payment Number')
+    }
+    if(record.installment == '2'){
+        return setInstallmentNumber('Second Advance Payment Number')
+    }
+    if(record.installment == '3'){
+        return setInstallmentNumber('Final Advance Payment Number')
+    }
+},[installmentNumber])
 
     const { Panel } = Collapse;
     const { Option, OptGroup } = Select;
@@ -193,7 +209,7 @@ const PayButton = (props: { record: any }) => {
                 footer={null}
                 centered={true}
             >
-                <Title className='payment-title'><Text className='payment-title-text'>First Advance Payment Details</Text></Title>
+                <Title className='payment-title'><Text className='payment-title-text'>{installmentNumber}</Text></Title>
 
                 <Collapse
                     bordered={false}
@@ -217,7 +233,7 @@ const PayButton = (props: { record: any }) => {
                             </Col>
                             <Col span={18}>
                             <Space direction='vertical'>
-                                    <Text className='inner-text'>: {record.seller_id}</Text>
+                                    <Text className='inner-text'>: {record.destinyId}</Text>
                                     <Text className='inner-text'>: {record.produce}</Text>
                                     <Text className='inner-text'>: {record.buyer_quantity}qtl</Text>
                                     <Text className='inner-text'>: ₹{record.buyer_price_per_quintal}</Text>
@@ -233,7 +249,7 @@ const PayButton = (props: { record: any }) => {
                     <Col span={24} className='mode-column'>
                         <Text className='mode-of-payment'>Mode of payment</Text>
                         <img src={vectorDown}></img>
-                        <Select defaultValue="Payment Gateway" showArrow={false}
+                        <Select className='selectMode' defaultValue="Payment Gateway" showArrow={false}
                             onChange={ChangeTheSelectValue}>
                             <Option value="Payment Gateway">Payment Gateway</Option>
                             <OptGroup label="Other">
@@ -251,7 +267,7 @@ const PayButton = (props: { record: any }) => {
                         <Input
                             className='payment-custom-input'
                             type='hidden'
-                            value={record.seller_id}
+                            value={record.destinyId}
                             name='sellerId'
                         />
                         <Input
@@ -283,7 +299,7 @@ const PayButton = (props: { record: any }) => {
                         <Input type='hidden' value={loginState.pk} name='userId' />
                         <Input type='hidden' value={record.pk} name='transactionId' />
                         <Input type='hidden' value={record.produce} name='produce' />
-                        <Input type='hidden' value={record.seller_id} name='sellerId' />
+                        <Input type='hidden' value={record.destinyId} name='sellerId' />
                         <Input type='hidden' value='payment Gateway' name='paymentType' />
                         <Input type='hidden' value='1' name='payment' />
                         <Input type='hidden' value={uuid} name='uuid' />

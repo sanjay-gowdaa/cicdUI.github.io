@@ -17,7 +17,7 @@ const Commodities = () => {
     return (
         <div id='commodities'>
             <div className='commodities-wrapper'>
-            <Title level={2} className='commoditiesTitle'>
+            <Title className='commoditiesTitle'>
             {t('commodities_page.title')}
             </Title>
             <Paragraph className='commoditiesParagraph'>{t('commodities_page.paragraph')}</Paragraph>
