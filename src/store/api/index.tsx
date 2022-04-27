@@ -51,7 +51,8 @@ const USER_HISTORY = 'userHistory';
 const GET_ADDITIONAL_INFO = 'getAdditionalInfo';
 const GET_SELLER_CROP_IMAGE = 'seller/getCropImages';
 const GET_DESTINY_ID = `${TRANSACTION_API}/getDestinyCode`;
-const CHECK_DRAFT_API= 'payment/pay';
+//CHECK_DRAFT_API endpoint remains same for all the environment
+const CHECK_DRAFT_API= 'https://enzdzh0pw2.execute-api.ap-south-1.amazonaws.com/dev/payment/pay'
 
 export const LAST_AUTH_USER = localStorage.getItem(`${COGNITO_PROVIDER}.${COGNITO_ID}.LastAuthUser`);
 export const ACCESS_TOKEN = localStorage.getItem(`${COGNITO_PROVIDER}.${COGNITO_ID}.${LAST_AUTH_USER}.accessToken`);
@@ -686,7 +687,7 @@ export const fetchDestinyId = (userName: string) => {
 
 
 export const submitCheckDraftDetails=(values:any)=>{
-    const checkDraftApi=`${BASE_URL}/${STAGE}/${CHECK_DRAFT_API}`;
+    const checkDraftApi=`${CHECK_DRAFT_API}`;
     console.log(values);
      try {
         return fetch(checkDraftApi, { method: 'POST' ,body:JSON.stringify(values)});
