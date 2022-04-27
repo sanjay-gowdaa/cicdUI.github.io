@@ -35,7 +35,9 @@ console.log(transactionId)
             "CollectedDate": `${values.CollectedDate}`,
             "CollectedBy": `${values.CollectedBy}`,
             "Receipt": `${values.Receipt}`,
+            "envType": process.env.REACT_APP_ENV,
         }
+        console.log("payload", payload);
         form.resetFields();
         dispatch(cashAndCheckPayment(payload));
         setPaymentDetails(!viewPaymentDetails);
