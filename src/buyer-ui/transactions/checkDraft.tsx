@@ -35,6 +35,7 @@ const CheckDraft = (props: { record: any, viewPaymentDetails: any, setPaymentDet
             "ifsc_code": `${values.ifsc_code}`,
             "BankDocument": `${values.BankDocument}`,
             "BankName": `${values.BankName}`,
+            "envType": process.env.REACT_APP_ENV,
         }
         form.resetFields();
         dispatch(cashAndCheckPayment(payload));
