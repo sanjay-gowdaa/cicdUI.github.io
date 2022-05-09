@@ -35,6 +35,7 @@ const DirectBankTransferModal = (props: { record: any,viewPaymentDetails:any,set
             "BankDocument": `${values.BankDocument}`,
             "BankName":`${values.BankName}`,
             "bankTransactionID":`${values.bankTransactionID}`,
+            "envType": process.env.REACT_APP_ENV,
         }
 
         form.resetFields();
