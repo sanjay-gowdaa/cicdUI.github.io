@@ -6,10 +6,12 @@ import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../../store/rootReducer';
 import UploadDocument from '../../app-components/uploadDocument';
 import { parseIDfromHash } from '../../app-components/utils';
+import { generateFormData } from '../../profile/utils';
+import { cloneDeep } from 'lodash';
 
 
-const CheckDraft = (props: { record: any, viewPaymentDetails: any, setPaymentDetails: any }) => {
-    const { record, viewPaymentDetails, setPaymentDetails } = props;
+const CheckDraft = (props: any) => {
+    const { record, viewPaymentDetails, setPaymentDetails, bankDoc, setBankDoc } = props;
     const loginState = useSelector((state: RootState) => state.loginUser);
     const buyerState = useSelector((state: RootState) => state.buyer);
 
@@ -22,23 +24,31 @@ const CheckDraft = (props: { record: any, viewPaymentDetails: any, setPaymentDet
     const quantity = props?.record?.buyer_quantity;
 
     const OnCheckDetailsSave = (values: any) => {
-        const payload = {
-            "userType": "buyer",
-            "transactionId": `${transactionId}`,
-            "produce": `${produce}`,
-            "quantity": `${quantity}`,
-            "userId": `${loginState.pk}`,
-            "paymentType": "cheque",
-            "Amount": `${buyerState.paymentAmount}`,
-            "Cheque/Challan Number": `${values.ChequeChallanNumber}`,
-            "Date": `${values.Date}`,
-            "ifsc_code": `${values.ifsc_code}`,
-            "BankDocument": `${values.BankDocument}`,
-            "BankName": `${values.BankName}`,
-        }
-        form.resetFields();
-        dispatch(cashAndCheckPayment(payload));
-        setPaymentDetails(!viewPaymentDetails);
+        var files: any
+        const registerDataPromise =
+            generateFormData(cloneDeep({
+                ...values,
+            }));
+        registerDataPromise.then((data) => {
+            const payload = {
+                "userType": "buyer",
+                "transactionId": `${transactionId}`,
+                "produce": `${produce}`,
+                "quantity": `${quantity}`,
+                "userId": `${loginState.pk}`,
+                "paymentType": "cheque",
+                "Amount": `${buyerState.paymentAmount}`,
+                "Cheque/Challan Number": `${values.ChequeChallanNumber}`,
+                "Date": `${values.Date}`,
+                "ifsc_code": `${values.ifsc_code}`,
+                "BankDocument": `${values.BankDocument}`,
+                "BankName": data.files,
+                "envType":process.env.REACT_APP_ENV
+            }
+            form.resetFields();
+            dispatch(cashAndCheckPayment(payload));
+            setPaymentDetails(!viewPaymentDetails);
+        })
     }
 
     const cancelClick = () => {
@@ -74,7 +84,7 @@ const CheckDraft = (props: { record: any, viewPaymentDetails: any, setPaymentDet
                     className='payment-form-text'
                     name='BankName'
                     label='Bank Name'
-                    rules={[{required: true},{ validator: (rule, value) => customNameValidator(rule, value, 'Bank Name is Required') }]}
+                    rules={[{ required: true }, { validator: (rule, value) => customNameValidator(rule, value, 'Bank Name is Required') }]}
                 >
                     <Input name='BankName' />
                 </Form.Item>
