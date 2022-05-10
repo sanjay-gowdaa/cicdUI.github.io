@@ -1,15 +1,17 @@
 import React from 'react';
-import { Input, Typography, Collapse, Select, Button, Form, DatePicker } from 'antd';
+import { Input, Button, Form, DatePicker } from 'antd';
 
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../../store/rootReducer';
 import UploadDocument from '../../app-components/uploadDocument';
-import {customNameValidator } from '../../login-ui/registration/utils';
+import { customNameValidator } from '../../login-ui/registration/utils';
 import { cashAndCheckPayment } from '../../store/buyerReducer/actions';
 import { parseIDfromHash } from '../../app-components/utils';
+import { generateFormData } from '../../profile/utils';
+import { cloneDeep } from 'lodash';
 
-const CashPaymentModal = (props: { record: any,viewPaymentDetails:any,setPaymentDetails:any}) => {
-    const { record,viewPaymentDetails,setPaymentDetails } = props;
+const CashPaymentModal = (props: any) => {
+    const { record, viewPaymentDetails, setPaymentDetails, bankDoc, setBankDoc } = props;
     const loginState = useSelector((state: RootState) => state.loginUser);
     const buyerState = useSelector((state: RootState) => state.buyer);
 
@@ -21,25 +23,34 @@ const CashPaymentModal = (props: { record: any,viewPaymentDetails:any,setPayment
     const produce = props?.record?.produce;
     const quantity = props?.record?.buyer_quantity;
 
-console.log(transactionId)
+
     const OnCheckDetailsSave = (values: any) => {
-        console.log(values.Amount);
-        const payload = {
-            "userType": "buyer",
-            "transactionId": `${transactionId}`,
-            "produce": `${produce}`,
-            "quantity": `${quantity}`,
-            "userId": `${loginState.pk}`,
-            "paymentType": "cash",
-            "Amount": `${buyerState.paymentAmount}`,
-            "CollectedDate": `${values.CollectedDate}`,
-            "CollectedBy": `${values.CollectedBy}`,
-            "Receipt": `${values.Receipt}`,
-        }
-        form.resetFields();
-        dispatch(cashAndCheckPayment(payload));
-        setPaymentDetails(!viewPaymentDetails);
-    }
+        var files:any
+        const registerDataPromise =
+            generateFormData(cloneDeep({
+                ...values,
+            }));
+            registerDataPromise.then((data) =>
+            {   
+                const payload = {
+                    "userType": "buyer",
+                    "transactionId": `${transactionId}`,
+                    "produce": `${produce}`,
+                    "quantity": `${quantity}`,
+                    "userId": `${loginState.pk}`,
+                    "paymentType": "cash",
+                    "Amount": `${buyerState.paymentAmount}`,
+                    "CollectedDate": `${values.CollectedDate}`,
+                    "CollectedBy": `${values.CollectedBy}`,
+                    "Receipt": data.files,
+                    "envType":process.env.REACT_APP_ENV
+                }
+                dispatch(cashAndCheckPayment(payload));
+                form.resetFields();
+                setPaymentDetails(!viewPaymentDetails);
+            }
+        );
+}
 
     const cancelClick = () => {
         form.resetFields();
@@ -79,9 +90,9 @@ console.log(transactionId)
                     className='payment-form-text'
                     label='Collected By'
                     name='CollectedBy'
-                    rules={[{required: true},{ validator: (rule, value) => customNameValidator(rule, value, 'collected By is Required') }]}
+                    rules={[{ required: true }, { validator: (rule, value) => customNameValidator(rule, value, 'collected By is Required') }]}
                 >
-                    <Input name='CollectedBy'/>
+                    <Input name='CollectedBy' />
                 </Form.Item>
 
                 <Form.Item name='Receipt' label='Receipt' className='doc-upload-required'
@@ -90,7 +101,7 @@ console.log(transactionId)
                     ]}>
                     <UploadDocument
                         className='margin-zero'
-                        name='bank_doc'
+                        name='reciept'
                     />
                 </Form.Item>
                 <div className='other-btn-section'>

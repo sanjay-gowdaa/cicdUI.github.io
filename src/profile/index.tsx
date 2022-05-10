@@ -40,6 +40,7 @@ import PrimaryBtn from '../app-components/primaryBtn';
 import { getUserFiles, saveKyc } from '../store/loginReducer/actions';
 import { normFile } from '../app-components/uploadDocument';
 
+
 const { Title, Text } = Typography;
 
 const Profile = (props: { history: History }) => {
@@ -276,10 +277,8 @@ const Profile = (props: { history: History }) => {
         console.log('Failed:', error);
     };
 
-   
     return (
         <div className='profile-page'>
-            <Header history={history} showActions isLoggedIn />
             <div className='profile-wrapper'>
                 <Button
                     type='link'
