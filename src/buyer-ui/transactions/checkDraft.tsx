@@ -41,8 +41,8 @@ const CheckDraft = (props: any) => {
                 "Cheque/Challan Number": `${values.ChequeChallanNumber}`,
                 "Date": `${values.Date}`,
                 "ifsc_code": `${values.ifsc_code}`,
-                "BankDocument": `${values.BankDocument}`,
-                "BankName": data.files,
+                "BankDocument": data.files,
+                "BankName": `${values.BankName}`,
                 "envType":process.env.REACT_APP_ENV
             }
             form.resetFields();
