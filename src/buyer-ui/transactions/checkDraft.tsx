@@ -1,13 +1,17 @@
 import React from 'react';
 import { Input, Button, Form, DatePicker } from 'antd';
+import { cloneDeep } from 'lodash';
+
+import UploadBankDoc from './uploadBankDoc';
+
 import { customIfscValidator, customNameValidator } from '../../login-ui/registration/utils';
 import { cashAndCheckPayment } from '../../store/buyerReducer/actions';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../../store/rootReducer';
-import UploadDocument from '../../app-components/uploadDocument';
 import { parseIDfromHash } from '../../app-components/utils';
 import { generateFormData } from '../../profile/utils';
-import { cloneDeep } from 'lodash';
+
+
 
 
 const CheckDraft = (props: any) => {
@@ -24,7 +28,6 @@ const CheckDraft = (props: any) => {
     const quantity = props?.record?.buyer_quantity;
 
     const OnCheckDetailsSave = (values: any) => {
-        var files: any
         const registerDataPromise =
             generateFormData(cloneDeep({
                 ...values,
@@ -41,11 +44,12 @@ const CheckDraft = (props: any) => {
                 "Cheque/Challan Number": `${values.ChequeChallanNumber}`,
                 "Date": `${values.Date}`,
                 "ifsc_code": `${values.ifsc_code}`,
-                "BankDocument": data.files,
+                "BankDocument": data.files[0],
                 "BankName": `${values.BankName}`,
                 "envType":process.env.REACT_APP_ENV
             }
             form.resetFields();
+            console.log(payload)
             dispatch(cashAndCheckPayment(payload));
             setPaymentDetails(!viewPaymentDetails);
         })
@@ -118,7 +122,7 @@ const CheckDraft = (props: any) => {
                     rules={[
                         { required: true }
                     ]}>
-                    <UploadDocument
+                    <UploadBankDoc
                         className='margin-zero'
                         name='bank_doc'
                     />

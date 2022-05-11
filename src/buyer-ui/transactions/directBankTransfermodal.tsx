@@ -1,14 +1,19 @@
 import React from 'react';
 import { Input, Button, Form, DatePicker } from 'antd';
+import { cloneDeep } from 'lodash';
+import { useSelector, useDispatch } from 'react-redux';
+
+import UploadBankDoc from './uploadBankDoc';
+
 import { customNameValidator } from '../../login-ui/registration/utils';
 import { cashAndCheckPayment } from '../../store/buyerReducer/actions';
 
-import { useSelector, useDispatch } from 'react-redux';
+
 import { RootState } from '../../store/rootReducer';
-import UploadDocument from '../../app-components/uploadDocument';
 import { parseIDfromHash } from '../../app-components/utils';
 import { generateFormData } from '../../profile/utils';
-import { cloneDeep } from 'lodash';
+
+
 
 
 const DirectBankTransferModal = (props: any) => {
@@ -25,7 +30,6 @@ const DirectBankTransferModal = (props: any) => {
     const quantity = props?.record?.buyer_quantity;
 
     const OnCheckDetailsSave = (values: any) => {
-        var files: any
         const registerDataPromise =
             generateFormData(cloneDeep({
                 ...values,
@@ -40,7 +44,7 @@ const DirectBankTransferModal = (props: any) => {
                 "paymentType": "directBankTransfer",
                 "Amount": `${buyerState.paymentAmount}`,
                 "Date": `${values.Date}`,
-                "BankDocument":data.files,
+                "BankDocument": data.files[0],
                 "BankName": `${values.BankName}`,
                 "bankTransactionID": `${values.bankTransactionID}`,
                 "envType":process.env.REACT_APP_ENV
@@ -108,7 +112,7 @@ const DirectBankTransferModal = (props: any) => {
                     rules={[
                         { required: true }
                     ]}>
-                    <UploadDocument
+                    <UploadBankDoc
                         className='margin-zero'
                         name='receipt'
                     />
