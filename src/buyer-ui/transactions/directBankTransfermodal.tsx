@@ -1,16 +1,23 @@
 import React from 'react';
 import { Input, Button, Form, DatePicker } from 'antd';
-import {customNameValidator } from '../../login-ui/registration/utils';
+import { cloneDeep } from 'lodash';
+import { useSelector, useDispatch } from 'react-redux';
+
+import UploadBankDoc from './uploadBankDoc';
+
+import { customNameValidator } from '../../login-ui/registration/utils';
 import { cashAndCheckPayment } from '../../store/buyerReducer/actions';
 
-import { useSelector, useDispatch } from 'react-redux';
+
 import { RootState } from '../../store/rootReducer';
-import UploadDocument from '../../app-components/uploadDocument';
 import { parseIDfromHash } from '../../app-components/utils';
+import { generateFormData } from '../../profile/utils';
 
 
-const DirectBankTransferModal = (props: { record: any,viewPaymentDetails:any,setPaymentDetails:any }) => {
-    const { record,viewPaymentDetails, setPaymentDetails } = props;
+
+
+const DirectBankTransferModal = (props: any) => {
+    const { record, viewPaymentDetails, setPaymentDetails} = props;
     const loginState = useSelector((state: RootState) => state.loginUser);
     const buyerState = useSelector((state: RootState) => state.buyer);
 
@@ -19,28 +26,34 @@ const DirectBankTransferModal = (props: { record: any,viewPaymentDetails:any,set
     const [form] = Form.useForm();
 
     const transactionId = parseIDfromHash(props?.record?.key);
-    const produce=props?.record?.produce;
-    const quantity=props?.record?.buyer_quantity;
+    const produce = props?.record?.produce;
+    const quantity = props?.record?.buyer_quantity;
 
     const OnCheckDetailsSave = (values: any) => {
-        const payload = {
-            "userType": "buyer",
-            "transactionId": `${transactionId}`,
-            "produce": `${produce}`,
-            "quantity": `${quantity}`,
-            "userId": `${loginState.pk}`,
-            "paymentType": "directBankTransfer",
-            "Amount": `${buyerState.paymentAmount}`,
-            "Date": `${values.Date}`,
-            "BankDocument": `${values.BankDocument}`,
-            "BankName":`${values.BankName}`,
-            "bankTransactionID":`${values.bankTransactionID}`,
-            "envType": process.env.REACT_APP_ENV,
-        }
-
-        form.resetFields();
-        dispatch(cashAndCheckPayment(payload));
-        setPaymentDetails(!viewPaymentDetails);
+        const registerDataPromise =
+            generateFormData(cloneDeep({
+                ...values,
+            }));
+        registerDataPromise.then((data) => {
+            const payload = {
+                "userType": "buyer",
+                "transactionId": `${transactionId}`,
+                "produce": `${produce}`,
+                "quantity": `${quantity}`,
+                "userId": `${loginState.pk}`,
+                "paymentType": "directBankTransfer",
+                "Amount": `${buyerState.paymentAmount}`,
+                "Date": `${values.Date}`,
+                "BankDocument": data.files[0],
+                "BankName": `${values.BankName}`,
+                "bankTransactionID": `${values.bankTransactionID}`,
+                "envType":process.env.REACT_APP_ENV
+            }
+            form.resetFields();
+            console.log(payload)
+            dispatch(cashAndCheckPayment(payload));
+            setPaymentDetails(!viewPaymentDetails);
+        })
     }
 
     const cancelClick = () => {
@@ -63,7 +76,7 @@ const DirectBankTransferModal = (props: { record: any,viewPaymentDetails:any,set
                     className='payment-form-text'
                     name='BankName'
                     label='Bank Name'
-                    rules={[{required: true},{ validator: (rule, value) => customNameValidator(rule, value, 'Bank Name is Required') }]}
+                    rules={[{ required: true }, { validator: (rule, value) => customNameValidator(rule, value, 'Bank Name is Required') }]}
                 >
                     <Input name='BankName' />
                 </Form.Item>
@@ -76,32 +89,32 @@ const DirectBankTransferModal = (props: { record: any,viewPaymentDetails:any,set
                         { required: true },
                     ]}
                 >
-                    <Input name='bankTransactionID'/>
+                    <Input name='bankTransactionID' />
                 </Form.Item>
 
                 <Form.Item name='Date' label='Date' className='payment-form-text'
-                rules={[
-                    { required: true },
-                ]}
+                    rules={[
+                        { required: true },
+                    ]}
                 >
-                <DatePicker
-                    className="custom-input"
-                    format="DD-MM-YYYY"
-                    placeholder="DD-MM-YYYY"
-                />
+                    <DatePicker
+                        className="custom-input"
+                        format="DD-MM-YYYY"
+                        placeholder="DD-MM-YYYY"
+                    />
                 </Form.Item>
 
                 <Form.Item name='Amount' label='Amount' className='payment-form-text'>
-                     <Input name='amount' type='textarea' disabled={true} defaultValue={`₹ ${buyerState.paymentAmount}`} allowClear={false}/>
+                    <Input name='amount' type='textarea' disabled={true} defaultValue={`₹ ${buyerState.paymentAmount}`} allowClear={false} />
                 </Form.Item>
 
                 <Form.Item name='BankDocument' label='Bank Document' className='doc-upload-required'
                     rules={[
                         { required: true }
                     ]}>
-                    <UploadDocument
+                    <UploadBankDoc
                         className='margin-zero'
-                        name='bank_doc'
+                        name='receipt'
                     />
                 </Form.Item>
                 <div className='other-btn-section'>
