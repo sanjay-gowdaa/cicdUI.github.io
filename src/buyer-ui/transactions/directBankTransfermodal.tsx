@@ -50,8 +50,6 @@ const DirectBankTransferModal = (props: any) => {
             dispatch(cashAndCheckPayment(payload));
             setPaymentDetails(!viewPaymentDetails);
         })
-
-
     }
 
     const cancelClick = () => {
