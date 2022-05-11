@@ -3,12 +3,13 @@ import { Input, Button, Form, DatePicker } from 'antd';
 
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../../store/rootReducer';
-import UploadDocument from '../../app-components/uploadDocument';
+
 import { customNameValidator } from '../../login-ui/registration/utils';
 import { cashAndCheckPayment } from '../../store/buyerReducer/actions';
 import { parseIDfromHash } from '../../app-components/utils';
 import { generateFormData } from '../../profile/utils';
 import { cloneDeep } from 'lodash';
+import UploadBankDoc from './uploadBankDoc';
 
 const CashPaymentModal = (props: any) => {
     const { record, viewPaymentDetails, setPaymentDetails, bankDoc, setBankDoc } = props;
@@ -25,7 +26,6 @@ const CashPaymentModal = (props: any) => {
 
 
     const OnCheckDetailsSave = (values: any) => {
-        var files:any
         const registerDataPromise =
             generateFormData(cloneDeep({
                 ...values,
@@ -42,10 +42,11 @@ const CashPaymentModal = (props: any) => {
                     "Amount": `${buyerState.paymentAmount}`,
                     "CollectedDate": `${values.CollectedDate}`,
                     "CollectedBy": `${values.CollectedBy}`,
-                    "Receipt": data.files,
+                    "Receipt": data.files[0],
                     "envType":process.env.REACT_APP_ENV
                 }
                 dispatch(cashAndCheckPayment(payload));
+                console.log(payload)
                 form.resetFields();
                 setPaymentDetails(!viewPaymentDetails);
             }
@@ -97,9 +98,9 @@ const CashPaymentModal = (props: any) => {
 
                 <Form.Item name='Receipt' label='Receipt' className='doc-upload-required'
                     rules={[
-                        { required: true }
+                        { required: true },
                     ]}>
-                    <UploadDocument
+                    <UploadBankDoc
                         className='margin-zero'
                         name='reciept'
                     />
