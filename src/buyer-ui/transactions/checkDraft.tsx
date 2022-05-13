@@ -1,6 +1,7 @@
 import React from 'react';
 import { Input, Button, Form, DatePicker } from 'antd';
 import { cloneDeep } from 'lodash';
+import moment from 'moment';
 
 import UploadBankDoc from './uploadBankDoc';
 
@@ -10,9 +11,6 @@ import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../../store/rootReducer';
 import { parseIDfromHash } from '../../app-components/utils';
 import { generateFormData } from '../../profile/utils';
-
-
-
 
 const CheckDraft = (props: any) => {
     const { record, viewPaymentDetails, setPaymentDetails, bankDoc, setBankDoc } = props;
@@ -110,6 +108,10 @@ const CheckDraft = (props: any) => {
                         className="custom-input"
                         format="DD-MM-YYYY"
                         placeholder="DD-MM-YYYY"
+                        disabledDate={(current) => {
+                            return moment().add(-5, 'days')  >= current ||
+                                 moment().add(1, 'days')  <= current;
+                            }}
                     />
                 </Form.Item>
 
