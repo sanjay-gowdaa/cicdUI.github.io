@@ -51,7 +51,7 @@ const CheckDraft = (props: any) => {
             dispatch(cashAndCheckPayment(payload));
             setPaymentDetails(!viewPaymentDetails);
         })
-    }
+}
 
     const cancelClick = () => {
         form.resetFields();
