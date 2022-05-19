@@ -174,19 +174,19 @@ const PayButton = (props: { record: any }) => {
 
   useEffect(() => {
     if(record.installment == '1'){
-        return setInstallmentNumber('First Advance Payment Number')
+        return setInstallmentNumber('First Advance Payment Details')
     }
     if(record.installment == '2'){
-        return setInstallmentNumber('Second Advance Payment Number')
+        return setInstallmentNumber('Second Advance Payment Details')
     }
     if(record.installment == '3'){
-        return setInstallmentNumber('Final Advance Payment Number')
+        return setInstallmentNumber('Final Payment Details')
     }
 },[installmentNumber])
 
     const { Panel } = Collapse;
     const { Option, OptGroup } = Select;
-
+    const [masterCategory = '', produceCateogry = '', cropType = '', grade = ''] = !isEmpty(record?.produce) ? record?.produce.split('-') : [];
     return (
         <React.Fragment>
            <PrimaryBtn
@@ -224,7 +224,9 @@ const PayButton = (props: { record: any }) => {
                             <Col span={6}>
                                 <Space direction='vertical'>
                                     <Text className='inner-text'>Seller Id</Text>
+                                    <Text className='inner-text'>Category</Text>
                                     <Text className='inner-text'>Produce</Text>
+                                    <Text className='inner-text'>Grade</Text>
                                     <Text className='inner-text'>Quantity</Text>
                                     <Text className='inner-text'>Price per quintal</Text>
                                     <Text className='inner-text'>Location</Text>
@@ -234,7 +236,9 @@ const PayButton = (props: { record: any }) => {
                             <Col span={18}>
                             <Space direction='vertical'>
                                     <Text className='inner-text'>: {record.destinyId}</Text>
-                                    <Text className='inner-text'>: {record.produce}</Text>
+                                    <Text className='inner-text'>: {masterCategory}</Text>
+                                    <Text className='inner-text'>: {produceCateogry}</Text>
+                                    <Text className='inner-text'>: {grade}</Text>
                                     <Text className='inner-text'>: {record.buyer_quantity}qtl</Text>
                                     <Text className='inner-text'>: ₹{record.buyer_price_per_quintal}</Text>
                                     <Text className='inner-text'>: {record.seller_location}</Text>
@@ -309,11 +313,42 @@ const PayButton = (props: { record: any }) => {
                         <Input type='hidden' value={loginState.email} name='customerEmail' />
                         <Input type='hidden' value={loginState.name} name='customerName' />
 
-                        {displayCheckModal && <CheckDraft record={record} viewPaymentDetails={viewPaymentDetails} setPaymentDetails={setPaymentDetails}/>}
-                        {displayCashModal && <CashPaymentModal record={record} viewPaymentDetails={viewPaymentDetails} setPaymentDetails={setPaymentDetails}/>}
-                        {directBankTransferModal && <DirectBankTransferModal record={record} viewPaymentDetails={viewPaymentDetails} setPaymentDetails={setPaymentDetails}/>}
-                        {proceedToPayBtn ?<div className='payment-btn-block'><button className='pay-button-btn' type='submit' onClick={handlePayment}>Proceed to Pay ₹{buyerState.paymentAmount}</button></div>:null}
-                        {payBtnDisplay ?<div className='payment-btn-block-position'><button className='pay-btn-width' type='submit' value='pay'>Pay</button></div>:null}
+                        {displayCheckModal && 
+                            <CheckDraft record={record} 
+                                viewPaymentDetails={viewPaymentDetails} 
+                                setPaymentDetails={setPaymentDetails} 
+                            />
+                        }
+                        {displayCashModal && 
+                            <CashPaymentModal 
+                                record={record} 
+                                viewPaymentDetails={viewPaymentDetails} 
+                                setPaymentDetails={setPaymentDetails} 
+                            />
+                        }
+                        {directBankTransferModal && 
+                            <DirectBankTransferModal 
+                                record={record} 
+                                viewPaymentDetails={viewPaymentDetails} 
+                                setPaymentDetails={setPaymentDetails} 
+                            />
+                        }
+                        {proceedToPayBtn ?
+                            <div className='payment-btn-block'>
+                                <button 
+                                    className='pay-button-btn' 
+                                    type='submit' 
+                                    onClick={handlePayment}>Proceed to Pay ₹{buyerState.paymentAmount}
+                                </button>
+                            </div>
+                            :null
+                        }
+                        {payBtnDisplay ?
+                            <div className='payment-btn-block-position'>
+                                <button className='pay-btn-width' type='submit' value='pay'>Pay</button>
+                            </div>
+                            :null
+                        }
                     </form>
                 </Row>
             </Modal>

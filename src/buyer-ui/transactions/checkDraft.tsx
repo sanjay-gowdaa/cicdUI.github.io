@@ -1,15 +1,19 @@
 import React from 'react';
 import { Input, Button, Form, DatePicker } from 'antd';
+import { cloneDeep } from 'lodash';
+import moment from 'moment';
+
+import UploadBankDoc from './uploadBankDoc';
+
 import { customIfscValidator, customNameValidator } from '../../login-ui/registration/utils';
 import { cashAndCheckPayment } from '../../store/buyerReducer/actions';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../../store/rootReducer';
-import UploadDocument from '../../app-components/uploadDocument';
 import { parseIDfromHash } from '../../app-components/utils';
+import { generateFormData } from '../../profile/utils';
 
-
-const CheckDraft = (props: { record: any, viewPaymentDetails: any, setPaymentDetails: any }) => {
-    const { record, viewPaymentDetails, setPaymentDetails } = props;
+const CheckDraft = (props: any) => {
+    const { record, viewPaymentDetails, setPaymentDetails, bankDoc, setBankDoc } = props;
     const loginState = useSelector((state: RootState) => state.loginUser);
     const buyerState = useSelector((state: RootState) => state.buyer);
 
@@ -22,25 +26,32 @@ const CheckDraft = (props: { record: any, viewPaymentDetails: any, setPaymentDet
     const quantity = props?.record?.buyer_quantity;
 
     const OnCheckDetailsSave = (values: any) => {
-        const payload = {
-            "userType": "buyer",
-            "transactionId": `${transactionId}`,
-            "produce": `${produce}`,
-            "quantity": `${quantity}`,
-            "userId": `${loginState.pk}`,
-            "paymentType": "cheque",
-            "Amount": `${buyerState.paymentAmount}`,
-            "Cheque/Challan Number": `${values.ChequeChallanNumber}`,
-            "Date": `${values.Date}`,
-            "ifsc_code": `${values.ifsc_code}`,
-            "BankDocument": `${values.BankDocument}`,
-            "BankName": `${values.BankName}`,
-            "envType": process.env.REACT_APP_ENV,
-        }
-        form.resetFields();
-        dispatch(cashAndCheckPayment(payload));
-        setPaymentDetails(!viewPaymentDetails);
-    }
+        const registerDataPromise =
+            generateFormData(cloneDeep({
+                ...values,
+            }));
+        registerDataPromise.then((data) => {
+            const payload = {
+                "userType": "buyer",
+                "transactionId": `${transactionId}`,
+                "produce": `${produce}`,
+                "quantity": `${quantity}`,
+                "userId": `${loginState.pk}`,
+                "paymentType": "cheque",
+                "Amount": `${buyerState.paymentAmount}`,
+                "Cheque/Challan Number": `${values.ChequeChallanNumber}`,
+                "Date": `${values.Date}`,
+                "ifsc_code": `${values.ifsc_code}`,
+                "BankDocument": data.files[0],
+                "BankName": `${values.BankName}`,
+                "envType":process.env.REACT_APP_ENV
+            }
+            form.resetFields();
+            console.log(payload)
+            dispatch(cashAndCheckPayment(payload));
+            setPaymentDetails(!viewPaymentDetails);
+        })
+}
 
     const cancelClick = () => {
         form.resetFields();
@@ -75,7 +86,7 @@ const CheckDraft = (props: { record: any, viewPaymentDetails: any, setPaymentDet
                     className='payment-form-text'
                     name='BankName'
                     label='Bank Name'
-                    rules={[{required: true},{ validator: (rule, value) => customNameValidator(rule, value, 'Bank Name is Required') }]}
+                    rules={[{ required: true }, { validator: (rule, value) => customNameValidator(rule, value, 'Bank Name is Required') }]}
                 >
                     <Input name='BankName' />
                 </Form.Item>
@@ -97,6 +108,10 @@ const CheckDraft = (props: { record: any, viewPaymentDetails: any, setPaymentDet
                         className="custom-input"
                         format="DD-MM-YYYY"
                         placeholder="DD-MM-YYYY"
+                        disabledDate={(current) => {
+                            return moment().add(-5, 'days')  >= current ||
+                                 moment().add(1, 'days')  <= current;
+                            }}
                     />
                 </Form.Item>
 
@@ -109,7 +124,7 @@ const CheckDraft = (props: { record: any, viewPaymentDetails: any, setPaymentDet
                     rules={[
                         { required: true }
                     ]}>
-                    <UploadDocument
+                    <UploadBankDoc
                         className='margin-zero'
                         name='bank_doc'
                     />

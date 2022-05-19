@@ -3,8 +3,9 @@ import { Form, Typography, Upload } from 'antd';
 import { isEmpty } from 'lodash';
 import { RuleObject } from 'rc-field-form/lib/interface';
 import { UploadOutlined } from '@ant-design/icons';
+import DefaultBtn from '../../app-components/defaultBtn';
 
-import DefaultBtn from './defaultBtn';
+
 
 const { Text } = Typography;
 
@@ -16,28 +17,17 @@ export const normFile = (e: any) => {
     return e && e.fileList;
 };
 
-export const validateUploadBankDoc = (rule: RuleObject, value: any) => {
-    if (!isEmpty(value)) {
-        const size = value[0]?.size;
-        if (size <= 256000) {
-            return Promise.resolve();
-        } else {
-            return Promise.reject('Max Size of file should be 256kb!');
-        }
-    } else {
-        return Promise.resolve();
-    }
-};
 
-const UploadDocument = (props: any) => {
 
-    const validateUpload = (rule: RuleObject, value: any) => {
+const UploadBankDoc = (props: any) => {
+
+    const validateUploadBankDoc = (rule: RuleObject, value: any) => {
         if (!isEmpty(value)) {
             const size = value[0]?.size;
-            if (size <= 1000000) {
+            if (size <= 256000) {
                 return Promise.resolve();
             } else {
-                return Promise.reject('Max Size of file should be 1MB!');
+                return Promise.reject('Max Size of file should be 256kb!');
             }
         } else {
             return Promise.resolve();
@@ -50,7 +40,7 @@ const UploadDocument = (props: any) => {
                 {...props}
                 valuePropName="fileList"
                 getValueFromEvent={normFile}
-                rules={[{ validator: (rule, value) => validateUpload(rule, value) }]}
+                rules={[{ validator: (rule, value) => validateUploadBankDoc(rule, value) }]}
             >
                 <Upload
                     accept="image/*"
@@ -75,11 +65,11 @@ const UploadDocument = (props: any) => {
                         icon={<UploadOutlined />}
                         content="Upload Document"
                     />
-                    <br /><Text className="font-size-small">Max file size: 1MB</Text>
+                    <br /><Text className="font-size-small">Max file size: 256kb</Text>
                 </Upload>
             </Form.Item>
         </React.Fragment>
     );
 };
 
-export default UploadDocument;
+export default UploadBankDoc;
