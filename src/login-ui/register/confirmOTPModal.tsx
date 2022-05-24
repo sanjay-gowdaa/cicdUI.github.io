@@ -12,7 +12,7 @@ import {
 import { useDispatch, useSelector } from 'react-redux';
 import { History } from 'history';
 
-import { confirmOTP, resendOTP } from '../../store/registrationReducer/actions';
+import { confirmOTP, resendOTP, byPassOTP } from '../../store/registrationReducer/actions';
 import { RootState } from '../../store/rootReducer';
 import PrimaryBtn from '../../app-components/primaryBtn';
 import InputOtp from '../../app-components/inputOtp';
@@ -118,7 +118,10 @@ const ConfirmOTPModal = ({ showOTPModal, setShowOTPModal, currentType, history }
                     <Space>
                         <PrimaryBtn
                             disabled={otp.length !== 4}
-                            onClick={() => dispatch(confirmOTP(formData?.number, otp))}
+                            onClick={() => {
+                                // dispatch(confirmOTP(formData?.number, otp)),
+                                dispatch(byPassOTP(otp));
+                            }}
                             content='Submit OTP'
                         />
                     </Space>

@@ -177,6 +177,25 @@ export const confirmOTP = (number: string, otp: string) => {
     };
 };
 
+/** Bypass Otp for testing purpose not being used in demo environment
+ * 
+ * @param { string } otp - Should be '1234'
+ */
+export const byPassOTP = (otp: string) => {
+    return async (dispatch: any, getState: any) => {
+        dispatch(setProcessingFlag(true));
+        const verified = otp === '1234';
+        if (!verified) {
+            dispatch(setOtpErrorFlag(true));
+            dispatch(setOtpErrorMsg('otp not matching'));
+        } else {
+            dispatch(setOtpErrorFlag(false));
+            dispatch(setOtpVerifiedFlag(true));
+        }
+        dispatch(setProcessingFlag(false));
+    };
+};
+
 /** Send user data to dynamo db on registration
  * 
  * @param { any } userFormData - User data for registration

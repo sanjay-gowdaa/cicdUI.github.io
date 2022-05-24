@@ -76,7 +76,7 @@ const Register = ({ history, setSignUpPopupVisible }: { history: History, setSig
 
     const onFinish = (values: any) => {
         const { name, number, email, type, category } = values;
-        dispatch(sendOTP(`91${number}`));
+        // dispatch(sendOTP(`91${number}`));
         dispatch(updateEntityType(currentType));
         dispatch(updateBasicRegistrationData({ name, number, email, type, category }));
         setSignUpPopupVisible(false);
