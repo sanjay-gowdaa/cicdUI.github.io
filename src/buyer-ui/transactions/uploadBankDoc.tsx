@@ -1,75 +1,45 @@
 import React from 'react';
-import { Form, Typography, Upload } from 'antd';
-import { isEmpty } from 'lodash';
-import { RuleObject } from 'rc-field-form/lib/interface';
-import { UploadOutlined } from '@ant-design/icons';
-import DefaultBtn from '../../app-components/defaultBtn';
-
-
-
-const { Text } = Typography;
-
-export const normFile = (e: any) => {
-    console.log('Upload event:', e);
-    if (Array.isArray(e)) {
-        return e;
-    }
-    return e && e.fileList;
-};
-
-
+import Compress from 'compress.js';
 
 const UploadBankDoc = (props: any) => {
+    
+    const {imageFile,setImageFile} = props
+    const compress = new Compress()
 
-    const validateUploadBankDoc = (rule: RuleObject, value: any) => {
-        if (!isEmpty(value)) {
-            const size = value[0]?.size;
-            if (size <= 256000) {
-                return Promise.resolve();
-            } else {
-                return Promise.reject('Max Size of file should be 256kb!');
-            }
-        } else {
-            return Promise.resolve();
-        }
-    };
+    const upload=(e:any)=> {
+        const files = [...e.target.files];
+        compress.compress(files, {
+            size: 4, // the max size in MB, defaults to 2MB
+            quality: .75, // the quality of the image, max is 1,
+            maxWidth: 1000, // the max width of the output image, defaults to 1920px
+            maxHeight: 1000, // the max height of the output image, defaults to 1920px
+            resize: true, // defaults to true, set false if you do not want to resize the image width and height
+        }).then((results) => {
+            const img1 = results[0];
+            // console.log("img1",img1);
+            // const convertedImage = img1.data;
+            let uploadFile = {
+                content : img1.data,
+                filename : "document",
+                fieldname: "fieldname"
+            };
+            // const imgExt = img1.ext
+            // const file = Compress.convertBase64ToFile(base64str, imgExt)
+            setImageFile({uploadFile});
+            // console.log(convertedImage);
+        })
+    }
 
     return (
-        <React.Fragment>
-            <Form.Item
-                {...props}
-                valuePropName="fileList"
-                getValueFromEvent={normFile}
-                rules={[{ validator: (rule, value) => validateUploadBankDoc(rule, value) }]}
-            >
-                <Upload
-                    accept="image/*"
-                    beforeUpload={(file) => {
-                        // const isRequiredFileType =
-                        //     file.type === 'image/jpeg' ||
-                        //     file.type === 'image/png';
-                        // if (!isRequiredFileType) {
-                        //     message.error(
-                        //         `${file.name} is not an Image file`,
-                        //     );
-                        // }
-                        // return isRequiredFileType;
-                        return false;
-                    }}
-                    name="logo"
-                    listType="text"
-                    maxCount={1}
-                >
-                    <DefaultBtn
-                    className="other-upload"
-                        icon={<UploadOutlined />}
-                        content="Upload Document"
-                    />
-                    <br /><Text className="font-size-small">Max file size: 256kb</Text>
-                </Upload>
-            </Form.Item>
-        </React.Fragment>
-    );
+
+        <>
+            <input
+                type="file"
+                accept='image/*'
+                onChange={(e)=>{upload(e)}}
+            />
+        </>
+    )
 };
 
 export default UploadBankDoc;

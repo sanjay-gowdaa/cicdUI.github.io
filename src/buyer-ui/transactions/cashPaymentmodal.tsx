@@ -1,5 +1,5 @@
-import React from 'react';
-import { Input, Button, Form, DatePicker } from 'antd';
+import React, { useState } from 'react';
+import { Input, Button, Form, DatePicker, Typography } from 'antd';
 import moment from 'moment';
 
 import { useSelector, useDispatch } from 'react-redux';
@@ -12,9 +12,14 @@ import { generateFormData } from '../../profile/utils';
 import { cloneDeep } from 'lodash';
 import UploadBankDoc from './uploadBankDoc';
 
+const { Text, Title } = Typography;
 
 const CashPaymentModal = (props: any) => {
+    const [imageFile, setImageFile] = useState({});
+    const [requiredDocument,setRequiredDocument] = useState(false);
     const { record, viewPaymentDetails, setPaymentDetails, bankDoc, setBankDoc } = props;
+
+
     const loginState = useSelector((state: RootState) => state.loginUser);
     const buyerState = useSelector((state: RootState) => state.buyer);
 
@@ -26,34 +31,32 @@ const CashPaymentModal = (props: any) => {
     const produce = props?.record?.produce;
     const quantity = props?.record?.buyer_quantity;
 
+    console.log("imageFile", imageFile);
 
     const OnCheckDetailsSave = (values: any) => {
-        const registerDataPromise =
-            generateFormData(cloneDeep({
-                ...values,
-            }));
-            registerDataPromise.then((data) =>
-            {   
-                const payload = {
-                    "userType": "buyer",
-                    "transactionId": `${transactionId}`,
-                    "produce": `${produce}`,
-                    "quantity": `${quantity}`,
-                    "userId": `${loginState.pk}`,
-                    "paymentType": "cash",
-                    "Amount": `${buyerState.paymentAmount}`,
-                    "CollectedDate": `${values.CollectedDate}`,
-                    "CollectedBy": `${values.CollectedBy}`,
-                    "Receipt": data.files[0],
-                    "envType":process.env.REACT_APP_ENV
-                }
-                dispatch(cashAndCheckPayment(payload));
-                console.log(payload)
-                form.resetFields();
-                setPaymentDetails(!viewPaymentDetails);
-            }
-        );
-}
+        const payload = {
+            "userType": "buyer",
+            "transactionId": `${transactionId}`,
+            "produce": `${produce}`,
+            "quantity": `${quantity}`,
+            "userId": `${loginState.pk}`,
+            "paymentType": "cash",
+            "Amount": `${buyerState.paymentAmount}`,
+            "CollectedDate": `${values.CollectedDate}`,
+            "CollectedBy": `${values.CollectedBy}`,
+            "Receipt": imageFile,
+            "envType": process.env.REACT_APP_ENV
+        }
+        if(requiredDocument===true){
+            dispatch(cashAndCheckPayment(payload));
+            form.resetFields();
+            setPaymentDetails(!viewPaymentDetails);
+        }
+        // 
+        console.log(imageFile)
+        console.log(payload)
+        
+    }
 
     const cancelClick = () => {
         form.resetFields();
@@ -87,9 +90,9 @@ const CashPaymentModal = (props: any) => {
                         format="DD-MM-YYYY"
                         placeholder="DD-MM-YYYY"
                         disabledDate={(current) => {
-                            return moment().add(-5, 'days')  >= current ||
-                                 moment().add(1, 'days')  <= current;
-                            }}
+                            return moment().add(-5, 'days') >= current ||
+                                moment().add(1, 'days') <= current;
+                        }}
                     />
                 </Form.Item>
 
@@ -102,14 +105,15 @@ const CashPaymentModal = (props: any) => {
                     <Input name='CollectedBy' />
                 </Form.Item>
 
-                <Form.Item name='Receipt' label='Receipt' className='doc-upload-required'
-                    rules={[
-                        { required: true },
-                    ]}>
+                <Form.Item name='Receipt' label='Receipt' className='doc-upload-required'>
                     <UploadBankDoc
-                        className='margin-zero'
-                        name='reciept'
+                        name='Receipt'
+                        imageFile={imageFile}
+                        setImageFile={setImageFile}
+                        requiredDocument={requiredDocument}
+                        setRequiredDocument={setRequiredDocument}
                     />
+                    {requiredDocument ? "":<Text style={{color:'red'}}>Document is Required</Text>}
                 </Form.Item>
                 <div className='other-btn-section'>
                     <Button className='other-btn-cancel' htmlType="button" onClick={cancelClick}>Cancel</Button>
