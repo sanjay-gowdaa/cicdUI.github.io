@@ -3,7 +3,7 @@ import Compress from 'compress.js';
 
 const UploadBankDoc = (props: any) => {
     
-    const {imageFile,setImageFile} = props
+    const {imageFile,setImageFile,requiredDocument,setRequiredDocument} = props
     const compress = new Compress()
 
     const upload=(e:any)=> {
@@ -26,7 +26,7 @@ const UploadBankDoc = (props: any) => {
             // const imgExt = img1.ext
             // const file = Compress.convertBase64ToFile(base64str, imgExt)
             setImageFile({uploadFile});
-            // console.log(convertedImage);
+            console.log({uploadFile});
         })
     }
 
@@ -36,7 +36,9 @@ const UploadBankDoc = (props: any) => {
             <input
                 type="file"
                 accept='image/*'
-                onChange={(e)=>{upload(e)}}
+                onChange={(e)=>{
+                    upload(e)
+                    setRequiredDocument(true)}}
             />
         </>
     )
