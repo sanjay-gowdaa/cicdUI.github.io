@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { Input, Button, Form, DatePicker,Typography } from 'antd';
-import { cloneDeep } from 'lodash';
 import { useSelector, useDispatch } from 'react-redux';
 import moment from 'moment';
 
@@ -12,10 +11,9 @@ import { cashAndCheckPayment } from '../../store/buyerReducer/actions';
 
 import { RootState } from '../../store/rootReducer';
 import { parseIDfromHash } from '../../app-components/utils';
-import { generateFormData } from '../../profile/utils';
 
 
-const { Text, Title } = Typography;
+const { Text} = Typography;
 
 
 const DirectBankTransferModal = (props: any) => {

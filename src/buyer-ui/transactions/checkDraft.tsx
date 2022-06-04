@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { Input, Button, Form, DatePicker,Typography } from 'antd';
-import { cloneDeep } from 'lodash';
 import moment from 'moment';
 
 import UploadBankDoc from './uploadBankDoc';
@@ -10,7 +9,6 @@ import { cashAndCheckPayment } from '../../store/buyerReducer/actions';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../../store/rootReducer';
 import { parseIDfromHash } from '../../app-components/utils';
-import { generateFormData } from '../../profile/utils';
 
 const { Text, Title } = Typography;
 

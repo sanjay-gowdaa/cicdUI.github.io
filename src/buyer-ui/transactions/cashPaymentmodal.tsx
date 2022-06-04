@@ -3,14 +3,13 @@ import { Input, Button, Form, DatePicker, Typography } from 'antd';
 import moment from 'moment';
 
 import { useSelector, useDispatch } from 'react-redux';
+import UploadBankDoc from './uploadBankDoc';
 import { RootState } from '../../store/rootReducer';
 
 import { customNameValidator } from '../../login-ui/registration/utils';
 import { cashAndCheckPayment } from '../../store/buyerReducer/actions';
 import { parseIDfromHash } from '../../app-components/utils';
-import { generateFormData } from '../../profile/utils';
-import { cloneDeep } from 'lodash';
-import UploadBankDoc from './uploadBankDoc';
+
 
 const { Text, Title } = Typography;
 
