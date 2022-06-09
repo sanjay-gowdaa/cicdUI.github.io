@@ -104,6 +104,7 @@ export interface BuyerStateModel {
     rejectCount: any;
     otpError: OtpErrorInMatch;
     status: Array<Status>;
+    urd_status: boolean;
 };
 
 export interface BuyerRejectMatch {

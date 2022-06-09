@@ -80,8 +80,9 @@ const AddCropModal = ({
         useState({ produce_name: '', quantity: '', delivery_by: '', additional_info: '' });
 
     const buyerState = useSelector((state: RootState) => state.buyer);
+    const loginState = useSelector((state: RootState) => state.loginUser);
     const { produceList } = buyerState;
-
+    
     useEffect(() => {
         if (modalVisible) {
             const formInitValues: any = isEdit ?
@@ -116,7 +117,8 @@ const AddCropModal = ({
             // delivery_by: deliveryByIsoformat,
             additional_info,
             isEditable: true,
-            quantity: quantity
+            quantity: quantity,
+            urd_status: loginState.urd_status
         };
         const produceName = `${addProducePayload.crop_name}-${addProducePayload.category}-${addProducePayload.sub_type}-${addProducePayload.grade}`;
 

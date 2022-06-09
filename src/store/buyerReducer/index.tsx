@@ -44,7 +44,8 @@ const INITIAL_STATE: BuyerStateModel = {
     paymentAmount: '',
     rejectCount: '',
     otpError: { showError: false, errorMg: '', verified: false, sellerId: '', buyerId: '', sellerCropId: '', buyerCropId: '' },
-    status: [{ details: [], key: '' }]
+    status: [{ details: [], key: '' }],
+    urd_status: false
 };
 
 const reducer = (state = INITIAL_STATE, action: any) => {

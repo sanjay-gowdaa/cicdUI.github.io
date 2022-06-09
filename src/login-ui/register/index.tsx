@@ -8,7 +8,8 @@ import {
     Input,
     Row,
     Select,
-    Typography
+    Typography,
+    Radio
 } from 'antd';
 import { uniqBy } from 'lodash';
 import { useDispatch, useSelector } from 'react-redux';
@@ -70,15 +71,17 @@ const Register = ({ history, setSignUpPopupVisible }: { history: History, setSig
     const [showOTPModal, setShowOTPModal] = useState(false);
     const [displayTandC, setTandC] = useState(false);
     const [showCategory, setShowCategory] = useState(false);
+    const [showURD, setShowURD] = useState(false);
     const dispatch = useDispatch();
     const registrationState = useSelector((state: RootState) => state.registration);
     const { configs } = registrationState;
 
     const onFinish = (values: any) => {
-        const { name, number, email, type, category } = values;
+        console.log("values", values);
+        const { name, number, email, type, category, urd_status} = values;
         dispatch(sendOTP(`91${number}`));
         dispatch(updateEntityType(currentType));
-        dispatch(updateBasicRegistrationData({ name, number, email, type, category }));
+        dispatch(updateBasicRegistrationData({ name, number, email, type, category, urd_status }));
         setSignUpPopupVisible(false);
         setShowOTPModal(!showOTPModal);
     };
@@ -93,6 +96,11 @@ const Register = ({ history, setSignUpPopupVisible }: { history: History, setSig
         setSubType(type);
         const filter = uniqBy(configs.filter((config: any) => config.type === currentType && config.sub_type === type), 'category');
         (filter.length > 1) ? setShowCategory(true) : setShowCategory(false);
+        if(type === "Individual" || type === "Farmer"){
+            setShowURD(true);
+        }else(
+            setShowURD(false)
+        )
     };
 
     return (
@@ -167,6 +175,19 @@ const Register = ({ history, setSignUpPopupVisible }: { history: History, setSig
                             {getUserCategoryOption(configs, currentType, subType)}
                         </Select>
                     </Form.Item> : null
+                }
+                {showURD ?
+                    <Form.Item
+                    label='Registered user'
+                    name='urd_status'
+                    rules={[{ required: true, validator: (rule, value) => customConsentValidator(rule, value) }]}
+                >
+                        <Radio.Group>
+                            <Radio value={1}>Yes</Radio>
+                            <Radio value={2}>No</Radio>
+                        </Radio.Group>
+                </Form.Item> : null
+
                 }
                 <Form.Item
                     label='Name'
