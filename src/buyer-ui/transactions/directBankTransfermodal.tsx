@@ -32,7 +32,7 @@ const DirectBankTransferModal = (props: any) => {
     const produce = props?.record?.produce;
     const quantity = props?.record?.buyer_quantity;
 
-    const OnCheckDetailsSave = (values: any) => {
+    const directBankPaymentFunc = (values: any) => {
         const payload = {
             "userType": "buyer",
             "transactionId": `${transactionId}`,
@@ -67,7 +67,7 @@ const DirectBankTransferModal = (props: any) => {
                 wrapperCol={{ span: 10 }}
                 colon={false}
                 labelAlign='left'
-                onFinish={OnCheckDetailsSave}
+                onFinish={directBankPaymentFunc}
             >
 
                 <Form.Item
@@ -110,9 +110,7 @@ const DirectBankTransferModal = (props: any) => {
                     <Input name='amount' type='textarea' disabled={true} defaultValue={`₹ ${buyerState.paymentAmount}`} allowClear={false} />
                 </Form.Item>
 
-                <Form.Item name='BankDocument' label='Bank Document' className='doc-upload-required'
-                    // 
-                >
+                <Form.Item name='BankDocument' label='Bank Document' className='doc-upload-required'>
                     <UploadBankDoc
                         name='receipt'
                         imageFile={imageFile}

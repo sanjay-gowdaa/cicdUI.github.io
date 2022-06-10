@@ -4,19 +4,19 @@ import moment from 'moment';
 
 import { useSelector, useDispatch } from 'react-redux';
 import UploadBankDoc from './uploadBankDoc';
-import { RootState } from '../../store/rootReducer';
 
+import { RootState } from '../../store/rootReducer';
 import { customNameValidator } from '../../login-ui/registration/utils';
 import { cashAndCheckPayment } from '../../store/buyerReducer/actions';
 import { parseIDfromHash } from '../../app-components/utils';
 
 
-const { Text, Title } = Typography;
+const { Text } = Typography;
 
 const CashPaymentModal = (props: any) => {
     const [imageFile, setImageFile] = useState({});
-    const [requiredDocument,setRequiredDocument] = useState(false);
-    const { record, viewPaymentDetails, setPaymentDetails, bankDoc, setBankDoc } = props;
+    const [requiredDocument, setRequiredDocument] = useState(false);
+    const { record, viewPaymentDetails, setPaymentDetails } = props;
 
 
     const loginState = useSelector((state: RootState) => state.loginUser);
@@ -30,9 +30,7 @@ const CashPaymentModal = (props: any) => {
     const produce = props?.record?.produce;
     const quantity = props?.record?.buyer_quantity;
 
-    console.log("imageFile", imageFile);
-
-    const OnCheckDetailsSave = (values: any) => {
+    const cashPaymentFunc = (values: any) => {
         const payload = {
             "userType": "buyer",
             "transactionId": `${transactionId}`,
@@ -46,15 +44,11 @@ const CashPaymentModal = (props: any) => {
             "Receipt": imageFile,
             "envType": process.env.REACT_APP_ENV
         }
-        if(requiredDocument===true){
-            dispatch(cashAndCheckPayment(payload));
+        if (requiredDocument === true) {
+            // dispatch(cashAndCheckPayment(payload));
             form.resetFields();
             setPaymentDetails(!viewPaymentDetails);
         }
-        // 
-        console.log(imageFile)
-        console.log(payload)
-        
     }
 
     const cancelClick = () => {
@@ -70,9 +64,9 @@ const CashPaymentModal = (props: any) => {
                 wrapperCol={{ span: 10 }}
                 colon={false}
                 labelAlign='left'
-                onFinish={OnCheckDetailsSave}
+                onFinish={cashPaymentFunc}
             >
-
+                
                 <Form.Item
                     className='payment-form-text'
                     name='Amount'
@@ -112,13 +106,12 @@ const CashPaymentModal = (props: any) => {
                         requiredDocument={requiredDocument}
                         setRequiredDocument={setRequiredDocument}
                     />
-                    {requiredDocument ? "":<Text style={{color:'red'}}>Document is Required</Text>}
+                    {requiredDocument ? "" : <Text style={{ color: 'red' }}>Document is Required</Text>}
                 </Form.Item>
                 <div className='other-btn-section'>
                     <Button className='other-btn-cancel' htmlType="button" onClick={cancelClick}>Cancel</Button>
                     <Button className='other-btn-save' htmlType='submit'>Save</Button>
                 </div>
-
             </Form>
         </div>
     )

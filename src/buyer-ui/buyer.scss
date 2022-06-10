@@ -313,6 +313,10 @@ $col-shade-error: #e90000;
 }
 
 div.ant-modal.payment-modal{
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     .ant-modal-content{
         position: relative;
         display: flex;

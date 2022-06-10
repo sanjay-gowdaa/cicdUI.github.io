@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Input, Button, Form, DatePicker,Typography } from 'antd';
+import { Input, Button, Form, DatePicker, Typography } from 'antd';
 import moment from 'moment';
 
 import UploadBankDoc from './uploadBankDoc';
@@ -10,12 +10,12 @@ import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../../store/rootReducer';
 import { parseIDfromHash } from '../../app-components/utils';
 
-const { Text, Title } = Typography;
+const { Text } = Typography;
 
 const CheckDraft = (props: any) => {
     const [imageFile, setImageFile] = useState({});
-    const [requiredDocument,setRequiredDocument] = useState(false);
-    const { record, viewPaymentDetails, setPaymentDetails, bankDoc, setBankDoc } = props;
+    const [requiredDocument, setRequiredDocument] = useState(false);
+    const { record, viewPaymentDetails, setPaymentDetails} = props;
     const loginState = useSelector((state: RootState) => state.loginUser);
     const buyerState = useSelector((state: RootState) => state.buyer);
 
@@ -28,7 +28,6 @@ const CheckDraft = (props: any) => {
     const quantity = props?.record?.buyer_quantity;
 
     const OnCheckDetailsSave = (values: any) => {
-
         const payload = {
             "userType": "buyer",
             "transactionId": `${transactionId}`,
@@ -44,7 +43,7 @@ const CheckDraft = (props: any) => {
             "BankName": `${values.BankName}`,
             "envType": process.env.REACT_APP_ENV
         }
-        if(requiredDocument===true){
+        if (requiredDocument === true) {
             dispatch(cashAndCheckPayment(payload));
             form.resetFields();
             setPaymentDetails(!viewPaymentDetails);
@@ -126,7 +125,7 @@ const CheckDraft = (props: any) => {
                         requiredDocument={requiredDocument}
                         setRequiredDocument={setRequiredDocument}
                     />
-                    {requiredDocument ? "":<Text style={{color:'red'}}>Document is Required</Text>}
+                    {requiredDocument ? "" : <Text style={{ color: 'red' }}>Document is Required</Text>}
                 </Form.Item>
                 <div className='other-btn-section'>
                     <Button className='other-btn-cancel' htmlType="button" onClick={cancelClick}>Cancel</Button>
