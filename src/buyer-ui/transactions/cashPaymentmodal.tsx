@@ -45,7 +45,7 @@ const CashPaymentModal = (props: any) => {
             "envType": process.env.REACT_APP_ENV
         }
         if (requiredDocument === true) {
-            // dispatch(cashAndCheckPayment(payload));
+            dispatch(cashAndCheckPayment(payload));
             form.resetFields();
             setPaymentDetails(!viewPaymentDetails);
         }
