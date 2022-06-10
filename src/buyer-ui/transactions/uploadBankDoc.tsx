@@ -25,8 +25,8 @@ const UploadBankDoc = (props: any) => {
             };
             // const imgExt = img1.ext
             // const file = Compress.convertBase64ToFile(base64str, imgExt)
-            setImageFile({uploadFile});
-            console.log({uploadFile});
+            setImageFile(uploadFile);
+            console.log(uploadFile);
         })
     }
 
