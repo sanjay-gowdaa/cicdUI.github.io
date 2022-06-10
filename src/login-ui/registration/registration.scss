@@ -1,4 +1,7 @@
 .entity-details-container {
+    position: relative;
+    top:-80px;
+    margin-top:0px;
     padding: 2em;
 
     .full-time-checkbox {
@@ -15,6 +18,7 @@
 .register {
     .landing-page-header-bar {
         position: unset;
+
 
         .header-breadcrumb {
             display: none;

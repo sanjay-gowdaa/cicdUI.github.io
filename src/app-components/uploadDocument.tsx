@@ -19,10 +19,10 @@ export const normFile = (e: any) => {
 export const validateUploadBankDoc = (rule: RuleObject, value: any) => {
     if (!isEmpty(value)) {
         const size = value[0]?.size;
-        if (size <= 256000) {
+        if (size <= 1000000) {
             return Promise.resolve();
         } else {
-            return Promise.reject('Max Size of file should be 256kb!');
+            return Promise.reject('Max Size of file should be 1MB!');
         }
     } else {
         return Promise.resolve();

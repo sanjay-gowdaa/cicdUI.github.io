@@ -1,6 +1,5 @@
-import React from 'react';
-import { Input, Button, Form, DatePicker } from 'antd';
-import { cloneDeep } from 'lodash';
+import React, { useState } from 'react';
+import { Input, Button, Form, DatePicker, Typography } from 'antd';
 import moment from 'moment';
 
 import UploadBankDoc from './uploadBankDoc';
@@ -10,10 +9,13 @@ import { cashAndCheckPayment } from '../../store/buyerReducer/actions';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../../store/rootReducer';
 import { parseIDfromHash } from '../../app-components/utils';
-import { generateFormData } from '../../profile/utils';
+
+const { Text } = Typography;
 
 const CheckDraft = (props: any) => {
-    const { record, viewPaymentDetails, setPaymentDetails, bankDoc, setBankDoc } = props;
+    const [imageFile, setImageFile] = useState({});
+    const [requiredDocument, setRequiredDocument] = useState(false);
+    const { record, viewPaymentDetails, setPaymentDetails} = props;
     const loginState = useSelector((state: RootState) => state.loginUser);
     const buyerState = useSelector((state: RootState) => state.buyer);
 
@@ -26,31 +28,26 @@ const CheckDraft = (props: any) => {
     const quantity = props?.record?.buyer_quantity;
 
     const OnCheckDetailsSave = (values: any) => {
-        const registerDataPromise =
-            generateFormData(cloneDeep({
-                ...values,
-            }));
-        registerDataPromise.then((data) => {
-            const payload = {
-                "userType": "buyer",
-                "transactionId": `${transactionId}`,
-                "produce": `${produce}`,
-                "quantity": `${quantity}`,
-                "userId": `${loginState.pk}`,
-                "paymentType": "cheque",
-                "Amount": `${buyerState.paymentAmount}`,
-                "Cheque/Challan Number": `${values.ChequeChallanNumber}`,
-                "Date": `${values.Date}`,
-                "ifsc_code": `${values.ifsc_code}`,
-                "BankDocument": data.files[0],
-                "BankName": `${values.BankName}`,
-                "envType":process.env.REACT_APP_ENV
-            }
-            form.resetFields();
-            console.log(payload)
+        const payload = {
+            "userType": "buyer",
+            "transactionId": `${transactionId}`,
+            "produce": `${produce}`,
+            "quantity": `${quantity}`,
+            "userId": `${loginState.pk}`,
+            "paymentType": "cheque",
+            "Amount": `${buyerState.paymentAmount}`,
+            "Cheque/Challan Number": `${values.ChequeChallanNumber}`,
+            "Date": `${values.Date}`,
+            "ifsc_code": `${values.ifsc_code}`,
+            "BankDocument": imageFile,
+            "BankName": `${values.BankName}`,
+            "envType": process.env.REACT_APP_ENV
+        }
+        if (requiredDocument === true) {
             dispatch(cashAndCheckPayment(payload));
+            form.resetFields();
             setPaymentDetails(!viewPaymentDetails);
-        })
+        }
     }
 
     const cancelClick = () => {
@@ -109,9 +106,9 @@ const CheckDraft = (props: any) => {
                         format="DD-MM-YYYY"
                         placeholder="DD-MM-YYYY"
                         disabledDate={(current) => {
-                            return moment().add(-5, 'days')  >= current ||
-                                 moment().add(1, 'days')  <= current;
-                            }}
+                            return moment().add(-5, 'days') >= current ||
+                                moment().add(1, 'days') <= current;
+                        }}
                     />
                 </Form.Item>
 
@@ -120,14 +117,15 @@ const CheckDraft = (props: any) => {
                     <Input name='amount' type='textarea' disabled={true} defaultValue={`₹ ${buyerState.paymentAmount}`} allowClear={false} />
                 </Form.Item>
 
-                <Form.Item name='BankDocument' label='Bank Document' className='doc-upload-required'
-                    rules={[
-                        { required: true }
-                    ]}>
+                <Form.Item name='BankDocument' label='Bank Document' className='doc-upload-required'>
                     <UploadBankDoc
-                        className='margin-zero'
                         name='bank_doc'
+                        imageFile={imageFile}
+                        setImageFile={setImageFile}
+                        requiredDocument={requiredDocument}
+                        setRequiredDocument={setRequiredDocument}
                     />
+                    {requiredDocument ? "" : <Text style={{ color: 'red' }}>Document is Required</Text>}
                 </Form.Item>
                 <div className='other-btn-section'>
                     <Button className='other-btn-cancel' htmlType="button" onClick={cancelClick}>Cancel</Button>
