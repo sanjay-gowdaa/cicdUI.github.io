@@ -140,7 +140,7 @@ export const produceColumns = ({
                         <Button
                             type="link"
                             className="button"
-                            disabled={editClick===2 && currentCropId === getCropId(record.sk || '')}
+                            disabled={editClick===2}
                             onClick={() => {  
                                 prepareForEditProduce(record);
                                 console.log(record)
