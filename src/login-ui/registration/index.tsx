@@ -52,8 +52,8 @@ const Registration = (props: { history: History }) => {
     const dispatch = useDispatch();
     const registrationState = useSelector((state: RootState) => state.registration);
     const { configs, entityType, formData, registerResponse, isProcessing } = registrationState;
-    const { type, category } = formData;
-
+    const { type, category, urd_status } = formData;
+    
     useEffect(() => {
         if (registerResponse.verified) {
             dispatch(setRegisterMsg(''));
@@ -73,6 +73,7 @@ const Registration = (props: { history: History }) => {
             dispatch(updateForm(registerFormValues as any));
             dispatch(submitRegister(registerFromData));
         });
+       
     };
 
     const onFinish = (values: any) => {
@@ -203,6 +204,21 @@ const Registration = (props: { history: History }) => {
                                     />
                                 </Form.Item> : null
                             }
+                            
+                                <Form.Item
+                                    labelAlign='left'
+                                    labelCol={{ span: 10 }}
+                                    wrapperCol={{ span: 12 }}
+                                    label='Registered user'
+                                    name='urd_status'
+                                >
+                                    <Input
+                                        className='custom-input'
+                                        bordered={false}
+                                        disabled={true}
+                                    />
+                                </Form.Item> 
+                            
                         </Col>
                     </Row>
                     <Row gutter={16} justify='start'>

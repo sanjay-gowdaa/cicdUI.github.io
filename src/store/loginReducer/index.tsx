@@ -21,7 +21,8 @@ const INITIAL_STATE: UserStateModel = {
     confirmationCodeError: '',
     isNewUser: false,
     user: {},
-    amplifyResponse: false
+    amplifyResponse: false,
+    urd_status: false,
 };
 
 const reducer = (state = INITIAL_STATE, action: any) => {

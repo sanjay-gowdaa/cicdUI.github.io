@@ -4,6 +4,7 @@ export interface RegsitrationFormModel {
     email: string;
     type: string;
     category: string;
+    urd_status: boolean;
 }
 
 export interface RegitrationFullFormModel extends RegsitrationFormModel {

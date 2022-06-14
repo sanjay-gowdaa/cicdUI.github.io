@@ -23,7 +23,7 @@ const TradeSummary = (props: componentProps) => {
     } = cropDetails;
 
     
-    const produce_total_cost = seller_price + gst_amount
+    const produce_total_cost = Math.round(seller_price) + gst_amount
     const seller_faci_with_gst = Math.round(seller_facilitation_cost + seller_facilitation_gst)
     const buyer_faci_with_gst = Math.round(buyer_facilitation_cost + buyer_facilitation_gst)
     const diffAmt = Math.round(produce_total_cost - seller_initial_produce_cost);

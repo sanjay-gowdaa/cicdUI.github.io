@@ -119,6 +119,7 @@ const AddCropModal = (addCropProps: PropsType) => {
         const updatedValueWithApmcRates = {
             ...values,
             additionalInfo,
+            urd_status: loginUser.urd_status,
             district: loginUser.district,
             zip: loginUser.zip
         };
