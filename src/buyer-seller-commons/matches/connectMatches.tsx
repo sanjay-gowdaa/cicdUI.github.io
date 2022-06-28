@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Alert, Checkbox, Col, Modal, Row, Space, Statistic, Typography } from 'antd';
+import { Alert, Checkbox, Col, Modal, Row, Space, Statistic, Typography, Select } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 
 import TradeSummary from './tradeSummary';
@@ -34,6 +34,7 @@ import { displayConcurrentMatchError, displayMatchSuccessModal, getTransactionDa
 
 const { Text, Title } = Typography;
 const { Countdown } = Statistic;
+const { Option } = Select;
 
 const ConnectMatches = ({ cropDetails }: { cropDetails: MatchRequirementModel }) => {
     const dispatch = useDispatch();
@@ -47,13 +48,17 @@ const ConnectMatches = ({ cropDetails }: { cropDetails: MatchRequirementModel })
     const [resend, showResend] = useState(false);
     const [otpResent, setOtpResent] = useState(false);
     const [isAgreed, setAgreed] = useState(false);
+    const [installmentType, setInstallmentType] = useState(1);
     const { pk = '' } = cropDetails;
-
+    
     useEffect(() => {
         const isUnique = checkIfUnique(cropDetails, otpError);
         if (otpError.verified && isUnique) {
             if (is_buyer) {
                 const transactionEntry = getTransactionDataStructure(cropDetails);
+                transactionEntry.buyer[0].Installment_count = installmentType;
+                transactionEntry.seller[0].Installment_count = installmentType;
+                console.log("transactionEntry", transactionEntry);
                 const { seller_crop_id, seller_id } = cropDetails;
                 (dispatch(checkSellerConnectedStatus(seller_id, seller_crop_id)) as any)
                     .then((data: { isBuyerConnected: string }) => {
@@ -112,6 +117,19 @@ const ConnectMatches = ({ cropDetails }: { cropDetails: MatchRequirementModel })
         }
     };
 
+    const handleChange = (value: string) => {
+        if(value === 'Partial_installment1'){
+            setInstallmentType(2);
+        }
+        if(value === "Partial_installment2"){
+            setInstallmentType(3);
+        }
+        if(value === 'Full_Payment'){
+            setInstallmentType(1);
+        }
+      };
+    console.log(installmentType);
+
     return (
         <React.Fragment>
             <PrimaryBtn
@@ -129,6 +147,28 @@ const ConnectMatches = ({ cropDetails }: { cropDetails: MatchRequirementModel })
                 
             >
                 <TradeSummary cropDetails={cropDetails} />
+                {is_buyer ? 
+                    <Row>
+                        <Col span={8}>
+                            Select Type of installment 
+                        </Col>
+                        <Col span={16}>
+                            : <Select defaultValue="Full_Payment" style={{ width: 200 }} onSelect={handleChange}>
+                                <Option value="Full_Payment">Pay in 1 installment</Option>
+                                <Option value="Partial_installment1">Pay in 2 installments(50/50)</Option>
+                                <Option value="Partial_installment2">Pay in 3 installments(10/70/20)</Option>
+                            </Select>
+                        </Col>
+                    </Row> :
+                    <Row>
+                        <Col span={8}>
+                            Number of Payment Installments
+                        </Col>
+                        <Col span={16}>
+                            : {cropDetails.Installment_count}
+                        </Col>
+                    </Row>
+                }
                 <Checkbox
                     className='custom-checkbox'
                     checked={isAgreed}
@@ -149,7 +189,7 @@ const ConnectMatches = ({ cropDetails }: { cropDetails: MatchRequirementModel })
                     and agree to digitally sign the same using OTP.
                 </Checkbox>
                 {isAgreed &&
-                    <>
+                    <>  
                         <Row justify='center'>
                             <Col>
                                 <Text>Please enter 4 digit OTP number sent to your phone number +91-{maskData(username)}</Text>
