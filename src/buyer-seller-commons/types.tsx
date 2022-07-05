@@ -39,6 +39,7 @@ export interface MatchRequirementModel {
     seller_final_price_per_quintal: number;
     seller_initial_produce_cost: number;
     seller_quoted_price_per_quintal: number;
+    Installment_count: number;
 };
 
 export interface CropListType {

@@ -19,7 +19,7 @@ export const getTransactionDataStructure = (cropDetails: MatchRequirementModel) 
         fulfillment_flag, produce, matched_quantity, seller_crop_id, seller_id, seller_quantity,buyer_remaining_quantity,seller_remaining_quantity,
         seller_final_price, seller_price, seller_location, seller_facilitation_cost, seller_transportation_cost,seller_facilitation_gst,
         seller_final_price_per_quintal, buyer_id, buyer_crop_id, buyer_location, buyer_facilitation_cost,seller_total_price,seller_initial_produce_cost,seller_quoted_price_per_quintal,
-        buyer_transportation_cost, buyer_final_price, buyer_actual_quantity, buyer_price_per_quintal,gst_amount,buyer_total_price,buyer_facilitation_gst
+        buyer_transportation_cost, buyer_final_price, buyer_actual_quantity, buyer_price_per_quintal,gst_amount,buyer_total_price,buyer_facilitation_gst,Installment_count
     } = cropDetails;
 
     const transactionEntry = {
@@ -40,7 +40,8 @@ export const getTransactionDataStructure = (cropDetails: MatchRequirementModel) 
             gst_amount,
             buyer_total_price,
             buyer_remaining_quantity,
-            buyer_facilitation_gst
+            buyer_facilitation_gst,
+            Installment_count
         }],
         seller: [{
             seller_id,
@@ -57,7 +58,8 @@ export const getTransactionDataStructure = (cropDetails: MatchRequirementModel) 
             seller_remaining_quantity,
             seller_initial_produce_cost,
             seller_quoted_price_per_quintal,
-            gst_amount
+            gst_amount,
+            Installment_count
         }]
     };
 
