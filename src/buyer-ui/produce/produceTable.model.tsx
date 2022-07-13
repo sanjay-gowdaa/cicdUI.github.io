@@ -23,8 +23,6 @@ type produceColumnCallbacks = {
     setIsEdit: any;
     isEdit: boolean;
     currentCropId: string;
-    editClick:number;
-    setEditClick:any;
 };
 
 export const produceColumns = ({
@@ -34,8 +32,6 @@ export const produceColumns = ({
     setIsEdit,
     isEdit,
     currentCropId,
-    editClick,
-    setEditClick,
 }: produceColumnCallbacks) =>
     [
         {
@@ -140,19 +136,15 @@ export const produceColumns = ({
                         <Button
                             type="link"
                             className="button"
-                            disabled={editClick===2 && currentCropId === getCropId(record.sk || '')}
+                            disabled={!record.isEditable}
                             onClick={() => {  
-                                prepareForEditProduce(record);
-                                console.log(record)
-                                setEditClick(editClick+2);
-                            }}
+                                prepareForEditProduce(record)}}
                         >
                             Edit
                         </Button>
                         <Button
                             type="link"
                             danger
-                            disabled={!record.isEditable}
                             onClick={() => confirmationPopup('delete', deleteProduce, record.sk)}
                         >
                             Delete
