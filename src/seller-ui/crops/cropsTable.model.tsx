@@ -36,18 +36,18 @@ export const cropColumns = ({
     [
         {
             title: 'Produce',
-            dataIndex: 'crop_name',
-            key: 'crop_name',
-            render: (cropName: string, record: CropApiModel) => {
-                const { category_name } = record;
-                const imageSrc = showCropImage(category_name);
+            dataIndex: 'produce',
+            key: 'produce',
+            render: (produce: string, record: CropApiModel) => {
+                const { category } = record;
+                const imageSrc = showCropImage(category);
 
                 return (
                     <div className='display-flex-row align-center'>
                         <Image className='table-crop-image' src={imageSrc} />
                         <div className='margin-l-r-1em'>
-                            <Title level={5}>{cropName}</Title>
-                            <p>{record?.sub_category}</p>
+                            <Title level={5}>{produce}</Title>
+                            <p>{record?.variety}</p>
                         </div>
                     </div>
                 );

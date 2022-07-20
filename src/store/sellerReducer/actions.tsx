@@ -443,8 +443,8 @@ export const fetchAllCropsApmcData = (Items: Array<CropApiModel>) => {
         const { seller } = getState() as RootState;
         const { cropsList }: SellerStateModel = seller;
         const apmcFetchDataCrops: Array<UpdatedLiveApmcRatesQuery> = Items.map((item: CropApiModel) => {
-            const { category_name, crop_name, sub_category, district, grade } = item;
-            return { category: category_name, produce: crop_name, variety: sub_category, grade, district }
+            const { category, produce, variety, district, grade } = item;
+            return { category: category, produce: produce, variety: variety, grade, district }
         })
         const allCropsPriceModel = await getLiveApmcRateUpdated(apmcFetchDataCrops);
         const allCropsPriceModelDetails = (!isEmpty(allCropsPriceModel) && !isNull(allCropsPriceModel)) ? allCropsPriceModel : [];
