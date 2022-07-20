@@ -686,11 +686,11 @@ export const fetchDestinyId = (userName: string) => {
 /* Matches And Transactions End */
 
 
-export const submitCheckDraftDetails=(values:any)=>{
-    const checkDraftApi=`${CHECK_DRAFT_API}`;
+export const submitCheckDraftDetails = (values: any) => {
+    const checkDraftApi = `${CHECK_DRAFT_API}`;
     console.log(values);
-     try {
-        return fetch(checkDraftApi, { method: 'POST' ,body:JSON.stringify(values)});
+    try {
+        return fetch(checkDraftApi, { method: 'POST', body: JSON.stringify(values) }).then(() => window.location.reload());
     } catch (error) {
         return console.log('error', error);
     }
