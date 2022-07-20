@@ -40,11 +40,11 @@ export const produceColumns = ({
     [
         {
             title: 'Produce',
-            dataIndex: 'crop_name',
-            key: 'crop_name',
-            render: (cropName: string, record: ProduceModel) => {
-                const { category, crop_name, sub_type: subType } = record;
-                const imageSrc = showCropImage(crop_name);
+            dataIndex: 'produce',
+            key: 'produce',
+            render: (produce: string, record: ProduceModel) => {
+                const { category, variety: subType } = record;
+                const imageSrc = showCropImage(produce);
 
                 return (
                     <div className='display-flex-row align-center'>

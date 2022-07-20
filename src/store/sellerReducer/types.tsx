@@ -9,9 +9,9 @@ import {
 } from '../../buyer-seller-commons/types';
 
 export interface CropApiModel {
-    category_name: string;
-    crop_name: string;
-    sub_category: string;
+    category: string;
+    produce: string;
+    variety: string;
     grade: string;
     quantity: string;
     price_per_qnt: string;
@@ -31,8 +31,8 @@ export interface CropApiModel {
 };
 
 export interface CropModel {
-    cropName: string;
-    subCategory?: string;
+    produce: string;
+    variety?: string;
     cropGrade?: string;
     quantity: number;
     pricePerQnt: number;

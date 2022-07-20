@@ -10,18 +10,18 @@ export interface componentCallBacksModel {
 export const masterListColumns = (componentCallBacks: componentCallBacksModel) => [
     {
         title: 'Produce Category',
+        dataIndex: 'category_name',
+        key: 'category_name',
+    },
+    {
+        title: 'Produce',
         dataIndex: 'produce_name',
         key: 'produce_name',
     },
     {
-        title: 'Produce',
-        dataIndex: 'crop_name',
-        key: 'crop_name',
-    },
-    {
         title: 'Variety',
-        dataIndex: 'category_name',
-        key: 'category_name',
+        dataIndex: 'variety_name',
+        key: 'variety_name',
     },
     {
         title: 'Grade',

@@ -22,8 +22,8 @@ export const renderClassName = (isSelected: boolean, entityType: string) => {
 export const convertMasterListToGradeStructure = (masterList: Array<any>) => {
     let gradeDataStructure: any = {};
     masterList.forEach((masterCropDetails) => {
-        const { produce_name, crop_name, category_name, grade_name } = masterCropDetails;
-        gradeDataStructure = updateMasterCropDatastructure(grade_name, true, { gradeDataStructure, selectedProduceCategory: produce_name, selectedCrop: crop_name, selectedVariety: category_name })
+        const { category_name, produce_name, variety_name,  grade_name } = masterCropDetails;
+        gradeDataStructure = updateMasterCropDatastructure(grade_name, true, { gradeDataStructure, selectedProduceCategory: category_name, selectedCrop: produce_name, selectedVariety: variety_name })
     });
     return gradeDataStructure;
 };

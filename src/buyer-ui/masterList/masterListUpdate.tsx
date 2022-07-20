@@ -147,9 +147,9 @@ const MasterList = ({ setModalVisible }: any) => {
         updateSelectedList(updatedGradeStructure);
         // Create entry data
         const entryData = {
-            produce_name: selectedProduceCategory,
-            crop_name: selectedCrop,
-            category_name: selectedVariety,
+            category_name: selectedProduceCategory,
+            produce_name: selectedCrop,
+            variety_name: selectedVariety,
             grade_name: gradeSelection
         };
         // Update master list
@@ -162,14 +162,14 @@ const MasterList = ({ setModalVisible }: any) => {
     };
 
     const handleMasterTableDelete = (record: MasterListApiFormat, index: number) => {
-        const { crop_name, grade_name: gradeName, category_name, produce_name } = record;
+        const { variety_name, grade_name: gradeName, category_name, produce_name } = record;
         removeElementAndUpdateList(index);
 
         /* Update grade datastructure */
         const updatedGradeStructure = updateMasterCropDatastructure(
             gradeName,
             false,
-            { gradeDataStructure: selectedGradeList, selectedProduceCategory: produce_name, selectedCrop: crop_name, selectedVariety: category_name }
+            { gradeDataStructure: selectedGradeList, selectedProduceCategory: category_name, selectedCrop: produce_name, selectedVariety: variety_name }
         );
         updateSelectedList(updatedGradeStructure);
         /* Update grade datastructure end */

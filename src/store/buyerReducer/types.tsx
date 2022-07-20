@@ -9,10 +9,10 @@ import {
 } from '../../buyer-seller-commons/types';
 
 export interface ProduceModel {
-    crop_name: string;
+    produce: string;
     grade: string;
     category: string;
-    sub_type: string;
+    variety: string;
     quantity: number;
     delivery_by: any;
     additionalInfo?: string | null;
@@ -24,28 +24,28 @@ export interface ProduceModel {
 };
 
 export interface CropModel {
-    cropName: string;
-    subCategory?: string;
+    produce: string;
+    variety?: string;
     cropGrade?: string;
     quantity: number;
     pricePerQnt: number;
 };
 
 export interface flatMasterListType {
-    produce_id: string;
-    produce_name: string;
-    crop_id: string;
-    crop_name: string;
     category_id: string;
     category_name: string;
+    produce_id: string;
+    produce_name: string;
+    variety_id: string;
+    variety_name: string;
     grade_id: string;
     grade_name: string;
 };
 
 export interface MasterListApiFormat {
-    produce_name: string;
-    crop_name: string;
     category_name: string;
+    produce_name: string;
+    variety_name: string;
     grade_name: string;
 };
 
