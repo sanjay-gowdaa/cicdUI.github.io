@@ -14,6 +14,8 @@ import { getAmount, rejectMatches } from '../../store/buyerReducer/actions';
 import { ACCESS_TOKEN, BASE_URL, STAGE } from '../../store/api';
 import CashPaymentModal from '../../buyer-ui/transactions/cashPaymentmodal';
 import DirectBankTransferModal from './directBankTransfermodal';
+import { render } from '@testing-library/react';
+import RejectionModal from '../../buyer-seller-commons/rejectionModal';
 
 
 
@@ -28,7 +30,7 @@ const PayButton = (props: { record: any }) => {
     const loginState = useSelector((state: RootState) => state.loginUser);
     const buyerState = useSelector((state: RootState) => state.buyer);
     const status = buyerState.currentStatusDetails;
-
+    
     const [userStatus, setUserStatus] = useState('');
     const [proceedToPayBtn, setProceedToPayBtn] = useState(true);
     const [disableTradeSummary, setDisableTradeSummary] = useState(1)
@@ -128,6 +130,9 @@ const PayButton = (props: { record: any }) => {
         setPayBtnDisplay(true);
     }
 
+    
+    
+
     const ChangeTheSelectValue = (value: string) => {
         if (value === 'Payment Gateway') {
             setPaymentDetails(true)
@@ -199,6 +204,14 @@ const PayButton = (props: { record: any }) => {
                 onClick={() => payNow()}
                 content={isError ? 'Retry and Pay' : 'Pay Now'}
             />
+            {displayPay &&
+            <RejectionModal record={record}/>
+            
+
+            }
+            
+            
+
 
             <Modal
                 // bodyStyle={{width:466,height:530}}

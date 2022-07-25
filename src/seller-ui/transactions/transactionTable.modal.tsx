@@ -8,6 +8,7 @@ import { showCropImage } from '../../buyer-seller-commons/constants';
 import GetCurrentStatusDetails from '../../buyer-seller-commons/transactions/getCurrentStatusDetails';
 import { openAdditionalInfo } from '../../buyer-seller-commons/openAdditionalInfo';
 import ViewCropImages from '../../buyer-seller-commons/viewCropImages';
+import RejectionModal from '../../buyer-seller-commons/rejectionModal';
 
 const { Text } = Typography;
 
@@ -110,5 +111,15 @@ export const transactionSellerColumns = [
                 <GetCurrentStatusDetails data={transactionId} />
             );
         },
-    }
+    },
+    {
+        title: '',
+        key: 'action',
+        render: (record: any) => {
+            return (
+                
+                <RejectionModal record={record} />
+            );
+        },
+    },
 ];
