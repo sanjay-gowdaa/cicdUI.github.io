@@ -293,6 +293,7 @@ export const signIn = (userName: string, password: string) => {
                     const { accessToken } = signInUserSession;
                     dispatch(setSuccessInLogin());
                     (window as any).userToken = accessToken.jwtToken;
+                    {console.log(accessToken.jwtToken)}
                     (window as any).userName = user.username;
                     dispatch(setAmplifyResponse(true));
                 }
