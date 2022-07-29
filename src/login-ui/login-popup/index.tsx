@@ -102,6 +102,7 @@ const LoginPopup = (props: { history: History, setLogin: any }) => {
                     content='Login'
                 />
                 <Button
+                    style={{ width: '100%' }}
                     onClick={() => {
                         setLogin(false);
                         form.resetFields();
