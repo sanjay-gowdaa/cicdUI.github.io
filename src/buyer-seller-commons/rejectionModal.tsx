@@ -1,38 +1,52 @@
 import React from 'react'
-import { Modal, Button, Form, Input, Select, Checkbox, Radio, Typography } from 'antd';
+import { Modal, Button, Form, Input, Select,Radio, Typography } from 'antd';
 import { useState } from 'react';
-import type { FormInstance } from 'antd/es/form';
+import { RuleObject } from 'antd/lib/form';
 import { useForm } from 'antd/lib/form/Form';
 import { useSelector } from 'react-redux';
 import { RootState } from '../store/rootReducer';
-import { ProduceModel } from '../store/buyerReducer/types';
 import { isEmpty } from 'lodash';
 import { ACCESS_TOKEN } from '../store/api';
+
 const { Text } = Typography;
-
-
-
 
 const RejectionModal = (props: any) => {
 
-    const [buyqunt, setbuyqunt] = useState("")
-    const [optval, setoptval] = useState("")
-    const [reason, setreason] = useState("")
-    const [option, setoption] = useState("")
+    const [buyqunt, setbuyqunt] = useState("");
+    const [optval, setoptval] = useState("");
+    const [reason, setreason] = useState("");
+    const [option, setoption] = useState("");
+    const [isModalVisible, setIsModalVisible] = useState(false);
+
     const { record } = props;
     const { Option } = Select;
+
     const [form] = useForm();
-    const [isModalVisible, setIsModalVisible] = useState(false);
+    
     const loginState = useSelector((state: RootState) => state.loginUser);
     const userToken = (window as any).userToken ? (window as any).userToken : ACCESS_TOKEN;
 
-    console.log(record, 'record')
     const rejectfun = () => {
         setIsModalVisible(true);
     };
 
     const onValChange = (value: string) => {
         setoptval(value);
+    };
+
+    const validateQuantityInReject = (rule: RuleObject, value: string) => {
+        const regExp = /^[0-9]*$/;
+        if (isEmpty(value)) {
+            return Promise.reject('Please input the Quantity!');
+        } else if (!regExp.test(value)) {
+            return Promise.reject('Please enter a valid quantity!');
+        } else if (parseInt(value) === 0) {
+            return Promise.reject('Quantity cannot be Zero');
+        } else if (parseInt(value)> record.matched_quantity ) {
+            return Promise.reject('The maximum value for quantity Should not exceed matched Quantity');
+        } else {
+            return Promise.resolve();
+        }
     };
 
     const submitForm = (values: any) => {
@@ -75,11 +89,14 @@ const RejectionModal = (props: any) => {
                     <Form.Item
                         label="Rejected Quantity"
                         name="RejectedQuantity"
-                        rules={[{ required: true, message: 'Please input your quantity' }]}
+                        rules={[{
+                            required: true,
+                            validator: (rules, value) => validateQuantityInReject(rules, value)
+                        }]}
                     >
                         <Input
                             value={buyqunt}
-                            onChange={(e) => { setbuyqunt(e.target.value) }} />
+                            onChange={(value:any) => {setbuyqunt(value)}}/>
                     </Form.Item>
 
                     <Form.Item
@@ -109,7 +126,7 @@ const RejectionModal = (props: any) => {
                         >
                             <Input value={reason}
                                 placeholder="Your reason"
-                                onChange={(e) => { setreason(e.target.value) }} />
+                                onChange={(value:any) => { setreason(value) }} />
                         </Form.Item>
                     }
 
@@ -120,8 +137,8 @@ const RejectionModal = (props: any) => {
                         rules={[{ required: true, message: "This value is manditory" }]}
                     >
                         <Radio.Group>
-                            <Radio value="yes" onChange={(e) => { setoption(e.target.value) }}> Yes </Radio>
-                            <Radio value="no" onChange={(e) => { setoption(e.target.value) }}> No </Radio>
+                            <Radio value="yes" onChange={(value:any) => { setoption(value) }}> Yes </Radio>
+                            <Radio value="no" onChange={(value:any) => { setoption(value) }}> No </Radio>
                         </Radio.Group>
                     </Form.Item>
                     <div
