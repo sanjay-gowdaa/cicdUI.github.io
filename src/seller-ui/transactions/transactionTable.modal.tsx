@@ -2,7 +2,7 @@ import React from 'react';
 import { Button, Image, Typography, Tooltip } from 'antd';
 import { isEmpty } from 'lodash';
 
-import { TransactionModel } from '../../buyer-seller-commons/types';
+import { TransactionModel, TransactionStatus } from '../../buyer-seller-commons/types';
 import { parseIDfromHash } from '../../app-components/utils';
 import { showCropImage } from '../../buyer-seller-commons/constants';
 import GetCurrentStatusDetails from '../../buyer-seller-commons/transactions/getCurrentStatusDetails';
@@ -117,8 +117,8 @@ export const transactionSellerColumns = [
         key: 'action',
         render: (record: any) => {
             return (
-                
-                <RejectionModal record={record} />
+                record.gsi_status == 'pending' ?
+                <RejectionModal record={record} />:null
             );
         },
     },
