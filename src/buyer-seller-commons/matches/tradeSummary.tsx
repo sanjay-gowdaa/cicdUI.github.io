@@ -91,7 +91,7 @@ const TradeSummary = (props: componentProps) => {
                     :{seller_price} + {gst_amount} ( 5% GST) = <strong>{produce_total_cost}</strong>
                 </Col>
             </Row>
-            {buyer_faci_with_gst === 0 || seller_faci_with_gst === 0  ? null :
+            {buyer_faci_with_gst === 0 || seller_faci_with_gst === 0 ? null :
                 <Row>
                     <Col span={8}>
                         Facilitation cost
@@ -113,11 +113,12 @@ const TradeSummary = (props: componentProps) => {
                         {is_buyer ?
                             <React.Fragment></React.Fragment> :
                             <React.Fragment>
-                                <Statistic
+                                {diffAmt === 0 ? null : <Statistic
                                     value={diffAmt}
                                     valueStyle={{ color, fontSize: '12px' }}
                                     prefix={isIncrease ? <CaretUpOutlined /> : <CaretDownOutlined />}
-                                />
+                                />}
+
                             </React.Fragment>
                         }
                     </Space>

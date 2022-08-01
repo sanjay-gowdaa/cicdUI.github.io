@@ -18,8 +18,8 @@ const getWorkingHoursOptions = () => {
     );
 };
 
-const BuyerWorkingHours = (props: { workingHours: any, setDisableSave: any }) => {
-    const { workingHours, setDisableSave } = props;
+const BuyerWorkingHours = (props: any) => {
+    const { workingHours, setDisableSave, setChangeWorkingHr } = props;
     const [change, setChange] = useState(false);
 
     return (
@@ -66,13 +66,19 @@ const BuyerWorkingHours = (props: { workingHours: any, setDisableSave: any }) =>
                             {getWorkingHoursOptions()}
                         </Select>
                     </Form.Item>
-                    <Button type='link' danger onClick={() => setChange(!change)}>Cancel</Button>
+                    <Button type='link' danger onClick={() => {
+                        setChange(!change);
+                        setChangeWorkingHr(false)
+                    }}>Cancel</Button>
                 </React.Fragment> :
                 <React.Fragment>
                     <Text>Monday to Friday: {startCase(workingHours?.weekday.replaceAll('_', ' '))}</Text>
                     <br /><Text>Saturday: {startCase(workingHours?.saturday.replaceAll('_', ' '))}</Text>
                     <br /><Text>Sunday: {startCase(workingHours?.sunday.replaceAll('_', ' '))}</Text>
-                    <br /><Button type='link' onClick={() => setChange(!change)}>Change</Button>
+                    <br /><Button type='link' onClick={() => {
+                        setChange(!change);
+                        setChangeWorkingHr(true)
+                    }}>Change</Button>
                 </React.Fragment>
             }
         </Form.Item>
