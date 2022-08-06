@@ -1,12 +1,13 @@
 import React from 'react'
-import { Modal, Button, Form, Input, Select,Radio, Typography } from 'antd';
+import { Modal, Button, Form, Input, Select, Radio, Typography } from 'antd';
 import { useState } from 'react';
 import { RuleObject } from 'antd/lib/form';
 import { useForm } from 'antd/lib/form/Form';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../store/rootReducer';
 import { isEmpty } from 'lodash';
 import { ACCESS_TOKEN } from '../store/api';
+import { rejectFormPayload } from '../store/buyerReducer/actions';
 
 const { Text } = Typography;
 
@@ -22,7 +23,8 @@ const RejectionModal = (props: any) => {
     const { Option } = Select;
 
     const [form] = useForm();
-    
+    const dispatch = useDispatch();
+
     const loginState = useSelector((state: RootState) => state.loginUser);
     const userToken = (window as any).userToken ? (window as any).userToken : ACCESS_TOKEN;
 
@@ -42,7 +44,7 @@ const RejectionModal = (props: any) => {
             return Promise.reject('Please enter a valid quantity!');
         } else if (parseInt(value) === 0) {
             return Promise.reject('Quantity cannot be Zero');
-        } else if (parseInt(value)> record.matched_quantity ) {
+        } else if (parseInt(value) > record.matched_quantity) {
             return Promise.reject('The maximum value for quantity Should not exceed matched Quantity');
         } else {
             return Promise.resolve();
@@ -57,10 +59,10 @@ const RejectionModal = (props: any) => {
             accessToken: userToken,
             userType: loginState.is_buyer ? 'buyer' : 'seller',
             transactionId: record.pk,
-        }
+        };
+        dispatch(rejectFormPayload(rejectPayload));
         form.resetFields();
-        setIsModalVisible(false)
-        console.log(rejectPayload, "rejectPayload")
+        setIsModalVisible(false);
     };
 
     return (
@@ -77,7 +79,7 @@ const RejectionModal = (props: any) => {
                 onCancel={() => setIsModalVisible(false)}
                 footer={null}>
                 <Form
-                    form = {form}
+                    form={form}
                     name="basic"
                     labelCol={{ span: 10 }}
                     wrapperCol={{ span: 15 }}
@@ -96,7 +98,7 @@ const RejectionModal = (props: any) => {
                     >
                         <Input
                             value={buyqunt}
-                            onChange={(value:any) => {setbuyqunt(value)}}/>
+                            onChange={(value: any) => { setbuyqunt(value) }} />
                     </Form.Item>
 
                     <Form.Item
@@ -126,7 +128,7 @@ const RejectionModal = (props: any) => {
                         >
                             <Input value={reason}
                                 placeholder="Your reason"
-                                onChange={(value:any) => { setreason(value) }} />
+                                onChange={(value: any) => { setreason(value) }} />
                         </Form.Item>
                     }
 
@@ -137,13 +139,13 @@ const RejectionModal = (props: any) => {
                         rules={[{ required: true, message: "This value is manditory" }]}
                     >
                         <Radio.Group>
-                            <Radio value="yes" onChange={(value:any) => { setoption(value) }}> Yes </Radio>
-                            <Radio value="no" onChange={(value:any) => { setoption(value) }}> No </Radio>
+                            <Radio value="yes" onChange={(value: any) => { setoption(value) }}> Yes </Radio>
+                            <Radio value="no" onChange={(value: any) => { setoption(value) }}> No </Radio>
                         </Radio.Group>
                     </Form.Item>
                     <div
-                    style=
-                    {{display: 'flex', flexDirection:'row',justifyContent:'space-evenly',alignItems:'center'}}>
+                        style=
+                        {{ display: 'flex', flexDirection: 'row', justifyContent: 'space-evenly', alignItems: 'center' }}>
                         <Button htmlType="submit">
                             Save
                         </Button>
