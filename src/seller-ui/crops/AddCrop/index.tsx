@@ -75,9 +75,9 @@ const AddCropModal = (addCropProps: PropsType) => {
         intentToSell: 'No',
         transportRequired: 'No',
         additionalInfo: null,
-        categoryName: null,
-        cropName: null,
-        subCategory: null,
+        category: null,
+        produce: null,
+        variety: null,
         grade: null
     });
 
@@ -91,9 +91,9 @@ const AddCropModal = (addCropProps: PropsType) => {
                 intentToSell: 'No',
                 transportRequired: 'No',
                 additionalInfo: null,
-                categoryName: null,
-                cropName: null,
-                subCategory: null,
+                category: null,
+                produce: null,
+                variety: null,
                 grade: null
             }
             setFormInitValues(formInitValues);
@@ -123,11 +123,11 @@ const AddCropModal = (addCropProps: PropsType) => {
             district: loginUser.district,
             zip: loginUser.zip
         };
-        const produceName = `${updatedValueWithApmcRates.categoryName}-${updatedValueWithApmcRates.cropName}-${updatedValueWithApmcRates.subCategory}-${updatedValueWithApmcRates.grade}`;
+        const produceName = `${updatedValueWithApmcRates.category}-${updatedValueWithApmcRates.produce}-${updatedValueWithApmcRates.variety}-${updatedValueWithApmcRates.grade}`;
 
         let counter = 0;
         for (let i = 0; i < cropsList.length; i++) {
-            const produceListName = `${cropsList[i].category_name}-${cropsList[i].crop_name}-${cropsList[i].sub_category}-${cropsList[i].grade}`;
+            const produceListName = `${cropsList[i].category}-${cropsList[i].produce}-${cropsList[i].variety}-${cropsList[i].grade}`;
             if (produceListName === produceName) {
                 counter++;
             }
@@ -161,7 +161,7 @@ const AddCropModal = (addCropProps: PropsType) => {
 
     const onSelectCategory = (category: string) => {
         /* Reset other fields */
-        form.setFieldsValue({ cropName: null, subCategory: null, grade: null });
+        form.setFieldsValue({ produce: null, variety: null, grade: null });
         setSelectedMasterCrop('');
         setSelectedVariety('');
         resetApmcState();
@@ -177,7 +177,7 @@ const AddCropModal = (addCropProps: PropsType) => {
 
     const onMasterCrops = (produce: string) => {
         /* Reset other fields */
-        form.setFieldsValue({ subCategory: null, grade: null });
+        form.setFieldsValue({ variety: null, grade: null });
         setSelectedVariety('');
         resetApmcState();
         /* Reset other fields end */
@@ -221,7 +221,7 @@ const AddCropModal = (addCropProps: PropsType) => {
                         <Col xs={24} md={10} lg={10}>
                             <Form.Item
                                 label='Select Category'
-                                name='categoryName'
+                                name='category'
                                 rules={[{ required: true, message: 'Please select the Crop Category!' }]}
                             >
                                 <Select
@@ -234,7 +234,7 @@ const AddCropModal = (addCropProps: PropsType) => {
                             </Form.Item>
                             <Form.Item
                                 label='Select Produce'
-                                name='cropName'
+                                name='produce'
                                 rules={[{ required: true, message: 'Please select the Produce!' }]}
                             >
                                 <Select
@@ -247,7 +247,7 @@ const AddCropModal = (addCropProps: PropsType) => {
                             </Form.Item>
                             <Form.Item
                                 label='Select Variety'
-                                name='subCategory'
+                                name='variety'
                                 rules={[{ required: true, message: 'Please select the Produce Variety!' }]}
                             >
                                 <Select

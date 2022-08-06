@@ -304,7 +304,8 @@ export const getLiveApmcRateUpdated = (cropDetails: Array<UpdatedLiveApmcRatesQu
  */
 export const intentToSell = (produceId: string) => {
     const user = (window as any).userName ? (window as any).userName : LAST_AUTH_USER;
-    const intentToSellForSeller = `${BASE_URL}/${STAGE}/seller/${user}/crop/${produceId}/${INTENT_TO_SELL}`;
+    //const intentToSellForSeller = `${BASE_URL}/${STAGE}/seller/${user}/crop/${produceId}/${INTENT_TO_SELL}`;
+    const intentToSellForSeller = `http://localhost:4000/dev/seller/${user}/crop/${produceId}/${INTENT_TO_SELL}`;
     return fetch(intentToSellForSeller, {
         method: 'POST',
         headers: getAuthHeader()

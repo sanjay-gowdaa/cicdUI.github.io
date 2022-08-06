@@ -47,14 +47,14 @@ const getMasterProduceListOpts = ({ masterProduceList }: { masterProduceList: Ar
     return (
         <React.Fragment>
             {masterProduceList.map((masterProduceItem: MasterListApiFormat) => {
-                const { produce_name = '', crop_name = '', category_name = '', grade_name = '' } = masterProduceItem;
+                const { category_name = '', produce_name = '', variety_name = '',  grade_name = '' } = masterProduceItem;
 
                 return (
                     <Option
-                        key={`${produce_name}-${crop_name}-${category_name}-${grade_name}`}
-                        value={`${produce_name}-${crop_name}-${category_name}-${grade_name}`}
+                        key={`${category_name}-${produce_name}-${variety_name}-${grade_name}`}
+                        value={`${category_name}-${produce_name}-${variety_name}-${grade_name}`}
                     >
-                        {`${produce_name}-${crop_name}-${category_name}-${grade_name}`}
+                        {`${category_name}-${produce_name}-${variety_name}-${grade_name}`}
                     </Option>
                 );
             })
@@ -100,7 +100,7 @@ const AddCropModal = ({
             // delivery_by, 
             quantity
         } = fieldsValue;
-        const [masterProduce, category, sub_type, grade] = produce_name.split('-');
+        const [masterProduce, category, variety, grade] = produce_name.split('-');
         // const deliveryByIsoformat = new Date(delivery_by).toISOString();
         const additional_info = {
             moisture: fieldsValue.moisture,
@@ -110,9 +110,9 @@ const AddCropModal = ({
             fungus: fieldsValue.fungus
         };
         const addProducePayload = {
-            crop_name: masterProduce.trim(),
+            produce: masterProduce.trim(),
             category: category.trim(),
-            sub_type: sub_type.trim(),
+            variety: variety.trim(),
             grade: grade.trim(),
             // delivery_by: deliveryByIsoformat,
             additional_info,
@@ -120,11 +120,11 @@ const AddCropModal = ({
             quantity: quantity,
             urd_status: loginState.urd_status
         };
-        const produceName = `${addProducePayload.crop_name}-${addProducePayload.category}-${addProducePayload.sub_type}-${addProducePayload.grade}`;
+        const produceName = `${addProducePayload.produce}-${addProducePayload.category}-${addProducePayload.variety}-${addProducePayload.grade}`;
 
         let counter = 0;
         for (let i = 0; i < produceList.length; i++) {
-            const produceListName = `${produceList[i].crop_name}-${produceList[i].category}-${produceList[i].sub_type}-${produceList[i].grade}`;
+            const produceListName = `${produceList[i].produce}-${produceList[i].category}-${produceList[i].variety}-${produceList[i].grade}`;
             if (produceListName === produceName) {
                 counter++;
             }
@@ -151,8 +151,8 @@ const AddCropModal = ({
     };
 
     const processOnEditInitValues = (currentProduceRecord: ProduceModel) => {
-        const { crop_name, category, sub_type, grade } = currentProduceRecord;
-        const produce_name = `${crop_name}-${category}-${sub_type}-${grade}`;
+        const { produce, category, variety, grade } = currentProduceRecord;
+        const produce_name = `${produce}-${category}-${variety}-${grade}`;
         const deliveryByProcessed = moment(currentProduceRecord.delivery_by);
         return { ...currentProduceRecord, delivery_by: deliveryByProcessed, produce_name };
     };
