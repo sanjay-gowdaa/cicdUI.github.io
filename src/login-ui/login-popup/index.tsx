@@ -16,14 +16,15 @@ import { routesMap } from '../../constants';
 
 const { Text } = Typography;
 
-const LoginPopup = (props: { history: History }) => {
-    const { history } = props;
+const LoginPopup = (props: { history: History, setLogin: any }) => {
+    const { history, setLogin } = props;
     const loginState: UserStateModel = useSelector((state: RootState) => state.loginUser);
     const { msg, redirect } = loginState.errorInLogin;
     const [showForgotPassword, setForgotPassword] = useState(false);
     const [confirmLoading, showConfirmLoading] = useState(false);
     const [showNewPassword, setNewPassword] = useState(false);
     const dispatch = useDispatch();
+    const [form] = Form.useForm();
 
     useEffect(() => {
         if (loginState.isNewUser)
@@ -37,6 +38,7 @@ const LoginPopup = (props: { history: History }) => {
     const onFinish = (values: any) => {
         const { userName, password } = values;
         dispatch(signIn(userName, password));
+        form.resetFields();
     };
 
     const onFinishFailed = (value: any) => {
@@ -46,6 +48,7 @@ const LoginPopup = (props: { history: History }) => {
     return (
         <React.Fragment>
             <Form
+                form={form}
                 labelCol={{ span: 24 }}
                 wrapperCol={{ span: 24 }}
                 name='login-form'
@@ -98,6 +101,14 @@ const LoginPopup = (props: { history: History }) => {
                     htmlType='submit'
                     content='Login'
                 />
+                <Button
+                    style={{ width: '100%' }}
+                    onClick={() => {
+                        setLogin(false);
+                        form.resetFields();
+                    }}>
+                    cancel
+                </Button>
             </Form>
             <ForgotPasswordModal showModal={showForgotPassword} setModal={setForgotPassword} />
             <NewPasswordModal showModal={showNewPassword} setModal={setNewPassword} />

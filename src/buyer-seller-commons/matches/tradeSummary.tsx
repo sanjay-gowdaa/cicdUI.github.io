@@ -16,13 +16,13 @@ const TradeSummary = (props: componentProps) => {
     const { cropDetails } = props;
     const loginState = useSelector((state: RootState) => state.loginUser);
     const { is_buyer } = loginState;
-    const { buyer_location,  seller_price, destinyId, produce, gst_amount,
-        buyer_price_per_quintal, matched_quantity, seller_location, seller_final_price,seller_quoted_price_per_quintal,
-        buyer_total_price, seller_total_price, seller_facilitation_gst,buyer_facilitation_gst, 
-        buyer_facilitation_cost,seller_facilitation_cost, seller_final_price_per_quintal,seller_initial_produce_cost,
+    const { buyer_location, seller_price, destinyId, produce, gst_amount,
+        buyer_price_per_quintal, matched_quantity, seller_location, seller_final_price, seller_quoted_price_per_quintal,
+        buyer_total_price, seller_total_price, seller_facilitation_gst, buyer_facilitation_gst,
+        buyer_facilitation_cost, seller_facilitation_cost, seller_final_price_per_quintal, seller_initial_produce_cost,
     } = cropDetails;
 
-    
+
     const produce_total_cost = Math.round(seller_price) + gst_amount
     const seller_faci_with_gst = Math.round(seller_facilitation_cost + seller_facilitation_gst)
     const buyer_faci_with_gst = Math.round(buyer_facilitation_cost + buyer_facilitation_gst)
@@ -35,7 +35,7 @@ const TradeSummary = (props: componentProps) => {
             <Title level={4}>Trade summary </Title>
             <Row>
                 <Col span={8}>
-                {is_buyer ? <>Seller </> : <>Buyer </>}Id
+                    {is_buyer ? <>Seller </> : <>Buyer </>}Id
                 </Col>
                 <Col span={16}>
                     : {destinyId}
@@ -57,7 +57,7 @@ const TradeSummary = (props: componentProps) => {
                     : {matched_quantity}
                 </Col>
             </Row>
-            {is_buyer ? 
+            {is_buyer ?
                 <Row>
                     <Col span={8}>
                         Price per quintal
@@ -74,14 +74,14 @@ const TradeSummary = (props: componentProps) => {
                         : {seller_quoted_price_per_quintal}
                     </Col>
                 </Row>
-                <Row>
-                    <Col span={8}>
-                        Vikasbandhu price/Qtl
-                    </Col>
-                    <Col span={16} className='required-form-field-after'>
-                        : {seller_final_price_per_quintal}
-                    </Col>
-                </Row></div>
+                    <Row>
+                        <Col span={8}>
+                            Vikasbandhu price/Qtl
+                        </Col>
+                        <Col span={16} className='required-form-field-after'>
+                            : {seller_final_price_per_quintal}
+                        </Col>
+                    </Row></div>
             }
             <Row>
                 <Col span={8}>
@@ -91,14 +91,16 @@ const TradeSummary = (props: componentProps) => {
                     :{seller_price} + {gst_amount} ( 5% GST) = <strong>{produce_total_cost}</strong>
                 </Col>
             </Row>
-            <Row>
-                <Col span={8}>
-                    Facilitation cost
-                </Col>
-                <Col span={16}>
-                    : {is_buyer ? buyer_facilitation_cost : seller_facilitation_cost} +  {is_buyer ? buyer_facilitation_gst : seller_facilitation_gst} (18% GST) = <strong>{is_buyer? buyer_faci_with_gst : seller_faci_with_gst}</strong>
-                </Col>
-            </Row>
+            {buyer_faci_with_gst === 0 || seller_faci_with_gst === 0 ? null :
+                <Row>
+                    <Col span={8}>
+                        Facilitation cost
+                    </Col>
+                    <Col span={16}>
+                        :{is_buyer ? buyer_facilitation_cost : seller_facilitation_cost} +  {is_buyer ? buyer_facilitation_gst : seller_facilitation_gst} (18% GST) = <strong>{is_buyer ? buyer_faci_with_gst : seller_faci_with_gst}</strong>
+                    </Col>
+                </Row>
+            }
             <Row>
                 <Col span={8}>
                     <strong>Total price</strong>
@@ -108,20 +110,21 @@ const TradeSummary = (props: componentProps) => {
                         <strong>
                             {is_buyer ? buyer_total_price : seller_total_price}
                         </strong>
-                    {is_buyer ?
-                        <React.Fragment></React.Fragment> :
-                        <React.Fragment>
-                            <Statistic
-                                value={diffAmt}
-                                valueStyle={{ color, fontSize: '12px' }}
-                                prefix={isIncrease ? <CaretUpOutlined /> : <CaretDownOutlined />}
-                            />
-                        </React.Fragment>
-                    }
+                        {is_buyer ?
+                            <React.Fragment></React.Fragment> :
+                            <React.Fragment>
+                                {diffAmt === 0 ? null : <Statistic
+                                    value={diffAmt}
+                                    valueStyle={{ color, fontSize: '12px' }}
+                                    prefix={isIncrease ? <CaretUpOutlined /> : <CaretDownOutlined />}
+                                />}
+
+                            </React.Fragment>
+                        }
                     </Space>
                 </Col>
             </Row>
-             
+
             <Row>
                 <Col span={8}>
                     Location
@@ -138,10 +141,10 @@ const TradeSummary = (props: componentProps) => {
                     : {'12/08/2020 to 15/08/2020'}
                 </Col>
             </Row> */}
-            {is_buyer ? <></> : 
-            <Text className='required-form-field' style={{ color: 'red'}}>
-                Including all taxes
-            </Text>
+            {is_buyer ? <></> :
+                <Text className='required-form-field' style={{ color: 'red' }}>
+                    Including all taxes
+                </Text>
             }
         </React.Fragment>
     );

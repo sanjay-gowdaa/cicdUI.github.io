@@ -75,10 +75,11 @@ const Register = ({ history, setSignUpPopupVisible }: { history: History, setSig
     const dispatch = useDispatch();
     const registrationState = useSelector((state: RootState) => state.registration);
     const { configs } = registrationState;
+    const [form] = Form.useForm();
 
     const onFinish = (values: any) => {
         console.log("values", values);
-        const { name, number, email, type, category, urd_status} = values;
+        const { name, number, email, type, category, urd_status } = values;
         dispatch(sendOTP(`91${number}`));
         dispatch(updateEntityType(currentType));
         dispatch(updateBasicRegistrationData({ name, number, email, type, category, urd_status }));
@@ -96,9 +97,9 @@ const Register = ({ history, setSignUpPopupVisible }: { history: History, setSig
         setSubType(type);
         const filter = uniqBy(configs.filter((config: any) => config.type === currentType && config.sub_type === type), 'category');
         (filter.length > 1) ? setShowCategory(true) : setShowCategory(false);
-        if(type === "Individual" || type === "Farmer"){
+        if (type === "Individual" || type === "Farmer") {
             setShowURD(true);
-        }else(
+        } else (
             setShowURD(false)
         )
     };
@@ -138,6 +139,7 @@ const Register = ({ history, setSignUpPopupVisible }: { history: History, setSig
             </Row>
             <Form
                 {...registerBasicFormMainLayout}
+                form={form}
                 name='basic'
                 className='register-basic-form'
                 initialValues={{}}
@@ -178,15 +180,15 @@ const Register = ({ history, setSignUpPopupVisible }: { history: History, setSig
                 }
                 {showURD ?
                     <Form.Item
-                    label='Registered user'
-                    name='urd_status'
-                    rules={[{ required: true, validator: (rule, value) => customConsentValidator(rule, value) }]}
-                >
+                        label='Registered user'
+                        name='urd_status'
+                        rules={[{ required: true, validator: (rule, value) => customConsentValidator(rule, value) }]}
+                    >
                         <Radio.Group>
                             <Radio value={1}>Yes</Radio>
                             <Radio value={2}>No</Radio>
                         </Radio.Group>
-                </Form.Item> : null
+                    </Form.Item> : null
 
                 }
                 <Form.Item
@@ -237,7 +239,10 @@ const Register = ({ history, setSignUpPopupVisible }: { history: History, setSig
                 </Form.Item>
                 <Form.Item {...registerBasicFormTailLayout}>
                     <PrimaryBtn style={{ width: '50%' }} htmlType='submit' content='Request OTP' />
-                    <DefaultBtn style={{ width: '50%' }} onClick={() => setSignUpPopupVisible(false)} content='Cancel' />
+                    <DefaultBtn style={{ width: '50%' }} onClick={() => {
+                        setSignUpPopupVisible(false);
+                        form.resetFields();
+                    }} content='Cancel' />
                 </Form.Item>
             </Form>
             {displayTandC && <TAndCPopup initialDisplayType='general' viewTAndC={displayTandC} />}
