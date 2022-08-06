@@ -73,6 +73,7 @@ const getAuthHeader = () => {
     const userToken = (window as any).userToken ? (window as any).userToken : ACCESS_TOKEN;
     if (userToken) {
         const userAccessToken = parseToken(userToken);
+        
         return ({ 'Authorization': `Bearer ${userAccessToken}` });
     } else {
         return ({ 'Authorization': `Bearer ` });

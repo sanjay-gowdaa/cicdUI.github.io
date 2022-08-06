@@ -120,4 +120,14 @@ export const transactionBuyerColumns = [
             );
         },
     },
+    /* {
+        title: '',
+        className: 'reject-button',
+        key: 'action',
+        render :(record:any) =>{
+            return(
+                
+            )
+        }
+    } */
 ];
