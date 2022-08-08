@@ -112,9 +112,10 @@ const RejectionModal = (props: any) => {
                             onChange={onValChange}
                             allowClear
                         >
-                            <Option value="r1">Reason 1</Option>
-                            <Option value="r2">Reason 2</Option>
-                            <Option value="r3">Reason 3</Option>
+                            <Option value="Quantity mismatched">Quantity mismatched</Option>
+                            <Option value="Quality not satisfied">Quality not satisfied</Option>
+                            <Option value="Delay in delivery">Delay in delivery</Option>
+                            <Option value="Package not satisfied">Package not satisfied</Option>
                             <Option value="others"> Other </Option>
 
                         </Select>
