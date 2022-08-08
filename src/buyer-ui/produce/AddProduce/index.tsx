@@ -100,7 +100,8 @@ const AddCropModal = ({
             // delivery_by, 
             quantity
         } = fieldsValue;
-        const [masterProduce, category, variety, grade] = produce_name.split('-');
+        const [category, produce, variety, grade] = produce_name.split('-');
+        
         // const deliveryByIsoformat = new Date(delivery_by).toISOString();
         const additional_info = {
             moisture: fieldsValue.moisture,
@@ -109,9 +110,10 @@ const AddCropModal = ({
             packing_type: fieldsValue.packing_type,
             fungus: fieldsValue.fungus
         };
+
         const addProducePayload = {
-            produce: masterProduce.trim(),
             category: category.trim(),
+            produce: produce.trim(),
             variety: variety.trim(),
             grade: grade.trim(),
             // delivery_by: deliveryByIsoformat,
@@ -120,11 +122,11 @@ const AddCropModal = ({
             quantity: quantity,
             urd_status: loginState.urd_status
         };
-        const produceName = `${addProducePayload.produce}-${addProducePayload.category}-${addProducePayload.variety}-${addProducePayload.grade}`;
+        const produceName = `${addProducePayload.category}-${addProducePayload.produce}-${addProducePayload.variety}-${addProducePayload.grade}`;
 
         let counter = 0;
         for (let i = 0; i < produceList.length; i++) {
-            const produceListName = `${produceList[i].produce}-${produceList[i].category}-${produceList[i].variety}-${produceList[i].grade}`;
+            const produceListName = `${produceList[i].category}-${produceList[i].produce}-${produceList[i].variety}-${produceList[i].grade}`;
             if (produceListName === produceName) {
                 counter++;
             }
@@ -152,7 +154,7 @@ const AddCropModal = ({
 
     const processOnEditInitValues = (currentProduceRecord: ProduceModel) => {
         const { produce, category, variety, grade } = currentProduceRecord;
-        const produce_name = `${produce}-${category}-${variety}-${grade}`;
+        const produce_name = `${category}-${produce}-${variety}-${grade}`;
         const deliveryByProcessed = moment(currentProduceRecord.delivery_by);
         return { ...currentProduceRecord, delivery_by: deliveryByProcessed, produce_name };
     };

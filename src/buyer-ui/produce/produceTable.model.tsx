@@ -40,7 +40,7 @@ export const produceColumns = ({
             key: 'produce',
             render: (produce: string, record: ProduceModel) => {
                 const { category, variety: subType } = record;
-                const imageSrc = showCropImage(produce);
+                const imageSrc = showCropImage(category);
 
                 return (
                     <div className='display-flex-row align-center'>
