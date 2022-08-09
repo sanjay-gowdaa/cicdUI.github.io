@@ -74,7 +74,7 @@ const PayButton = (props: { record: any }) => {
             const newDate = new Date();
             const updatedDate = record.updated_timestamp;
 
-            const diffInDays = parseInt(moment(newDate).format('YYYYMMDD')) - parseInt(moment(updatedDate).format('YYYYMMDD'));
+            const diffInDays = parseInt(moment(newDate).format('DD-MM-YYYY HH:mm:ss')) - parseInt(updatedDate);
 
             if (diffInDays === 1) {
                 Modal.info({
