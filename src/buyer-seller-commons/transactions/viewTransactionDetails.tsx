@@ -56,6 +56,7 @@ const TransactionDetailsModal = (props: any) => {
         return showDetails.map((list: any) => {
             return (isDownload ?
                 <React.Fragment>
+                    <div style={{display: 'flex', flexDirection: 'column'}}>
                     {!isUndefined(list.pdf_link) ?
                         <Button
                             type='link'
@@ -66,6 +67,7 @@ const TransactionDetailsModal = (props: any) => {
                             Download
                         </Button> : null
                     }
+                    </div>
                 </React.Fragment> :
                 <React.Fragment>
                     <Text>{list.event_name} ({moment(list.event_time).format('DD-MM-YYYY HH:MM')})</Text>

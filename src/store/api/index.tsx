@@ -52,7 +52,9 @@ const GET_ADDITIONAL_INFO = 'getAdditionalInfo';
 const GET_SELLER_CROP_IMAGE = 'seller/getCropImages';
 const GET_DESTINY_ID = `${TRANSACTION_API}/getDestinyCode`;
 //CHECK_DRAFT_API endpoint remains same for all the environment
-const CHECK_DRAFT_API= 'https://enzdzh0pw2.execute-api.ap-south-1.amazonaws.com/dev/payment/pay'
+const CHECK_DRAFT_API = 'https://enzdzh0pw2.execute-api.ap-south-1.amazonaws.com/dev/payment/pay';
+
+const REJECT_FORM_API = 'https://enzdzh0pw2.execute-api.ap-south-1.amazonaws.com/dev/transaction/terminateTransaction'
 
 export const LAST_AUTH_USER = localStorage.getItem(`${COGNITO_PROVIDER}.${COGNITO_ID}.LastAuthUser`);
 export const ACCESS_TOKEN = localStorage.getItem(`${COGNITO_PROVIDER}.${COGNITO_ID}.${LAST_AUTH_USER}.accessToken`);
@@ -73,6 +75,7 @@ const getAuthHeader = () => {
     const userToken = (window as any).userToken ? (window as any).userToken : ACCESS_TOKEN;
     if (userToken) {
         const userAccessToken = parseToken(userToken);
+        
         return ({ 'Authorization': `Bearer ${userAccessToken}` });
     } else {
         return ({ 'Authorization': `Bearer ` });
@@ -687,11 +690,21 @@ export const fetchDestinyId = (userName: string) => {
 /* Matches And Transactions End */
 
 
-export const submitCheckDraftDetails=(values:any)=>{
-    const checkDraftApi=`${CHECK_DRAFT_API}`;
+export const submitCheckDraftDetails = (values: any) => {
+    const checkDraftApi = `${CHECK_DRAFT_API}`;
     console.log(values);
-     try {
-        return fetch(checkDraftApi, { method: 'POST' ,body:JSON.stringify(values)});
+    try {
+        return fetch(checkDraftApi, { method: 'POST', body: JSON.stringify(values) }).then(() => window.location.reload());
+    } catch (error) {
+        return console.log('error', error);
+    }
+};
+
+export const submitRejectFormPayload = (values: any) => {
+    const RejectFormApi = `${REJECT_FORM_API}`;
+    console.log(values);
+    try {
+        return fetch(RejectFormApi, { method: 'POST', body: JSON.stringify(values) });
     } catch (error) {
         return console.log('error', error);
     }

@@ -60,6 +60,7 @@ const Profile = (props: { history: History }) => {
     const [kycFormValues, setKycFormValues] = useState(initialFormValues);
     const [formSubmitValue, setFormSubmitValue] = useState({});
     const [showWorkingHourAlert, setShowWorkingHourAlert] = useState(false)
+    const [changeWorkingHr,setChangeWorkingHr] = useState(false)
 
     const loginState = useSelector((state: RootState) => state.loginUser);
     const { bank_info, bank_doc, configs, working_hours, category } = loginState;
@@ -156,7 +157,7 @@ const Profile = (props: { history: History }) => {
             }
         }
         if (count === length) {
-            setKycFlag('submitted');
+            // setKycFlag('submitted');
             return true;
         } else {
             return false;
@@ -178,8 +179,10 @@ const Profile = (props: { history: History }) => {
     };
 
     const onSave = () => {
+        console.log(formSubmitValue,'formSubmitValue');
         const isSubmitted = setKycToComplete(formSubmitValue);
-        const kyc_flag = isSubmitted ? 'submitted' : loginState.kyc_flag;
+        const kyc_flag =  ( addBankInfo || isChangeClicked ) ? 'submitted' : loginState.kyc_flag;
+        console.log(kyc_flag,'kyc_flag');
         const registerDataPromise =
             generateFormData(cloneDeep({
                 ...kycFormValues,
@@ -258,7 +261,7 @@ const Profile = (props: { history: History }) => {
                 }
 
             }
-            finalValues['kyc_flag'] = 'isSubmitted';
+            // finalValues['kyc_flag'] = 'isSubmitted';
             setKycFormValues(finalValues);
             if (!isEmpty(finalValues)) {
                 console.log('i have entered')
@@ -441,7 +444,7 @@ const Profile = (props: { history: History }) => {
                                     <br />{loginState.address2},
                                     <br />{loginState.zip}
                                 </Form.Item>
-                                {userType === UserTypes.BUYER && <BuyerWorkingHours workingHours={working_hours} setDisableSave={setDisableSave} />}
+                                {userType === UserTypes.BUYER && <BuyerWorkingHours workingHours={working_hours} setDisableSave={setDisableSave} setChangeWorkingHr={setChangeWorkingHr} />}
                                 <div className='add-details-text add-bank-details'>
                                     <Title level={5} style={{ width: 'fit-content', float: 'left' }}>Bank Details</Title>
                                     {addBankInfo ?

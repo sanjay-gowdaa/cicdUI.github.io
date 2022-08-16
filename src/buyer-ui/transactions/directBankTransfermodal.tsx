@@ -51,7 +51,6 @@ const DirectBankTransferModal = (props: any) => {
             dispatch(cashAndCheckPayment(payload));
             form.resetFields();
             setPaymentDetails(!viewPaymentDetails);
-            window.location.reload();
         }
     }
 

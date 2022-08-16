@@ -56,11 +56,11 @@ const UserBasicActions = ({ history, popUpTrigger }: { history: History, popUpTr
                 width={'30%'}
                 maskClosable={false}
                 className='custom-login-modal'
-                onCancel={() => setLogin(!showLogin)}
                 centered
+                closable={false}
                 wrapClassName='login-popup-container'
             >
-                <LoginPopup history={history} />
+                <LoginPopup history={history} setLogin={setLogin}/>
             </Modal>
         </div>
     );
