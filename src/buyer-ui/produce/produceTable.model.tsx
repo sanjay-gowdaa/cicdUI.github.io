@@ -39,14 +39,15 @@ export const produceColumns = ({
             dataIndex: 'produce',
             key: 'produce',
             render: (produce: string, record: ProduceModel) => {
-                const { category, variety: subType } = record;
+                const { category, variety: subType} = record;
+                console.log("record", record)
                 const imageSrc = showCropImage(category);
 
                 return (
                     <div className='display-flex-row align-center'>
                         <Image src={imageSrc} className="table-crop-image" />
                         <div className='margin-l-r-1em'>
-                            <Title level={5}>{category}</Title>
+                            <Title level={5}>{record.produce}</Title>
                             <p>{subType}</p>
                         </div>
                     </div>
