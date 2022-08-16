@@ -35,11 +35,12 @@ export const Terms = (props: { history: History }) => {
                 <Panel header="General Terms" key="1">
                     <GeneralTerms />
                 </Panel>
-                {loginState.is_buyer?<Panel header="Buyer Terms" key="2">
+                <Panel header="Buyer Terms" key="2">
                     <BuyerTerms />
-                </Panel>:<Panel header="Seller Terms" key="3">
+                </Panel>
+                <Panel header="Seller Terms" key="3">
                     <SellerTerms />
-                </Panel>}
+                </Panel>
                 <Panel header="Privacy Policy" key="4">
                     <PrivacyPolicy />
                 </Panel>
