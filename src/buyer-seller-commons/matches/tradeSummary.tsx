@@ -91,14 +91,16 @@ const TradeSummary = (props: componentProps) => {
                     :{seller_price} + {gst_amount} ( 5% GST) = <strong>{produce_total_cost}</strong>
                 </Col>
             </Row>
-            <Row>
-                <Col span={8}>
-                    Facilitation cost
-                </Col>
-                <Col span={16}>
-                    : {is_buyer ? buyer_facilitation_cost : seller_facilitation_cost} +  {is_buyer ? buyer_facilitation_gst : seller_facilitation_gst} (18% GST) = <strong>{is_buyer? buyer_faci_with_gst : seller_faci_with_gst}</strong>
-                </Col>
-            </Row>
+            {is_buyer && buyer_facilitation_cost === 0 || !is_buyer && seller_facilitation_cost === 0? null :
+                <Row>
+                    <Col span={8}>
+                        Facilitation cost
+                    </Col>
+                    <Col span={16}>
+                        :{is_buyer ? buyer_facilitation_cost : seller_facilitation_cost} +  {is_buyer ? buyer_facilitation_gst : seller_facilitation_gst} (18% GST) = <strong>{is_buyer ? buyer_faci_with_gst : seller_faci_with_gst}</strong>
+                    </Col>
+                </Row>
+            }
             <Row>
                 <Col span={8}>
                     <strong>Total price</strong>
