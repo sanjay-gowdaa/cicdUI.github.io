@@ -56,8 +56,10 @@ const ContactUs = () => {
                             <div>
                                 <EnvironmentOutlined className='contact-us-icon' />
                                 <address className='contact-details contact-address'>
-                                    {t('contact_us_page.address1')}
+                                    <b>{t('contact_us_page.address1')}</b>
                                     <br />{t('contact_us_page.address2')}
+                                    <br />{t('contact_us_page.address3')}
+                                    <br/>{t('contact_us_page.address4')}
                                 </address>
                             </div>
                             <div className="mapouter">
