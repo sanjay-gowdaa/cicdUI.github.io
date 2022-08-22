@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Button, Image, Progress, Typography } from 'antd';
-import {isEmpty } from 'lodash';
+import { isEmpty } from 'lodash';
 
 import { ProduceModel } from '../../store/buyerReducer/types';
 import { showCropImage } from '../../buyer-seller-commons/constants';
@@ -34,7 +34,6 @@ export const produceColumns = ({
     isEdit,
     currentCropId,
 }: produceColumnCallbacks) =>
-    
     [
         {
             title: 'Produce',
@@ -109,27 +108,26 @@ export const produceColumns = ({
             title: 'Additional',
             key: 'additional_info',
             dataIndex: 'additional_info',
-            render: (additionalInfo: any , record:ProduceModel) => {
+            render: (additionalInfo: any, record: ProduceModel) => {
                 return (
                     <div>
                         <Button
                             type="link"
                             disabled={isEmpty(additionalInfo)}
-                            onClick={() => {openAdditionalInfo(additionalInfo) ; console.log(record)} }
+                            onClick={() => { openAdditionalInfo(additionalInfo); }}
                         >
                             Additional Info
-                        </Button> 
-                        { isEmpty(additionalInfo) && 
-                        <Button 
-                        type='link'
-                        onClick={ () => EditAdditionalInfo(record,updateCropDetails)}
-                        
-                        >
-                            Edit
-                        </Button>}
+                        </Button>
+                        {isEmpty(additionalInfo) &&
+                            <Button
+                                type='link'
+                                onClick={() => EditAdditionalInfo(record, updateCropDetails)}
+                            >
+                                Edit
+                            </Button>}
                     </div>
-                    
-                    
+
+
                 );
             },
         },
@@ -151,8 +149,9 @@ export const produceColumns = ({
                             type="link"
                             className="button"
                             disabled={!record.isEditable}
-                            onClick={() => {  
-                                prepareForEditProduce(record);}}
+                            onClick={() => {
+                                prepareForEditProduce(record);
+                            }}
                         >
                             Edit
                         </Button>

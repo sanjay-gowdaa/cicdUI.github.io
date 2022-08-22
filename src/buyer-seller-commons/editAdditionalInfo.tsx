@@ -7,7 +7,6 @@ export const EditAdditionalInfo =(record:any,updateCropDetails:any) =>{
     const changedInfo = record;
     console.log(changedInfo)
     const onFinish = (fieldsValue: any) => {
-
         const additional_info = {
             moisture: fieldsValue.moisture,
             other_info: fieldsValue.other_info,
@@ -15,12 +14,11 @@ export const EditAdditionalInfo =(record:any,updateCropDetails:any) =>{
             packing_type: fieldsValue.packing_type,
             fungus: fieldsValue.fungus
         };
-        console.log(additional_info)
-        changedInfo.additional_info['moisture'] = additional_info.moisture
-        changedInfo.additional_info['other_info'] = additional_info.other_info
-        changedInfo.additional_info['packing_size'] = additional_info.packing_size
-        changedInfo.additional_info['packing_type'] = additional_info.packing_type
-        changedInfo.additional_info['fungus'] = additional_info.fungus
+        changedInfo.additional_info['moisture'] = additional_info.moisture;
+        changedInfo.additional_info['other_info'] = additional_info.other_info;
+        changedInfo.additional_info['packing_size'] = additional_info.packing_size;
+        changedInfo.additional_info['packing_type'] = additional_info.packing_type;
+        changedInfo.additional_info['fungus'] = additional_info.fungus;
         console.log(changedInfo)
         updateCropDetails(changedInfo)
         modal.destroy();
