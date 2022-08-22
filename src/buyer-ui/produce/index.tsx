@@ -27,6 +27,7 @@ const ProduceSection = (props: { history: History }) => {
     const loginState = useSelector((state: RootState) => state.loginUser);
     const dispatch = useDispatch();
     const [isEdit, setIsEdit] = useState(false);
+    const [isopenEdit,setisopenEdit]=useState(true)
     const [currentCropId, setCurrentCropId] = useState('');
     const [currentProduceRecord, setCurrentProduceRecord] = useState({} as ProduceModel);
     const [modalVisible, setModalVisible] = useState(false);
