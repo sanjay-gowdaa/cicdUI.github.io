@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Button, Image, Progress, Typography } from 'antd';
 import { isEmpty } from 'lodash';
 
@@ -11,8 +11,6 @@ import { EditAdditionalInfo } from '../../buyer-seller-commons/editAdditionalInf
 
 const { Title } = Typography;
 
-
-
 const getCropId = (cropID: string) => {
     return parseIDfromHash(cropID);
 };
@@ -24,7 +22,7 @@ type produceColumnCallbacks = {
     setIsEdit: any;
     isEdit: boolean;
     currentCropId: string;
-    updateAdditionalDetails:any;
+    updateAdditionalDetails: any;
 };
 
 export const produceColumns = ({
@@ -120,17 +118,14 @@ export const produceColumns = ({
                         >
                             Additional Info
                         </Button>
-                        
-                            <Button
-                                disabled = {!isEmpty(additionalInfo)}
-                                type='link'
-                                onClick={() =>{window.alert("You can edit this only once");EditAdditionalInfo(record, updateAdditionalDetails)} }
-                            >
-                                Edit
-                            </Button>
+                        <Button
+                            disabled={!isEmpty(additionalInfo)}
+                            type='link'
+                            onClick={() => { EditAdditionalInfo(record, updateAdditionalDetails) }}
+                        >
+                            Edit
+                        </Button>
                     </div>
-
-
                 );
             },
         },

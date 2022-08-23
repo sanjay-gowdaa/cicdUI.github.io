@@ -1,13 +1,13 @@
 import React from 'react'
 import { Button, Col, Form, Input, Modal, Row } from 'antd';
 import TextArea from 'antd/lib/input/TextArea';
-import { convertMasterListToGradeStructure } from '../buyer-ui/masterList/masterListUtils';
+import { ExclamationCircleOutlined } from '@ant-design/icons';
 
 export const EditAdditionalInfo = (record: any, updateAdditionalDetails: any) => {
-
     const changedInfo = record;
-    const onFinish = (fieldsValue: any) => {
-        console.log(record)
+
+    function onFinish(fieldsValue: any) {
+        console.log("i am here")
         const additional_info = {
             moisture: fieldsValue.moisture,
             other_info: fieldsValue.other_info,
@@ -15,7 +15,6 @@ export const EditAdditionalInfo = (record: any, updateAdditionalDetails: any) =>
             packing_type: fieldsValue.packing_type,
             fungus: fieldsValue.fungus
         };
-
         changedInfo.additional_info['moisture'] = additional_info.moisture;
         changedInfo.additional_info['other_info'] = additional_info.other_info;
         changedInfo.additional_info['packing_size'] = additional_info.packing_size;
@@ -29,6 +28,15 @@ export const EditAdditionalInfo = (record: any, updateAdditionalDetails: any) =>
         console.log('Failed:', errorInfo);
     };
 
+    const confirmationPopup = (fieldsValue: any) => {
+        Modal.confirm({
+            title: `Are you sure you want to change the additional info? You can do it only once.`,
+            icon: <ExclamationCircleOutlined />,
+            onOk() { onFinish(fieldsValue) },
+            onCancel() { }
+        });
+    };
+
     const modal = Modal.info({
         visible: false,
         title: 'Specification',
@@ -38,7 +46,7 @@ export const EditAdditionalInfo = (record: any, updateAdditionalDetails: any) =>
             <Row gutter={16}>
                 <Col span={24}>
                     <Form
-                        onFinish={onFinish}
+                        onFinish={confirmationPopup}
                         onFinishFailed={onFinishFailed}>
                         <Form.Item
                             labelCol={{ span: 10 }}
@@ -105,7 +113,6 @@ export const EditAdditionalInfo = (record: any, updateAdditionalDetails: any) =>
                         >
                             Edit Requirements
                         </Button>
-
                     </Form>
                 </Col>
             </Row>
@@ -113,6 +120,5 @@ export const EditAdditionalInfo = (record: any, updateAdditionalDetails: any) =>
         okText: 'Ok',
         icon: null
     });
-
 }
 
