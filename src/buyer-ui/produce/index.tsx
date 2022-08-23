@@ -59,6 +59,14 @@ const ProduceSection = (props: { history: History }) => {
         dispatch(editProduce({ ...updatedCropData, is_delete: 'no', sk, pk,isEditable:false }));
     };
 
+    const updateAdditionalDetails = (updatedCropData: ProduceModel) => {
+        const { sk, pk } = updatedCropData;
+        const actualCropID = getCropId(sk || '');
+        console.log('actualCropId', actualCropID);
+        console.log('updatedCropDetails', updatedCropData);
+        dispatch(editProduce({ ...updatedCropData, is_delete: 'no', sk, pk,isEditable:true }));
+    };
+
     const showKycRequiredModal = () => {
         Modal.info({
             className: 'kyc-required-modal',
@@ -108,7 +116,7 @@ const ProduceSection = (props: { history: History }) => {
                         cell: EditableCell,
                     },
                 }}
-                columns={produceColumns({ deleteProduce, prepareForEditProduce, updateCropDetails, setIsEdit, isEdit, currentCropId}) as any}
+                columns={produceColumns({ deleteProduce, prepareForEditProduce, updateCropDetails,updateAdditionalDetails, setIsEdit, isEdit, currentCropId}) as any}
                 dataSource={buyerState.produceList}
             />
         </div>

@@ -24,11 +24,13 @@ type produceColumnCallbacks = {
     setIsEdit: any;
     isEdit: boolean;
     currentCropId: string;
+    updateAdditionalDetails:any;
 };
 
 export const produceColumns = ({
     deleteProduce,
     prepareForEditProduce,
+    updateAdditionalDetails,
     updateCropDetails,
     setIsEdit,
     isEdit,
@@ -118,13 +120,14 @@ export const produceColumns = ({
                         >
                             Additional Info
                         </Button>
-                        {isEmpty(additionalInfo) &&
+                        
                             <Button
+                                disabled = {!isEmpty(additionalInfo)}
                                 type='link'
-                                onClick={() => EditAdditionalInfo(record, updateCropDetails)}
+                                onClick={() =>{window.alert("You can edit this only once");EditAdditionalInfo(record, updateAdditionalDetails)} }
                             >
                                 Edit
-                            </Button>}
+                            </Button>
                     </div>
 
 
