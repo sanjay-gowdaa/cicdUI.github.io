@@ -1,0 +1,38 @@
+div.ant-modal.rejection-notification{
+    div.ant-modal-header{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: green;
+    }
+        .ant-modal-content{
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            width: 29.125rem;
+            resize: auto !important;
+            background-color:green;
+
+           
+                    .rejection-collpase{
+                        width: 100%;
+                        // background-color:yellow;
+                        display: flex;
+                        flex-direction: row;
+                        justify-content: center;
+                        align-items: center;
+                        div.ant-collapse-header{
+                            width:300px;
+                            // background-color:red;
+                            height:50px;
+                            display:flex;
+                            align-items: center;
+                            flex-direction: row;
+                            .trade-summary-title{
+                                font-weight: normal;
+                                font-size:15px;
+                            }
+                        }
+                    }
+        }
+}

@@ -170,7 +170,7 @@ const PayButton = (props: { record: any }) => {
             setProceedToPayBtn(false);
         }
     }
-
+    
     let findNumber = /\d+/;
     let percent = userStatus.match(findNumber);
     // console.log(percent)
@@ -194,17 +194,17 @@ const PayButton = (props: { record: any }) => {
     const [masterCategory = '', produceCateogry = '', cropType = '', grade = ''] = !isEmpty(record?.produce) ? record?.produce.split('-') : [];
     return (
         <React.Fragment>
-            <PrimaryBtn
-                className={
-                    displayPay ?
-                        isError ?
-                            'pay-retry' : 'vikas-btn-radius pay-button-position' :
-                        'display-none'
-                }
-                onClick={() => payNow()}
-                content={isError ? 'Retry and Pay' : 'Pay Now'}
-            />
-
+                <PrimaryBtn
+                    className={
+                        displayPay ?
+                            isError ?
+                                'pay-retry' : 'vikas-btn-radius pay-button-position' :
+                            'display-none'
+                    }
+                    onClick={() => payNow()}
+                    content={isError ? 'Retry and Pay' : 'Pay Now'}
+                />
+            
             {displayPay && <RejectionModal record={record} />}
 
             <Modal
