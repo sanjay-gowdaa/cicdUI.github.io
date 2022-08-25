@@ -1,5 +1,6 @@
-import React from 'react'
-import { Modal, Button, Form, Input, Select, Radio, Typography } from 'antd';
+import React, { useEffect } from 'react'
+import { Modal, Button, Form, Input, Select, Radio, Typography, Collapse, Row, Space, Col } from 'antd';
+import { CaretUpOutlined } from '@ant-design/icons';
 import { useState } from 'react';
 import { RuleObject } from 'antd/lib/form';
 import { useForm } from 'antd/lib/form/Form';
@@ -7,9 +8,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../store/rootReducer';
 import { isEmpty } from 'lodash';
 import { ACCESS_TOKEN } from '../store/api';
-import { rejectFormPayload } from '../store/buyerReducer/actions';
+import './rejectionStyles.scss';
 
-const { Text } = Typography;
+import { parseIDfromHash } from '../app-components/utils';
+
+const { Text, Title } = Typography;
 
 const RejectionModal = (props: any) => {
 
@@ -17,16 +20,47 @@ const RejectionModal = (props: any) => {
     const [optval, setoptval] = useState("");
     const [reason, setreason] = useState("");
     const [option, setoption] = useState("");
+    const [userStatus, setUserStatus] = useState('');
     const [isModalVisible, setIsModalVisible] = useState(false);
-
-    const { record } = props;
+    const [notifyReject, setNotifyReject] = useState(false);
+    const [disableTradeSummary, setDisableTradeSummary] = useState(1)
     const { Option } = Select;
 
+    const { Panel } = Collapse;
+    const { record } = props;
     const [form] = useForm();
     const dispatch = useDispatch();
 
     const loginState = useSelector((state: RootState) => state.loginUser);
+    const buyerStates = useSelector((state: RootState) => state.buyer);
+    const sellerStates = useSelector((state: RootState) => state.seller);
     const userToken = (window as any).userToken ? (window as any).userToken : ACCESS_TOKEN;
+
+    const status = buyerStates.currentStatusDetails
+
+    console.log(status, 'status');
+
+    const transactionId = parseIDfromHash(props?.record?.key);
+    const userId = parseIDfromHash(props?.record?.gsi);
+    const buyerCropId = (props?.record?.buyer_crop_id);
+    const sellerCropId = (props?.record?.seller_crop_id);
+    const buyerCropIdPayload = parseIDfromHash(props?.record?.buyer_crop_id);
+    const sellerCropIdPayload = parseIDfromHash(props?.record?.seller_crop_id);
+
+    const isEditableValueBuyer = buyerStates.produceList;
+    const isEditableValueSeller = sellerStates.cropsList;
+    console.log(isEditableValueSeller, 'isEditableValueSeller');
+    const objectOne = loginState.is_buyer ? isEditableValueBuyer.find((x: any) => x.sk === `${buyerCropId}`) : isEditableValueSeller.find((x: any) => x.sk === `${sellerCropId}`);
+    console.log(objectOne, 'objectOne')
+    
+    const [masterCategory = '', produceCateogry = '', cropType = '', grade = ''] = !isEmpty(record?.produce) ? record?.produce.split('-') : [];
+    // console.log(search,'search');
+    const text = (
+        <Title className='trade-summary-header'><Text className='trade-summary-title'>Trade summary</Text></Title>
+    )
+    const rejectionNotificationFunc = () => {
+        setNotifyReject(true);
+    }
 
     const rejectfun = () => {
         setIsModalVisible(true);
@@ -35,6 +69,26 @@ const RejectionModal = (props: any) => {
     const onValChange = (value: string) => {
         setoptval(value);
     };
+
+    const getDisplay = (status: string) => {
+        var substring = status.substring(0, 4).toLowerCase();
+        if (substring === 'reject' || status === 'Sorry error occured, crop rejected unsucessfull') {
+            return true;
+        }
+        return false;
+    };
+    const displayReject = getDisplay(userStatus);
+    const isError = userStatus === 'Sorry error occured, crop rejected unsucessfull' ? true : false;
+
+    useEffect(() => {
+        if (!isEmpty(status)) {
+            for (let i = 0; i < status.length; i++) {
+                if (status[i].pk === record.pk) {
+                    setUserStatus(status[i].event_description);
+                }
+            }
+        }
+    }, [status]);
 
     const validateQuantityInReject = (rule: RuleObject, value: string) => {
         const regExp = /^[0-9]*$/;
@@ -51,28 +105,103 @@ const RejectionModal = (props: any) => {
         }
     };
 
+    // console.log(record.is_editable,'isEditable')
+    console.log(record, 'record')
+
+
+    const okOnReject = () => {
+        const consentPayload = {
+            userchoice: 'continue',
+            access_token: userToken
+        }
+        console.log(consentPayload, 'consentPayload')
+    }
+
+
     const submitForm = (values: any) => {
-        const rejectPayload = {
-            ...values,
-            quantity: record.matched_quantity,
-            sk: loginState.is_buyer ? record.buyer_crop_id : record.seller_crop_id,
-            accessToken: userToken,
-            userType: loginState.is_buyer ? 'buyer' : 'seller',
-            transactionId: record.pk,
-        };
-        dispatch(rejectFormPayload(rejectPayload));
+        console.log(values, 'values')
+        console.log(masterCategory, 'masterCategory')
+        console.log(produceCateogry, 'produceCateogry')
+        console.log(cropType, 'cropType')
+        console.log(grade, 'grade')
+
+        const rejectPayloadOne = [
+            {
+                transactionId: transactionId,
+                userType: loginState.is_buyer ? 'buyer' : 'seller',
+                event_description: optval === 'others' ? reason : optval,
+                Userchoice: values.CropDeletion,
+                QuanityRejected: values.RejectedQuantity,
+                quantity: record.matched_quantity,
+                access_token: userToken,
+                userid: userId,
+                cropid: loginState.is_buyer ? buyerCropIdPayload : sellerCropIdPayload,
+                gsiStatus: record.gsi_status
+            },
+            {
+                ...loginState.is_buyer ?
+                    { ...objectOne } :
+                    {
+                        additional_info: {},
+                        category: produceCateogry,
+                        created_timestamp: record.created_at,
+                        crop_name: masterCategory,
+                        district: record.buyer_location,
+                        grade: grade,
+                        isEditable: true,//couldnt find this.
+                        is_delete: "no",
+                        pk: "user#8105616993",
+                        quantity: "81",
+                        sk: "buyer_crop#16e4f9cb296c2db370d2928db8be0a3055a79390",
+                        sub_type: cropType,
+                        urd_status: false,
+                        zip: "587101"
+                    }
+            }
+            ,
+            {
+                ...loginState.is_seller ? { ...objectOne } :
+                    {
+                        crop_name: masterCategory,
+                        category: produceCateogry,
+                        district: "Koppal",
+                        grade: grade,
+                        isEditable: true,
+                        is_delete: "no",
+                        pk: record.seller_id,
+                        quantity: record.seller_quantity,
+                        sk: record.seller_crop_id,
+                        sub_type: cropType,
+                        urd_status: false,
+                        zip: "583231",
+                        price_per_qnt: record.seller_quoted_price_per_quintal
+                    }
+            }
+        ];
+        console.log(rejectPayloadOne, 'rejectPayloadOne')
+        // dispatch(rejectFormPayload(rejectPayload));
         form.resetFields();
         setIsModalVisible(false);
     };
 
     return (
         <React.Fragment>
-            <Button
-                danger
-                onClick={rejectfun}
-            >
-                Reject
-            </Button>
+            {displayReject ?
+                <Button
+                    danger
+                    type="link"
+                    onClick={rejectionNotificationFunc}
+                >
+                    View Details
+                </Button>
+                :
+                <Button
+                    danger
+                    onClick={rejectfun}
+                >
+                    Reject
+                </Button>
+            }
             <Modal
                 title='Rejection Form'
                 visible={isModalVisible}
@@ -156,6 +285,59 @@ const RejectionModal = (props: any) => {
                         }}>Cancel</Button>
                     </div>
                 </Form>
+            </Modal>
+
+            <Modal
+                title='Crop Rejection Notification'
+                visible={notifyReject}
+                onCancel={() => setNotifyReject(false)}
+                footer={null}
+                className='rejection-notification'
+            >
+
+                <Collapse
+                    bordered={false}
+                    defaultActiveKey={disableTradeSummary}
+                    expandIconPosition={'left'}
+                    destroyInactivePanel={true}
+                    expandIcon={({ isActive }) => <CaretUpOutlined rotate={isActive ? 0 : 180} />}
+                    className="rejection-collpase"
+                >
+                    <Panel header={text} key="1">
+                        <Row className='trade-summary-row'>
+                            <Col span={6}>
+                                <Space direction='vertical'>
+                                    <Text className='inner-text'>Seller Id</Text>
+                                    <Text className='inner-text'>Category</Text>
+                                    <Text className='inner-text'>Produce</Text>
+                                    <Text className='inner-text'>Grade</Text>
+                                    <Text className='inner-text'>Quantity</Text>
+                                    <Text className='inner-text'>Price per quintal</Text>
+                                    <Text className='inner-text'>Location</Text>
+                                    <Text className='inner-text'>Tentative Delivery</Text>
+                                </Space>
+                            </Col>
+                            <Col span={18}>
+                                <Space direction='vertical'>
+                                    <Text className='inner-text'>: {record.destinyId}</Text>
+                                    <Text className='inner-text'>: {masterCategory}</Text>
+                                    <Text className='inner-text'>: {produceCateogry}</Text>
+                                    <Text className='inner-text'>: {grade}</Text>
+                                    <Text className='inner-text'>: {record.buyer_quantity}qtl</Text>
+                                    <Text className='inner-text'>: ₹{record.buyer_price_per_quintal}</Text>
+                                    <Text className='inner-text'>: {record.seller_location}</Text>
+                                    <Text className='inner-text'>: Tentative Delivery</Text>
+                                </Space>
+                            </Col>
+                        </Row>
+                    </Panel>
+                </Collapse>
+                <div style={{ display: 'flex', flexDirection: 'column' }}>
+                    <Text>your Crop has been Rejected</Text>
+                    <Button type='primary' onClick={() => okOnReject}>
+                        ok
+                    </Button>
+                </div>
             </Modal>
         </React.Fragment>
     )
