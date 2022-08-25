@@ -205,7 +205,7 @@ const PayButton = (props: { record: any }) => {
                     content={isError ? 'Retry and Pay' : 'Pay Now'}
                 />
             
-            {displayPay && <RejectionModal record={record} />}
+            {displayPay ? <RejectionModal record={record} />:null}
 
             <Modal
                 // bodyStyle={{width:466,height:530}}
