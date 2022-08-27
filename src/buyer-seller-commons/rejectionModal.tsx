@@ -11,6 +11,7 @@ import { ACCESS_TOKEN } from '../store/api';
 import './rejectionStyles.scss';
 
 import { parseIDfromHash } from '../app-components/utils';
+import { rejectFormPayload } from '../store/buyerReducer/actions';
 
 const { Text, Title } = Typography;
 
@@ -36,10 +37,7 @@ const RejectionModal = (props: any) => {
     const sellerStates = useSelector((state: RootState) => state.seller);
     const userToken = (window as any).userToken ? (window as any).userToken : ACCESS_TOKEN;
 
-    const status = buyerStates.currentStatusDetails
-
-    console.log(status, 'status');
-
+    const status = buyerStates.currentStatusDetails;
     const transactionId = parseIDfromHash(props?.record?.key);
     const userId = parseIDfromHash(props?.record?.gsi);
     const buyerCropId = (props?.record?.buyer_crop_id);
@@ -49,12 +47,12 @@ const RejectionModal = (props: any) => {
 
     const isEditableValueBuyer = buyerStates.produceList;
     const isEditableValueSeller = sellerStates.cropsList;
-    console.log(isEditableValueSeller, 'isEditableValueSeller');
+    
     const objectOne = loginState.is_buyer ? isEditableValueBuyer.find((x: any) => x.sk === `${buyerCropId}`) : isEditableValueSeller.find((x: any) => x.sk === `${sellerCropId}`);
     console.log(objectOne, 'objectOne')
-    
-    const [masterCategory = '', produceCateogry = '', cropType = '', grade = ''] = !isEmpty(record?.produce) ? record?.produce.split('-') : [];
-    // console.log(search,'search');
+
+    const [category = '', produce = '', variety = '', grade = ''] = !isEmpty(record?.produce) ? record?.produce.split('-') : [];
+
     const text = (
         <Title className='trade-summary-header'><Text className='trade-summary-title'>Trade summary</Text></Title>
     )
@@ -105,25 +103,21 @@ const RejectionModal = (props: any) => {
         }
     };
 
-    // console.log(record.is_editable,'isEditable')
-    console.log(record, 'record')
-
+    console.log(category, 'category');
+    console.log(produce, 'produce');
+    console.log(variety, 'variety');
+    console.log(grade, 'grade');
 
     const okOnReject = () => {
         const consentPayload = {
             userchoice: 'continue',
             access_token: userToken
-        }
-        console.log(consentPayload, 'consentPayload')
-    }
+        };
+        console.log(consentPayload, 'consentPayload');
+    };
 
 
     const submitForm = (values: any) => {
-        console.log(values, 'values')
-        console.log(masterCategory, 'masterCategory')
-        console.log(produceCateogry, 'produceCateogry')
-        console.log(cropType, 'cropType')
-        console.log(grade, 'grade')
 
         const rejectPayloadOne = [
             {
@@ -143,27 +137,28 @@ const RejectionModal = (props: any) => {
                     { ...objectOne } :
                     {
                         additional_info: {},
-                        category: produceCateogry,
+                        category: category,
                         created_timestamp: record.created_at,
-                        crop_name: masterCategory,
+                        produce: produce,
                         district: record.buyer_location,
                         grade: grade,
                         isEditable: true,//couldnt find this.
                         is_delete: "no",
-                        pk: "user#8105616993",
-                        quantity: "81",
-                        sk: "buyer_crop#16e4f9cb296c2db370d2928db8be0a3055a79390",
-                        sub_type: cropType,
+                        pk: record.pk,
+                        quantity: record.matched_quantity,
+                        sk: buyerCropId,
+                        variety: variety,
                         urd_status: false,
                         zip: "587101"
                     }
             }
             ,
             {
-                ...loginState.is_seller ? { ...objectOne } :
+                ...loginState.is_seller ?
+                    { ...objectOne } :
                     {
-                        crop_name: masterCategory,
-                        category: produceCateogry,
+                        produce: produce,
+                        category: category,
                         district: "Koppal",
                         grade: grade,
                         isEditable: true,
@@ -171,15 +166,15 @@ const RejectionModal = (props: any) => {
                         pk: record.seller_id,
                         quantity: record.seller_quantity,
                         sk: record.seller_crop_id,
-                        sub_type: cropType,
+                        variety: variety,
                         urd_status: false,
                         zip: "583231",
                         price_per_qnt: record.seller_quoted_price_per_quintal
                     }
             }
         ];
-        console.log(rejectPayloadOne, 'rejectPayloadOne')
-        // dispatch(rejectFormPayload(rejectPayload));
+        console.log(rejectPayloadOne, 'rejectPayloadOne');
+        // dispatch(rejectFormPayload(rejectPayloadOne));
         form.resetFields();
         setIsModalVisible(false);
     };
@@ -227,6 +222,7 @@ const RejectionModal = (props: any) => {
                     >
                         <Input
                             value={buyqunt}
+                            placeholder={record.matched_quantity}
                             onChange={(value: any) => { setbuyqunt(value) }} />
                     </Form.Item>
 
@@ -320,8 +316,8 @@ const RejectionModal = (props: any) => {
                             <Col span={18}>
                                 <Space direction='vertical'>
                                     <Text className='inner-text'>: {record.destinyId}</Text>
-                                    <Text className='inner-text'>: {masterCategory}</Text>
-                                    <Text className='inner-text'>: {produceCateogry}</Text>
+                                    <Text className='inner-text'>: {category}</Text>
+                                    <Text className='inner-text'>: {produce}</Text>
                                     <Text className='inner-text'>: {grade}</Text>
                                     <Text className='inner-text'>: {record.buyer_quantity}qtl</Text>
                                     <Text className='inner-text'>: ₹{record.buyer_price_per_quintal}</Text>
@@ -340,7 +336,7 @@ const RejectionModal = (props: any) => {
                 </div>
             </Modal>
         </React.Fragment>
-    )
+    );
 };
 
 export default RejectionModal;
