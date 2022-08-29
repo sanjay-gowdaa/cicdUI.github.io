@@ -173,7 +173,7 @@ console.log(record,'record');
             }
         ];
         console.log(rejectPayloadOne, 'rejectPayloadOne');
-        // dispatch(rejectFormPayload(rejectPayloadOne));
+        dispatch(rejectFormPayload(rejectPayloadOne));
         form.resetFields();
         setIsModalVisible(false);
     };
