@@ -107,11 +107,11 @@ export const EditAdditionalInfo = (record: any, updateAdditionalDetails: any) =>
                             <TextArea className="custom-input" rows={4} />
                         </Form.Item>
                         <Button
-                            className="crop-modal-action-btn vikas-btn-radius add-edit-button"
+                            className="crop-modal-action-btn vikas-btn-radius add-edit-button edit-requirement"
                             type="primary"
                             htmlType="submit"
                         >
-                            Edit Requirements
+                            Edit
                         </Button>
                     </Form>
                 </Col>
