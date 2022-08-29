@@ -107,7 +107,7 @@ const RejectionModal = (props: any) => {
     console.log(produce, 'produce');
     console.log(variety, 'variety');
     console.log(grade, 'grade');
-
+console.log(record,'record');
     const okOnReject = () => {
         const consentPayload = {
             userchoice: 'continue',
@@ -126,7 +126,6 @@ const RejectionModal = (props: any) => {
                 event_description: optval === 'others' ? reason : optval,
                 Userchoice: values.CropDeletion,
                 QuanityRejected: values.RejectedQuantity,
-                quantity: record.matched_quantity,
                 access_token: userToken,
                 userid: userId,
                 cropid: loginState.is_buyer ? buyerCropIdPayload : sellerCropIdPayload,
@@ -144,7 +143,7 @@ const RejectionModal = (props: any) => {
                         grade: grade,
                         isEditable: true,//couldnt find this.
                         is_delete: "no",
-                        pk: record.pk,
+                        pk: record.buyer_id,
                         quantity: record.matched_quantity,
                         sk: buyerCropId,
                         variety: variety,
