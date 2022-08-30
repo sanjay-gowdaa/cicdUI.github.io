@@ -27,6 +27,7 @@ const ProduceSection = (props: { history: History }) => {
     const loginState = useSelector((state: RootState) => state.loginUser);
     const dispatch = useDispatch();
     const [isEdit, setIsEdit] = useState(false);
+    const [isopenEdit,setisopenEdit]=useState(true)
     const [currentCropId, setCurrentCropId] = useState('');
     const [currentProduceRecord, setCurrentProduceRecord] = useState({} as ProduceModel);
     const [modalVisible, setModalVisible] = useState(false);
@@ -56,6 +57,14 @@ const ProduceSection = (props: { history: History }) => {
         console.log('actualCropId', actualCropID);
         console.log('updatedCropDetails', updatedCropData);
         dispatch(editProduce({ ...updatedCropData, is_delete: 'no', sk, pk,isEditable:false }));
+    };
+
+    const updateAdditionalDetails = (updatedCropData: ProduceModel) => {
+        const { sk, pk } = updatedCropData;
+        const actualCropID = getCropId(sk || '');
+        console.log('actualCropId', actualCropID);
+        console.log('updatedCropDetails', updatedCropData);
+        dispatch(editProduce({ ...updatedCropData, is_delete: 'no', sk, pk,isEditable:true }));
     };
 
     const showKycRequiredModal = () => {
@@ -107,7 +116,7 @@ const ProduceSection = (props: { history: History }) => {
                         cell: EditableCell,
                     },
                 }}
-                columns={produceColumns({ deleteProduce, prepareForEditProduce, updateCropDetails, setIsEdit, isEdit, currentCropId}) as any}
+                columns={produceColumns({ deleteProduce, prepareForEditProduce, updateCropDetails,updateAdditionalDetails, setIsEdit, isEdit, currentCropId}) as any}
                 dataSource={buyerState.produceList}
             />
         </div>

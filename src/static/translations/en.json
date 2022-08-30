@@ -171,8 +171,10 @@
     },
     "contact_us_page": {
         "title": "Contact Us",
-        "address1": "617, Shivam, Royal Park Residency,",
-        "address2": "J P Nagar 9th Phase, Bengaluru-560062",
+        "address1": "Samparkbindhu Solutions Pvt Ltd",
+        "address2": "c/o 91080 Co-works office space no -3,",
+        "address3":"1st floor,Doddakallasandra,",
+        "address4":"Bengaluru - 560062",
         "contact_form": {
             "title": "We would like to hear from you!",
             "full_name": "Full Name",

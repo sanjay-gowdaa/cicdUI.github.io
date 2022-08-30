@@ -9,6 +9,7 @@ import { showCropImage } from '../../buyer-seller-commons/constants';
 import confirmationPopup from '../../buyer-seller-commons/confirmationPopup';
 import { openAdditionalInfo } from '../../buyer-seller-commons/openAdditionalInfo';
 import ViewCropImages from '../../buyer-seller-commons/viewCropImages';
+import { EditAdditionalInfo } from '../../buyer-seller-commons/editAdditionalInfo';
 
 const { Text, Title } = Typography;
 
@@ -169,10 +170,18 @@ export const cropColumns = ({
                     <React.Fragment>
                         <Button
                             type='link'
-                            disabled={intent_to_sell.toLowerCase() === 'yes' && isEmpty(additional_info)}
-                            onClick={() => openAdditionalInfo(additional_info)}
+                            disabled={/* intent_to_sell.toLowerCase() === 'yes' &&  */isEmpty(additional_info)}
+                            onClick={() => {openAdditionalInfo(additional_info);
+                            console.log(additional_info)}}
                         >
                             Additional Info
+                        </Button>
+                        <Button
+                            type='link'
+                            disabled={intent_to_sell.toLowerCase() === 'yes' && isEmpty(additional_info)}
+                            onClick={() => EditAdditionalInfo(record,updateCropDetails) }
+                        >
+                            Edit Additional Info
                         </Button>
                         <ViewCropImages list={cropImageList} disablePhotos={intent_to_sell.toLowerCase() !== 'yes'} />
                     </React.Fragment>
