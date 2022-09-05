@@ -102,7 +102,7 @@ const AddCropModal = (addCropProps: PropsType) => {
     }, [modalVisible]);
 
     const onFinish = (values: any) => {
-        // console.log('Success:', values);
+        console.log('Success:', values);
         const additionalInfo = {
             moisture: values.moisture,
             other_info: values.other_info,
