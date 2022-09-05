@@ -1,5 +1,17 @@
-import React, { useEffect } from 'react'
-import { Modal, Button, Form, Input, Select, Radio, Typography, Collapse, Row, Space, Col } from 'antd';
+import React, { useEffect } from 'react';
+import {
+    Modal,
+    Button,
+    Form,
+    Input,
+    Select,
+    Radio,
+    Typography,
+    Collapse,
+    Row,
+    Space,
+    Col,
+} from 'antd';
 import { CaretUpOutlined } from '@ant-design/icons';
 import { useState } from 'react';
 import { RuleObject } from 'antd/lib/form';
@@ -16,15 +28,14 @@ import { rejectFormPayload } from '../store/buyerReducer/actions';
 const { Text, Title } = Typography;
 
 const RejectionModal = (props: any) => {
-
-    const [buyqunt, setbuyqunt] = useState("");
-    const [optval, setoptval] = useState("");
-    const [reason, setreason] = useState("");
-    const [option, setoption] = useState("");
+    const [buyqunt, setbuyqunt] = useState('');
+    const [optval, setoptval] = useState('');
+    const [reason, setreason] = useState('');
+    const [option, setoption] = useState('');
     const [userStatus, setUserStatus] = useState('');
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [notifyReject, setNotifyReject] = useState(false);
-    const [disableTradeSummary, setDisableTradeSummary] = useState(1)
+    const [disableTradeSummary, setDisableTradeSummary] = useState(1);
     const { Option } = Select;
 
     const { Panel } = Collapse;
@@ -40,25 +51,31 @@ const RejectionModal = (props: any) => {
     const status = buyerStates.currentStatusDetails;
     const transactionId = parseIDfromHash(props?.record?.key);
     const userId = parseIDfromHash(props?.record?.gsi);
-    const buyerCropId = (props?.record?.buyer_crop_id);
-    const sellerCropId = (props?.record?.seller_crop_id);
+    const buyerCropId = props?.record?.buyer_crop_id;
+    const sellerCropId = props?.record?.seller_crop_id;
     const buyerCropIdPayload = parseIDfromHash(props?.record?.buyer_crop_id);
     const sellerCropIdPayload = parseIDfromHash(props?.record?.seller_crop_id);
 
     const isEditableValueBuyer = buyerStates.produceList;
     const isEditableValueSeller = sellerStates.cropsList;
-    
-    const objectOne = loginState.is_buyer ? isEditableValueBuyer.find((x: any) => x.sk === `${buyerCropId}`) : isEditableValueSeller.find((x: any) => x.sk === `${sellerCropId}`);
-    console.log(objectOne, 'objectOne')
 
-    const [category = '', produce = '', variety = '', grade = ''] = !isEmpty(record?.produce) ? record?.produce.split('-') : [];
+    const objectOne = loginState.is_buyer
+        ? isEditableValueBuyer.find((x: any) => x.sk === `${buyerCropId}`)
+        : isEditableValueSeller.find((x: any) => x.sk === `${sellerCropId}`);
+    console.log(objectOne, 'objectOne');
+
+    const [category = '', produce = '', variety = '', grade = ''] = !isEmpty(record?.produce)
+        ? record?.produce.split('-')
+        : [];
 
     const text = (
-        <Title className='trade-summary-header'><Text className='trade-summary-title'>Trade summary</Text></Title>
-    )
+        <Title className="trade-summary-header">
+            <Text className="trade-summary-title">Trade summary</Text>
+        </Title>
+    );
     const rejectionNotificationFunc = () => {
         setNotifyReject(true);
-    }
+    };
 
     const rejectfun = () => {
         setIsModalVisible(true);
@@ -70,7 +87,10 @@ const RejectionModal = (props: any) => {
 
     const getDisplay = (status: string) => {
         var substring = status.substring(0, 4).toLowerCase();
-        if (substring === 'reject' || status === 'Sorry error occured, crop rejected unsucessfull') {
+        if (
+            substring === 'reject' ||
+            status === 'Sorry error occured, crop rejected unsucessfull'
+        ) {
             return true;
         }
         return false;
@@ -97,7 +117,9 @@ const RejectionModal = (props: any) => {
         } else if (parseInt(value) === 0) {
             return Promise.reject('Quantity cannot be Zero');
         } else if (parseInt(value) > record.matched_quantity) {
-            return Promise.reject('The maximum value for quantity Should not exceed matched Quantity');
+            return Promise.reject(
+                'The maximum value for quantity Should not exceed matched Quantity',
+            );
         } else {
             return Promise.resolve();
         }
@@ -107,19 +129,17 @@ const RejectionModal = (props: any) => {
     console.log(produce, 'produce');
     console.log(variety, 'variety');
     console.log(grade, 'grade');
-console.log(record,'record');
+    console.log(record, 'record');
 
     const okOnReject = () => {
         const consentPayload = {
             userchoice: 'continue',
-            access_token: userToken
+            access_token: userToken,
         };
         console.log(consentPayload, 'consentPayload');
     };
 
-
     const submitForm = (values: any) => {
-
         const rejectPayloadOne = [
             {
                 transactionId: transactionId,
@@ -130,48 +150,47 @@ console.log(record,'record');
                 access_token: userToken,
                 userid: userId,
                 cropid: loginState.is_buyer ? buyerCropIdPayload : sellerCropIdPayload,
-                gsiStatus: record.gsi_status
+                gsiStatus: record.gsi_status,
             },
             {
-                ...loginState.is_buyer ?
-                    { ...objectOne } :
-                    {
-                        additional_info: {},
-                        category: category,
-                        created_timestamp: record.created_at,
-                        produce: produce,
-                        district: record.buyer_location,
-                        grade: grade,
-                        isEditable: true,//couldnt find this.
-                        is_delete: "no",
-                        pk: record.buyer_id,
-                        quantity: record.matched_quantity,
-                        sk: buyerCropId,
-                        variety: variety,
-                        urd_status: false,
-                        zip: "587101"
-                    }
-            }
-            ,
+                ...(loginState.is_buyer
+                    ? { ...objectOne }
+                    : {
+                          additional_info: {},
+                          category: category,
+                          created_timestamp: record.created_at,
+                          produce: produce,
+                          district: record.buyer_location,
+                          grade: grade,
+                          isEditable: true, //couldnt find this.
+                          is_delete: 'no',
+                          pk: record.buyer_id,
+                          quantity: record.matched_quantity,
+                          sk: buyerCropId,
+                          variety: variety,
+                          urd_status: false,
+                          zip: '587101',
+                      }),
+            },
             {
-                ...loginState.is_seller ?
-                    { ...objectOne } :
-                    {
-                        produce: produce,
-                        category: category,
-                        district: "Koppal",
-                        grade: grade,
-                        isEditable: true,
-                        is_delete: "no",
-                        pk: record.seller_id,
-                        quantity: record.seller_quantity,
-                        sk: record.seller_crop_id,
-                        variety: variety,
-                        urd_status: false,
-                        zip: "583231",
-                        price_per_qnt: record.seller_quoted_price_per_quintal
-                    }
-            }
+                ...(loginState.is_seller
+                    ? { ...objectOne }
+                    : {
+                          produce: produce,
+                          category: category,
+                          district: 'Koppal',
+                          grade: grade,
+                          isEditable: true,
+                          is_delete: 'no',
+                          pk: record.seller_id,
+                          quantity: record.seller_quantity,
+                          sk: record.seller_crop_id,
+                          variety: variety,
+                          urd_status: false,
+                          zip: '583231',
+                          price_per_qnt: record.seller_quoted_price_per_quintal,
+                      }),
+            },
         ];
         console.log(rejectPayloadOne, 'rejectPayloadOne');
         dispatch(rejectFormPayload(rejectPayloadOne));
@@ -181,27 +200,21 @@ console.log(record,'record');
 
     return (
         <React.Fragment>
-            {displayReject ?
-                <Button
-                    danger
-                    type="link"
-                    onClick={rejectionNotificationFunc}
-                >
+            {displayReject ? (
+                <Button danger type="link" onClick={rejectionNotificationFunc}>
                     View Details
                 </Button>
-                :
-                <Button
-                    danger
-                    onClick={rejectfun}
-                >
+            ) : (
+                <Button danger onClick={rejectfun}>
                     Reject
                 </Button>
-            }
+            )}
             <Modal
-                title='Rejection Form'
+                title="Rejection Form"
                 visible={isModalVisible}
                 onCancel={() => setIsModalVisible(false)}
-                footer={null}>
+                footer={null}
+            >
                 <Form
                     form={form}
                     name="basic"
@@ -215,15 +228,20 @@ console.log(record,'record');
                     <Form.Item
                         label="Rejected Quantity"
                         name="RejectedQuantity"
-                        rules={[{
-                            required: true,
-                            validator: (rules, value) => validateQuantityInReject(rules, value)
-                        }]}
+                        rules={[
+                            {
+                                required: true,
+                                validator: (rules, value) => validateQuantityInReject(rules, value),
+                            },
+                        ]}
                     >
                         <Input
                             value={buyqunt}
                             placeholder={record.matched_quantity}
-                            onChange={(value: any) => { setbuyqunt(value) }} />
+                            onChange={(value: any) => {
+                                setbuyqunt(value);
+                            }}
+                        />
                     </Form.Item>
 
                     <Form.Item
@@ -242,55 +260,80 @@ console.log(record,'record');
                             <Option value="Delay in delivery">Delay in delivery</Option>
                             <Option value="Package not satisfied">Package not satisfied</Option>
                             <Option value="others"> Other </Option>
-
                         </Select>
                     </Form.Item>
 
-                    {optval == "others" &&
+                    {optval == 'others' && (
                         <Form.Item
                             label="Reason for decline"
                             name="BreifText"
                             rules={[{ required: true, message: 'Please input your Reason' }]}
                         >
-                            <Input value={reason}
+                            <Input
+                                value={reason}
                                 placeholder="Your reason"
-                                onChange={(value: any) => { setreason(value) }} />
+                                onChange={(value: any) => {
+                                    setreason(value);
+                                }}
+                            />
                         </Form.Item>
-                    }
+                    )}
 
                     <Text>Do you want to retain the crop or delete it ?</Text>
 
                     <Form.Item
                         name="CropDeletion"
-                        rules={[{ required: true, message: "This value is manditory" }]}
+                        rules={[{ required: true, message: 'This value is manditory' }]}
                     >
                         <Radio.Group>
-                            <Radio value="yes" onChange={(value: any) => { setoption(value) }}> Yes </Radio>
-                            <Radio value="no" onChange={(value: any) => { setoption(value) }}> No </Radio>
+                            <Radio
+                                value="yes"
+                                onChange={(value: any) => {
+                                    setoption(value);
+                                }}
+                            >
+                                {' '}
+                                Yes{' '}
+                            </Radio>
+                            <Radio
+                                value="no"
+                                onChange={(value: any) => {
+                                    setoption(value);
+                                }}
+                            >
+                                {' '}
+                                No{' '}
+                            </Radio>
                         </Radio.Group>
                     </Form.Item>
                     <div
-                        style=
-                        {{ display: 'flex', flexDirection: 'row', justifyContent: 'space-evenly', alignItems: 'center' }}>
-                        <Button htmlType="submit">
-                            Save
+                        style={{
+                            display: 'flex',
+                            flexDirection: 'row',
+                            justifyContent: 'space-evenly',
+                            alignItems: 'center',
+                        }}
+                    >
+                        <Button htmlType="submit">Save</Button>
+                        <Button
+                            onClick={() => {
+                                form.resetFields();
+                                setIsModalVisible(false);
+                            }}
+                        >
+                            Cancel
                         </Button>
-                        <Button onClick={() => {
-                            form.resetFields();
-                            setIsModalVisible(false)
-                        }}>Cancel</Button>
                     </div>
                 </Form>
             </Modal>
 
             <Modal
-                title='Crop Rejection Notification'
+                title="Crop Rejection Notification"
                 visible={notifyReject}
                 onCancel={() => setNotifyReject(false)}
                 footer={null}
-                className='rejection-notification'
+                className="rejection-notification"
             >
-
                 <Collapse
                     bordered={false}
                     defaultActiveKey={disableTradeSummary}
@@ -300,29 +343,31 @@ console.log(record,'record');
                     className="rejection-collpase"
                 >
                     <Panel header={text} key="1">
-                        <Row className='trade-summary-row'>
+                        <Row className="trade-summary-row">
                             <Col span={6}>
-                                <Space direction='vertical'>
-                                    <Text className='inner-text'>Seller Id</Text>
-                                    <Text className='inner-text'>Category</Text>
-                                    <Text className='inner-text'>Produce</Text>
-                                    <Text className='inner-text'>Grade</Text>
-                                    <Text className='inner-text'>Quantity</Text>
-                                    <Text className='inner-text'>Price per quintal</Text>
-                                    <Text className='inner-text'>Location</Text>
-                                    <Text className='inner-text'>Tentative Delivery</Text>
+                                <Space direction="vertical">
+                                    <Text className="inner-text">Seller Id</Text>
+                                    <Text className="inner-text">Category</Text>
+                                    <Text className="inner-text">Produce</Text>
+                                    <Text className="inner-text">Grade</Text>
+                                    <Text className="inner-text">Quantity</Text>
+                                    <Text className="inner-text">Price per quintal</Text>
+                                    <Text className="inner-text">Location</Text>
+                                    <Text className="inner-text">Tentative Delivery</Text>
                                 </Space>
                             </Col>
                             <Col span={18}>
-                                <Space direction='vertical'>
-                                    <Text className='inner-text'>: {record.destinyId}</Text>
-                                    <Text className='inner-text'>: {category}</Text>
-                                    <Text className='inner-text'>: {produce}</Text>
-                                    <Text className='inner-text'>: {grade}</Text>
-                                    <Text className='inner-text'>: {record.buyer_quantity}qtl</Text>
-                                    <Text className='inner-text'>: ₹{record.buyer_price_per_quintal}</Text>
-                                    <Text className='inner-text'>: {record.seller_location}</Text>
-                                    <Text className='inner-text'>: Tentative Delivery</Text>
+                                <Space direction="vertical">
+                                    <Text className="inner-text">: {record.destinyId}</Text>
+                                    <Text className="inner-text">: {category}</Text>
+                                    <Text className="inner-text">: {produce}</Text>
+                                    <Text className="inner-text">: {grade}</Text>
+                                    <Text className="inner-text">: {record.buyer_quantity}qtl</Text>
+                                    <Text className="inner-text">
+                                        : ₹{record.buyer_price_per_quintal}
+                                    </Text>
+                                    <Text className="inner-text">: {record.seller_location}</Text>
+                                    <Text className="inner-text">: Tentative Delivery</Text>
                                 </Space>
                             </Col>
                         </Row>
@@ -330,7 +375,7 @@ console.log(record,'record');
                 </Collapse>
                 <div style={{ display: 'flex', flexDirection: 'column' }}>
                     <Text>your Crop has been Rejected</Text>
-                    <Button type='primary' onClick={() => okOnReject}>
+                    <Button type="primary" onClick={() => okOnReject}>
                         ok
                     </Button>
                 </div>
