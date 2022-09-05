@@ -270,7 +270,7 @@ const AddCropModal = (addCropProps: PropsType) => {
                                     placeholder='Select'
                                     onChange={(value: string) => {
                                         dispatch(updatedFetchLiveApmcRate({
-                                            category: form.getFieldValue('categoryName'),
+                                            category: form.getFieldValue('category'),
                                             itemName: selectedMasterCrop,
                                             variety: selectedVariety,
                                             grade: value,
