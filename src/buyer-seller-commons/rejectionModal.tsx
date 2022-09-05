@@ -108,6 +108,7 @@ const RejectionModal = (props: any) => {
     console.log(variety, 'variety');
     console.log(grade, 'grade');
 console.log(record,'record');
+
     const okOnReject = () => {
         const consentPayload = {
             userchoice: 'continue',
