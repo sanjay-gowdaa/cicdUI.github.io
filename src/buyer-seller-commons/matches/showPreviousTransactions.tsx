@@ -32,7 +32,7 @@ const columns = [
         title: 'Transaction Date',
         dataIndex: 'created_at',
         key: 'created_at',
-        render: (created_id: string) => <Text>{moment(created_id).format('DD/MM/YYYY')}</Text>
+        render: (created_id: string) => <Text>{created_id}</Text>
     },
     {
         title: 'Produce',

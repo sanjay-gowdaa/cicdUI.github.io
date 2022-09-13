@@ -70,7 +70,7 @@ const TransactionDetailsModal = (props: any) => {
                     </div>
                 </React.Fragment> :
                 <React.Fragment>
-                    <Text>{list.event_name} ({moment(list.event_time).format('DD-MM-YYYY HH:MM')})</Text>
+                    <Text>{list.event_name} ({list.event_time})</Text>
                     <br />
                 </React.Fragment>
             )
@@ -89,7 +89,7 @@ const TransactionDetailsModal = (props: any) => {
                     const isPending = completedStatus.event_description === latestStatus && tab !== TransactionStatus.completed;
                     return (
                         <Timeline.Item
-                            label={isPending ? '-' : moment(completedStatus.event_timestamp).format('DD-MM-YYYY HH:MM')}
+                            label={isPending ? '-' : completedStatus.event_timestamp}
                             dot={isPending ? null : <CheckCircleFilled style={{ color: '#12805C' }} />}
                             color={'#F5A31A'}
                             className={isPending ? 'is-pending' : 'is-complete'}
