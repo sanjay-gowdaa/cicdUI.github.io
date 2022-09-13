@@ -38,6 +38,12 @@ $col-shade-green: #12805c;
             width:25rem;
             position: relative;
             top:3.125rem;
+            .homeTitle{
+                width: 500px;
+                font-style: normal;
+                font-weight: 600;
+                font-size: 48px;
+            }
             h5.ant-typography{
                     font-style: normal;
                     font-weight: 300;
@@ -1199,7 +1205,7 @@ img{
             .join-us-reg {
                 width: 25vw;
                 height: 5vh;
-            font-size: 1rem;
+                font-size: 1rem;
                 position: relative;
                 bottom: 7rem;
                 left: 16rem;
@@ -1209,26 +1215,59 @@ img{
 
 #home{
     width:100%;
-    height:50rem;
+    height:fit-content;
     padding:2.625rem;
+    // background:blue;
     align-items: center !important;
+    .home-wrapper{
+        padding-right: 0px;
+        height:46.5rem;
+        // background-color:orange;
+    }
 
     .ant-row{
-        position: relative;
-        left:1.875rem;
-        .ant-col-8{
+        .ant-col-10{
+            display:flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-evenly;
             .wimage,.registerComponent{
                 width:80%;
+            }
+            .homeTitle{
+                width: 300px;
+                font-style: normal;
+                font-weight: 600;
+                font-size: 25px;
             }
             h5{
                 width:80%;
             }
+            .googlePlay {
+                display:flex;
+                justify-content: center;
+                // position: relative;
+                // left:-3.625rem;
+                width: 12.5rem;
+                height: 2.769rem;
+                margin-top: 3rem;
+                Button,img {
+                    width: 9.375rem;
+                    height: 2.769rem;
+                    margin-left: 0rem;
+                    border: none;
+                    }
+            }
             .headFooter{
+                position: relative;
+                left:50px;
                 width:18.75rem;
-                height:18.75rem;
+                height:fit-content;
+                // background-color:blue;
                 .secondL,.ant-breadcrumb{
                     width:18.75rem;
-                    height:12.5rem;
+                    height:13.5rem;
+                    
                     .ant-breadcrumb{
                         display: flex;
                         flex-direction:column;
@@ -1245,22 +1284,32 @@ img{
 width:100vw;
 // left:3.125rem;
 padding:5rem;
-top:-5rem;
-// background-color: orange;
+// top:-5rem;
+top:0rem;
+background-color: orange;
 height:fit-content;
 
     .aim-wrapper{
+        width:100vw;
+        top:-50px;
         display: flex;
         align-items: center;
-        justify-content:center;
+        justify-content:space-evenly;
         flex-direction: column;
+        height:fit-content;
         .aimFirstRow{
+            left: 0rem;
+            top:-200px;
+            display: flex;
+            flex-direction: column;
+            justify-content:space-evenly;
+            align-items: center;
             .aim-Whatis{
                 width:18.75rem;
                 h2{
                     width:100vw;
                     position: relative;
-                    left:-2.5rem;
+                    // left:-2.5rem;
                 }
                 p{
                     width:75vw;
@@ -1273,6 +1322,20 @@ height:fit-content;
                 top:1.25rem;
                 left:-1.875rem;
             }
+            .divider{
+                position: relative;
+                top:50px;
+            }
+        }
+        
+        .why-vikasBandhu{
+            position: relative;
+            top:-250px;
+        }
+        .at-present-text{
+            position: relative;
+            top:-270px;
+            left:-18px;
         }
 
         h2,span.ant-typography{
@@ -1283,8 +1346,10 @@ height:fit-content;
         
         .seller-buyer-advantage{
             position: relative;
-            left:24rem;
             padding:2rem;
+            top:-300px;
+            left:280px;
+            background:blue;
             .headText{
                 position: relative;
                 width:18.75rem;
@@ -1714,7 +1779,6 @@ height:fit-content;
 
     #updates{
         top:37.5rem;
-        // background-color:green;
         .updateWrapper{
             width:100vw;
             .site-collapse-custom-collapse{
