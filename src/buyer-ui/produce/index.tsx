@@ -39,6 +39,8 @@ const ProduceSection = (props: { history: History }) => {
         dispatch(getProduceList());
     }, []);
 
+    console.log(buyerState.matchesList,'buyerState.matchesList')
+
     const deleteProduce = (produceId: string) => {
         const actualProduceId = parseIDfromHash(produceId);
         dispatch(deleteSelectedProduce(actualProduceId));
@@ -118,6 +120,7 @@ const ProduceSection = (props: { history: History }) => {
                 }}
                 columns={produceColumns({ deleteProduce, prepareForEditProduce, updateCropDetails,updateAdditionalDetails, setIsEdit, isEdit, currentCropId}) as any}
                 dataSource={buyerState.produceList}
+                // rowClassName={(record: ProduceModel) => record.enabled === false && "disabled-row"}
             />
         </div>
     );
