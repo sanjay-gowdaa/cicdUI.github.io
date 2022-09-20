@@ -18,7 +18,7 @@ export interface ProduceModel {
     additionalInfo?: string | null;
     sk?: string;
     pk?: string;
-    currently_fulfilled_qty?: number;
+    currently_fulfilled_qty?:any| number | undefined;
     isEditable?: boolean;
     initial?: number |undefined;
 };

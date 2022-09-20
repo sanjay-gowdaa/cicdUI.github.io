@@ -41,7 +41,6 @@ export const produceColumns = ({
             key: 'produce',
             render: (produce: string, record: ProduceModel) => {
                 const { category, variety: subType} = record;
-                console.log("record", record)
                 const imageSrc = showCropImage(category);
 
                 return (

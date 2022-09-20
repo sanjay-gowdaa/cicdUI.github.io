@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Modal, Table, Typography} from 'antd';
+import { Modal, Table, Typography } from 'antd';
 import { useSelector, useDispatch } from 'react-redux';
 import { History } from 'history';
 
@@ -8,7 +8,11 @@ import AddProduce from './AddProduce';
 import './crops.scss';
 
 import { RootState } from '../../store/rootReducer';
-import { deleteSelectedProduce, editProduce, getProduceList } from '../../store/buyerReducer/actions';
+import {
+    deleteSelectedProduce,
+    editProduce,
+    getProduceList,
+} from '../../store/buyerReducer/actions';
 import { ProduceModel } from '../../store/buyerReducer/types';
 import { parseIDfromHash } from '../../app-components/utils';
 import PrimaryBtn from '../../app-components/primaryBtn';
@@ -27,19 +31,17 @@ const ProduceSection = (props: { history: History }) => {
     const loginState = useSelector((state: RootState) => state.loginUser);
     const dispatch = useDispatch();
     const [isEdit, setIsEdit] = useState(false);
-    const [isopenEdit,setisopenEdit]=useState(true)
+    const [isopenEdit, setisopenEdit] = useState(true);
     const [currentCropId, setCurrentCropId] = useState('');
     const [currentProduceRecord, setCurrentProduceRecord] = useState({} as ProduceModel);
     const [modalVisible, setModalVisible] = useState(false);
     const { masterProduceList } = buyerState;
-    const isApproved = (loginState.kyc_flag === 'approved');
-    const is_Active = (loginState?.is_active === 'Add Requirement Blocked');
+    const isApproved = loginState.kyc_flag === 'approved';
+    const is_Active = loginState?.is_active === 'Add Requirement Blocked';
 
     useEffect(() => {
         dispatch(getProduceList());
     }, []);
-
-    console.log(buyerState.matchesList,'buyerState.matchesList')
 
     const deleteProduce = (produceId: string) => {
         const actualProduceId = parseIDfromHash(produceId);
@@ -58,7 +60,7 @@ const ProduceSection = (props: { history: History }) => {
         const actualCropID = getCropId(sk || '');
         console.log('actualCropId', actualCropID);
         console.log('updatedCropDetails', updatedCropData);
-        dispatch(editProduce({ ...updatedCropData, is_delete: 'no', sk, pk,isEditable:false }));
+        dispatch(editProduce({ ...updatedCropData, is_delete: 'no', sk, pk, isEditable: false }));
     };
 
     const updateAdditionalDetails = (updatedCropData: ProduceModel) => {
@@ -66,32 +68,42 @@ const ProduceSection = (props: { history: History }) => {
         const actualCropID = getCropId(sk || '');
         console.log('actualCropId', actualCropID);
         console.log('updatedCropDetails', updatedCropData);
-        dispatch(editProduce({ ...updatedCropData, is_delete: 'no', sk, pk,isEditable:true }));
+        dispatch(editProduce({ ...updatedCropData, is_delete: 'no', sk, pk, isEditable: true }));
     };
 
     const showKycRequiredModal = () => {
         Modal.info({
             className: 'kyc-required-modal',
-            content:
+            content: (
                 <React.Fragment>
-                    {!loginState.isSubmitted ? <Text>Please update your KYC information to update master list/ add requirements</Text>:<Text>Please wait for the admin to approve your KYC to update master list/ add requirements</Text> }
+                    {!loginState.isSubmitted ? (
+                        <Text>
+                            Please update your KYC information to update master list/ add
+                            requirements
+                        </Text>
+                    ) : (
+                        <Text>
+                            Please wait for the admin to approve your KYC to update master list/ add
+                            requirements
+                        </Text>
+                    )}
                     <br />
                     <Text>Profile &gt; KYC Information</Text>
                 </React.Fragment>
-            ,
+            ),
             okText: 'Update Now',
-            okButtonProps:!loginState.isSubmitted ?{ disabled: false }:{ disabled:true},
+            okButtonProps: !loginState.isSubmitted ? { disabled: false } : { disabled: true },
             closable: true,
             onOk: () => history.push(routesMap.profile),
         });
     };
 
     return (
-        <div className='crops-container'>
+        <div className="crops-container">
             <Title level={2}>My Requirements</Title>
             <PrimaryBtn
-                className='add-crop-btn vikas-btn-radius'
-                id='my-requirements-button'
+                className="add-crop-btn vikas-btn-radius"
+                id="my-requirements-button"
                 disabled={is_Active}
                 onClick={() => {
                     if (isApproved || is_Active) {
@@ -101,7 +113,7 @@ const ProduceSection = (props: { history: History }) => {
                         showKycRequiredModal();
                     }
                 }}
-                content='Add Requirements'
+                content="Add Requirements"
             />
             <AddProduce
                 currentProduceRecord={currentProduceRecord}
@@ -111,16 +123,32 @@ const ProduceSection = (props: { history: History }) => {
                 modalVisible={modalVisible}
             />
             <Table
-                className='margin-t-1em'
+                className="margin-t-1em"
                 components={{
                     body: {
                         row: EditableRow,
                         cell: EditableCell,
                     },
                 }}
-                columns={produceColumns({ deleteProduce, prepareForEditProduce, updateCropDetails,updateAdditionalDetails, setIsEdit, isEdit, currentCropId}) as any}
+                columns={
+                    produceColumns({
+                        deleteProduce,
+                        prepareForEditProduce,
+                        updateCropDetails,
+                        updateAdditionalDetails,
+                        setIsEdit,
+                        isEdit,
+                        currentCropId,
+                    }) as any
+                }
                 dataSource={buyerState.produceList}
-                // rowClassName={(record: ProduceModel) => record.enabled === false && "disabled-row"}
+                rowClassName={(record: ProduceModel) =>
+                    (record.isEditable === false &&
+                        record.quantity - record.currently_fulfilled_qty === 0) ||
+                    record.quantity - record.currently_fulfilled_qty === 0
+                        ? 'disabled-row'
+                        : ''
+                }
             />
         </div>
     );

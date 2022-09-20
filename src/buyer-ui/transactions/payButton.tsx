@@ -17,9 +17,6 @@ import DirectBankTransferModal from './directBankTransfermodal';
 import { render } from '@testing-library/react';
 import RejectionModal from '../../buyer-seller-commons/rejectionModal';
 
-
-
-
 const { Text, Title } = Typography;
 
 const PAYMENT_REQUEST = 'paymentrequest';
@@ -33,14 +30,14 @@ const PayButton = (props: { record: any }) => {
 
     const [userStatus, setUserStatus] = useState('');
     const [proceedToPayBtn, setProceedToPayBtn] = useState(true);
-    const [disableTradeSummary, setDisableTradeSummary] = useState(1)
+    const [disableTradeSummary, setDisableTradeSummary] = useState(1);
     const [payAmountDetails, setPayAmountDetails] = useState(true);
     const [viewPaymentDetails, setPaymentDetails] = useState(false);
     const [displayCheckModal, setDisplayCheckModal] = useState(false);
     const [payBtnDisplay, setPayBtnDisplay] = useState(false);
     const [displayCashModal, setDisplayCashModal] = useState(false);
     const [directBankTransferModal, setDirectBankTransferModal] = useState(false);
-    const [installmentNumber, setInstallmentNumber] = useState('')
+    const [installmentNumber, setInstallmentNumber]: any = useState(() => {});
     const uuid = uuidv4();
     const accessToken = (window as any).userToken ? (window as any).userToken : null;
 
@@ -51,6 +48,7 @@ const PayButton = (props: { record: any }) => {
 
     const getDisplay = (status: string) => {
         var substring = status.substring(0, 4).toLowerCase();
+        console.log(substring, 'substring');
         if (substring === 'pay ' || status === 'Sorry error occured, payment unsucessfull') {
             return true;
         }
@@ -74,16 +72,18 @@ const PayButton = (props: { record: any }) => {
             const newDate = new Date();
             const updatedDate = record.updated_timestamp;
 
-            const diffInDays = parseInt(moment(newDate).format('DD-MM-YYYY HH:mm:ss')) - parseInt(updatedDate);
+            const diffInDays =
+                parseInt(moment(newDate).format('DD-MM-YYYY HH:mm:ss')) - parseInt(updatedDate);
 
             if (diffInDays === 1) {
                 Modal.info({
                     title: 'Kindly pay the seller within 24hrs!',
                     content: (
                         <p>
-                            Kindly do the payment for <b>{record.produce}</b> within 24hrs or the transaction will be terminated!
+                            Kindly do the payment for <b>{record.produce}</b> within 24hrs or the
+                            transaction will be terminated!
                         </p>
-                    )
+                    ),
                 });
             }
 
@@ -92,12 +92,20 @@ const PayButton = (props: { record: any }) => {
                     title: 'No action were taken in the last 48 hrs',
                     content: (
                         <p>
-                            The <b>{record.produce}</b> transaction is auto rejected since there were no actions taken in 48hrs!
+                            The <b>{record.produce}</b> transaction is auto rejected since there
+                            were no actions taken in 48hrs!
                         </p>
-                    )
+                    ),
                 });
                 // Change the transaction status to complete
-                const { buyer_crop_id, seller_id, seller_crop_id, matched_quantity, pk, destinyId } = record;
+                const {
+                    buyer_crop_id,
+                    seller_id,
+                    seller_crop_id,
+                    matched_quantity,
+                    pk,
+                    destinyId,
+                } = record;
                 const rejectData = {
                     buyer_id: loginState.pk,
                     buyer_crop_id,
@@ -106,8 +114,8 @@ const PayButton = (props: { record: any }) => {
                     matched_quantity,
                     transaction_id: pk,
                     destinyId,
-                    buyer_event: 'auto_reject'
-                }
+                    buyer_event: 'auto_reject',
+                };
                 dispatch(rejectMatches(rejectData));
             }
         }
@@ -119,23 +127,19 @@ const PayButton = (props: { record: any }) => {
     };
 
     const text = (
-        <Title className='trade-summary-header'><Text className='trade-summary-title'>Trade summary</Text></Title>
-    )
+        <Title className="trade-summary-header">
+            <Text className="trade-summary-title">Trade summary</Text>
+        </Title>
+    );
 
-    const handlePayment = () => {
-        console.log('i am clicked')
-        setProceedToPayBtn(false);
-        setPayAmountDetails(false);
-        setPaymentDetails(true);
-        setPayBtnDisplay(true);
+    const handleCancel = ()=>{
+        setPayAmountDetails(true);
+        // setPaymentDetails(!viewPaymentDetails);
     }
-
-
-
 
     const ChangeTheSelectValue = (value: string) => {
         if (value === 'Payment Gateway') {
-            setPaymentDetails(true)
+            setPaymentDetails(true);
             setProceedToPayBtn(true);
             setPayAmountDetails(true);
             setDisplayCheckModal(false);
@@ -143,63 +147,77 @@ const PayButton = (props: { record: any }) => {
             setDirectBankTransferModal(false);
         }
         if (value === 'Cheque/Draft') {
-            setPaymentDetails(true)
+            setPaymentDetails(true);
             setPayAmountDetails(false);
-            setDisplayCheckModal(true)
-            setDisplayCashModal(false)
+            setDisplayCheckModal(true);
+            setDisplayCashModal(false);
             setPayBtnDisplay(false);
             setProceedToPayBtn(false);
             setDirectBankTransferModal(false);
         }
         if (value === 'cash') {
-            setPaymentDetails(true)
-            setDisplayCashModal(true)
+            setPaymentDetails(true);
+            setDisplayCashModal(true);
             setPayAmountDetails(false);
-            setDisplayCheckModal(false)
+            setDisplayCheckModal(false);
             setPayBtnDisplay(false);
             setProceedToPayBtn(false);
             setDirectBankTransferModal(false);
         }
         if (value === 'Direct Bank Transfer') {
             setDirectBankTransferModal(true);
-            setPaymentDetails(true)
-            setDisplayCashModal(false)
+            setPaymentDetails(true);
+            setDisplayCashModal(false);
             setPayAmountDetails(false);
-            setDisplayCheckModal(false)
+            setDisplayCheckModal(false);
             setPayBtnDisplay(false);
             setProceedToPayBtn(false);
         }
-    }
+    };
 
-    let findNumber = /\d+/;
-    let percent = userStatus.match(findNumber);
-    // console.log(percent)
-    // console.log(userStatus)
-    console.log(record.installment)
+    var findNumber = /\d+/;
+    var percent: any = userStatus.match(findNumber);
 
-    useEffect(() => {
-        if (record.installment == '1') {
-            return setInstallmentNumber('First Advance Payment Details')
-        }
-        if (record.installment == '2') {
-            return setInstallmentNumber('Second Advance Payment Details')
-        }
-        if (record.installment == '3') {
-            return setInstallmentNumber('Final Payment Details')
-        }
-    }, [installmentNumber])
+    // useEffect(() => {
+    //     // let findNumber = /\d+/;
+    //     // var percent: any = userStatus.match(findNumber);
+    //     let destructure = percent?.[0];
+    //     console.log(destructure, 'destructure');
+    //     // console.log(userStatus, 'userStatus');
+    //     // let word = userStatus.includes('20%');
+    //     // let word1 = userStatus.includes('70%') || userStatus.includes('50%');
+    //     // let word3 = userStatus.includes('10%');
+    //     // console.log(word, 'word');
+    //     // console.log(word1, 'word1');
+    //     // console.log(word3, 'word3');
+    //     if (destructure === '10') {
+    //         return setInstallmentNumber('First Advance Payment Details');
+    //     }
+    //     if (destructure === '50') {
+    //         return setInstallmentNumber('Second Advance Payment Details');
+    //     }
+    //     if (destructure === '20' || '100') {
+    //         return setInstallmentNumber('Final Payment Details');
+    //     }
+    // }, [installmentNumber, userStatus]);
+
 
     const { Panel } = Collapse;
     const { Option, OptGroup } = Select;
-    const [masterCategory = '', produceCateogry = '', cropType = '', grade = ''] = !isEmpty(record?.produce) ? record?.produce.split('-') : [];
+    const [masterCategory = '', produceCateogry = '', cropType = '', grade = ''] = !isEmpty(
+        record?.produce,
+    )
+        ? record?.produce.split('-')
+        : [];
     return (
         <React.Fragment>
             <PrimaryBtn
                 className={
-                    displayPay ?
-                        isError ?
-                            'pay-retry' : 'vikas-btn-radius pay-button-position' :
-                        'display-none'
+                    displayPay
+                        ? isError
+                            ? 'pay-retry'
+                            : 'vikas-btn-radius pay-button-position'
+                        : 'display-none'
                 }
                 onClick={() => payNow()}
                 content={isError ? 'Retry and Pay' : 'Pay Now'}
@@ -209,14 +227,16 @@ const PayButton = (props: { record: any }) => {
 
             <Modal
                 // bodyStyle={{width:466,height:530}}
-                className='payment-modal'
+                className="payment-modal"
                 visible={viewPaymentDetails}
                 closable={false}
-                onCancel={() => setPaymentDetails(!viewPaymentDetails)}
+                onCancel={handleCancel}
                 footer={null}
                 centered={true}
             >
-                <Title className='payment-title'><Text className='payment-title-text'>{installmentNumber}</Text></Title>
+                <Title className="payment-title">
+                    <Text className="payment-title-text">Payment Details</Text>
+                </Title>
 
                 <Collapse
                     bordered={false}
@@ -227,41 +247,49 @@ const PayButton = (props: { record: any }) => {
                     className="site-collapse-custom-collapse"
                 >
                     <Panel header={text} key="1" className="site-collapse-custom-panel">
-                        <Row className='trade-summary-row'>
+                        <Row className="trade-summary-row">
                             <Col span={6}>
-                                <Space direction='vertical'>
-                                    <Text className='inner-text'>Seller Id</Text>
-                                    <Text className='inner-text'>Category</Text>
-                                    <Text className='inner-text'>Produce</Text>
-                                    <Text className='inner-text'>Grade</Text>
-                                    <Text className='inner-text'>Quantity</Text>
-                                    <Text className='inner-text'>Price per quintal</Text>
-                                    <Text className='inner-text'>Location</Text>
-                                    <Text className='inner-text'>Tentative Delivery</Text>
+                                <Space direction="vertical">
+                                    <Text className="inner-text">Seller Id</Text>
+                                    <Text className="inner-text">Category</Text>
+                                    <Text className="inner-text">Produce</Text>
+                                    <Text className="inner-text">Grade</Text>
+                                    <Text className="inner-text">Quantity</Text>
+                                    <Text className="inner-text">Price per quintal</Text>
+                                    <Text className="inner-text">Location</Text>
+                                    <Text className="inner-text">Tentative Delivery</Text>
                                 </Space>
                             </Col>
                             <Col span={18}>
-                                <Space direction='vertical'>
-                                    <Text className='inner-text'>: {record.destinyId}</Text>
-                                    <Text className='inner-text'>: {masterCategory}</Text>
-                                    <Text className='inner-text'>: {produceCateogry}</Text>
-                                    <Text className='inner-text'>: {grade}</Text>
-                                    <Text className='inner-text'>: {record.buyer_quantity}qtl</Text>
-                                    <Text className='inner-text'>: ₹{record.buyer_price_per_quintal}</Text>
-                                    <Text className='inner-text'>: {record.seller_location}</Text>
-                                    <Text className='inner-text'>: Tentative Delivery</Text>
+                                <Space direction="vertical">
+                                    <Text className="inner-text">: {record.destinyId}</Text>
+                                    <Text className="inner-text">: {masterCategory}</Text>
+                                    <Text className="inner-text">: {produceCateogry}</Text>
+                                    <Text className="inner-text">: {grade}</Text>
+                                    <Text className="inner-text">: {record.buyer_quantity}qtl</Text>
+                                    <Text className="inner-text">
+                                        : ₹{record.buyer_price_per_quintal}
+                                    </Text>
+                                    <Text className="inner-text">: {record.seller_location}</Text>
+                                    <Text className="inner-text">: Tentative Delivery</Text>
                                 </Space>
                             </Col>
                         </Row>
                     </Panel>
                 </Collapse>
-                <Title className='payment-summary'><Text className='paymentsummarytext'>Payment Summary</Text></Title>
-                <Row className='payment-summary-row'>
-                    <Col span={24} className='mode-column'>
-                        <Text className='mode-of-payment'>Mode of payment</Text>
+                <Title className="payment-summary">
+                    <Text className="paymentsummarytext">Payment Summary</Text>
+                </Title>
+                <Row className="payment-summary-row">
+                    <Col span={24} className="mode-column">
+                        <Text className="mode-of-payment">Mode of payment</Text>
                         <img src={vectorDown}></img>
-                        <Select className='selectMode' defaultValue="Payment Gateway" showArrow={false}
-                            onChange={ChangeTheSelectValue}>
+                        <Select
+                            className="selectMode"
+                            defaultValue="Payment Gateway"
+                            showArrow={false}
+                            onChange={ChangeTheSelectValue}
+                        >
                             <Option value="Payment Gateway">Payment Gateway</Option>
                             <OptGroup label="Other">
                                 <Option value="cash">Cash</Option>
@@ -270,92 +298,93 @@ const PayButton = (props: { record: any }) => {
                             </OptGroup>
                         </Select>
                     </Col>
-                    {payAmountDetails ? <Col span={24} className='pay-amount'>
-                        <Text className='payment-amount'>Pay Amount</Text>
-                        <Text className='amount'><strong>₹{buyerState.paymentAmount}</strong>({percent}% of ₹{record.buyer_total_price})</Text>
-                    </Col> : null}
-                    <form method='POST' action={`${BASE_URL}/${STAGE}/${PAYMENT_REQUEST}`}>
+                    {payAmountDetails ? (
+                        <Col span={24} className="pay-amount">
+                            <Text className="payment-amount">Pay Amount</Text>
+                            <Text className="amount">
+                                <strong>₹{buyerState.paymentAmount}</strong>({percent}% of ₹
+                                {record.buyer_total_price})
+                            </Text>
+                        </Col>
+                    ) : null}
+                    <form method="POST" action={`${BASE_URL}/${STAGE}/${PAYMENT_REQUEST}`}>
                         <Input
-                            className='payment-custom-input'
-                            type='hidden'
+                            className="payment-custom-input"
+                            type="hidden"
                             value={record.destinyId}
-                            name='sellerId'
+                            name="sellerId"
                         />
                         <Input
-                            className='payment-custom-input'
-                            type='hidden'
+                            className="payment-custom-input"
+                            type="hidden"
                             value={record.produce}
-                            name='produce'
+                            name="produce"
                         />
                         <Input
-                            className='payment-custom-input'
-                            type='hidden'
-                            value='Test note'
-                            name='orderNote'
+                            className="payment-custom-input"
+                            type="hidden"
+                            value="Test note"
+                            name="orderNote"
                         />
                         <Input
-                            className='payment-custom-input'
-                            type='hidden'
+                            className="payment-custom-input"
+                            type="hidden"
                             value={loginState.name}
-                            name='customerName'
+                            name="customerName"
                         />
                         <Input
-                            className='payment-custom-input'
-                            type='hidden'
+                            className="payment-custom-input"
+                            type="hidden"
                             value={record.seller_location}
-                            name='customerLocation'
+                            name="customerLocation"
                         />
-                        <Input type='hidden' value='INR' name='orderCurrency' />
-                        <Input type='hidden' value={user} name='user' />
-                        <Input type='hidden' value={loginState.pk} name='userId' />
-                        <Input type='hidden' value={record.pk} name='transactionId' />
-                        <Input type='hidden' value={record.produce} name='produce' />
-                        <Input type='hidden' value={record.destinyId} name='sellerId' />
-                        <Input type='hidden' value='payment Gateway' name='paymentType' />
-                        <Input type='hidden' value='1' name='payment' />
-                        <Input type='hidden' value={uuid} name='uuid' />
-                        <Input type='hidden' value={accessToken || ACCESS_TOKEN} name='token' />
-                        <Input type='hidden' value={id} name='orderId' />
-                        <Input type='hidden' value={loginState.phone_no} name='customerPhone' />
-                        <Input type='hidden' value={loginState.email} name='customerEmail' />
-                        <Input type='hidden' value={loginState.name} name='customerName' />
+                        <Input type="hidden" value="INR" name="orderCurrency" />
+                        <Input type="hidden" value={user} name="user" />
+                        <Input type="hidden" value={loginState.pk} name="userId" />
+                        <Input type="hidden" value={record.pk} name="transactionId" />
+                        <Input type="hidden" value={record.produce} name="produce" />
+                        <Input type="hidden" value={record.destinyId} name="sellerId" />
+                        <Input type="hidden" value="payment Gateway" name="paymentType" />
+                        <Input type="hidden" value="1" name="payment" />
+                        <Input type="hidden" value={uuid} name="uuid" />
+                        <Input type="hidden" value={accessToken || ACCESS_TOKEN} name="token" />
+                        <Input type="hidden" value={id} name="orderId" />
+                        <Input type="hidden" value={loginState.phone_no} name="customerPhone" />
+                        <Input type="hidden" value={loginState.email} name="customerEmail" />
+                        <Input type="hidden" value={loginState.name} name="customerName" />
 
-                        {displayCheckModal &&
-                            <CheckDraft record={record}
+                        {displayCheckModal ? (
+                            <CheckDraft
+                                record={record}
                                 viewPaymentDetails={viewPaymentDetails}
                                 setPaymentDetails={setPaymentDetails}
                             />
-                        }
-                        {displayCashModal &&
+                        ):null}
+                        {displayCashModal ? (
                             <CashPaymentModal
                                 record={record}
                                 viewPaymentDetails={viewPaymentDetails}
                                 setPaymentDetails={setPaymentDetails}
                             />
-                        }
-                        {directBankTransferModal &&
+                        ):null}
+                        {directBankTransferModal ?(
                             <DirectBankTransferModal
                                 record={record}
                                 viewPaymentDetails={viewPaymentDetails}
                                 setPaymentDetails={setPaymentDetails}
                             />
-                        }
-                        {proceedToPayBtn ?
-                            <div className='payment-btn-block'>
+                        ):null}
+                        {proceedToPayBtn ? (
+                            <div className="payment-btn-block">
                                 <button
-                                    className='pay-button-btn'
-                                    type='submit'
-                                    onClick={handlePayment}>Proceed to Pay ₹{buyerState.paymentAmount}
+                                    className="pay-button-btn"
+                                    type="submit"
+                                    value="pay"
+                                >
+                                    Proceed to Pay ₹{buyerState.paymentAmount}
                                 </button>
                             </div>
-                            : null
-                        }
-                        {payBtnDisplay ?
-                            <div className='payment-btn-block-position'>
-                                <button className='pay-btn-width' type='submit' value='pay'>Pay</button>
-                            </div>
-                            : null
-                        }
+                        ) : null}
                     </form>
                 </Row>
             </Modal>
