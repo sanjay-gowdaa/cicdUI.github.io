@@ -11,6 +11,7 @@ import DefaultBtn from '../../app-components/defaultBtn';
 import { getMasterProduceList } from '../../store/buyerReducer/actions';
 import { routesMap } from '../../constants';
 import { RootState } from '../../store/rootReducer';
+import PrimaryBtn from '../../app-components/primaryBtn';
 
 const { Paragraph, Text, Title } = Typography;
 
@@ -89,7 +90,7 @@ const AddProduceModal = (props: { history: History }) => {
                 }
                 <Title level={5}>Create/ Update Your Produce Master List</Title>
                 <Paragraph>Add all the produce that you deal with into a master list for quick and easy selection when there a requirement to buy.</Paragraph>
-                <DefaultBtn
+                <PrimaryBtn
                     className='add-produce-btn vikas-btn-radius my-master-list-button'
                     onClick={() => {
                         if (isApproved) {
