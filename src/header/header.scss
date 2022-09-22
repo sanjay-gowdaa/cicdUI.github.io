@@ -16,8 +16,7 @@
         flex-direction: row;
         justify-content: space-evenly; 
         align-items: center;   
-        width:1000px;
-        // background-color:green;
+        width:100vw;
         .logo {
             width: 6.5rem;
             height: 5rem;
@@ -86,15 +85,17 @@
     .landing-page-header-bar {
         width: 100vw;
         height: 12vh;
-    }
-
-    .logo {
-        width: 5rem !important;
-        height: 3rem !important;
-    }
-
-    .header-breadcrumb {
-        display: none;
+        .logo {
+            position: relative;
+            top:2.5vh;
+            left:-100px;
+            width: 5rem !important;
+            height: 3rem !important;
+            // background:green;
+        }
+        .header-breadcrumb {
+            display: none;
+        }
     }
 
     .mobile-header-breadcrumb {

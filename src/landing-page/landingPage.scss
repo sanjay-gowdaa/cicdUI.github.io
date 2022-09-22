@@ -14,16 +14,16 @@ $col-shade-green: #12805c;
 
 
 #home {
-    width:100vw;
+    width:100%;
     background-color:white;
     z-index: 1;
     position: relative;
-    padding-top: 18vh;
+    top:20vh;
     height: 53rem;
     display:flex;
     align-items: center;
     flex-direction: column;
-    // font-family: Roboto;
+    scroll-margin:20vh;
     
     .home-wrapper{
         width:75rem;
@@ -39,6 +39,8 @@ $col-shade-green: #12805c;
             position: relative;
             top:3.125rem;
             .homeTitle{
+                position: relative;
+                // top:40px;
                 width: 31.25rem;
                 font-style: normal;
                 font-weight: 600;
@@ -1217,6 +1219,8 @@ img{
 #home{
     width:100%;
     height:fit-content;
+    position: relative;
+    top:5vh;
     padding:2.625rem;
     // background:blue;
     align-items: center !important;
@@ -1291,6 +1295,7 @@ padding:5rem;
 top:0rem;
 // background-color: orange;
 height:fit-content;
+scroll-margin:9.5vh;
 
     .aim-wrapper{
         width:100vw;
@@ -1415,6 +1420,7 @@ height:fit-content;
     width:100vw;
     height:fit-content;
     top:-30.25rem;
+    scroll-margin:-3vh;
     // background-color:blue;
       .ecosystem-wrapper{
         position: relative;
@@ -1484,6 +1490,7 @@ height:fit-content;
 
     #commodities {
         top:-37rem;
+        scroll-margin:4vh;
         // background-color:green;
         .commodities-wrapper{
             .commoditiesTitle{
@@ -1509,6 +1516,7 @@ height:fit-content;
 
     #team{
        top:13rem;
+       scroll-margin:9.5vh;
 
         .teamWrapper{
            width:100vw;
@@ -1576,6 +1584,7 @@ height:fit-content;
         padding:1.25rem;
         // background-color:orange !important;
         height:106.25rem;
+        scroll-margin:-14vh;
         .legalWrapper{
             width:100vw !important;
             padding: 1.25rem !important;
@@ -1601,6 +1610,7 @@ height:fit-content;
     //   background-color: #F5761A;
       top:-13rem;
       width:100vw;
+      scroll-margin:30vh;
       .contact-us-title{
           position: relative;
           top:6.25rem;
