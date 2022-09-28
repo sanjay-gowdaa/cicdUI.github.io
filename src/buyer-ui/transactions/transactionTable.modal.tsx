@@ -114,6 +114,7 @@ export const transactionBuyerColumns = [
         className: 'pay-button',
         key: 'action',
         render: (record: any) => {
+            // console.log(record,'record in transactionTable');
             return (
                 record?.gsi_status !== TransactionStatus.completed &&
                 <PayButton record={record} />

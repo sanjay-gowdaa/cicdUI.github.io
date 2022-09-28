@@ -123,7 +123,7 @@ const PayButton = (props: { record: any }) => {
     )
 
     const handlePayment = () => {
-        console.log('i am clicked')
+        // console.log('i am clicked')
         setProceedToPayBtn(false);
         setPayAmountDetails(false);
         setPaymentDetails(true);
@@ -175,7 +175,9 @@ const PayButton = (props: { record: any }) => {
     let percent = userStatus.match(findNumber);
     // console.log(percent)
     // console.log(userStatus)
-    console.log(record.installment)
+    // console.log(record.installment_count,'record.installment_count')
+    // console.log(record.installment,'record.installment')
+    // console.log(record.transaction_type,'record.transaction_type')
 
     useEffect(() => {
         if (record.installment == '1') {
@@ -205,7 +207,7 @@ const PayButton = (props: { record: any }) => {
                     content={isError ? 'Retry and Pay' : 'Pay Now'}
                 />
             
-            {displayPay ? <RejectionModal record={record} />:null}
+            {record.installment === record.Installment_count ? <RejectionModal record={record} />:null}
 
             <Modal
                 // bodyStyle={{width:466,height:530}}
