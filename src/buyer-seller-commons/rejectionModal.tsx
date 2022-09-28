@@ -24,6 +24,7 @@ import './rejectionStyles.scss';
 
 import { parseIDfromHash } from '../app-components/utils';
 import { rejectFormPayload } from '../store/buyerReducer/actions';
+import confirmationPopup from './confirmationPopup';
 
 const { Text, Title } = Typography;
 
@@ -125,11 +126,11 @@ const RejectionModal = (props: any) => {
         }
     };
 
-    console.log(category, 'category');
-    console.log(produce, 'produce');
-    console.log(variety, 'variety');
-    console.log(grade, 'grade');
-    console.log(record, 'record');
+    // console.log(category, 'category');
+    // console.log(produce, 'produce');
+    // console.log(variety, 'variety');
+    // console.log(grade, 'grade');
+    // console.log(record, 'record');
 
     const okOnReject = () => {
         const consentPayload = {
@@ -138,6 +139,17 @@ const RejectionModal = (props: any) => {
         };
         console.log(consentPayload, 'consentPayload');
     };
+
+    const onSave = async (rejectPayloadOne: any) => {
+        try {
+            console.log(rejectPayloadOne, 'rejectFormValues');
+            dispatch(rejectFormPayload(rejectPayloadOne));
+        } catch {
+            console.log('error to save');
+        }
+    };
+
+    const submitText = 'reject the transaction, rejection fee will be applied';
 
     const submitForm = (values: any) => {
         const rejectPayloadOne = [
@@ -193,25 +205,19 @@ const RejectionModal = (props: any) => {
             },
         ];
         console.log(rejectPayloadOne, 'rejectPayloadOne');
-        dispatch(rejectFormPayload(rejectPayloadOne));
-        form.resetFields();
-        setIsModalVisible(false);
+        confirmationPopup(`${submitText}`, onSave, rejectPayloadOne);
     };
 
     return (
         <React.Fragment>
-            {displayReject ? (
-                <Button danger type="link" onClick={rejectionNotificationFunc}>
-                    View Details
-                </Button>
-            ) : (
-                <Button danger onClick={rejectfun}>
-                    Reject
-                </Button>
-            )}
+            <Button danger onClick={rejectfun}>
+                Reject
+            </Button>
+
             <Modal
                 title="Rejection Form"
                 visible={isModalVisible}
+                closable={false}
                 onCancel={() => setIsModalVisible(false)}
                 footer={null}
             >
@@ -327,7 +333,7 @@ const RejectionModal = (props: any) => {
                 </Form>
             </Modal>
 
-            <Modal
+            {/* <Modal
                 title="Crop Rejection Notification"
                 visible={notifyReject}
                 onCancel={() => setNotifyReject(false)}
@@ -379,7 +385,7 @@ const RejectionModal = (props: any) => {
                         ok
                     </Button>
                 </div>
-            </Modal>
+            </Modal> */}
         </React.Fragment>
     );
 };
