@@ -16,6 +16,7 @@ import CashPaymentModal from '../../buyer-ui/transactions/cashPaymentmodal';
 import DirectBankTransferModal from './directBankTransfermodal';
 import { render } from '@testing-library/react';
 import RejectionModal from '../../buyer-seller-commons/rejectionModal';
+import { TransactionStatus } from '../../buyer-seller-commons/types';
 
 
 
@@ -189,7 +190,15 @@ const PayButton = (props: { record: any }) => {
         if (record.installment == '3') {
             return setInstallmentNumber('Final Payment Details')
         }
-    }, [installmentNumber])
+    }, [installmentNumber]);
+
+    const showReject:any = ()=>{
+        if(record.installment === record.Installment_count){
+            return true
+        }if(record.installment === record.Installment_count && record?.gsi_status ==="terminated"){
+            return false
+        }
+    }
 
     const { Panel } = Collapse;
     const { Option, OptGroup } = Select;
@@ -206,8 +215,8 @@ const PayButton = (props: { record: any }) => {
                     onClick={() => payNow()}
                     content={isError ? 'Retry and Pay' : 'Pay Now'}
                 />
-            
-            {record.installment === record.Installment_count ? <RejectionModal record={record} />:null}
+            {console.log(record,'record')}
+            {showReject === true ? <RejectionModal record={record} />:null}
 
             <Modal
                 // bodyStyle={{width:466,height:530}}
