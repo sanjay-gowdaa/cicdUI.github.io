@@ -708,4 +708,13 @@ export const submitRejectFormPayload = (values: any) => {
     } catch (error) {
         return console.log('error', error);
     }
+};
+
+export const submitDeliveryDetail = (values:any)=>{
+    const deliveryDetailApi = `http://localhost:4000/dev/updateFinalState`;
+   try {
+    return fetch(deliveryDetailApi, { method: 'POST', body: JSON.stringify(values)})
+   } catch (error) {
+    return console.log('error',error);
+   }
 }

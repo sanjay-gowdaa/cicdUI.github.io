@@ -41,6 +41,7 @@ const PayButton = (props: { record: any }) => {
     const [payBtnDisplay, setPayBtnDisplay] = useState(false);
     const [displayCashModal, setDisplayCashModal] = useState(false);
     const [directBankTransferModal, setDirectBankTransferModal] = useState(false);
+    const [displayRejectBtn,setDispalyRejectBtn] = useState(false);
     const [installmentNumber, setInstallmentNumber] = useState('')
     const uuid = uuidv4();
     const accessToken = (window as any).userToken ? (window as any).userToken : null;
@@ -131,9 +132,6 @@ const PayButton = (props: { record: any }) => {
         setPayBtnDisplay(true);
     }
 
-
-
-
     const ChangeTheSelectValue = (value: string) => {
         if (value === 'Payment Gateway') {
             setPaymentDetails(true)
@@ -174,11 +172,6 @@ const PayButton = (props: { record: any }) => {
     
     let findNumber = /\d+/;
     let percent = userStatus.match(findNumber);
-    // console.log(percent)
-    // console.log(userStatus)
-    // console.log(record.installment_count,'record.installment_count')
-    // console.log(record.installment,'record.installment')
-    // console.log(record.transaction_type,'record.transaction_type')
 
     useEffect(() => {
         if (record.installment == '1') {
@@ -192,13 +185,14 @@ const PayButton = (props: { record: any }) => {
         }
     }, [installmentNumber]);
 
-    const showReject:any = ()=>{
+    useEffect(() => {
         if(record.installment === record.Installment_count){
-            return true
+            return setDispalyRejectBtn(true)
         }if(record.installment === record.Installment_count && record?.gsi_status ==="terminated"){
-            return false
+            return setDispalyRejectBtn(false)
         }
-    }
+    },[displayRejectBtn])
+    
 
     const { Panel } = Collapse;
     const { Option, OptGroup } = Select;
@@ -215,11 +209,10 @@ const PayButton = (props: { record: any }) => {
                     onClick={() => payNow()}
                     content={isError ? 'Retry and Pay' : 'Pay Now'}
                 />
-            {console.log(record,'record')}
-            {showReject === true ? <RejectionModal record={record} />:null}
+
+            {displayRejectBtn ? <RejectionModal record={record} />:null}
 
             <Modal
-                // bodyStyle={{width:466,height:530}}
                 className='payment-modal'
                 visible={viewPaymentDetails}
                 closable={false}
@@ -285,7 +278,7 @@ const PayButton = (props: { record: any }) => {
                         <Text className='payment-amount'>Pay Amount</Text>
                         <Text className='amount'><strong>₹{buyerState.paymentAmount}</strong>({percent}% of ₹{record.buyer_total_price})</Text>
                     </Col> : null}
-                    <form method='POST' action={`${BASE_URL}/${STAGE}/${PAYMENT_REQUEST}`}>
+                    <form method='POST' action={`http://localhost:4000/dev/updatepayment`}>
                         <Input
                             className='payment-custom-input'
                             type='hidden'

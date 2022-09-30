@@ -67,8 +67,8 @@ export const generateFileData = async (fileObject: { name: string, type: string 
  * @returns { string } - ex: 9876543210
  */
 export const parseIDfromHash = (rawID: string): string => {
-    const indexOfHash = rawID.indexOf('#');
-    const actualID = indexOfHash > 0 ? rawID.substring(indexOfHash + 1) : '';
+    const indexOfHash = rawID?.indexOf('#');
+    const actualID = indexOfHash > 0 ? rawID?.substring(indexOfHash + 1) : '';
     return actualID;
 };
 
