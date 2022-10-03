@@ -23,7 +23,7 @@ const TransactionDetailsModal = (props: any) => {
     const { status, eventTemplate, currentStatusDetails } = userState;
     const [count, setCount] = useState(status.length - 1);
     const [currentStatus, setCurrentStatus] = useState([]);
-    const [latestStatus, setLatestStatus] = useState('');
+    const [latestStatus, setLatestStatus]:any = useState('');
     const [deliveryValue, setDeliveryValue]: any = useState('');
     var id = pk;
     id = id.substring(12);
@@ -170,6 +170,7 @@ const TransactionDetailsModal = (props: any) => {
                     );
                 })}
                 {console.log(deliveryValue,'deliveryValue')}
+                {console.log(latestStatus,'latestStatus')}
                 {deliveryValue === 'yes' ? null : (
                     <Row
                         style={{
@@ -178,7 +179,7 @@ const TransactionDetailsModal = (props: any) => {
                             transform: 'translate(-50%, -50%)',
                         }}
                     >
-                        {latestStatus === 'Is goods received?' ? showDeliveryConfirm() : null}
+                        {latestStatus === 'Is goods recieved?' ? showDeliveryConfirm() : null}
                     </Row>
                  )}
                 {/* {deliveryValue === 'no' ? (
