@@ -56,6 +56,8 @@ const CHECK_DRAFT_API = 'https://enzdzh0pw2.execute-api.ap-south-1.amazonaws.com
 
 const REJECT_FORM_API = 'https://enzdzh0pw2.execute-api.ap-south-1.amazonaws.com/dev/transaction/terminateTransaction'
 
+const UPDATE_FINAL_STATE ='updateFinalState';
+
 export const LAST_AUTH_USER = localStorage.getItem(`${COGNITO_PROVIDER}.${COGNITO_ID}.LastAuthUser`);
 export const ACCESS_TOKEN = localStorage.getItem(`${COGNITO_PROVIDER}.${COGNITO_ID}.${LAST_AUTH_USER}.accessToken`);
 
@@ -711,7 +713,8 @@ export const submitRejectFormPayload = (values: any) => {
 };
 
 export const submitDeliveryDetail = (values:any)=>{
-    const deliveryDetailApi = `http://localhost:4000/dev/updateFinalState`;
+    const deliveryDetailApi = `${BASE_URL}/${STAGE}/${UPDATE_FINAL_STATE}`;
+    
    try {
     return fetch(deliveryDetailApi, { method: 'POST', body: JSON.stringify(values)})
    } catch (error) {
