@@ -4,6 +4,7 @@ import { BuyerRejectMatch } from '../buyerReducer/types';
 import { UpdatedLiveApmcRatesQuery, UserHistoryQuery } from '../genericTypes';
 
 import { MatchRequirementModel, TransactionAction, TransactionStatus } from '../../buyer-seller-commons/types';
+import { updateBuyerTransactionList } from '../buyerReducer/actions';
 
 export const BASE_URL = process.env.REACT_APP_BASE_URL;
 export const STAGE = process.env.REACT_APP_ENV;
@@ -716,7 +717,7 @@ export const submitDeliveryDetail = (values:any)=>{
     const deliveryDetailApi = `${BASE_URL}/${STAGE}/${UPDATE_FINAL_STATE}`;
     
    try {
-    return fetch(deliveryDetailApi, { method: 'POST', body: JSON.stringify(values)})
+    return fetch(deliveryDetailApi, { method: 'POST', body: JSON.stringify(values)}).then(()=>window.location.reload())
    } catch (error) {
     return console.log('error',error);
    }
