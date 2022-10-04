@@ -75,7 +75,8 @@ const TransactionDetailsModal = (props: any) => {
                             </Button>
                         ) : null}
                     </div>
-                </React.Fragment> :
+                </React.Fragment>
+            ) : (
                 <React.Fragment>
                     <Text>{list.event_name} ({list.event_time})</Text>
                     <br />
