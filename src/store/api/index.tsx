@@ -4,6 +4,7 @@ import { BuyerRejectMatch } from '../buyerReducer/types';
 import { UpdatedLiveApmcRatesQuery, UserHistoryQuery } from '../genericTypes';
 
 import { MatchRequirementModel, TransactionAction, TransactionStatus } from '../../buyer-seller-commons/types';
+import { updateBuyerTransactionList } from '../buyerReducer/actions';
 
 export const BASE_URL = process.env.REACT_APP_BASE_URL;
 export const STAGE = process.env.REACT_APP_ENV;
@@ -55,6 +56,8 @@ const GET_DESTINY_ID = `${TRANSACTION_API}/getDestinyCode`;
 const CHECK_DRAFT_API = 'https://enzdzh0pw2.execute-api.ap-south-1.amazonaws.com/dev/payment/pay';
 
 const REJECT_FORM_API = 'https://enzdzh0pw2.execute-api.ap-south-1.amazonaws.com/dev/transaction/terminateTransaction'
+
+const UPDATE_FINAL_STATE ='updateFinalState';
 
 export const LAST_AUTH_USER = localStorage.getItem(`${COGNITO_PROVIDER}.${COGNITO_ID}.LastAuthUser`);
 export const ACCESS_TOKEN = localStorage.getItem(`${COGNITO_PROVIDER}.${COGNITO_ID}.${LAST_AUTH_USER}.accessToken`);
@@ -708,4 +711,14 @@ export const submitRejectFormPayload = (values: any) => {
     } catch (error) {
         return console.log('error', error);
     }
+};
+
+export const submitDeliveryDetail = (values:any)=>{
+    const deliveryDetailApi = `${BASE_URL}/${STAGE}/${UPDATE_FINAL_STATE}`;
+    
+   try {
+    return fetch(deliveryDetailApi, { method: 'POST', body: JSON.stringify(values)}).then(()=>window.location.reload())
+   } catch (error) {
+    return console.log('error',error);
+   }
 }

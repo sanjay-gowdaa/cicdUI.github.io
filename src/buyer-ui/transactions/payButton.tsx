@@ -16,6 +16,7 @@ import CashPaymentModal from '../../buyer-ui/transactions/cashPaymentmodal';
 import DirectBankTransferModal from './directBankTransfermodal';
 import { render } from '@testing-library/react';
 import RejectionModal from '../../buyer-seller-commons/rejectionModal';
+import { TransactionStatus } from '../../buyer-seller-commons/types';
 
 
 
@@ -40,6 +41,7 @@ const PayButton = (props: { record: any }) => {
     const [payBtnDisplay, setPayBtnDisplay] = useState(false);
     const [displayCashModal, setDisplayCashModal] = useState(false);
     const [directBankTransferModal, setDirectBankTransferModal] = useState(false);
+    const [displayRejectBtn,setDispalyRejectBtn] = useState(false);
     const [installmentNumber, setInstallmentNumber] = useState('')
     const uuid = uuidv4();
     const accessToken = (window as any).userToken ? (window as any).userToken : null;
@@ -123,15 +125,12 @@ const PayButton = (props: { record: any }) => {
     )
 
     const handlePayment = () => {
-        console.log('i am clicked')
+        // console.log('i am clicked')
         setProceedToPayBtn(false);
         setPayAmountDetails(false);
         setPaymentDetails(true);
         setPayBtnDisplay(true);
     }
-
-
-
 
     const ChangeTheSelectValue = (value: string) => {
         if (value === 'Payment Gateway') {
@@ -170,12 +169,9 @@ const PayButton = (props: { record: any }) => {
             setProceedToPayBtn(false);
         }
     }
-
+    
     let findNumber = /\d+/;
     let percent = userStatus.match(findNumber);
-    // console.log(percent)
-    // console.log(userStatus)
-    console.log(record.installment)
 
     useEffect(() => {
         if (record.installment == '1') {
@@ -187,28 +183,36 @@ const PayButton = (props: { record: any }) => {
         if (record.installment == '3') {
             return setInstallmentNumber('Final Payment Details')
         }
-    }, [installmentNumber])
+    }, [installmentNumber]);
+
+    useEffect(() => {
+        if(record.installment === record.Installment_count){
+            return setDispalyRejectBtn(true)
+        }if(record.installment === record.Installment_count && record?.gsi_status ==="terminated"){
+            return setDispalyRejectBtn(false)
+        }
+    },[displayRejectBtn])
+    
 
     const { Panel } = Collapse;
     const { Option, OptGroup } = Select;
     const [masterCategory = '', produceCateogry = '', cropType = '', grade = ''] = !isEmpty(record?.produce) ? record?.produce.split('-') : [];
     return (
         <React.Fragment>
-            <PrimaryBtn
-                className={
-                    displayPay ?
-                        isError ?
-                            'pay-retry' : 'vikas-btn-radius pay-button-position' :
-                        'display-none'
-                }
-                onClick={() => payNow()}
-                content={isError ? 'Retry and Pay' : 'Pay Now'}
-            />
+                <PrimaryBtn
+                    className={
+                        displayPay ?
+                            isError ?
+                                'pay-retry' : 'vikas-btn-radius pay-button-position' :
+                            'display-none'
+                    }
+                    onClick={() => payNow()}
+                    content={isError ? 'Retry and Pay' : 'Pay Now'}
+                />
 
-            {displayPay && <RejectionModal record={record} />}
+            {displayRejectBtn ? <RejectionModal record={record} />:null}
 
             <Modal
-                // bodyStyle={{width:466,height:530}}
                 className='payment-modal'
                 visible={viewPaymentDetails}
                 closable={false}

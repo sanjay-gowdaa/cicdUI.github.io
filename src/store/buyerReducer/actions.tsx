@@ -26,7 +26,8 @@ import {
     fetchUserHistory,
     fetchDestinyId,
     submitCheckDraftDetails,
-    submitRejectFormPayload
+    submitRejectFormPayload,
+    submitDeliveryDetail
 } from '../api';
 import { UserStateModel } from '../loginReducer/types';
 import { BuyerStateModel } from '../buyerReducer/types';
@@ -604,5 +605,11 @@ export const cashAndCheckPayment=(values:any)=>{
 export const rejectFormPayload =(values:any)=>{
     return async () => {
         const result = await submitRejectFormPayload(values);
+    }
+};
+
+export const isDeliveryRecievedPayload =(values:any)=>{
+    return async ()=>{
+        const result = await submitDeliveryDetail(values)
     }
 }
