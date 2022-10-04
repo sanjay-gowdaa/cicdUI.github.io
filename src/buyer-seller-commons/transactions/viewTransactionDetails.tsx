@@ -182,8 +182,8 @@ const TransactionDetailsModal = (props: any) => {
                         </Timeline.Item>
                     );
                 })}
-                {console.log(deliveryValue,'deliveryValue')}
-                {console.log(latestStatus,'latestStatus')}
+                {/* {console.log(deliveryValue,'deliveryValue')} */}
+                {/* {console.log(latestStatus,'latestStatus')} */}
                 {deliveryValue === 'yes' ? null : (
                     <Row
                         style={{
@@ -195,11 +195,6 @@ const TransactionDetailsModal = (props: any) => {
                         {latestStatus === 'Is goods recieved?' ? showDeliveryConfirm() : null}
                     </Row>
                  )}
-                {/* {deliveryValue === 'no' ? (
-                    <Row>
-                        <Text>Please select yes,This feature is in progress</Text>
-                    </Row>
-                ) : null} */}
             </Timeline>
         </React.Fragment>
     );

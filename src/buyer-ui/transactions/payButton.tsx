@@ -278,7 +278,7 @@ const PayButton = (props: { record: any }) => {
                         <Text className='payment-amount'>Pay Amount</Text>
                         <Text className='amount'><strong>₹{buyerState.paymentAmount}</strong>({percent}% of ₹{record.buyer_total_price})</Text>
                     </Col> : null}
-                    <form method='POST' action={`http://localhost:4000/dev/updatepayment`}>
+                    <form method='POST' action={`${BASE_URL}/${STAGE}/${PAYMENT_REQUEST}`}>
                         <Input
                             className='payment-custom-input'
                             type='hidden'
