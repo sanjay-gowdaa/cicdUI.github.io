@@ -32,6 +32,7 @@ const TradeSummary = (props: componentProps) => {
 
     return (
         <React.Fragment>
+            <div style ={{marginTop:'-20px'}}>
             <Title level={4}>Trade summary </Title>
             <Row>
                 <Col span={8}>
@@ -146,6 +147,7 @@ const TradeSummary = (props: componentProps) => {
                     Including all taxes
                 </Text>
             }
+            </div>
         </React.Fragment>
     );
 };
