@@ -16,6 +16,7 @@ import CashPaymentModal from '../../buyer-ui/transactions/cashPaymentmodal';
 import DirectBankTransferModal from './directBankTransfermodal';
 import { render } from '@testing-library/react';
 import RejectionModal from '../../buyer-seller-commons/rejectionModal';
+import { TransactionStatus } from '../../buyer-seller-commons/types';
 
 const { Text, Title } = Typography;
 
@@ -37,7 +38,7 @@ const PayButton = (props: { record: any }) => {
     const [payBtnDisplay, setPayBtnDisplay] = useState(false);
     const [displayCashModal, setDisplayCashModal] = useState(false);
     const [directBankTransferModal, setDirectBankTransferModal] = useState(false);
-    const [installmentNumber, setInstallmentNumber]: any = useState(() => {});
+    const [displayRejectBtn,setDispalyRejectBtn] = useState(false);
     const uuid = uuidv4();
     const accessToken = (window as any).userToken ? (window as any).userToken : null;
 
@@ -173,10 +174,20 @@ const PayButton = (props: { record: any }) => {
             setPayBtnDisplay(false);
             setProceedToPayBtn(false);
         }
-    };
 
     var findNumber = /\d+/;
     var percent: any = userStatus.match(findNumber);
+    
+    let findNumber = /\d+/;
+    let percent = userStatus.match(findNumber);
+
+    useEffect(() => {
+        if(record.installment === record.Installment_count){
+            return setDispalyRejectBtn(true)
+        }if(record.installment === record.Installment_count && record?.gsi_status ==="terminated"){
+            return setDispalyRejectBtn(false)
+        }
+    },[displayRejectBtn])
 
     const { Panel } = Collapse;
     const { Option, OptGroup } = Select;
@@ -187,19 +198,18 @@ const PayButton = (props: { record: any }) => {
         : [];
     return (
         <React.Fragment>
-            <PrimaryBtn
-                className={
-                    displayPay
-                        ? isError
-                            ? 'pay-retry'
-                            : 'vikas-btn-radius pay-button-position'
-                        : 'display-none'
-                }
-                onClick={() => payNow()}
-                content={isError ? 'Retry and Pay' : 'Pay Now'}
-            />
+                <PrimaryBtn
+                    className={
+                        displayPay ?
+                            isError ?
+                                'pay-retry' : 'vikas-btn-radius pay-button-position' :
+                            'display-none'
+                    }
+                    onClick={() => payNow()}
+                    content={isError ? 'Retry and Pay' : 'Pay Now'}
+                />
 
-            {displayPay && <RejectionModal record={record} />}
+            {displayRejectBtn ? <RejectionModal record={record} />:null}
 
             <Modal
                 className="payment-modal"
