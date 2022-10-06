@@ -134,7 +134,7 @@ const PayButton = (props: { record: any }) => {
 
     const handleCancel = ()=>{
         setPayAmountDetails(true);
-        // setPaymentDetails(!viewPaymentDetails);
+        setPaymentDetails(!viewPaymentDetails);
     }
 
     const ChangeTheSelectValue = (value: string) => {
@@ -178,30 +178,6 @@ const PayButton = (props: { record: any }) => {
     var findNumber = /\d+/;
     var percent: any = userStatus.match(findNumber);
 
-    // useEffect(() => {
-    //     // let findNumber = /\d+/;
-    //     // var percent: any = userStatus.match(findNumber);
-    //     let destructure = percent?.[0];
-    //     console.log(destructure, 'destructure');
-    //     // console.log(userStatus, 'userStatus');
-    //     // let word = userStatus.includes('20%');
-    //     // let word1 = userStatus.includes('70%') || userStatus.includes('50%');
-    //     // let word3 = userStatus.includes('10%');
-    //     // console.log(word, 'word');
-    //     // console.log(word1, 'word1');
-    //     // console.log(word3, 'word3');
-    //     if (destructure === '10') {
-    //         return setInstallmentNumber('First Advance Payment Details');
-    //     }
-    //     if (destructure === '50') {
-    //         return setInstallmentNumber('Second Advance Payment Details');
-    //     }
-    //     if (destructure === '20' || '100') {
-    //         return setInstallmentNumber('Final Payment Details');
-    //     }
-    // }, [installmentNumber, userStatus]);
-
-
     const { Panel } = Collapse;
     const { Option, OptGroup } = Select;
     const [masterCategory = '', produceCateogry = '', cropType = '', grade = ''] = !isEmpty(
@@ -226,7 +202,6 @@ const PayButton = (props: { record: any }) => {
             {displayPay && <RejectionModal record={record} />}
 
             <Modal
-                // bodyStyle={{width:466,height:530}}
                 className="payment-modal"
                 visible={viewPaymentDetails}
                 closable={false}
