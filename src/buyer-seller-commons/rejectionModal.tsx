@@ -144,6 +144,7 @@ const RejectionModal = (props: any) => {
         try {
             console.log(rejectPayloadOne, 'rejectFormValues');
             dispatch(rejectFormPayload(rejectPayloadOne));
+            setIsModalVisible(false)
         } catch {
             console.log('error to save');
         }
