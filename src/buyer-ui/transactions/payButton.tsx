@@ -186,10 +186,10 @@ const PayButton = (props: { record: any }) => {
     }, [installmentNumber]);
 
     useEffect(() => {
-        if(record.installment === record.Installment_count && record.gsi_status === "terminated"){
+        if(record.installment === record.Installment_count && (record.gsi_status === "terminated" || record.gsi_status === "completed")){
             setDispalyRejectBtn(false)
         }else if(record.installment === record.Installment_count){
-            setDispalyRejectBtn(false)
+            setDispalyRejectBtn(true)
         }
     },[displayRejectBtn,record.installment,record.Installment_count,record.gsi_status])
     
