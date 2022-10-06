@@ -186,12 +186,12 @@ const PayButton = (props: { record: any }) => {
     }, [installmentNumber]);
 
     useEffect(() => {
-        if(record.installment === record.Installment_count){
-            return setDispalyRejectBtn(true)
-        }if(record.installment === record.Installment_count && record?.gsi_status ==="terminated"){
-            return setDispalyRejectBtn(false)
+        if(record.installment === record.Installment_count && record.gsi_status === "terminated"){
+            setDispalyRejectBtn(false)
+        }else if(record.installment === record.Installment_count){
+            setDispalyRejectBtn(false)
         }
-    },[displayRejectBtn])
+    },[displayRejectBtn,record.installment,record.Installment_count,record.gsi_status])
     
 
     const { Panel } = Collapse;
