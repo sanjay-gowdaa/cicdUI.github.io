@@ -174,13 +174,11 @@ const PayButton = (props: { record: any }) => {
             setPayBtnDisplay(false);
             setProceedToPayBtn(false);
         }
+    };
 
     var findNumber = /\d+/;
     var percent: any = userStatus.match(findNumber);
     
-    let findNumber = /\d+/;
-    let percent = userStatus.match(findNumber);
-
     useEffect(() => {
         if(record.installment === record.Installment_count){
             return setDispalyRejectBtn(true)
