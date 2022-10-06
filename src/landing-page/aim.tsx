@@ -35,8 +35,8 @@ const Aim = () => {
                             src="https://www.youtube.com/embed/p4CZAGgJ-wM"
                         />
                     </Col>
+                    <LandingDivider className ='divider'/>
                 </Row>
-                <LandingDivider style={{position: 'relative',top:'-10px'}} className='pageDivider'/>
                 <Title className='why-vikasBandhu'>{t('aim_page.text3')}</Title>
                 <Text className='at-present-text'>{t('aim_page.text4')}</Text>
                 <Row className='seller-buyer-advantage'>

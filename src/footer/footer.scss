@@ -1,8 +1,8 @@
 .app-footer-container {
     width: 100%;
     background: #102E44;
-    height: 100px;
-    top:1050px;
+    height: 6.25rem;
+    top:65.625rem;
     z-index:1;
     position: relative;
     color: #ffffff;
@@ -13,11 +13,11 @@
     text-align: center;
 
     .phone {
-        padding-right: 80px;
+        padding-right: 5rem;
     }
 
     .applied-for {
-        margin-top: 30px;
+        margin-top: 1.875rem;
     }
 
     .powered-by-text {
@@ -32,15 +32,22 @@
         width: 100vw;
         background: #102E44;
         flex-direction: column;
+        align-items: center;
         font-size: 1rem;
         height:16.875rem;
+        top:6.25rem;
 
         .height-full {
+            display:flex;
+            align-items: center;
+            flex-direction: column;
             width: 100vw;
-            padding-left: 2rem;
-            margin: 0 -14px;
+            margin: 0 -0.875rem;
             height: fit-content;
             padding-top: 1rem;
+            .phone {
+                padding-right: 0rem;
+            }
         }
 .applied-for{
     height:12.5rem;
