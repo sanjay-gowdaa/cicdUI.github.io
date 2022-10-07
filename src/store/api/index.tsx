@@ -717,7 +717,7 @@ export const submitDeliveryDetail = (values:any)=>{
     const deliveryDetailApi = `${BASE_URL}/${STAGE}/${UPDATE_FINAL_STATE}`;
     
    try {
-    return fetch(deliveryDetailApi, { method: 'POST', body: JSON.stringify(values)}).then(()=>window.location.reload())
+    return fetch(deliveryDetailApi, { method: 'POST', body: JSON.stringify(values)})
    } catch (error) {
     return console.log('error',error);
    }
