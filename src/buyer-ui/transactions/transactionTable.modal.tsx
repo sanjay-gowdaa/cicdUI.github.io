@@ -116,8 +116,8 @@ export const transactionBuyerColumns = [
         render: (record: any) => {
             // console.log(record,'record in transactionTable');
             return (
-                record?.gsi_status !== TransactionStatus.completed &&
-                <PayButton record={record} />
+                record?.gsi_status !== TransactionStatus.completed ?
+                <PayButton record={record} />:null
             );
         },
     },
