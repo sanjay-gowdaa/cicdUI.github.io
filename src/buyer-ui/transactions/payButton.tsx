@@ -180,12 +180,16 @@ const PayButton = (props: { record: any }) => {
     var percent: any = userStatus.match(findNumber);
     
     useEffect(() => {
-        if(record.installment === record.Installment_count){
-            return setDispalyRejectBtn(true)
-        }if(record.installment === record.Installment_count && record?.gsi_status ==="terminated"){
-            return setDispalyRejectBtn(false)
+        if(record.installment === record.Installment_count && (record.gsi_status === "terminated" || record.gsi_status === "completed")){
+            setDispalyRejectBtn(false)
+        }else if(record.installment === record.Installment_count){
+            setDispalyRejectBtn(true)
+        }else{
+            setDispalyRejectBtn(true)
         }
-    },[displayRejectBtn])
+    },[displayRejectBtn,record.installment,record.Installment_count,record.gsi_status])
+    
+    console.log(displayRejectBtn,'displayRejectBtn')
 
     const { Panel } = Collapse;
     const { Option, OptGroup } = Select;
@@ -207,7 +211,7 @@ const PayButton = (props: { record: any }) => {
                     content={isError ? 'Retry and Pay' : 'Pay Now'}
                 />
 
-            {displayRejectBtn ? <RejectionModal record={record} />:null}
+            {displayRejectBtn? <RejectionModal record={record} />:null}
 
             <Modal
                 className="payment-modal"
