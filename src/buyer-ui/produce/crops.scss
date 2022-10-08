@@ -47,3 +47,14 @@
         }
     }
 }
+
+.additionalInfo-submit{
+display: flex;
+align-items: center;
+justify-content: center;
+}
+
+.disabled-row{
+    background: rgba(0,0,0,0.1);
+    pointer-events:none;
+}

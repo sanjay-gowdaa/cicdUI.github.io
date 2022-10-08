@@ -72,6 +72,7 @@ export const displayMatchSuccessModal = () => {
         icon: '',
         centered: true,
         title: <CheckCircleFilled className='match-success-icon' />,
+        closable:false,
         content: (
             <>
                 <Title className='text-align-center' level={5}>

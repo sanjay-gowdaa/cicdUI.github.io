@@ -17,7 +17,7 @@ const ViewCropDetails = (props: componentProps) => {
     const closeModal = () => setOpenDetailsModal(!openDetailsModal);
 
     return (
-        <Modal visible={openDetailsModal} title='Details' onCancel={closeModal} footer={null} width={'40%'}>
+        <Modal visible={openDetailsModal} title='Details' onCancel={closeModal} closable={false} footer={null} width={'40%'}>
             <TradeSummary cropDetails={cropDetails} />
             <Divider />
             <Row justify='center'>

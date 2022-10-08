@@ -14,16 +14,16 @@ $col-shade-green: #12805c;
 
 
 #home {
-    width:100vw;
+    width:100%;
     background-color:white;
     z-index: 1;
     position: relative;
-    padding-top: 18vh;
+    top:20vh;
     height: 53rem;
     display:flex;
     align-items: center;
     flex-direction: column;
-    // font-family: Roboto;
+    scroll-margin:20vh;
     
     .home-wrapper{
         width:75rem;
@@ -38,6 +38,14 @@ $col-shade-green: #12805c;
             width:25rem;
             position: relative;
             top:3.125rem;
+            .homeTitle{
+                position: relative;
+                // top:40px;
+                width: 31.25rem;
+                font-style: normal;
+                font-weight: 600;
+                font-size: 3rem;
+            }
             h5.ant-typography{
                     font-style: normal;
                     font-weight: 300;
@@ -172,6 +180,7 @@ scroll-margin: 12rem;
 display:flex;
 align-items: center;
 justify-content: center;
+flex-direction: column;
 // background-color: #12805c;
     .aim-wrapper{
         display: flex;
@@ -235,14 +244,14 @@ justify-content: center;
             position: relative;
             left:10%;
             width:37.5rem;
-            height:70px;
+            height:4.375rem;
             margin-bottom: 3.125rem;
             .span-text{
                 font-size: 1.875rem;
             }
             p{
                 position: relative;
-                margin:0px;
+                margin:0rem;
             }
         }
         
@@ -1199,7 +1208,7 @@ img{
             .join-us-reg {
                 width: 25vw;
                 height: 5vh;
-            font-size: 1rem;
+                font-size: 1rem;
                 position: relative;
                 bottom: 7rem;
                 left: 16rem;
@@ -1209,26 +1218,63 @@ img{
 
 #home{
     width:100%;
-    height:50rem;
+    height:fit-content;
+    position: relative;
+    top:5vh;
     padding:2.625rem;
+    // background:blue;
     align-items: center !important;
+    .home-wrapper{
+        padding-right: 0rem;
+        height:46.5rem;
+        // background-color:orange;
+    }
 
     .ant-row{
-        position: relative;
-        left:1.875rem;
-        .ant-col-8{
+        .ant-col-10{
+            display:flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-evenly;
             .wimage,.registerComponent{
                 width:80%;
+            }
+            .homeTitle{
+                position: relative;
+                left:-0.625rem;
+                width: 18.75rem;
+                font-style: normal;
+                font-weight: 600;
+                font-size: 1.813rem;
             }
             h5{
                 width:80%;
             }
+            .googlePlay {
+                display:flex;
+                justify-content: center;
+                // position: relative;
+                // left:-3.625rem;
+                width: 12.5rem;
+                height: 2.769rem;
+                margin-top: 3rem;
+                Button,img {
+                    width: 9.375rem;
+                    height: 2.769rem;
+                    margin-left: 0rem;
+                    border: none;
+                    }
+            }
             .headFooter{
+                position: relative;
+                left:3.125rem;
                 width:18.75rem;
-                height:18.75rem;
+                height:fit-content;
+                // background-color:blue;
                 .secondL,.ant-breadcrumb{
                     width:18.75rem;
-                    height:12.5rem;
+                    height:13.5rem;
+                    
                     .ant-breadcrumb{
                         display: flex;
                         flex-direction:column;
@@ -1245,22 +1291,34 @@ img{
 width:100vw;
 // left:3.125rem;
 padding:5rem;
-top:-5rem;
+// top:-5rem;
+top:0rem;
 // background-color: orange;
 height:fit-content;
+scroll-margin:9.5vh;
 
     .aim-wrapper{
+        width:100vw;
+        top:-3.125rem;
         display: flex;
         align-items: center;
-        justify-content:center;
+        justify-content:space-evenly;
         flex-direction: column;
         .aimFirstRow{
+            left: 0rem;
+            top:-12.5rem;
+            display: flex;
+            flex-direction: column;
+            justify-content:space-evenly;
+            align-items: center;
             .aim-Whatis{
                 width:18.75rem;
-                h2{
-                    width:100vw;
+                .aim-header{
+                    width:80vw;
                     position: relative;
-                    left:-2.5rem;
+                    // background: blue;
+                    font-size: 1.875rem;
+                    // left:-2.5rem;
                 }
                 p{
                     width:75vw;
@@ -1273,6 +1331,23 @@ height:fit-content;
                 top:1.25rem;
                 left:-1.875rem;
             }
+            .divider{
+                position: relative;
+                top:3.125rem;
+            }
+        }
+        
+        .why-vikasBandhu{
+            position: relative;
+            top:-15.625rem;
+            left:-1.938rem;
+            font-size: 1.875rem;
+        }
+        .at-present-text{
+            position: relative;
+            top:-15.625rem;
+            left:-1.125rem;
+            font-size: 1.25rem;
         }
 
         h2,span.ant-typography{
@@ -1283,8 +1358,10 @@ height:fit-content;
         
         .seller-buyer-advantage{
             position: relative;
-            left:24rem;
             padding:2rem;
+            top:-18.75rem;
+            left: 17.5rem;
+            // background:blue;
             .headText{
                 position: relative;
                 width:18.75rem;
@@ -1293,8 +1370,14 @@ height:fit-content;
                 text-align: center;
             }
         }
+        .manyMore,.solid{
+            position: relative;
+            top:-18.75rem;
+        }
 
         .seventhBox{
+            position: relative;
+            top:-18.75rem;
             width:18.75rem;
             height:fit-content;
         }
@@ -1302,7 +1385,8 @@ height:fit-content;
         .advantageBadges{
             // background-color: #F5761A;
             position: relative;
-            left:-1.25rem;
+            top:-18.75rem;
+            left:1.50rem;
             .ant-col-6 img{
                     width:9.25em;
                     height:9.25em;
@@ -1318,16 +1402,16 @@ height:fit-content;
             div.ant-row.tenthBox{
                 width:18.75rem;
                 position: relative;
-                top:1.875rem;
+                top:-18.75rem;
             }
 
             .ninethBox{
                 position: relative;
-                top:1.25rem;
+                top:-15.625rem;
             }
             .pageDivider{
                 position: relative;
-                top:3.25rem;
+                top:-18.75rem;
             }
     }
 }
@@ -1335,11 +1419,14 @@ height:fit-content;
 #ecosystem {
     width:100vw;
     height:fit-content;
-    top:-6.25rem;
-    //background-color:orange;
+    top:-30.25rem;
+    scroll-margin:-3vh;
+    // background-color:blue;
       .ecosystem-wrapper{
-          top:0rem;
+        position: relative;
+          top:-7.5rem;
           align-items:center !important;
+        //   background:blue;
           .iphone-screen-mobile{
               width:80vw;
             //   background-color:green;
@@ -1370,14 +1457,18 @@ height:fit-content;
           }
           .keyFeatures{
               position: relative;
-              top:13.75rem;
+              top:3rem;
               text-align:center;
+              font-size:1.25rem;
           }
           img{
             position: relative;
-            top:12.5rem;
+            top:0rem;
           }
+          
           .lastContent-ecosystem{
+              position: relative;
+              top:0rem;
               flex-direction: column;
               justify-content:space-evenly;
               height: fit-content;
@@ -1391,180 +1482,41 @@ height:fit-content;
           }
           .pageDivider{
             position: relative;
-            top:15rem;
+            top:3rem;
         }
         
     }
 }
 
     #commodities {
-        top:7.5rem;
+        top:-37rem;
+        scroll-margin:4vh;
         // background-color:green;
-        .commoditiesParagraph{
-            width:100vw;
-            padding:0.625rem;
-        }
-        .CropImages_sec{
-            position: relative;
-            top:18.75rem;
-            flex-direction: column;
-        }
-        .ant-divider-plain.ant-divider-with-text{
-            position: relative;
-            top:37.5rem;
-        }
-    }
-
-    #users {
-        width: 100vw;
-        bottom: 0;
-        background-color: #ffffff;
-
-        .user-title {
-        font-size: 1.25rem;
-            margin-left: 1rem;
-            padding-top: 0;
-        }
-
-        .user-column {
-            width: 90vw;
-            margin-left: 5vw;
-
-            .user-card {
-                width: 90vw;
-            font-size: 1rem;
-                height: fit-content;
-                border-radius: 0.3rem;
-                padding: 0;
-
-                .user-card-title {
-                font-size: 1.25rem;
-                }
-
-                .subtitle {
-                font-size: 1rem;
-                    padding-left: 7rem;
-                    text-align: left;
-                }
-
-                .user-image {
-                    border: 0.063rem solid white;
-                    background-color: #ffffff;
-                    border-radius: 0.3rem;
-                    width: 25vw;
-                    height: 25vw;
-                    position: absolute;
-                    bottom: 1.5rem;
-                    right: 3.5rem;
-                }
-
-                .user-paragraph {
-                    text-align: left;
-                font-size: 1rem;
-                    margin: 0;
-                }
+        .commodities-wrapper{
+            .commoditiesTitle{
+                font-size: 1.875rem;
             }
-        }
-
-        .buyer-column {
-            position: relative;
-            top: 21rem;
-            right: 11.25rem;
-        }
-
-        .transport-image {
-            margin-left: 2.5vw;
-            position: relative;
-            top: 18rem;
-            width: 95vw;
-            margin-bottom: 15rem;
-            margin-right: 0;
-        }
-    }
-
-    #aboutUs {
-        width: 100vw;
-        background-color: #ffffff;
-        height: 100vh;
-        margin: 0;
-        bottom: -6vh;
-        padding: 0rem !important;
-
-        .about-us-title {
-            font-size: 1.25rem;
-            padding: 2rem;
-        }
-
-        .outline-image{
-            position: relative;
-            bottom: 4rem;
-            height: 25vw;
-            margin-right: 2vw;
-            width: 25vw;
-        }
-
-        .outline-paragraph{
-            padding-left: 2rem;
-            font-size: 1rem;
-            width: 90vw;
-        }
-
-        .vision-card{
-            width: 90vw;
-            height: 22vh;
-            margin-left: 5vw;
-            text-align: left;
-
-            .about-us-card-image{
-                margin-top: 2vh;
-                width: 15vw;
-                height: 15vw;
+            .commoditiesParagraph{
+                width:100vw;
+                padding:0.625rem;
             }
-
-            .card-title{
-                text-align: center;
-                width: max-content;
-                float: right;
+            .CropImages_sec{
                 position: relative;
-                right: 9.5rem;
-            font-size: 1.25rem;
+                top:25rem;
+                display: flex;
+                flex-direction: column;
             }
-
-            .card-paragraph{
-                width: 65vw;
-                float: right;
+            .ant-divider-plain.ant-divider-with-text{
                 position: relative;
-                left: 1rem;
-                bottom: 3.5rem;
-            font-size: 1rem;
+                top:50.5rem;
             }
         }
-
-        .phylosophy-card{
-            position: relative;
-            top: 12rem;
-            right: 12rem;
-            height: 20vh;
-            margin-bottom: 12rem;
-
-            .card-title {
-                right: 6.75rem;
-            }
-        }
-
-        .vision-div {
-            padding-left: 2rem;
-            width: 95vw;
-        }
-
-        .vision-div-title,
-        .vision-paragraph {
-        font-size: 1rem !important;
-        }
+        
     }
 
     #team{
-       top:43.75rem;
+       top:13rem;
+       scroll-margin:9.5vh;
 
         .teamWrapper{
            width:100vw;
@@ -1574,19 +1526,18 @@ height:fit-content;
            justify-content: center;
            .Founders_sec{
                width:18.75rem;
-               height:90.625rem;
+               height: 112.5rem;
                display:flex;
                justify-content: center;
                text-align: center;
                .FoundersTitle{
                    top:-1.25rem;
-                   left:33%;
+                   left:5.5rem;
                }
                 .FoundersRow{
                    width:15.625rem;
-                   height:29.375rem;
+                   height: 34.375rem;
                    margin-bottom:0.625rem;
-                   //background-color:green;
                    .ant-col-6 img{
                        position: relative;
                        left:50%;
@@ -1595,24 +1546,24 @@ height:fit-content;
                        width:18.75rem;
                        position: relative;
                     //    background-color: green;
-                       top:-3.125rem;
+                       top:-6.125rem;
                    }
                 }
            }
             .Management_sec{
             width:18.75rem;
-            height:70.313rem;
+            height: 28.125rem;
             display:flex;
             justify-content: center;
             text-align: center;
             .FoundersTitle{
                 position: relative;
-                top:-1.25rem;
-                left:3.125rem;
+                top:-1rem;
+                left:1.9rem;
             }
                 .ManagementRow{
                 width:15.625rem;
-                height:21.875rem;
+                height:23.875rem;
                 margin-bottom:0.625rem;
                 .ant-col-6 img{
                     position: relative;
@@ -1628,11 +1579,12 @@ height:fit-content;
     }
 
     #legal{
-        top:37.5rem;
+        top:6rem;
         width:100vw;
         padding:1.25rem;
         // background-color:orange !important;
         height:106.25rem;
+        scroll-margin:-14vh;
         .legalWrapper{
             width:100vw !important;
             padding: 1.25rem !important;
@@ -1656,8 +1608,9 @@ height:fit-content;
 
     #contactUs{
     //   background-color: #F5761A;
-      top:18.875rem;
+      top:-13rem;
       width:100vw;
+      scroll-margin:30vh;
       .contact-us-title{
           position: relative;
           top:6.25rem;
@@ -1681,8 +1634,7 @@ height:fit-content;
                   .contact-details{
                       height:8.125rem;
                       width:80vw;
-                      text-align: center;
-                    //   background-color:#f5a31a;
+                      text-align: start;
                   }
                   .mapouter{
                       position: relative;
@@ -1713,18 +1665,17 @@ height:fit-content;
     }
 
     #updates{
-        top:37.5rem;
-        // background-color:green;
+        top:6rem;
         .updateWrapper{
             width:100vw;
             .site-collapse-custom-collapse{
                 .site-collapse-custom-panel{
                     .card{
-                        width:100vw;
+                        width:90vw;
                         display:flex;
                         flex-direction:column;
                         justify-content:center;
-                        height: 31.25rem;
+                        height:fit-content;
                         img{
                             position: relative;
                             top:0.313rem;

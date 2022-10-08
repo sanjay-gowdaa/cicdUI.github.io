@@ -11,6 +11,7 @@ import DefaultBtn from '../../app-components/defaultBtn';
 import { getMasterProduceList } from '../../store/buyerReducer/actions';
 import { routesMap } from '../../constants';
 import { RootState } from '../../store/rootReducer';
+import PrimaryBtn from '../../app-components/primaryBtn';
 
 const { Paragraph, Text, Title } = Typography;
 
@@ -57,6 +58,8 @@ const AddProduceModal = (props: { history: History }) => {
         }
     ];
 
+    console.log(loginState?.isSubmitted,'loginState.isSubmitted');
+
     const showKycRequiredModal = () => {
         Modal.info({
             className: 'kyc-required-modal',
@@ -89,7 +92,7 @@ const AddProduceModal = (props: { history: History }) => {
                 }
                 <Title level={5}>Create/ Update Your Produce Master List</Title>
                 <Paragraph>Add all the produce that you deal with into a master list for quick and easy selection when there a requirement to buy.</Paragraph>
-                <DefaultBtn
+                <PrimaryBtn
                     className='add-produce-btn vikas-btn-radius my-master-list-button'
                     onClick={() => {
                         if (isApproved) {
@@ -100,19 +103,19 @@ const AddProduceModal = (props: { history: History }) => {
                     }}
                     content='My Master List'
                 />
-                {!loginState.isSubmitted &&
+                {!loginState.isSubmitted ?
                     <Space className='kyc-pending-message' direction='horizontal' >
                         <WarningFilled className='warning-icon' />
                         <Title level={5} className='kyc-pending-text'>KYC Pending.</Title>
                         <Link to={routesMap.profile} className='update-text'>Update Now</Link>
-                    </Space>
+                    </Space>:null
                 }
-                {loginState.isSubmitted && !isApproved &&
+                {loginState?.isSubmitted && !isApproved ?
                     <Space className='kyc-pending-message' direction='horizontal' >
                         <WarningFilled className='warning-icon' />
                         <Title level={5} className='kyc-pending-text'>KYC waiting for approval.</Title>
                     </Space>
-                }
+                :null}
             </div>
             <Modal
                 title={<Title level={3}>Produce Master List</Title>}

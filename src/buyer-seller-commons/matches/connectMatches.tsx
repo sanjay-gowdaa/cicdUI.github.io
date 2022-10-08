@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Alert, Checkbox, Col, Modal, Row, Space, Statistic, Typography, Select } from 'antd';
+import { Alert, Checkbox, Col, Modal, Row, Space, Statistic, Typography, Select, Divider } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 
 import TradeSummary from './tradeSummary';
@@ -139,13 +139,14 @@ const ConnectMatches = ({ cropDetails }: { cropDetails: MatchRequirementModel })
             />
             <Modal
                 visible={viewAgreement}
-                title={<Title level={3}>Agreement To {is_buyer ? <>Buy</> : <>Sell</>}</Title>}
                 onCancel={() => {setViewAgreement(!viewAgreement)
                     setAgreed(false);}
                 }
                 footer={null}
                 
             >
+                <Title level={3} style = {{marginBottom:'-20px',marginTop:'-10px'}}>Agreement To {is_buyer ? <>Buy</> : <>Sell</>}</Title>
+                <Divider style={{border:'1px solid black'}}></Divider>
                 <TradeSummary cropDetails={cropDetails} />
                 {is_buyer ? 
                     <Row>
