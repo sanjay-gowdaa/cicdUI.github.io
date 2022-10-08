@@ -211,7 +211,7 @@ const RejectionModal = (props: any) => {
 
     return (
         <React.Fragment>
-            <Button danger onClick={rejectfun}>
+            <Button className = "rejectButton" danger onClick={rejectfun}>
                 Reject
             </Button>
 
@@ -321,8 +321,9 @@ const RejectionModal = (props: any) => {
                             alignItems: 'center',
                         }}
                     >
-                        <Button htmlType="submit">Save</Button>
+                        <Button className = "rejectSubmitBtn" htmlType="submit">Save</Button>
                         <Button
+                            className= "rejectCancelBtn"
                             onClick={() => {
                                 form.resetFields();
                                 setIsModalVisible(false);
