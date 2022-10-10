@@ -38,7 +38,7 @@ const PayButton = (props: { record: any }) => {
     const [payBtnDisplay, setPayBtnDisplay] = useState(false);
     const [displayCashModal, setDisplayCashModal] = useState(false);
     const [directBankTransferModal, setDirectBankTransferModal] = useState(false);
-    const [displayRejectBtn,setDispalyRejectBtn] = useState(false);
+    const [displayRejectBtn, setDispalyRejectBtn]: any = useState(false);
     const uuid = uuidv4();
     const accessToken = (window as any).userToken ? (window as any).userToken : null;
 
@@ -133,10 +133,10 @@ const PayButton = (props: { record: any }) => {
         </Title>
     );
 
-    const handleCancel = ()=>{
+    const handleCancel = () => {
         setPayAmountDetails(true);
         setPaymentDetails(!viewPaymentDetails);
-    }
+    };
 
     const ChangeTheSelectValue = (value: string) => {
         if (value === 'Payment Gateway') {
@@ -178,18 +178,34 @@ const PayButton = (props: { record: any }) => {
 
     var findNumber = /\d+/;
     var percent: any = userStatus.match(findNumber);
+    console.log(record, 'record in paybtn');
+
     
+    
+
+    
+    
+
     useEffect(() => {
-        if(record.installment === record.Installment_count && (record.gsi_status === "terminated" || record.gsi_status === "completed")){
-            setDispalyRejectBtn(false)
-        }else if(record.installment === record.Installment_count){
-            setDispalyRejectBtn(true)
-        }else{
-            setDispalyRejectBtn(true)
+        const installmentCount = parseInt(record.Installment_count);
+        const installment = parseInt(record.installment);
+        // console.log(installment, 'installment');
+        // console.log(installmentCount, 'installmentCount');
+        if (
+            installment === installmentCount &&
+            (record.gsi_status === 'terminated' ||
+                record.gsi_status === 'completed' ||
+                record.gsi_status === 'waiting for seller to accept')
+        ) {
+            setDispalyRejectBtn(false);
+        } else if (installment === installmentCount) {
+            setDispalyRejectBtn(true);
+        } else {
+            setDispalyRejectBtn(false);
         }
-    },[displayRejectBtn,record.installment,record.Installment_count,record.gsi_status])
-    
-    console.log(displayRejectBtn,'displayRejectBtn')
+    }, [displayRejectBtn, record.installment, record.Installment_count, record.gsi_status]);
+
+    console.log(displayRejectBtn, 'displayRejectBtn');
 
     const { Panel } = Collapse;
     const { Option, OptGroup } = Select;
@@ -200,18 +216,19 @@ const PayButton = (props: { record: any }) => {
         : [];
     return (
         <React.Fragment>
-                <PrimaryBtn
-                    className={
-                        displayPay ?
-                            isError ?
-                                'pay-retry' : 'vikas-btn-radius pay-button-position' :
-                            'display-none'
-                    }
-                    onClick={() => payNow()}
-                    content={isError ? 'Retry and Pay' : 'Pay Now'}
-                />
+            <PrimaryBtn
+                className={
+                    displayPay
+                        ? isError
+                            ? 'pay-retry'
+                            : 'vikas-btn-radius pay-button-position'
+                        : 'display-none'
+                }
+                onClick={() => payNow()}
+                content={isError ? 'Retry and Pay' : 'Pay Now'}
+            />
 
-            {displayRejectBtn? <RejectionModal record={record} />:null}
+            {displayRejectBtn ? <RejectionModal record={record} /> : null}
 
             <Modal
                 className="payment-modal"
@@ -346,28 +363,24 @@ const PayButton = (props: { record: any }) => {
                                 viewPaymentDetails={viewPaymentDetails}
                                 setPaymentDetails={setPaymentDetails}
                             />
-                        ):null}
+                        ) : null}
                         {displayCashModal ? (
                             <CashPaymentModal
                                 record={record}
                                 viewPaymentDetails={viewPaymentDetails}
                                 setPaymentDetails={setPaymentDetails}
                             />
-                        ):null}
-                        {directBankTransferModal ?(
+                        ) : null}
+                        {directBankTransferModal ? (
                             <DirectBankTransferModal
                                 record={record}
                                 viewPaymentDetails={viewPaymentDetails}
                                 setPaymentDetails={setPaymentDetails}
                             />
-                        ):null}
+                        ) : null}
                         {proceedToPayBtn ? (
                             <div className="payment-btn-block">
-                                <button
-                                    className="pay-button-btn"
-                                    type="submit"
-                                    value="pay"
-                                >
+                                <button className="pay-button-btn" type="submit" value="pay">
                                     Proceed to Pay ₹{buyerState.paymentAmount}
                                 </button>
                             </div>
