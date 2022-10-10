@@ -123,7 +123,7 @@ const TransactionDetailsModal = (props: any) => {
                         </Radio.Group>
                     </Form.Item>
                     <Form.Item>
-                        <Button className = "deliverySubmitBtn" htmlType="submit">submit</Button>
+                        <Button className = "deliverySubmitBtn" htmlType="submit">confirm</Button>
                     </Form.Item>
                 </Form>
             </React.Fragment>
