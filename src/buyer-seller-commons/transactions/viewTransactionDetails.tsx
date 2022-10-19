@@ -3,7 +3,6 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Typography, Row, Col, Timeline, Button, Form, Radio } from 'antd';
 import { CheckCircleFilled } from '@ant-design/icons';
 import { isEmpty, isUndefined } from 'lodash';
-import moment from 'moment';
 
 import { getStatus } from '../actions';
 

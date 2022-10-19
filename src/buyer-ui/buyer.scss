@@ -313,9 +313,13 @@ $col-shade-error: #e90000;
 }
 
 div.ant-modal.payment-modal{
-    position: relative;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     display: flex;
-    align-items: center;
+    vertical-align:middle;
+    align-self: center;
     justify-content: center;
     .ant-modal-content{
         position: relative;
