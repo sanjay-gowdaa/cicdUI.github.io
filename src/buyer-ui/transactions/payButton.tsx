@@ -180,12 +180,6 @@ const PayButton = (props: { record: any }) => {
     var percent: any = userStatus.match(findNumber);
     console.log(record, 'record in paybtn');
 
-    
-    
-
-    
-    
-
     useEffect(() => {
         const installmentCount = parseInt(record.Installment_count);
         const installment = parseInt(record.installment);

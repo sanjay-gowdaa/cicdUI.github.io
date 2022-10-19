@@ -44,6 +44,7 @@ export const transactionBuyerColumns = [
                     <Image src={imageSrc} className='table-crop-image' />
                     <div className='margin-l-r-1em'>
                         <p>{produce}</p>
+                        {console.log(record.additional_info,'additionalInfo')}
                         {!isEmpty(record.additional_info) &&
                             <Button
                                 type='link'
