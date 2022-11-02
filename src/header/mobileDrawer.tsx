@@ -40,7 +40,7 @@ const MobileDrawer = () => {
                         {t('landing_page.header.breadcrumb.aim')}
                     </Breadcrumb.Item>
                     <Breadcrumb.Item href="#ecosystem" onClick={() => setVisible(false)}>
-                        {t('landing_page.header.breadcrumb.ecosystem')}
+                        {t('landing_page.header.breadcrumb.solution')}
                     </Breadcrumb.Item>
                     <Breadcrumb.Item href="#commodities" onClick={() => setVisible(false)}>
                         {t('landing_page.header.breadcrumb.commodities')}

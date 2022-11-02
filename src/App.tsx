@@ -52,8 +52,8 @@ const App = (props: { history: History }) => {
                 <div className='main-content'>
                     <Home history={history} popUpTrigger setSignUpPopupVisible={setSignUpPopupVisible} />
                     <LandingPage />
+                    <Footer />
                 </div>
-                <Footer />
             </React.Fragment>
             <MobileRegisterModal
                 showModal={openMobileRegModel}
