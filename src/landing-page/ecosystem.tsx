@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { Typography, Row, Col, Carousel, Popover, Button, Tooltip } from 'antd';
+import React, { useRef, useState } from 'react';
+import { Typography, Row, Col, Carousel, Tooltip } from 'antd';
 import { useTranslation } from 'react-i18next';
 
 import SmallDivider from '../static/assets/Line 24.png';
@@ -32,11 +32,11 @@ import { LandingDivider } from '../app-components/landingDivider';
 const { Text } = Typography;
 
 const Ecosystem = () => {
-    const [key, setKey]: any = useState(0);
     const [isShow, setIsShow]: any = useState(false);
     const [data, setData]: any = useState();
     const { t } = useTranslation('common');
     const customStyles = isEnglish(t('language')) ? englishStyling : kannadaStyling;
+    const ref = useRef<null | HTMLDivElement>(null);
 
     const ecoSystemData = [
         {
@@ -133,6 +133,10 @@ const Ecosystem = () => {
         }
     };
 
+    const setIntoPosition = () => {
+        ref.current?.scrollIntoView({ behavior: 'smooth', block: 'end', inline: 'nearest' });
+    };
+
     return (
         <div id="ecosystem">
             <div className="ecosystem-wrapper">
@@ -142,12 +146,13 @@ const Ecosystem = () => {
                         Technology Differentiaters of VikasBandhu
                     </Text>
                     <div className="technologyBoxes">
-                        <Tooltip placement="topLeft" title="click to know more">
+                        <Tooltip placement="right" title="click to know more">
                             <div
                                 className="firstBox"
                                 onClick={() => {
                                     setData('firstClick');
                                     setIsShow(true);
+                                    setIntoPosition();
                                 }}
                             >
                                 <div className="topImage">
@@ -162,12 +167,13 @@ const Ecosystem = () => {
                                 </ul>
                             </div>
                         </Tooltip>
-                        <Tooltip placement="topLeft" title="click to know more">
+                        <Tooltip placement="right" title="click to know more">
                             <div
                                 className="secondBox"
                                 onClick={() => {
                                     setData('secondClick');
                                     setIsShow(true);
+                                    setIntoPosition();
                                 }}
                             >
                                 <div className="topImage">
@@ -184,12 +190,13 @@ const Ecosystem = () => {
                                 </ul>
                             </div>
                         </Tooltip>
-                        <Tooltip placement="topLeft" title="click to know more">
+                        <Tooltip placement="right" title="click to know more">
                             <div
                                 className="thirdBox"
                                 onClick={() => {
                                     setData('thirdClick');
                                     setIsShow(true);
+                                    setIntoPosition();
                                 }}
                             >
                                 <div className="topImage">
@@ -205,12 +212,13 @@ const Ecosystem = () => {
                                 </ul>
                             </div>
                         </Tooltip>
-                        <Tooltip placement="topLeft" title="click to know more">
+                        <Tooltip placement="right" title="click to know more">
                             <div
                                 className="fourthBox"
                                 onClick={() => {
                                     setData('fourthClick');
                                     setIsShow(true);
+                                    setIntoPosition();
                                 }}
                             >
                                 <div className="topImage">
@@ -229,7 +237,7 @@ const Ecosystem = () => {
                     </div>
                     <Row className="Phone-view">
                         <Col span={24} xs={24} md={0}>
-                            <Carousel autoplay dots={false}>
+                            <Carousel autoplay dots={false} fade>
                                 <div>
                                     <div
                                         className="firstBox"
@@ -323,7 +331,7 @@ const Ecosystem = () => {
                         </Col>
                     </Row>
                     <div className="OnhoverDisplay">
-                        <div className="OnHoverContentBox">
+                        <div ref={ref} className="OnHoverContentBox">
                             {isShow ? (
                                 showData()
                             ) : (
@@ -412,20 +420,71 @@ const Ecosystem = () => {
                             </Carousel>
                         </Col>
                     </Row>
-                    <img className='smallDivider' src={SmallDivider} alt="smallDivider" />
+                    <img className="smallDivider" src={SmallDivider} alt="smallDivider" />
                     <p className="keyFeatures">{t('ecosystem_page.text1')}</p>
                     <div className="lastContent-ecosystem">
-                        {ecoSystemData.map((item: any) => {
-                            return (
-                                <div className="lastContentBadges">
-                                    <div>
-                                        <img src={item.imageSrc} alt="image" />
+                        <div className="lastContentWeb">
+                            {ecoSystemData.map((item: any) => {
+                                return (
+                                    <div className="lastContentBadges">
+                                        <div>
+                                            <img src={item.imageSrc} alt="image" />
+                                        </div>
+                                        <p className="insideText">{item.text1}</p>
+                                        <p className="outerText">{item.text2}</p>
                                     </div>
-                                    <p className="insideText">{item.text1}</p>
-                                    <p className="outerText">{item.text2}</p>
+                                );
+                            })}
+                        </div>
+                        <Col span={24} xs={24} md={0}>
+                            <Carousel autoplay dots={false} fade>
+                                <div>
+                                    <div className="lastContentBadges">
+                                        <div>
+                                            <img src={KycImage} alt="image" />
+                                        </div>
+                                        <p className="insideText">{t('ecosystem_page.text2')}</p>
+                                        <p className="outerText">{t('ecosystem_page.text3')}</p>
+                                    </div>
                                 </div>
-                            );
-                        })}
+                                <div>
+                                    <div className="lastContentBadges">
+                                        <div>
+                                            <img src={DashboardImage} alt="image" />
+                                        </div>
+                                        <p className="insideText">{t('ecosystem_page.text4')}</p>
+                                        <p className="outerText">{t('ecosystem_page.text5')}</p>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div className="lastContentBadges">
+                                        <div>
+                                            <img src={ProduceImage} alt="image" />
+                                        </div>
+                                        <p className="insideText">{t('ecosystem_page.text6')}</p>
+                                        <p className="outerText">{t('ecosystem_page.text7')}</p>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div className="lastContentBadges">
+                                        <div>
+                                            <img src={BarCImage} alt="image" />
+                                        </div>
+                                        <p className="insideText">{t('ecosystem_page.text8')}</p>
+                                        <p className="outerText">{t('ecosystem_page.text9')}</p>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div className="lastContentBadges">
+                                        <div>
+                                            <img src={HelpImage} alt="image" />
+                                        </div>
+                                        <p className="insideText">{t('ecosystem_page.text10')}</p>
+                                        <p className="outerText">{t('ecosystem_page.text11')}</p>
+                                    </div>
+                                </div>
+                            </Carousel>
+                        </Col>
                     </div>
                 </div>
                 <div id="BestPracticesContainer" className="BestPracticesContainer">
@@ -456,31 +515,78 @@ const Ecosystem = () => {
                     </div>
                     <Text className="inAdditionText">in addition, we</Text>
                     <div className="inAdditionContent">
-                        <div className="insideContainer">
-                            <div>
-                                <Text className="insideText">Provide Expert Help</Text>
-                                <p className="insidePara">
-                                    Help from local agro experts to help during trade
-                                </p>
+                        <div className="inAdditionWeb">
+                            <div className="insideContainer">
+                                <div>
+                                    <Text className="insideText">Provide Expert Help</Text>
+                                    <p className="insidePara">
+                                        Help from local agro experts to help during trade
+                                    </p>
+                                </div>
+                            </div>
+                            <div className="insideContainer">
+                                <div>
+                                    <Text className="insideText">Provide Local Employment</Text>
+                                    <p className="insidePara">
+                                        Boost rural economy by providing local employment.
+                                    </p>
+                                </div>
+                            </div>
+                            <div className="insideContainer">
+                                <div>
+                                    <Text className="insideText">Work with Government</Text>
+                                    <p className="insidePara">
+                                        Partnering with Government's vision
+                                    </p>
+                                </div>
                             </div>
                         </div>
-                        <div className="insideContainer">
-                            <div>
-                                <Text className="insideText">Provide Local Employment</Text>
-                                <p className="insidePara">
-                                    Boost rural economy by providing local employment.
-                                </p>
-                            </div>
-                        </div>
-                        <div className="insideContainer">
-                            <div>
-                                <Text className="insideText">Work with Government</Text>
-                                <p className="insidePara">Partnering with Government's vision</p>
-                            </div>
+                        <div className="inAdditionPhone">
+                            <Col span={24} xs={24} md={0}>
+                                <Carousel autoplay dots={false}>
+                                    <div>
+                                        <div className="insideContainer">
+                                            <div>
+                                                <Text className="insideText">
+                                                    Provide Expert Help
+                                                </Text>
+                                                <p className="insidePara">
+                                                    Help from local agro experts to help during
+                                                    trade
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div className="insideContainer">
+                                            <div>
+                                                <Text className="insideText">
+                                                    Provide Local Employment
+                                                </Text>
+                                                <p className="insidePara">
+                                                    Boost rural economy by providing local
+                                                    employment.
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div className="insideContainer">
+                                            <div>
+                                                <Text className="insideText">
+                                                    Work with Government
+                                                </Text>
+                                                <p className="insidePara">
+                                                    Partnering with Government's vision
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </Carousel>
+                            </Col>
                         </div>
                     </div>
                 </div>
-
                 <LandingDivider className="pageDivider" />
             </div>
         </div>
