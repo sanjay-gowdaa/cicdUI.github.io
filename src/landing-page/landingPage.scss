@@ -1708,14 +1708,13 @@ scroll-margin:1.25rem;
         .why-vikasBandhu{
             position: relative;
             top:-9.375rem;
-            left:-1.938rem;
             font-size: 1.875rem;
         }
         .at-present-text{
             width:80vw;
             position: relative;
             top:-14.375rem;
-            left:-1rem;
+            text-align: center;
             font-size: 1.25rem;
         }
 
@@ -1939,7 +1938,7 @@ scroll-margin:1.25rem;
 #ecosystem {
     width:100vw;
     height:187.5rem;
-    top:-40.625rem;
+    top:-39.625rem;
     scroll-margin:4.375rem;
     // background-color:blue;
 
@@ -1971,8 +1970,10 @@ scroll-margin:1.25rem;
             }
             .Phone-view{
                 display: flex;
-                align-items:center;
-                width:80vw;
+                flex-direction:row;
+                justify-content: center;
+                align-items:flex-start;
+                width:100vw;
                 height:37.5rem;
                 // background-color:blue;
                 .ant-col-24{
@@ -1980,6 +1981,8 @@ scroll-margin:1.25rem;
                     height:31.25rem;
                     // background-color:orange;
                     div{
+                        display:flex;
+                        justify-content:center;
                         height:31.25rem;
                         // background:yellow;
                     }
@@ -2054,7 +2057,7 @@ scroll-margin:1.25rem;
           .howVikasbandhuworks{
             .firstHead{
                 position: relative;
-                top:-15.625rem;
+                top:-18.625rem;
                 width:100vw !important;
                 height:3.125rem;
                 font-size:1.875rem;
@@ -2067,7 +2070,7 @@ scroll-margin:1.25rem;
             }
             .iphone-screen-mobile{
                 position: relative;
-                top:-15.625rem;
+                top:-18.625rem;
                 width:80vw;
                 // background-color:green;
                 height:43.75rem;
@@ -2096,7 +2099,7 @@ scroll-margin:1.25rem;
           .keyFeatures{
               width:100vw;
               position: relative;
-              top:-15.625rem;
+              top:-20.625rem;
               text-align:center;
               font-size:1.25rem;
           }
@@ -2107,7 +2110,7 @@ scroll-margin:1.25rem;
           
           .lastContent-ecosystem{
             position: relative;
-            top:-15.625rem;
+            top:-23.625rem;
             .lastContentWeb{
                 display:none !important;
             }
@@ -2168,20 +2171,21 @@ scroll-margin:1.25rem;
 
           .pageDivider{
             position: relative;
-            top:-3.125rem;
+            top:-14.125rem;
         }
         .smallDivider{
             display: none;
         }
         #BestPracticesContainer,.BestPracticesContainer{
             position: relative;
-            top:-9.375rem;
+            top:-19.375rem;
             width:100vw;
             // background-color:blue;
             height:25rem !important;
             justify-content: space-evenly;
             .BestPracticesText{
                 width:100vw;
+                text-align: center;
                 // background-color:blue;
                 position: relative;
             }
@@ -2256,7 +2260,7 @@ scroll-margin:1.25rem;
 }
 
     #commodities {
-        top:-45.625rem;
+        top:-55.625rem;
         height:50rem;
         display: flex;
         flex-direction:column;
@@ -2318,7 +2322,7 @@ scroll-margin:1.25rem;
     }
 
     #team{
-       top:-48.125rem;
+       top:-59.125rem;
        scroll-margin:8.5vh;
 
         .teamWrapper{
@@ -2382,7 +2386,7 @@ scroll-margin:1.25rem;
     }
 
     #legal{
-        top:-38.75rem;
+        top:-50.75rem;
         width:100vw;
         padding:1.25rem;
         // background-color:orange !important;
@@ -2411,7 +2415,7 @@ scroll-margin:1.25rem;
 
     #contactUs{
     //   background-color: #F5761A;
-      top:-40rem;
+      top:-53rem;
       width:100vw;
       scroll-margin:30vh;
       .contact-us-title{
@@ -2468,7 +2472,7 @@ scroll-margin:1.25rem;
     }
 
     #updates{
-        top:-18.75rem;
+        top:-32.75rem;
         .updateWrapper{
             width:100vw;
             .site-collapse-custom-collapse{

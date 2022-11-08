@@ -84,13 +84,13 @@
 @media screen and (max-width: 767px) {
     .landing-page-header-bar {
         width: 100vw;
-        height: 12vh;
+        height: 13vh;
         .logo {
             position: relative;
-            top:2.5vh;
+            top:1.5vh;
             left:-100px;
-            width: 5rem !important;
-            height: 3rem !important;
+            width: 6rem !important;
+            height: 6rem !important;
             // background:green;
         }
         .header-breadcrumb {
@@ -113,7 +113,7 @@
     .mobile-visible {
         position: relative;
         top: 1.5rem;
-        left: 7.5rem;
+        left: 5.5rem;
     }
 
     .drawer-register-button {
