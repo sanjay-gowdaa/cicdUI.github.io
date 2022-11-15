@@ -1,0 +1,61 @@
+.main-content {
+    width: 100%;
+    height: calc(100% - 70px);
+}
+
+.main-content-banner {
+    position: fixed;
+    bottom: 10em;
+    left: 5em;
+    background: rgba(0, 0, 0, 0.6);
+    border-radius: 10px;
+    width: 50%;
+    padding: 2em;
+}
+
+/*flex-classes*/
+.display-flex-row {
+    display: flex;
+    flex-direction: row;
+    
+    &.align-center {
+        align-items: center;
+    }
+
+    &.justify-content-space-bet {
+        justify-content: space-between;
+    }
+}
+
+/*Margin and padding classes*/
+.margin-l-r-1em {
+    margin-left: 1em;
+    margin-right: 1em;
+}
+
+.terms-and-conditions {
+    margin: 0 0.3em;
+}
+
+/*width classes*/
+.width-full {
+    width: 100%
+}
+.wid150{
+    width: 150px;
+}
+
+/**/
+.height-full {
+    height: 100%;
+}
+
+/*border radius*/
+.vikas-btn-radius {
+    border-radius: 3px
+}
+
+/* Color classes*/
+.col-white {
+    color: white !important;
+}
