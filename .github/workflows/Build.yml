@@ -38,3 +38,6 @@ jobs:
         run: |
           npx yarn install
           npm run start:dev
+          CTRL+C
+          n
+          
