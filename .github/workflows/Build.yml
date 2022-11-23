@@ -26,7 +26,7 @@ jobs:
       - name: checkout code to Runner
         uses: actions/checkout@v3
         with:
-            node-version: 14
+            node-version: 16
            
 
       # Runs a single command using the runners shell
@@ -38,6 +38,5 @@ jobs:
         run: |
           npx yarn install
           npm run start:dev
-          ^C
-          y
+         
           
