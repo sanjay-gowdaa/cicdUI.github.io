@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox-sw.js");
 
 importScripts(
-  "/cicdUI.github.io/precache-manifest.b671e1afabc191323e7dd30e0ccc58ec.js"
+  "/cicdUI.github.io/precache-manifest.1257f803bc4fd678e006be26ef880dc3.js"
 );
 
 workbox.clientsClaim();
