@@ -26,7 +26,7 @@ jobs:
       - name: checkout code to Runner
         uses: actions/checkout@v3
         with:
-            node-version: 16
+            node-version: 14
            
 
       # Runs a single command using the runners shell
@@ -38,5 +38,9 @@ jobs:
         run: |
           npx yarn install
           npm run start:dev
+      - name: Deployment start
+        run: npm run gh-pages build
+        
+          
          
           
