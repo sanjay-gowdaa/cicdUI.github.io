@@ -16,6 +16,6 @@ jobs:
           npm start
 
       - name: Deploy 🚀
-        uses: sanjay-gowdaa/github-pages-deploy-action@v4
+        uses: JamesIves/github-pages-deploy-action@v4
         with:
           folder: build # The folder the action should deploy.
