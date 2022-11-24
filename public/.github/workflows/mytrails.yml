@@ -2,7 +2,7 @@ name: Build and Deploy
 on:
   push:
     branches:
-      - cicd-trail2
+      - mytrails
 permissions:
   contents: write
 jobs:
@@ -12,8 +12,7 @@ jobs:
     steps:
       - name: Checkout 🛎️
         uses: actions/checkout@v3
-
-      - name: setup Nodejs v14 ⌛
+      - name: setup Nodejs v14
         uses: actions/setup-node@v3
         with:
             node-version: 14
@@ -24,8 +23,21 @@ jobs:
           node -v
           npx yarn install
           npm run build:dev
-
-      - name: Deploy to S3 🚀
+#       - name: Deploy 🚀
+#         uses: JamesIves/github-pages-deploy-action@v4
+#         with:
+#           folder: build # The folder the action should deploy.
+#       - name: Configure AWS Credentials
+#         uses: aws-actions/configure-aws-credentials@v1-node16
+#         with:
+#           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+#           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+#           aws-region: ap-south-1
+#       - name: Deploy
+#         uses: jonelantha/gatsby-s3-action@v2
+#         with:
+#           dest-s3-bucket: buildbkt
+      - name: Deploy to S3
         uses: jakejarvis/s3-sync-action@master
         with:
           args: --acl public-read --delete
