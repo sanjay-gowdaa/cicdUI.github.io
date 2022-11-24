@@ -53,7 +53,7 @@ $col-shade-green: #12805c;
             }
         
             .wimage {
-                background-image: url("../static/assets/wheatCustomised.svg");
+                background-image: URL("../static/assets/wheatCustomised.svg");
                 background-repeat: repeat;
                 width:24.5rem;
                 height:1.75rem;
@@ -835,7 +835,7 @@ flex-direction: column;
                     width: 12.664rem;
                     height: 10rem;
                     background-position: center;
-                    background-image:url('../static/assets/blob (1).png');
+                    background-image:URL('../static/assets/blob (1).png');
                     background-repeat:no-repeat;
                     div{
                         position: relative;
@@ -2223,7 +2223,7 @@ scroll-margin:1.25rem;
                         width: 12.664rem;
                         height: 10rem;
                         background-position: center;
-                        background-image:url('../static/assets/blob (1).png');
+                        background-image:URL('../static/assets/blob (1).png');
                         background-repeat:no-repeat;
                         div{
                             position: relative;

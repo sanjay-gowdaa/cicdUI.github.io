@@ -372,7 +372,7 @@ div.ant-modal.payment-modal{
                 position: relative;
                 top: -4.063rem;
                 width: 26.625rem;
-                content:url('../static/assets/Line 40.png')
+                content:URL('../static/assets/Line 40.png')
             }
             .trade-summary-header{
                 position: relative;
@@ -581,7 +581,7 @@ div.ant-modal.payment-modal{
 &::after{
     position: relative;
     top: 0.313rem;
-    content: url('../static/assets/Vector.png')
+    content: URL('../static/assets/Vector.png')
 }
     }
 }
