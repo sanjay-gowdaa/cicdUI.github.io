@@ -22,7 +22,13 @@ jobs:
         run: |
           node -v
           npx yarn install
-          CI = npm run build:dev
+      - name: building in process 🛎️
+        run: npm run build:dev 
+        env:
+            CI: false
+
+          
+        
 #       - name: Deploy 🚀
 #         uses: JamesIves/github-pages-deploy-action@v4
 #         with:
