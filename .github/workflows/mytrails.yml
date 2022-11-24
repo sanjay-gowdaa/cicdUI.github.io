@@ -55,7 +55,7 @@ jobs:
             SOURCE_DIR: "build"
 
     YTshorts:
-    - name: Ytshorts
+      name: Ytshorts
       runs-on: ubuntu-latest
       steps:
         - name: Checkout 🛎️
