@@ -1,8 +1,5 @@
 name: Build and Deploy
-on:
-  push:
-    branches:
-      - export
+on: [push]
 permissions:
   contents: write
 jobs:
