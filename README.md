@@ -1,6 +1,6 @@
 Vikas Bandhu
 
-ci cd p
+ci cd pipeline
 
 ## To override ANTD theme variables
 Steps to run the application
