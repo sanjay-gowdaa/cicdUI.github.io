@@ -1,6 +1,6 @@
 Vikas Bandhu
 
-ci cd
+ci cd p
 
 ## To override ANTD theme variables
 Steps to run the application
