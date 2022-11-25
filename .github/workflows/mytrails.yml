@@ -6,22 +6,50 @@ on:
 permissions:
   contents: write
 jobs:
-  job1:
-    name: Job 1
+  build-and-deploy:
+    concurrency: ci-${{ github.ref }} # Recommended if you intend to make multiple deployments in quick succession.
     runs-on: ubuntu-latest
-
     steps:
-    - name: Sleep and Run
-      run: |
-        echo "Sleeping for 10"
-        sleep 10
+      - name: Checkout 🛎️
+        uses: actions/checkout@v3
+      - name: setup Nodejs v14
+        uses: actions/setup-node@v3
+        with:
+            node-version: 14
+            
 
-  job2:
-    name: Job 2
-    runs-on: ubuntu-latest
+      - name: Install and Build 🔧 # This example project is built using npm and outputs the result to the 'build' folder. Replace with the commands required to build your project, or remove this step entirely if your site is pre-built.
+        run: |
+          node -v
+          npx yarn install
+      - name: building in process 🛎️
+        run: npm run build:dev 
+        env:
+            CI: false
 
-    steps:
-    - name: Dependant is Running
-      run: |
-        echo "Completed job 2, but triggering failure"
-        exit 1
+          
+        
+#       - name: Deploy 🚀
+#         uses: JamesIves/github-pages-deploy-action@v4
+#         with:
+#           folder: build # The folder the action should deploy.
+#       - name: Configure AWS Credentials
+#         uses: aws-actions/configure-aws-credentials@v1-node16
+#         with:
+#           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+#           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+#           aws-region: ap-south-1
+#       - name: Deploy
+#         uses: jonelantha/gatsby-s3-action@v2
+#         with:
+#           dest-s3-bucket: buildbkt
+      - name: Deploy to S3
+        uses: jakejarvis/s3-sync-action@master
+        with:
+          args: --acl public-read --delete
+        env:
+          AWS_S3_BUCKET: ${{ secrets.AWS_PRODUCTION_BUCKET_NAME }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_REGION: ${{ secrets.AWS_REGION }}
+          SOURCE_DIR: "build"
