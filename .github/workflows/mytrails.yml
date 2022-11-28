@@ -17,6 +17,7 @@ jobs:
   BUILD_APPLICATION:
     needs: SETUP_ENVIRONMENT
     name: Build vikasbandhu-test application on specified platform.
+    runs-on: ubuntu-latest  
     steps:
         - name: Install dependencies 🔧 
           run: |
@@ -30,6 +31,7 @@ jobs:
   DEPLOY_TO_S3:
     name: Deploying vikasbandu-test ui to S3.
     needs: [SETUP_ENVIRONMENT, BUILD_APPLICATION]
+    runs-on: ubuntu-latest    
     steps:
         - name: Deploy to S3
           uses: jakejarvis/s3-sync-action@master
