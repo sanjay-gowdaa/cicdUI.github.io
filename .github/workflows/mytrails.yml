@@ -4,7 +4,7 @@ on:
     branches:
       - mytrails
 jobs:
-  SETUP_ENVIRONMENT:
+  SETUP_ENV & BUILD :
     name: setup environment for reactjs application.
     runs-on: ubuntu-latest
     steps:
@@ -14,11 +14,11 @@ jobs:
         uses: actions/setup-node@v3
         with:
             node-version: 14
-  BUILD_APPLICATION:
-    needs: SETUP_ENVIRONMENT
-    name: Build vikasbandhu-test application on specified platform.
-    runs-on: ubuntu-latest  
-    steps:
+  # BUILD_APPLICATION:
+  #   needs: SETUP_ENVIRONMENT
+  #   name: Build vikasbandhu-test application on specified platform.
+  #   runs-on: ubuntu-latest  
+  #   steps:
         - name: Install dependencies 🔧 
           run: |
             node -v
@@ -27,21 +27,26 @@ jobs:
           run: npm run build:dev 
           env:
               CI: false
-
-  DEPLOY_TO_S3:
-    name: Deploying vikasbandu-test ui to S3.
-    needs: [SETUP_ENVIRONMENT, BUILD_APPLICATION]
-    runs-on: ubuntu-latest    
-    steps:
-        - name: Deploy to S3
-          uses: jakejarvis/s3-sync-action@master
+        - name: Upload Artifacts
+          uses: actions/upload-artifact@v3
           with:
-            args: --acl public-read --delete
-          env:
-            AWS_S3_BUCKET: ${{ secrets.AWS_PRODUCTION_BUCKET_NAME }}
-            AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-            AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-            AWS_REGION: ${{ secrets.AWS_REGION }}
-            SOURCE_DIR: "build"
+            name: vb-test-buildFile
+            path: path/to/artifact/ # or path/to/artifact
+
+  # DEPLOY_TO_S3:
+  #   name: Deploying vikasbandu-test ui to S3.
+  #   needs: [SETUP_ENVIRONMENT, BUILD_APPLICATION]
+  #   runs-on: ubuntu-latest    
+  #   steps:
+  #       - name: Deploy to S3
+  #         uses: jakejarvis/s3-sync-action@master
+  #         with:
+  #           args: --acl public-read --delete
+  #         env:
+  #           AWS_S3_BUCKET: ${{ secrets.AWS_PRODUCTION_BUCKET_NAME }}
+  #           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+  #           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+  #           AWS_REGION: ${{ secrets.AWS_REGION }}
+  #           SOURCE_DIR: "build"
 
     
