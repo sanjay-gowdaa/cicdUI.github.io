@@ -18,11 +18,11 @@ jobs:
     needs: SETUP_ENVIRONMENT
     name: Build vikasbandhu-test application on specified platform.
     steps:
-      - name: Install dependencies 🔧 
+        - name: Install dependencies 🔧 
           run: |
             node -v
             npx yarn install
-      - name: Build application 🛎️
+        - name: Build application 🛎️
           run: npm run build:dev 
           env:
               CI: false
@@ -31,7 +31,7 @@ jobs:
     name: Deploying vikasbandu-test ui to S3.
     needs: [SETUP_ENVIRONMENT, BUILD_APPLICATION]
     steps:
-      - name: Deploy to S3
+        - name: Deploy to S3
           uses: jakejarvis/s3-sync-action@master
           with:
             args: --acl public-read --delete
