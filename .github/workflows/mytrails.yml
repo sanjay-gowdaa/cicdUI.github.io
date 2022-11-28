@@ -17,27 +17,29 @@ jobs:
   BUILD_APPLICATION:
     needs: SETUP_ENVIRONMENT
     name: Build vikasbandhu-test application on specified platform.
-    - name: Install dependencies 🔧 
-        run: |
-          node -v
-          npx yarn install
+    steps:
+      - name: Install dependencies 🔧 
+          run: |
+            node -v
+            npx yarn install
       - name: Build application 🛎️
-        run: npm run build:dev 
-        env:
-            CI: false
+          run: npm run build:dev 
+          env:
+              CI: false
 
   DEPLOY_TO_S3:
     name: Deploying vikasbandu-test ui to S3.
     needs: [SETUP_ENVIRONMENT, BUILD_APPLICATION]
-    - name: Deploy to S3
-        uses: jakejarvis/s3-sync-action@master
-        with:
-          args: --acl public-read --delete
-        env:
-          AWS_S3_BUCKET: ${{ secrets.AWS_PRODUCTION_BUCKET_NAME }}
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          AWS_REGION: ${{ secrets.AWS_REGION }}
-          SOURCE_DIR: "build"
+    steps:
+      - name: Deploy to S3
+          uses: jakejarvis/s3-sync-action@master
+          with:
+            args: --acl public-read --delete
+          env:
+            AWS_S3_BUCKET: ${{ secrets.AWS_PRODUCTION_BUCKET_NAME }}
+            AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+            AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+            AWS_REGION: ${{ secrets.AWS_REGION }}
+            SOURCE_DIR: "build"
 
-  
+    
