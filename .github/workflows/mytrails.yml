@@ -4,7 +4,7 @@ on:
     branches:
       - mytrails
 jobs:
-  SETUP_ENV AND BUILD :
+  SETUP_ENV AND BUILD:
     name: setup environment for reactjs application.
     runs-on: ubuntu-latest
     steps:
