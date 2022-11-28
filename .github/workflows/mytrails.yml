@@ -8,12 +8,12 @@ jobs:
     name: setup environment for reactjs application.
     runs-on: ubuntu-latest
     steps:
-      - name: checkout code from vikasbandhu-ui github repo 🛎️
-        uses: actions/checkout@v3
-      - name: setup Nodejs v14 environment on github hosted runner
-        uses: actions/setup-node@v3
-        with:
-            node-version: 14
+        - name: checkout code from vikasbandhu-ui github repo 🛎️
+          uses: actions/checkout@v3
+        - name: setup Nodejs v14 environment on github hosted runner
+          uses: actions/setup-node@v3
+          with:
+              node-version: 14
   # BUILD_APPLICATION:
   #   needs: SETUP_ENVIRONMENT
   #   name: Build vikasbandhu-test application on specified platform.
