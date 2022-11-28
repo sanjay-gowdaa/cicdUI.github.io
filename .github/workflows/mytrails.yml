@@ -33,20 +33,20 @@ jobs:
             name: vb-test-buildFile
             path: path/to/artifact/ # or path/to/artifact
 
-  # DEPLOY_TO_S3:
-  #   name: Deploying vikasbandu-test ui to S3.
-  #   needs: [SETUP_ENVIRONMENT, BUILD_APPLICATION]
-  #   runs-on: ubuntu-latest    
-  #   steps:
-  #       - name: Deploy to S3
-  #         uses: jakejarvis/s3-sync-action@master
-  #         with:
-  #           args: --acl public-read --delete
-  #         env:
-  #           AWS_S3_BUCKET: ${{ secrets.AWS_PRODUCTION_BUCKET_NAME }}
-  #           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-  #           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-  #           AWS_REGION: ${{ secrets.AWS_REGION }}
-  #           SOURCE_DIR: "build"
+  DEPLOY_TO_S3:
+    name: Deploying vikasbandu-test ui to S3.
+    needs: [SETUP_ENVIRONMENT, BUILD_APPLICATION]
+    runs-on: ubuntu-latest    
+    steps:
+        - name: Deploy to S3
+          uses: jakejarvis/s3-sync-action@master
+          with:
+            args: --acl public-read --delete
+          env:
+            AWS_S3_BUCKET: ${{ secrets.AWS_PRODUCTION_BUCKET_NAME }}
+            AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+            AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+            AWS_REGION: ${{ secrets.AWS_REGION }}
+            SOURCE_DIR: "build"
 
     
