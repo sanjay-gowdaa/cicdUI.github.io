@@ -31,7 +31,7 @@ jobs:
           uses: actions/upload-artifact@v3
           with:
             name: vb-test-buildFile
-            path: path/to/artifact/ # or path/to/artifact
+            path: .\build\
 
   # DEPLOY_TO_S3:
   #   name: Deploying vikasbandu-test ui to S3.
