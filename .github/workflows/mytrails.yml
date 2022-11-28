@@ -1,49 +1,35 @@
-name: Build and Deploy
+name: vikasbandhu-test cicd trail.
 on:
   push:
     branches:
       - mytrails
-permissions:
-  contents: write
 jobs:
-  build-and-deploy:
-    concurrency: ci-${{ github.ref }} # Recommended if you intend to make multiple deployments in quick succession.
+  SETUP_ENVIRONMENT:
+    name: setup environment for reactjs application.
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout 🛎️
+      - name: checkout code from vikasbandhu-ui github repo 🛎️
         uses: actions/checkout@v3
-      - name: setup Nodejs v14
+      - name: setup Nodejs v14 environment on github hosted runner
         uses: actions/setup-node@v3
         with:
             node-version: 14
-            
-
-      - name: Install and Build 🔧 # This example project is built using npm and outputs the result to the 'build' folder. Replace with the commands required to build your project, or remove this step entirely if your site is pre-built.
+  BUILD_APPLICATION:
+    needs: SETUP_ENVIRONMENT
+    name: Build vikasbandhu-test application on specified platform.
+    - name: Install dependencies 🔧 
         run: |
           node -v
           npx yarn install
-      - name: building in process 🛎️
+      - name: Build application 🛎️
         run: npm run build:dev 
         env:
             CI: false
 
-          
-        
-#       - name: Deploy 🚀
-#         uses: JamesIves/github-pages-deploy-action@v4
-#         with:
-#           folder: build # The folder the action should deploy.
-#       - name: Configure AWS Credentials
-#         uses: aws-actions/configure-aws-credentials@v1-node16
-#         with:
-#           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-#           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-#           aws-region: ap-south-1
-#       - name: Deploy
-#         uses: jonelantha/gatsby-s3-action@v2
-#         with:
-#           dest-s3-bucket: buildbkt
-      - name: Deploy to S3
+  DEPLOY_TO_S3:
+    name: Deploying vikasbandu-test ui to S3.
+    needs: [SETUP_ENVIRONMENT, BUILD_APPLICATION]
+    - name: Deploy to S3
         uses: jakejarvis/s3-sync-action@master
         with:
           args: --acl public-read --delete
@@ -53,3 +39,5 @@ jobs:
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           AWS_REGION: ${{ secrets.AWS_REGION }}
           SOURCE_DIR: "build"
+
+  
