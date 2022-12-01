@@ -4,34 +4,46 @@ on:
     branches:
       - mytrails
 jobs:
-  SETUP_AND_BUILD:
-    name: setup environment for reactjs application.
-    runs-on: ubuntu-latest
-    steps:
-        - name: checkout code from vikasbandhu-ui github repo 🛎️
-          uses: actions/checkout@v3
-        - name: setup Nodejs v14 environment on github hosted runner
-          uses: actions/setup-node@v3
-          with:
-              node-version: 14
-  # BUILD_APPLICATION:
-  #   needs: SETUP_ENVIRONMENT
-  #   name: Build vikasbandhu-test application on specified platform.
-  #   runs-on: ubuntu-latest  
+  # SETUP_AND_BUILD:
+  #   name: setup environment for reactjs application.
+  #   runs-on: ubuntu-latest
   #   steps:
-        - name: Install dependencies 🔧 
-          run: |
-            node -v
-            npx yarn install
-        - name: Build application 🛎️
-          run: npm run build:dev 
-          env:
-              CI: false
-        - name: Upload Artifacts
-          uses: actions/upload-artifact@v3
+  #       - name: checkout code from vikasbandhu-ui github repo 🛎️
+  #         uses: actions/checkout@v3
+  #       - name: setup Nodejs v14 environment on github hosted runner
+  #         uses: actions/setup-node@v3
+  #         with:
+  #             node-version: 14
+  # # BUILD_APPLICATION:
+  # #   needs: SETUP_ENVIRONMENT
+  # #   name: Build vikasbandhu-test application on specified platform.
+  # #   runs-on: ubuntu-latest  
+  # #   steps:
+  #       - name: Install dependencies 🔧 
+  #         run: |
+  #           node -v
+  #           npx yarn install
+  #       - name: Build application 🛎️
+  #         run: npm run build:dev 
+  #         env:
+  #             CI: false
+  #       - name: Upload Artifacts
+  #         uses: actions/upload-artifact@v3
+  #         with:
+  #           name: vb-test-buildFile
+  #           path: build/
+    
+BUILD_APPLICATION:
+    # needs: SETUP_AND_BUILD
+    name: Build vikasbandhu-test application on specified platform.
+    runs-on: ubuntu-latest  
+    steps:
+        - name: Checkout private tools
+          uses: actions/checkout@v3
           with:
-            name: vb-test-buildFile
-            path: build/
+            repository: sanjay-gowdaa/justCICD1
+            # token: ${{ secrets.GH_PAT }} # `GH_PAT` is a secret that contains your PAT
+            # path: my-tools
 
   # DEPLOY_TO_S3:
   #   name: Deploying vikasbandu-test ui to S3.
