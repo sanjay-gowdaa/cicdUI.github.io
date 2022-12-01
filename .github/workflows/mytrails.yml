@@ -51,6 +51,7 @@ jobs:
               node-version: 16
         - name: run testsuite
           run: |
+            ls
             npm i
             cd testsuite
             node testCase001.js Dev Firefox Headless
