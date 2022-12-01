@@ -56,6 +56,7 @@ jobs:
             npm i
             cd batch
             chmod 755 ./VBbatch.sh
+            ./VBbatch.sh
             # cd testsuite
             # node testCase001.js Dev Firefox Headless
 
