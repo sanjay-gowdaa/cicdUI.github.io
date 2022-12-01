@@ -49,9 +49,10 @@ jobs:
           uses: actions/setup-node@v3
           with:
               node-version: 16
-          run: npm i
-          run: cd testsuite
-          run: node testCase001.js Dev Firefox Headless
+          run: |
+            npm i
+            cd testsuite
+            node testCase001.js Dev Firefox Headless
 
 
 
