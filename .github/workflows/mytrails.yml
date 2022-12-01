@@ -43,7 +43,9 @@ jobs:
           with:
             repository: sanjay-gowdaa/justCICD1
             token: ${{ secrets.GH_PAT }} # `GH_PAT` is a secret that contains your PAT
-            path: .justCICD1.chromeDriver
+            path: .chromeDriver
+            ref: chromeDriver
+
 
   # DEPLOY_TO_S3:
   #   name: Deploying vikasbandu-test ui to S3.
