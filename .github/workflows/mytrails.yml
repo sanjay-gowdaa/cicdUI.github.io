@@ -51,6 +51,7 @@ jobs:
               node-version: 16
         - name: run testsuite
           run: |
+            cd chromeDriver
             ls
             npm i
             cd testsuite
