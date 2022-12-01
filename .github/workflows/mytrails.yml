@@ -33,7 +33,7 @@ jobs:
   #           name: vb-test-buildFile
   #           path: build/
     
-BUILD_APPLICATION:
+  BUILD_APPLICATION:
     # needs: SETUP_AND_BUILD
     name: Build vikasbandhu-test application on specified platform.
     runs-on: ubuntu-latest  
