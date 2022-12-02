@@ -95,10 +95,11 @@ jobs:
         - name: Download a single artifact
           uses: actions/download-artifact@v3
           with:
-            name: vb-test-buildFile 
+            name: vb-test-buildFile
+            path: build 
         - name: jst
           run: |
-              cd ..
+              # cd ..
               ls
 
 
