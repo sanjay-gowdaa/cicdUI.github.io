@@ -96,9 +96,9 @@ jobs:
           uses: actions/download-artifact@v3
           with:
             name: vb-test-buildFile 
-        -name: jst
-         run: |
-            ls
+        - name: jst
+          run: |
+              ls
 
 
         - name: Deploy to S3
