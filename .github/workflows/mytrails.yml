@@ -55,34 +55,34 @@ jobs:
   #           name: vb-test-buildFile
   #           path: build/
     
-  # TEST:
-  #   needs: BUILD
-  #   name: Build vikasbandhu-test application on specified platform.
-  #   runs-on: ubuntu-latest 
+  TEST:
+    needs: BUILD
+    name: Build vikasbandhu-test application on specified platform.
+    runs-on: ubuntu-latest 
 
-  #   steps:
+    steps:
 
-  #       - name: Checkout private tools
-  #         uses: actions/checkout@v3
-  #         with:
-  #           repository: sanjay-gowdaa/justCICD1
-  #           token: ${{ secrets.GH_PATH }} # `GH_PAT` is a secret that contains your PAT
-  #           path: chromeDriver
-  #           ref: chromeDriver
+        - name: Checkout private tools
+          uses: actions/checkout@v3
+          with:
+            repository: sanjay-gowdaa/justCICD1
+            token: ${{ secrets.GH_PATH }} # `GH_PAT` is a secret that contains your PAT
+            path: chromeDriver
+            ref: chromeDriver
 
-  #       - name: setup Nodejs v14 environment on github hosted runner
-  #         uses: actions/setup-node@v3
-  #         with:
-  #             node-version: 16
+        - name: setup Nodejs v14 environment on github hosted runner
+          uses: actions/setup-node@v3
+          with:
+              node-version: 16
 
-  #       - name: run testsuite
-  #         run: |
-  #           cd chromeDriver
-  #           ls
-  #           npm i
-  #           cd batch
-  #           chmod 755 ./VBbatch.sh
-  #           ./VBbatch.sh
+        - name: run testsuite
+          run: |
+            cd chromeDriver
+            ls
+            npm i
+            cd batch
+            chmod 755 ./VBbatch.sh
+            ./VBbatch.sh
 
   DEPLOY:
 
