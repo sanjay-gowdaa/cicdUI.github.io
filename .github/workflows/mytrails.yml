@@ -4,21 +4,43 @@ on:
     branches:
       - mytrails
 jobs:
-  # SETUP_AND_BUILD:
-  #   name: setup environment for reactjs application.
-  #   runs-on: ubuntu-latest
+
+  BUILD:
+    name: setup environment for reactjs application.
+    runs-on: ubuntu-latest
+
+    steps:
+
+        - name: checkout code from vikasbandhu-ui github repo 🛎️
+          uses: actions/checkout@v3
+
+        - name: setup Nodejs v14 environment on github hosted runner
+          uses: actions/setup-node@v3
+
+          with:
+              node-version: 14
+
+        - name: Install dependencies 🔧 
+          run: |
+            node -v
+            npx yarn install
+
+        - name: Build application 🛎️
+          run: npm run build:dev 
+          env:
+              CI: false
+
+        - name: Upload Artifacts
+          uses: actions/upload-artifact@v3
+          with:
+            name: vb-test-buildFile
+            path: build/
+
+  # BUILD_APPLICATION:
+  #   needs: SETUP_ENVIRONMENT
+  #   name: Build vikasbandhu-test application on specified platform.
+  #   runs-on: ubuntu-latest  
   #   steps:
-  #       - name: checkout code from vikasbandhu-ui github repo 🛎️
-  #         uses: actions/checkout@v3
-  #       - name: setup Nodejs v14 environment on github hosted runner
-  #         uses: actions/setup-node@v3
-  #         with:
-  #             node-version: 14
-  # # BUILD_APPLICATION:
-  # #   needs: SETUP_ENVIRONMENT
-  # #   name: Build vikasbandhu-test application on specified platform.
-  # #   runs-on: ubuntu-latest  
-  # #   steps:
   #       - name: Install dependencies 🔧 
   #         run: |
   #           node -v
@@ -33,11 +55,13 @@ jobs:
   #           name: vb-test-buildFile
   #           path: build/
     
-  BUILD_APPLICATION:
-    # needs: SETUP_AND_BUILD
+  TEST:
+    needs: BUILD
     name: Build vikasbandhu-test application on specified platform.
-    runs-on: ubuntu-latest  
+    runs-on: ubuntu-latest 
+
     steps:
+
         - name: Checkout private tools
           uses: actions/checkout@v3
           with:
@@ -45,10 +69,12 @@ jobs:
             token: ${{ secrets.GH_PATH }} # `GH_PAT` is a secret that contains your PAT
             path: chromeDriver
             ref: chromeDriver
+
         - name: setup Nodejs v14 environment on github hosted runner
           uses: actions/setup-node@v3
           with:
               node-version: 16
+
         - name: run testsuite
           run: |
             cd chromeDriver
@@ -57,27 +83,23 @@ jobs:
             cd batch
             chmod 755 ./VBbatch.sh
             ./VBbatch.sh
-            # cd testsuite
-            # node testCase001.js Dev Firefox Headless
-            
 
+  DEPLOY:
 
-
-
-  # DEPLOY_TO_S3:
-  #   name: Deploying vikasbandu-test ui to S3.
-  #   # needs: [SETUP_ENVIRONMENT, BUILD_APPLICATION]
-  #   runs-on: ubuntu-latest    
-  #   steps:
-  #       - name: Deploy to S3
-  #         uses: jakejarvis/s3-sync-action@master
-  #         with:
-  #           args: --acl public-read --delete
-  #         env:
-  #           AWS_S3_BUCKET: ${{ secrets.AWS_PRODUCTION_BUCKET_NAME }}
-  #           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-  #           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-  #           AWS_REGION: ${{ secrets.AWS_REGION }}
-  #           SOURCE_DIR: "build"
+    name: Deploying vikasbandu-test ui to S3.
+    needs: [BUILD, TEST]
+    runs-on: ubuntu-latest    
+    
+    steps:
+        - name: Deploy to S3
+          uses: jakejarvis/s3-sync-action@master
+          with:
+            args: --acl public-read --delete
+          env:
+            AWS_S3_BUCKET: ${{ secrets.AWS_PRODUCTION_BUCKET_NAME }}
+            AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+            AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+            AWS_REGION: ${{ secrets.AWS_REGION }}
+            SOURCE_DIR: "build"
 
     
