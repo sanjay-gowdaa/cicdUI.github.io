@@ -6,7 +6,7 @@ on:
 jobs:
 
   BUILD:
-    name: setup environment for reactjs application.
+    name: BUILD
     runs-on: ubuntu-latest
 
     steps:
@@ -57,7 +57,7 @@ jobs:
     
   TEST:
     needs: BUILD
-    name: Build vikasbandhu-test application on specified platform.
+    name: TEST
     runs-on: ubuntu-latest 
 
     steps:
@@ -86,8 +86,8 @@ jobs:
 
   DEPLOY:
 
-    name: Deploying vikasbandu-test ui to S3.
-    needs: [BUILD]
+    name: DEPLOY TO S3.
+    needs: [BUILD , TEST]
     runs-on: ubuntu-latest    
 
     steps:
