@@ -5,36 +5,36 @@ on:
       - mytrails
 jobs:
 
-  BUILD:
-    name: BUILD
-    runs-on: ubuntu-latest
+#   BUILD:
+#     name: BUILD
+#     runs-on: ubuntu-latest
 
-    steps:
+#     steps:
 
-        - name: checkout code from vikasbandhu-ui github repo 🛎️
-          uses: actions/checkout@v3
+#         - name: checkout code from vikasbandhu-ui github repo 🛎️
+#           uses: actions/checkout@v3
 
-        - name: setup Nodejs v14 environment on github hosted runner
-          uses: actions/setup-node@v3
+#         - name: setup Nodejs v14 environment on github hosted runner
+#           uses: actions/setup-node@v3
 
-          with:
-              node-version: 14
+#           with:
+#               node-version: 14
 
-        - name: Install dependencies 🔧 
-          run: |
-            node -v
-            npx yarn install
+#         - name: Install dependencies 🔧 
+#           run: |
+#             node -v
+#             npx yarn install
 
-        - name: Build application 🛎️
-          run: npm run build:dev 
-          env:
-              CI: false
+#         - name: Build application 🛎️
+#           run: npm run build:dev 
+#           env:
+#               CI: false
 
-        - name: Upload Artifacts
-          uses: actions/upload-artifact@v3
-          with:
-            name: vb-test-buildFile
-            path: build/
+#         - name: Upload Artifacts
+#           uses: actions/upload-artifact@v3
+#           with:
+#             name: vb-test-buildFile
+#             path: build/
 
   # BUILD_APPLICATION:
   #   needs: SETUP_ENVIRONMENT
@@ -56,7 +56,7 @@ jobs:
   #           path: build/
     
   TEST:
-    needs: BUILD
+#     needs: BUILD
     name: TEST
     runs-on: ubuntu-latest 
 
@@ -77,36 +77,35 @@ jobs:
 
         - name: run testsuite
           run: |
-            cd chromeDriver
-            ls
             npm i
-            cd batch
-            chmod 755 ./VBbatch.sh
-            ./VBbatch.sh
+            node testCase001.js Test Firefox Headless
+#             cd batch
+#             chmod 755 ./VBbatch.sh
+#             ./VBbatch.sh
 
-  DEPLOY:
+#   DEPLOY:
 
-    name: DEPLOY TO S3.
-    needs: [BUILD , TEST]
-    runs-on: ubuntu-latest    
+#     name: DEPLOY TO S3.
+#     needs: [BUILD , TEST]
+#     runs-on: ubuntu-latest    
 
-    steps:
+#     steps:
 
-        - name: Download a single artifact
-          uses: actions/download-artifact@v3
-          with:
-            name: vb-test-buildFile
-            path: build 
-        - name: jst
-          run: |
-              # cd ..
-              ls
+#         - name: Download a single artifact
+#           uses: actions/download-artifact@v3
+#           with:
+#             name: vb-test-buildFile
+#             path: build 
+#         - name: jst
+#           run: |
+#               # cd ..
+#               ls
 
 
-        - name: Deploy to S3
-          uses: jakejarvis/s3-sync-action@master
-          with:
-            args: --acl public-read --delete
+#         - name: Deploy to S3
+#           uses: jakejarvis/s3-sync-action@master
+#           with:
+#             args: --acl public-read --delete
 
         
 
