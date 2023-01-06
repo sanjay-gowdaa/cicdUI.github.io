@@ -78,6 +78,7 @@ jobs:
 
         - name: run testsuite
           run: |
+            cd chromeDriver
             ls
             npm i
 #             cd testsuite
