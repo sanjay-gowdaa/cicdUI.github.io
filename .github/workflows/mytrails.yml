@@ -81,8 +81,8 @@ jobs:
             cd chromeDriver
             ls
             npm i
-#             cd testsuite
-#             node testCase005.js Test Firefox Headless
+            cd testsuite
+            node testCase001.js Test Firefox Headless
 #             cd batch
 #             chmod 755 ./VBbatch.sh
 #             ./VBbatch.sh
