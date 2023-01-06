@@ -65,7 +65,8 @@ jobs:
         - name: Checkout private tools
           uses: actions/checkout@v3
           with:
-            repository: sanjay-gowdaa/justCICD1
+           # repository: sanjay-gowdaa/justCICD1
+            respository: VikasBandhu/VB_GUI_SL_Automation
             token: ${{ secrets.GH_PATH }} # `GH_PAT` is a secret that contains your PAT
             path: chromeDriver
             ref: chromeDriver
