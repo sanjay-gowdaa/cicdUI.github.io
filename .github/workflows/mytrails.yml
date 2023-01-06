@@ -78,6 +78,7 @@ jobs:
 
         - name: run testsuite
           run: |
+            ls
             npm i
 #             cd testsuite
 #             node testCase005.js Test Firefox Headless
